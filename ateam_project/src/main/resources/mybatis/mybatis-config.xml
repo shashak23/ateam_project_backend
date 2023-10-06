@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration
+	PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+	"https://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<settings>
+	<!-- 전통적인 데이터베이스 형태인 A_Column 을 camelcase
+	형태의 자바 프로퍼티명 형태인 aColumn으로
+	자동으로 매핑하도록 함 (기본값: false) -->
+	 	<setting name="mapUnderscoreToCamelCase" value="true"/>
+		<setting name ="jdbcTypeForNull" value="NULL" />
+	</settings>
+</configuration>
