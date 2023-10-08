@@ -1,0 +1,67 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ktdsuniversity.edu.member.dao.MemberDAO">
+	<select id="getEmailCount" parameterType="string">
+		SELECT COUNT(1)
+		FROM "MEMBER"
+		WHERE EMAIL = #{_parameter}
+	</select>
+	<select id="getNicknameCount" parameterType="string">
+		SELECT COUNT(1)
+		FROM "MEMBER"
+		WHERE NICKNAME = #{_parameter}
+	</select>
+	<insert id="createNewMember"
+		parameterType="com.ktdsuniversity.edu.member.vo.MemberVO">
+		INSERT INTO "MEMBER"
+		( MEMBER_ID
+		, EMAIL
+		, PW
+		, SALT
+		, NICKNAME
+		, INFO_AGREEMENT_YN
+		, PROFILE_PIC
+		, REGIST_DATE
+		, MEMBER_TYPE
+		, WITHDRAW_YN)
+		VALUES
+		( SEQ_MEMBER_PK.NEXTVAL
+		, #{email}
+		, #{pw}
+		, #{salt}
+		, #{nickname}
+		, 'Y'
+		, NULL
+		, SYSDATE
+		, 'GENERAL_MEMBER'
+		, 'N' )
+	</insert>
+	
+<!-- 로그인 쿼리 -->
+	<select id="getSalt"
+			parameterType="string"
+			resultType="string">
+	SELECT SALT
+	  FROM "MEMBER" 
+	 WHERE EMAIL =#{_parameter}
+	</select>
+	<select id="getMember"
+			parameterType="com.ktdsuniversity.edu.member.vo.MemberVO"
+			resultType="com.ktdsuniversity.edu.member.vo.MemberVO">
+		SELECT MEMBER_ID
+			 , EMAIL
+			 , PW
+			 , SALT
+			 , NICKNAME
+			 , INFO_AGREEMENT_YN
+			 , PROFILE_PIC
+			 , SYSDATE
+			 , MEMBER_TYPE
+			 , WITHDRAW_YN
+		  FROM "MEMBER"
+		 WHERE EMAIL = #{email}
+		   AND PW = #{pw}
+	</select>
+</mapper>
