@@ -33,7 +33,7 @@
 		, #{salt}
 		, #{nickname}
 		, 'Y'
-		, NULL
+		, 'img'
 		, SYSDATE
 		, 'GENERAL_MEMBER'
 		, 'N' )
