@@ -4,14 +4,24 @@ spring:
             max-file-size: 104857600
             max-request-size: 10485760
     datasource:
-        url: jdbc:oracle:thin:@192:168.211.31:1521:XE
+        url: jdbc:oracle:thin:@192.168.211.31:1521:XE
         driver-class-name: oracle.jdbc.driver.OracleDriver
         username: aTeam
         password: 1234
-    mvc:
-        view:
-            prefix: /WEB-INF/views/
-            suffix: .jsp
 mybatis:
     config-location: classpath:mybatis/mybatis-config.xml
     mapper-locations: classpath:com/ktdsuniversity/edu/**/dao/mapper/*.xml
+
+# 파일 업로드 커스텀 설정 
+app:
+    # 파일 업로드 정책 관련 설정.
+    multipart: 
+        #업로드한 파일이 저장한 위치
+        base-dir: C:/uploadFiles
+        #파일명 난독화 관련 설정
+        obfuscation:
+            #난독화 사용 여부
+            enable: true
+            #파일명에서 확장자를 숨길 것인지에 대한 설정.
+            hide-ext:
+                enable: true
