@@ -1,0 +1,17 @@
+spring:
+    servlet:
+        multipart:
+            max-file-size: 104857600
+            max-request-size: 10485760
+    datasource:
+        url: jdbc:oracle:thin:@192:168.211.31:1521:XE
+        driver-class-name: oracle.jdbc.driver.OracleDriver
+        username: aTeam
+        password: 1234
+    mvc:
+        view:
+            prefix: /WEB-INF/views/
+            suffix: .jsp
+mybatis:
+    config-location: classpath:mybatis/mybatis-config.xml
+    mapper-locations: classpath:com/ktdsuniversity/edu/**/dao/mapper/*.xml
