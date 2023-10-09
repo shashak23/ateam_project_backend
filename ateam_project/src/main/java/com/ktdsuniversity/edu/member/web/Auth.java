@@ -54,4 +54,8 @@ public class Auth {
 		session.invalidate();
 		return "redirect:/home/main";
 	}
+	@GetMapping("/home/main")
+	public String main() {
+		return "home/home";
+	}
 }
