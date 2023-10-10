@@ -1,23 +1,24 @@
 package com.ktdsuniversity.edu.career.vo;
 
+import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
+
 public class CareerVO {
 	private String careerId;
-	private String generalMemberId;
-	/**
-	 * 근무 회사명
-	 */
+	private String generalMemberEmail;
 	private String previousCompanyName;
 	private String jobTitle;
 	private String hireDate;
 	private String resignDate;
-	private CareerVO careerVO;
+	
+	private GeneralMemberVO generalMemberVO;
 	
 	
-	public CareerVO getCareerVO() {
-		return careerVO;
+	
+	public GeneralMemberVO getGeneralMemberVO() {
+		return generalMemberVO;
 	}
-	public void setCareerVO(CareerVO careerVO) {
-		this.careerVO = careerVO;
+	public void setGeneralMemberVO(GeneralMemberVO generalMemberVO) {
+		this.generalMemberVO = generalMemberVO;
 	}
 	public String getCareerId() {
 		return careerId;
@@ -25,11 +26,11 @@ public class CareerVO {
 	public void setCareerId(String careerId) {
 		this.careerId = careerId;
 	}
-	public String getGeneralMemberId() {
-		return generalMemberId;
+	public String getGeneralMemberEmail() {
+		return generalMemberEmail;
 	}
-	public void setGeneralMemberId(String generalMemberId) {
-		this.generalMemberId = generalMemberId;
+	public void setGeneralMemberEmail(String generalMemberEmail) {
+		this.generalMemberEmail = generalMemberEmail;
 	}
 	public String getPreviousCompanyName() {
 		return previousCompanyName;
@@ -55,5 +56,9 @@ public class CareerVO {
 	public void setResignDate(String resignDate) {
 		this.resignDate = resignDate;
 	}
+	
+	
+	
+	
 	
 }

@@ -1,5 +1,6 @@
-package com.ktdsuniversity.edu.member.vo;
+package com.ktdsuniversity.edu.generalmember.vo;
 
+import com.ktdsuniversity.edu.member.vo.MemberVO;
 
 public class GeneralMemberVO {
 	private String generalMemberEmail;
@@ -8,7 +9,7 @@ public class GeneralMemberVO {
 	private String region;
 	private String tierId;
 	private String githubUrl;
-	private String email;
+	private String additionalEmail;
 	private String blogUrl;
 	private MemberVO memberVO;
 	
@@ -56,11 +57,12 @@ public class GeneralMemberVO {
 	public void setGithubUrl(String githubUrl) {
 		this.githubUrl = githubUrl;
 	}
-	public String getEmail() {
-		return email;
+	
+	public String getAdditionalEmail() {
+		return additionalEmail;
 	}
-	public void setEmail(String email) {
-		this.email = email;
+	public void setAdditionalEmail(String additionalEmail) {
+		this.additionalEmail = additionalEmail;
 	}
 	public String getBlogUrl() {
 		return blogUrl;

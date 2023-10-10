@@ -32,7 +32,6 @@
         };
         $.datepicker.setDefaults($.datepicker.regional['ko']);
         
-        // DatePicker를 사용할 input 필드에 클래스 추가
         $(".date-picker").datepicker({
             changeYear: true,
             showButtonPanel: true,
@@ -40,7 +39,6 @@
             dateFormat: "yy-mm-dd"
         });
         
-        // 팝업 창을 생성할 버튼 클릭 시 동작
         $("#openPopupButton").click(function() {
             $("#popup").dialog({
                 width: 400,
@@ -48,15 +46,22 @@
             });
         });
         
-        // 입력한 입사일과 퇴사일을 비교하여 이전 날짜인지 확인
         $("#hireDate, #resignDate").change(function() {
+            var currentDate = new Date(); // 현재 날짜 가져오기
             var hireDate = $("#hireDate").datepicker("getDate");
             var resignDate = $("#resignDate").datepicker("getDate");
             
-            if (hireDate && resignDate && hireDate > resignDate) {
-                alert("입사일이 퇴사일보다 이전일 수 없습니다.");
-                // 입사일을 초기화 또는 수정할 수 있도록 처리
-                $("#hireDate").val("");
+            if (hireDate && resignDate) {
+                if (hireDate > currentDate || resignDate > currentDate) {
+                    alert("입사일과 퇴사일은 현재 날짜보다 클 수 없습니다.");
+                    // 입사일과 퇴사일을 초기화
+                    $("#hireDate").val("");
+                    $("#resignDate").val("");
+                } else if (hireDate > resignDate) {
+                    alert("입사일이 퇴사일보다 이전일 수 없습니다.");
+                    // 입사일을 초기화
+                    $("#hireDate").val("");
+                }
             }
         });
     });
@@ -74,11 +79,11 @@
         </div>
         <div>
             <label for="hireDate">입사일:</label>
-            <input type="text" id="hireDate" name="hireDate" class="date-picker" placeholder="YYYY-MM-DD" required>
+            <input type="text" id="hireDate" name="hireDate" class="date-picker" placeholder="YYYY-MM-DD" readonly="readonly">
         </div>
         <div>
             <label for="resignDate">퇴사일:</label>
-            <input type="text" id="resignDate" name="resignDate" class="date-picker" placeholder="YYYY-MM-DD">
+            <input type="text" id="resignDate" name="resignDate" class="date-picker" placeholder="YYYY-MM-DD" readonly="readonly">
         </div>
         <input type="submit" value="저장">
     </form>

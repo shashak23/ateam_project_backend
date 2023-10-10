@@ -11,12 +11,15 @@ public class CareerDAOImpl extends SqlSessionDaoSupport implements CareerDAO {
 	@Autowired
 	@Override
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
-		// TODO Auto-generated method stub
 		super.setSqlSessionTemplate(sqlSessionTemplate);
 	}
 	@Override
 	public int createNewCareer(CareerVO careerVO) {
 		return getSqlSession().insert("createNewCareer",careerVO );
+	}
+	@Override
+	public int updateOneCarrer(CareerVO careerVO) {
+		return getSqlSession().update("updateOneCarrer", careerVO);
 	}
 
 }
