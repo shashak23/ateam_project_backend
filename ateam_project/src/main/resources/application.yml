@@ -3,6 +3,10 @@ spring:
         multipart:
             max-file-size: 104857600
             max-request-size: 10485760
+    mvc:
+        view:
+            prefix: /WEB-INF/views/
+            suffix: .jsp
     datasource:
         url: jdbc:oracle:thin:@192.168.211.31:1521:XE
         driver-class-name: oracle.jdbc.driver.OracleDriver
