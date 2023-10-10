@@ -4,7 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ktdsuniversity.edu.beans.SHA;
+import com.ktdsuniversity.edu.member.dao.GeneralMemberDAO;
 import com.ktdsuniversity.edu.member.dao.MemberDAO;
+import com.ktdsuniversity.edu.member.vo.GeneralMemberVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 
 @Service
@@ -12,10 +14,12 @@ public class MemberServiceImpl implements MemberService{
 	@Autowired
 	private MemberDAO memberDAO;
 	@Autowired
+	private GeneralMemberDAO generalMemberDAO;
+	@Autowired
 	private SHA sha;
 	
 	@Override
-	public boolean createNewMember(MemberVO memberVO) {
+	public boolean createNewMember(MemberVO memberVO, GeneralMemberVO generalMemberVO) {
 		int emailCount = memberDAO.getEmailCount(memberVO.getEmail());
 		int nicknameCount= memberDAO.getNicknameCount(memberVO.getNickname());
 		if(emailCount >0) {
@@ -29,8 +33,9 @@ public class MemberServiceImpl implements MemberService{
 		String encryptedPassword = sha.getEncrypt(password, salt);
 		memberVO.setPw(encryptedPassword);
 		memberVO.setSalt(salt);
-		int insertCount = memberDAO.createNewMember(memberVO);
-		return insertCount>0;
+		int insertMemberCount = memberDAO.createNewMember(memberVO);
+		int insertGMemberCount = generalMemberDAO.createNewGeneralMember(generalMemberVO);
+		return insertMemberCount>0 && insertGMemberCount>0;
 	}
 
 	@Override

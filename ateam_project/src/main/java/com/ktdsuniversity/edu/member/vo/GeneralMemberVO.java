@@ -1,9 +1,8 @@
-package com.ktdsuniversity.edu.memberinfo.vo;
+package com.ktdsuniversity.edu.member.vo;
 
-import com.ktdsuniversity.edu.member.vo.MemberVO;
 
-public class MemberInfoVO {
-	private String generalMemberId;
+public class GeneralMemberVO {
+	private String generalMemberEmail;
 	private String selfIntro;
 	private String jobId;
 	private String region;
@@ -19,12 +18,14 @@ public class MemberInfoVO {
 	public void setMemberVO(MemberVO memberVO) {
 		this.memberVO = memberVO;
 	}
-	public String getGeneralMemberId() {
-		return generalMemberId;
+	
+	public String getGeneralMemberEmail() {
+		return generalMemberEmail;
 	}
-	public void setGeneralMemberId(String generalMemberId) {
-		this.generalMemberId = generalMemberId;
+	public void setGeneralMemberEmail(String generalMemberEmail) {
+		this.generalMemberEmail = generalMemberEmail;
 	}
+	
 	public String getSelfIntro() {
 		return selfIntro;
 	}
