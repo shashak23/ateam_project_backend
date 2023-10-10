@@ -1,4 +1,4 @@
-![header](https://capsule-render.vercel.app/api?type=wave&color=auto&height=300&section=header&text=Ateam%20FrontEnd&fontSize=90)
+![header](https://capsule-render.vercel.app/api?type=wave&color=auto&height=300&section=header&text=Ateam%20BackEnd&fontSize=90)
 
 <h2>[깃허브 규칙]</h2>
 

@@ -33,7 +33,7 @@
 		, #{salt}
 		, #{nickname}
 		, 'Y'
-		, NULL
+		, 'https://w7.pngwing.com/pngs/384/868/png-transparent-person-profile-avatar-user-basic-ui-icon.png'
 		, SYSDATE
 		, 'GENERAL_MEMBER'
 		, 'N' )
