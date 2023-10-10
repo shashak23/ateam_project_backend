@@ -14,5 +14,10 @@ public class CareerServiceImpl implements CareerService{
 		int createCount = careerDAO.createNewCareer(careerVO);
 		return createCount>0;
 	}
+	@Override
+	public boolean updateOneCarrer(CareerVO careerVO) {
+		int updateCount = careerDAO.updateOneCarrer(careerVO);
+		return updateCount>0;
+	}
 
 }

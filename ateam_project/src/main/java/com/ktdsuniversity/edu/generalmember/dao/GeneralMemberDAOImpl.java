@@ -1,11 +1,12 @@
-package com.ktdsuniversity.edu.member.dao;
+package com.ktdsuniversity.edu.generalmember.dao;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.ktdsuniversity.edu.member.vo.GeneralMemberVO;
+import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
+
 
 @Repository
 public class GeneralMemberDAOImpl extends SqlSessionDaoSupport implements GeneralMemberDAO {

@@ -253,6 +253,8 @@
                             <h2>GW</h2>
                         </li>
                         <li class="list_intro">내 꿈은 해적왕  
+                         <button>
+                            수정</button>
                         </li>
                         
                     </ul>

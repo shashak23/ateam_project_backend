@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ktdsuniversity.edu.beans.SHA;
-import com.ktdsuniversity.edu.member.dao.GeneralMemberDAO;
+import com.ktdsuniversity.edu.generalmember.dao.GeneralMemberDAO;
+import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 import com.ktdsuniversity.edu.member.dao.MemberDAO;
-import com.ktdsuniversity.edu.member.vo.GeneralMemberVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 
 @Service
