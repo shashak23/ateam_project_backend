@@ -39,7 +39,7 @@ public class CareerController {
 	 
 	 @GetMapping("/memberInfo/modify/update-career/{careerId}")
 	 public String updateCareer(@PathVariable int careerId) {
-//		 CareerVO careerVO =careerService.
+		 //CareerVO careerVO =careerService.
 		 
 		 return null;
 	 }
