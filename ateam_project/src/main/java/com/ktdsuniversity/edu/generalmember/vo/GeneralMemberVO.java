@@ -2,7 +2,7 @@ package com.ktdsuniversity.edu.generalmember.vo;
 
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 
-public class GeneralMemberVO {
+public class GeneralMemberVO extends MemberVO {
 	private String generalMemberEmail;
 	private String selfIntro;
 	private String jobId;
@@ -11,14 +11,6 @@ public class GeneralMemberVO {
 	private String githubUrl;
 	private String additionalEmail;
 	private String blogUrl;
-	private MemberVO memberVO;
-	
-	public MemberVO getMemberVO() {
-		return memberVO;
-	}
-	public void setMemberVO(MemberVO memberVO) {
-		this.memberVO = memberVO;
-	}
 	
 	public String getGeneralMemberEmail() {
 		return generalMemberEmail;
