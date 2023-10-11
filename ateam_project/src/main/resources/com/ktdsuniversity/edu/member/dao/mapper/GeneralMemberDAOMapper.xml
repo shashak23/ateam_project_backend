@@ -1,0 +1,30 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="com.ktdsuniversity.edu.generalmember.dao.GeneralMemberDAO">
+	<insert id="createNewGeneralMember"
+		parameterType="com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO">
+		INSERT INTO GENERAL_MEMBER
+		( GENERAL_MEMBER_EMAIL
+		, SELF_INTRO
+		, JOB_ID
+		, REGION
+		, TIER_ID
+		, GITHUB_URL
+		, ADDITIONAL_EMAIL
+		, BLOG_URL)
+		VALUES
+		( #{email}
+		, NULL
+		, NULL
+		, NULL
+		, 'tier'
+		, NULL
+		, NULL
+		, NULL)
+	</insert>
+
+
+</mapper>

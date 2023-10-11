@@ -1,0 +1,46 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ktdsuniversity.edu.companynews.dao.CompanyNewsDAO">
+	<select id="getCompanyNewsAllCount"
+	        resultType="_int">
+		
+	</select>
+	
+	<resultMap type="com.ktdsuniversity.edu.companynews.vo.CompanyNewsVO"
+	           id="companyNewsVOMap"
+	           autoMapping="true">
+	    <id column="COMPANY_NEWS_POST_ID" property="companyNewsPostId" />
+		<!-- <association property=""
+		             javaType=""
+		             autoMapping="">
+			<id column="" property="" />
+		</association> -->
+	</resultMap>
+
+	<select id="getAllCompanyNews" 
+	        resultMap="companyNewsVOMap">
+	</select>
+	
+	<insert id="createNewCompanyNews"
+	        parameterType="com.ktdsuniversity.edu.companynews.vo.CompanyNewsVO">
+	</insert>
+	
+	<update id="increaseViewCount"
+	        parameterType="_int">
+	</update>
+	
+	<select id="getOneCompanyNews"
+	        parameterType="_int"
+	        resultMap="companyNewsVOMap">
+	</select>
+	
+	<update id="updateOneCompanyNews"
+	        parameterType="com.ktdsuniversity.edu.companynews.vo.CompanyNewsVO">
+	</update>
+	
+	<update id="deleteOneCompanyNews"
+	        parameterType="com.ktdsuniversity.edu.companynews.vo.CompanyNewsVO">
+	</update>
+</mapper>
