@@ -1,6 +1,8 @@
 package com.ktdsuniversity.edu.common.web;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -37,10 +39,16 @@ public class CommonController {
 		
 		String[] hashtagArr = commonVO.getCodeContent().split(" ");
 		
+		// 중복된 값 제거
+		Set<String> hashtagSet = new HashSet<>();
+		for (String str : hashtagArr) {
+			hashtagSet.add(str);
+		}
+		
 		int count = 0;
 		boolean isExist = false;
 		
-		for (String hashtag : hashtagArr) {
+		for (String hashtag : hashtagSet) {
 			for (CommonVO originhashtag : originHashtagList) {
 				if (hashtag.equals(originhashtag.getCodeContent())) {
 					count++;
@@ -59,8 +67,7 @@ public class CommonController {
 			isExist = false;
 		}
 		
-		
-		if (count == hashtagArr.length) {
+		if (count == hashtagSet.size()) {
 			mav.setViewName("redirect:/home/hashtaglist");
 			return mav;
 		}
