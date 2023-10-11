@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,6 +8,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
+	글쓰기 공간 페이지 
 </body>
 </html>
