@@ -16,8 +16,7 @@
 	<insert id="createNewMember"
 		parameterType="com.ktdsuniversity.edu.member.vo.MemberVO">
 		INSERT INTO "MEMBER"
-		( MEMBER_ID
-		, EMAIL
+		( EMAIL
 		, PW
 		, SALT
 		, NICKNAME
@@ -27,8 +26,7 @@
 		, MEMBER_TYPE
 		, WITHDRAW_YN)
 		VALUES
-		( SEQ_MEMBER_PK.NEXTVAL
-		, #{email}
+		( #{email}
 		, #{pw}
 		, #{salt}
 		, #{nickname}
@@ -50,8 +48,7 @@
 	<select id="getMember"
 			parameterType="com.ktdsuniversity.edu.member.vo.MemberVO"
 			resultType="com.ktdsuniversity.edu.member.vo.MemberVO">
-		SELECT MEMBER_ID
-			 , EMAIL
+		SELECT EMAIL
 			 , PW
 			 , SALT
 			 , NICKNAME
