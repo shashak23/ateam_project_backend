@@ -1,0 +1,43 @@
+/* 스와이퍼 컨테이너의 스타일 */
+.swiper-container {
+    margin: 0 auto;
+    position: relative;
+    overflow: hidden;
+    list-style: none;
+    padding: 0;
+    z-index: 1;
+  }
+  
+  /* 스와이퍼 컨테이너의 높이를 자식 슬라이드에 맞추는 설정 */
+  .swiper-container-autoheight, .swiper-container-autoheight .swiper-slide {
+    height: auto;
+  }
+  
+  /* 스와이퍼 슬라이드의 스타일 */
+  .swiper-slide {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    
+  
+  /* 스와이퍼 슬라이드의 가로 정렬 설정 */
+  .swiper-container-no-flexbox .swiper-slide {
+    float: left;
+  }
+  
+  /* 스와이퍼 슬라이드를 수직 방향으로 정렬하는 설정 */
+  /* webkit는 웹 브라우징 엔징의 하나이며 apple이 개발하고 사용하는 엔진*/
+  .swiper-container-vertical > .swiper-wrapper {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+  }
+  
+  /* 스와이퍼 슬라이드의 가로 너비 설정 */
+  .swiper-slide {
+    width: 100%;
+    height: 100%;
+  }
+}

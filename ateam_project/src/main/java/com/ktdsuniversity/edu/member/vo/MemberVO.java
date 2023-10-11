@@ -7,8 +7,6 @@ import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
 public class MemberVO {
-	private String memberId;
-	
 	@NotBlank(groups= {MemberSignupGroup.class,
 					   MemberAuthGroup.class},
 			           message = "이메일을 입력해주세요.")
@@ -33,12 +31,7 @@ public class MemberVO {
 	private String registDate;
 	private String memberType;
 	private String withdrawYn;
-	public String getMemberId() {
-		return memberId;
-	}
-	public void setMemberId(String memberId) {
-		this.memberId = memberId;
-	}
+	
 	public String getEmail() {
 		return email;
 	}
