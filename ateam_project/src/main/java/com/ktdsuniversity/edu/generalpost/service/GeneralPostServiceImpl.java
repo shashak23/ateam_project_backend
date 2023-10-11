@@ -57,9 +57,9 @@ public class GeneralPostServiceImpl implements GeneralPostService{
 	}
 
 	@Override
-	public String deleteFreeBoard(String generalPostId) {
+	public boolean deleteOneBoard(GeneralPostVO generalPostVO) {
 		// TODO Auto-generated method stub
-		return null;
+		return false;
 	}
 
 }

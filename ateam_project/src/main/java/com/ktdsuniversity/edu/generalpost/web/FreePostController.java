@@ -4,8 +4,6 @@ package com.ktdsuniversity.edu.generalpost.web;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -146,14 +144,5 @@ public class FreePostController {
 	}
 	
 	// 삭제
-	@PostMapping("/freeboard/delete/{generalpostid}")
-	public ResponseEntity<String> deleteFreeBoard(@RequestParam String generalPostId) {
-        String result = generalPostService.deleteFreeBoard(generalPostId);
-        
-        if (result != null) {
-            return new ResponseEntity<>("Success", HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>("Failed", HttpStatus.BAD_REQUEST);
-        }
-    }
+	
 }
