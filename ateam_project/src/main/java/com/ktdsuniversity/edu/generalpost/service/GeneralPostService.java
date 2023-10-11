@@ -16,5 +16,5 @@ public interface GeneralPostService {
 	
 	public boolean updateOneBoard(GeneralPostVO generalPostVO);
 	
-	public boolean deleteOneBoard(GeneralPostVO generalPostVO);
+	public String deleteFreeBoard(String generalPostId);
 }

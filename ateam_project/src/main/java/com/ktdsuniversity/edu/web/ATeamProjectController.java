@@ -21,4 +21,5 @@ public class ATeamProjectController {
 		html.append("</html>");	
 		return new ResponseEntity<>(html.toString(), HttpStatus.OK);
 	}
+	
 }
