@@ -33,7 +33,7 @@ public class CompanyNewsController {
 	public String viewCompanyNewsList(Model model) {
 		CompanyNewsListVO companyNewsListVO = companyNewsService.getAllCompanyNews();
 		
-		model.addAttribute("", companyNewsListVO);
+		model.addAttribute("companyNewsList", companyNewsListVO);
 		return "company/news/newslist";
 	}
 	
