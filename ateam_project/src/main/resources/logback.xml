@@ -43,7 +43,7 @@
           - level은 총 5가지이다. 
           - error, warn, info, debug, trace -->
   <root level="debug">
-  <appender-ref></appender-ref>
+  <appender-ref ref="FILE"/>
     <appender-ref ref="STDOUT" />
   </root>
 </configuration>

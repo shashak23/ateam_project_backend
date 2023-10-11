@@ -29,21 +29,21 @@ public class WebConfig implements WebMvcConfigurer {
         .addResourceLocations("classpath:/static/images/");
 	}
 	
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		//세션 체크를 하지 않을URL을 적어주세요.
-		
-		List<String> excludePatterns = new ArrayList<>();
-		excludePatterns.add("/member/signup/**");
-//		excludePatterns.add("/member/signup");
-		excludePatterns.add("/member/auth");
-		excludePatterns.add("/js/**");
-		excludePatterns.add("/css/**");
-		excludePatterns.add("/img/**");
-		
-		registry.addInterceptor(new CheckSessionInterceptor())
-				.addPathPatterns("/**")
-				.excludePathPatterns(excludePatterns);
-	}
+//	@Override
+//	public void addInterceptors(InterceptorRegistry registry) {
+//		//세션 체크를 하지 않을URL을 적어주세요.
+//		
+//		List<String> excludePatterns = new ArrayList<>();
+//		excludePatterns.add("/member/signup/**");
+////		excludePatterns.add("/member/signup");
+//		excludePatterns.add("/member/auth");
+//		excludePatterns.add("/js/**");
+//		excludePatterns.add("/css/**");
+//		excludePatterns.add("/img/**");
+//		
+//		registry.addInterceptor(new CheckSessionInterceptor())
+//				.addPathPatterns("/**")
+//				.excludePathPatterns(excludePatterns);
+//	}
 	
 }
