@@ -38,5 +38,45 @@ scanPeriod: 몇 초 주기로 변경 검사를 시행할 것인지 설정 -->
 		<!-- appender-ref를 통해 appender가 실행된다. --> 
 		<appender-ref ref="STDOUT" />
 		<appender-ref ref="FILE" />
+<configuration>
+
+	<appender name="STDOUT"
+		class="ch.qos.logback.core.ConsoleAppender">
+		<!-- encoders are assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder 
+			by default -->
+
+		<!-- appender: 실행 이력을 쌓는 설정, name: appender의 이름 class: 실행 이력을 쌓는 방식을 설정, 
+			ch.qos.logback.core.ConsoleAppender 콘솔에 실행 이력을 출력하는 클래스 -->
+		<encoder>
+			<pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} -%kvp- %msg%n</pattern>
+		</encoder>
+	</appender>
+	<appender name="FILE"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<!-- 로그를 파일에기록하는 appender 당일 로그는 cafe.log에 쌓인다 -->
+		<file>C:/logs/cafe.log</file>
+		<rollingPolicy
+			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!-- daily rollover : 파일의 패턴에 따라 시간이 지나면 별도의 파일로 분리보관한다 cafe.2013-11-05.log 
+				이런식으로 -->
+			<fileNamePattern>C:/logs/cafe.%d{yyyy-MM-dd}.log</fileNamePattern>
+
+			<!-- keep 30 days' worth of history capped at 3GB total size 30일이 지난 로그는 
+				삭제된다 totalSizeCap : 보관하고 있는 로긍이 총량이 3기가가 넘어가면 가장 마지막 로그부터 삭제되고 로그가 지워지면 안된다. 
+				따라서 아래 설정은 필요 없음 -->
+			<maxHistory>30</maxHistory>
+			<!-- <totalSizeCap>3GB</totalSizeCap> -->
+
+		</rollingPolicy>
+
+		<encoder>
+			<pattern>%-4relative [%thread] %-5level %logger{35} -%kvp- %msg%n</pattern>
+		</encoder>
+	</appender>
+	<!-- root: 로그 전체 기본 설정, - level로 로그 정책을 설정한다 - level은 총 5가지이다. - error, 
+		warn, info, debug, trace -->
+	<root level="debug">
+		<appender-ref ref="FILE" />
+		<appender-ref ref="STDOUT" />
 	</root>
 </configuration>

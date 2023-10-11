@@ -78,19 +78,18 @@ public class MemberController {
 	}
 	@PostMapping("/member/signup")
 	public String doMemberSignUp(@Validated(MemberSignupGroup.class)
-							   @ModelAttribute MemberVO memberVO,
 							   @ModelAttribute GeneralMemberVO generalMemberVO
-							   , BindingResult bindingResult	
-							   ,Model model) {
+							   , BindingResult bindingResult
+							   , Model model) {
 		if(bindingResult.hasErrors()) {
-			model.addAttribute("memberVO", memberVO);
+			model.addAttribute("memberVO", generalMemberVO);
 			return "member/membersignup";
 		}
-		boolean isSuccess = memberService.createNewMember(memberVO, generalMemberVO);
+		boolean isSuccess = memberService.createNewMember(generalMemberVO);
 		if(isSuccess) {
 			return("redirect:/member/auth");
 		}
-		model.addAttribute("memberVO", memberVO);
+		model.addAttribute("memberVO", generalMemberVO);
 		return "member/membersignup";
 	}
 	
