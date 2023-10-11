@@ -7,7 +7,7 @@ import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.ktdsuniversity.edu.generalpost.vo.GenaralPostVO;
+import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
 
 @Repository
 public class GeneralPostDAOImpl extends SqlSessionDaoSupport
@@ -24,12 +24,12 @@ public class GeneralPostDAOImpl extends SqlSessionDaoSupport
 	}
 
 	@Override
-	public List<GenaralPostVO> getAllBoard() {
+	public List<GeneralPostVO> getAllBoard() {
 		return getSqlSession().selectList("getAllBoard");
 	}
 
 	@Override
-	public int createNewBoard(GenaralPostVO generalVO) {
+	public int createNewBoard(GeneralPostVO generalVO) {
 		return getSqlSession().insert("createNewBoard", generalVO);
 	}
 
@@ -39,18 +39,18 @@ public class GeneralPostDAOImpl extends SqlSessionDaoSupport
 	}
 
 	@Override
-	public GenaralPostVO getOneBoardVO(int likeCnt) {
-		return getSqlSession().selectOne("getOneBoardVO", likeCnt);
+	public GeneralPostVO getOneBoardVO(int generalPostId) {
+		return getSqlSession().selectOne("getOneBoardVO", generalPostId);
 	}
 
 	@Override
-	public int updateOneBoard(GenaralPostVO generaVO) {
+	public int updateOneBoard(GeneralPostVO generaVO) {
 		return getSqlSession().update("updateOneBoard", generaVO);
 	}
 
 	@Override
-	public int deleteOnBoard(int boardId) {
-		return getSqlSession().delete("deleteOneBoard", boardId);
+	public int deleteOnBoard(int generalPostId) {
+		return getSqlSession().delete("deleteOneBoard", generalPostId);
 	}
 
 }

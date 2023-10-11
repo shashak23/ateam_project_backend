@@ -5,7 +5,7 @@ import java.util.List;
 public class GeneralPostListVO {
 
 	private int boardCnt;
-	private List<GenaralPostVO> generalPostList;
+	private List<GeneralPostVO> generalPostList;
 	
 	public int getBoardCnt() {
 		return boardCnt;
@@ -13,10 +13,10 @@ public class GeneralPostListVO {
 	public void setBoardCnt(int boardCnt) {
 		this.boardCnt = boardCnt;
 	}
-	public List<GenaralPostVO> getGeneralPostList() {
+	public List<GeneralPostVO> getGeneralPostList() {
 		return generalPostList;
 	}
-	public void setGeneralPostList(List<GenaralPostVO> generalPostList) {
+	public void setGeneralPostList(List<GeneralPostVO> generalPostList) {
 		this.generalPostList = generalPostList;
 	}
 	

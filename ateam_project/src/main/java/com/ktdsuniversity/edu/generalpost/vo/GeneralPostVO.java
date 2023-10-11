@@ -4,7 +4,7 @@ import com.ktdsuniversity.edu.member.vo.MemberVO;
 
 import jakarta.validation.constraints.NotBlank;
 
-public class GenaralPostVO {
+public class GeneralPostVO {
 	private String generalPostId;
 	private String postWriterId;
 	private String boardId;
