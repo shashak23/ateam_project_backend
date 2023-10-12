@@ -4,9 +4,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>에러페이지 입니다.</title>
+<title>Insert title here</title>
 </head>
 <body>
-  <h1>에러가 났네요? 메롱ㅎ</h1>
+
 </body>
 </html>
