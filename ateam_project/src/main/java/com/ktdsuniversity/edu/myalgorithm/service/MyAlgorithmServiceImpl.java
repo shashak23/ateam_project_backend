@@ -12,10 +12,10 @@ public class MyAlgorithmServiceImpl implements MyAlgorithmService{
 	private MyAlgorithmDAO myAlgorithmDAO;
 	
 	@Override
-	public MyAlgorithmListVO getAllMyAlgorithm() {
+	public MyAlgorithmListVO getAllMyAlgorithm(String email) {
 		MyAlgorithmListVO myList = new MyAlgorithmListVO();
-		myList.setMyAlgotirhmListCnt(myAlgorithmDAO.getAllNumber());
-		myList.setMyAlgorithmList(myAlgorithmDAO.getAllMyAlgorithmList());
+		myList.setMyAlgotirhmListCnt(myAlgorithmDAO.getAllNumber(email));
+		myList.setMyAlgorithmList(myAlgorithmDAO.getAllMyAlgorithmList(email));
 		return myList;
 	}
 

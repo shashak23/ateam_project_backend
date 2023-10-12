@@ -38,6 +38,7 @@
 		</association>
 	</resultMap>
 	<select id="getAllNumber"
+			parameterType="string"
 			resultType="_int">
 		SELECT COUNT(1)
 		  FROM MEMBER M
@@ -45,8 +46,10 @@
 		    ON MAQ.GENERAL_MEMBER_EMAIL = M.EMAIL 
 		 INNER JOIN COMPANY_ALGORITHM_QUESTION CAQ
 		    ON CAQ.COMPANY_ALGORITHM_QUESTION_ID = MAQ.COMPANY_ALGORITHM_QUESTION_ID
+		 WHERE M.EMAIL = #{_parameter}
 	</select>
 	<select id="getAllMyAlgorithmList"
+			parameterType="string"
 			resultMap="MyAlgorithmDAOMap">
 		SELECT M.EMAIL 
 		     , M.NICKNAME 
@@ -62,5 +65,6 @@
 		    ON MAQ.GENERAL_MEMBER_EMAIL = M.EMAIL 
 		 INNER JOIN COMPANY_ALGORITHM_QUESTION CAQ
 		    ON CAQ.COMPANY_ALGORITHM_QUESTION_ID = MAQ.COMPANY_ALGORITHM_QUESTION_ID
+		 WHERE M.EMAIL = #{_parameter}
 	</select>
 </mapper>
