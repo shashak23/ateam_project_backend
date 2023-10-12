@@ -64,7 +64,7 @@
 	
 	 <select id="getOneBoard"
 			parameterType="_int"
-			resultMap="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
+			resultType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
 		SELECT GENERAL_POST_ID
 			, POST_WRITER_ID
 			, BOARD_ID
