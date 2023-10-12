@@ -1,8 +1,13 @@
 package com.ktdsuniversity.edu.companynews.service;
 
+import java.io.File;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.ktdsuniversity.edu.beans.FileHandler;
+import com.ktdsuniversity.edu.beans.FileHandler.StoredFile;
 import com.ktdsuniversity.edu.companynews.dao.CompanyNewsDAO;
 import com.ktdsuniversity.edu.companynews.vo.CompanyNewsListVO;
 import com.ktdsuniversity.edu.companynews.vo.CompanyNewsVO;
@@ -10,6 +15,9 @@ import com.ktdsuniversity.edu.companynews.vo.CompanyNewsVO;
 @Service
 public class CompanyNewsServiceImpl implements CompanyNewsService {
 
+	@Autowired
+	private FileHandler fileHandler;
+	
 	@Autowired
 	private CompanyNewsDAO companyNewsDAO;
 	
@@ -22,13 +30,23 @@ public class CompanyNewsServiceImpl implements CompanyNewsService {
 	}
 
 	@Override
-	public boolean createNewCompanyNews(CompanyNewsVO companyNewsVO) {
+	public boolean createNewCompanyNews(CompanyNewsVO companyNewsVO, MultipartFile file) {
+		StoredFile storedFile = fileHandler.storeFile(file);
+		
+		System.out.println("FileName: " + storedFile.getFileName());
+		System.out.println("RealFileName: " + storedFile.getRealFileName());
+		System.out.println("FileSize: " + storedFile.getFileSize());
+		System.out.println("RealFilePath: " + storedFile.getRealFilePath());
+
+		companyNewsVO.setFileName(storedFile.getRealFileName());
+		companyNewsVO.setOriginFileName(storedFile.getFileName());
+		
 		int createCount = companyNewsDAO.createNewCompanyNews(companyNewsVO);
 		return createCount > 0;	
 	}
 
 	@Override
-	public CompanyNewsVO getOneNews(String companyNewsPostId, boolean isIncrease) {
+	public CompanyNewsVO getOneCompanyNews(String companyNewsPostId, boolean isIncrease) {
 		if (isIncrease) {
 			int updateCount = companyNewsDAO.increaseViewCount(companyNewsPostId);
 			if(updateCount == 0) {
@@ -46,7 +64,27 @@ public class CompanyNewsServiceImpl implements CompanyNewsService {
 	}
 
 	@Override
-	public boolean updateOneCompanyNews(CompanyNewsVO companyNewsVO) {
+	public boolean updateOneCompanyNews(CompanyNewsVO companyNewsVO, MultipartFile file) {
+		
+		// 파일을 업로드 했는지 확인.
+		if (file != null && !file.isEmpty()) {
+			// 변경되기 전의 게시글 정보 가져오기
+			CompanyNewsVO originCompanyNewsVO = 
+					companyNewsDAO.getOneCompanyNews(companyNewsVO.getCompanyNewsPostId());
+			if (originCompanyNewsVO != null && originCompanyNewsVO.getFileName() != null) {
+				// 변경되기 전의 게시글이 파일이 업로드된 게시글일 경우
+				File originFile = 
+						fileHandler.getStoredFile(originCompanyNewsVO.getFileName());
+				// 파일이 있는지 확인하고 삭제한다.
+				if (originFile.exists() && originFile.isFile()) {
+					originFile.delete();
+				}
+			}
+			StoredFile storedFile = fileHandler.storeFile(file);
+			companyNewsVO.setFileName(storedFile.getRealFileName());
+			companyNewsVO.setOriginFileName(storedFile.getFileName());
+		}
+		
 		int updateCount = companyNewsDAO.updateOneCompanyNews(companyNewsVO);
 		return updateCount > 0;
 	}
