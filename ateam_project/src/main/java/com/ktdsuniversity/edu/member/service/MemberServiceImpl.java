@@ -19,9 +19,9 @@ public class MemberServiceImpl implements MemberService{
 	private SHA sha;
 	
 	@Override
-	public boolean createNewMember(MemberVO memberVO, GeneralMemberVO generalMemberVO) {
-		int emailCount = memberDAO.getEmailCount(memberVO.getEmail());
-		int nicknameCount= memberDAO.getNicknameCount(memberVO.getNickname());
+	public boolean createNewMember(GeneralMemberVO generalMemberVO) {
+		int emailCount = memberDAO.getEmailCount(generalMemberVO.getEmail());
+		int nicknameCount= memberDAO.getNicknameCount(generalMemberVO.getNickname());
 		if(emailCount >0) {
 			throw new IllegalArgumentException("email이 이미 사용중 입니다.");
 		}
@@ -29,11 +29,12 @@ public class MemberServiceImpl implements MemberService{
 			throw new IllegalArgumentException("Nickname이 이미 사용중 입니다.");
 		}
 		String salt= sha.generateSalt();
-		String password=memberVO.getPw();
+		String password=generalMemberVO.getPw();
 		String encryptedPassword = sha.getEncrypt(password, salt);
-		memberVO.setPw(encryptedPassword);
-		memberVO.setSalt(salt);
-		int insertMemberCount = memberDAO.createNewMember(memberVO);
+		generalMemberVO.setPw(encryptedPassword);
+		generalMemberVO.setSalt(salt);
+		
+		int insertMemberCount = memberDAO.createNewMember(generalMemberVO);
 		int insertGMemberCount = generalMemberDAO.createNewGeneralMember(generalMemberVO);
 		return insertMemberCount>0 && insertGMemberCount>0;
 	}
