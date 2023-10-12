@@ -11,6 +11,8 @@ public class CompanyNewsVO {
 	private int likeCnt;
 	private char deleteYn;
 	
+//	private CompanyVO companyVO;
+	
 	public String getCompanyNewsPostId() {
 		return companyNewsPostId;
 	}
@@ -60,6 +62,5 @@ public class CompanyNewsVO {
 		this.deleteYn = deleteYn;
 	}
 
-	
 	
 }

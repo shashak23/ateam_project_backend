@@ -5,7 +5,8 @@
 <mapper namespace="com.ktdsuniversity.edu.companynews.dao.CompanyNewsDAO">
 	<select id="getCompanyNewsAllCount"
 	        resultType="_int">
-		
+		SELECT COUNT(COMPANY_NEWS_POST_ID)
+		  FROM COMPANY_NEWS_POST
 	</select>
 	
 	<resultMap type="com.ktdsuniversity.edu.companynews.vo.CompanyNewsVO"
@@ -21,26 +22,73 @@
 
 	<select id="getAllCompanyNews" 
 	        resultMap="companyNewsVOMap">
+		SELECT COMPANY_NEWS_POST_ID
+		     , POST_WRITER
+		     , POST_TITLE
+		     , POST_CONTENT
+		     , TO_CHAR(POST_DATE, 'YYYY-MM-DD') POST_DATE
+		     , VIEW_CNT
+		     , LIKE_CNT
+		     , DELETE_YN
+		  FROM COMPANY_NEWS_POST
 	</select>
 	
 	<insert id="createNewCompanyNews"
 	        parameterType="com.ktdsuniversity.edu.companynews.vo.CompanyNewsVO">
+		INSERT INTO COMPANY_NEWS_POST
+		 (COMPANY_NEWS_POST_ID
+		, POST_WRITER
+		, POST_TITLE
+		, POST_CONTENT
+		, POST_DATE
+		, VIEW_CNT
+		, LIKE_CNT
+		, DELETE_YN)
+		VALUES
+		 (SEQ_COMPANY_NEWS_POST_PK.NEXTVAL
+		, #{postWriter}
+		, #{postTitle}
+		, #{postContent}
+		, SYSDATE
+		, 0
+		, 0
+		, 'N')
 	</insert>
 	
 	<update id="increaseViewCount"
 	        parameterType="_int">
+		UPDATE COMPANY_NEWS_POST
+		   SET VIEW_CNT = VIEW_CNT + 1
+		 WHERE COMPANY_NEWS_POST_ID = #{_parameter}
 	</update>
 	
 	<select id="getOneCompanyNews"
 	        parameterType="_int"
 	        resultMap="companyNewsVOMap">
+		SELECT COMPANY_NEWS_POST_ID
+		     , POST_WRITER
+		     , POST_TITLE
+		     , POST_CONTENT
+		     , TO_CHAR(POST_DATE, 'YYYY-MM-DD') POST_DATE
+		     , VIEW_CNT
+		     , LIKE_CNT
+		     , DELETE_YN
+		  FROM COMPANY_NEWS_POST
+		 WHERE COMPANY_NEWS_POST_ID = #{_parameter}
 	</select>
 	
 	<update id="updateOneCompanyNews"
 	        parameterType="com.ktdsuniversity.edu.companynews.vo.CompanyNewsVO">
+		UPDATE COMPANY_NEWS_POST
+		   SET POST_TITLE = #{postTitle}
+		     , POST_CONTENT = #{postContent}
+		 WHERE COMPANY_NEWS_POST_ID = #{companyNewsPostId}
 	</update>
 	
 	<update id="deleteOneCompanyNews"
 	        parameterType="com.ktdsuniversity.edu.companynews.vo.CompanyNewsVO">
+		UPDATE COMPANY_NEWS_POST
+		   SET DELETE_YN = 'Y'
+		 WHERE COMPANY_NEWS_POST_ID = #{companyNewsPostId}
 	</update>
 </mapper>
