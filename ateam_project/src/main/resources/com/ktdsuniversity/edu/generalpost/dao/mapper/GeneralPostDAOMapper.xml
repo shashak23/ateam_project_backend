@@ -50,9 +50,9 @@
 	<select id="getBoardAllCount"
 			resultType="_int">
 		SELECT COUNT(1)
-		  FROM GENERALPOST GP
+		  FROM GENERAL_POST GP
 		 INNER JOIN MEMBERS M
-		    ON GP.EMAIL = M.EMAIL
+		    ON GP.POST_WRITER = M.EMAIL
 	</select>
 	
 	<update id="increaseViewCount"
@@ -62,58 +62,57 @@
 		 WHERE GENERAL_POST_ID = #{_parameter}
 	</update>
 	
-	 <select id="getOneBoard"
-			parameterType="_int"
-			resultMap="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
+	<select id="getOneBoard"
+		parameterType="_int"
+		resultType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
 		SELECT GENERAL_POST_ID
-			, POST_WRITER_ID
-			, BOARD_ID
-			, POST_TITLE
-			, POST_CONTENT
-			, TO_CHAR(CRT_DT,'YYYY-MM-DD') POST_DATE
-			, LIKE_CNT
-			, VIEW_CNT
-			, DELETE_YN	
-		 FROM GENERAL_POST
-		WHERE GENERAL_POST_ID = #{_parameter}  
+		     , POST_WRITER_ID
+		     , BOARD_ID
+		     , POST_TITLE
+		     , POST_CONTENT
+		     , POST_DATE
+		     , LIKE_CNT
+		     , VIEW_CNT
+		     , DELETE_YN
+		  FROM GENERAL_POST
+		 WHERE GENERAL_POST_ID = #{_parameter}
 	</select>
 	
-	<!-- <select id="getAllBoard"
-			resultMap="genaralPostVOMap">
-		SELECT ID
-		     , GP.SUBJECT
-		     , GP.CONTENT
-		     , GP.EMAIL
-		     , GP.VIEW_CNT
-		     , TO_CHAR(GP.CRT_DT,'YYYY-MM-DD') CRT_DT
-		     , TO_CHAR(GP.MDFY_DT,'YYYY-MM-DD')MDFY_DT
-		     , GP.FILE_NAME
-		     , GP.ORIGIN_FILE_NAME
-		  FROM GENERALPOST GP 
-		 INNER JOIN MEMBERS M
-		    ON GP.EMAIL = M.EMAIL
-	 	 ORDER BY GP.ID DESC
+	<select id="getAllBoard"
+	resultType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
+		SELECT GENERAL_POST_ID
+		     , POST_WRITER_ID
+		     , BOARD_ID
+		     , POST_TITLE
+		     , PODT_CONTENT
+		     , POST_DATE
+		     , LIKR_CNT
+		     , VIEW_CNT
+		     , DELETE_YN
+		  FROM GENERAL_POST
+		 ORDER BY GENERAL_POST_ID
+	</select>
 
-	</select> -->
 	
 	<update id="updateOneBoard"
-	        parameterType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
+		parameterType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
 		UPDATE GENERAL_POST
 		   SET POST_TITLE = #{posttitle}
 		     , POST_CONTENT = #{postcontent}
-		     , POST_WRITER_ID = #{postwriterid}
 		     , POST_DATE = SYSDATE
-		 WHERE GENERAL_POST_ID = #{_parameter}
+		 WHERE POST_WRITER_ID = #{postwriterid}
 	</update>
+
 	
-	<!-- GeneralPostMapper.xml -->
-    <update id="deleteFreeBoard">
-        UPDATE GENERAL_POST
-        SET DELETE_YN = 'Y',
-            POST_TITLE = '',
-            POST_CONTENT = ''
-        WHERE GENERAL_POST_ID = #{generalPostId}
-    </update>
-	
+	<!-- 삭제,근데 수정. -->
+    <update id="deleteOneBoard"
+	parameterType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
+		UPDATE GENERAL_POST
+		   SET POST_TITLE = #{posttitle}
+		     , POST_CONTENT = #{postcontent}
+		     , POST_DATE = SYSDATE
+		     , DELETE_YN = 'Y'
+		 WHERE POST_WRITER_ID = #{post_writer_id}
+	</update>
 	
 </mapper>
