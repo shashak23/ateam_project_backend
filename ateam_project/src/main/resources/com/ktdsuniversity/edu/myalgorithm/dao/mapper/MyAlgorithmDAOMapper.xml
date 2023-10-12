@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.ktdsuniversity.edu.myalgorithm.dao.MyAlgorithmDAO">
+	<resultMap type="com.ktdsuniversity.edu.myalgorithm.vo.MyAlgorithmVO"
+		id="MyAlgorithmDAOMap" autoMapping="true">
+		<id column="MY_ALGORITHM_QUESTION_ID"
+			property="myAlgorithmQuestionId" />
+		<association property="memberVO"
+			javaType="com.ktdsuniversity.edu.member.vo.MemberVO">
+			<id column="EMAIL" property="email" />
+			<result column="GENERAL_MEMBER_EMAIL" property="pw" />
+			<result column="PW" property="confirmPw" />
+			<result column="PW" property="salt" />
+			<result column="NICKNAME" property="nickname" />
+			<result column="INFO_AGREEMENT_YN" property="infoAgreementYn" />
+			<result column="PROFILE_PIC" property="profilePic" />
+			<result column="REGIST_DATE" property="registDate" />
+			<result column="MEMBER_TYPE" property="memberType" />
+			<result column="WITHDRAW_YN" property="withdrawYn" />
+		</association>
+		<association property="companyAlgorithmQuestionVO"
+			javaType="com.ktdsuniversity.edu.companyalgorithmquestion.vo.CompanyAlgorithmQuestionVO">
+			<id column="COMPANY_ALGORITHM_QUESTION_ID"
+				property="companyAlgorithmQuestionId" />
+			<result column="ALGORITHM_CATEGORY_ID"
+				property="algorithmCategoryId" />
+			<result column="ALGORITHM_TIER_ID" property="algorithmTierId" />
+			<result column="POST_WRITER" property="postWriter" />
+			<result column="POST_TITLE" property="postTitle" />
+			<result column="POST_CONTENT" property="postContent" />
+			<result column="POST_DATE" property="postDate" />
+			<result column="VIEW_CNT" property="viewCnt" />
+			<result column="LIKE_CNT" property="likeCnt" />
+			<result column="DELETE_YN" property="deleteYn" />
+		</association>
+	</resultMap>
+	<select id="getAllNumber"
+			resultType="_int">
+		SELECT COUNT(1)
+		  FROM MEMBER M
+		 INNER JOIN MY_ALGOTIRHM_QUESTION MAQ
+		    ON MAQ.GENERAL_MEMBER_EMAIL = M.EMAIL 
+		 INNER JOIN COMPANY_ALGORITHM_QUESTION CAQ
+		    ON CAQ.COMPANY_ALGORITHM_QUESTION_ID = MAQ.COMPANY_ALGORITHM_QUESTION_ID
+	</select>
+	<select id="getAllMyAlgorithmList"
+			resultMap="MyAlgorithmDAOMap">
+		SELECT M.EMAIL 
+		     , M.NICKNAME 
+		     , CAQ.ALGORITHM_CATEGORY_ID 
+		     , CAQ.ALGORITHM_TIER_ID 
+		     , CAQ.POST_WRITER 
+		     , CAQ.POST_TITLE 
+		     , CAQ.POST_CONTENT 
+		     , CAQ.VIEW_CNT 
+		     , CAQ.LIKE_CNT
+		  FROM MEMBER M
+		 INNER JOIN MY_ALGOTIRHM_QUESTION MAQ
+		    ON MAQ.GENERAL_MEMBER_EMAIL = M.EMAIL 
+		 INNER JOIN COMPANY_ALGORITHM_QUESTION CAQ
+		    ON CAQ.COMPANY_ALGORITHM_QUESTION_ID = MAQ.COMPANY_ALGORITHM_QUESTION_ID
+	</select>
+</mapper>
