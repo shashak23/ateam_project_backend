@@ -13,5 +13,8 @@
 	<div>
 		현재 로그인된 아이디: <strong>${sessionScope._LOGIN_USER_.email}</strong>
 	</div>
+	<div>
+		현재 로그인된 이름: <strong>${sessionScope._LOGIN_USER_.nickname}</strong>
+	</div>
 </body>
 </html>
