@@ -38,6 +38,12 @@ public class QnAPostController {
 		return view;
 	}
 	
+	// 글쓰기 화면 보이기 
+	@GetMapping("/qnaboard/create")
+	public String createFreeBoard() {
+		return "/qnaboard/create";
+	}
+	
 	// 등록
 	@PostMapping("/qnaboard/create")
 	public ModelAndView createQnaBoard(@Valid @ModelAttribute GeneralPostVO generalPostVO
@@ -45,7 +51,6 @@ public class QnAPostController {
 	           , HttpServletRequest request
 	           , @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 		
-		// common가져오기....
 		System.out.println("일반회원용 게시글ID: " + generalPostVO.getGeneralPostId());
 		System.out.println("게시글 작성자ID: " + generalPostVO.getPostWriterId());
 		System.out.println("게시판ID: " + generalPostVO.getBoardId());
