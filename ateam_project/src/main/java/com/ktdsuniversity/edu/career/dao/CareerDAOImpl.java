@@ -15,7 +15,7 @@ public class CareerDAOImpl extends SqlSessionDaoSupport implements CareerDAO {
 	}
 	@Override
 	public int createNewCareer(CareerVO careerVO) {
-		return getSqlSession().insert("createNewCareer",careerVO );
+		return getSqlSession().insert("createNewCareer",careerVO);
 	}
 	@Override
 	public int updateOneCarrer(CareerVO careerVO) {

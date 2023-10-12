@@ -9,28 +9,33 @@
 		  FROM COMPANY_NEWS_POST
 	</select>
 	
+	<!-- 
 	<resultMap type="com.ktdsuniversity.edu.companynews.vo.CompanyNewsVO"
 	           id="companyNewsVOMap"
 	           autoMapping="true">
 	    <id column="COMPANY_NEWS_POST_ID" property="companyNewsPostId" />
-		<!-- <association property=""
+		<association property=""
 		             javaType=""
 		             autoMapping="">
 			<id column="" property="" />
-		</association> -->
+		</association>
 	</resultMap>
-
+	-->
+	
 	<select id="getAllCompanyNews" 
-	        resultMap="companyNewsVOMap">
+	        resultType="com.ktdsuniversity.edu.companynews.vo.CompanyNewsVO">
 		SELECT COMPANY_NEWS_POST_ID
 		     , POST_WRITER
 		     , POST_TITLE
 		     , POST_CONTENT
 		     , TO_CHAR(POST_DATE, 'YYYY-MM-DD') POST_DATE
+             , FILE_NAME
+             , ORIGIN_FILE_NAME
 		     , VIEW_CNT
 		     , LIKE_CNT
 		     , DELETE_YN
 		  FROM COMPANY_NEWS_POST
+		 ORDER BY POST_DATE ASC <!-- 작성날짜 오름차순 -->
 	</select>
 	
 	<insert id="createNewCompanyNews"
@@ -41,6 +46,8 @@
 		, POST_TITLE
 		, POST_CONTENT
 		, POST_DATE
+        , FILE_NAME
+        , ORIGIN_FILE_NAME
 		, VIEW_CNT
 		, LIKE_CNT
 		, DELETE_YN)
@@ -50,26 +57,30 @@
 		, #{postTitle}
 		, #{postContent}
 		, SYSDATE
+        , #{fileName}
+        , #{originFileName}
 		, 0
 		, 0
 		, 'N')
 	</insert>
 	
 	<update id="increaseViewCount"
-	        parameterType="_int">
+	        parameterType="string">
 		UPDATE COMPANY_NEWS_POST
 		   SET VIEW_CNT = VIEW_CNT + 1
 		 WHERE COMPANY_NEWS_POST_ID = #{_parameter}
 	</update>
 	
 	<select id="getOneCompanyNews"
-	        parameterType="_int"
-	        resultMap="companyNewsVOMap">
+	        parameterType="string"
+	        resultType="com.ktdsuniversity.edu.companynews.vo.CompanyNewsVO">
 		SELECT COMPANY_NEWS_POST_ID
 		     , POST_WRITER
 		     , POST_TITLE
 		     , POST_CONTENT
 		     , TO_CHAR(POST_DATE, 'YYYY-MM-DD') POST_DATE
+             , FILE_NAME
+             , ORIGIN_FILE_NAME
 		     , VIEW_CNT
 		     , LIKE_CNT
 		     , DELETE_YN
@@ -82,6 +93,10 @@
 		UPDATE COMPANY_NEWS_POST
 		   SET POST_TITLE = #{postTitle}
 		     , POST_CONTENT = #{postContent}
+		     <if test='fileName != null and fileName != ""'>
+		     , FILE_NAME = #{fileName}
+		     , ORIGIN_FILE_NAME = #{originFileName}
+		     </if>
 		 WHERE COMPANY_NEWS_POST_ID = #{companyNewsPostId}
 	</update>
 	

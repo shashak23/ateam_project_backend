@@ -35,7 +35,7 @@ public class GeneralPostDAOImpl extends SqlSessionDaoSupport
 
 	@Override
 	public int increaseViewCount(int likeCnt) {
-		return getSqlSession().update("increaseViewCount", likeCnt);
+		return getSqlSession().update("com.ktdsuniversity.edu.generalpost.dao.GeneralPostDAO.increaseViewCount", likeCnt);
 	}
 
 	@Override

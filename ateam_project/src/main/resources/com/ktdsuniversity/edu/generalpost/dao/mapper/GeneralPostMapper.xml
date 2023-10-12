@@ -64,7 +64,7 @@
 	
 	 <select id="getOneBoard"
 			parameterType="_int"
-			resultMap="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
+			resultType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
 		SELECT GENERAL_POST_ID
 			, POST_WRITER_ID
 			, BOARD_ID
@@ -99,9 +99,9 @@
 	<update id="updateOneBoard"
 	        parameterType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
 		UPDATE GENERAL_POST
-		   SET POST_TITLE = #{posttitle}
-		     , POST_CONTENT = #{postcontent}
-		     , POST_WRITER_ID = #{postwriterid}
+		   SET POST_TITLE = #{postTitle}
+		     , POST_CONTENT = #{postContent}
+		     , POST_WRITER_ID = #{postWriterId}
 		     , POST_DATE = SYSDATE
 		 WHERE GENERAL_POST_ID = #{_parameter}
 	</update>

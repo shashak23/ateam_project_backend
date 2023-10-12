@@ -1,25 +1,35 @@
-package com.ktdsuniversity.edu.companynews.vo;
+package com.ktdsuniversity.edu.algorithmquestion.vo;
 
-public class CompanyNewsVO {
+public class AlgorithmQuestionVO {
 	
-	private String companyNewsPostId;
+	private String companyAlgorithmQuestionId;
+	private String algorithmCategoryId;
+	private String algorithmTierId;
 	private String postWriter;
 	private String postTitle;
 	private String postContent;
 	private String postDate;
-	private String fileName;
-	private String originFileName;
 	private int viewCnt;
 	private int likeCnt;
 	private char deleteYn;
 	
-//	private CompanyVO companyVO;
-	
-	public String getCompanyNewsPostId() {
-		return companyNewsPostId;
+	public String getCompanyAlgorithmQuestionId() {
+		return companyAlgorithmQuestionId;
 	}
-	public void setCompanyNewsPostId(String companyNewsPostId) {
-		this.companyNewsPostId = companyNewsPostId;
+	public void setCompanyAlgorithmQuestionId(String companyAlgorithmQuestionId) {
+		this.companyAlgorithmQuestionId = companyAlgorithmQuestionId;
+	}
+	public String getAlgorithmCategoryId() {
+		return algorithmCategoryId;
+	}
+	public void setAlgorithmCategoryId(String algorithmCategoryId) {
+		this.algorithmCategoryId = algorithmCategoryId;
+	}
+	public String getAlgorithmTierId() {
+		return algorithmTierId;
+	}
+	public void setAlgorithmTierId(String algorithmTierId) {
+		this.algorithmTierId = algorithmTierId;
 	}
 	public String getPostWriter() {
 		return postWriter;
@@ -44,18 +54,6 @@ public class CompanyNewsVO {
 	}
 	public void setPostDate(String postDate) {
 		this.postDate = postDate;
-	}
-	public String getFileName() {
-		return fileName;
-	}
-	public void setFileName(String fileName) {
-		this.fileName = fileName;
-	}
-	public String getOriginFileName() {
-		return originFileName;
-	}
-	public void setOriginFileName(String originFileName) {
-		this.originFileName = originFileName;
 	}
 	public int getViewCnt() {
 		return viewCnt;

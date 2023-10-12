@@ -37,21 +37,32 @@
         font-size: 12px;
         margin-bottom: 12px;
     }
+    input {
+        padding: 0px;
+        margin-bottom: 12px;
+    }
 </style>
 <body>
 	<h3>기업소식 게시글 작성</h3>
-	<form:form modelAttribute="CompanyNewsVO" method="post">
+	<form:form modelAttribute="CompanyNewsVO" method="post" 
+	           enctype="multipart/form-data">
 		<div class="grid">
+		    
             <input id="postTitle" type="text" name="postTitle" placeholder="제목을 입력해 주세요."
                    value="${CompanyNewsVO.postTitle}" />
             
+            <input id="email" type="email" name="postWriter" value="test@test" />
             
-            <textarea name="text" id="editor"></textarea>
+            <input id="file" type="file" name="file" />
+            
+            <textarea name="postContent" id="editor"></textarea>
             <script>
                 ClassicEditor.create( document.querySelector( '#editor' ), {
                    language: "ko"
                 } );
             </script>
+            
+            
             <div class="btn-group">
                 <div class="right-align">
                     <input type="submit" value="저장" />
