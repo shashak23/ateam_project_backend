@@ -145,7 +145,7 @@ public class FreePostController {
 	}
 	
 	// 삭제 - 근데 수정
-	@PostMapping("/freeboard/update/{generalpostid}")
+	@PostMapping("/freeboard/delete/{generalpostid}")
 	public ModelAndView deleteFreeBoard(@ModelAttribute GeneralPostVO generalPostVO) {
 		System.out.println("일반회원용 게시글ID: " + generalPostVO.getGeneralPostId());
 		System.out.println("게시글 작성자ID: " + generalPostVO.getPostWriterId());
