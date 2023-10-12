@@ -1,5 +1,7 @@
 package com.ktdsuniversity.edu.career.vo;
 
+import java.util.List;
+
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 
 public class CareerVO {
@@ -9,10 +11,17 @@ public class CareerVO {
 	private String jobTitle;
 	private String hireDate;
 	private String resignDate;
-	
+	private List<CareerVO> careerList;
 	private GeneralMemberVO generalMemberVO;
 	
 	
+	
+	public List<CareerVO> getCareerList() {
+		return careerList;
+	}
+	public void setCareerList(List<CareerVO> careerList) {
+		this.careerList = careerList;
+	}
 	
 	public GeneralMemberVO getGeneralMemberVO() {
 		return generalMemberVO;
@@ -20,6 +29,7 @@ public class CareerVO {
 	public void setGeneralMemberVO(GeneralMemberVO generalMemberVO) {
 		this.generalMemberVO = generalMemberVO;
 	}
+
 	public String getCareerId() {
 		return careerId;
 	}

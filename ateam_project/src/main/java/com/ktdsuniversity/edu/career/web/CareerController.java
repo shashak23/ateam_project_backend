@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.ktdsuniversity.edu.career.service.CareerService;
@@ -36,12 +37,48 @@ public class CareerController {
 			 return "career/careercreate";
 		 }
 	 }
-	 
-	 @GetMapping("/memberInfo/modify/update-career/{careerId}")
-	 public String updateCareer(@PathVariable int careerId) {
-		 //CareerVO careerVO =careerService.
-		 
-		 return null;
+	 /**
+	  * Career 조회
+	  */
+	 @GetMapping("/memberInfo/modify/view")
+	 public String viewOneCareer(@RequestParam String careerId, Model model) {
+		 CareerVO careerVO = careerService.getOneCareer(careerId);
+		 model.addAttribute("careerVO", careerVO);
+		 return "career/careerview";
 	 }
 	 
+	 
+	 @GetMapping("/memberInfo/modify/update-career/{careerId}")
+	 public String updateCareer(@PathVariable String careerId
+			 					, Model model
+			 					,@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+		 CareerVO careerVO =careerService.getOneCareer(careerId);
+		 model.addAttribute("careerVO", careerVO);
+		 
+		 return "career/careermodify";
+	 }
+	 @PostMapping("/memberInfo/modify/update-career")
+	 public String doUpdateCareer(@ModelAttribute CareerVO careerVO
+			 					  ,Model model
+			 					 ,@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+		 System.out.println(careerVO.getCareerId());
+		 boolean isSuccess = careerService.updateOneCarrer(careerVO);
+		 if(isSuccess) {
+			 return "redirect:/memberInfo/modify/view?careerId="+ careerVO.getCareerId();
+		 }
+		 else {
+			 model.addAttribute("careerVO", careerVO);
+			 return "career/careermodify";
+		 }
+	 }
+	 @GetMapping("/memberInfo/modify/delete-career/{careerId}")
+	 public String doDeleteCareer(@PathVariable String careerId) {
+		 boolean isSuccess = careerService.deleteOneCareer(careerId);
+		 if(isSuccess) {
+			 return "redirect:/memberinfo/view";
+		 }
+		 else {
+			 return "redirect:/memberInfo/modify/view?careerId="+careerId;
+		 }
+	 }
 }
