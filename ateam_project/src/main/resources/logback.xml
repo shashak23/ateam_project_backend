@@ -2,44 +2,7 @@
 <!-- logback 설정
 scan: logback 설정 파일 변경 검사 여부
 scanPeriod: 몇 초 주기로 변경 검사를 시행할 것인지 설정 --> 
-<configuration scan="true" scanPeriod="30 seconds">
-	<!-- appender: 실행이력을 쌓는 설정.
-	name: appender의 이름
-	class: 실행 이력을 쌓는 방식 선택
-	ch.qos.logback.core.ConsoleAppender는 콘솔에 로그를 출력함. -->
-	<appender name="STDOUT"
-	class="ch.qos.logback.core.ConsoleAppender"> 
-		<!-- 어떤 형태로 로그를 만들것인지 설정 -->
-		<encoder>
-			<pattern>
-				%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} -%kvp- %msg%n
-			</pattern> 
-		</encoder>
-	</appender>
-	<!-- 로그를 파일에 기록함. -->
-	<appender name="FILE"
-				class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<!-- 로그 파일 위치 설정 -->
-		<file>C:/logs/logFile.log</file>
-		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-			<!-- 매일 새로운 로그파일에 기록한다. -->
-			<fileNamePattern>C:/logs/logFile.%d{yyyy-MM-dd}.log</fileNamePattern>
-			<!-- 30일이 지난 로그는 삭제한다. -->
-			<maxHistory>30</maxHistory>
-		</rollingPolicy>
-		<encoder>
-			<pattern>
-				%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} -%kvp- %msg%n
-			</pattern>
-		</encoder>	
-	</appender>		
-	<!-- 로그 정책 기본 설정 --> 
-	<root level="debug">
-		<!-- appender-ref를 통해 appender가 실행된다. --> 
-		<appender-ref ref="STDOUT" />
-		<appender-ref ref="FILE" />
 <configuration>
-
 	<appender name="STDOUT"
 		class="ch.qos.logback.core.ConsoleAppender">
 		<!-- encoders are assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder 
