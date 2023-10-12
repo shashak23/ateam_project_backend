@@ -16,12 +16,18 @@ public class MyAlgorithmController {
 	@Autowired
 	private MyAlgorithmService myAlgorithmService;
 
-	@GetMapping("home/my/algorithmlist{email}")
-	public ModelAndView viewAllMyAlgorithm(@PathVariable String email,
-										   @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+	@GetMapping("home/my/algorithmlist")
+	public ModelAndView viewAllMyAlgorithm(@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 		ModelAndView mav = new ModelAndView();
-		MyAlgorithmListVO myList = myAlgorithmService.getAllMyAlgorithm();
-
+		String email = memberVO.getEmail();
+		System.out.println("email: " + email);
+		MyAlgorithmListVO myList = myAlgorithmService.getAllMyAlgorithm(email);
+		System.out.println(myList.getMyAlgotirhmListCnt());
+		
+		for (int i = 0; i < myList.getMyAlgotirhmListCnt(); i++) {
+			System.out.println(i + ": " + myList.getMyAlgorithmList().get(i).getGeneralMemberEmail());
+			System.out.println(i + ": " + myList.getMyAlgorithmList().get(i).getCompanyAlgorithmQuestionId());
+		}
 		mav.setViewName("myalgorithm/myalgorithmlist");
 		mav.addObject("myAlgorithmList", myList);
 		return mav;

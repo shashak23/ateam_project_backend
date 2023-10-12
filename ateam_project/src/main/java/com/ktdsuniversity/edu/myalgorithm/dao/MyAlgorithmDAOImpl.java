@@ -19,11 +19,11 @@ public class MyAlgorithmDAOImpl extends SqlSessionDaoSupport implements MyAlgori
 	
 	@Override
 	public int getAllNumber(String email) {
-		return getSqlSession().selectOne("getAllNumber");
+		return getSqlSession().selectOne("getAllNumber", email);
 	}
 
 	@Override
 	public List<MyAlgorithmVO> getAllMyAlgorithmList(String email) {
-		return getSqlSession().selectList("getAllMyAlgorithmList");
+		return getSqlSession().selectList("getAllMyAlgorithmList", email);
 	}
 }
