@@ -48,7 +48,13 @@ public class FreePostController {
 		
 		return modelAndView;
 	}
+	// 글쓰기 화면 보이기 
+	@GetMapping("/freeboard/create")
+	public String createFreeBoard() {
+		return "/freeboard/create";
+	}
 	
+	// 등록 
 	@PostMapping("/freeboard/create")
 	public ModelAndView createFreeBoard(@Valid @ModelAttribute GeneralPostVO generalPostVO
 							   , BindingResult bindingResult 
