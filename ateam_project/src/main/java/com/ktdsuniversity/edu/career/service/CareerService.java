@@ -1,8 +1,11 @@
 package com.ktdsuniversity.edu.career.service;
 
+import java.util.List;
+
 import com.ktdsuniversity.edu.career.vo.CareerVO;
 
 public interface CareerService {
+	
 	/**
 	 * 경력 생성
 	 */

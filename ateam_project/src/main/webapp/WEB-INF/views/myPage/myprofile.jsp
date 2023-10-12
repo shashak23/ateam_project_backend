@@ -308,19 +308,23 @@
                 </ul>
             </div>
             <div class="career">
-                <p>경력
+                <p>경력</p>
                     <button id="edit_button4"><img
                             src="https://cdn.icon-icons.com/icons2/1462/PNG/512/101edit_99874.png"></button>
-                </p>
                 <ul>
-                    <li>한국레드햇 - Senior Solution Architect
-                    <li class="career_list_year">2018.12 ~ 현재</li>
-                    <li>한국오라클 - Principal Sales Consultant
-                    <li class="career_list_year">2015.01 ~ 2018.11</li>
-                    <li>액센츄어 코리아 - Senior System Administrator
-                    <li class="career_list_year">2012.05 ~ 2014.12</li>
-                    <li>엑셈 - Senior Technical Support Engineer
-                    <li class="career_list_year">2008.06 ~ 2012.04</li>
+                <c:choose>
+                <c:when test="${not empty careerList}">
+                <c:forEach items="${careerList}" var="career">
+                    <li>${career.previousCompanyName} - ${career.jobTitle }
+                    <li class="career_list_year">${career.hireDate} ~ ${career.resignDate}</li>
+                    </li>
+                </c:forEach>
+                </c:when>
+                	<c:otherwise>
+                		<li><button>추가하기</button></li>
+                	</c:otherwise>
+                    
+                </c:choose>
                 </ul>
             </div>
         </div>

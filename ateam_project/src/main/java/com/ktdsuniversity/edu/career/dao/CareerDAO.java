@@ -5,10 +5,7 @@ import java.util.List;
 import com.ktdsuniversity.edu.career.vo.CareerVO;
 
 public interface CareerDAO {
-	/**
-	 * 전체 조회
-	 */
-	public List<CareerVO> getAllCareerList();
+	
 	/**
 	 * 경력 생성
 	 */

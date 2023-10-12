@@ -1,7 +1,10 @@
 package com.ktdsuniversity.edu.member.vo;
 
+import java.util.List;
+
 import com.ktdsuniversity.edu.member.vo.validategroup.MemberAuthGroup;
 import com.ktdsuniversity.edu.member.vo.validategroup.MemberSignupGroup;
+import com.ktdsuniversity.edu.myalgorithm.vo.MyAlgorithmVO;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -31,6 +34,10 @@ public class MemberVO {
 	private String registDate;
 	private String memberType;
 	private String withdrawYn;
+	private List<MyAlgorithmVO> myAlgorithmVO;
+
+	
+	
 	
 	public String getEmail() {
 		return email;
@@ -91,6 +98,12 @@ public class MemberVO {
 	}
 	public void setWithdrawYn(String withdrawYn) {
 		this.withdrawYn = withdrawYn;
+	}
+	public List<MyAlgorithmVO> getMyAlgorithmVO() {
+		return myAlgorithmVO;
+	}
+	public void setMyAlgorithmVO(List<MyAlgorithmVO> myAlgorithmVO) {
+		this.myAlgorithmVO = myAlgorithmVO;
 	}
 	
 	

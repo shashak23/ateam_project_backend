@@ -31,9 +31,6 @@ public class CareerDAOImpl extends SqlSessionDaoSupport implements CareerDAO {
 	public int deleteOneCareer(String careerId) {
 		return getSqlSession().delete("deleteOneCareer",careerId);
 	}
-	@Override
-	public List<CareerVO> getAllCareerList() {
-		return getSqlSession().selectList("getAllCareerList");
-	}
+	
 
 }

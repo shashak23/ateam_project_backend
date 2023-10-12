@@ -14,13 +14,20 @@ public class GeneralMemberVO extends MemberVO {
 	private String githubUrl;
 	private String additionalEmail;
 	private String blogUrl;
-	private List<CareerVO> careerVO;
+	private List<CareerVO> careerVOList;
+	private MemberVO memberVO;
 	
-	public List<CareerVO> getCareerVO() {
-		return careerVO;
+	public MemberVO getMemberVO() {
+		return memberVO;
 	}
-	public void setCareerVO(List<CareerVO> careerVO) {
-		this.careerVO = careerVO;
+	public void setMemberVO(MemberVO memberVO) {
+		this.memberVO = memberVO;
+	}
+	public List<CareerVO> getCareerVOList() {
+		return careerVOList;
+	}
+	public void setCareerVOList(List<CareerVO> careerVOList) {
+		this.careerVOList = careerVOList;
 	}
 	public String getGeneralMemberEmail() {
 		return generalMemberEmail;

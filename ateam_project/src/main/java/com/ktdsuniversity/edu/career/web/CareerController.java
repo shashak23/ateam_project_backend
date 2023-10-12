@@ -18,7 +18,9 @@ import com.ktdsuniversity.edu.member.vo.MemberVO;
 public class CareerController {
 	@Autowired
 	private CareerService careerService;
-	 @GetMapping("/memberInfo/modify/create-career")
+	 
+	
+	@GetMapping("/memberInfo/modify/create-career")
 	 public String createCareer() {
 		 return "career/careercreate";
 	 }
