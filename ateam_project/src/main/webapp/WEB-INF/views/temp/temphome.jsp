@@ -7,9 +7,9 @@
 <title>임시 홈페이지</title>
 </head>
 <body>
-	<div>
+	<p>
 		※ 임시 홈페이지 입니다. (로그인 확인용)		
-	</div>
+	</p>
 	<div>
 		현재 로그인된 아이디: <strong>${sessionScope._LOGIN_USER_.email}</strong>
 	</div>
