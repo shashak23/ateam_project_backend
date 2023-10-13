@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="jakarta.tags.core" %>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -54,11 +55,11 @@
 		<div class="btn-group">
 				<div class="right-align">
 					<a href="/news/update/${companyNewsVO.companyNewsPostId}">수정</a>
-					<form modelAttribute="CompanyNewsVO"
+					<form:form modelAttribute="CompanyNewsVO"
 					      action="/news/delete" method="post">
 					    <input type="hidden" name="deleteYn" value="${companyNewsVO.deleteYn}" />
 					 	<input type="submit" value="삭제" />
-					</form>
+					</form:form>
 				</div>
 		</div>
 		
