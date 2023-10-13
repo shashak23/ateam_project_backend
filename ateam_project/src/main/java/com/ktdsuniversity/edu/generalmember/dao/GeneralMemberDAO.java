@@ -8,7 +8,16 @@ import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 public interface GeneralMemberDAO {
 	public int createNewGeneralMember(GeneralMemberVO generalMemberVO);
 		/**
-		 * 전체 조회
+		 * 경력 전체 조회
 		 */
 		public List<CareerVO> getAllCareerListByMemberEmail(String generalMemberEmail);
+		
+		/**
+		 * 주소 조회
+		 */
+		public GeneralMemberVO getOneAddress(String generalMemberEmail);
+		/**
+		 * 수정
+		 */
+		public int updateOneAddress(GeneralMemberVO generalMemberVO);
 }

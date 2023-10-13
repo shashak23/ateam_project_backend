@@ -26,5 +26,13 @@ public class GeneralMemberDAOImpl extends SqlSessionDaoSupport implements Genera
 	public List<CareerVO> getAllCareerListByMemberEmail(String generalMemberEmail) {
 		return getSqlSession().selectList("getAllCareerListByMemberEmail", generalMemberEmail);
 	}
+	@Override
+	public GeneralMemberVO getOneAddress(String generalMemberEmail) {
+		return getSqlSession().selectOne("getOneAddress",generalMemberEmail);
+	}
+	@Override
+	public int updateOneAddress(GeneralMemberVO generalMemberVO) {
+		return getSqlSession().update("updateOneAddress", generalMemberVO);
+	}
 
 }
