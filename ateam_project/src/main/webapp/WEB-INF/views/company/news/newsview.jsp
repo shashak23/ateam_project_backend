@@ -14,7 +14,7 @@
 
 	div.grid {
 		display: grid;
-		grid-template-columns: 80px 1fr;
+		grid-template-columns: 120px 1fr;
 		grid-template-rows: 28px 28px 28px 28px 28px 28px 320px 1fr;
 		row-gap: 10px;
 	}
@@ -39,7 +39,7 @@
 		<label for="postTitle">제목</label>
 		<div>${companyNewsVO.postTitle}</div>
 		
-		<label for="postWriter">작성자이메일</label>
+		<label for="postWriter">작성자</label>
 		<div>${companyNewsVO.postWriter}</div>
 		
 		<label for="viewCnt">조회수</label>
@@ -54,7 +54,11 @@
 		<div class="btn-group">
 				<div class="right-align">
 					<a href="/news/update/${companyNewsVO.companyNewsPostId}">수정</a>
-					<a href="/news/delete/${companyNewsVO.companyNewsPostId}">삭제</a>
+					<form modelAttribute="CompanyNewsVO"
+					      action="/news/delete" method="post">
+					    <input type="hidden" name="deleteYn" value="${companyNewsVO.deleteYn}" />
+					 	<input type="submit" value="삭제" />
+					</form>
 				</div>
 		</div>
 		

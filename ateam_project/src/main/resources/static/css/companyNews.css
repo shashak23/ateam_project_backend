@@ -244,6 +244,7 @@ a:hover {
 }
 
 .contents {
+  display: grid;
   width: 100%;
   padding: 0 30px;
 }
@@ -454,7 +455,7 @@ a:hover {
  
 }
 
-.contents {
+.news_container > .contents {
     width: 200px;
     height:200px;
     border: 1px solid #ddd;

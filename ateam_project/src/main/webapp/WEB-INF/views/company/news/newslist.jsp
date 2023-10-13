@@ -1,104 +1,141 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>기업소식 게시글 목록</title>
-<style type="text/css">
-	a:link, a:hover, a:active, a:visited {
-		color: #333;
-		text-decoration: none;
-	}
-	table.table {
-		border-collapse: collapse;
-		border: 1px solid #DDD;
-	}
-	table.table > thead > tr {
-		background-color: #FFF;
-	}
-	table.table > thead th {
-		padding: 10px;
-		color:#333;
-	}
-	table.table th, table.table td {
-		border-right: 1px solid #F0F0F0;
-	}
-	table.table th:last-child, table.table td:last-child {
-		border-right: none;
-	}
-	table.table > tbody tr:nth-child(odd) {
-		background-color: #f5f5f5;
-	}
-	table.table > tbody tr:hover {
-		background-color: #FAFAFA;
-	}
-	table.table > tbody td {
-		padding: 10px;
-		color: #333;
-	}
-	div.grid {
-		display: grid;
-		grid-template-columns: 1fr;
-		grid-template-rows: 28px 28px 1fr 28px;
-		row-gap: 10px;
-	}
-	div.grid div.right-align {
-		text-align: right;
-	}
-	
-	ul.horizontal-list {
-		padding: 0px;
-		margin: 0px;
-	}
-	ul.horizontal-list li {
-		display: inline;
-	}
-	
-</style>
+<title>기업소식 페이지</title>
+<!--브라우저에게 현재 페이지를 가장 최신 버전으로 렌더링-->
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<!--뷰포트는 화면에 표시되는 웹영역 표시, 모바일 등에서 상호작용 할 수있는지 제어-->
+<meta
+  name="viewport"
+  id="viewport"
+  content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, width=device-width"
+/><!--스타일,폰트 지정-->
+<!--스와이퍼 기능 지정-->
+<!--스타일 입히기-->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<link rel="stylesheet" type="text/css" href="/css/companyNews.css" />
 </head>
 <body>
-	<div class="grid">
-		<table class="table">
-			<thead>
-				<tr>
-					<th>제목</th>
-					<th>작성자</th>
-					<th>조회수</th>
-					<th>좋아요수</th>
-				</tr>
-			</thead>
-			<tbody>
-			<c:choose>
-				<c:when test="${not empty companyNewsList.companyNewsList}">
-					<c:forEach items="${companyNewsList.companyNewsList}" var="companynews">
-						<tr>
-							<td>
-								<a href="/news/view/${companynews.companyNewsPostId}">
-									&lt;<c:out value="${companynews.postTitle}뉴스 타이틀" />&gt;
-								</a>
-							</td>
-							<td>${companynews.postWriter}</td>
-							<td>${companynews.viewCnt}</td>
-							<td>${companynews.likeCnt}</td>
-						</tr>
-					</c:forEach>				
-				</c:when>
-				<c:otherwise>
-					<tr>
-						<td colspan="6">등록된 게시글이 없습니다.</td>
-					</tr>
-				</c:otherwise>
-			</c:choose>
-			</tbody>
-		</table>
-		<c:if test="${not empty sessionScope._LOGIN_USER_}">
-			<div class="right-align">
-				<a href="/board/excel/download">엑셀 다운로드</a>
-				<a href="/board/write">게시글 등록</a>
-			</div>
-		</c:if>
-	</div>
+    <!--아이디와 클래스 값을 부여함-->
+    <div id="wrap" class="wrap">
+          
+        <header id="header" class="header">
+  
+                  <!-- 로그인/회원가입 -->
+                  <!-- <li><a href="#">로그인</a></li> 링크를 통해 # 사용자가 지정 할수있고 버튼을 누르면 그곳으로 이동해 달라는 태그 -->
+                  
+                  <div class="util">
+                      <ul>
+                          <li><a href="#">로그인</a></li>
+                          <li><a href="#">회원가입</a></li>
+                      </ul>               
+                  </div>
+  
+                  <div class="inner">
+                      <!-- 로고 -->
+                     
+                          <h1><a href="index.html">SnapChat</a></h1>
+                      
+      
+                      <!-- Navigation -->
+                      <!--누르면 링크로 이동하는 버튼 네비게이션을 통하여 그 창으로 이동힌다-->
+                      <nav class="gnb">
+                          <ul>
+                              <li><a href="index.html">자유게시판</a></li>
+                              <li><a href="qa.html">Q&A</a></li>
+                              <li><a href="#">채용</a></li>
+                              <li><a href="#">코딩테스트</a></li>
+                          </ul>
+                      </nav>
+  
+                      <!-- 아이콘 -->
+                      <div class="setting">
+                          <a href="#">
+                              <span class="material-symbols-outlined">account_circle</span>
+                          </a>
+                          <a href="#">
+                              <span class="material-symbols-outlined">mail</span>
+                          </a>
+                          <a href="#">
+                              <span class="material-symbols-outlined">notifications</span>
+                          </a>
+                      </div>
+                  </div>
+        </header>
+  
+        <!-- 검색박스 -->
+        <div class="searchbox">
+                  <div class="inner">
+                      <input type="text" placeholder="검색어를 입력해주세요.">
+                      <button type="submit" class="btn_search">
+                          <span class="material-symbols-outlined">
+                          search
+                          </span>
+                      </button>
+                  </div>
+              </div>
+              <section id="container" class="container">
+                  <!-- 왼쪽 컨텐츠 -->
+                  <!--aside>는 HTML5에서 도입된 태그로, 웹 페이지의 주요 내용과는 별도로 나란히 배치되는 측면(사이드) 콘텐츠를 정의하며 주로 광고,사이드바 같은 부과 태그..-->
+                  <aside class="side sideLeft">
+                    <div class="baner_01">
+                                  자유롭게 컨텐츠를 넣기 !
+                              </div>
+          
+                              <div class="baner_02">
+                                  자유롭게 컨텐츠를 넣기 !
+                              </div>
+                  </aside> 
+                  <div class="news_container">
+                       <c:choose>
+                           <c:when test="${not empty companyNewsList.companyNewsList}">
+                               <c:forEach items="${companyNewsList.companyNewsList}" var="companynews">
+                        			<div class="contents">
+                                    
+                                        <div class="company_name">${companynews.postWriter}</div>
+                                        <div class="news_title">
+                                            <a href="/news/view/${companynews.companyNewsPostId}">
+                                                <c:out value="${companynews.postTitle}" />
+                                            </a>
+                                        </div>
+                                            <img src="/news/file/download/${companynews.companyNewsPostId}" />
+                                        <div class="view">${companynews.viewCnt}조회수</div>
+                                        <div class="like">${companynews.likeCnt}좋아요 수</div>
+                                    </div>
+                               </c:forEach>
+                           </c:when>
+                       </c:choose>
+                  </div>
+                  <aside class="side sideRight">
+                      <div class="baner_03">
+                          오른쪽 컨텐츠 1
+                      </div>
+  
+                      <div class="baner_04">
+                          오른쪽 컨텐츠 2
+                      </div>
+          </aside>
+  
+        </section>
+        <!-- 페이지 푸터 -->
+        <footer id="footer" class="footer">
+        <div class="inner">
+            <address>
+            <span>상호명 : SNAPCHAT </span>
+            <span>개인정보책임관리자 : 홍길동 </span> 
+            <span>주소 : kt ds </span>
+            
+            <span>ssss</span>
+            </address>
+            <div class="copyright">
+            &copy; 2023 by SNAPCHAT. All rights reserved
+            </div>
+        </div>
+        </footer>
+    </div>  
 </body>
 </html>
