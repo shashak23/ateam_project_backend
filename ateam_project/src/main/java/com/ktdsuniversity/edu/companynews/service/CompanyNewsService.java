@@ -16,5 +16,5 @@ public interface CompanyNewsService {
 	
 	public boolean updateOneCompanyNews(CompanyNewsVO companyNewsVO, MultipartFile file);
 	
-	public boolean deleteOneCompanyNews(CompanyNewsVO companyNewsVO);
+	public boolean deleteOneCompanyNews(String companyNewsPostId);
 }

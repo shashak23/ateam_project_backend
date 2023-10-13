@@ -5,13 +5,14 @@ public class AlgorithmQuestionVO {
 	private String companyAlgorithmQuestionId;
 	private String algorithmCategoryId;
 	private String algorithmTierId;
-	private String postWriter;
-	private String postTitle;
-	private String postContent;
+	private String algorithmWriter;
+	private String algorithmTitle;
+	private String algorithmContent;
+	private String algorithmSolution;
 	private String postDate;
 	private int viewCnt;
 	private int likeCnt;
-	private char deleteYn;
+	private String deleteYn;
 	
 	public String getCompanyAlgorithmQuestionId() {
 		return companyAlgorithmQuestionId;
@@ -31,23 +32,29 @@ public class AlgorithmQuestionVO {
 	public void setAlgorithmTierId(String algorithmTierId) {
 		this.algorithmTierId = algorithmTierId;
 	}
-	public String getPostWriter() {
-		return postWriter;
+	public String getAlgorithmWriter() {
+		return algorithmWriter;
 	}
-	public void setPostWriter(String postWriter) {
-		this.postWriter = postWriter;
+	public void setAlgorithmWriter(String algorithmWriter) {
+		this.algorithmWriter = algorithmWriter;
 	}
-	public String getPostTitle() {
-		return postTitle;
+	public String getAlgorithmTitle() {
+		return algorithmTitle;
 	}
-	public void setPostTitle(String postTitle) {
-		this.postTitle = postTitle;
+	public void setAlgorithmTitle(String algorithmTitle) {
+		this.algorithmTitle = algorithmTitle;
 	}
-	public String getPostContent() {
-		return postContent;
+	public String getAlgorithmContent() {
+		return algorithmContent;
 	}
-	public void setPostContent(String postContent) {
-		this.postContent = postContent;
+	public void setAlgorithmContent(String algorithmContent) {
+		this.algorithmContent = algorithmContent;
+	}
+	public String getAlgorithmSolution() {
+		return algorithmSolution;
+	}
+	public void setAlgorithmSolution(String algorithmSolution) {
+		this.algorithmSolution = algorithmSolution;
 	}
 	public String getPostDate() {
 		return postDate;
@@ -67,12 +74,13 @@ public class AlgorithmQuestionVO {
 	public void setLikeCnt(int likeCnt) {
 		this.likeCnt = likeCnt;
 	}
-	public char getDeleteYn() {
+	public String getDeleteYn() {
 		return deleteYn;
 	}
-	public void setDeleteYn(char deleteYn) {
+	public void setDeleteYn(String deleteYn) {
 		this.deleteYn = deleteYn;
 	}
+	
 
 	
 }

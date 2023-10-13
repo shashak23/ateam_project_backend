@@ -90,8 +90,8 @@ public class CompanyNewsServiceImpl implements CompanyNewsService {
 	}
 
 	@Override
-	public boolean deleteOneCompanyNews(CompanyNewsVO companyNewsVO) {
-		int deleteCount = companyNewsDAO.deleteOneCompanyNews(companyNewsVO);
+	public boolean deleteOneCompanyNews(String companyNewsPostId) {
+		int deleteCount = companyNewsDAO.deleteOneCompanyNews(companyNewsPostId);
 		return deleteCount > 0;
 	}
 	

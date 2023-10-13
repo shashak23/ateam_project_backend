@@ -35,6 +35,7 @@
 		     , LIKE_CNT
 		     , DELETE_YN
 		  FROM COMPANY_NEWS_POST
+		 WHERE DELETE_YN = 'N'
 		 ORDER BY POST_DATE ASC <!-- 작성날짜 오름차순 -->
 	</select>
 	
@@ -101,9 +102,9 @@
 	</update>
 	
 	<update id="deleteOneCompanyNews"
-	        parameterType="com.ktdsuniversity.edu.companynews.vo.CompanyNewsVO">
+	        parameterType="string">
 		UPDATE COMPANY_NEWS_POST
 		   SET DELETE_YN = 'Y'
-		 WHERE COMPANY_NEWS_POST_ID = #{companyNewsPostId}
+		 WHERE COMPANY_NEWS_POST_ID = #{_parameter}
 	</update>
 </mapper>

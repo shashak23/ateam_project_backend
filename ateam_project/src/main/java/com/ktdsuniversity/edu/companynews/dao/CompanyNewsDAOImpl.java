@@ -49,8 +49,8 @@ public class CompanyNewsDAOImpl extends SqlSessionDaoSupport implements CompanyN
 	}
 
 	@Override
-	public int deleteOneCompanyNews(CompanyNewsVO companyNewsVO) {
-		return getSqlSession().update("deleteOneCompanyNews", companyNewsVO);
+	public int deleteOneCompanyNews(String companyNewsPostId) {
+		return getSqlSession().update("deleteOneCompanyNews", companyNewsPostId);
 	}
 	
 	

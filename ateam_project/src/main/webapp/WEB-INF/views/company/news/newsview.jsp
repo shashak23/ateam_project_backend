@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="jakarta.tags.core" %>
-<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -35,7 +34,7 @@
 </style>
 </head>
 <body>
-	<h1>게시글 작성</h1>
+	<h1>기업소식 게시글 내용 조회하기</h1>
 	<div class="grid">
 		<label for="postTitle">제목</label>
 		<div>${companyNewsVO.postTitle}</div>
@@ -55,11 +54,7 @@
 		<div class="btn-group">
 				<div class="right-align">
 					<a href="/news/update/${companyNewsVO.companyNewsPostId}">수정</a>
-					<form:form modelAttribute="CompanyNewsVO"
-					      action="/news/delete" method="post">
-					    <input type="hidden" name="deleteYn" value="${companyNewsVO.deleteYn}" />
-					 	<input type="submit" value="삭제" />
-					</form:form>
+					<a href="/news/delete/${companyNewsVO.companyNewsPostId}">삭제</a>
 				</div>
 		</div>
 		

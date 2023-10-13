@@ -28,4 +28,30 @@ public class AlgorithmQuestionDAOImpl extends SqlSessionDaoSupport implements Al
 		return getSqlSession().selectList("getAllAlgorithmQuestion");
 	}
 
+	@Override
+	public int createNewsAlgorithmQuestion(AlgorithmQuestionVO algorithmQuestionVO) {
+		return getSqlSession().insert("createNewsAlgorithmQuestion", algorithmQuestionVO);
+	}
+
+	@Override
+	public int increaseViewCount(String companyAlgorithmQuestionId) {
+		return getSqlSession().update("com.ktdsuniversity.edu.algorithmquestion.dao.AlgorithmQuestionDAO.increaseViewCount", companyAlgorithmQuestionId);
+	}
+
+	@Override
+	public AlgorithmQuestionVO getOneAlgorithmQuestion(String companyAlgorithmQuestionId) {
+		return getSqlSession().selectOne("getOneAlgorithmQuestion", companyAlgorithmQuestionId);
+	}
+
+	@Override
+	public int updateOneAlgorithmQuestion(AlgorithmQuestionVO algorithmQuestionVO) {
+		return getSqlSession().update("updateOneAlgorithmQuestion", algorithmQuestionVO);
+	}
+
+	@Override
+	public int deleteOneAlgorithmQuestion(String companyAlgorithmQuestionId) {
+		return getSqlSession().update("deleteOneAlgorithmQuestion", companyAlgorithmQuestionId);
+	}
+
+	
 }

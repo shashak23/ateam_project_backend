@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -94,18 +94,17 @@
                        <c:choose>
                            <c:when test="${not empty companyNewsList.companyNewsList}">
                                <c:forEach items="${companyNewsList.companyNewsList}" var="companynews">
-                        			<div class="contents">
-                                    
-                                        <div class="company_name">${companynews.postWriter}</div>
-                                        <div class="news_title">
-                                            <a href="/news/view/${companynews.companyNewsPostId}">
-                                                <c:out value="${companynews.postTitle}" />
-                                            </a>
-                                        </div>
-                                            <img src="/news/file/download/${companynews.companyNewsPostId}" />
-                                        <div class="view">${companynews.viewCnt}조회수</div>
-                                        <div class="like">${companynews.likeCnt}좋아요 수</div>
-                                    </div>
+	                        			<div class="contents">
+	                                        <div class="company_name">${companynews.postWriter}</div>
+	                                        <div class="news_title">
+	                                            <a href="/news/view/${companynews.companyNewsPostId}">
+	                                                <c:out value="${companynews.postTitle}" />
+	                                            </a>
+	                                        </div>
+	                                        <img src="/news/file/download/${companynews.companyNewsPostId}" />
+	                                        <div class="view">${companynews.viewCnt}조회수</div>
+	                                        <div class="like">${companynews.likeCnt}좋아요 수</div>
+	                                    </div>
                                </c:forEach>
                            </c:when>
                        </c:choose>

@@ -27,7 +27,14 @@ public class CompanyNewsController {
 	
 	@Autowired
 	private CompanyNewsService companyNewsService;
-
+	
+	@GetMapping("/news/list")
+	public String viewCompanyNewsList(Model model) {
+		CompanyNewsListVO companyNewsListVO = companyNewsService.getAllCompanyNews();
+		model.addAttribute("companyNewsList", companyNewsListVO);
+		return "company/news/newslist";
+	}
+	
 	@GetMapping("/news/view/{companyNewsPostId}") 
 	public String viewOneCompanyNews(@PathVariable String companyNewsPostId
 			                       , Model model) {
@@ -35,14 +42,6 @@ public class CompanyNewsController {
 				                     .getOneCompanyNews(companyNewsPostId, true);
 		model.addAttribute("companyNewsVO", companyNewsVO);
 		return "company/news/newsview";
-	}
-	
-	@GetMapping("/news/list")
-	public String viewCompanyNewsList(Model model) {
-		CompanyNewsListVO companyNewsListVO = companyNewsService.getAllCompanyNews();
-		model.addAttribute("companyNewsList", companyNewsListVO);
-		System.out.println(companyNewsListVO.getCompanyNewsList());
-		return "company/news/newslist";
 	}
 	
 	@GetMapping("/news/create")
@@ -118,19 +117,16 @@ public class CompanyNewsController {
 		}
 	}
 	
-	@PostMapping("/news/delete")
-	public String doDeleteCompanyNews(@ModelAttribute CompanyNewsVO companyNewsVO
-                                    , Model model) {
-		System.out.println("Post ID: " + companyNewsVO.getCompanyNewsPostId());
+	@GetMapping("/news/delete/{companyNewsPostId}")
+	public String doDeleteCompanyNews(@PathVariable String companyNewsPostId) {
+        System.out.println("PathVariable: " + companyNewsPostId);
 		
-		boolean isSuccess = companyNewsService.deleteOneCompanyNews(companyNewsVO);
-
-		if(isSuccess) {
-			return "redirect:/news/list";
-		}
-		else {
-			model.addAttribute("companyNewsVO", companyNewsVO);
-			return "redirect:/news/view/" + companyNewsVO.getCompanyNewsPostId();
-		}
+        companyNewsService.deleteOneCompanyNews(companyNewsPostId);
+		
+//		if(!companyNewsVO.getPostWriter().equals()) {
+//			throw new IllegalArgumentException("잘못된 접근입니다.");
+//		}
+		
+		return "redirect:/news/list";
 	}
 }

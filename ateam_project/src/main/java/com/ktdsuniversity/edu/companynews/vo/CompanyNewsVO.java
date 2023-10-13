@@ -11,7 +11,7 @@ public class CompanyNewsVO {
 	private String originFileName;
 	private int viewCnt;
 	private int likeCnt;
-	private char deleteYn;
+	private String deleteYn;
 	
 //	private CompanyVO companyVO;
 	
@@ -69,10 +69,10 @@ public class CompanyNewsVO {
 	public void setLikeCnt(int likeCnt) {
 		this.likeCnt = likeCnt;
 	}
-	public char getDeleteYn() {
+	public String getDeleteYn() {
 		return deleteYn;
 	}
-	public void setDeleteYn(char deleteYn) {
+	public void setDeleteYn(String deleteYn) {
 		this.deleteYn = deleteYn;
 	}
 
