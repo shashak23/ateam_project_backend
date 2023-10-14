@@ -38,21 +38,20 @@
 		VALUES 
 		 (SEQ_GENERAL_POST_PK.NEXTVAL
 	        , #{postWriterId}
-			, #{boardId} 
+			, NULL 
 			, #{postTitle}
 			, #{postContent}
-			, #{postDate}
+			, SYSDATE
 			, 0
 			, 0
 			, #{deleteYn} )
 	</insert>
 	
 	<select id="getBoardAllCount"
-			resultType="_int">
+			resultType="_int"
+			parameterType="string">
 		SELECT COUNT(1)
-		  FROM GENERAL_POST GP
-		 INNER JOIN MEMBERS M
-		    ON GP.POST_WRITER = M.EMAIL
+		  FROM GENERAL_POST
 	</select>
 	
 	<update id="increaseViewCount"
@@ -63,8 +62,23 @@
 	</update>
 	
 	<select id="getOneBoard"
-		parameterType="_int"
+		parameterType="string"
 		resultType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
+		SELECT GENERAL_POST_ID
+		     , POST_WRITER_ID
+		     , BOARD_ID
+		     , POST_TITLE
+		     , POST_CONTENT
+		     , TO_CHAR(POST_DATE, 'YYYY-MM-DD') POST_DATE
+		     , LIKE_CNT
+		     , VIEW_CNT
+		     , DELETE_YN
+		  FROM GENERAL_POST
+		 WHERE GENERAL_POST_ID = #{generalPostId}
+	</select>
+	
+	<select id="getAllBoard"
+	resultType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
 		SELECT GENERAL_POST_ID
 		     , POST_WRITER_ID
 		     , BOARD_ID
@@ -75,21 +89,6 @@
 		     , VIEW_CNT
 		     , DELETE_YN
 		  FROM GENERAL_POST
-		 WHERE GENERAL_POST_ID = #{_parameter}
-	</select>
-	
-	<select id="getAllBoard"
-	resultType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
-		SELECT GENERAL_POST_ID
-		     , POST_WRITER_ID
-		     , BOARD_ID
-		     , POST_TITLE
-		     , PODT_CONTENT
-		     , POST_DATE
-		     , LIKR_CNT
-		     , VIEW_CNT
-		     , DELETE_YN
-		  FROM GENERAL_POST
 		 ORDER BY GENERAL_POST_ID
 	</select>
 
@@ -97,10 +96,11 @@
 	<update id="updateOneBoard"
 		parameterType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
 		UPDATE GENERAL_POST
-		   SET POST_TITLE = #{posttitle}
-		     , POST_CONTENT = #{postcontent}
+		   SET POST_TITLE = #{postTitle}
+		     , POST_CONTENT = #{postContent}
 		     , POST_DATE = SYSDATE
-		 WHERE POST_WRITER_ID = #{postwriterid}
+		     , POST_WRITER_ID = #{postWriterId} <!-- POST_WRITER_ID를 업데이트합니다 -->
+		 WHERE GENERAL_POST_ID = #{generalPostId}
 	</update>
 
 	
@@ -108,11 +108,13 @@
     <update id="deleteOneBoard"
 	parameterType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
 		UPDATE GENERAL_POST
-		   SET POST_TITLE = #{posttitle}
-		     , POST_CONTENT = #{postcontent}
+		   SET POST_TITLE = #{postTitle}
+		     , POST_CONTENT = #{postContent}
 		     , POST_DATE = SYSDATE
-		     , DELETE_YN = 'Y'
-		 WHERE POST_WRITER_ID = #{post_writer_id}
+		     , POST_WRITER_ID = #{postWriterId} 
+		     , 'Y'		     
+		 WHERE GENERAL_POST_ID = #{generalPostId}
 	</update>
+	
 	
 </mapper>

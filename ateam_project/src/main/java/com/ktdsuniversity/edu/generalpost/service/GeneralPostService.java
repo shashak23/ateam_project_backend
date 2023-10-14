@@ -4,6 +4,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostListVO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
+import com.ktdsuniversity.edu.member.vo.MemberVO;
 
 
 public interface GeneralPostService {
@@ -12,9 +13,12 @@ public interface GeneralPostService {
 
 	public boolean createNewBoard(GeneralPostVO generalPostVO);
 
-	public GeneralPostVO getOneBoard(int generalPostId, boolean isIncrease);
+	public GeneralPostVO getOneBoard(String generalPostId);
 	
 	public boolean updateOneBoard(GeneralPostVO generalPostVO);
-	
+		
 	public boolean deleteOneBoard(GeneralPostVO generalPostVO);
+
+	
+//	public GeneralPostVO getOneBoard(String generalPostId);
 }
