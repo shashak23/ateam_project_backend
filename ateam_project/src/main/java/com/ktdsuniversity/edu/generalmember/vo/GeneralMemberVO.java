@@ -1,5 +1,8 @@
 package com.ktdsuniversity.edu.generalmember.vo;
 
+import java.util.List;
+
+import com.ktdsuniversity.edu.career.vo.CareerVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 
 public class GeneralMemberVO extends MemberVO {
@@ -11,7 +14,29 @@ public class GeneralMemberVO extends MemberVO {
 	private String githubUrl;
 	private String additionalEmail;
 	private String blogUrl;
+	private List<GeneralMemberVO> generalMemberList;
+	private List<CareerVO> careerVOList;
+	private MemberVO memberVO;
 	
+	
+	public List<GeneralMemberVO> getGeneralMemberList() {
+		return generalMemberList;
+	}
+	public void setGeneralMemberList(List<GeneralMemberVO> generalMemberList) {
+		this.generalMemberList = generalMemberList;
+	}
+	public MemberVO getMemberVO() {
+		return memberVO;
+	}
+	public void setMemberVO(MemberVO memberVO) {
+		this.memberVO = memberVO;
+	}
+	public List<CareerVO> getCareerVOList() {
+		return careerVOList;
+	}
+	public void setCareerVOList(List<CareerVO> careerVOList) {
+		this.careerVOList = careerVOList;
+	}
 	public String getGeneralMemberEmail() {
 		return generalMemberEmail;
 	}

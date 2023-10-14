@@ -20,12 +20,12 @@ public class CompanyNewsDAOImpl extends SqlSessionDaoSupport implements CompanyN
 
 	@Override
 	public int getCompanyNewsAllCount() {
-		return 0;
+		return getSqlSession().selectOne("getCompanyNewsAllCount");
 	}
 
 	@Override
 	public List<CompanyNewsVO> getAllCompanyNews() {
-		return null;
+		return getSqlSession().selectList("getAllCompanyNews");
 	}
 
 	@Override
@@ -35,7 +35,7 @@ public class CompanyNewsDAOImpl extends SqlSessionDaoSupport implements CompanyN
 
 	@Override
 	public int increaseViewCount(String companyNewsPostId) {
-		return getSqlSession().update("increaseViewCount", companyNewsPostId);
+		return getSqlSession().update("com.ktdsuniversity.edu.companynews.dao.CompanyNewsDAO.increaseViewCount", companyNewsPostId);
 	}
 
 	@Override
@@ -49,8 +49,8 @@ public class CompanyNewsDAOImpl extends SqlSessionDaoSupport implements CompanyN
 	}
 
 	@Override
-	public int deleteOneCompanyNews(CompanyNewsVO companyNewsVO) {
-		return getSqlSession().update("deleteOneCompanyNews", companyNewsVO);
+	public int deleteOneCompanyNews(String companyNewsPostId) {
+		return getSqlSession().update("deleteOneCompanyNews", companyNewsPostId);
 	}
 	
 	

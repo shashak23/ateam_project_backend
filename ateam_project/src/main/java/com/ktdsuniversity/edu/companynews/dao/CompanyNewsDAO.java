@@ -23,6 +23,6 @@ public interface CompanyNewsDAO {
 	
 	public int updateOneCompanyNews(CompanyNewsVO companyNewsVO);
 	
-	public int deleteOneCompanyNews(CompanyNewsVO companyNewsVO);
+	public int deleteOneCompanyNews(String companyNewsPostId);
 
 }

@@ -1,0 +1,103 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ktdsuniversity.edu.algorithmquestion.dao.AlgorithmQuestionDAO">
+	<select id="getAlgorithmQuestionAllCount"
+	        resultType="_int">
+	    SELECT COUNT(COMPANY_ALGORITHM_QUESTION_ID)
+          FROM COMPANY_ALGORITHM_QUESTION
+	</select>
+	
+	<select id="getAllAlgorithmQuestion"
+	        resultType="com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionVO">
+	    SELECT COMPANY_ALGORITHM_QUESTION_ID
+		     , ALGORITHM_CATEGORY_ID
+		     , ALGORITHM_TIER_ID
+		     , ALGORITHM_WRITER
+		     , ALGORITHM_TITLE
+		     , ALGORITHM_CONTENT
+		     , ALGORITHM_SOLUTION
+		     , TO_CHAR(POST_DATE, 'YYYY-MM-DD') POST_DATE
+		     , VIEW_CNT
+		     , LIKE_CNT
+		     , DELETE_YN
+		  FROM COMPANY_ALGORITHM_QUESTION
+		 WHERE DELETE_YN = 'N'
+		 ORDER BY POST_DATE DESC -- 최신글순
+	</select>
+	
+	<insert id="createNewsAlgorithmQuestion"
+	        parameterType="com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionVO">
+	    INSERT INTO COMPANY_ALGORITHM_QUESTION
+		 (COMPANY_ALGORITHM_QUESTION_ID
+		, ALGORITHM_CATEGORY_ID
+		, ALGORITHM_TIER_ID
+		, ALGORITHM_WRITER
+		, ALGORITHM_TITLE
+		, ALGORITHM_CONTENT
+		, ALGORITHM_SOLUTION
+		, POST_DATE
+		, VIEW_CNT
+		, LIKE_CNT
+		, DELETE_YN)
+		VALUES
+		 (SEQ_COMPANY_ALGORITHM_QUESTION_PK.NEXTVAL
+		, #{algorithmCategoryId}
+		, #{algorithmTierId}
+		, #{algorithmWriter}
+		, #{algorithmTitle}
+		, #{algorithmContent}
+		, #{algorithmSolution}
+		, SYSDATE
+		, 0
+		, 0
+		, 'N')
+	</insert>
+	
+	<update id="increaseViewCount"
+	        parameterType="string">
+		UPDATE COMPANY_ALGORITHM_QUESTION
+		   SET VIEW_CNT = VIEW_CNT + 1
+		 WHERE COMPANY_ALGORITHM_QUESTION_ID = #{_parameter}
+	</update>
+	
+	<select id="getOneAlgorithmQuestion"
+	        parameterType="string"
+	        resultType="com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionVO">
+	    SELECT COMPANY_ALGORITHM_QUESTION_ID
+		     , ALGORITHM_CATEGORY_ID
+		     , ALGORITHM_TIER_ID
+		     , ALGORITHM_WRITER
+		     , ALGORITHM_TITLE
+		     , ALGORITHM_CONTENT
+		     , ALGORITHM_SOLUTION
+		     , TO_CHAR(POST_DATE, 'YYYY-MM-DD') POST_DATE
+		     , VIEW_CNT
+		     , LIKE_CNT
+		     , DELETE_YN
+		  FROM COMPANY_ALGORITHM_QUESTION
+		 WHERE COMPANY_ALGORITHM_QUESTION_ID = #{_parameter}
+	</select>
+	
+	<update id="updateOneAlgorithmQuestion"
+	        parameterType="com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionVO">
+	    UPDATE COMPANY_ALGORITHM_QUESTION
+		   SET ALGORITHM_CATEGORY_ID = #{algorithmCategoryId}
+		     , ALGORITHM_TIER_ID = #{algorithmTierId}
+		     , ALGORITHM_TITLE = #{algorithmTitle}
+		     , ALGORITHM_CONTENT = #{algorithmContent}
+		     , ALGORITHM_SOLUTION = #{algorithmSolution}
+		 WHERE COMPANY_ALGORITHM_QUESTION_ID = #{companyAlgorithmQuestionId}
+	</update>
+	
+	<update id="deleteOneAlgorithmQuestion"
+	        parameterType="string">
+	    UPDATE COMPANY_ALGORITHM_QUESTION
+	       SET DELETE_YN = 'Y'
+		 WHERE COMPANY_ALGORITHM_QUESTION_ID = #{_parameter}
+	</update>
+	
+	
+	
+</mapper>

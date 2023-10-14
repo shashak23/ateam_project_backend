@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ktdsuniversity.edu.generalpost.dao.GeneralCommentDAO">
+
+    <resultMap type="com.ktdsuniversity.edu.generalpost.vo.GeneralCommentVO"
+               id="generalCommentVOMap"
+               autoMapping="true">
+        <id column="GENERAL_COMMENT_ID" property="generalCommentId" />
+        <association property="generalMemberVO"
+                     javaType="com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO"
+                     autoMapping="true">
+            <id column="GENERAL_MEMBER_EMAIL" property="generalMemberEmail" />
+            <result column="GENERAL_MEMBER_EMAIL" property="generalMemberEmail" />
+        </association>
+        
+       
+    </resultMap>
+    <select id="getAllComments"
+            parameterType="_int"
+            resultMap="generalCommentVOMap">
+        SELECT C.GENERAL_COMMENT_ID
+		     , C.COMMENT_WRITER_ID
+		     , C.GENERAL_POST_ID
+		     , C.COMMENT_CONTENT
+		     , C.POST_DATE
+		     , C.UPPER_COMMENT_ID
+		     , C.LIKE_CNT
+		     , C.DELETE_YN
+		     , M.GENERAL_MEMBER_EMAIL
+		  FROM GENERAL_COMMENT C
+		 INNER JOIN GENERAL_POST P
+		    ON C.GENERAL_POST_ID = P.GENERAL_POST_ID
+		 INNER JOIN GENERAL_MEMBER M
+		    ON C.COMMENT_WRITER_ID = M.GENERAL_MEMBER_EMAIL
+		 START WITH C.UPPER_COMMENT_ID=0
+		   AND C.GENERAL_POST_ID=#{_parameter}
+	   CONNECT BY PRIOR C.GENERAL_POST_ID = C.UPPER_COMMENT_ID
+    </select>
+    <select id="getOneComment"
+            parameterType="_int"
+            resultMap="generalCommentVOMap">
+        SELECT C.GENERAL_COMMENT_ID
+             , C.COMMENT_WRITER_ID
+             , C.GENERAL_POST_ID
+             , C.COMMENT_CONTENT
+             , C.POST_DATE
+             , C.UPPER_COMMENT_ID
+             , C.LIKE_CNT
+             , C.DELETE_YN
+             , M.GENERAL_MEMBER_EMAIL
+          FROM GENERAL_COMMENT C
+         INNER JOIN GENERAL_MEMBER M
+            ON C.COMMENT_WRITER_ID = M.GENERAL_MEMBER_EMAIL
+         WHERE C.GENERAL_COMMENT = #{_parameter}
+    </select>
+    
+    <insert id="createNewComment"
+            parameterType="com.ktdsuniversity.edu.generalpost.vo.GeneralCommentVO">
+        INSERT INTO GENERAL_COMMENT (
+             , GENERAL_COMMENT_ID
+		     , COMMENT_WRITER_ID
+		     , GENERAL_POST_ID
+		     , COMMENT_CONTENT
+		     , POST_DATE
+		     , UPPER_COMMENT_ID
+		     , LIKE_CNT
+		     , DELETE_YN)
+		VALUES (
+		   SEQ_GENERAL_COMMENT_ID.NEXTVAL,
+		     , #{commentWriterId}
+		     , #{generalPostId}
+		     , #{commentContent}
+		     , SYSDATE
+		     , #{upperCommentId}
+		     , 0
+		     , 'N')   <!-- 삭제여부: 삭제되지 않았음을 나타내야 함. 맞는지? -->
+            </insert>
+    <delete id="deleteOneComment"
+            parameterType="_int">
+       DELETE
+         FROM GENERAL_COMMENT
+        WHERE GENERAL_COMMENT_ID = #{_parameter}
+    </delete>
+    <update id="recommendOneComment"
+            parameterType="_int">
+        UPDATE GENERAL_COMMENT
+           SET LIKE_CNT = LIKE_CNT + 1
+         WHERE GENERAL_COMMENT_ID = #{_parameter}        
+    </update>
+    <insert id="reportOneComment"
+            parameterType="com.ktdsuniversity.edu.generalpost.vo.GeneralCommentVO">
+            INSERT INTO REPORT (
+                 , REPORT_ID
+                 , REPORT_MEMBER_ID
+                 , REPORT_TYPE_ID
+                 , RECEIVED_REPORT_MEMBER_ID
+                 , REPORT_CONTENT_ID
+                 , REPORT_DATE
+                 , REPORT_REASON
+                 , REPORT_REASON_CONTENT
+                 , ATTACHED_IMG
+                 , PROGRESS_YN
+                 , CANCEL_YN)
+            VALUES (
+            SEQ_REPORT_PK.NEXTVAL,
+            #{reportMemberId},
+            #{reportTypeId},
+            #{receivedReportMemberId},
+            #{reportContentId},
+            SYSDATE,
+            #{reportReason},
+            #{reportReasonContent},
+            #{attachedImg},
+            'N',
+            'N'
+            )
+    </insert>
+            
+  </mapper>
+            

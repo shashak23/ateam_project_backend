@@ -41,6 +41,9 @@ public class WebConfig implements WebMvcConfigurer {
 		excludePatterns.add("/js/**");
 		excludePatterns.add("/css/**");
 		excludePatterns.add("/img/**");
+		excludePatterns.add("/news/**");
+		excludePatterns.add("/error");
+		excludePatterns.add("/algorithm/**");
 		
 		registry.addInterceptor(new CheckSessionInterceptor())
 				.addPathPatterns("/**")

@@ -7,9 +7,13 @@ public class CompanyNewsVO {
 	private String postTitle;
 	private String postContent;
 	private String postDate;
+	private String fileName;
+	private String originFileName;
 	private int viewCnt;
 	private int likeCnt;
-	private char deleteYn;
+	private String deleteYn;
+	
+//	private CompanyVO companyVO;
 	
 	public String getCompanyNewsPostId() {
 		return companyNewsPostId;
@@ -41,6 +45,18 @@ public class CompanyNewsVO {
 	public void setPostDate(String postDate) {
 		this.postDate = postDate;
 	}
+	public String getFileName() {
+		return fileName;
+	}
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
+	public String getOriginFileName() {
+		return originFileName;
+	}
+	public void setOriginFileName(String originFileName) {
+		this.originFileName = originFileName;
+	}
 	public int getViewCnt() {
 		return viewCnt;
 	}
@@ -53,13 +69,12 @@ public class CompanyNewsVO {
 	public void setLikeCnt(int likeCnt) {
 		this.likeCnt = likeCnt;
 	}
-	public char getDeleteYn() {
+	public String getDeleteYn() {
 		return deleteYn;
 	}
-	public void setDeleteYn(char deleteYn) {
+	public void setDeleteYn(String deleteYn) {
 		this.deleteYn = deleteYn;
 	}
 
-	
 	
 }

@@ -3,8 +3,11 @@
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ktdsuniversity.edu.career.dao.CareerDAO">
+
+	
+	
 	<insert id="createNewCareer"
-			parameterType="com.ktdsuniversity.edu.career.vo.CareerVO">
+		parameterType="com.ktdsuniversity.edu.career.vo.CareerVO">
 		INSERT INTO CAREER
 		( CAREER_ID
 		, GENERAL_MEMBER_EMAIL
@@ -20,14 +23,30 @@
 		, #{hireDate}
 		, #{resignDate})
 	</insert>
+
+	<select id="getOneCareer" parameterType="string"
+		resultType="com.ktdsuniversity.edu.career.vo.CareerVO">
+		SELECT CAREER_ID
+		, GENERAL_MEMBER_EMAIL
+		, PREVIOUS_COMPANY_NAME
+		, JOB_TITLE
+		, TO_CHAR(HIRE_DATE,'yyyy-DD-mm') HIRE_DATE
+		, TO_CHAR(RESIGN_DATE,'yyyy-DD-mm') RESIGN_DATE
+		FROM CAREER
+		WHERE CAREER_ID = #{_parameter}
+	</select>
 	<update id="updateOneCarrer"
-	   		parameterType="com.ktdsuniversity.edu.career.vo.CareerVO">
+		parameterType="com.ktdsuniversity.edu.career.vo.CareerVO">
 		UPDATE CAREER
-		   SET PREVIOUS_COMPANY_NAME = #{previousCompanyName}
-			 , JOB_TITLE = #{jobTitle}
-		     , HIRE_DATE = #{hireDate}
-		     , RESIGN_DATE = #{resignDate}
-		 WHERE CAREER_ID = #{careerId} 
+		SET PREVIOUS_COMPANY_NAME = #{previousCompanyName},
+		JOB_TITLE = #{jobTitle},
+		HIRE_DATE = #{hireDate},
+		RESIGN_DATE = #{resignDate}
+		WHERE CAREER_ID = #{careerId}
 	</update>
-	
+	<delete id="deleteOneCareer" parameterType="string">
+		DELETE
+		  FROM CAREER
+		 WHERE CAREER_ID = #{_parameter}
+	</delete>
 </mapper>

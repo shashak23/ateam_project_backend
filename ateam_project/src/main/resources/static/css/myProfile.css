@@ -1,0 +1,627 @@
+@charset "utf-8";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap');/*글꼴을 가져오는 페이지*/
+
+
+:root {
+  /* Full width꽉찬 화면으로 */
+  --width-fullsize: 1400px;
+  --width-sideLeft: 250px;
+  --width-sideRight: 250px;
+  
+  /* color 상징하는 색이 파랑색이니까*/
+  --color-main: #30a4ac;
+
+
+  /* bg */
+  --bg-black: #7bca30;
+  --bg-second: #306aac;
+  --bg-third: #30ac72;
+}
+
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+body, div, dl, dt, dd, ul, ol, li, h1, h2, h3, h4, h5, h6, form, fieldset, legend, textarea, p, th, td, address, blockquote {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* 기본 폰트 및 텍스트 스타일 */
+body {
+  font-family: 'Noto Sans KR', 'Noto Serif KR', sans-serif;
+  font-size: 14px;
+  line-height: 1;
+  color: #222;
+  font-weight: normal;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  padding: 0;
+  font-size: 1em;
+  font-weight: normal;
+}
+
+/* 기본 스타일 리셋 */
+img, fieldset, iframe, table, th, td {
+  border: none;
+}
+
+li, ol {
+  list-style: none;
+}
+
+input, select, button, textarea {
+  font-size: 1em;
+  font-family: 'Noto Sans KR', 'Noto Serif KR', sans-serif;
+  color: #222;
+  vertical-align: middle;
+}
+
+img {
+  vertical-align: middle;
+}
+
+sup {
+  font-size: 90%;
+}
+
+em, address, cite, dfn {
+  font-style: normal;
+}
+
+table {
+  border-collapse: collapse;
+  border-spacing: 0;
+  empty-cells: show;
+}
+
+hr {
+  display: none;
+}
+
+legend, caption {
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  font-size: 0;
+  line-height: 0;
+  text-indent: -999px;
+} /* 스크린 리더기용 */
+
+/* 버튼 스타일 리셋 */
+button {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  background: none;
+  cursor: pointer;
+  overflow: visible;/*HTML 요소에 overflow 속성을 visible로 설정하는 것을 의미*/
+}
+
+button::-moz-focus-inner {
+  margin: -1px;
+  padding: 0;
+}
+
+/* 링크 스타일 */
+a:link {
+  color: #222;
+  text-decoration: none;
+}
+
+a:visited {
+  color: #222;
+  text-decoration: none;
+}
+
+a:active {
+  color: #222;
+  text-decoration: none;
+}
+
+a:hover {
+  color: #222;
+  text-decoration: none;
+}
+/*상속(inherit)을 통해 부모 요소로부터 상속받은 box-sizing 속성 값을 현재 요소에 적용하도록 지정*/
+*,
+*:before,
+*:after {box-sizing: inherit;}
+
+.wrap {width: 100%;position: relative;overflow: hidden;}
+
+.header {  border-bottom: 1px solid #eee;}
+.header .inner {
+  display: flex;/*현재 요소를 Flex Container로 설정합니다*/
+  justify-content: space-between;/* 주요한 요소 사이의 여백을 최대화하여 컨텐츠를 양쪽으로 분산 정렬합니다. */
+  align-items: center;/* 수직 정렬을 수행하며, 요소를 세로 중앙 정렬합니다. */
+  width: var(--width-fullsize);/* 요소의 너비를 --width-fullsize 변수 값으로 설정합니다. */
+  height: 70px;/* 요소의 높이를 70픽셀로 설정합니다. */
+  margin:0 auto;/* 위 아래 여백을 0으로 설정하고, 좌우 여백을 자동으로 조정하여 가운데 정렬합니다. */
+}
+.header .util {
+  border-bottom: 1px solid #eee;
+}
+
+.header .util ul {
+  width: var(--width-fullsize);
+  height: 50px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: right;
+  align-items: center;
+}
+
+.header .util li a {
+  display: block;
+  font-size: 12px;
+  color: #999;
+}
+
+.header .util li {
+  margin: 0 5px;
+}
+
+.header hgroup {
+  text-align: center;
+}
+
+.header hgroup h1 a {
+  display: block;
+  color: var(--color-main);
+  font-size: 30px;
+  font-weight: 700;
+}
+
+/* Navi/*네비게이션 스타일 속성*/
+/* 네비게이션 메뉴 스타일 */
+.gnb ul {
+    height: 50px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .gnb ul > li {
+    position: relative;
+    height: inherit;
+    margin: 0 50px;
+  }
+  
+  .gnb ul > li > a {
+    position: relative;
+    height: inherit;
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    font-weight: 500;
+    color: #333;
+  }
+  
+  .gnb ul > li > a::after {
+    content: '';
+    width: 0;
+    height: 4px;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+    background-color: var(--color-main);
+    transition: width 0.2s ease-in-out;
+  }
+  
+  /* 링크 호버 및 활성 스타일 */
+  .gnb ul > li > a:hover,
+  .gnb ul > li > a.active {
+    color: var(--color-main);
+  }
+  
+  .gnb ul > li > a:hover::after,
+  .gnb ul > li > a.active::after {
+    width: 100%;
+    left: 0;
+  }
+
+.setting {display: flex;}
+.setting a {margin-left: 10px;color: #999;}
+.setting a:hover {color: var(--bg-black);}
+
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  position: relative;width: var(--width-fullsize);
+  margin:0 auto;
+  padding:80px 0;
+}
+.container h2 {font-size: 36px;color: #222;font-weight: 700;letter-spacing: -0.5px;text-align: center;}
+
+.side.sideLeft {
+  width : var(--width-sideLeft);
+}
+.side.sideRight {
+  width : var(--width-sideRight);
+}
+
+.baner_01 {
+  height: 200px;
+  border: 1px solid #ddd;
+  margin-bottom: 20px;
+}
+.baner_02 {
+  height: 200px;
+  border: 1px solid #ddd;
+  margin-bottom: 20px;
+}
+
+.baner_03 {
+  height: 200px;
+  border: 1px solid #ddd;
+  margin-bottom: 20px;
+}
+.baner_04 {
+  height: 200px;
+  border: 1px solid #ddd;
+  margin-bottom: 20px;
+}
+
+.contents {
+  width: 100%;
+  padding: 0 30px;
+}
+
+.searchbox {
+  display: flex;
+  align-items: center;
+  height: 120px;
+  background-color: var(--bg-black);
+}
+.searchbox .inner{
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 900px;margin:0 auto;
+}
+
+.searchbox .inner input{
+  width: 100%;
+  height: 46px;
+  border: none;
+  border-radius: 50px;
+  padding: 0 20px;
+  font-size: 16px;
+}
+
+.searchbox .inner .btn_search{
+  position: absolute;
+  right: 20px;
+  font-size: 30px;
+}
+
+.bbs_title {
+  font-size: 26px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  line-height: 38px;
+}
+
+#container {
+  display: grid;
+  grid-gap: 30px;
+  grid-template-columns: 300px 1fr;
+}
+
+.flex_button {
+  display: flex;
+  flex-direction: column;
+  margin-left: 120px;
+  
+}
+
+.flex_main {
+  display: flex;
+  flex-direction: column;
+  width: 1200px;
+  margin-left: 45px;
+}
+
+.flex_button button {
+  width: 150px;
+  height: 40px;
+  margin-bottom: 15px;
+  cursor: pointer;
+  border: 2px;
+}
+
+.flex_button button:hover {
+  background-color: #007BFF;
+  color: white;
+}
+
+.flex_button button:first-child {
+  margin-top: 51px;
+}
+
+.follow_chat {
+  text-align: right;
+}
+.follow_icon{
+  background-color: white;
+  cursor: pointer;
+  height: 30px;
+}
+.follow_icon>img ,.message_icon>img{
+  width: 15px;
+}
+.message_icon{
+  background-color: black;
+  cursor: pointer;
+  color: white;
+  height: 30px;
+}
+
+
+.profile {
+  display: grid;
+  grid-template-columns: 170px 1fr;
+  margin: 20px;
+}
+
+.profile img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+}
+
+.follow {
+  border-bottom: 1px solid #333;
+
+}
+
+.follow>p {
+  padding-bottom: 5px;
+}
+
+.introduction_list {
+  padding: 0px;
+  list-style: none;
+  grid-gap: 20px;
+  width: 1200px;
+}
+
+.list_name {
+  margin-top: 66px;
+}
+
+.follow a {
+  text-decoration: none;
+  color: #000;
+}
+.follow a:first-child{
+  margin-left: 50px;
+}
+.related_link {
+  display: flex;
+  align-items: center;
+  margin-top: 20px;
+
+}
+
+.related_link img {
+  width: 30px;
+}
+
+.related_link a {
+  text-decoration: none;
+  color: #333;
+  margin-right: 10px;
+
+}
+
+.show_pwf {
+  display: grid;
+  grid-template-columns: 1fr 250px 250px 250px 1fr;
+}
+
+.show_pwf button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding-top: 30px;
+  text-decoration: none;
+  color: #575555;
+  position: relative;
+}
+
+.show_pwf button>h2 {
+  margin-bottom: 0px;
+}
+
+.show_pwf button:hover::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background-color: orange;
+  transform: scaleX(0.55);
+}
+
+#technology_stack {
+  margin-top: 70px;
+  border-bottom: 1px solid #333;
+}
+
+   #edit_button1{
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding-left: 10px;
+            margin: 0;
+        }
+         #edit_button2,#edit_button3,#edit_button4, #edit_button5 {
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        #edit_button1>img,
+        #edit_button2>img,
+        #edit_button3>img,
+        #edit_button4>img,
+        #edit_button5>img
+        {
+            width: 20px;
+        }
+
+#technology_stack ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  margin-bottom: 40px;
+}
+
+#technology_stack li {
+  margin-right: 10px;
+}
+
+#technology_stack ul>li>button {
+  background-color: #f2f2f2;
+  border: none;
+  border-radius: 20px;
+  padding: 5px 15px;
+  cursor: pointer;
+}
+
+.education{
+  border-bottom: 1px solid #000;
+}
+.career{
+  margin-top: 40px;
+  border-bottom: 1px solid #333;
+}
+.education>ul,
+.career>ul {
+  padding: 0px;
+  margin-bottom: 40px;
+}
+
+.education>ul>li {
+  list-style: none;
+  margin-bottom: 10px;
+}
+
+.career>ul>li {
+  list-style: none;
+}
+
+.career_list_year {
+  font-size: 10pt;
+  margin-bottom: 15px;
+}
+
+/* Button style */
+.btn_set {
+    overflow: hidden;
+    position: relative;
+    width: 100%;
+    margin: 30px 0;
+}
+
+.btn_set.btn_left { text-align: left; }
+.btn_set.btn_right { text-align: right; }
+.btn_set.btn_center { text-align: center; }
+
+.btn {
+    margin: 0 2px;
+    border-radius: 3px;
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    padding: 0 8px;
+}
+
+.btn, .btn a {
+    position: relative;
+    display: inline-block;
+    text-align: center;
+    padding: 0 8px;
+}
+
+/* 버튼 스타일 1 */
+.btn_st_1 {
+    background-color: var(--color-main);
+}
+
+.btn_st_1 a {
+    font-size: 14px;
+    height: 30px;
+    line-height: 30px;
+    color: #fff;
+}
+
+/* 버튼 스타일 2 */
+.btn_st_2 {
+    background-color: var(--bg-second);
+}
+
+.btn_st_2 a {
+    font-size: 14px;
+    height: 30px;
+    line-height: 30px;
+    color: #fff;
+}
+
+/* 버튼 스타일 3 */
+.btn_st_3 {
+    background-color: var(--bg-third);
+}
+
+.btn_st_3 a {
+    font-size: 14px;
+    height: 30px;
+    line-height: 30px;
+    color: #fff;
+}.paginate a.pre,
+.paginate a.next {
+    position: relative;
+    background: none !important;
+}
+
+
+
+
+/* footer */
+.footer {
+  background-color: var(--bg-black);
+  color: #999 ;
+}
+
+.footer .inner {
+  width: var(--width-fullsize);
+  margin: 0 auto ;
+  padding: 40px 0 ;
+}
+
+.footer .inner address {
+  text-align: center;
+  padding: 0 0 30px 0;
+  font-weight: 300;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.footer .inner .copyright {
+  border-top: 1px solid #333;
+  text-align: center;
+  padding: 30px 0 0 0;
+  font-weight: 300;
+  font-size: 12px;
+}

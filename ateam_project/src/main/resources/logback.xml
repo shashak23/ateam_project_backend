@@ -2,7 +2,8 @@
 <!-- logback 설정
 scan: logback 설정 파일 변경 검사 여부
 scanPeriod: 몇 초 주기로 변경 검사를 시행할 것인지 설정 --> 
-<configuration>
+<configuration scan="true" scanPeriod="30 seconds">
+
 	<appender name="STDOUT"
 		class="ch.qos.logback.core.ConsoleAppender">
 		<!-- encoders are assigned the type ch.qos.logback.classic.encoder.PatternLayoutEncoder 
