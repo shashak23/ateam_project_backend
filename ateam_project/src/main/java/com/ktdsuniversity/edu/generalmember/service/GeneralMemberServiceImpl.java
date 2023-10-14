@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import com.ktdsuniversity.edu.career.vo.CareerVO;
 import com.ktdsuniversity.edu.generalmember.dao.GeneralMemberDAO;
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
+import com.ktdsuniversity.edu.member.vo.MemberVO;
 @Service
 public class GeneralMemberServiceImpl implements GeneralMemberService {
 	@Autowired
@@ -17,8 +18,17 @@ public class GeneralMemberServiceImpl implements GeneralMemberService {
 		return generalMemberDAO.getAllCareerListByMemberEmail(generalMemberEmail);
 	}
 	@Override
-	public GeneralMemberVO getOneAddress(String generalMemberEmail) {
-		GeneralMemberVO generalMemberVO = generalMemberDAO.getOneAddress(generalMemberEmail);
+	public List<GeneralMemberVO> getAllGeeralMemberList(String generalMemberEmail) {
+		return generalMemberDAO.getAllGeeralMemberList(generalMemberEmail);
+	}
+	
+	@Override
+	public MemberVO getSelectNickname(String generalMemberEmail) {
+		return generalMemberDAO.getSelectNickname(generalMemberEmail);
+	}
+	@Override
+	public GeneralMemberVO getSelectGeneralMember(String generalMemberEmail) {
+		GeneralMemberVO generalMemberVO = generalMemberDAO.getSelectGeneralMember(generalMemberEmail);
 		return generalMemberVO;
 	}
 	@Override
@@ -26,5 +36,43 @@ public class GeneralMemberServiceImpl implements GeneralMemberService {
 		int updateCount = generalMemberDAO.updateOneAddress(generalMemberVO);
 		return updateCount>0;
 	}
+	@Override
+	public boolean deleteOneAddress(String generalMemberEmail) {
+		int deleteCount = generalMemberDAO.deleteOneAddress(generalMemberEmail);
+		return deleteCount>0;
+	}
+	@Override
+	public boolean updateSns(GeneralMemberVO generalMemberVO) {
+			int updateCount = generalMemberDAO.updateSns(generalMemberVO);
+			return updateCount>0;
+	}
+	@Override
+	public boolean deleteGithub(String generalMemberEmail) {
+		int deleteCount = generalMemberDAO.deleteGithub(generalMemberEmail);
+		return deleteCount>0;
+	}
+	@Override
+	public boolean deleteEmail(String generalMemberEmail) {
+		int deleteCount = generalMemberDAO.deleteEmail(generalMemberEmail);
+		return deleteCount>0;
+	}
+	@Override
+	public boolean deleteBlog(String generalMemberEmail) {
+		int deleteCount = generalMemberDAO.deleteBlog(generalMemberEmail);
+		return deleteCount>0;
+	}
+	@Override
+	public boolean updateselfIntro(GeneralMemberVO generalMemberVO) {
+		int updateCount = generalMemberDAO.updateselfIntro(generalMemberVO);
+		return updateCount>0;
+	}
+	@Override
+	public boolean deleteSelfIntro(String generalMemberEmail) {
+		int deleteCount = generalMemberDAO.deleteSelfIntro(generalMemberEmail);
+		return deleteCount>0;
+	}
+
+	
+	
 
 }

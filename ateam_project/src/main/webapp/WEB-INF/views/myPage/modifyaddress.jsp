@@ -5,7 +5,6 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-</head>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script>
     function sample6_execDaumPostcode() {
@@ -41,25 +40,24 @@
                         extraAddr = ' (' + extraAddr + ')';
                     }
                     // 조합된 참고항목을 해당 필드에 넣는다.
-                    document.getElementById("sample6_extraAddress").value = extraAddr;
                 
-                } else {
-                    document.getElementById("sample6_extraAddress").value = '';
                 }
-
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
                 document.getElementById('sample6_postcode').value = data.zonecode;
-                document.getElementById("sample6_address").value = addr;
+                document.getElementById("region").value = addr;
                 // 커서를 상세주소 필드로 이동한다.
-                document.getElementById("sample6_detailAddress").focus();
             }
         }).open();
     }
 </script>
-<body>
+</head>
+<form method="post" action="/memberInfo/modify/update-location">
+	<input type="hidden" name="generalMemberEmail" value="${generalMemberVO.generalMemberEmail }"/>
 <input type="text" id="sample6_postcode" placeholder="우편번호">
 <input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-<input type="text" id="sample6_address" placeholder="주소"><br>
+<input type="text" id="region" name ="region" value="${generalMemberVO.region}" placeholder="주소" ><br>
+<input type="submit" value="수정" />
+</form>
 </body>
 </html>
 

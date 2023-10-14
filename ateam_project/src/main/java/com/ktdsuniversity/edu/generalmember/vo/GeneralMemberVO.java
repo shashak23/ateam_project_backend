@@ -14,9 +14,17 @@ public class GeneralMemberVO extends MemberVO {
 	private String githubUrl;
 	private String additionalEmail;
 	private String blogUrl;
+	private List<GeneralMemberVO> generalMemberList;
 	private List<CareerVO> careerVOList;
 	private MemberVO memberVO;
 	
+	
+	public List<GeneralMemberVO> getGeneralMemberList() {
+		return generalMemberList;
+	}
+	public void setGeneralMemberList(List<GeneralMemberVO> generalMemberList) {
+		this.generalMemberList = generalMemberList;
+	}
 	public MemberVO getMemberVO() {
 		return memberVO;
 	}

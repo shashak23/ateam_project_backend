@@ -19,6 +19,16 @@ public class CareerController {
 	@Autowired
 	private CareerService careerService;
 	 
+	/**
+	 * Career 조회
+	 */
+	@GetMapping("/memberInfo/modify/view/{careerId}")
+	public String viewOneCareer(@PathVariable String careerId, Model model) {
+		CareerVO careerVO = careerService.getOneCareer(careerId);
+		model.addAttribute("careerVO", careerVO);
+		return "career/careerview";
+	}
+	
 	
 	@GetMapping("/memberInfo/modify/create-career")
 	 public String createCareer() {
@@ -39,17 +49,10 @@ public class CareerController {
 			 return "career/careercreate";
 		 }
 	 }
+	 
 	 /**
-	  * Career 조회
+	  * 수정
 	  */
-	 @GetMapping("/memberInfo/modify/view")
-	 public String viewOneCareer(@RequestParam String careerId, Model model) {
-		 CareerVO careerVO = careerService.getOneCareer(careerId);
-		 model.addAttribute("careerVO", careerVO);
-		 return "career/careerview";
-	 }
-	 
-	 
 	 @GetMapping("/memberInfo/modify/update-career/{careerId}")
 	 public String updateCareer(@PathVariable String careerId
 			 					, Model model
@@ -59,20 +62,23 @@ public class CareerController {
 		 
 		 return "career/careermodify";
 	 }
+	
 	 @PostMapping("/memberInfo/modify/update-career")
 	 public String doUpdateCareer(@ModelAttribute CareerVO careerVO
 			 					  ,Model model
 			 					 ,@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
-		 System.out.println(careerVO.getCareerId());
 		 boolean isSuccess = careerService.updateOneCarrer(careerVO);
 		 if(isSuccess) {
-			 return "redirect:/memberInfo/modify/view?careerId="+ careerVO.getCareerId();
+			 return "redirect:/memberInfo/modify/view/"+ careerVO.getCareerId();
 		 }
 		 else {
 			 model.addAttribute("careerVO", careerVO);
 			 return "career/careermodify";
 		 }
 	 }
+	 /**
+	  * 삭제
+	  */
 	 @GetMapping("/memberInfo/modify/delete-career/{careerId}")
 	 public String doDeleteCareer(@PathVariable String careerId) {
 		 boolean isSuccess = careerService.deleteOneCareer(careerId);

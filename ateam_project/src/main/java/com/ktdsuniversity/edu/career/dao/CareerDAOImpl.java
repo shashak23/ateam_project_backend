@@ -1,6 +1,5 @@
 package com.ktdsuniversity.edu.career.dao;
 
-import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.support.SqlSessionDaoSupport;

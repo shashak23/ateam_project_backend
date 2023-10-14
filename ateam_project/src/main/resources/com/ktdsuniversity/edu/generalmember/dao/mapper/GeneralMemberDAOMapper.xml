@@ -14,11 +14,39 @@
 	     WHERE GENERAL_MEMBER_EMAIL = #{_parameter}
 	     ORDER BY HIRE_DATE DESC
 	</select>
-	
-	<select id="getOneAddress"
+	<select id="getAllGeeralMemberList"
 			parameterType="string"
 			resultType="com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO">
-		SELECT REGION
+		SELECT GENERAL_MEMBER_EMAIL
+             , SELF_INTRO
+             , JOB_ID
+             , REGION
+             , TIER_ID
+             , GITHUB_URL
+             , ADDITIONAL_EMAIL
+             , BLOG_URL
+  		  FROM GENERAL_MEMBER
+	     WHERE GENERAL_MEMBER_EMAIL = #{_parameter}
+	</select>
+	<select id="getSelectNickname"
+			parameterType="string"
+			resultType="com.ktdsuniversity.edu.member.vo.MemberVO">
+			SELECT NICKNAME
+			  FROM MEMBER
+			 WHERE EMAIL =#{_parameter}
+	
+	</select>
+	<select id="getSelectGeneralMember"
+			parameterType="string"
+			resultType="com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO">
+		SELECT GENERAL_MEMBER_EMAIL
+             , SELF_INTRO
+             , JOB_ID
+             , REGION
+             , TIER_ID
+             , GITHUB_URL
+             , ADDITIONAL_EMAIL
+             , BLOG_URL
 		  FROM GENERAL_MEMBER
 		 WHERE GENERAL_MEMBER_EMAIL =#{_parameter}	
 	</select>
@@ -26,6 +54,56 @@
 			parameterType="com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO">
 		UPDATE GENERAL_MEMBER
 		   SET REGION = #{region}
-		 WHERE GENERAL_MEMBER_EMAIL =#{generalMemberEmail}	
+		 WHERE GENERAL_MEMBER_EMAIL = #{generalMemberEmail}	
+	</update>
+	<update id="deleteOneAddress"
+			parameterType="string">
+		UPDATE GENERAL_MEMBER
+		   SET REGION = NULL
+		 WHERE GENERAL_MEMBER_EMAIL = #{generalMemberEmail}	
+	</update>
+	
+	<update id="updateSns"
+			parameterType="com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO">
+		UPDATE GENERAL_MEMBER
+		   SET GITHUB_URL = #{githubUrl}
+		   	 , ADDITIONAL_EMAIL =#{additionalEmail}
+             , BLOG_URL = #{blogUrl}
+		 WHERE GENERAL_MEMBER_EMAIL = #{generalMemberEmail}	
+	</update>
+	
+	<update id="deleteGithub"
+			parameterType="string">
+		UPDATE GENERAL_MEMBER
+		   SET GITHUB_URL = NULL
+		 WHERE GENERAL_MEMBER_EMAIL = #{generalMemberEmail}	
+	</update>
+	
+	<update id="deleteEmail"
+			parameterType="string">
+		UPDATE GENERAL_MEMBER
+		   SET ADDITIONAL_EMAIL = NULL
+		 WHERE GENERAL_MEMBER_EMAIL = #{generalMemberEmail}	
+	</update>
+	
+	<update id="deleteBlog"
+			parameterType="string">
+		UPDATE GENERAL_MEMBER
+		   SET BLOG_URL = NULL
+		 WHERE GENERAL_MEMBER_EMAIL = #{generalMemberEmail}	
+	</update>
+	
+	<update id="updateselfIntro"
+			parameterType="com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO">
+		UPDATE GENERAL_MEMBER
+		   SET SELF_INTRO = #{selfIntro}
+		 WHERE GENERAL_MEMBER_EMAIL = #{generalMemberEmail}	
+	</update>
+	
+	<update id="deleteSelfIntro"
+			parameterType="string">
+		UPDATE GENERAL_MEMBER
+		   SET SELF_INTRO = NULL
+		 WHERE GENERAL_MEMBER_EMAIL = #{generalMemberEmail}	
 	</update>
 </mapper>

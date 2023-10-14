@@ -9,7 +9,7 @@
 <body>
 <label>주소:</label>
 <div>${generalMemberVO.region}</div>
-<div href="#">수정</div>
-<div href="#">삭제</div>
+<a href="/memberInfo/modify/update-location/${generalMemberVO.generalMemberEmail}">수정</a>
+<a href="/memberInfo/modify/delete-location/${generalMemberVO.generalMemberEmail}">삭제</a>
 </body>
 </html>

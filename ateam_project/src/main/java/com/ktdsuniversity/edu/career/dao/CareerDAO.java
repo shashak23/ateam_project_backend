@@ -1,6 +1,5 @@
 package com.ktdsuniversity.edu.career.dao;
 
-import java.util.List;
 
 import com.ktdsuniversity.edu.career.vo.CareerVO;
 
