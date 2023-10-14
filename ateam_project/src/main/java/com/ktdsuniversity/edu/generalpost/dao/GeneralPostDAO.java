@@ -3,6 +3,7 @@ package com.ktdsuniversity.edu.generalpost.dao;
 import java.util.List;
 
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
+import com.ktdsuniversity.edu.member.vo.MemberVO;
 
 public interface GeneralPostDAO {
 
@@ -12,12 +13,15 @@ public interface GeneralPostDAO {
 	
 	public int createNewBoard(GeneralPostVO generalVO);
 	
-	public int increaseViewCount(int likeCnt);
-	
-	public GeneralPostVO getOneBoardVO(int generalPostId);
-	
+	public GeneralPostVO getOneBoard(String generalPostId);
+
 	public int updateOneBoard(GeneralPostVO generaVO);
 	
-	public int deleteOnBoard(int generalPostId);
+	public int deleteOneBoard(int generalPostId);
+
+	public int increaseViewCount(String generalPostId);
 	
+//	public int increaseViewCount(String generalPostId);
+	
+//	public GeneralPostVO getOneBoard(String generalPostId);
 }

@@ -19,6 +19,9 @@ public class GeneralPostVO {
 
 	// 게시글을 작성하는 회원의 정보
 	private MemberVO memberVO;
+	
+//	//공통코드 받아오기
+//	private CommonVO commonVO;
 
 	public String getGeneralPostId() {
 		return generalPostId;

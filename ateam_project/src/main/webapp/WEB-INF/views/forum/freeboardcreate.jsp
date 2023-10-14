@@ -31,35 +31,37 @@
 			padding: 10px;
 		}	
 	</style>
+<script>
 
+</script>
 </head>
 <body>
 	<jsp:include page="../member/membermenu.jsp"></jsp:include>
 
 	<h1> 자유게시판의 게시글 작성 </h1>
-	<form:form modelAttribute = "freeBoardVO" method = "post" enctype="multipart/form-data">		
+	<form method = "post" >		
 		<!-- @Valid중 실패한 내용이 있다면
 			BindingResult에 존재하는 내용들을 출력한다 -->
-		<div>
-			<form:errors path="postTitle" element="div" cssClass="erros"/>
-			<form:errors path="postWriterId" element="div" cssClass="erros"/>
-			<form:errors path="postContent" element="div" cssClass="erros"/>
-		</div>
+<!-- 		<div> -->
+<!-- 			<form:errors path="postTitle" element="div" cssClass="erros"/> -->
+<!-- 			<form:errors path="postWriterId" element="div" cssClass="erros"/> -->
+<!-- 			<form:errors path="postContent" element="div" cssClass="erros"/> -->
+<!-- 		</div> -->
 		
 		<div class = "grid">
-			<label for = "subject"> 제목 </label>
-			<input id = "subject" type = "text" name="subject" value="${freeBoardVO.postTitle}"/>
+			<label for = "postTitle"> 제목 </label>
+			<input id = "postTitle" type = "text" name="postTitle" />
 			
-			<label for = "email"> 이메일 </label>
-			<input id = "email" type = "email" name = "email" value="${freeBoardVO.postWriterId}"/>
-
+			<label for = "postWriterId"> 이메일 </label>
+			<input id = "postWriterId" type = "email" name = "postWriterId"/>
+<!-- 
 			<label for = "file"> 첨부파일 </label>
 			<input id = "file" type = "file" name = "file" />
-			
-			<label for = "content"> 내용 </label>
-			<textarea id ="content" 
-			name = "content" style = "height: 300px;"
-			value="${freeBoardVO.postContent}"></textarea>
+			 -->
+			<label for = "postContent"> 내용 </label>
+			<textarea id ="postContent" 
+			name = "postContent" style = "height: 300px;"
+			></textarea>
 			
 			<div class = "btn-group">
 				<div class="right-align">
@@ -67,7 +69,7 @@
 				</div>
 			</div>
 		</div>
-	</form:form>
+	</form>
 	
 </body>
 </html>

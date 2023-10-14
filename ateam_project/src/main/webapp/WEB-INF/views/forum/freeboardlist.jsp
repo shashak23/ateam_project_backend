@@ -5,6 +5,11 @@
     <html lang="ko">
       <head>
         <meta charset="utf-8" />
+        
+        <c:if test="${not empty memberVO.nickname}">
+		    <p>Welcome, ${memberVO.nickname}!</p>
+		</c:if>
+        
         <title>SnapChat</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta
@@ -18,6 +23,7 @@
       </head>
       <body>
         <div id="wrap" class="wrap">
+    
     
           <!-- 상단영역 -->
           <header id="header" class="header">
@@ -128,42 +134,19 @@
                                                             </tr>
                                                     </thead>
                                                     <tbody>
+                                                        <c:forEach items="${generalPostListVO.generalPostList}" var="freeboard">
                                                             <tr>
-                                                                    <td class="c_num">5</td>
-                                                                    <td class="c_info"><a href="#">자유게시판입니다</a></td>
-                                                                    <td class="c_date">홍길동</td>
-                                                                    <td class="c_date">2020.12.4</td>
-                                                                    <td class="c_date">100</td>
+                                                                <td>${freeboard.generalPostId}</td>
+                                                                <td>
+                                                                    <a href="/freeboard/view/${freeboard.generalPostId}">
+                                                                        ${freeboard.postTitle}
+                                                                    </a>
+                                                                </td>
+                                                                <td>${freeboard.postWriterId}</td>
+                                                                <td>${freeboard.postDate}</td>
+                                                                <td>${freeboard.viewCnt}</td>
                                                             </tr>
-                                                            <tr>
-                                                                    <td class="c_num">4</td>
-                                                                    <td class="c_info"><a href="#">자유게시판입니다</a></td>
-                                                                    <td class="c_date">홍길동</td>
-                                                                    <td class="c_date">2020.12.4</td>
-                                                                    <td class="c_date">100</td>
-                                                            </tr>
-                                                            <tr>
-                                                                    <td class="c_num">3</td>
-                                                                    <td class="c_info"><a href="#">자유게시판입니다</a></td>
-                                                                    <td class="c_date">홍길동</td>
-                                                                    <td class="c_date">2020.12.4</td>
-                                                                    <td class="c_date">100</td>
-                                                            </tr>
-                                                            <tr>
-                                                                    <td class="c_num">2</td>
-                                                                    <td class="c_info"><a href="#">자유게시판입니다</a></td>
-                                                                    <td class="c_date">홍길동</td>
-                                                                    <td class="c_date">2020.12.4</td>
-                                                                    <td class="c_date">100</td>
-                                                            </tr>
-                                                            <tr>
-                                                                    <td class="c_num">1</td>
-                                                                    <td class="c_info"><a href="#">자유게시판입니다</a></td>
-                                                                    <td class="c_date">홍길동</td>
-                                                                    <td class="c_date">2020.12.4</td>
-                                                                    <td class="c_date">100</td>
-                                                            </tr>
-                                                            
+                                                        </c:forEach>
                                                     </tbody>
                                             </table>
                                     </div>
@@ -171,7 +154,7 @@
                                     <!-- button -->
                                     <div class="btn_set btn_right">
                                             <div class="btn btn_st_1">
-                                                    <a href="#">글쓰기</a>
+                                                    <a href="/freeboard/create">글쓰기</a>
                                             </div>
                                     </div>
     
