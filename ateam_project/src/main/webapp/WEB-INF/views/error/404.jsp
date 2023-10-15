@@ -4,9 +4,10 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>페이지를 찾을 수 없습니다.</title>
 </head>
 <body>
-  
+    <h3>찾으시는 페이지는 존재하지 않습니다.</h3>
+    <a href="/home/main">홈메인으로 가기</a>
 </body>
 </html>

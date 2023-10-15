@@ -1,4 +1,4 @@
-package com.ktdsuniversity.edu.common.vo;
+package com.ktdsuniversity.edu.commoncode.vo;
 
 import java.util.List;
 

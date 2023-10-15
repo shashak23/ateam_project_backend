@@ -29,8 +29,8 @@ public class MyAlgorithmController {
 		for (MyAlgorithmVO list : myList.getMyAlgorithmList()) {
 			System.out.println("start!");
 			System.out.println(list.getCompanyAlgorithmQuestionId());
-			System.out.println(list.getCompanyAlgorithmQuestionVO().getPostTitle());
-			System.out.println(list.getCompanyAlgorithmQuestionVO().getPostContent());
+			System.out.println(list.getAlgorithmQuestionVO().getAlgorithmTitle());
+			System.out.println(list.getAlgorithmQuestionVO().getAlgorithmContent());
 			System.out.println(list.getMemberVO().getNickname());
 		}
 		

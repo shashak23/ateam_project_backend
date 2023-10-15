@@ -1,4 +1,4 @@
-package com.ktdsuniversity.edu.common.web;
+package com.ktdsuniversity.edu.commoncode.web;
 
 import java.util.HashSet;
 import java.util.List;
@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ktdsuniversity.edu.common.servicee.CommonService;
-import com.ktdsuniversity.edu.common.vo.CommonListVO;
-import com.ktdsuniversity.edu.common.vo.CommonVO;
+import com.ktdsuniversity.edu.commoncode.servicee.CommonService;
+import com.ktdsuniversity.edu.commoncode.vo.CommonListVO;
+import com.ktdsuniversity.edu.commoncode.vo.CommonVO;
 
 @Controller
 public class CommonController {

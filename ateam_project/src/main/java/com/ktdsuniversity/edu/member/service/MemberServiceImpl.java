@@ -4,6 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ktdsuniversity.edu.beans.SHA;
+import com.ktdsuniversity.edu.exceptions.AlreadyUseException;
+import com.ktdsuniversity.edu.exceptions.UserIdentityNotMatchException;
 import com.ktdsuniversity.edu.generalmember.dao.GeneralMemberDAO;
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 import com.ktdsuniversity.edu.member.dao.MemberDAO;
@@ -23,10 +25,10 @@ public class MemberServiceImpl implements MemberService{
 		int emailCount = memberDAO.getEmailCount(generalMemberVO.getEmail());
 		int nicknameCount= memberDAO.getNicknameCount(generalMemberVO.getNickname());
 		if(emailCount >0) {
-			throw new IllegalArgumentException("email이 이미 사용중 입니다.");
+			throw new AlreadyUseException(generalMemberVO, "email이 이미 사용중 입니다.");
 		}
 		if(nicknameCount >0) {
-			throw new IllegalArgumentException("Nickname이 이미 사용중 입니다.");
+			throw new AlreadyUseException(generalMemberVO, "Nickname이 이미 사용중 입니다.");
 		}
 		String salt= sha.generateSalt();
 		String password=generalMemberVO.getPw();
@@ -55,7 +57,7 @@ public class MemberServiceImpl implements MemberService{
 	public MemberVO getMember(MemberVO memberVO) {
 		String salt = memberDAO.getSalt(memberVO.getEmail());
 		if(salt == null) {
-			throw new IllegalArgumentException("아이디 또는 비밀번호가 일치하지 않습니다.");
+			throw new UserIdentityNotMatchException(memberVO, "아이디 또는 비밀번호가 일치하지 않습니다.");
 		}
 		String password = memberVO.getPw();
 		String encryptedPassword = sha.getEncrypt(password, salt);
@@ -63,7 +65,7 @@ public class MemberServiceImpl implements MemberService{
 		
 		MemberVO member = memberDAO.getMember(memberVO);
 		if(member == null) {
-			throw new IllegalArgumentException("아이디 또는 비밀번호가 일치하지 않습니다.");
+			throw new UserIdentityNotMatchException(memberVO, "아이디 또는 비밀번호가 일치하지 않습니다.");
 		}
 		return member;
 	}

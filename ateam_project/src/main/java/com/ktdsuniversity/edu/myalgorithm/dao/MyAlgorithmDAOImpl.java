@@ -26,4 +26,9 @@ public class MyAlgorithmDAOImpl extends SqlSessionDaoSupport implements MyAlgori
 	public List<MyAlgorithmVO> getAllMyAlgorithmList(String email) {
 		return getSqlSession().selectList("getAllMyAlgorithmList", email);
 	}
+	
+	@Override
+	public int createNewMyAlgorithm(MyAlgorithmVO myalgorithmVO) {
+		return getSqlSession().insert("createNewMyAlgorithm", myalgorithmVO);
+	}
 }

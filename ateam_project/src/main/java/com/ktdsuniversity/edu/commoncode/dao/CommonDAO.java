@@ -1,8 +1,8 @@
-package com.ktdsuniversity.edu.common.dao;
+package com.ktdsuniversity.edu.commoncode.dao;
 
 import java.util.List;
 
-import com.ktdsuniversity.edu.common.vo.CommonVO;
+import com.ktdsuniversity.edu.commoncode.vo.CommonVO;
 
 public interface CommonDAO {
 	public int getHashtagAllNumber();

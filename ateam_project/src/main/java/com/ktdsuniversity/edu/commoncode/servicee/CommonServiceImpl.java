@@ -1,11 +1,11 @@
-package com.ktdsuniversity.edu.common.servicee;
+package com.ktdsuniversity.edu.commoncode.servicee;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ktdsuniversity.edu.common.dao.CommonDAO;
-import com.ktdsuniversity.edu.common.vo.CommonListVO;
-import com.ktdsuniversity.edu.common.vo.CommonVO;
+import com.ktdsuniversity.edu.commoncode.dao.CommonDAO;
+import com.ktdsuniversity.edu.commoncode.vo.CommonListVO;
+import com.ktdsuniversity.edu.commoncode.vo.CommonVO;
 
 @Service
 public class CommonServiceImpl implements CommonService {

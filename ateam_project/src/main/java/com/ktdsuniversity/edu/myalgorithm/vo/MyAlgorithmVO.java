@@ -2,21 +2,21 @@ package com.ktdsuniversity.edu.myalgorithm.vo;
 
 import java.util.List;
 
+import com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionVO;
 import com.ktdsuniversity.edu.companyalgorithmquestion.vo.CompanyAlgorithmQuestionVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 
-public class MyAlgorithmVO {
+public class MyAlgorithmVO extends AlgorithmQuestionVO {
 	private String myAlgorithmQuestionId;
 	private String generalMemberEmail;
 	private String companyAlgorithmQuestionId;
 	private String correctAnswerYn;
 	private String deleteYn;
 	private String myAnswer;
-	
-	private CompanyAlgorithmQuestionVO companyAlgorithmQuestionVO;
+	private AlgorithmQuestionVO algorithmQuestionVO;
+		
 	private MemberVO memberVO;
-	
-	
+		
 	public String getMyAlgorithmQuestionId() {
 		return myAlgorithmQuestionId;
 	}
@@ -53,12 +53,14 @@ public class MyAlgorithmVO {
 	public void setMyAnswer(String myAnswer) {
 		this.myAnswer = myAnswer;
 	}
-	public CompanyAlgorithmQuestionVO getCompanyAlgorithmQuestionVO() {
-		return companyAlgorithmQuestionVO;
+	
+	public AlgorithmQuestionVO getAlgorithmQuestionVO() {
+		return algorithmQuestionVO;
 	}
-	public void setCompanyAlgorithmQuestionVO(CompanyAlgorithmQuestionVO companyAlgorithmQuestionVO) {
-		this.companyAlgorithmQuestionVO = companyAlgorithmQuestionVO;
+	public void setAlgorithmQuestionVO(AlgorithmQuestionVO algorithmQuestionVO) {
+		this.algorithmQuestionVO = algorithmQuestionVO;
 	}
+	
 	public MemberVO getMemberVO() {
 		return memberVO;
 	}

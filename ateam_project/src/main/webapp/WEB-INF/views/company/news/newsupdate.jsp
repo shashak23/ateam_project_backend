@@ -41,12 +41,27 @@
         padding: 0px;
         margin-bottom: 12px;
     }
+    div.errors {
+        background-color: #ff00004a;
+        opacity: 0.8;
+        padding: 10px;
+        color: #333;
+    }
+    div.errors:last-child {
+        margin-bottom: 15px;
+    }
+    
 </style>
 <body>
 	<h3>기업소식 게시글 수정</h3>
 	<form:form modelAttribute="CompanyNewsVO" method="post" 
 	           enctype="multipart/form-data" action="/news/update">
 	    <input type="hidden" name="companyNewsPostId" value="${companyNewsVO.companyNewsPostId}" />
+		
+		<div>
+		    <form:errors path="postTitle" element="div" cssClass="errors" />
+	        <form:errors path="postContent" element="div" cssClass="errors" />
+		</div>
 		<div class="grid">
 		    
             <input id="postTitle" type="text" name="postTitle"
