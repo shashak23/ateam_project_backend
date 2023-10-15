@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ktdsuniversity.edu.member.dao.CompanyDAO">
+
+	<select id="getCompanyEmailCount"
+			parameterType="string">
+		SELECT *
+	  	  FROM COMPANY
+	 	 WHERE COMPANY_EMAIL = #{_parameter}
+	</select>
+
+	<insert id="createNewCompanyMember"
+			parameterType="com.ktdsuniversity.edu.member.vo.CompanyVO">
+		INSERT INTO COMPANY (COMPANY_EMAIL
+			 , CONTACT_NUMBER
+			 , CONTACT_NAME
+			 , COMPANY_NAME
+			 , INDUSTRY_TYPE
+			 , COMPANY_REGIST_NUMBER
+			 , COMPANY_REGIST_CERTIFICATE_URL
+			 , ADDRESS
+			 , SALES
+			 , STAFF_CNT
+			 , INVESTMENT
+			 , COMPANY_INTRO
+			 , HOME_URL
+			 , CONFIRM_YN)
+		VALUES (#{email}
+			  , #{contact}
+			  , #{name}
+			  , ''
+			  , ''
+			  , ''
+			  , 'https://image.fnnews.com/resource/media/image/2021/07/20/202107200834119404_l.jpg'
+			  , ''
+			  , ''
+			  , ''
+			  , ''
+			  , ''
+			  , 'COMPANY_MEMBER'
+			  , 'N')
+	</insert>
+</mapper>
