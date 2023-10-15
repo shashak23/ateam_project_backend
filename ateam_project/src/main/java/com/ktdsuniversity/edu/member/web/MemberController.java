@@ -51,16 +51,8 @@ public class MemberController {
 			return "member/memberlogin";
 		}
 		
-		try {
 		MemberVO member = memberService.getMember(memberVO);
 		session.setAttribute("_LOGIN_USER_", member);
-		}
-		catch (IllegalArgumentException iae) {
-			model.addAttribute("memberVO", memberVO);
-			model.addAttribute("message", iae.getMessage());
-			return "member/memberlogin";
-		}
-		
 		return "redirect:" + next;
 	}
 	@GetMapping("member/logout")

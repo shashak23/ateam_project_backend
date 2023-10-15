@@ -2,8 +2,8 @@ package com.ktdsuniversity.edu.generalpost.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
+import com.ktdsuniversity.edu.exceptions.PageNotFoundException;
 import com.ktdsuniversity.edu.generalpost.dao.GeneralPostDAO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostListVO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
@@ -38,13 +38,13 @@ public class GeneralPostServiceImpl implements GeneralPostService{
 			int updateCount = generalPostDAO.increaseViewCount(generalPostId);
 			if(updateCount == 0) {
 				// 예외가 발생한다면, 
-				throw new IllegalArgumentException("잘못된 접근입니다");
+				throw new PageNotFoundException("잘못된 접근입니다");
 			}
 		}
 		// 예외가 발생하지 않는다면,
 		GeneralPostVO generalPostVO = generalPostDAO.getOneBoardVO(generalPostId);
 		if(generalPostVO == null) {
-			throw new IllegalArgumentException("잘못된 접근입니다");
+			throw new PageNotFoundException("잘못된 접근입니다");
 
 		}
 		return generalPostVO;

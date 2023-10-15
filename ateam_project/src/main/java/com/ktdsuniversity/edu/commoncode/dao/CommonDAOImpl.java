@@ -1,4 +1,4 @@
-package com.ktdsuniversity.edu.common.dao;
+package com.ktdsuniversity.edu.commoncode.dao;
 
 import java.util.List;
 
@@ -7,7 +7,7 @@ import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.ktdsuniversity.edu.common.vo.CommonVO;
+import com.ktdsuniversity.edu.commoncode.vo.CommonVO;
 
 @Repository
 public class CommonDAOImpl extends SqlSessionDaoSupport implements CommonDAO {

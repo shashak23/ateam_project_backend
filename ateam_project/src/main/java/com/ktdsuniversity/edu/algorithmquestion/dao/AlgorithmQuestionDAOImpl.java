@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionVO;
+import com.ktdsuniversity.edu.algorithmquestion.vo.SearchAlgorithmQuestionVO;
 
 @Repository
 public class AlgorithmQuestionDAOImpl extends SqlSessionDaoSupport implements AlgorithmQuestionDAO {
@@ -19,8 +20,8 @@ public class AlgorithmQuestionDAOImpl extends SqlSessionDaoSupport implements Al
 	}
 	
 	@Override
-	public int getAlgorithmQuestionAllCount() {
-		return getSqlSession().selectOne("getAlgorithmQuestionAllCount");
+	public int getAlgorithmQuestionAllCount(SearchAlgorithmQuestionVO searchAlgorithmQuestionVO) {
+		return getSqlSession().selectOne("getAlgorithmQuestionAllCount", searchAlgorithmQuestionVO);
 	}
 
 	@Override
@@ -28,6 +29,11 @@ public class AlgorithmQuestionDAOImpl extends SqlSessionDaoSupport implements Al
 		return getSqlSession().selectList("getAllAlgorithmQuestion");
 	}
 
+	@Override
+	public List<AlgorithmQuestionVO> searchAllAlgorithmQuestion(SearchAlgorithmQuestionVO searchAlgorithmQuestionVO) {
+		return getSqlSession().selectList("searchAllAlgorithmQuestion", searchAlgorithmQuestionVO);
+	}
+	
 	@Override
 	public int createNewsAlgorithmQuestion(AlgorithmQuestionVO algorithmQuestionVO) {
 		return getSqlSession().insert("createNewsAlgorithmQuestion", algorithmQuestionVO);

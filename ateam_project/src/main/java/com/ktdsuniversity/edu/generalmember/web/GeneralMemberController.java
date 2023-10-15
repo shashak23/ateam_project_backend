@@ -2,6 +2,8 @@ package com.ktdsuniversity.edu.generalmember.web;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,17 +11,20 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ktdsuniversity.edu.career.vo.CareerVO;
+import com.ktdsuniversity.edu.exceptions.PageNotFoundException;
 import com.ktdsuniversity.edu.generalmember.service.GeneralMemberService;
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 
 @Controller
 public class GeneralMemberController {
+	
+	private Logger logger = LoggerFactory.getLogger(GeneralMemberController.class);
+	
 	@Autowired
 	private GeneralMemberService generalMemberService;
 
@@ -29,7 +34,7 @@ public class GeneralMemberController {
 	@GetMapping("/memberinfo/view")
 	public ModelAndView viewMemberInfo(@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 		ModelAndView modelAndView = new ModelAndView();
-		System.out.println(memberVO.getEmail());
+		logger.debug(memberVO.getEmail());
 		List<CareerVO> careerListVO = generalMemberService.getAllCareerListByMemberEmail(memberVO.getEmail());
 		List<GeneralMemberVO> generalMemberListVO = generalMemberService.getAllGeeralMemberList(memberVO.getEmail());
 		MemberVO member = generalMemberService.getSelectNickname(memberVO.getEmail());
@@ -61,7 +66,7 @@ public class GeneralMemberController {
 			@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 		GeneralMemberVO generalMemberVO = generalMemberService.getSelectGeneralMember(generalMemberEmail);
 		if (!generalMemberVO.getGeneralMemberEmail().equals(memberVO.getEmail())) {
-			throw new IllegalArgumentException("잘못된 접근입니다.");
+			throw new PageNotFoundException("잘못된 접근입니다.");
 		}
 		model.addAttribute("generalMemberVO", generalMemberVO);
 		return "mypage/modifyaddress";
@@ -111,7 +116,7 @@ public class GeneralMemberController {
 			@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 		GeneralMemberVO generalMemberVO = generalMemberService.getSelectGeneralMember(generalMemberEmail);
 		if (!generalMemberVO.getGeneralMemberEmail().equals(memberVO.getEmail())) {
-			throw new IllegalArgumentException("잘못된 접근입니다.");
+			throw new PageNotFoundException("잘못된 접근입니다.");
 		}
 		model.addAttribute("generalMemberVO", generalMemberVO);
 		return "mypage/modifysns";
@@ -178,7 +183,7 @@ public class GeneralMemberController {
 			@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 		GeneralMemberVO generalMemberVO = generalMemberService.getSelectGeneralMember(generalMemberEmail);
 		if (!generalMemberVO.getGeneralMemberEmail().equals(memberVO.getEmail())) {
-			throw new IllegalArgumentException("잘못된 접근입니다.");
+			throw new PageNotFoundException("잘못된 접근입니다.");
 		}
 		model.addAttribute("generalMemberVO", generalMemberVO);
 		return "mypage/modifyintroduce";

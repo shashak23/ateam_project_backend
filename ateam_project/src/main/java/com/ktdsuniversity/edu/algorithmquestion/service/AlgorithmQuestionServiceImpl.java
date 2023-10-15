@@ -6,6 +6,10 @@ import org.springframework.stereotype.Service;
 import com.ktdsuniversity.edu.algorithmquestion.dao.AlgorithmQuestionDAO;
 import com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionListVO;
 import com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionVO;
+import com.ktdsuniversity.edu.algorithmquestion.vo.SearchAlgorithmQuestionVO;
+import com.ktdsuniversity.edu.exceptions.PageNotFoundException;
+import com.ktdsuniversity.edu.myalgorithm.dao.MyAlgorithmDAO;
+import com.ktdsuniversity.edu.myalgorithm.vo.MyAlgorithmVO;
 
 @Service
 public class AlgorithmQuestionServiceImpl implements AlgorithmQuestionService {
@@ -13,11 +17,14 @@ public class AlgorithmQuestionServiceImpl implements AlgorithmQuestionService {
 	@Autowired
 	private AlgorithmQuestionDAO algorithmQuestionDAO;
 	
+	@Autowired
+	private MyAlgorithmDAO myAlgorithmDAO;
+	
 	@Override
-	public AlgorithmQuestionListVO getAllAlgorithmQuestion() {
+	public AlgorithmQuestionListVO getAllAlgorithmQuestion(SearchAlgorithmQuestionVO searchAlgorithmQuestionVO) {
 		
 		AlgorithmQuestionListVO algorithmQuestionListVO = new AlgorithmQuestionListVO();
-		algorithmQuestionListVO.setAlgorithmQuestionCnt(algorithmQuestionDAO.getAlgorithmQuestionAllCount());
+		algorithmQuestionListVO.setAlgorithmQuestionCnt(algorithmQuestionDAO.getAlgorithmQuestionAllCount(searchAlgorithmQuestionVO));
 		algorithmQuestionListVO.setAlgorithmQuestionList(algorithmQuestionDAO.getAllAlgorithmQuestion());
 		
 		return algorithmQuestionListVO;
@@ -36,12 +43,12 @@ public class AlgorithmQuestionServiceImpl implements AlgorithmQuestionService {
 		if(isIncrease) {
 			int updateCount = algorithmQuestionDAO.increaseViewCount(companyAlgorithmQuestionId);
 			if(updateCount == 0) {
-				throw new IllegalArgumentException("잘못된 접근입니다.");
+				throw new PageNotFoundException("잘못된 접근입니다.");
 			}
 		}
 		AlgorithmQuestionVO algorithmQuestionVO = algorithmQuestionDAO.getOneAlgorithmQuestion(companyAlgorithmQuestionId);
 		if(algorithmQuestionVO == null) {
-			throw new IllegalArgumentException("잘못된 접근입니다.");
+			throw new PageNotFoundException("잘못된 접근입니다.");
 		}
 		return algorithmQuestionVO;
 	}
@@ -58,5 +65,9 @@ public class AlgorithmQuestionServiceImpl implements AlgorithmQuestionService {
 		return deleteCount > 0;
 	}
 
-	
+	@Override
+	public boolean createNewMyAlgorithm(MyAlgorithmVO myAlgorithmVO) {
+		int createMyAlgorithmCount = myAlgorithmDAO.createNewMyAlgorithm(myAlgorithmVO);
+		return createMyAlgorithmCount > 0;
+	}
 }

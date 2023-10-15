@@ -1,4 +1,4 @@
-package com.ktdsuniversity.edu.common.vo;
+package com.ktdsuniversity.edu.commoncode.vo;
 
 public class CommonVO {
 	private String codeId;

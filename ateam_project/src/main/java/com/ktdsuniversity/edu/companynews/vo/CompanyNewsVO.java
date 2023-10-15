@@ -1,19 +1,42 @@
 package com.ktdsuniversity.edu.companynews.vo;
 
+import com.ktdsuniversity.edu.member.vo.MemberVO;
+
+import jakarta.validation.constraints.NotBlank;
+
+
 public class CompanyNewsVO {
 	
 	private String companyNewsPostId;
 	private String postWriter;
+	
+	@NotBlank(message = "제목을 입력해주세요.")
 	private String postTitle;
+	
+	@NotBlank(message = "내용을 입력해주세요.")
 	private String postContent;
+	
 	private String postDate;
+	
+	//@NotNull(message = "대표이미지를 첨부해주세요.")
 	private String fileName;
+	
+	//@NotNull(message = "대표이미지를 첨부해주세요.")
 	private String originFileName;
+	
 	private int viewCnt;
 	private int likeCnt;
 	private String deleteYn;
+
+
+	private MemberVO memberVO;
 	
-//	private CompanyVO companyVO;
+	public MemberVO getMemberVO() {
+		return memberVO;
+	}
+	public void setMemberVO(MemberVO memberVO) {
+		this.memberVO = memberVO;
+	}
 	
 	public String getCompanyNewsPostId() {
 		return companyNewsPostId;
