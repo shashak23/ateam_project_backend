@@ -1,6 +1,11 @@
 package com.ktdsuniversity.edu.beans;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
@@ -8,8 +13,8 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.ktdsuniversity.edu.beans.filter.xss.XssEscapeServletFilter;
+
 @Configuration
 @Configurable 
 @EnableWebMvc
@@ -42,10 +47,21 @@ public class WebConfig implements WebMvcConfigurer {
 		excludePatterns.add("/img/**");
 		excludePatterns.add("/news/**");
 		excludePatterns.add("/error");
+		excludePatterns.add("/member/regist");
 		
 		registry.addInterceptor(new CheckSessionInterceptor())
 				.addPathPatterns("/**")
 				.excludePathPatterns(excludePatterns);
 	}
+	
+	@Bean
+	public FilterRegistrationBean<XssEscapeServletFilter> filterRegistrationBean() {
+		FilterRegistrationBean<XssEscapeServletFilter> filterRegistration = new FilterRegistrationBean<>();
+		filterRegistration.setFilter(new XssEscapeServletFilter());
+		filterRegistration.setOrder(1);
+		filterRegistration.addUrlPatterns("/*");
+		return filterRegistration;
+	}
+
 	
 }
