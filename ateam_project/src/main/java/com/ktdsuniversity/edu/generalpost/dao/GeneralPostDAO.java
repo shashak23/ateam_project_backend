@@ -11,13 +11,13 @@ public interface GeneralPostDAO {
 	
 	public List<GeneralPostVO> getAllBoard();
 	
-	public int createNewBoard(GeneralPostVO generalVO);
+	public int createNewFreeBoard(GeneralPostVO generalVO);
 	
 	public GeneralPostVO getOneBoard(String generalPostId);
 
 	public int updateOneBoard(GeneralPostVO generaVO);
 	
-	public int deleteOneBoard(int generalPostId);
+	public int deleteOneBoard(String generalPostId);
 
 	public int increaseViewCount(String generalPostId);
 	

@@ -6,9 +6,6 @@
       <head>
         <meta charset="utf-8" />
         
-        <c:if test="${not empty memberVO.nickname}">
-		    <p>Welcome, ${memberVO.nickname}!</p>
-		</c:if>
         
         <title>SnapChat</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -30,6 +27,8 @@
     
                     <!-- 로그인/회원가입 -->
                     <div class="util">
+                    	<jsp:include page="../member/membermenu.jsp"></jsp:include>
+                    
                         <ul>
                             <li><a href="#">로그인</a></li>
                             <li><a href="#">회원가입</a></li>
@@ -103,9 +102,7 @@
                                 <div class="btn btn_st_2">
                                     <a href="#">조회</a>
                                 </div>
-                                <div class="btn btn_st_3">
-                                    <a href="#">등록</a>
-                                </div>
+                                
                             </div>
     
                             <!-- 게시판 리스트 -->
