@@ -1,3 +1,9 @@
+/**
+ * 작성자: 김태현
+ * 작성일자: 2023-10-12
+ * 내용: 내가 푼 알고리즘들을 조회하고 처리하는 컨트롤러 클래스입니다.
+ */
+
 package com.ktdsuniversity.edu.myalgorithm.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
