@@ -70,8 +70,8 @@ public class AlgorithmQuestionController {
 	
 	@PostMapping("/algorithm/question/create")
 	public String doAlgorithmQuestionCreate(@Valid @ModelAttribute AlgorithmQuestionVO algorithmQuestionVO
+											, BindingResult bindingResult
 			                              , Model model
-			                              , BindingResult bindingResult
 			                              , @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 
 		if(bindingResult.hasErrors()) {
