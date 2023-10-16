@@ -2,10 +2,7 @@ package com.ktdsuniversity.edu.beans;
 
 import java.util.Enumeration;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerInterceptor;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 
@@ -33,6 +30,7 @@ public class CheckSessionInterceptor implements HandlerInterceptor{
 		}
 		return true;
 	}
+	
 	private String getQueryString(HttpServletRequest request) {
 		String queryString = "";
 		
@@ -52,5 +50,4 @@ public class CheckSessionInterceptor implements HandlerInterceptor{
 		}
 		return queryString;
 	}
-	
 }

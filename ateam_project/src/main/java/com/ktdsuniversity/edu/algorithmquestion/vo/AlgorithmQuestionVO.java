@@ -14,10 +14,10 @@ public class AlgorithmQuestionVO {
 	
 	private String companyAlgorithmQuestionId;
 	
-	//@NotBlank(message = "알고리즘 카테고리를 선택해주세요.")
+	@NotBlank(message = "알고리즘 카테고리를 선택해주세요.")
 	private String algorithmCategoryId;
 	
-	//@NotBlank(message = "난이도를 선택해주세요.")
+	@NotBlank(message = "난이도를 선택해주세요.")
 	private String algorithmTierId;
 	
 	private String algorithmWriter;

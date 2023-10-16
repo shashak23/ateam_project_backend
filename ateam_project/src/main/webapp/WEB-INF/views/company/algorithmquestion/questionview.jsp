@@ -103,12 +103,12 @@
 				        <a href="/member/auth">로그인하기</a>
 				    </c:if>
 				    <!-- 기업회원이 로그인 했을 시 -->
-				    <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq companyVO.memberVO.email}">
+				    <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.memberType eq 'COMPANY'}">
 					    <a href="/algorithm/question/update/${algorithmQuestionVO.companyAlgorithmQuestionId}">수정</a>
 					    <a href="/algorithm/question/delete/${algorithmQuestionVO.companyAlgorithmQuestionId}">삭제</a>
 				    </c:if>
 				    <!-- 일반회원이 로그인 했을 시 -->
-				    <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq generalMemberVO.generalMemberEmail}">
+				    <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.memberType eq 'GENERAL_MEMBER'}">
 				        <input type="submit" id="submit" value="제출 후 채점하기" />
 				    </c:if>
 				</div>

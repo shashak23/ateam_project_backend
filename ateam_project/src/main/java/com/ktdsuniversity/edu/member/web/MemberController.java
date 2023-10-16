@@ -41,11 +41,10 @@ public class MemberController {
 	}
 	@PostMapping("/member/auth")
 	public String doSignIn(@Validated(MemberAuthGroup.class) @ModelAttribute MemberVO memberVO
-						  ,BindingResult bindingResult
-						  ,@RequestParam(required = false,defaultValue = "/home/main")
-					       String next
-						  ,HttpSession session
-						  ,Model model) {
+						  , BindingResult bindingResult
+						  , @RequestParam(required = false, defaultValue = "/home/main") String next
+						  , HttpSession session
+						  , Model model) {
 		if(bindingResult.hasErrors()) {
 			model.addAttribute("memberVO", memberVO);
 			return "member/memberlogin";
