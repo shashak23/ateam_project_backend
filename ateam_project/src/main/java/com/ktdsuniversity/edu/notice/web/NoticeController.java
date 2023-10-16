@@ -1,3 +1,9 @@
+/**
+ * 작성자: 김태현
+ * 작성일자: 2023-10-13
+ * 내용: 공지를 보여주고 처리하는 화면의 클래스입니다.
+ */
+
 package com.ktdsuniversity.edu.notice.web;
 
 import org.springframework.beans.factory.annotation.Autowired;

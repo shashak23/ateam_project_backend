@@ -1,9 +1,12 @@
+/**
+ * 작성자: 김태현
+ * 작성일자: 2023-10-12
+ * 내용: 내가 푼 알고리즘 문제를 저장할 VO클래스입니다.
+ */
+
 package com.ktdsuniversity.edu.myalgorithm.vo;
 
-import java.util.List;
-
 import com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionVO;
-import com.ktdsuniversity.edu.companyalgorithmquestion.vo.CompanyAlgorithmQuestionVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 
 public class MyAlgorithmVO extends AlgorithmQuestionVO {

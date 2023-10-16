@@ -1,3 +1,9 @@
+/**
+ * 작성자: 김태현
+ * 작성일자: 2023-10-11
+ * 내용: 공통 코드 테이블의 조회 화면을 보여주고 처리하는 클래스입니다.
+ */
+
 package com.ktdsuniversity.edu.commoncode.web;
 
 import java.util.HashSet;

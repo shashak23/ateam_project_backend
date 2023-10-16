@@ -1,3 +1,9 @@
+/**
+ * 작성자: 김태현
+ * 작성일시: 2023-10-13
+ * 내용: 공지 테이블의 VO입니다.
+ */
+
 package com.ktdsuniversity.edu.notice.vo;
 
 import com.ktdsuniversity.edu.member.vo.MemberVO;
