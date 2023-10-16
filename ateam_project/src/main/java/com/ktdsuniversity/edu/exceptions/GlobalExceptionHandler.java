@@ -1,3 +1,9 @@
+/*
+ * 작성자: 장보늬
+ * 작성일자: 2023-10-15
+ * 내용: 공통예외 처리를 총 관리합니다.
+ */
+
 package com.ktdsuniversity.edu.exceptions;
 
 import org.springframework.ui.Model;
@@ -13,7 +19,9 @@ public class GlobalExceptionHandler {
 		return "error/404";
 	}
 	
-	@ExceptionHandler({FileNotExistsException.class, MakeXlsxFileException.class})
+	@ExceptionHandler({FileNotExistsException.class
+		             , MakeXlsxFileException.class
+		             , RuntimeException.class})
 	public String viewErrorPage(RuntimeException runtimeException, Model model) {
 		model.addAttribute("message", runtimeException.getMessage());
 		return "error/500";

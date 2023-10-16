@@ -36,7 +36,9 @@
 
 	<jsp:include page="../member/membermenu.jsp"></jsp:include>
 
-	<h1>게시글 작성</h1>
+	<h1>게시글 조회</h1>
+	
+	<form name="generalPostVO" method="post" ModelAttribute="generalPostVO" >
 	<div class="grid">
 		<label for="postTitle">제목</label>
 		<div>${generalPostVO.postTitle}</div>
@@ -51,27 +53,20 @@
 		<div>${generalPostVO.postDate}</div>
 
 		<label for="postContent">내용</label> 
-		<div>${generalPostVO.postContent}</div> 
+		<div>${generalPostVO.postContent}</div>
 
 		<div class="btn-group">
-		<div class="right-align">
+			<div class="right-align">
  			<!-- <a href="/freeboard/update/${generalPostVO.generalPostId}">수정</a> -->
-			 <form method="post" action="/freeboard/update">
 				<div class="update_btn">
 					<div class="btn">
-						<input type="submit" value="수정">
+						<a href="/freeboard/update/${generalPostVO.generalPostId}">수정</a>
+			            <a href="/freeboard/delete/${generalPostVO.generalPostId}">삭제</a>	
 					</div>
 				</div>
-			</form>
-			<!-- <a href="/freeboard/delete/${generalPostVO.generalPostId}">삭제</a> -->
-			<form method="post" action="/freeboard/delete">
-				<div class="delete_btn">
-					<div class="btn">
-						<input type="submit" value="삭제">
-					</div>
-				</div>
-			</form>
-		</div> 
+			</div> 
+		</div>
 	</div>
+	</form>
 </body>
 </html>

@@ -40,7 +40,7 @@ public class GeneralPostDAOImpl extends SqlSessionDaoSupport
 	}
 
 	@Override
-	public int createNewBoard(GeneralPostVO generalPostVO) {
+	public int createNewFreeBoard(GeneralPostVO generalPostVO) {
 		return getSqlSession().insert("createNewBoard", generalPostVO);
 	}
 
@@ -64,7 +64,7 @@ public class GeneralPostDAOImpl extends SqlSessionDaoSupport
 	}
 	
 	@Override
-	public int deleteOneBoard (int generalPostId) {
+	public int deleteOneBoard (String generalPostId) {
 		return getSqlSession().delete("deleteOneBoard", generalPostId);
 	}
 	

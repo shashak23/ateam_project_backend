@@ -1,3 +1,9 @@
+/*
+ * 작성자: 장보늬
+ * 작성일자: 2023-10-15
+ * 내용: 기업소식 게시판의 CRUD 실행결과를 저장합니다.
+ */
+
 package com.ktdsuniversity.edu.companynews.service;
 
 import java.io.File;
@@ -6,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ktdsuniversity.edu.beans.FileHandler;
@@ -34,6 +41,7 @@ public class CompanyNewsServiceImpl implements CompanyNewsService {
 		return companyNewsListVO;
 	}
 
+	@Transactional
 	@Override
 	public boolean createNewCompanyNews(CompanyNewsVO companyNewsVO, MultipartFile file) {
 		StoredFile storedFile = fileHandler.storeFile(file);
@@ -50,6 +58,7 @@ public class CompanyNewsServiceImpl implements CompanyNewsService {
 		return createCount > 0;	
 	}
 
+	@Transactional
 	@Override
 	public CompanyNewsVO getOneCompanyNews(String companyNewsPostId, boolean isIncrease) {
 		if (isIncrease) {
@@ -68,6 +77,7 @@ public class CompanyNewsServiceImpl implements CompanyNewsService {
 		return companyNewsVO;
 	}
 
+	@Transactional
 	@Override
 	public boolean updateOneCompanyNews(CompanyNewsVO companyNewsVO, MultipartFile file) {
 		
@@ -94,6 +104,7 @@ public class CompanyNewsServiceImpl implements CompanyNewsService {
 		return updateCount > 0;
 	}
 
+	@Transactional
 	@Override
 	public boolean deleteOneCompanyNews(String companyNewsPostId) {
 		int deleteCount = companyNewsDAO.deleteOneCompanyNews(companyNewsPostId);
