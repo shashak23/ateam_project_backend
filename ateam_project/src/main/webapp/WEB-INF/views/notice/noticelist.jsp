@@ -53,6 +53,7 @@
         left: 50%;
         transform: translate(-50%, -80%);
         z-index: 10;
+        box-shadow: 0 0 10px #19191948;
         border: 1px solid;
         width: 500px;
         padding: 30px;
