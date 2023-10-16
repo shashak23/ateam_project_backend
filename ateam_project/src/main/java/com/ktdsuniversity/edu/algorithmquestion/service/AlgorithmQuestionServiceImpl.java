@@ -31,7 +31,7 @@ public class AlgorithmQuestionServiceImpl implements AlgorithmQuestionService {
 		
 		AlgorithmQuestionListVO algorithmQuestionListVO = new AlgorithmQuestionListVO();
 		algorithmQuestionListVO.setAlgorithmQuestionCnt(algorithmQuestionDAO.getAlgorithmQuestionAllCount(searchAlgorithmQuestionVO));
-		algorithmQuestionListVO.setAlgorithmQuestionList(algorithmQuestionDAO.getAllAlgorithmQuestion());
+		algorithmQuestionListVO.setAlgorithmQuestionList(algorithmQuestionDAO.searchAllAlgorithmQuestion(searchAlgorithmQuestionVO));
 		
 		return algorithmQuestionListVO;
 	}
