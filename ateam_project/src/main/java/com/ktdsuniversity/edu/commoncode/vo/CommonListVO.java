@@ -1,3 +1,9 @@
+/**
+ * 작성자: 김태현
+ * 작성일자: 2023-10-11
+ * 내용: 공통 코드 테이블의 전체 목록을 저장할 VO클래스입니다.
+ */
+
 package com.ktdsuniversity.edu.commoncode.vo;
 
 import java.util.List;
