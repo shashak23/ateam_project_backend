@@ -49,12 +49,12 @@
 			 , DELETE_YN)
 			 VALUES (
 			   'NT-' || TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_NOTICE_PK.NEXTVAL, 6, 0)
-			 , 'admin@admin'
+			 , #{postWriter}
 			 , #{postTitle}
 			 , #{noticeContent}
 			 , SYSDATE
-			 , SYSDATE + 1
-			 , SYSDATE + 8
+			 , #{releaseStartDate}
+			 , #{releaseEndDate}
 			 , 'N')
 	</insert>
 	<update id="updateNotice"

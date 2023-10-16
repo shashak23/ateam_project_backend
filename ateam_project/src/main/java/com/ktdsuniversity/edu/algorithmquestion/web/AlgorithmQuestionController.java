@@ -30,7 +30,7 @@ public class AlgorithmQuestionController {
 	private AlgorithmQuestionService algorithmQuestionService;
 
 	@GetMapping("/algorithm/question/list")
-	public String viewAlgorithmQuestionList(Model model, @ModelAttribute SearchAlgorithmQuestionVO searchAlgorithmQuestionVO) {
+	public String viewAlgorithmQuestionList( @ModelAttribute SearchAlgorithmQuestionVO searchAlgorithmQuestionVO, Model model) {
 		AlgorithmQuestionListVO algorithmQuestionListVO = algorithmQuestionService.getAllAlgorithmQuestion(searchAlgorithmQuestionVO);
 		model.addAttribute("algorithmQuestionList", algorithmQuestionListVO);
 		model.addAttribute("searchAlgorithmQuestionVO", searchAlgorithmQuestionVO);
