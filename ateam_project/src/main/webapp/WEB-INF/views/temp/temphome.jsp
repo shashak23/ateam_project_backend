@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -128,12 +129,21 @@
 	<p>
 		※ 임시 홈페이지 입니다. (로그인 확인용)		
 	</p>
-	<div>
-		현재 로그인된 아이디: <strong>${sessionScope._LOGIN_USER_.email}</strong>
-	</div>
-	<div>
-		현재 로그인된 이름: <strong>${sessionScope._LOGIN_USER_.nickname}</strong>
-	</div>
+	<c:choose>
+		<c:when test="${empty sessionScope._LOGIN_USER_}">
+			<div>
+				로그인 하지 않았습니다.
+			</div>
+		</c:when>
+		<c:otherwise>
+			<div>
+				현재 로그인된 아이디: <strong>${sessionScope._LOGIN_USER_.email}</strong>
+			</div>
+			<div>
+				현재 로그인된 이름: <strong>${sessionScope._LOGIN_USER_.nickname}</strong>
+			</div>
+		</c:otherwise>
+	</c:choose>
 	<div class="create_container">
 		<div class="btn-close">&times;</div>
 		<h1 class="create_title">공지</h1>

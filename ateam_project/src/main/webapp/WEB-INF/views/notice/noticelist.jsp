@@ -7,6 +7,9 @@
 <meta charset="UTF-8">
 <title>공지 목록 테스트</title>
 <script src="/js/lib/jquery-3.7.1.js"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <style>
     * {
         margin: 0;
@@ -17,6 +20,14 @@
     .mb10 {
         display: block;
         margin-bottom: 10px;
+    }
+
+    .ck-editor__editable { 
+        height: 400px; 
+    }
+
+    .ck-content { 
+        font-size: 12px; 
     }
 
     .create_btn {
@@ -126,6 +137,18 @@
     .date_wrap {
         display: flex;
         justify-content: space-around;
+        align-items: center;
+    }
+
+    .dateSelector {
+        width: 150px;
+        height: 30px;
+        outline: none;
+        border: 1px solid #e5e5e5;
+    }
+
+    .dateSeslector::placeholder {
+        color: #e44545;
     }
 
     #start-date, #end-date {
@@ -194,14 +217,17 @@
             </div>
             <label for="noticeContent" class="mb10">내용</label>
             <div>
-                <textarea name="noticeContent" id="noticeContent" placeholder="내용을 입력해주세요."></textarea>
+                <textarea name="noticeContent" id="editor" placeholder="내용을 입력해주세요."></textarea>
+			</script>
             </div>
             <div class="date_wrap">
                 <label for="start-date">시작일</label>
-                <input type="date" name="releaseStartDate" id="start-date" />
+                <!-- <input type="date" name="releaseStartDate" id="start-date" /> -->
+                <input class="dateSelector" placeholder="ex) 2020-09-01" />
                 <span>~</span>
                 <label for="end-date">종료일</label>
-                <input type="date" name="releaseEndDate" id="end-date" />
+                <!-- <input type="date" name="releaseEndDate" id="end-date" /> -->
+                <input class="dateSelector" placeholder="ex) 2020-09-30" />
             </div>
             <div class="submit_btn_wrap">
                 <input type="submit" value="생성" class="submit_btn"/>
@@ -212,6 +238,10 @@
 
     <script>
         $().ready(function() {
+            // var dateSelector = document.querySelector('.dateSelector');
+            // dateSelector.flatpickr();
+            $('.dateSelector').flatpickr()
+
             $('.create_btn').click(function() {
                 $('.create_container, .overlay').addClass('active')
             })
@@ -219,6 +249,10 @@
             $('.btn-close, .overlay').click(function() {
                 $('.create_container, .overlay').removeClass('active')
             })
+
+            ClassicEditor.create( document.querySelector( '#editor' ), {
+			    language: "ko"
+			}); 
         })
     </script>
 </body>

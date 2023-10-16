@@ -13,6 +13,7 @@ import com.ktdsuniversity.edu.notice.vo.NoticeVO;
 public interface NoticeDAO {
 	public int getAllNoticeCount();
 	public List<NoticeVO> getNoticeAllList();
+	public List<NoticeVO> getValidateList();
 	public NoticeVO getOneNotice(String id);
 	public int createNotice(NoticeVO noticeVO);
 	public int updateNotice(NoticeVO noticeVO);

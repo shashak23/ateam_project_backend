@@ -8,13 +8,18 @@ package com.ktdsuniversity.edu.notice.vo;
 
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 
+import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.PastOrPresent;
+
 public class NoticeVO {
 	private String noticeId;
 	private String postWriter;
 	private String postTitle;
 	private String noticeContent;
 	private String postDate;
+	@PastOrPresent(message = "게시할 날짜를 입력해주세요.")
 	private String releaseStartDate;
+	@FutureOrPresent(message = "마지막 날짜를 입력해주세요.")
 	private String releaseEndDate;
 	private String deleteYn;
 	
