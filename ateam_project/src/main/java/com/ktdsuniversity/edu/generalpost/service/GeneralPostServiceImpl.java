@@ -34,8 +34,8 @@ public class GeneralPostServiceImpl implements GeneralPostService{
 	}
 
 	@Override
-	public boolean createNewBoard(GeneralPostVO generalPostVO) {
-		int boardCount = generalPostDAO.createNewBoard(generalPostVO);
+	public boolean createNewFreeBoard(GeneralPostVO generalPostVO) {
+		int boardCount = generalPostDAO.createNewFreeBoard(generalPostVO);
 		
 		return boardCount > 0;
 	}
@@ -56,8 +56,10 @@ public class GeneralPostServiceImpl implements GeneralPostService{
 	}
 
 	@Override
-	public boolean deleteOneBoard(GeneralPostVO generalPostVO) {
-		return false;
+	public boolean deleteOneBoard(String generalPostId) {
+		int deleteCount = generalPostDAO.deleteOneBoard(generalPostId);
+		
+		return deleteCount > 0;
 	}
 
 //	@Override

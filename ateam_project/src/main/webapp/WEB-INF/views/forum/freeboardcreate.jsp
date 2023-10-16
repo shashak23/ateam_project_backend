@@ -40,20 +40,12 @@
 
 	<h1> 자유게시판의 게시글 작성 </h1>
 	<form method = "post" >		
-		<!-- @Valid중 실패한 내용이 있다면
-			BindingResult에 존재하는 내용들을 출력한다 -->
-<!-- 		<div> -->
-<!-- 			<form:errors path="postTitle" element="div" cssClass="erros"/> -->
-<!-- 			<form:errors path="postWriterId" element="div" cssClass="erros"/> -->
-<!-- 			<form:errors path="postContent" element="div" cssClass="erros"/> -->
-<!-- 		</div> -->
-		
 		<div class = "grid">
 			<label for = "postTitle"> 제목 </label>
 			<input id = "postTitle" type = "text" name="postTitle" />
 			
-			<label for = "postWriterId"> 이메일 </label>
-			<input id = "postWriterId" type = "email" name = "postWriterId"/>
+			<!-- <label for = "postWriterId"> 이메일 </label>
+			<input id = "postWriterId" type = "email" name = "postWriterId"/> -->
 <!-- 
 			<label for = "file"> 첨부파일 </label>
 			<input id = "file" type = "file" name = "file" />
