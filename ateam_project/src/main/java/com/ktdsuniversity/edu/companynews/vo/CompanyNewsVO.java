@@ -1,3 +1,9 @@
+/*
+ * 작성자: 장보늬
+ * 작성일자: 2023-10-15
+ * 내용: 기업소식 게시판의 VO를 가집니다.
+ */
+
 package com.ktdsuniversity.edu.companynews.vo;
 
 import com.ktdsuniversity.edu.member.vo.MemberVO;
