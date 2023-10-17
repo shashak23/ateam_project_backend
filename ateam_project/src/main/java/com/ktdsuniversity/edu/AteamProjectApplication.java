@@ -16,7 +16,7 @@ public class AteamProjectApplication extends SpringBootServletInitializer {
 	protected SpringApplicationBuilder configure(SpringApplicationBuilder builder) {
 		return builder.sources(AteamProjectApplication.class);
 	}
-	
+	    
 	public static void main(String[] args) {
 		SpringApplication.run(AteamProjectApplication.class, args);
 	}
