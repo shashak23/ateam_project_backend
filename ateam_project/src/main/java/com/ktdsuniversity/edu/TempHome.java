@@ -11,10 +11,9 @@ import com.ktdsuniversity.edu.member.vo.MemberVO;
 public class TempHome {
 	
 	@GetMapping("home/main")
-	public ModelAndView home(@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+	public ModelAndView home() {
 		ModelAndView mav = new ModelAndView();
 		mav.setViewName("temp/temphome");
-		mav.addObject("member", memberVO);
 		return mav;
 	}
 }
