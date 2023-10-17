@@ -57,10 +57,13 @@ public class AlgorithmQuestionController {
 			                        , Model model) {
 		boolean isSuccess = algorithmQuestionService.createNewMyAlgorithm(myAlgorithmVO);
 		if(isSuccess) {
-			return("redirect:/algorithm/question/list");
+			return "redirect:/algorithm/question/list";
 		}
-		model.addAttribute("myAlgorithmVO", myAlgorithmVO);
-		return "company/algorithmquestion/questionview";
+		else {
+			model.addAttribute("myAlgorithmVO", myAlgorithmVO);
+			return "company/algorithmquestion/questionview";
+			
+		}
 	}
 	
 	@GetMapping("/algorithm/question/create")
@@ -70,7 +73,7 @@ public class AlgorithmQuestionController {
 	
 	@PostMapping("/algorithm/question/create")
 	public String doAlgorithmQuestionCreate(@Valid @ModelAttribute AlgorithmQuestionVO algorithmQuestionVO
-											, BindingResult bindingResult
+			                              , BindingResult bindingResult
 			                              , Model model
 			                              , @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@taglib prefix="c" uri="jakarta.tags.core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,11 +11,21 @@
 <script type="text/javascript" src="/js/lib/jquery-3.7.1.js"></script>
 <script type="text/javascript">
 	$().ready(function() {
+		
+		<!--
 		$("select[name=algorithmCategoryId]").change(function() {
             var category = 
                 $("select[name=algorithmCategoryId] option:selected").text();
             $("#algorithmCategoryId").val(category);
         })
+        -->
+		$('input:checkbox[name=algorithmCategoryId]').each(function (index) {
+			if($(this).is(":checked")==true){
+				var category = $(this).val()
+				$("")
+			}
+		})
+		
         $("select[name=algorithmTierId]").change(function() {
             var tier = 
                 $("select[name=algorithmTierId] option:selected").text();
@@ -100,6 +111,13 @@
 		<div class="grid">
 		    <div class=flex>
 		    <label for="algorithmCategoryId">알고리즘 카테고리</label>
+		    <c:forEach items="${commonCodeList.commonCodeList}" var="commoncode">
+		        <c:if test="${commoncode.codeType eq '알고리즘카테고리'}">
+		            <input type="checkbox" name="algorithmCategoryId" value="${commoncode.codeContent}" />${commoncode.codeContent}
+		        </c:if>
+		    </c:forEach>
+		    
+		    <!-- 
 		    <select name="algorithmCategoryId">
                 <option value="">선택하세요</option>
                 <option value="수학">수학</option>
@@ -111,6 +129,7 @@
                 <option value="문자열">문자열</option>
                 <option value="기타">기타</option>
             </select>
+		     -->
             <label for="algorithmTierId">난이도</label>
 		    <select name="algorithmTierId" >
                 <option value="">선택하세요 (난이도최하:1 / 난이도최상:5)</option>

@@ -104,7 +104,7 @@
 		, LIKE_CNT
 		, DELETE_YN)
 		VALUES
-		 (SEQ_COMPANY_ALGORITHM_QUESTION_PK.NEXTVAL
+		 ('AQ-' || TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_COMPANY_ALGORITHM_QUESTION_PK.NEXTVAL, 6, '0')
 		, #{algorithmCategoryId}
 		, #{algorithmTierId}
 		, #{algorithmWriter}
@@ -127,7 +127,7 @@
         , CORRECT_ANSWER_YN
         , DELETE_YN)
         VALUES
-         (SEQ_MY_ALGORITHM_QUESTION_PK.NEXTVAL
+         ('MA-' || TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_MY_ALGORITHM_QUESTION_PK.NEXTVAL, 6, '0')
         , #{email}
         , #{companyAlgorithmQuestionId}
         , #{myAnswer}

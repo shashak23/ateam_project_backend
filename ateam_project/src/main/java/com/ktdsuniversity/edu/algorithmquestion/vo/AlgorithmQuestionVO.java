@@ -6,6 +6,7 @@
 
 package com.ktdsuniversity.edu.algorithmquestion.vo;
 
+import com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO;
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 import com.ktdsuniversity.edu.member.vo.CompanyVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
@@ -44,6 +45,16 @@ public class AlgorithmQuestionVO {
 	private GeneralMemberVO generalMemberVO;
 	
 	private CompanyVO companyVO;
+	
+	private CommonCodeVO commonCodeVO;
+	
+	public CommonCodeVO getCommonCodeVO() {
+		return commonCodeVO;
+	}
+	
+	public void setCommonCodeVO(CommonCodeVO commonCodeVO) {
+		this.commonCodeVO = commonCodeVO;
+	}
 	
 	public GeneralMemberVO getGeneralMemberVO() {
 		return generalMemberVO;
