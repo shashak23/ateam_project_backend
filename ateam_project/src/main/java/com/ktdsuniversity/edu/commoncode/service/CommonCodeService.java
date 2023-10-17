@@ -7,10 +7,13 @@
 
 package com.ktdsuniversity.edu.commoncode.service;
 
+import java.util.List;
+
 import com.ktdsuniversity.edu.commoncode.vo.CommonCodeListVO;
 import com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO;
 
 public interface CommonCodeService {
 	public CommonCodeListVO getAllHashtag();
 	public boolean createHashtag(CommonCodeVO commonVO);
+	public List<CommonCodeListVO> search(String codeName);
 }

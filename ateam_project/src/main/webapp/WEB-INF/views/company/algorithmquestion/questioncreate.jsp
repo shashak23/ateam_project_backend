@@ -12,6 +12,17 @@
 <script type="text/javascript">
 	$().ready(function() {
 		
+		$.get("/code/알고리즘카테고리", function(response) {
+			for (var i = 0; i < response.length; i++) {
+				var code = response[i]
+				var label = $("<label for='"+code.codeId+"'>"+code.codeContent+"</label>")
+				var checkbox = $("<input type='checkbox' id='"+code.codeId+"' name='algorithmCategoryId' value='"+code.codeId+"' />");
+				$("#algorithm_category").append(label);
+				$("#algorithm_category").append(checkbox);
+			}
+			
+		});
+		
 		<!--
 		$("select[name=algorithmCategoryId]").change(function() {
             var category = 
@@ -111,11 +122,7 @@
 		<div class="grid">
 		    <div class=flex>
 		    <label for="algorithmCategoryId">알고리즘 카테고리</label>
-		    <c:forEach items="${commonCodeList.commonCodeList}" var="commoncode">
-		        <c:if test="${commoncode.codeType eq '알고리즘카테고리'}">
-		            <input type="checkbox" name="algorithmCategoryId" value="${commoncode.codeContent}" />${commoncode.codeContent}
-		        </c:if>
-		    </c:forEach>
+		    <div id="algorithm_category"></div>
 		    
 		    <!-- 
 		    <select name="algorithmCategoryId">

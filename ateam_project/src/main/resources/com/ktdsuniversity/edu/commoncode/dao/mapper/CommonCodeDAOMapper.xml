@@ -28,4 +28,14 @@
 			 , '해시태그'
 			 , #{codeContent})
 	</insert>
+	
+	<select id="search"
+			parameterType="string"
+			resultType="com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO">
+		SELECT CODE_ID
+		     , CODE_TYPE
+		     , CODE_CONTENT
+		  FROM COMMON_CODE
+		 WHERE CODE_TYPE = #{_parameter}
+	</select>
 </mapper>

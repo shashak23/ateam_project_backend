@@ -9,10 +9,12 @@ package com.ktdsuniversity.edu.commoncode.dao;
 
 import java.util.List;
 
+import com.ktdsuniversity.edu.commoncode.vo.CommonCodeListVO;
 import com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO;
 
 public interface CommonCodeDAO {
 	public int getHashtagAllNumber();
 	public List<CommonCodeVO> getAllHashtag();
 	public int createHashtag(CommonCodeVO commonCodeVO);
+	public List<CommonCodeListVO> search(String codeName);
 }

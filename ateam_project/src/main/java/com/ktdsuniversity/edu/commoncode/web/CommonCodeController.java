@@ -9,13 +9,16 @@ package com.ktdsuniversity.edu.commoncode.web;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ktdsuniversity.edu.commoncode.service.CommonCodeService;
@@ -26,6 +29,12 @@ import com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO;
 public class CommonCodeController {
 	@Autowired
 	private CommonCodeService commonCodeService;
+	
+	@GetMapping("/code/{codeName}")
+	@ResponseBody
+	public List<CommonCodeListVO> searchCode(@PathVariable String codeName) {
+		return commonCodeService.search(codeName);
+	}
 	
 	@GetMapping("/home/hashtaglist")
 	public ModelAndView viewHashtagList() {

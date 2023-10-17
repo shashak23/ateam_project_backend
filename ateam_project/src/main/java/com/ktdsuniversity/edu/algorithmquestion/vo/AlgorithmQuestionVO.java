@@ -46,16 +46,6 @@ public class AlgorithmQuestionVO {
 	
 	private CompanyVO companyVO;
 	
-	private CommonCodeVO commonCodeVO;
-	
-	public CommonCodeVO getCommonCodeVO() {
-		return commonCodeVO;
-	}
-	
-	public void setCommonCodeVO(CommonCodeVO commonCodeVO) {
-		this.commonCodeVO = commonCodeVO;
-	}
-	
 	public GeneralMemberVO getGeneralMemberVO() {
 		return generalMemberVO;
 	}

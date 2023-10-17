@@ -14,6 +14,7 @@ import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ktdsuniversity.edu.commoncode.vo.CommonCodeListVO;
 import com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO;
 
 @Repository
@@ -38,5 +39,10 @@ public class CommonCodeDAOImpl extends SqlSessionDaoSupport implements CommonCod
 	@Override
 	public int createHashtag(CommonCodeVO commonVO) {
 		return getSqlSession().insert("createHashtag", commonVO);
+	}
+	
+	@Override
+	public List<CommonCodeListVO> search(String codeName) {
+		return getSqlSession().selectList("search", codeName);
 	}
 }

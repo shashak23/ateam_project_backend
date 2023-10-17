@@ -7,6 +7,8 @@
 
 package com.ktdsuniversity.edu.commoncode.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,5 +35,10 @@ public class CommonCodeServiceImpl implements CommonCodeService {
 	@Override
 	public boolean createHashtag(CommonCodeVO commonCodeVO) {
 		return commonCodeDAO.createHashtag(commonCodeVO) > 0;
-	};
+	}
+	
+	@Override
+	public List<CommonCodeListVO> search(String codeName) {
+		return commonCodeDAO.search(codeName);
+	}
 }
