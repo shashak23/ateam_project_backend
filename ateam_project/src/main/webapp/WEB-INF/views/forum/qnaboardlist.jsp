@@ -1,30 +1,24 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <!DOCTYPE html>
-<html lang="ko">
-  <head>
-    <meta charset="utf-8" />
-    <title>SnapChat</title>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta
-      name="viewport"
-      id="viewport"
-      content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, width=device-width"
-    />
-		<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-		<link rel="stylesheet" type="text/css" href="./css/swiper.min.css">
-    <link rel="stylesheet" type="text/css" href="./css/style.css" />
-  </head>
-  <body>
+ <!DOCTYPE html>
+    <html lang="ko">
+      <head>
+        <meta charset="utf-8" />
+        
+        
+        <title>SnapChat</title>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta
+          name="viewport"
+          id="viewport"
+          content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, width=device-width"
+        />
+            <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+            <link rel="stylesheet" type="text/css" href="/css/swiper.min.css">
+        <link rel="stylesheet" type="text/css" href="/css/style.css" />
+      </head>
+      <body>
     <div id="wrap" class="wrap">
 
       <!-- 상단영역 -->
@@ -125,9 +119,7 @@
 							<div class="btn btn_st_2">
 								<a href="#">조회</a>
 							</div>
-							<div class="btn btn_st_3">
-								<a href="#">등록</a>
-							</div>
+						
 						</div>
 
 						<!-- 게시판 리스트 -->
@@ -156,41 +148,19 @@
 														</tr>
 												</thead>
 												<tbody>
-														<tr>
-																<td class="c_num">5</td>
-																<td class="c_info"><a href="#">자유게시판입니다</a></td>
-																<td class="c_date">홍길동</td>
-																<td class="c_date">2020.12.4</td>
-																<td class="c_date">100</td>
-														</tr>
-														<tr>
-																<td class="c_num">4</td>
-																<td class="c_info"><a href="#">자유게시판입니다</a></td>
-																<td class="c_date">홍길동</td>
-																<td class="c_date">2020.12.4</td>
-																<td class="c_date">100</td>
-														</tr>
-														<tr>
-																<td class="c_num">3</td>
-																<td class="c_info"><a href="#">자유게시판입니다</a></td>
-																<td class="c_date">홍길동</td>
-																<td class="c_date">2020.12.4</td>
-																<td class="c_date">100</td>
-														</tr>
-														<tr>
-																<td class="c_num">2</td>
-																<td class="c_info"><a href="#">자유게시판입니다</a></td>
-																<td class="c_date">홍길동</td>
-																<td class="c_date">2020.12.4</td>
-																<td class="c_date">100</td>
-														</tr>
-														<tr>
-																<td class="c_num">1</td>
-																<td class="c_info"><a href="#">자유게시판입니다</a></td>
-																<td class="c_date">홍길동</td>
-																<td class="c_date">2020.12.4</td>
-																<td class="c_date">100</td>
-														</tr>
+													<c:forEach items="${generalPostListVO.generalPostList}" var="qnaboard">
+                                                            <tr>
+                                                                <td>${qnaboard.generalPostId}</td>
+                                                                <td>
+                                                                    <a href="/qnaboard/view/${qnaboard.generalPostId}">
+                                                                        ${qnaboard.postTitle}
+                                                                    </a>
+                                                                </td>
+                                                                <td>${qnaboard.postWriterId}</td>
+                                                                <td>${qnaboard.postDate}</td>
+                                                                <td>${qnaboard.viewCnt}</td>
+                                                            </tr>
+                                                        </c:forEach>	
 														
 												</tbody>
 										</table>
@@ -199,7 +169,7 @@
 								<!-- button -->
 								<div class="btn_set btn_right">
 										<div class="btn btn_st_1">
-												<a href="#">글쓰기</a>
+												<a href="/qnaboard/create">글쓰기</a>
 										</div>
 								</div>
 
@@ -258,7 +228,4 @@
 		<script src="./js/common.js"></script>
 
   </body>
-</html>
-
-</body>
 </html>

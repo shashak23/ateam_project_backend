@@ -38,19 +38,20 @@ public class WebConfig implements WebMvcConfigurer {
 	public void addInterceptors(InterceptorRegistry registry) {
 		//세션 체크를 하지 않을URL을 적어주세요.
 		
-		List<String> checkSessionExcludePatterns = new ArrayList<>();
-		checkSessionExcludePatterns.add("/member/signup/**");
-		checkSessionExcludePatterns.add("/member/auth");
-		checkSessionExcludePatterns.add("/freeboard/list");
-		checkSessionExcludePatterns.add("/home/main");
-		checkSessionExcludePatterns.add("/js/**");
-		checkSessionExcludePatterns.add("/css/**");
-		checkSessionExcludePatterns.add("/img/**");
-		checkSessionExcludePatterns.add("/news/**");
-		checkSessionExcludePatterns.add("/algorithm/question/list");
-		checkSessionExcludePatterns.add("/algorithm/question/view/**");
-		checkSessionExcludePatterns.add("/error");
-		checkSessionExcludePatterns.add("/member/regist");
+
+		List<String> excludePatterns = new ArrayList<>();
+		excludePatterns.add("/member/signup/**");
+		excludePatterns.add("/member/auth");
+		excludePatterns.add("/freeboard/list");
+		excludePatterns.add("/home/main");
+		excludePatterns.add("/js/**");
+		excludePatterns.add("/css/**");
+		excludePatterns.add("/img/**");
+		excludePatterns.add("/news/**");
+		excludePatterns.add("/error");
+		excludePatterns.add("/algorithm/**");
+		excludePatterns.add("/member/regist");
+		excludePatterns.add("/qnaboard/list");
 
 		
 		registry.addInterceptor(new CheckSessionInterceptor())

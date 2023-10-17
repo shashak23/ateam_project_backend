@@ -33,7 +33,7 @@ public class FreePostController {
 	// 전체조회
 	@GetMapping("/freeboard/list")
 	public ModelAndView freeBoardList() {
-		GeneralPostListVO generalPostListVO = generalPostService.getAllBoard();
+		GeneralPostListVO generalPostListVO = generalPostService.getAllFreeBoard();
 		ModelAndView modelAndView = new ModelAndView();
 		
 		modelAndView.setViewName("forum/freeboardlist");
@@ -66,7 +66,8 @@ public class FreePostController {
 		System.out.println("삭제여부: " + generalPostVO.getDeleteYn());
 		
 		ModelAndView modelAndView = new ModelAndView();
-		
+		log.debug("1--컨트롤러---자유----------------------");
+
 		// Validation 체크한 것 중 실패한 것이 있다면.
 		if (bindingResult.hasErrors()) {
 			// 글쓰기 화면을 보여준다.
@@ -95,7 +96,7 @@ public class FreePostController {
 	public ModelAndView freeBoardSingle(@PathVariable String generalPostId) {
 //		log.debug("되는거 맞지요?--------------------------------------");
 //		log.debug("글번호: " + generalPostId);
-		GeneralPostVO generalPostVO = generalPostService.getOneBoard(generalPostId);
+		GeneralPostVO generalPostVO = generalPostService.getOneFreeBoard(generalPostId);
 		ModelAndView view = new ModelAndView();
 		view.setViewName("forum/freeboardview");
 		view.addObject("generalPostVO", generalPostVO);
@@ -106,7 +107,7 @@ public class FreePostController {
 	   @GetMapping("/freeboard/update/{generalPostId}")
 	   public ModelAndView viewUpdatePage(@PathVariable String generalPostId) {
 		   // 요런식으로다가 서비스에서 -> DB에서 게시글 ID로 게시글 가져오는 쿼리 실행
-	      GeneralPostVO generalPostVO  = generalPostService.getOneBoard(generalPostId); 
+	      GeneralPostVO generalPostVO  = generalPostService.getOneFreeBoard(generalPostId); 
 	                              
 	      ModelAndView view = new ModelAndView();
 	      view.setViewName("forum/freeboardupdate");
@@ -123,7 +124,7 @@ public class FreePostController {
 		System.out.println("게시글 내용: " + generalPostVO.getPostContent());
 		
 		ModelAndView view = new ModelAndView();
-		boolean isSuccess = generalPostService.updateOneBoard(generalPostVO);
+		boolean isSuccess = generalPostService.updateOneFreeBoard(generalPostVO);
 		if(isSuccess) {
 			// 게시글의 수정이 성공이라면
 			view.setViewName("redirect:/freeboard/list");
@@ -150,18 +151,17 @@ public class FreePostController {
 	
 	// 삭제 - 근데 수정
 	@PostMapping("/freeboard/delete/{generalPostId}")
-	public ModelAndView deleteFreeBoardPost (@ModelAttribute GeneralPostVO generalPostVO
-											, BindingResult bindingResult
-											, @PathVariable String generalPostId) {
+	public ModelAndView deleteFreeBoard(@ModelAttribute GeneralPostVO generalPostVO
+										, BindingResult bindingResult
+										, @PathVariable String generalPostId) {
 
 		ModelAndView view = new ModelAndView();
 		
-		GeneralPostVO origingeneralPostVO  = generalPostService.getOneBoard(generalPostVO.getGeneralPostId());		
+		GeneralPostVO origingeneralPostVO  = generalPostService.getOneFreeBoard(generalPostVO.getGeneralPostId());		
 		log.debug("삭제여부 : " + origingeneralPostVO.getDeleteYn());
-		log.debug("아이디 나와라 얍!!! : " + generalPostId + "-------------------------");
 		generalPostVO.getGeneralPostId();
 		// 게시글을 등록한다.
-		boolean isSuccess = generalPostService.deleteOneBoard(origingeneralPostVO.getGeneralPostId());
+		boolean isSuccess = generalPostService.deleteOneFreeBoard(origingeneralPostVO.getGeneralPostId());
 		if (isSuccess) {
 			view.setViewName("redirect:/freeboard/list");
 			return view;
