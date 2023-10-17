@@ -19,5 +19,4 @@ public class GeneralPostListVO {
 	public void setGeneralPostList(List<GeneralPostVO> generalPostList) {
 		this.generalPostList = generalPostList;
 	}
-	
 }

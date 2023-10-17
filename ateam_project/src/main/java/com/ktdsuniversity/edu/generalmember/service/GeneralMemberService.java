@@ -1,8 +1,16 @@
+/**
+ * 작성자 : 김광원
+ * 작성일자 : 2023-10-24
+ * 수정일자 : 2023-10-25 수정자(김광원)
+ * 내용 : 일반회원을 위한 Service입니다.
+ */
 package com.ktdsuniversity.edu.generalmember.service;
 
 import java.util.List;
 
+
 import com.ktdsuniversity.edu.career.vo.CareerVO;
+import com.ktdsuniversity.edu.education.vo.EducationVO;
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 
@@ -17,6 +25,10 @@ public interface GeneralMemberService {
 	 */
 	public List<GeneralMemberVO> getAllGeeralMemberList(String generalMemberEmail);
 	/**
+	 * 학력 리스트
+	 */
+	public List<EducationVO> getAllEducationList(String generalMemberEmail); 
+	/**
 	 * 회원 닉네임 조회
 	 */
 	public MemberVO getSelectNickname(String generalMemberEmail);
@@ -25,6 +37,7 @@ public interface GeneralMemberService {
 	 * 일반회원 조회
 	 */
 	public GeneralMemberVO getSelectGeneralMember(String generalMemberEmail);
+	
 	/**
 	 * 주소 수정
 	 */
