@@ -2,29 +2,29 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ktdsuniversity.edu.commoncode.dao.CommonCodeDAO">
+<mapper namespace="com.ktdsuniversity.edu.commoncode.dao.CommonDAO">
 	<select id="getAllHashtag"
-			resultType="com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO">
+			resultType="com.ktdsuniversity.edu.commoncode.vo.CommonVO">
 		SELECT CODE_ID
 		     , CODE_TYPE
 		     , CODE_CONTENT
-		  FROM COMMON_CODE
+		  FROM COMMON
 		 WHERE CODE_TYPE = '해시태그'
 	</select>
 	<select id="getHashtagAllNumber"
 			resultType="_int">
 		SELECT COUNT(1)
-		  FROM COMMON_CODE
+		  FROM COMMON
 		 WHERE CODE_TYPE = '해시태그'
 	</select>
 	<insert id="createHashtag"
-			parameterType="com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO">
-		INSERT INTO COMMON_CODE (
+			parameterType="com.ktdsuniversity.edu.commoncode.vo.CommonVO">
+		INSERT INTO COMMON (
 			   CODE_ID
 			 , CODE_TYPE
 			 , CODE_CONTENT)
 			 VALUES (
-			   'CC-' || TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_COMMON_CODE_PK.NEXTVAL, 6, 0)
+			   'CM-' || TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_COMMON_PK.NEXTVAL, 6, 0)
 			 , '해시태그'
 			 , #{codeContent})
 	</insert>

@@ -1,6 +1,5 @@
 /**
  * 작성자: 김태현
- * 수정자: 장보늬(2023-10-17)
  * 작성일자: 2023-10-11
  * 내용: 공통 코드 테이블의 전체 목록을 저장할 VO클래스입니다.
  */
@@ -9,11 +8,11 @@ package com.ktdsuniversity.edu.commoncode.vo;
 
 import java.util.List;
 
-public class CommonCodeListVO {
+public class CommonListVO {
 	private int allCommonNumber;
-	private List<CommonCodeVO> commonCodeList;
+	private List<CommonVO> commonList;
 	private int hashtagCnt;
-	private List<CommonCodeVO> hashtagList;
+	private List<CommonVO> hashtagList;
 	
 	
 	public int getAllCommonNumber() {
@@ -22,11 +21,11 @@ public class CommonCodeListVO {
 	public void setAllCommonNumber(int allCommonNumber) {
 		this.allCommonNumber = allCommonNumber;
 	}
-	public List<CommonCodeVO> getCommonCodeList() {
-		return commonCodeList;
+	public List<CommonVO> getCommonList() {
+		return commonList;
 	}
-	public void setCommonCodeListVO(List<CommonCodeVO> commonCodeList) {
-		this.commonCodeList = commonCodeList;
+	public void setCommonListVO(List<CommonVO> commonList) {
+		this.commonList = commonList;
 	}
 	public int getHashtagCnt() {
 		return hashtagCnt;
@@ -34,10 +33,10 @@ public class CommonCodeListVO {
 	public void setHashtagCnt(int hashtagCnt) {
 		this.hashtagCnt = hashtagCnt;
 	}
-	public List<CommonCodeVO> getHashtagList() {
+	public List<CommonVO> getHashtagList() {
 		return hashtagList;
 	}
-	public void setHashtagList(List<CommonCodeVO> hashtagList) {
+	public void setHashtagList(List<CommonVO> hashtagList) {
 		this.hashtagList = hashtagList;
 	}
 	

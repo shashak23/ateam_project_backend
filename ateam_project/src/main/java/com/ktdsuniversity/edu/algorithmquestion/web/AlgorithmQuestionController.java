@@ -59,7 +59,7 @@ public class AlgorithmQuestionController {
 		if(isSuccess) {
 			return("redirect:/algorithm/question/list");
 		}
-		model.addAttribute("myAlgorithmVO", myAlgorithmVO);
+		model.addAttribute("algorithmQuestionVO", myAlgorithmVO);
 		return "company/algorithmquestion/questionview";
 	}
 	
@@ -81,7 +81,7 @@ public class AlgorithmQuestionController {
 		
 		algorithmQuestionVO.setAlgorithmWriter(memberVO.getEmail());
 		
-		boolean isSuccess = algorithmQuestionService.createNewAlgorithmQuestion(algorithmQuestionVO);
+		boolean isSuccess = algorithmQuestionService.createNewsAlgorithmQuestion(algorithmQuestionVO);
 		if(isSuccess) {
 			return "redirect:/algorithm/question/list";
 		}
