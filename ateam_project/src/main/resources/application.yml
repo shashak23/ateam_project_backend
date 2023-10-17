@@ -8,10 +8,10 @@ spring:
             prefix: /WEB-INF/views/
             suffix: .jsp
     datasource:
-        url: jdbc:oracle:thin:@mcjang.iptime.org:1521:XE
+        url: jdbc:oracle:thin:@192.168.211.31:1521:XE
         driver-class-name: oracle.jdbc.driver.OracleDriver
-        username: ATEAM
-        password: ateam
+        username: aTeam
+        password: 1234
 mybatis:
     config-location: classpath:mybatis/mybatis-config.xml
     mapper-locations: classpath:com/ktdsuniversity/edu/**/dao/mapper/*.xml

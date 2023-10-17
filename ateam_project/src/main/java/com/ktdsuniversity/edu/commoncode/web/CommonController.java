@@ -1,6 +1,5 @@
 /**
  * 작성자: 김태현
- * 수정자: 장보늬(2023-10-17)
  * 작성일자: 2023-10-11
  * 내용: 공통 코드 테이블의 조회 화면을 보여주고 처리하는 클래스입니다.
  */
@@ -18,32 +17,32 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ktdsuniversity.edu.commoncode.service.CommonCodeService;
-import com.ktdsuniversity.edu.commoncode.vo.CommonCodeListVO;
-import com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO;
+import com.ktdsuniversity.edu.commoncode.servicee.CommonService;
+import com.ktdsuniversity.edu.commoncode.vo.CommonListVO;
+import com.ktdsuniversity.edu.commoncode.vo.CommonVO;
 
 @Controller
-public class CommonCodeController {
+public class CommonController {
 	@Autowired
-	private CommonCodeService commonCodeService;
+	private CommonService commonService;
 	
 	@GetMapping("/home/hashtaglist")
 	public ModelAndView viewHashtagList() {
 		ModelAndView mav = new ModelAndView();
-		CommonCodeListVO commonCodeListVO = commonCodeService.getAllHashtag();
+		CommonListVO commonListVO = commonService.getAllHashtag();
 		mav.setViewName("temp/hashtagselect");
-		mav.addObject("commonCodeListVO", commonCodeListVO);
+		mav.addObject("commonListVO", commonListVO);
 		
 		return mav;
 	}
 	
 	@PostMapping("/home/hashtaglist")
-	public ModelAndView createHashtag(@ModelAttribute CommonCodeVO commonCodeVO) {
+	public ModelAndView createHashtag(@ModelAttribute CommonVO commonVO) {
 		ModelAndView mav = new ModelAndView();
-		CommonCodeListVO commonCodeListVO = commonCodeService.getAllHashtag();
-		List<CommonCodeVO> originHashtagList = commonCodeListVO.getHashtagList();
+		CommonListVO commonListVO = commonService.getAllHashtag();
+		List<CommonVO> originHashtagList = commonListVO.getHashtagList();
 		
-		String[] hashtagArr = commonCodeVO.getCodeContent().split(" ");
+		String[] hashtagArr = commonVO.getCodeContent().split(" ");
 		
 		// 중복된 값 제거
 		Set<String> hashtagSet = new HashSet<>();
@@ -55,7 +54,7 @@ public class CommonCodeController {
 		boolean isExist = false;
 		
 		for (String hashtag : hashtagSet) {
-			for (CommonCodeVO originhashtag : originHashtagList) {
+			for (CommonVO originhashtag : originHashtagList) {
 				if (hashtag.equals(originhashtag.getCodeContent())) {
 					count++;
 					isExist = true;
@@ -63,8 +62,8 @@ public class CommonCodeController {
 				}
 			}
 			if (!isExist) {
-				commonCodeVO.setCodeContent(hashtag);
-				boolean isSuccess = commonCodeService.createHashtag(commonCodeVO);
+				commonVO.setCodeContent(hashtag);
+				boolean isSuccess = commonService.createHashtag(commonVO);
 				
 				if (isSuccess) {
 					count++;

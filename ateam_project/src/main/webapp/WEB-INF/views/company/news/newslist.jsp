@@ -95,7 +95,7 @@
                           <c:when test="${not empty companyNewsList.companyNewsList}">
                               <c:forEach items="${companyNewsList.companyNewsList}" var="companynews">
                         			<div class="contents">
-                                        <div class="company_name">${companynews.memberVO.nickname}(${companyNewsVO.memberVO.email})</div>
+                                        <div class="company_name">${companynews.memberVO.nickname}</div>
                                         <div class="news_title">
                                             <a href="/news/view/${companynews.companyNewsPostId}">
                                                 <c:out value="${companynews.postTitle}" />

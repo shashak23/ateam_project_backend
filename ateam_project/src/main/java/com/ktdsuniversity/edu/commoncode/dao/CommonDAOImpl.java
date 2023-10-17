@@ -1,6 +1,5 @@
 /**
  * 작성자: 김태현
- * 수정자: 장보늬(2023-10-17)
  * 작성일자: 2023-10-11
  * 내용: 공통 코드 테이블의 쿼리를 수행할 클래스입니다.
  */
@@ -14,10 +13,10 @@ import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO;
+import com.ktdsuniversity.edu.commoncode.vo.CommonVO;
 
 @Repository
-public class CommonCodeDAOImpl extends SqlSessionDaoSupport implements CommonCodeDAO {
+public class CommonDAOImpl extends SqlSessionDaoSupport implements CommonDAO {
 	@Autowired
 	@Override
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
@@ -31,12 +30,12 @@ public class CommonCodeDAOImpl extends SqlSessionDaoSupport implements CommonCod
 	}
 	
 	@Override
-	public List<CommonCodeVO> getAllHashtag() {
+	public List<CommonVO> getAllHashtag() {
 		return getSqlSession().selectList("getAllHashtag");
 	}
 
 	@Override
-	public int createHashtag(CommonCodeVO commonVO) {
+	public int createHashtag(CommonVO commonVO) {
 		return getSqlSession().insert("createHashtag", commonVO);
 	}
 }

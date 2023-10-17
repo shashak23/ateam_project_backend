@@ -15,7 +15,7 @@ public interface AlgorithmQuestionService {
 	
 	public AlgorithmQuestionListVO getAllAlgorithmQuestion(SearchAlgorithmQuestionVO searchAlgorithmQuestionVO);
 	
-	public boolean createNewAlgorithmQuestion(AlgorithmQuestionVO algorithmQuestionVO);
+	public boolean createNewsAlgorithmQuestion(AlgorithmQuestionVO algorithmQuestionVO);
 	
 	public AlgorithmQuestionVO getOneAlgorithmQuestion(String companyAlgorithmQuestionId, boolean isIncrease);
 	

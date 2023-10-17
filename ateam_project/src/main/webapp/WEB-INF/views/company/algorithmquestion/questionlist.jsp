@@ -53,10 +53,8 @@
 		padding: 10px;
 		color: #333;
 	}
-	
 </style>
 <body>
-    <jsp:include page="../../member/membermenu.jsp"></jsp:include>
     <form id="search-form"
 	      method="get"
 	      action="/algorithm/question/list">
@@ -70,18 +68,6 @@
 			    <button id="search-btn">검색</button>
 	      </div>
 	</form>
-	<div class="btn-group">
-		<div class="right-align">
-			<!-- 로그인 하지 않았을 때 -->
-		    <c:if test="${empty sessionScope._LOGIN_USER_}">
-		        <a href="/member/auth">로그인하기</a>
-		    </c:if>
-			<!-- 기업회원에게만 보임 -->
-			<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.memberType eq 'COMPANY'}">
-				<a href="/algorithm/question/create">게시글 등록</a>
-			</c:if>
-		</div>
-	</div>
 	<table class="table">
 		<thead>
 			<tr>
@@ -119,6 +105,7 @@
 		</c:choose>
 		</tbody>
 	</table>
+
 	
 
 
