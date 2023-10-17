@@ -14,7 +14,9 @@ public class NoticeVO {
 	private String postTitle;
 	private String noticeContent;
 	private String postDate;
+//	@PastOrPresent(message = "게시할 날짜를 입력해주세요.")
 	private String releaseStartDate;
+//	@FutureOrPresent(message = "마지막 날짜를 입력해주세요.")
 	private String releaseEndDate;
 	private String deleteYn;
 	

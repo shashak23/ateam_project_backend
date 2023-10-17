@@ -62,7 +62,7 @@ public class GeneralPostDAOImpl extends SqlSessionDaoSupport
 	public GeneralPostVO getOneFreeBoard(String generalPostId) {
 		return getSqlSession().selectOne("getOneFreeBoard", generalPostId);
 	}
-	
+
 	@Override
 	public int updateOneFreeBoard(GeneralPostVO generalPostVO) {
 		return getSqlSession().update("updateOneFreeBoard", generalPostVO);

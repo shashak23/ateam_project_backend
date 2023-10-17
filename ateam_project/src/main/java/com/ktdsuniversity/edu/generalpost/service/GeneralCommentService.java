@@ -1,3 +1,8 @@
+/**
+ * 작성자: 남현욱
+ * 작성일자: 2023-10-16
+ * 내용: 질문 답변 게시판 댓글을 위한 service입니다.
+ */
 package com.ktdsuniversity.edu.generalpost.service;
 
 import java.util.List;
@@ -8,8 +13,8 @@ public interface GeneralCommentService {
 
 	public List<GeneralCommentVO> getAllComments(String generalPostId);
 	public boolean createNewComment(GeneralCommentVO generalCommentVO);
-	public boolean deleteOneComment(String generalCommentId,String commentWriterId);
+	public boolean deleteOneComment(String generalCommentId,String commentWriter);
 	public boolean modifyOneComment(GeneralCommentVO generalCommentVO);
-	public boolean recommendOneComment(String generalCommentId, String commentWriterId);
-	public boolean reportOneComment(String generalCommentId, String commentWriterId);
+	public boolean recommendOneComment(String generalCommentId, String commentWriter);
+	public boolean reportOneComment(String generalCommentId, String commentWriter);
 }

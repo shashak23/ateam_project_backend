@@ -31,19 +31,26 @@ public class AlgorithmQuestionServiceImpl implements AlgorithmQuestionService {
 		
 		AlgorithmQuestionListVO algorithmQuestionListVO = new AlgorithmQuestionListVO();
 		algorithmQuestionListVO.setAlgorithmQuestionCnt(algorithmQuestionDAO.getAlgorithmQuestionAllCount(searchAlgorithmQuestionVO));
-		algorithmQuestionListVO.setAlgorithmQuestionList(algorithmQuestionDAO.getAllAlgorithmQuestion());
+		algorithmQuestionListVO.setAlgorithmQuestionList(algorithmQuestionDAO.searchAllAlgorithmQuestion(searchAlgorithmQuestionVO));
 		
 		return algorithmQuestionListVO;
 	}
 
 	@Override
-	public boolean createNewsAlgorithmQuestion(AlgorithmQuestionVO algorithmQuestionVO) {
+	public boolean createNewAlgorithmQuestion(AlgorithmQuestionVO algorithmQuestionVO) {
 		
-		int createCount = algorithmQuestionDAO.createNewsAlgorithmQuestion(algorithmQuestionVO);
+		int createCount = algorithmQuestionDAO.createNewAlgorithmQuestion(algorithmQuestionVO);
 	
 		return createCount > 0;
 	}
 
+
+	@Override
+	public boolean createNewMyAlgorithm(MyAlgorithmVO myAlgorithmVO) {
+		int createMyAlgorithmCount = algorithmQuestionDAO.createNewMyAlgorithm(myAlgorithmVO);
+		return createMyAlgorithmCount > 0;
+	}
+	
 	@Override
 	public AlgorithmQuestionVO getOneAlgorithmQuestion(String companyAlgorithmQuestionId, boolean isIncrease) {
 		if(isIncrease) {
@@ -71,9 +78,4 @@ public class AlgorithmQuestionServiceImpl implements AlgorithmQuestionService {
 		return deleteCount > 0;
 	}
 
-	@Override
-	public boolean createNewMyAlgorithm(MyAlgorithmVO myAlgorithmVO) {
-		int createMyAlgorithmCount = myAlgorithmDAO.createNewMyAlgorithm(myAlgorithmVO);
-		return createMyAlgorithmCount > 0;
-	}
 }

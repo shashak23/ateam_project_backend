@@ -20,15 +20,16 @@
           FROM COMPANY_ALGORITHM_QUESTION CAQ
          INNER JOIN MEMBER M
             ON CAQ.ALGORITHM_WRITER = M.EMAIL
-        <if test='searchKeyword != null and searchKeyword != ""'>
+	       WHERE DELETE_YN = 'N'
+		<if test='searchKeyword != null and searchKeyword != ""'>
 		    <if test='searchType == "algorithmTitle"'>
-		 WHERE CAQ.ALGORITHM_TITLE LIKE '%' || #{searchKeyword} || '%'
+		   AND CAQ.ALGORITHM_TITLE LIKE '%' || #{searchKeyword} || '%'
 		    </if>
 		    <if test='searchType == "algorithmContent"'>
-		 WHERE CAQ.ALGORITHM_CONTENT LIKE '%' || #{searchKeyword} || '%'
+		   AND CAQ.ALGORITHM_CONTENT LIKE '%' || #{searchKeyword} || '%'
 		    </if>
 		    <if test='searchType == "algorithmWriter"'>
-		 WHERE CAQ.ALGORITHM_WRITER LIKE '%' || #{searchKeyword} || '%'
+		   AND M.NICKNAME LIKE '%' || #{searchKeyword} || '%'
 		    </if>
 		</if>
         
@@ -73,22 +74,22 @@
 		  FROM COMPANY_ALGORITHM_QUESTION CAQ
 		 INNER JOIN MEMBER M
 		    ON CAQ.ALGORITHM_WRITER = M.EMAIL
+		 WHERE DELETE_YN = 'N'
 		<if test='searchKeyword != null and searchKeyword != ""'>
 		    <if test='searchType == "algorithmTitle"'>
-		 WHERE CAQ.ALGORITHM_TITLE LIKE '%' || #{searchKeyword} || '%'
+		   AND CAQ.ALGORITHM_TITLE LIKE '%' || #{searchKeyword} || '%'
 		    </if>
 		    <if test='searchType == "algorithmContent"'>
-		 WHERE CAQ.ALGORITHM_CONTENT LIKE '%' || #{searchKeyword} || '%'
+		   AND CAQ.ALGORITHM_CONTENT LIKE '%' || #{searchKeyword} || '%'
 		    </if>
 		    <if test='searchType == "algorithmWriter"'>
-		 WHERE CAQ.ALGORITHM_WRITER LIKE '%' || #{searchKeyword} || '%'
+		   AND M.NICKNAME LIKE '%' || #{searchKeyword} || '%'
 		    </if>
 		</if>
-		 WHERE DELETE_YN = 'N'
 		 ORDER BY POST_DATE DESC <!-- 최신글순 -->
 	</select>
 	
-	<insert id="createNewsAlgorithmQuestion"
+	<insert id="createNewAlgorithmQuestion"
 	        parameterType="com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionVO">
 	    INSERT INTO COMPANY_ALGORITHM_QUESTION
 		 (COMPANY_ALGORITHM_QUESTION_ID
@@ -116,7 +117,23 @@
 		, 'N')
 	</insert>
 	
-	
+	<insert id="createNewMyAlgorithm"
+	        parameterType="com.ktdsuniversity.edu.myalgorithm.vo.MyAlgorithmVO">
+		INSERT INTO MY_ALGORITHM_QUESTION
+		 (MY_ALGORITHM_QUESTION_ID
+        , GENERAL_MEMBER_EMAIL
+        , COMPANY_ALGORITHM_QUESTION_ID
+        , MY_ANSWER
+        , CORRECT_ANSWER_YN
+        , DELETE_YN)
+        VALUES
+         (SEQ_MY_ALGORITHM_QUESTION_PK.NEXTVAL
+        , #{email}
+        , #{companyAlgorithmQuestionId}
+        , #{myAnswer}
+        , CASE WHEN DBMS_RANDOM.NORMAL >= 0 THEN 'Y' ELSE 'N' END <!-- 랜덤으로 줘야 함 -->
+        , 'N')
+	</insert>
 	
 	<update id="increaseViewCount"
 	        parameterType="string">

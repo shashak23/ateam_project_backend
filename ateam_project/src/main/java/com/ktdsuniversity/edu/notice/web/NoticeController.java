@@ -8,12 +8,15 @@ package com.ktdsuniversity.edu.notice.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ktdsuniversity.edu.member.vo.MemberVO;
 import com.ktdsuniversity.edu.notice.service.NoticeService;
 import com.ktdsuniversity.edu.notice.vo.NoticeListVO;
 import com.ktdsuniversity.edu.notice.vo.NoticeVO;
@@ -34,15 +37,39 @@ public class NoticeController {
 		return mav;
 	}
 	
+	@PostMapping("/notice/list")
+	public ModelAndView viewAllNotice( @ModelAttribute NoticeVO noticeVO,
+									  @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+		ModelAndView mav = new ModelAndView();
+		noticeVO.setPostWriter(memberVO.getEmail());
+		
+		boolean isSuccess = noticeService.createNotice(noticeVO);
+		
+		if (isSuccess) {
+			mav.setViewName("redirect:/notice/list");
+			return mav;
+		}
+		
+		else {
+			mav.addObject("noticeVO", noticeVO);
+			mav.setViewName("notice/noticelist");
+			return mav;
+		}
+		
+	}
+	
 	@GetMapping("/notice/create")
 	public String viewCreateNotify() {
 		return "/notice/noticecreate";
 	}
 	
 	@PostMapping("/notice/create")
-	public ModelAndView doCreateaNotify(@ModelAttribute NoticeVO noticeVO) {
+	public ModelAndView doCreateaNotify(@ModelAttribute NoticeVO noticeVO,
+										@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 		ModelAndView mav = new ModelAndView();
-		System.out.println("전입니다.");
+		
+		noticeVO.setPostWriter(memberVO.getEmail());
+		
 		boolean isSuccess = noticeService.createNotice(noticeVO);
 		System.out.println();
 		

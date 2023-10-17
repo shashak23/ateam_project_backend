@@ -32,9 +32,9 @@
 				<!-- 로그인 상태 -->
 				<li style="margin-right: 15px;">
 					${sessionScope._LOGIN_USER_.nickname}
+					<a href="/member/logout">로그아웃</a>
 				</li>
 				<li>
-					<a href="/member/logout">로그아웃</a>
 				</li>
 			</c:otherwise>
 		</c:choose>

@@ -36,7 +36,7 @@ public class AlgorithmQuestionController {
 	private AlgorithmQuestionService algorithmQuestionService;
 
 	@GetMapping("/algorithm/question/list")
-	public String viewAlgorithmQuestionList(Model model, @ModelAttribute SearchAlgorithmQuestionVO searchAlgorithmQuestionVO) {
+	public String viewAlgorithmQuestionList( @ModelAttribute SearchAlgorithmQuestionVO searchAlgorithmQuestionVO, Model model) {
 		AlgorithmQuestionListVO algorithmQuestionListVO = algorithmQuestionService.getAllAlgorithmQuestion(searchAlgorithmQuestionVO);
 		model.addAttribute("algorithmQuestionList", algorithmQuestionListVO);
 		model.addAttribute("searchAlgorithmQuestionVO", searchAlgorithmQuestionVO);
@@ -59,7 +59,7 @@ public class AlgorithmQuestionController {
 		if(isSuccess) {
 			return("redirect:/algorithm/question/list");
 		}
-		model.addAttribute("algorithmQuestionVO", myAlgorithmVO);
+		model.addAttribute("myAlgorithmVO", myAlgorithmVO);
 		return "company/algorithmquestion/questionview";
 	}
 	
@@ -70,8 +70,8 @@ public class AlgorithmQuestionController {
 	
 	@PostMapping("/algorithm/question/create")
 	public String doAlgorithmQuestionCreate(@Valid @ModelAttribute AlgorithmQuestionVO algorithmQuestionVO
+											, BindingResult bindingResult
 			                              , Model model
-			                              , BindingResult bindingResult
 			                              , @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 
 		if(bindingResult.hasErrors()) {
@@ -81,7 +81,7 @@ public class AlgorithmQuestionController {
 		
 		algorithmQuestionVO.setAlgorithmWriter(memberVO.getEmail());
 		
-		boolean isSuccess = algorithmQuestionService.createNewsAlgorithmQuestion(algorithmQuestionVO);
+		boolean isSuccess = algorithmQuestionService.createNewAlgorithmQuestion(algorithmQuestionVO);
 		if(isSuccess) {
 			return "redirect:/algorithm/question/list";
 		}

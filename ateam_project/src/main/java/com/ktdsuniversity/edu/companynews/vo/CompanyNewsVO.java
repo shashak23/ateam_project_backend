@@ -9,6 +9,7 @@ package com.ktdsuniversity.edu.companynews.vo;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 
 public class CompanyNewsVO {
@@ -24,10 +25,8 @@ public class CompanyNewsVO {
 	
 	private String postDate;
 	
-	//@NotNull(message = "대표이미지를 첨부해주세요.")
 	private String fileName;
 	
-	//@NotNull(message = "대표이미지를 첨부해주세요.")
 	private String originFileName;
 	
 	private int viewCnt;
