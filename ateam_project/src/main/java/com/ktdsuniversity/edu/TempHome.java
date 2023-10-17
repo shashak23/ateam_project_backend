@@ -31,9 +31,7 @@ public class TempHome {
 	private NoticeService noticeService;
 	
 	@GetMapping("home/main")
-	public ModelAndView home(@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
-		
-
+	public ModelAndView home() {
 		ModelAndView mav = new ModelAndView();
 		
 		NoticeListVO noticeListVO = noticeService.getValidateList();
@@ -43,7 +41,6 @@ public class TempHome {
 		NoticeVO noticeVO = noticeListVO.getNoticeList().get(rdIndex);
 		
 		mav.setViewName("temp/temphome");
-		mav.addObject("member", memberVO);
 		mav.addObject("noticeVO", noticeVO);
 		return mav;
 	}

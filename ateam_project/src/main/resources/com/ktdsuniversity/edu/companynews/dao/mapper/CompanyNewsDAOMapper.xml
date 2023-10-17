@@ -35,6 +35,7 @@
 		     , CNP.LIKE_CNT
 		     , CNP.DELETE_YN
 		     , M.NICKNAME
+		     , M.EMAIL
 		  FROM COMPANY_NEWS_POST CNP
 		 INNER JOIN MEMBER M
 		    ON M.EMAIL = CNP.POST_WRITER
@@ -56,7 +57,7 @@
 		, LIKE_CNT
 		, DELETE_YN)
 		VALUES
-		 (SEQ_COMPANY_NEWS_POST_PK.NEXTVAL
+		 ('CN-' || TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_COMPANY_NEWS_POST_PK.NEXTVAL, 6, '0')
 		, #{postWriter}
 		, #{postTitle}
 		, #{postContent}
@@ -89,6 +90,7 @@
 		     , CNP.LIKE_CNT
 		     , CNP.DELETE_YN
 		     , M.NICKNAME
+		     , M.EMAIL
 		  FROM COMPANY_NEWS_POST CNP
 		 INNER JOIN MEMBER M
 		    ON M.EMAIL = CNP.POST_WRITER
