@@ -1,6 +1,7 @@
 /**
  * 작성자: 김태현
  * 수정자: 장보늬(2023-10-17)
+ * 		 김태현(2023-10-17)
  * 작성일자: 2023-10-11
  * 내용: 공통 코드 테이블의 조회 화면을 보여주고 처리하는 클래스입니다.
  */
@@ -9,7 +10,6 @@ package com.ktdsuniversity.edu.commoncode.web;
 
 import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +39,7 @@ public class CommonCodeController {
 	@GetMapping("/home/hashtaglist")
 	public ModelAndView viewHashtagList() {
 		ModelAndView mav = new ModelAndView();
-		CommonCodeListVO commonCodeListVO = commonCodeService.getAllHashtag();
+		CommonCodeListVO commonCodeListVO = commonCodeService.getAllCommonType("해시태그");
 		mav.setViewName("temp/hashtagselect");
 		mav.addObject("commonCodeListVO", commonCodeListVO);
 		
@@ -47,33 +47,33 @@ public class CommonCodeController {
 	}
 	
 	@PostMapping("/home/hashtaglist")
-	public ModelAndView createHashtag(@ModelAttribute CommonCodeVO commonCodeVO) {
+	public ModelAndView createCommonCode(@ModelAttribute CommonCodeVO commonCodeVO) {
 		ModelAndView mav = new ModelAndView();
-		CommonCodeListVO commonCodeListVO = commonCodeService.getAllHashtag();
-		List<CommonCodeVO> originHashtagList = commonCodeListVO.getHashtagList();
+		CommonCodeListVO commonCodeListVO = commonCodeService.getAllCommonType("해시태그");
+		List<CommonCodeVO> originCommonType = commonCodeListVO.getCommonCodeList();
 		
-		String[] hashtagArr = commonCodeVO.getCodeContent().split(" ");
+		String[] commonTypeArr = commonCodeVO.getCodeContent().split(" ");
 		
-		// 중복된 값 제거
-		Set<String> hashtagSet = new HashSet<>();
-		for (String str : hashtagArr) {
-			hashtagSet.add(str);
+		// 중복된 값이 제거된 타입 셋 생성
+		Set<String> commonTypeSet = new HashSet<>();
+		for (String str : commonTypeArr) {
+			commonTypeSet.add(str);
 		}
 		
 		int count = 0;
 		boolean isExist = false;
 		
-		for (String hashtag : hashtagSet) {
-			for (CommonCodeVO originhashtag : originHashtagList) {
-				if (hashtag.equals(originhashtag.getCodeContent())) {
+		for (String item : commonTypeSet) {
+			for (CommonCodeVO originhashtag : originCommonType) {
+				if (item.equals(originhashtag.getCodeContent())) {
 					count++;
 					isExist = true;
 					break;
 				}
 			}
 			if (!isExist) {
-				commonCodeVO.setCodeContent(hashtag);
-				boolean isSuccess = commonCodeService.createHashtag(commonCodeVO);
+				commonCodeVO.setCodeContent(item);
+				boolean isSuccess = commonCodeService.createCommonCode(commonCodeVO);
 				
 				if (isSuccess) {
 					count++;
@@ -82,7 +82,7 @@ public class CommonCodeController {
 			isExist = false;
 		}
 		
-		if (count == hashtagSet.size()) {
+		if (count == commonTypeSet.size()) {
 			mav.setViewName("redirect:/home/hashtaglist");
 			return mav;
 		}

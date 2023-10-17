@@ -1,6 +1,7 @@
 /**
  * 작성자: 김태현
  * 수정자: 장보늬(2023-10-17)
+ * 		 김태현(2023-10-17)
  * 작성일자: 2023-10-11
  * 내용: 공통 코드 테이블의 쿼리를 수행할 클래스입니다.
  */
@@ -27,18 +28,18 @@ public class CommonCodeDAOImpl extends SqlSessionDaoSupport implements CommonCod
 
 
 	@Override
-	public int getHashtagAllNumber() {
-		return getSqlSession().selectOne("getHashtagAllNumber");
+	public int getCommonTypeAllCount(String codeName) {
+		return getSqlSession().selectOne("getHashtagAllNumber", codeName);
 	}
 	
 	@Override
-	public List<CommonCodeVO> getAllHashtag() {
+	public List<CommonCodeVO> getAllCommonType(String codeName) {
 		return getSqlSession().selectList("getAllHashtag");
 	}
 
 	@Override
-	public int createHashtag(CommonCodeVO commonVO) {
-		return getSqlSession().insert("createHashtag", commonVO);
+	public int createCommonCode(CommonCodeVO commonCodeVO) {
+		return getSqlSession().insert("createHashtag", commonCodeVO);
 	}
 	
 	@Override

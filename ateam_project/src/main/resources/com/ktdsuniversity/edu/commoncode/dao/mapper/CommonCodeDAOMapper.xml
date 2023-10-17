@@ -1,23 +1,26 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<!-- 수정자: 김태현(2023-10-17) -->
+
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ktdsuniversity.edu.commoncode.dao.CommonCodeDAO">
-	<select id="getAllHashtag"
+	<select id="getAllCommonType"
+			parameterType="string"
 			resultType="com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO">
 		SELECT CODE_ID
 		     , CODE_TYPE
 		     , CODE_CONTENT
 		  FROM COMMON_CODE
-		 WHERE CODE_TYPE = '해시태그'
+		 WHERE CODE_TYPE = #{_parameter}
 	</select>
-	<select id="getHashtagAllNumber"
+	<select id="getCommonTypeAllCount"
+			parameterType="string"
 			resultType="_int">
 		SELECT COUNT(1)
 		  FROM COMMON_CODE
-		 WHERE CODE_TYPE = '해시태그'
+		 WHERE CODE_TYPE = #{_parameter}
 	</select>
-	<insert id="createHashtag"
+	<insert id="createCommonCode"
 			parameterType="com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO">
 		INSERT INTO COMMON_CODE (
 			   CODE_ID
@@ -25,10 +28,9 @@
 			 , CODE_CONTENT)
 			 VALUES (
 			   'CC-' || TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_COMMON_CODE_PK.NEXTVAL, 6, 0)
-			 , '해시태그'
+			 , #{codeType}
 			 , #{codeContent})
 	</insert>
-	
 	<select id="search"
 			parameterType="string"
 			resultType="com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO">
