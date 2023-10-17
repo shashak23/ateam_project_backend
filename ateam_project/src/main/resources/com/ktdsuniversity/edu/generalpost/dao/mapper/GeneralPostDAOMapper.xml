@@ -24,7 +24,7 @@
 			parameterType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
 		INSERT INTO GENERAL_POST 
 			(GENERAL_POST_ID
-			, POST_WRITER_ID
+			, POST_WRITER
 			, BOARD_ID
 			, POST_TITLE
 			, POST_CONTENT
@@ -34,7 +34,7 @@
 			, DELETE_YN) 
 		VALUES 
 		 (SEQ_GENERAL_POST_PK.NEXTVAL
-	        , #{postWriterId}
+	        , #{postWriter}
 			, 'CM-20231008-000029' 
 			, #{postTitle}
 			, #{postContent}
@@ -48,7 +48,7 @@
 		parameterType="string"
 		resultType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
 		SELECT GENERAL_POST_ID
-		     , POST_WRITER_ID
+		     , POST_WRITER
 		     , BOARD_ID
 		     , POST_TITLE
 		     , POST_CONTENT
@@ -63,7 +63,7 @@
 	<select id="getAllFreeBoard"
 	resultType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
 		SELECT GENERAL_POST_ID
-		     , POST_WRITER_ID
+		     , POST_WRITER
 		     , BOARD_ID
 		     , POST_TITLE
 		     , POST_CONTENT
@@ -73,7 +73,6 @@
 		     , DELETE_YN
 		  FROM GENERAL_POST
 		 WHERE DELETE_YN = 'N'
-		   AND BOARD_ID = 'CM-20231008-000029'
 		 ORDER BY POST_DATE DESC
 	</select>
 
@@ -98,7 +97,7 @@
 	<select id="getAllQnABoard"
 	resultType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
 		SELECT GENERAL_POST_ID
-		     , POST_WRITER_ID
+		     , POST_WRITER
 		     , BOARD_ID
 		     , POST_TITLE
 		     , POST_CONTENT
@@ -116,7 +115,7 @@
 			parameterType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
 		INSERT INTO GENERAL_POST 
 		 (GENERAL_POST_ID
-			 , POST_WRITER_ID
+			 , POST_WRITER
 			 , BOARD_ID
 			 , POST_TITLE
 			 , POST_CONTENT
@@ -126,7 +125,7 @@
 		 	 , DELETE_YN) 
 		VALUES 
 		 (SEQ_GENERAL_POST_PK.NEXTVAL
-	         , #{postWriterId}
+	         , #{postWriter}
 			 , 'CM-20231008-000028' 
 			 , #{postTitle}
 			 , #{postContent}
@@ -140,7 +139,7 @@
 		parameterType="string"
 		resultType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
 		SELECT GENERAL_POST_ID
-		     , POST_WRITER_ID
+		     , POST_WRITER
 		     , BOARD_ID
 		     , POST_TITLE
 		     , POST_CONTENT
