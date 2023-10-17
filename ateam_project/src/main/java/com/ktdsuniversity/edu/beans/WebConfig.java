@@ -50,6 +50,7 @@ public class WebConfig implements WebMvcConfigurer {
 		excludePatterns.add("/error");
 		excludePatterns.add("/algorithm/**");
 		excludePatterns.add("/member/regist");
+		excludePatterns.add("/qnaboard/list");
 
 		
 		registry.addInterceptor(new CheckSessionInterceptor())

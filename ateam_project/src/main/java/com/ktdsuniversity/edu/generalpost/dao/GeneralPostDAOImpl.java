@@ -1,3 +1,5 @@
+/**
+ */
 package com.ktdsuniversity.edu.generalpost.dao;
 
 import java.util.List;
@@ -29,50 +31,75 @@ public class GeneralPostDAOImpl extends SqlSessionDaoSupport
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		super.setSqlSessionTemplate(sqlSessionTemplate);
 	}
-	@Override
-	public int getBoardAllCount() {
-		return getSqlSession().selectOne("getBoardAllCount");
-	}
-
-	@Override
-	public List<GeneralPostVO> getAllBoard() {
-		return getSqlSession().selectList("getAllBoard");
-	}
-
-	@Override
-	public int createNewFreeBoard(GeneralPostVO generalPostVO) {
-		return getSqlSession().insert("createNewBoard", generalPostVO);
-	}
-
-	@Override
-	public GeneralPostVO getOneBoard(String generalPostId) {
-		return getSqlSession().selectOne("getOneBoard", generalPostId);
-	}
 	
 	public int increaseViewCount(int likeCnt) {
-		return getSqlSession().update("com.ktdsuniversity.edu.generalpost.dao.GeneralPostDAO.increaseViewCount", likeCnt);
+		return getSqlSession().update("increaseViewCount", likeCnt);
 	}
-
+	
 	@Override
 	public int increaseViewCount(String generalPostId) {
 		return getSqlSession().update("increaseViewCount", generalPostId);
 	}
 	
 	@Override
-	public int updateOneBoard(GeneralPostVO generalPostVO) {
-		return getSqlSession().update("updateOneBoard", generalPostVO);
+	public int getBoardAllCount() {
+		return getSqlSession().selectOne("getBoardAllCount");
+	}
+	// 자유게시판
+	@Override
+	public List<GeneralPostVO> getAllFreeBoard() {
+		return getSqlSession().selectList("getAllFreeBoard");
+	}
+
+	@Override
+	public int createNewFreeBoard(GeneralPostVO generalPostVO) {
+		log.debug("3--컨트롤러---자유----------------------");
+
+		return getSqlSession().insert("createNewFreeBoard", generalPostVO);
+	}
+
+	@Override
+	public GeneralPostVO getOneFreeBoard(String generalPostId) {
+		return getSqlSession().selectOne("getOneFreeBoard", generalPostId);
 	}
 	
 	@Override
-	public int deleteOneBoard (String generalPostId) {
-		return getSqlSession().delete("deleteOneBoard", generalPostId);
+	public int updateOneFreeBoard(GeneralPostVO generalPostVO) {
+		return getSqlSession().update("updateOneFreeBoard", generalPostVO);
 	}
 	
+	@Override
+	public int deleteOneFreeBoard (String generalPostId) {
+		return getSqlSession().delete("deleteOneFreeBoard", generalPostId);
+	}
 	
+	// 질답게시판
+	@Override
+	public List<GeneralPostVO> getAllQnABoard() {
+		return getSqlSession().selectList("getAllQnABoard");
+	}
+
+	@Override
+	public int createNewQnABoard(GeneralPostVO generalVO) {
+		log.debug("3------DAO---------------------------");
+
+		return getSqlSession().insert("createNewQnABoard");
+	}
+
+	@Override
+	public GeneralPostVO getOneQnABoard(String generalPostId) {
+		return getSqlSession().selectOne("getOneQnABoard");
+	}
+
+	@Override
+	public int updateOneQnABoard(GeneralPostVO generaVO) {
+		return getSqlSession().update("updateOneQnABoard");
+	}
+
+	@Override
+	public int deleteOneQnABoard(String generalPostId) {
+		return getSqlSession().delete("deleteOneQnABoard");
+	}
 	
-	
-//	@Override
-//	public int increaseViewCount(int likeCnt) {
-//		return getSqlSession().update("increaseViewCount", likeCnt);
-//	}
+
 }

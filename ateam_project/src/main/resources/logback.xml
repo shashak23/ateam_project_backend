@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- logback 설정
 scan: logback 설정 파일 변경 검사 여부
-scanPeriod: 몇 초 주기로 변경 검사를 시행할 것인지 설정 --> 
+scanPeriod: 몇 초 주기로 변경 검사를 시행할 것인지 설정 
+	작성자: 김시하
+	수정자: 김시하
+	작성일자: 2023-10-06
+	내용: 프로젝트 초기 설정--> 
 <configuration scan="true" scanPeriod="30 seconds">
 
 	<appender name="STDOUT"
@@ -17,13 +21,13 @@ scanPeriod: 몇 초 주기로 변경 검사를 시행할 것인지 설정 -->
 	</appender>
 	<appender name="FILE"
 		class="ch.qos.logback.core.rolling.RollingFileAppender">
-		<!-- 로그를 파일에기록하는 appender 당일 로그는 cafe.log에 쌓인다 -->
-		<file>C:/logs/cafe.log</file>
+		<!-- 로그를 파일에기록하는 appender 당일 로그는 aTeam.log에 쌓인다 -->
+		<file>C:/logs/aTeam.log</file>
 		<rollingPolicy
 			class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
 			<!-- daily rollover : 파일의 패턴에 따라 시간이 지나면 별도의 파일로 분리보관한다 cafe.2013-11-05.log 
 				이런식으로 -->
-			<fileNamePattern>C:/logs/cafe.%d{yyyy-MM-dd}.log</fileNamePattern>
+			<fileNamePattern>C:/logs/aTeam.%d{yyyy-MM-dd}.log</fileNamePattern>
 
 			<!-- keep 30 days' worth of history capped at 3GB total size 30일이 지난 로그는 
 				삭제된다 totalSizeCap : 보관하고 있는 로긍이 총량이 3기가가 넘어가면 가장 마지막 로그부터 삭제되고 로그가 지워지면 안된다. 
