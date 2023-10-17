@@ -11,14 +11,13 @@ public interface GeneralPostService {
 
 	public GeneralPostListVO getAllBoard();
 
-	public boolean createNewBoard(GeneralPostVO generalPostVO);
+	public boolean createNewFreeBoard(GeneralPostVO generalPostVO);
 
 	public GeneralPostVO getOneBoard(String generalPostId);
 	
 	public boolean updateOneBoard(GeneralPostVO generalPostVO);
 		
-	public boolean deleteOneBoard(GeneralPostVO generalPostVO);
-
+	public boolean deleteOneBoard(String generalPostId);
 	
 //	public GeneralPostVO getOneBoard(String generalPostId);
 }

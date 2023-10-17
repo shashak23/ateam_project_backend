@@ -9,34 +9,18 @@
 		<id column="MY_ALGORITHM_QUESTION_ID"
 			property="myAlgorithmQuestionId" />
 		<association property="memberVO"
-			javaType="com.ktdsuniversity.edu.member.vo.MemberVO">
+			javaType="com.ktdsuniversity.edu.member.vo.MemberVO"
+			autoMapping="true">
 			<id column="EMAIL" property="email" />
-			<result column="GENERAL_MEMBER_EMAIL" property="pw" />
-			<result column="PW" property="confirmPw" />
-			<result column="PW" property="salt" />
-			<result column="NICKNAME" property="nickname" />
-			<result column="INFO_AGREEMENT_YN" property="infoAgreementYn" />
-			<result column="PROFILE_PIC" property="profilePic" />
-			<result column="REGIST_DATE" property="registDate" />
-			<result column="MEMBER_TYPE" property="memberType" />
-			<result column="WITHDRAW_YN" property="withdrawYn" />
 		</association>
-		<association property="companyAlgorithmQuestionVO"
-			javaType="com.ktdsuniversity.edu.companyalgorithmquestion.vo.CompanyAlgorithmQuestionVO">
+		<association property="algorithmQuestionVO"
+			javaType="com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionVO"
+			autoMapping="true">
 			<id column="COMPANY_ALGORITHM_QUESTION_ID"
 				property="companyAlgorithmQuestionId" />
-			<result column="ALGORITHM_CATEGORY_ID"
-				property="algorithmCategoryId" />
-			<result column="ALGORITHM_TIER_ID" property="algorithmTierId" />
-			<result column="POST_WRITER" property="postWriter" />
-			<result column="POST_TITLE" property="postTitle" />
-			<result column="POST_CONTENT" property="postContent" />
-			<result column="POST_DATE" property="postDate" />
-			<result column="VIEW_CNT" property="viewCnt" />
-			<result column="LIKE_CNT" property="likeCnt" />
-			<result column="DELETE_YN" property="deleteYn" />
 		</association>
 	</resultMap>
+	
 	<select id="getAllNumber"
 			parameterType="string"
 			resultType="_int">
@@ -70,5 +54,23 @@
 		    ON CAQ.COMPANY_ALGORITHM_QUESTION_ID = MAQ.COMPANY_ALGORITHM_QUESTION_ID
 		 WHERE M.EMAIL = #{_parameter}
 	</select>
+	
+	<insert id="createNewMyAlgorithm"
+	        parameterType="com.ktdsuniversity.edu.myalgorithm.vo.MyAlgorithmVO">
+		INSERT INTO MY_ALGORITHM_QUESTION
+		 (MY_ALGORITHM_QUESTION_ID
+        , GENERAL_MEMBER_EMAIL
+        , COMPANY_ALGORITHM_QUESTION_ID
+        , MY_ANSWER
+        , CORRECT_ANSWER_YN
+        , DELETE_YN)
+        VALUES
+         (SEQ_MY_ALGORITHM_QUESTION_PK.NEXTVAL
+        , #{email}
+        , #{companyAlgorithmQuestionId}
+        , #{myAnswer}
+        , CASE WHEN DBMS_RANDOM.NORMAL >= 0 THEN 'Y' ELSE 'N' END <!-- 랜덤으로 줘야 함 -->
+        , 'N')
+	</insert>
 	
 </mapper>

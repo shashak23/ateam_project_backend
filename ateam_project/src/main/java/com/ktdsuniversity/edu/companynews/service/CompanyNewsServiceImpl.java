@@ -1,9 +1,18 @@
+/*
+ * 작성자: 장보늬
+ * 작성일자: 2023-10-15
+ * 내용: 기업소식 게시판의 CRUD 실행결과를 저장합니다.
+ */
+
 package com.ktdsuniversity.edu.companynews.service;
 
 import java.io.File;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ktdsuniversity.edu.beans.FileHandler;
@@ -11,10 +20,13 @@ import com.ktdsuniversity.edu.beans.FileHandler.StoredFile;
 import com.ktdsuniversity.edu.companynews.dao.CompanyNewsDAO;
 import com.ktdsuniversity.edu.companynews.vo.CompanyNewsListVO;
 import com.ktdsuniversity.edu.companynews.vo.CompanyNewsVO;
+import com.ktdsuniversity.edu.exceptions.PageNotFoundException;
 
 @Service
 public class CompanyNewsServiceImpl implements CompanyNewsService {
 
+	private Logger logger = LoggerFactory.getLogger(CompanyNewsServiceImpl.class);
+	
 	@Autowired
 	private FileHandler fileHandler;
 	
@@ -29,14 +41,15 @@ public class CompanyNewsServiceImpl implements CompanyNewsService {
 		return companyNewsListVO;
 	}
 
+	@Transactional
 	@Override
 	public boolean createNewCompanyNews(CompanyNewsVO companyNewsVO, MultipartFile file) {
 		StoredFile storedFile = fileHandler.storeFile(file);
 		
-		System.out.println("FileName: " + storedFile.getFileName());
-		System.out.println("RealFileName: " + storedFile.getRealFileName());
-		System.out.println("FileSize: " + storedFile.getFileSize());
-		System.out.println("RealFilePath: " + storedFile.getRealFilePath());
+		logger.debug("FileName: " + storedFile.getFileName());
+		logger.debug("RealFileName: " + storedFile.getRealFileName());
+		logger.debug("FileSize: " + storedFile.getFileSize());
+		logger.debug("RealFilePath: " + storedFile.getRealFilePath());
 
 		companyNewsVO.setFileName(storedFile.getRealFileName());
 		companyNewsVO.setOriginFileName(storedFile.getFileName());
@@ -45,12 +58,13 @@ public class CompanyNewsServiceImpl implements CompanyNewsService {
 		return createCount > 0;	
 	}
 
+	@Transactional
 	@Override
 	public CompanyNewsVO getOneCompanyNews(String companyNewsPostId, boolean isIncrease) {
 		if (isIncrease) {
 			int updateCount = companyNewsDAO.increaseViewCount(companyNewsPostId);
 			if(updateCount == 0) {
-				throw new IllegalArgumentException("잘못된 접근입니다.");
+				throw new PageNotFoundException("잘못된 접근입니다.");
 			}	
 		}
 		// 예외가 발생하지 않았다면, 게시글 정보를 조회한다.
@@ -58,11 +72,12 @@ public class CompanyNewsServiceImpl implements CompanyNewsService {
 		if (companyNewsVO == null) {
 			// 파라미터로 전달받은 companyPostId 값이 DB에 존재하지 않을 경우
 			// 잘못된 접근입니다. 라고 사용자에게 예외 메시지를 보내준다.
-			throw new IllegalArgumentException("잘못된 접근입니다.");
+			throw new PageNotFoundException("잘못된 접근입니다.");
 		}
 		return companyNewsVO;
 	}
 
+	@Transactional
 	@Override
 	public boolean updateOneCompanyNews(CompanyNewsVO companyNewsVO, MultipartFile file) {
 		
@@ -89,6 +104,7 @@ public class CompanyNewsServiceImpl implements CompanyNewsService {
 		return updateCount > 0;
 	}
 
+	@Transactional
 	@Override
 	public boolean deleteOneCompanyNews(String companyNewsPostId) {
 		int deleteCount = companyNewsDAO.deleteOneCompanyNews(companyNewsPostId);

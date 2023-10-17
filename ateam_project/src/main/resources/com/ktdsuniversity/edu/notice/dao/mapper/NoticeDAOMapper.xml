@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ktdsuniversity.edu.notice.dao.NoticeDAO">
+	<select id="getAllNoticeCount"
+			resultType="_int">
+		SELECT COUNT(1)
+		  FROM NOTICE
+	</select>
+	<select id="getNoticeAllList"
+			resultType="com.ktdsuniversity.edu.notice.vo.NoticeVO">
+		SELECT NOTICE_ID
+			 , POST_WRITER
+			 , POST_TITLE
+			 , NOTICE_CONTENT
+			 , POST_DATE
+			 , RELEASE_START_DATE
+			 , RELEASE_END_DATE
+			 , DELETE_YN
+		  FROM NOTICE
+		 WHERE DELETE_YN = 'N'
+	</select>
+	<select id="getOneNotice"
+			parameterType="string"
+			resultType="com.ktdsuniversity.edu.notice.vo.NoticeVO">
+		SELECT NOTICE_ID
+			 , POST_WRITER
+			 , POST_TITLE
+			 , NOTICE_CONTENT
+			 , POST_DATE
+			 , RELEASE_START_DATE
+			 , RELEASE_END_DATE
+			 , DELETE_YN
+		  FROM NOTICE
+		 WHERE NOTICE_ID = #{_parameter}
+	</select>
+	<insert id="createNotice"
+			parameterType="com.ktdsuniversity.edu.notice.vo.NoticeVO">
+		INSERT INTO NOTICE (
+			   NOTICE_ID
+			 , POST_WRITER
+			 , POST_TITLE
+			 , NOTICE_CONTENT
+			 , POST_DATE
+			 , RELEASE_START_DATE
+			 , RELEASE_END_DATE
+			 , DELETE_YN)
+			 VALUES (
+			   'NT-' || TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_NOTICE_PK.NEXTVAL, 6, 0)
+			 , 'admin@admin'
+			 , #{postTitle}
+			 , #{noticeContent}
+			 , SYSDATE
+			 , SYSDATE + 1
+			 , SYSDATE + 8
+			 , 'N')
+	</insert>
+	<update id="updateNotice"
+			parameterType="com.ktdsuniversity.edu.notice.vo.NoticeVO">
+		UPDATE NOTICE 
+		   SET POST_TITLE = #{postTitle}
+			 , NOTICE_CONTENT = #{noticeContent}
+			 , RELEASE_START_DATE = SYSDATE + 1
+			 , RELEASE_END_DATE = SYSDATE + 8
+		 WHERE NOTICE_ID = #{noticeId}
+	</update>
+	<update id="deleteNotice"
+			parameterType="string">
+		UPDATE NOTICE 
+		   SET DELETE_YN = 'Y'
+		 WHERE NOTICE_ID = #{_parameter}
+	</update>
+</mapper>

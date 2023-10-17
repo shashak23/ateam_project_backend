@@ -1,3 +1,9 @@
+/**
+ * 작성자: 김태현
+ * 작성일자: 2023-10-12
+ * 내용: 내가 푼 알고리즘들을 조회하고 처리하는 컨트롤러 클래스입니다.
+ */
+
 package com.ktdsuniversity.edu.myalgorithm.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,14 +29,13 @@ public class MyAlgorithmController {
 		System.out.println("email: " + email);
 		MyAlgorithmListVO myList = myAlgorithmService.getAllMyAlgorithm(email);
 		
-		
 		System.out.println(myList.getMyAlgotirhmListCnt());
 		
 		for (MyAlgorithmVO list : myList.getMyAlgorithmList()) {
 			System.out.println("start!");
 			System.out.println(list.getCompanyAlgorithmQuestionId());
-			System.out.println(list.getCompanyAlgorithmQuestionVO().getPostTitle());
-			System.out.println(list.getCompanyAlgorithmQuestionVO().getPostContent());
+			System.out.println(list.getAlgorithmQuestionVO().getAlgorithmTitle());
+			System.out.println(list.getAlgorithmQuestionVO().getAlgorithmContent());
 			System.out.println(list.getMemberVO().getNickname());
 		}
 		

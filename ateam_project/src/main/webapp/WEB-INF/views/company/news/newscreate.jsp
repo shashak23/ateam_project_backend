@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,21 +42,35 @@
         padding: 0px;
         margin-bottom: 12px;
     }
+    div.errors {
+        background-color: #ff00004a;
+        opacity: 0.8;
+        padding: 10px;
+        color: #333;
+    }
+    div.errors:last-child {
+        margin-bottom: 15px;
+    }
 </style>
 <body>
 	<h3>기업소식 게시글 작성</h3>
-	<form:form modelAttribute="CompanyNewsVO" method="post" 
+	<form:form modelAttribute="companyNewsVO" method="post" 
 	           enctype="multipart/form-data">
+	    <div>
+	        <form:errors path="postTitle" element="div" cssClass="errors" />
+	        <form:errors path="postContent" element="div" cssClass="errors" />
+	        <c:if test="${not empty message}">
+	        	<div class="errors" >${message}</div>
+	        </c:if>
+	    </div>
 		<div class="grid">
 		    
             <input id="postTitle" type="text" name="postTitle" placeholder="제목을 입력해 주세요."
-                   value="${CompanyNewsVO.postTitle}" />
-            
-            <input id="email" type="email" name="postWriter" value="test@test" />
+                   value="${companyNewsVO.postTitle}" />
             
             <input id="file" type="file" name="file" />
             
-            <textarea name="postContent" id="editor"></textarea>
+            <textarea name="postContent" id="editor">${companyNewsVO.postContent}</textarea>
             <script>
 			    ClassicEditor.create( document.querySelector( '#editor' ), {
 			       language: "ko"

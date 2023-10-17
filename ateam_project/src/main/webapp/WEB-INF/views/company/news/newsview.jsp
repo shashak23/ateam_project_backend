@@ -40,7 +40,7 @@
 		<div>${companyNewsVO.postTitle}</div>
 		
 		<label for="postWriter">작성자</label>
-		<div>${companyNewsVO.postWriter}</div>
+		<div>${companyNewsVO.memberVO.nickname}</div>
 		
 		<label for="viewCnt">조회수</label>
 		<div>${companyNewsVO.viewCnt}</div>
@@ -52,10 +52,13 @@
 		<div>${companyNewsVO.postContent}</div>
 		
 		<div class="btn-group">
+		    <!-- 기업회원 로그인 시에만 보이는 버튼 => 기업회원컨트롤러에 작성한 SessionAttribute와 동일해야함 -->
+            <!-- <c:if test="${not empty sessionScope._LOGIN_USER_}"> -->
 				<div class="right-align">
 					<a href="/news/update/${companyNewsVO.companyNewsPostId}">수정</a>
 					<a href="/news/delete/${companyNewsVO.companyNewsPostId}">삭제</a>
 				</div>
+			<!-- </c:if> -->
 		</div>
 		
 	</div>

@@ -1,3 +1,9 @@
+/**
+ * 작성자: 김태현
+ * 작성일자: 2023-10-12
+ * 내용: 내가 푼 알고리즘 문제들의 쿼리를 수행하는 클래스입니다.
+ */
+
 package com.ktdsuniversity.edu.myalgorithm.dao;
 
 import java.util.List;
@@ -25,5 +31,10 @@ public class MyAlgorithmDAOImpl extends SqlSessionDaoSupport implements MyAlgori
 	@Override
 	public List<MyAlgorithmVO> getAllMyAlgorithmList(String email) {
 		return getSqlSession().selectList("getAllMyAlgorithmList", email);
+	}
+	
+	@Override
+	public int createNewMyAlgorithm(MyAlgorithmVO myalgorithmVO) {
+		return getSqlSession().insert("createNewMyAlgorithm", myalgorithmVO);
 	}
 }

@@ -41,26 +41,17 @@ public class MemberController {
 	}
 	@PostMapping("/member/auth")
 	public String doSignIn(@Validated(MemberAuthGroup.class) @ModelAttribute MemberVO memberVO
-						  ,BindingResult bindingResult
-						  ,@RequestParam(required = false,defaultValue = "/home/main")
-					       String next
-						  ,HttpSession session
-						  ,Model model) {
+						  , BindingResult bindingResult
+						  , @RequestParam(required = false, defaultValue = "/home/main") String next
+						  , HttpSession session
+						  , Model model) {
 		if(bindingResult.hasErrors()) {
 			model.addAttribute("memberVO", memberVO);
 			return "member/memberlogin";
 		}
 		
-		try {
 		MemberVO member = memberService.getMember(memberVO);
 		session.setAttribute("_LOGIN_USER_", member);
-		}
-		catch (IllegalArgumentException iae) {
-			model.addAttribute("memberVO", memberVO);
-			model.addAttribute("message", iae.getMessage());
-			return "member/memberlogin";
-		}
-		
 		return "redirect:" + next;
 	}
 	@GetMapping("member/logout")

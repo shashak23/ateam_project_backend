@@ -3,28 +3,90 @@
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ktdsuniversity.edu.algorithmquestion.dao.AlgorithmQuestionDAO">
+	<resultMap type="com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionVO"
+	           id="AlgorithmQuestionDAOMap" autoMapping="true" >
+	           <id column="COMPANY_ALGORITHM_QUESTION_ID" property="companyAlgorithmQuestionId" />
+	    <association property="memberVO"
+	        javaType="com.ktdsuniversity.edu.member.vo.MemberVO"
+			autoMapping="true">
+			<id column="EMAIL" property="email" />
+		</association>	
+	</resultMap>
+	
 	<select id="getAlgorithmQuestionAllCount"
+	        parameterType="com.ktdsuniversity.edu.algorithmquestion.vo.SearchAlgorithmQuestionVO"
 	        resultType="_int">
-	    SELECT COUNT(COMPANY_ALGORITHM_QUESTION_ID)
-          FROM COMPANY_ALGORITHM_QUESTION
+	    SELECT COUNT(CAQ.COMPANY_ALGORITHM_QUESTION_ID)
+          FROM COMPANY_ALGORITHM_QUESTION CAQ
+         INNER JOIN MEMBER M
+            ON CAQ.ALGORITHM_WRITER = M.EMAIL
+	       WHERE DELETE_YN = 'N'
+		<if test='searchKeyword != null and searchKeyword != ""'>
+		    <if test='searchType == "algorithmTitle"'>
+		   AND CAQ.ALGORITHM_TITLE LIKE '%' || #{searchKeyword} || '%'
+		    </if>
+		    <if test='searchType == "algorithmContent"'>
+		   AND CAQ.ALGORITHM_CONTENT LIKE '%' || #{searchKeyword} || '%'
+		    </if>
+		    <if test='searchType == "algorithmWriter"'>
+		   AND M.NICKNAME LIKE '%' || #{searchKeyword} || '%'
+		    </if>
+		</if>
+        
 	</select>
 	
 	<select id="getAllAlgorithmQuestion"
-	        resultType="com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionVO">
-	    SELECT COMPANY_ALGORITHM_QUESTION_ID
-		     , ALGORITHM_CATEGORY_ID
-		     , ALGORITHM_TIER_ID
-		     , ALGORITHM_WRITER
-		     , ALGORITHM_TITLE
-		     , ALGORITHM_CONTENT
-		     , ALGORITHM_SOLUTION
-		     , TO_CHAR(POST_DATE, 'YYYY-MM-DD') POST_DATE
-		     , VIEW_CNT
-		     , LIKE_CNT
-		     , DELETE_YN
-		  FROM COMPANY_ALGORITHM_QUESTION
+	        resultMap="AlgorithmQuestionDAOMap">
+	    SELECT CAQ.COMPANY_ALGORITHM_QUESTION_ID
+		     , CAQ.ALGORITHM_CATEGORY_ID
+		     , CAQ.ALGORITHM_TIER_ID
+		     , CAQ.ALGORITHM_WRITER
+		     , CAQ.ALGORITHM_TITLE
+		     , CAQ.ALGORITHM_CONTENT
+		     , CAQ.ALGORITHM_SOLUTION
+		     , TO_CHAR(CAQ.POST_DATE, 'YYYY-MM-DD HH24:MI:SS') POST_DATE
+		     , CAQ.VIEW_CNT
+		     , CAQ.LIKE_CNT
+		     , CAQ.DELETE_YN
+		     , M.NICKNAME
+		  FROM COMPANY_ALGORITHM_QUESTION CAQ
+		 INNER JOIN MEMBER M
+		    ON CAQ.ALGORITHM_WRITER = M.EMAIL
 		 WHERE DELETE_YN = 'N'
-		 ORDER BY POST_DATE DESC -- 최신글순
+		 ORDER BY POST_DATE DESC <!-- 최신글순 -->
+	</select>
+	
+	<select id="searchAllAlgorithmQuestion"
+	        parameterType="com.ktdsuniversity.edu.algorithmquestion.vo.SearchAlgorithmQuestionVO"
+	        resultMap="AlgorithmQuestionDAOMap">
+	    SELECT CAQ.COMPANY_ALGORITHM_QUESTION_ID
+		     , CAQ.ALGORITHM_CATEGORY_ID
+		     , CAQ.ALGORITHM_TIER_ID
+		     , CAQ.ALGORITHM_WRITER
+		     , CAQ.ALGORITHM_TITLE
+		     , CAQ.ALGORITHM_CONTENT
+		     , CAQ.ALGORITHM_SOLUTION
+		     , TO_CHAR(CAQ.POST_DATE, 'YYYY-MM-DD HH24:MI:SS') POST_DATE
+		     , CAQ.VIEW_CNT
+		     , CAQ.LIKE_CNT
+		     , CAQ.DELETE_YN
+		     , M.NICKNAME
+		  FROM COMPANY_ALGORITHM_QUESTION CAQ
+		 INNER JOIN MEMBER M
+		    ON CAQ.ALGORITHM_WRITER = M.EMAIL
+		 WHERE DELETE_YN = 'N'
+		<if test='searchKeyword != null and searchKeyword != ""'>
+		    <if test='searchType == "algorithmTitle"'>
+		   AND CAQ.ALGORITHM_TITLE LIKE '%' || #{searchKeyword} || '%'
+		    </if>
+		    <if test='searchType == "algorithmContent"'>
+		   AND CAQ.ALGORITHM_CONTENT LIKE '%' || #{searchKeyword} || '%'
+		    </if>
+		    <if test='searchType == "algorithmWriter"'>
+		   AND M.NICKNAME LIKE '%' || #{searchKeyword} || '%'
+		    </if>
+		</if>
+		 ORDER BY POST_DATE DESC <!-- 최신글순 -->
 	</select>
 	
 	<insert id="createNewsAlgorithmQuestion"
@@ -55,6 +117,8 @@
 		, 'N')
 	</insert>
 	
+	
+	
 	<update id="increaseViewCount"
 	        parameterType="string">
 		UPDATE COMPANY_ALGORITHM_QUESTION
@@ -64,7 +128,7 @@
 	
 	<select id="getOneAlgorithmQuestion"
 	        parameterType="string"
-	        resultType="com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionVO">
+	        resultMap="AlgorithmQuestionDAOMap">
 	    SELECT COMPANY_ALGORITHM_QUESTION_ID
 		     , ALGORITHM_CATEGORY_ID
 		     , ALGORITHM_TIER_ID
@@ -72,7 +136,7 @@
 		     , ALGORITHM_TITLE
 		     , ALGORITHM_CONTENT
 		     , ALGORITHM_SOLUTION
-		     , TO_CHAR(POST_DATE, 'YYYY-MM-DD') POST_DATE
+		     , TO_CHAR(POST_DATE, 'YYYY-MM-DD HH24:MI:SS') POST_DATE
 		     , VIEW_CNT
 		     , LIKE_CNT
 		     , DELETE_YN

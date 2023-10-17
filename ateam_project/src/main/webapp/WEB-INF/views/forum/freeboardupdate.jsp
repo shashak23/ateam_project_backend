@@ -42,26 +42,25 @@
 <body>
 	<jsp:include page="../member/membermenu.jsp"></jsp:include>
 
-	<h1>게시글 수정</h1>
-	<form method="post" action="/update/freeboard/${generalPostVO.generalPostId}" enctype="multipart/form-data">
+	<h1>게시글 수정_${generalPostVO.generalPostId}번글</h1>
+
+	<form method="post" action="/freeboard/update" modelAttribute="generalPostVO" >
 		<input type="hidden" name="generalPostId" value="${generalPostVO.generalPostId}"/>
 		<div class="grid">
 			<label for="postTitle">제목</label>
 			<input id="postTitle" type="text" name="postTitle" value="${generalPostVO.postTitle}"/>
-	
-			<label for="postWriterId">이메일</label>
+			
+ 			<label for="postWriterId">이메일</label>
 			<input id="postWriterId" type="email" name="postWriterId" value="${generalPostVO.postWriterId}"/>
-	
-<!-- 			<label for="file">첨부파일</label> -->
-<!-- 			<div> -->
-<!-- 				<input type="file" id="file" name="file"> -->
-<%-- 				현재 업로드 된 파일: ${generalPostVO.originFileName} --%>
-<!-- 			</div> -->
-
+			
+			<label for="viewCnt">조회수</label>
+			<input id="viewCnt" type="number" name="viewCnt" value="${generalPostVO.viewCnt}"/>	
+			
+			<label for="postDate">등록일</label>
+			<input id="postDate" type="text" name="postDate" value="${generalPostVO.postDate}"/>
 	
 			<label for="postContent">내용</label>
 			<textarea id="postContent" name="postContent" style="height: 300px;">${generalPostVO.postContent}</textarea>
-	
 			<div class="btn-group">
 				<div class="right-align">
 					<input type="submit" value="저장" />
