@@ -29,7 +29,6 @@ public class MyAlgorithmController {
 		System.out.println("email: " + email);
 		MyAlgorithmListVO myList = myAlgorithmService.getAllMyAlgorithm(email);
 		
-		
 		System.out.println(myList.getMyAlgotirhmListCnt());
 		
 		for (MyAlgorithmVO list : myList.getMyAlgorithmList()) {

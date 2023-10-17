@@ -28,6 +28,7 @@ import com.ktdsuniversity.edu.beans.FileHandler;
 import com.ktdsuniversity.edu.companynews.service.CompanyNewsService;
 import com.ktdsuniversity.edu.companynews.vo.CompanyNewsListVO;
 import com.ktdsuniversity.edu.companynews.vo.CompanyNewsVO;
+import com.ktdsuniversity.edu.exceptions.FileNotExistsException;
 import com.ktdsuniversity.edu.exceptions.PageNotFoundException;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 
@@ -75,6 +76,13 @@ public class CompanyNewsController {
 		logger.debug("첨부파일명: " + file.getOriginalFilename());
 
 		if (bindingResult.hasErrors()) {
+			model.addAttribute("companyNewsVO", companyNewsVO);
+			return "company/news/newscreate";
+		}
+		
+		//파일이 null인지를 체크하는 if문 추가
+		if (file == null || file.isEmpty()) {
+			model.addAttribute("message", "첨부파일을 업로드해주세요.");
 			model.addAttribute("companyNewsVO", companyNewsVO);
 			return "company/news/newscreate";
 		}

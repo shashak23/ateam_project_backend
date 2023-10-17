@@ -10,6 +10,7 @@ import java.util.List;
 
 import com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionVO;
 import com.ktdsuniversity.edu.algorithmquestion.vo.SearchAlgorithmQuestionVO;
+import com.ktdsuniversity.edu.myalgorithm.vo.MyAlgorithmVO;
 
 public interface AlgorithmQuestionDAO {
 
@@ -19,7 +20,9 @@ public interface AlgorithmQuestionDAO {
 	
 	public List<AlgorithmQuestionVO> searchAllAlgorithmQuestion(SearchAlgorithmQuestionVO searchAlgorithmQuestionVO);
 	
-	public int createNewsAlgorithmQuestion(AlgorithmQuestionVO algorithmQuestionVO);
+	public int createNewAlgorithmQuestion(AlgorithmQuestionVO algorithmQuestionVO);
+	
+	public int createNewMyAlgorithm(MyAlgorithmVO myalgorithmVO);
 	
 	public int increaseViewCount(String companyAlgorithmQuestionId);
 	

@@ -25,7 +25,15 @@ public class NoticeServiceImpl implements NoticeService{
 		noticeListVO.setNoticeList(noticeDAO.getNoticeAllList());
 		return noticeListVO;
 	}
-
+	
+	@Override
+	public NoticeListVO getValidateList() {
+		NoticeListVO validateNoticeListVO = new NoticeListVO();
+		validateNoticeListVO.setNoticeListCnt(noticeDAO.getValidateList().size());
+		validateNoticeListVO.setNoticeList(noticeDAO.getValidateList());
+		return validateNoticeListVO;
+	}
+	
 	@Override
 	public NoticeVO getOneNotice(String id) {
 		NoticeVO noticeVO = noticeDAO.getOneNotice(id);

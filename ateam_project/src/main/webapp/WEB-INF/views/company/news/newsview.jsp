@@ -34,13 +34,15 @@
 </style>
 </head>
 <body>
+	<jsp:include page="../../member/membermenu.jsp"></jsp:include>
+	
 	<h1>기업소식 게시글 내용 조회하기</h1>
 	<div class="grid">
 		<label for="postTitle">제목</label>
 		<div>${companyNewsVO.postTitle}</div>
 		
 		<label for="postWriter">작성자</label>
-		<div>${companyNewsVO.memberVO.nickname}</div>
+		<div>${companyNewsVO.memberVO.nickname}(${companyNewsVO.memberVO.email})</div>
 		
 		<label for="viewCnt">조회수</label>
 		<div>${companyNewsVO.viewCnt}</div>
@@ -53,12 +55,12 @@
 		
 		<div class="btn-group">
 		    <!-- 기업회원 로그인 시에만 보이는 버튼 => 기업회원컨트롤러에 작성한 SessionAttribute와 동일해야함 -->
-            <!-- <c:if test="${not empty sessionScope._LOGIN_USER_}"> -->
+            <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq algorithmQuestionVO.companyVO.companyEmail}">
 				<div class="right-align">
 					<a href="/news/update/${companyNewsVO.companyNewsPostId}">수정</a>
 					<a href="/news/delete/${companyNewsVO.companyNewsPostId}">삭제</a>
 				</div>
-			<!-- </c:if> -->
+			</c:if>
 		</div>
 		
 	</div>

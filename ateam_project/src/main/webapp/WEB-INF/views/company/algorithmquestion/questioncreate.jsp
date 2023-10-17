@@ -90,10 +90,12 @@
 <body>
 	<h3>알고리즘 문제 작성</h3>
 	<form:form modelAttribute="algorithmQuestionVO" method="post">
-	<!-- <div>
+	<div>
+	    <form:errors path="algorithmCategoryId" element="div" cssClass="errors"/>
+	    <form:errors path="algorithmTierId" element="div" cssClass="errors"/>
 		<form:errors path="algorithmTitle" element="div" cssClass="errors"/>
 		<form:errors path="algorithmContent" element="div" cssClass="errors"/>
-	</div> -->
+	</div>
 	
 		<div class="grid">
 		    <div class=flex>
