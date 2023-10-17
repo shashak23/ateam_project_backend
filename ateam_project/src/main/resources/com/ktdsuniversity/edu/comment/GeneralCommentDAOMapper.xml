@@ -4,63 +4,32 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ktdsuniversity.edu.generalpost.dao.GeneralCommentDAO">
 
-    <resultMap type="com.ktdsuniversity.edu.generalpost.vo.GeneralCommentVO"
-               id="generalCommentVOMap"
-               autoMapping="true">
-        <id column="GENERAL_COMMENT_ID" property="generalCommentId" />
-        <association property="generalMemberVO"
-                     javaType="com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO"
-                     autoMapping="true">
-            <id column="GENERAL_MEMBER_EMAIL" property="generalMemberEmail" />
-            <result column="GENERAL_MEMBER_EMAIL" property="generalMemberEmail" />
-        </association>
-        
-       
-    </resultMap>
     <select id="getAllComments"
             parameterType="_int"
             resultMap="generalCommentVOMap">
-        SELECT C.GENERAL_COMMENT_ID
-		     , C.COMMENT_WRITER_ID
-		     , C.GENERAL_POST_ID
-		     , C.COMMENT_CONTENT
-		     , C.POST_DATE
-		     , C.UPPER_COMMENT_ID
-		     , C.LIKE_CNT
-		     , C.DELETE_YN
-		     , M.GENERAL_MEMBER_EMAIL
-		  FROM GENERAL_COMMENT C
-		 INNER JOIN GENERAL_POST P
-		    ON C.GENERAL_POST_ID = P.GENERAL_POST_ID
-		 INNER JOIN GENERAL_MEMBER M
-		    ON C.COMMENT_WRITER_ID = M.GENERAL_MEMBER_EMAIL
-		 START WITH C.UPPER_COMMENT_ID=0
-		   AND C.GENERAL_POST_ID=#{_parameter}
-	   CONNECT BY PRIOR C.GENERAL_POST_ID = C.UPPER_COMMENT_ID
-    </select>
-    <select id="getOneComment"
-            parameterType="_int"
-            resultMap="generalCommentVOMap">
-        SELECT C.GENERAL_COMMENT_ID
-             , C.COMMENT_WRITER_ID
-             , C.GENERAL_POST_ID
-             , C.COMMENT_CONTENT
-             , C.POST_DATE
-             , C.UPPER_COMMENT_ID
-             , C.LIKE_CNT
-             , C.DELETE_YN
-             , M.GENERAL_MEMBER_EMAIL
-          FROM GENERAL_COMMENT C
-         INNER JOIN GENERAL_MEMBER M
-            ON C.COMMENT_WRITER_ID = M.GENERAL_MEMBER_EMAIL
-         WHERE C.GENERAL_COMMENT = #{_parameter}
-    </select>
+        SELECT GC.GENERAL_COMMENT_ID
+             , GC.COMMENT_WRITER
+             , GC.GENERAL_POST_ID
+             , GC.COMMENT_CONTENT
+             , GC.POST_DATE
+             , GC.UPPER_COMMENT_ID
+             , GC.LIKE_CNT
+             , GC.DELETE_YN 
+          FROM GENERAL_COMMENT GC
+         INNER JOIN GENERAL_POST GP 
+            ON GC.GENERAL_POST_ID = GP.GENERAL_POST_ID
+         INNER JOIN COMMON C
+            ON C.CODE_ID =GP.BOARD_ID
+         START WITH GC.UPPER_COMMENT_IP=0
+           AND GC.GENERAL_POST_ID=#{_parameter}
+       CONNECT BY PRIOR GC.GENERAL_COMMENT_ID = GC.UPPER_COMMENT_ID;
+ </select>
     
     <insert id="createNewComment"
             parameterType="com.ktdsuniversity.edu.generalpost.vo.GeneralCommentVO">
         INSERT INTO GENERAL_COMMENT (
              , GENERAL_COMMENT_ID
-		     , COMMENT_WRITER_ID
+		     , COMMENT_WRITER
 		     , GENERAL_POST_ID
 		     , COMMENT_CONTENT
 		     , POST_DATE
@@ -68,53 +37,58 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		     , LIKE_CNT
 		     , DELETE_YN)
 		VALUES (
-		   SEQ_GENERAL_COMMENT_ID.NEXTVAL,
-		     , #{commentWriterId}
+		   SEQ_GENERAL_COMMENT_ID.NEXTVAL
+		     , #{commentWriter}
 		     , #{generalPostId}
 		     , #{commentContent}
 		     , SYSDATE
 		     , #{upperCommentId}
 		     , 0
-		     , 'N')   <!-- 삭제여부: 삭제되지 않았음을 나타내야 함. 맞는지? -->
+		     , 'N')  
             </insert>
     <delete id="deleteOneComment"
-            parameterType="_int">
+            parameterType="int">
        DELETE
          FROM GENERAL_COMMENT
         WHERE GENERAL_COMMENT_ID = #{_parameter}
     </delete>
     <update id="recommendOneComment"
-            parameterType="_int">
+            parameterType="int">
         UPDATE GENERAL_COMMENT
            SET LIKE_CNT = LIKE_CNT + 1
          WHERE GENERAL_COMMENT_ID = #{_parameter}        
     </update>
     <insert id="reportOneComment"
             parameterType="com.ktdsuniversity.edu.generalpost.vo.GeneralCommentVO">
-            INSERT INTO REPORT (
-                 , REPORT_ID
-                 , REPORT_MEMBER_ID
+            INSERT INTO REPORT R(
+                   REPORT_ID
+                 , REPORT_MEMBER_EMAIL
                  , REPORT_TYPE_ID
-                 , RECEIVED_REPORT_MEMBER_ID
+                 , RECEIVED_REPORT_MEMBER_EMAIL
                  , REPORT_CONTENT_ID
                  , REPORT_DATE
                  , REPORT_REASON
                  , REPORT_REASON_CONTENT
                  , ATTACHED_IMG
                  , PROGRESS_YN
-                 , CANCEL_YN)
-            VALUES (
-            SEQ_REPORT_PK.NEXTVAL,
-            #{reportMemberId},
-            #{reportTypeId},
-            #{receivedReportMemberId},
-            #{reportContentId},
-            SYSDATE,
-            #{reportReason},
-            #{reportReasonContent},
-            #{attachedImg},
-            'N',
-            'N'
+                 , CANCEL_YN
+            ) 
+            SELECT REPORT_ID
+                 , REPORT_MEMBER_EMAIL
+                 , REPORT_TYPE_ID
+                 , RECEIVED_REPORT_MEMBER_EMAIL
+                 , REPORT_CONTENT_ID
+                 , REPORT_DATE
+                 , REPORT_REASON
+                 , REPORT_REASON_CONTENT
+                 , ATTACHED_IMG
+                 , PROGRESS_YN
+                 , CANCEL_YN
+            FROM REPORT R
+            LEFT OUTER JOIN GENERAL_MEMBER GM 
+            ON GM.GENERAL_MEMBER_EMAIL = R.RECEIVED_REPORT_MEMBER_EMAIL 
+            INNER JOIN GENERAL_COMMENT GC 
+            ON GM.GENERAL_MEMBER_EMAIL = GC.COMMENT_WRITER ;
             )
     </insert>
             
