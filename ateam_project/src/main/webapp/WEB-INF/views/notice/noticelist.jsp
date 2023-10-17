@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,6 +10,8 @@
 <script src="/js/lib/jquery-3.7.1.js"></script>
 <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://npmcdn.com/flatpickr/dist/flatpickr.min.js"></script>
+<script src="https://npmcdn.com/flatpickr/dist/l10n/ko.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <style>
     * {
@@ -140,15 +143,14 @@
         align-items: center;
     }
 
-    .dateSelector {
+    .dateSelector1,
+    .dateSelector2 {
         width: 150px;
         height: 30px;
         outline: none;
         border: 1px solid #e5e5e5;
-    }
-
-    .dateSeslector::placeholder {
-        color: #e44545;
+        padding: 0 10px;
+        color: #191919;
     }
 
     #start-date, #end-date {
@@ -187,6 +189,20 @@
         opacity: 1;
         pointer-events: all;
     }
+
+    .errors {
+        background-color: rgb(255, 244, 244);
+        padding: 5px 10px;
+        color: #ffafaf;
+        margin-bottom: 10px;
+        font-size: 9pt;
+        cursor: pointer;
+    }
+
+    .inactive {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
 </style>
 </head>
 <body>
@@ -207,52 +223,397 @@
             </div>    
         </c:forEach>
     </div>
-    <form method="post">
+
+    <!-- 공지 입력 폼 -->
+    <form:form modelAttribute="noticeVO" method="post">
         <div class="create_container">
             <div class="btn-close">&times;</div>
             <h1 class="create_title">공지 생성</h1>
             <div>
                 <label for="postTitle" class="mb10">제목</label>
-                <input type="text" name="postTitle" id="postTitle" placeholder="제목을 입력해주세요"/>
+                <input type="text" name="postTitle" id="postTitle" placeholder="제목을 입력해주세요"
+                       value="${noticeVO.postTitle}"/>
+                <!-- <form:errors path="postTitle" element="div" cssClass="errors" /> -->
             </div>
             <label for="noticeContent" class="mb10">내용</label>
             <div>
-                <textarea name="noticeContent" id="editor" placeholder="내용을 입력해주세요."></textarea>
-			</script>
+                <textarea name="noticeContent" id="editor" placeholder="내용을 입력해주세요."
+                          value="${noticeVO.noticeContent}"></textarea>
+                <!-- <form:errors path="postTitle" element="div" cssClass="errors" /> -->
             </div>
             <div class="date_wrap">
                 <label for="start-date">시작일</label>
-                <!-- <input type="date" name="releaseStartDate" id="start-date" /> -->
-                <input class="dateSelector" placeholder="ex) 2020-09-01" />
+                <input class="dateSelector1" placeholder="시작 날짜" id="start-date"
+                       name="releaseStartDate" value="${noticeVO.releaseStartDate}"/>
                 <span>~</span>
                 <label for="end-date">종료일</label>
-                <!-- <input type="date" name="releaseEndDate" id="end-date" /> -->
-                <input class="dateSelector" placeholder="ex) 2020-09-30" />
+                <input class="dateSelector2" placeholder="종료 날짜" id="end-date"
+                       name="releaseEndDate" value="${noticeVO.releaseEndDate}"/>
             </div>
             <div class="submit_btn_wrap">
                 <input type="submit" value="생성" class="submit_btn"/>
             </div>
         </div>
-    </form>
+    </form:form>
     <div class="overlay"></div>
 
     <script>
-        $().ready(function() {
-            // var dateSelector = document.querySelector('.dateSelector');
-            // dateSelector.flatpickr();
-            $('.dateSelector').flatpickr()
+        $().ready(function() { 
+            // 달력 포맷
+            flatpickr.localize(flatpickr.l10ns.ko);
 
+            $('.dateSelector1').flatpickr({
+                minDate: 'today',
+                local: 'ko'
+            })
+
+            $('.dateSelector2').flatpickr({
+                minDate: 'today',
+                local: 'ko'
+            })
+            // 달력 포맷 끝
+
+            // 모달 실행을 위한 문장
             $('.create_btn').click(function() {
                 $('.create_container, .overlay').addClass('active')
             })
-    
+
             $('.btn-close, .overlay').click(function() {
                 $('.create_container, .overlay').removeClass('active')
             })
+            $('.dateSelector1').click(function() {
+                console.log($('.dateSelector1').val())
+            })
 
+            // ck 에디터
             ClassicEditor.create( document.querySelector( '#editor' ), {
 			    language: "ko"
-			}); 
+			})
+            
+            // 유효성 체크
+            $('.submit_btn').addClass('inactive')
+            $('.submit_btn').prop('disabled', true)
+            let today = new Date()
+            let year = today.getFullYear()
+            let month = today.getMonth() + 1
+            let day = today.getDate()
+            if (month < 10) {
+                    month = '0' + month
+                }
+            if (day < 10) {
+                day = '0' + day
+            }
+            let formattedToday = year + '' + month + '' + day
+            let start_date
+            let end_date
+            $('#end-date').change(function() { 
+                art_date = parseInt($('#start-date').val().split('-').join(''))
+                end_date = parseInt($('#end-date').val().split('-').join(''))
+                console.log('ㅎㅇ')
+                console.log(formattedToday, start_date, end_date)
+                if (end_date < formattedToday || 
+                    end_date < start_date) {
+                    const dateError = $('<div class="errors date_message">날짜 형식이 잘못되었습니다.</div>')
+                    $('.date_message').remove()
+                    $('.date_wrap').after(dateError)
+                    $('.submit_btn').addClass('inactive')
+                    $('.submit_btn').prop('disabled', true)
+                }
+                else if ($('#postTitle').val().trim() === '') {
+                    $('.date_message').remove()
+                    $('.submit_btn').addClass('inactive')
+                    $('.submit_btn').prop('disabled', true)
+                }
+                else {
+                    $('.date_message').remove()
+                }
+            })
+            
+            $('#postTitle').change(function() {
+                if ($('#postTitle').val().trim() === '') {
+                    const titleError = $('<div class="errors title_message">제목을 입력해주세요.</div>')
+                    $('.title_message').remove()
+                    $('#postTitle').after(titleError)
+                    $('.submit_btn').addClass('inactive')
+                    $('.submit_btn').prop('disabled', true)
+                }
+                else if (end_date < formattedToday || 
+                         end_date < start_date) {
+                    $('.title_message').remove()
+                    $('.submit_btn').addClass('inactive')
+                    $('.submit_btn').prop('disabled', true)
+                }
+                else {
+                    $('.title_message').remove()
+                    $('.submit_btn').prop('disabled', false)
+                    $('.submit_btn').removeClass('inactive')
+                } 
+            })
+            $('#end-date').change(function() { 
+                const start_date = parseInt($('#start-date').val().split('-').join(''))
+                const end_date = parseInt($('#end-date').val().split('-').join(''))
+                console.log('ㅎㅇ')
+                console.log(formattedToday, start_date, end_date)
+                if (end_date < formattedToday || 
+                    end_date < start_date) {
+                    const dateError = $('<div class="errors date_message">날짜 형식이 잘못되었습니다.</div>')
+                    $('.date_message').remove()
+                    $('.date_wrap').after(dateError)
+                    $('.submit_btn').addClass('inactive')
+                    $('.submit_btn').prop('disabled', true)
+                }
+                else if ($('#postTitle').val().trim() === '') {
+                    $('.date_message').remove()
+                    $('.submit_btn').addClass('inactive')
+                    $('.submit_btn').prop('disabled', true)
+                }
+                else {
+                    $('.date_message').remove()
+                }
+            })
+            $('#end-date').change(function() { 
+                const start_date = parseInt($('#start-date').val().split('-').join(''))
+                const end_date = parseInt($('#end-date').val().split('-').join(''))
+                console.log('ㅎㅇ')
+                console.log(formattedToday, start_date, end_date)
+                if (end_date < formattedToday || 
+                    end_date < start_date) {
+                    const dateError = $('<div class="errors date_message">날짜 형식이 잘못되었습니다.</div>')
+                    $('.date_message').remove()
+                    $('.date_wrap').after(dateError)
+                    $('.submit_btn').addClass('inactive')
+                    $('.submit_btn').prop('disabled', true)
+                }
+                else if ($('#postTitle').val().trim() === '') {
+                    $('.date_message').remove()
+                    $('.submit_btn').addClass('inactive')
+                    $('.submit_btn').prop('disabled', true)
+                }
+                else {
+                    $('.date_message').remove()
+                }
+            })
+            $('#end-date').change(function() { 
+                const start_date = parseInt($('#start-date').val().split('-').join(''))
+                const end_date = parseInt($('#end-date').val().split('-').join(''))
+                console.log('ㅎㅇ')
+                console.log(formattedToday, start_date, end_date)
+                if (end_date < formattedToday || 
+                    end_date < start_date) {
+                    const dateError = $('<div class="errors date_message">날짜 형식이 잘못되었습니다.</div>')
+                    $('.date_message').remove()
+                    $('.date_wrap').after(dateError)
+                    $('.submit_btn').addClass('inactive')
+                    $('.submit_btn').prop('disabled', true)
+                }
+                else if ($('#postTitle').val().trim() === '') {
+                    $('.date_message').remove()
+                    $('.submit_btn').addClass('inactive')
+                    $('.submit_btn').prop('disabled', true)
+                }
+                else {
+                    $('.date_message').remove()
+                }
+            })
+            $('#end-date').change(function() { 
+                const start_date = parseInt($('#start-date').val().split('-').join(''))
+                const end_date = parseInt($('#end-date').val().split('-').join(''))
+                console.log('ㅎㅇ')
+                console.log(formattedToday, start_date, end_date)
+                if (end_date < formattedToday || 
+                    end_date < start_date) {
+                    const dateError = $('<div class="errors date_message">날짜 형식이 잘못되었습니다.</div>')
+                    $('.date_message').remove()
+                    $('.date_wrap').after(dateError)
+                    $('.submit_btn').addClass('inactive')
+                    $('.submit_btn').prop('disabled', true)
+                }
+                else if ($('#postTitle').val().trim() === '') {
+                    $('.date_message').remove()
+                    $('.submit_btn').addClass('inactive')
+                    $('.submit_btn').prop('disabled', true)
+                }
+                else {
+                    $('.date_message').remove()
+                }
+            })
+            $('#end-date').change(function() { 
+                const start_date = parseInt($('#start-date').val().split('-').join(''))
+                const end_date = parseInt($('#end-date').val().split('-').join(''))
+                console.log('ㅎㅇ')
+                console.log(formattedToday, start_date, end_date)
+                if (end_date < formattedToday || 
+                    end_date < start_date) {
+                    const dateError = $('<div class="errors date_message">날짜 형식이 잘못되었습니다.</div>')
+                    $('.date_message').remove()
+                    $('.date_wrap').after(dateError)
+                    $('.submit_btn').addClass('inactive')
+                    $('.submit_btn').prop('disabled', true)
+                }
+                else if ($('#postTitle').val().trim() === '') {
+                    $('.date_message').remove()
+                    $('.submit_btn').addClass('inactive')
+                    $('.submit_btn').prop('disabled', true)
+                }
+                else {
+                    $('.date_message').remove()
+                }
+            })
+            $('#end-date').change(function() { 
+                const start_date = parseInt($('#start-date').val().split('-').join(''))
+                const end_date = parseInt($('#end-date').val().split('-').join(''))
+                console.log('ㅎㅇ')
+                console.log(formattedToday, start_date, end_date)
+                if (end_date < formattedToday || 
+                    end_date < start_date) {
+                    const dateError = $('<div class="errors date_message">날짜 형식이 잘못되었습니다.</div>')
+                    $('.date_message').remove()
+                    $('.date_wrap').after(dateError)
+                    $('.submit_btn').addClass('inactive')
+                    $('.submit_btn').prop('disabled', true)
+                }
+                else if ($('#postTitle').val().trim() === '') {
+                    $('.date_message').remove()
+                    $('.submit_btn').addClass('inactive')
+                    $('.submit_btn').prop('disabled', true)
+                }
+                else {
+                    $('.date_message').remove()
+                }
+            })
+            $('#end-date').change(function() { 
+                const start_date = parseInt($('#start-date').val().split('-').join(''))
+                const end_date = parseInt($('#end-date').val().split('-').join(''))
+                console.log('ㅎㅇ')
+                console.log(formattedToday, start_date, end_date)
+                if (end_date < formattedToday || 
+                    end_date < start_date) {
+                    const dateError = $('<div class="errors date_message">날짜 형식이 잘못되었습니다.</div>')
+                    $('.date_message').remove()
+                    $('.date_wrap').after(dateError)
+                    $('.submit_btn').addClass('inactive')
+                    $('.submit_btn').prop('disabled', true)
+                }
+                else if ($('#postTitle').val().trim() === '') {
+                    $('.date_message').remove()
+                    $('.submit_btn').addClass('inactive')
+                    $('.submit_btn').prop('disabled', true)
+                }
+                else {
+                    $('.date_message').remove()
+                }
+            })
+            $('#end-date').change(function() { 
+                const start_date = parseInt($('#start-date').val().split('-').join(''))
+                const end_date = parseInt($('#end-date').val().split('-').join(''))
+                console.log('ㅎㅇ')
+                console.log(formattedToday, start_date, end_date)
+                if (end_date < formattedToday || 
+                    end_date < start_date) {
+                    const dateError = $('<div class="errors date_message">날짜 형식이 잘못되었습니다.</div>')
+                    $('.date_message').remove()
+                    $('.date_wrap').after(dateError)
+                    $('.submit_btn').addClass('inactive')
+                    $('.submit_btn').prop('disabled', true)
+                }
+                else if ($('#postTitle').val().trim() === '') {
+                    $('.date_message').remove()
+                    $('.submit_btn').addClass('inactive')
+                    $('.submit_btn').prop('disabled', true)
+                }
+                else {
+                    $('.date_message').remove()
+                }
+            })
+            $('#end-date').change(function() { 
+                const start_date = parseInt($('#start-date').val().split('-').join(''))
+                const end_date = parseInt($('#end-date').val().split('-').join(''))
+                console.log('ㅎㅇ')
+                console.log(formattedToday, start_date, end_date)
+                if (end_date < formattedToday || 
+                    end_date < start_date) {
+                    const dateError = $('<div class="errors date_message">날짜 형식이 잘못되었습니다.</div>')
+                    $('.date_message').remove()
+                    $('.date_wrap').after(dateError)
+                    $('.submit_btn').addClass('inactive')
+                    $('.submit_btn').prop('disabled', true)
+                }
+                else if ($('#postTitle').val().trim() === '') {
+                    $('.date_message').remove()
+                    $('.submit_btn').addClass('inactive')
+                    $('.submit_btn').prop('disabled', true)
+                }
+                else {
+                    $('.date_message').remove()
+                }
+            })
+            $('#end-date').change(function() { 
+                const start_date = parseInt($('#start-date').val().split('-').join(''))
+                const end_date = parseInt($('#end-date').val().split('-').join(''))
+                console.log('ㅎㅇ')
+                console.log(formattedToday, start_date, end_date)
+                if (end_date < formattedToday || 
+                    end_date < start_date) {
+                    const dateError = $('<div class="errors date_message">날짜 형식이 잘못되었습니다.</div>')
+                    $('.date_message').remove()
+                    $('.date_wrap').after(dateError)
+                    $('.submit_btn').addClass('inactive')
+                    $('.submit_btn').prop('disabled', true)
+                }
+                else if ($('#postTitle').val().trim() === '') {
+                    $('.date_message').remove()
+                    $('.submit_btn').addClass('inactive')
+                    $('.submit_btn').prop('disabled', true)
+                }
+                else {
+                    $('.date_message').remove()
+                }
+            })
+            $('#end-date').change(function() { 
+                const start_date = parseInt($('#start-date').val().split('-').join(''))
+                const end_date = parseInt($('#end-date').val().split('-').join(''))
+                console.log('ㅎㅇ')
+                console.log(formattedToday, start_date, end_date)
+                if (end_date < formattedToday || 
+                    end_date < start_date) {
+                    const dateError = $('<div class="errors date_message">날짜 형식이 잘못되었습니다.</div>')
+                    $('.date_message').remove()
+                    $('.date_wrap').after(dateError)
+                    $('.submit_btn').addClass('inactive')
+                    $('.submit_btn').prop('disabled', true)
+                }
+                else if ($('#postTitle').val().trim() === '') {
+                    $('.date_message').remove()
+                    $('.submit_btn').addClass('inactive')
+                    $('.submit_btn').prop('disabled', true)
+                }
+                else {
+                    $('.date_message').remove()
+                }
+            })
+            $('#end-date').change(function() { 
+                const start_date = parseInt($('#start-date').val().split('-').join(''))
+                const end_date = parseInt($('#end-date').val().split('-').join(''))
+                console.log('ㅎㅇ')
+                console.log(formattedToday, start_date, end_date)
+                if (end_date < formattedToday || 
+                    end_date < start_date) {
+                    const dateError = $('<div class="errors date_message">날짜 형식이 잘못되었습니다.</div>')
+                    $('.date_message').remove()
+                    $('.date_wrap').after(dateError)
+                    $('.submit_btn').addClass('inactive')
+                    $('.submit_btn').prop('disabled', true)
+                }
+                else if ($('#postTitle').val().trim() === '') {
+                    $('.date_message').remove()
+                    $('.submit_btn').addClass('inactive')
+                    $('.submit_btn').prop('disabled', true)
+                }
+                else {
+                    $('.date_message').remove()
+                }
+            })
+
         })
     </script>
 </body>

@@ -8,6 +8,7 @@ package com.ktdsuniversity.edu.notice.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -37,13 +38,11 @@ public class NoticeController {
 	}
 	
 	@PostMapping("/notice/list")
-	public ModelAndView viewAllNotice(@ModelAttribute NoticeVO noticeVO,
+	public ModelAndView viewAllNotice( @ModelAttribute NoticeVO noticeVO,
 									  @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 		ModelAndView mav = new ModelAndView();
 		noticeVO.setPostWriter(memberVO.getEmail());
 		
-		System.out.println("마지막 날짜: " + noticeVO.getReleaseEndDate());
-		System.out.println("마지막 날짜: " + noticeVO.getReleaseEndDate().getClass());
 		boolean isSuccess = noticeService.createNotice(noticeVO);
 		
 		if (isSuccess) {
