@@ -22,21 +22,6 @@
 		  FROM NOTICE
 		 WHERE DELETE_YN = 'N'
 	</select>
-	<select id="getValidateList"
-			resultType="com.ktdsuniversity.edu.notice.vo.NoticeVO">
-		SELECT NOTICE_ID
-			 , POST_WRITER
-			 , POST_TITLE
-			 , NOTICE_CONTENT
-			 , POST_DATE
-			 , RELEASE_START_DATE
-			 , RELEASE_END_DATE
-			 , DELETE_YN
-		  FROM NOTICE
-		 WHERE DELETE_YN = 'N'
-		   AND RELEASE_START_DATE <![CDATA[<=]]> TO_CHAR(SYSDATE, 'YYYY-MM-DD')
-		   AND RELEASE_END_DATE <![CDATA[>=]]> TO_CHAR(SYSDATE, 'YYYY-MM-DD')
-	</select>
 	<select id="getOneNotice"
 			parameterType="string"
 			resultType="com.ktdsuniversity.edu.notice.vo.NoticeVO">
@@ -64,12 +49,12 @@
 			 , DELETE_YN)
 			 VALUES (
 			   'NT-' || TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_NOTICE_PK.NEXTVAL, 6, 0)
-			 , #{postWriter}
+			 , 'admin@admin'
 			 , #{postTitle}
 			 , #{noticeContent}
 			 , SYSDATE
-			 , #{releaseStartDate}
-			 , #{releaseEndDate}
+			 , SYSDATE + 1
+			 , SYSDATE + 8
 			 , 'N')
 	</insert>
 	<update id="updateNotice"

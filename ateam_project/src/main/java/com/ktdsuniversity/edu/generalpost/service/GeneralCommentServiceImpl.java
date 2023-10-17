@@ -1,8 +1,3 @@
-/**
- * 작성자: 남현욱
- * 작성일자: 2023-10-16
- * 내용: 질문 답변 게시판 댓글을 위한 ServiceImpl입니다.
- */
 package com.ktdsuniversity.edu.generalpost.service;
 
 import java.util.List;
@@ -32,9 +27,9 @@ public class GeneralCommentServiceImpl implements GeneralCommentService{
 	}
 	
 	@Override
-	public boolean deleteOneComment(String generalCommentId, String commentWriter) {
+	public boolean deleteOneComment(String generalCommentId, String commentWriterId) {
 		GeneralCommentVO generalCommentVO = generalCommentDAO.getOneComment(generalCommentId);
-		if(!commentWriter.equals(generalCommentVO.getCommentWriter())) {
+		if(!commentWriterId.equals(generalCommentVO.getCommentWriterId())) {
 				throw new PageNotFoundException("잘못된 접근입니다.");
 		}
 		return generalCommentDAO.deleteOneComment(generalCommentId) > 0;
@@ -42,24 +37,24 @@ public class GeneralCommentServiceImpl implements GeneralCommentService{
 	@Override
 	public boolean modifyOneComment(GeneralCommentVO generalCommentVO) {
 		GeneralCommentVO originCommentVO = generalCommentDAO.getOneComment(generalCommentVO.getGeneralCommentId());
-		if (!generalCommentVO.getCommentWriter().equals(originCommentVO.getCommentWriter())) {
+		if (!generalCommentVO.getCommentWriterId().equals(originCommentVO.getCommentWriterId())) {
 		throw new PageNotFoundException("잘못된 접근입니다.");
 		}
 		return generalCommentDAO.modifyOneComment(generalCommentVO) > 0;
 	}
 	@Override
-	public boolean recommendOneComment(String generalCommentId, String commentWriter) {
+	public boolean recommendOneComment(String generalCommentId, String commentWriterId) {
 		GeneralCommentVO generalCommentVO = generalCommentDAO.getOneComment(generalCommentId);
-		if(commentWriter.equals(generalCommentVO.getCommentWriter())) {
+		if(commentWriterId.equals(generalCommentVO.getCommentWriterId())) {
 			throw new PageNotFoundException("잘못된 접근입니다.");
 		}
 		return generalCommentDAO.recommendOneComment(generalCommentId) > 0;
 	}
 	
 	@Override
-	public boolean reportOneComment(String generalCommentId, String commentWriter) {
+	public boolean reportOneComment(String generalCommentId, String commentWriterId) {
 		GeneralCommentVO generalCommentVO = generalCommentDAO.getOneComment(generalCommentId);
-		if(!commentWriter.equals(generalCommentVO.getCommentWriter())) {
+		if(!commentWriterId.equals(generalCommentVO.getCommentWriterId())) {
 			throw new PageNotFoundException("잘못된 접근입니다.");
 	}
 	return generalCommentDAO.reportOneComment(generalCommentId) > 0;

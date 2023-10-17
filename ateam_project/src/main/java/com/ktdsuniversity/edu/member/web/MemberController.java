@@ -41,10 +41,11 @@ public class MemberController {
 	}
 	@PostMapping("/member/auth")
 	public String doSignIn(@Validated(MemberAuthGroup.class) @ModelAttribute MemberVO memberVO
-						  , BindingResult bindingResult
-						  , @RequestParam(required = false, defaultValue = "/home/main") String next
-						  , HttpSession session
-						  , Model model) {
+						  ,BindingResult bindingResult
+						  ,@RequestParam(required = false,defaultValue = "/home/main")
+					       String next
+						  ,HttpSession session
+						  ,Model model) {
 		if(bindingResult.hasErrors()) {
 			model.addAttribute("memberVO", memberVO);
 			return "member/memberlogin";
@@ -54,16 +55,11 @@ public class MemberController {
 		session.setAttribute("_LOGIN_USER_", member);
 		return "redirect:" + next;
 	}
-	
-	/**
-	 * 로그아웃
-	 */
-	@GetMapping("/member/logout")
+	@GetMapping("member/logout")
 	public String doLogout(HttpSession session) {
 		session.invalidate();
 		return "redirect:/home/main";
 	}
-	
 	
 	/**
 	 * 회원가입 관련

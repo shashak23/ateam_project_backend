@@ -1,15 +1,8 @@
-/**
- * 작성자 : 김광원
- * 작성일자 : 2023-10-24
- * 수정일자 : 2023-10-25 수정자(김광원)
- * 내용 : 일반회원을 위한 VO입니다.
- */
 package com.ktdsuniversity.edu.generalmember.vo;
 
 import java.util.List;
 
 import com.ktdsuniversity.edu.career.vo.CareerVO;
-import com.ktdsuniversity.edu.education.vo.EducationVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 
 public class GeneralMemberVO extends MemberVO {
@@ -23,16 +16,34 @@ public class GeneralMemberVO extends MemberVO {
 	private String blogUrl;
 	private List<GeneralMemberVO> generalMemberList;
 	private List<CareerVO> careerVOList;
-	private List<EducationVO> educationList;
 	private MemberVO memberVO;
 	
 	
+	public List<GeneralMemberVO> getGeneralMemberList() {
+		return generalMemberList;
+	}
+	public void setGeneralMemberList(List<GeneralMemberVO> generalMemberList) {
+		this.generalMemberList = generalMemberList;
+	}
+	public MemberVO getMemberVO() {
+		return memberVO;
+	}
+	public void setMemberVO(MemberVO memberVO) {
+		this.memberVO = memberVO;
+	}
+	public List<CareerVO> getCareerVOList() {
+		return careerVOList;
+	}
+	public void setCareerVOList(List<CareerVO> careerVOList) {
+		this.careerVOList = careerVOList;
+	}
 	public String getGeneralMemberEmail() {
 		return generalMemberEmail;
 	}
 	public void setGeneralMemberEmail(String generalMemberEmail) {
 		this.generalMemberEmail = generalMemberEmail;
 	}
+	
 	public String getSelfIntro() {
 		return selfIntro;
 	}
@@ -63,6 +74,7 @@ public class GeneralMemberVO extends MemberVO {
 	public void setGithubUrl(String githubUrl) {
 		this.githubUrl = githubUrl;
 	}
+	
 	public String getAdditionalEmail() {
 		return additionalEmail;
 	}
@@ -75,31 +87,6 @@ public class GeneralMemberVO extends MemberVO {
 	public void setBlogUrl(String blogUrl) {
 		this.blogUrl = blogUrl;
 	}
-	public List<GeneralMemberVO> getGeneralMemberList() {
-		return generalMemberList;
-	}
-	public void setGeneralMemberList(List<GeneralMemberVO> generalMemberList) {
-		this.generalMemberList = generalMemberList;
-	}
-	public List<CareerVO> getCareerVOList() {
-		return careerVOList;
-	}
-	public void setCareerVOList(List<CareerVO> careerVOList) {
-		this.careerVOList = careerVOList;
-	}
-	public List<EducationVO> getEducationList() {
-		return educationList;
-	}
-	public void setEducationList(List<EducationVO> educationList) {
-		this.educationList = educationList;
-	}
-	public MemberVO getMemberVO() {
-		return memberVO;
-	}
-	public void setMemberVO(MemberVO memberVO) {
-		this.memberVO = memberVO;
-	}
-	
 	
 	
 }

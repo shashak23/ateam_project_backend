@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -59,18 +58,16 @@
 	    <div>
 	        <form:errors path="postTitle" element="div" cssClass="errors" />
 	        <form:errors path="postContent" element="div" cssClass="errors" />
-	        <c:if test="${not empty message}">
-	        	<div class="errors" >${message}</div>
-	        </c:if>
+
 	    </div>
 		<div class="grid">
 		    
             <input id="postTitle" type="text" name="postTitle" placeholder="제목을 입력해 주세요."
-                   value="${companyNewsVO.postTitle}" />
+                   value="${CompanyNewsVO.postTitle}" />
             
             <input id="file" type="file" name="file" />
             
-            <textarea name="postContent" id="editor">${companyNewsVO.postContent}</textarea>
+            <textarea name="postContent" id="editor">${CompanyNewsVO.postContent}</textarea>
             <script>
 			    ClassicEditor.create( document.querySelector( '#editor' ), {
 			       language: "ko"

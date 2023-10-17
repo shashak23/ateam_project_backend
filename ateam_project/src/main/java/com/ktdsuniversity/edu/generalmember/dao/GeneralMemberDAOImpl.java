@@ -1,9 +1,3 @@
-/**
- * 작성자 : 김광원
- * 작성일자 : 2023-10-24
- * 수정일자 : 2023-10-25 수정자(김광원)
- * 내용 : 일반회원을 위한 DAOImpl입니다.
- */
 package com.ktdsuniversity.edu.generalmember.dao;
 
 import java.util.List;
@@ -14,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ktdsuniversity.edu.career.vo.CareerVO;
-import com.ktdsuniversity.edu.education.vo.EducationVO;
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 
@@ -38,12 +31,6 @@ public class GeneralMemberDAOImpl extends SqlSessionDaoSupport implements Genera
 	public List<GeneralMemberVO> getAllGeeralMemberList(String generalMemberEmail) {
 		return getSqlSession().selectList("getAllGeeralMemberList",generalMemberEmail);
 	}
-	
-	@Override
-	public List<EducationVO> getAllEducationList(String generalMemberEmail) {
-		return getSqlSession().selectList("getAllEducationList",generalMemberEmail);
-	}
-	
 	@Override
 	public MemberVO getSelectNickname(String generalMemberEmail) {
 		return getSqlSession().selectOne("getSelectNickname",generalMemberEmail);
@@ -84,7 +71,6 @@ public class GeneralMemberDAOImpl extends SqlSessionDaoSupport implements Genera
 	public int deleteSelfIntro(String generalMemberEmail) {
 		return getSqlSession().update("deleteSelfIntro",generalMemberEmail);
 	}
-	
 	
 
 }

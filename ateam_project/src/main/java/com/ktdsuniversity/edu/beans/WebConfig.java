@@ -38,7 +38,6 @@ public class WebConfig implements WebMvcConfigurer {
 	public void addInterceptors(InterceptorRegistry registry) {
 		//세션 체크를 하지 않을URL을 적어주세요.
 		
-
 		List<String> excludePatterns = new ArrayList<>();
 		excludePatterns.add("/member/signup/**");
 		excludePatterns.add("/member/auth");
@@ -57,7 +56,6 @@ public class WebConfig implements WebMvcConfigurer {
 		registry.addInterceptor(new CheckSessionInterceptor())
 				.addPathPatterns("/**")
 				.excludePathPatterns(excludePatterns);
-		
 	}
 	
 	@Bean

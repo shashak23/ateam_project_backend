@@ -11,10 +11,13 @@
 <script type="text/javascript">
 	$().ready(function() {
 
-		// 선택했던 option의 value가 선택되어있음
-        $("select[name=algorithmCategoryId]").val("${algorithmQuestionVO.algorithmCategoryId}")
-        $("select[name=algorithmTierId]").val("${algorithmQuestionVO.algorithmTierId}")
-        
+        // // db에 기록된 이전 선택 option 가져와서
+        // var originCategory = 
+        //         $("select[name=algorithmCategoryId] option:selected").text();
+        // // 해당 option이 선택된 상태로 만들기
+        // $('#algorithmCategoryId').val('originCategory').prop("selected", true);
+                
+
         // option 선택이 바뀌면, 바뀐 값이 들어감
 		$("select[name=algorithmCategoryId]").change(function() {
             var category = 

@@ -1,8 +1,3 @@
-/**
- * 작성자: 남현욱
- * 작성일자: 2023-10-16
- * 내용: 질문 답변 게시판 댓글을 위한 DAO입니다.
- */
 package com.ktdsuniversity.edu.generalpost.dao;
 
 import java.util.List;

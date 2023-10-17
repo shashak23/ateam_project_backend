@@ -61,7 +61,6 @@
 	
 </style>
 <body>
-    <jsp:include page="../../member/membermenu.jsp"></jsp:include>
 	<h1>알고리즘 문제 내용 조회하기</h1>
 	<div class="grid">
 		
@@ -80,11 +79,12 @@
 		<label for="algorithmContent">문제 내용</label>
 		<div>${algorithmQuestionVO.algorithmContent}</div>
 		
-		<form:form modelAttrivute="myAlgorithmVO" method="post">
+		<form:form modelAttrivute="myAlgorithmVO" method="post"
+		           action="/myalgorithm/create">
 		    <input type="hidden" name="myAlgorithmQuestionId" value="myAlgorithmVO.myAlgorithmQuestionId" />
 		
 		    <label for="myAnswer">답변</label> <!-- 웹IDE 테이블에 신규생성? -->
-		    <textarea name="myAnswer" id="editor" placeholder="답변을 작성해주세요." value="${myAlgorithmVO.myAnswer}"></textarea>
+		    <textarea name="myAnswer" id="editor" placeholder="답변을 작성해주세요.">${myAlgorithmVO.myAnswer}</textarea>
             <script>
 			    ClassicEditor.create( document.querySelector( '#editor' ), {
 			       language: "ko"
@@ -92,8 +92,7 @@
 			</script>
 		</form:form>
 		
-		<!-- 추후 작업 -->
-		<label for="result" id="result" >실행결과</label>
+		<label for="result" id="result" >실행결과</label> <!-- 자동으로 랜덤 데이터 넣기 -->
 		<textarea name="result">${result}</textarea>
 		
 		
@@ -103,13 +102,13 @@
 				    <c:if test="${empty sessionScope._LOGIN_USER_}">
 				        <a href="/member/auth">로그인하기</a>
 				    </c:if>
-				    <!-- 해당 게시글을 작성한 기업회원이 로그인 했을 시 -->
-				    <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq algorithmQuestionVO.companyVO.companyEmail}">
+				    <!-- 기업회원이 로그인 했을 시 -->
+				    <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq companyVO.memberVO.email}">
 					    <a href="/algorithm/question/update/${algorithmQuestionVO.companyAlgorithmQuestionId}">수정</a>
 					    <a href="/algorithm/question/delete/${algorithmQuestionVO.companyAlgorithmQuestionId}">삭제</a>
 				    </c:if>
 				    <!-- 일반회원이 로그인 했을 시 -->
-				    <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.memberType eq 'GENERAL_MEMBER'}">
+				    <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq generalMemberVO.generalMemberEmail}">
 				        <input type="submit" id="submit" value="제출 후 채점하기" />
 				    </c:if>
 				</div>

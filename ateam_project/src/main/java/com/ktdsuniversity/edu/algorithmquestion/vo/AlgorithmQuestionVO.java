@@ -6,8 +6,6 @@
 
 package com.ktdsuniversity.edu.algorithmquestion.vo;
 
-import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
-import com.ktdsuniversity.edu.member.vo.CompanyVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 
 import jakarta.validation.constraints.NotBlank;
@@ -16,10 +14,10 @@ public class AlgorithmQuestionVO {
 	
 	private String companyAlgorithmQuestionId;
 	
-	@NotBlank(message = "알고리즘 카테고리를 선택해주세요.")
+	//@NotBlank(message = "알고리즘 카테고리를 선택해주세요.")
 	private String algorithmCategoryId;
 	
-	@NotBlank(message = "난이도를 선택해주세요.")
+	//@NotBlank(message = "난이도를 선택해주세요.")
 	private String algorithmTierId;
 	
 	private String algorithmWriter;
@@ -41,22 +39,6 @@ public class AlgorithmQuestionVO {
 	 */
 	private MemberVO memberVO;
 	
-	private GeneralMemberVO generalMemberVO;
-	
-	private CompanyVO companyVO;
-	
-	public GeneralMemberVO getGeneralMemberVO() {
-		return generalMemberVO;
-	}
-	public void setGeneralMemberVO(GeneralMemberVO generalMemberVO) {
-		this.generalMemberVO = generalMemberVO;
-	}
-	public CompanyVO getCompanyVO() {
-		return companyVO;
-	}
-	public void setCompanyVO(CompanyVO companyVO) {
-		this.companyVO = companyVO;
-	}
 	public MemberVO getMemberVO() {
 		return memberVO;
 	}

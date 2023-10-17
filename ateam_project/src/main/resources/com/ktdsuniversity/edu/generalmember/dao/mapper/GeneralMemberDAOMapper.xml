@@ -28,22 +28,10 @@
   		  FROM GENERAL_MEMBER
 	     WHERE GENERAL_MEMBER_EMAIL = #{_parameter}
 	</select>
-	<select id="getAllEducationList"
-			parameterType="string"
-			resultType="com.ktdsuniversity.edu.education.vo.EducationVO">
-		SELECT SCHOOL_NAME
-			 , SCHOOL_DEPARTMENT
-			 , DEGREES
-	      FROM EDUCATION
-	     WHERE GENERAL_MEMBER_EMAIL = #{_parameter}
-	     ORDER BY DEGREES DESC
-	</select>
-	
 	<select id="getSelectNickname"
 			parameterType="string"
 			resultType="com.ktdsuniversity.edu.member.vo.MemberVO">
 			SELECT NICKNAME
-			     , PROFILE_PIC
 			  FROM MEMBER
 			 WHERE EMAIL =#{_parameter}
 	

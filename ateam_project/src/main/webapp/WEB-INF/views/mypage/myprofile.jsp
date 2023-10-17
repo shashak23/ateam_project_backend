@@ -20,15 +20,14 @@
 <link rel="stylesheet" type="text/css" href="./myProfile.css" />
 <link rel="stylesheet" type="text/css" href="/css/myProfile.css" />
 </head>
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+
 <body>
 	<!--아이디와 클래스 값을 부여함-->
 	<div id="wrap" class="wrap">
 
 
 		<header id="header" class="header">
-<jsp:include page="../member/membermenu.jsp"></jsp:include>
+
 			<!-- 로그인/회원가입 -->
 			<!-- <li><a href="#">로그인</a></li> 링크를 통해 # 사용자가 지정 할수있고 버튼을 누르면 그곳으로 이동해 달라는 태그 -->
 
@@ -67,6 +66,8 @@
 				</div>
 			</div>
 		</header>
+		<script
+			src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 		<!--           메인 -------------------------------------------------------------------------------- -->
 		<div id="container">
 			<div class="flex_button">
@@ -86,7 +87,7 @@
 				</div>
 				<div class="profile">
 					<img
-						src="${memberVO.profilePic}" />
+						src="https://thumb.mt.co.kr/06/2023/07/2023073016215867372_2.jpg/dims/optimize/">
 					<div>
 						<ul class="introduction_list">
 							<li class="list_name">
@@ -113,16 +114,11 @@
 				<div class="related_link">
 					<a href="${generalMemberVO.githubUrl}"><img
 						src="https://cdn-icons-png.flaticon.com/512/25/25231.png"
-						alt="Icon 1"></a>
-						
-						<a href="${generalMemberVO.additionalEmail}"><img
+						alt="Icon 1"></a> <a href="${generalMemberVO.additionalEmail}"><img
 						src="https://w7.pngwing.com/pngs/863/247/png-transparent-email-computer-icons-email-miscellaneous-angle-text.png"
-						alt="Icon 2"> </a> 
-						
-						<a href="${generalMemberVO.blogUrl}"><img
+						alt="Icon 2"> </a> <a href="${generalMemberVO.blogUrl}"><img
 						src="https://i.pinimg.com/originals/f8/0b/dd/f80bdd79a51358da6ee41a0fda520394.png"
-						alt="Icon 3"></a>
-						
+						alt="Icon 3"> </a>
 					<button id="edit_button1">
 						<img
 							src="https://cdn.icon-icons.com/icons2/1462/PNG/512/101edit_99874.png">
@@ -162,18 +158,9 @@
 						</button>
 					</p>
 					<ul>
-						<c:choose>
-							<c:when test="${not empty educationList}">
-								<c:forEach items="${educationList}" var="education">
-									<li>${education.schoolName}-${education.schoolDepartment } ${education.degrees }
-									</li>
-								</c:forEach>
-							</c:when>
-							<c:otherwise>
-								<li><button>추가하기</button></li>
-							</c:otherwise>
-
-						</c:choose>
+						<li>Massachusetts Institute of Technology Institute for Data,
+							Systems</li>
+						<li>서울대학교 컴퓨터공학과 석사</li>
 					</ul>
 				</div>
 				<div class="career">
