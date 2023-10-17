@@ -1,3 +1,9 @@
+/**
+ * 작성자 : 김광원
+ * 작성일자 : 2023-10-24
+ * 수정일자 : 2023-10-25 수정자(김광원)
+ * 내용 : 일반회원을 Controller입니다.
+ */
 package com.ktdsuniversity.edu.generalmember.web;
 
 import java.util.List;
@@ -15,6 +21,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ktdsuniversity.edu.career.vo.CareerVO;
+import com.ktdsuniversity.edu.education.vo.EducationVO;
 import com.ktdsuniversity.edu.exceptions.PageNotFoundException;
 import com.ktdsuniversity.edu.generalmember.service.GeneralMemberService;
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
@@ -29,14 +36,15 @@ public class GeneralMemberController {
 	private GeneralMemberService generalMemberService;
 
 	/**
-	 * 경력 조회
+	 * 마이페이지 조회
 	 */
 	@GetMapping("/memberinfo/view")
 	public ModelAndView viewMemberInfo(@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 		ModelAndView modelAndView = new ModelAndView();
-		logger.debug(memberVO.getEmail());
+		System.out.println(memberVO.getEmail());
 		List<CareerVO> careerListVO = generalMemberService.getAllCareerListByMemberEmail(memberVO.getEmail());
 		List<GeneralMemberVO> generalMemberListVO = generalMemberService.getAllGeeralMemberList(memberVO.getEmail());
+		List<EducationVO> educationListVO = generalMemberService.getAllEducationList(memberVO.getEmail());
 		MemberVO member = generalMemberService.getSelectNickname(memberVO.getEmail());
 		GeneralMemberVO generalMemberVO = generalMemberService.getSelectGeneralMember(memberVO.getEmail());
 		modelAndView.setViewName("/mypage/myprofile");
@@ -44,6 +52,7 @@ public class GeneralMemberController {
 		modelAndView.addObject("generalMemberList", generalMemberListVO);
 		modelAndView.addObject("generalMemberVO", generalMemberVO);
 		modelAndView.addObject("memberVO", member);
+		modelAndView.addObject("educationList", educationListVO);
 		return modelAndView;
 	}
 
