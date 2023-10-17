@@ -19,7 +19,7 @@
     div.grid {
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: 40px 1fr 1fr;
+        grid-template-rows: 40px 40px 1fr;
     }
 
     div.grid > div.btn-group {

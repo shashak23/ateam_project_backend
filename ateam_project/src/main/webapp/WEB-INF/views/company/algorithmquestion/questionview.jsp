@@ -66,7 +66,7 @@
 	<div class="grid">
 		
 		<label for="algorithmCategoryId">카테고리</label>
-		<div>${algorithmQuestionVO.algorithmCategoryId}</div>
+		<div>${algorithmQuestionVO.commonCodeVO.codeContent}</div>
 		
 		<label for="algorithmTierId">난이도</label>
 		<div>${algorithmQuestionVO.algorithmTierId}</div>

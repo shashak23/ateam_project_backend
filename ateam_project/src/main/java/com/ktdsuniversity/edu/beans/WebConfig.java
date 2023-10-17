@@ -1,3 +1,7 @@
+/*
+ * 수정자: 장보늬(2023-10-17) 
+ */
+
 package com.ktdsuniversity.edu.beans;
 
 import java.util.ArrayList;
@@ -39,24 +43,27 @@ public class WebConfig implements WebMvcConfigurer {
 		//세션 체크를 하지 않을URL을 적어주세요.
 		
 
-		List<String> excludePatterns = new ArrayList<>();
-		excludePatterns.add("/member/signup/**");
-		excludePatterns.add("/member/auth");
-		excludePatterns.add("/freeboard/list");
-		excludePatterns.add("/home/main");
-		excludePatterns.add("/js/**");
-		excludePatterns.add("/css/**");
-		excludePatterns.add("/img/**");
-		excludePatterns.add("/news/**");
-		excludePatterns.add("/error");
-		excludePatterns.add("/algorithm/**");
-		excludePatterns.add("/member/regist");
-		excludePatterns.add("/qnaboard/list");
+		List<String> checkSessionExcludePatterns = new ArrayList<>();
+		checkSessionExcludePatterns.add("/member/signup/**");
+		checkSessionExcludePatterns.add("/member/auth");
+		checkSessionExcludePatterns.add("/freeboard/list");
+		checkSessionExcludePatterns.add("/home/main");
+		checkSessionExcludePatterns.add("/js/**");
+		checkSessionExcludePatterns.add("/css/**");
+		checkSessionExcludePatterns.add("/img/**");
+		checkSessionExcludePatterns.add("/news/**");
+		checkSessionExcludePatterns.add("/error");
+		checkSessionExcludePatterns.add("/algorithm/**");
+		checkSessionExcludePatterns.add("/member/regist");
+		checkSessionExcludePatterns.add("/qnaboard/list");
 
 		
 		registry.addInterceptor(new CheckSessionInterceptor())
 				.addPathPatterns("/**")
-				.excludePathPatterns(excludePatterns);
+				.excludePathPatterns(checkSessionExcludePatterns);
+		
+		registry.addInterceptor(new NextUrlInterceptor())
+		        .addPathPatterns("/member/auth");
 		
 	}
 	

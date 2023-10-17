@@ -98,7 +98,7 @@
 			<c:when test="${not empty algorithmQuestionList.algorithmQuestionList}">
 				<c:forEach items="${algorithmQuestionList.algorithmQuestionList}" var="algorithmquestion">
 					<tr>
-						<td>${algorithmquestion.algorithmCategoryId}</td>
+						<td>${algorithmquestion.commonCodeVO.codeContent}</td>
 						<td>${algorithmquestion.memberVO.nickname}</td>
 						<td>
 							<a href="/algorithm/question/view/${algorithmquestion.companyAlgorithmQuestionId}">

@@ -15,21 +15,13 @@
 		$.get("/code/알고리즘카테고리", function(response) {
 			for (var i = 0; i < response.length; i++) {
 				var code = response[i]
-				var label = $("<label for='"+code.codeId+"'>"+code.codeContent+"</label>")
 				var checkbox = $("<input type='checkbox' id='"+code.codeId+"' name='algorithmCategoryId' value='"+code.codeId+"' />");
 				$("#algorithm_category").append(label);
 				$("#algorithm_category").append(checkbox);
+				var label = $("<label for='"+code.codeId+"'>"+code.codeContent+"</label>");
 			}
-			
 		});
 		
-		<!--
-		$("select[name=algorithmCategoryId]").change(function() {
-            var category = 
-                $("select[name=algorithmCategoryId] option:selected").text();
-            $("#algorithmCategoryId").val(category);
-        })
-        -->
 		$('input:checkbox[name=algorithmCategoryId]').each(function (index) {
 			if($(this).is(":checked")==true){
 				var category = $(this).val()
@@ -66,7 +58,7 @@
     div.grid {
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: 40px 40px 40px 1fr 40px 1fr 1fr;
+        grid-template-rows: 40px 60px 40px 40px 40px 40px 1fr 40px 1fr 40px;
     }
 
     div.grid > div.btn-group {
@@ -88,26 +80,15 @@
         padding: 0px;
         margin-bottom: 12px;
     }
-    label {
-        margin: 10px;
-    }
-    label:first-child {
-        margin-left: 0px;
-    }
-    
-    div.flex {
-        display: flex;
-        flex-direction: row;
-        margin-left: 0px;
-    }
     select {
         margin-bottom: 10px;
         margin-right: 10px;
-        width: 150px;
-    }
-    select:last-child {
         width: 280px;
-    }    
+    }
+    .label {
+        margin-top: 10px;
+        font-weight: bold;
+    }
 </style>
 <body>
 	<h3>알고리즘 문제 작성</h3>
@@ -120,24 +101,10 @@
 	</div>
 	
 		<div class="grid">
-		    <div class=flex>
-		    <label for="algorithmCategoryId">알고리즘 카테고리</label>
+		    <label class="label" for="algorithmCategoryId">알고리즘 카테고리</label>
 		    <div id="algorithm_category"></div>
-		    
-		    <!-- 
-		    <select name="algorithmCategoryId">
-                <option value="">선택하세요</option>
-                <option value="수학">수학</option>
-                <option value="그리디 알고리즘">그리디 알고리즘</option>
-                <option value="배열">배열</option>
-                <option value="동적 프로그래밍">동적 프로그래밍</option>
-                <option value="해싱">해싱</option>
-                <option value="자료구조">자료구조</option>
-                <option value="문자열">문자열</option>
-                <option value="기타">기타</option>
-            </select>
-		     -->
-            <label for="algorithmTierId">난이도</label>
+			
+            <label class="label" for="algorithmTierId">난이도</label>
 		    <select name="algorithmTierId" >
                 <option value="">선택하세요 (난이도최하:1 / 난이도최상:5)</option>
                 <option value="Lv.1">Lv.1</option>
@@ -146,12 +113,11 @@
                 <option value="Lv.4">Lv.4</option>
                 <option value="Lv.5">Lv.5</option>
             </select>
-		    </div>
 		    
             <input id="algorithmTitle" type="text" name="algorithmTitle" placeholder="제목을 입력해 주세요."
                    value="${algorithmQuestionVO.algorithmTitle}" />
             
-            <label for="algorithmContent">문제내용</label>
+            <label class="label" for="algorithmContent">문제내용</label>
             <textarea name="algorithmContent" id="editor">${algorithmQuestionVO.algorithmContent}</textarea>
             <script>
 			    ClassicEditor.create( document.querySelector( '#editor' ), {
@@ -159,8 +125,7 @@
 			    } );
 			</script>
 
-
-            <label for="algorithmSolution">문제풀이</label>
+            <label class="label" for="algorithmSolution">문제풀이</label>
             <textarea name="algorithmSolution" id="editor2"></textarea>
             <script>
 			    ClassicEditor.create( document.querySelector( '#editor2' ), {

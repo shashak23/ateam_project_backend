@@ -55,7 +55,7 @@
 		
 		<div class="btn-group">
 		    <!-- 해당 게시글을 작성한 기업회원이 로그인 했을 시 -->
-            <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq algorithmQuestionVO.companyVO.companyEmail}">
+            <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq companyNewsVO.postWriter}">
 				<div class="right-align">
 					<a href="/news/update/${companyNewsVO.companyNewsPostId}">수정</a>
 					<a href="/news/delete/${companyNewsVO.companyNewsPostId}">삭제</a>
