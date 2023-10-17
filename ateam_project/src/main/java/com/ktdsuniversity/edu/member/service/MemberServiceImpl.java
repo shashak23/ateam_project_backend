@@ -1,10 +1,16 @@
 package com.ktdsuniversity.edu.member.service;
 
+import java.io.File;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.ktdsuniversity.edu.beans.FileHandler;
+import com.ktdsuniversity.edu.beans.FileHandler.StoredFile;
 import com.ktdsuniversity.edu.beans.SHA;
 import com.ktdsuniversity.edu.exceptions.AlreadyUseException;
+import com.ktdsuniversity.edu.exceptions.PageNotFoundException;
 import com.ktdsuniversity.edu.exceptions.UserIdentityNotMatchException;
 import com.ktdsuniversity.edu.generalmember.dao.GeneralMemberDAO;
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
@@ -19,6 +25,7 @@ public class MemberServiceImpl implements MemberService{
 	private GeneralMemberDAO generalMemberDAO;
 	@Autowired
 	private SHA sha;
+	@Autowired FileHandler fileHandler;
 	
 	@Override
 	public boolean createNewMember(GeneralMemberVO generalMemberVO) {
@@ -69,4 +76,33 @@ public class MemberServiceImpl implements MemberService{
 		}
 		return member;
 	}
+	/**
+	 * 프로필사진 조회
+	 */
+	@Override
+	public MemberVO getOneFile(String email) {
+		MemberVO memberVO = memberDAO.getOneFile(email);
+		if(memberVO == null) {
+			throw new PageNotFoundException("잘못된 접근입니다.");
+		}
+		return memberVO;
+	}
+
+	@Override
+	public boolean updateOneFile(MemberVO memberVO, MultipartFile file) {	
+		if(file!= null && !file.isEmpty()) {
+			MemberVO originMemberVO = memberDAO.getOneFile(memberVO.getEmail());
+			if(originMemberVO != null && originMemberVO.getProfilePic() !=null) {
+				File originFile = fileHandler.getStoredFile(originMemberVO.getProfilePic());
+				if(originFile.exists() && originFile.isFile()) {
+					originFile.delete();
+				}
+			}
+			StoredFile storedFile = fileHandler.storeFile(file);
+			memberVO.setProfilePic(storedFile.getRealFileName());
+		}
+		int updateCount = memberDAO.updateOneFile(memberVO);
+		return updateCount>0;
+	}
+
 }

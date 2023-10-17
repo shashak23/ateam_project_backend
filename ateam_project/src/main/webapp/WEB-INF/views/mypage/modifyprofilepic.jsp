@@ -56,9 +56,7 @@
         <img src="${memberVO.profilePic}" alt="프로필 사진" class="profile-image" id="profile-image">
         <div class="file-input">
             <input type="file" id="profilePic" name="profilePic" />
-            현재 업로드된 파일: ${memberVO.profilePic}
         </div>
-        <input type="submit" value="저장" />
     </div>
 </form>
 </body>

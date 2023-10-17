@@ -56,10 +56,8 @@ public class WebConfig implements WebMvcConfigurer {
 		
 		registry.addInterceptor(new CheckSessionInterceptor())
 				.addPathPatterns("/**")
-				.excludePathPatterns(checkSessionExcludePatterns);
+				.excludePathPatterns(excludePatterns);
 		
-		registry.addInterceptor(new NextUrlInterceptor())
-				.addPathPatterns("/member/auth");
 	}
 	
 	@Bean
