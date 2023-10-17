@@ -1,3 +1,8 @@
+/**
+ * 작성자: 남현욱
+ * 작성일자: 2023-10-16
+ * 내용: 질문 답변 게시판 댓글을 위한 VO입니다.
+ */
 package com.ktdsuniversity.edu.generalpost.vo;
 
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
@@ -5,7 +10,7 @@ import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 public class GeneralCommentVO {
 
 	private String generalCommentId;
-	private String commentWriterId;
+	private String commentWriter;
 	private String generalPostId;
 	private String commentContent;
 	private String postDate;
@@ -23,12 +28,12 @@ public class GeneralCommentVO {
 		this.generalCommentId = generalCommentId;
 	}
 
-	public String getCommentWriterId() {
-		return commentWriterId;
+	public String getCommentWriter() {
+		return commentWriter;
 	}
 
-	public void setCommentWriterId(String commentWriterId) {
-		this.commentWriterId = commentWriterId;
+	public void setCommentWriter(String commentWriter) {
+		this.commentWriter = commentWriter;
 	}
 
 	public String getGeneralPostId() {
