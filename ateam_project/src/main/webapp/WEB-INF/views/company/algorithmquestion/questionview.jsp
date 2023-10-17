@@ -104,7 +104,7 @@
 				        <a href="/member/auth">로그인하기</a>
 				    </c:if>
 				    <!-- 해당 게시글을 작성한 기업회원이 로그인 했을 시 -->
-				    <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq algorithmQuestionVO.companyVO.companyEmail}">
+				    <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq algorithmQuestionVO.algorithmWriter}">
 					    <a href="/algorithm/question/update/${algorithmQuestionVO.companyAlgorithmQuestionId}">수정</a>
 					    <a href="/algorithm/question/delete/${algorithmQuestionVO.companyAlgorithmQuestionId}">삭제</a>
 				    </c:if>

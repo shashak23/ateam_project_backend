@@ -32,7 +32,6 @@
 		   AND M.NICKNAME LIKE '%' || #{searchKeyword} || '%'
 		    </if>
 		</if>
-        
 	</select>
 	
 	<select id="getAllAlgorithmQuestion"

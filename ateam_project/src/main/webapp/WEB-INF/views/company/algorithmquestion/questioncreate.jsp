@@ -33,7 +33,7 @@
 		$('input:checkbox[name=algorithmCategoryId]').each(function (index) {
 			if($(this).is(":checked")==true){
 				var category = $(this).val()
-				$("")
+				$("#algorithmCategoryId").val(category)
 			}
 		})
 		
