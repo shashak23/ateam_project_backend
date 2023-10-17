@@ -95,7 +95,7 @@
                           <c:when test="${not empty companyNewsList.companyNewsList}">
                               <c:forEach items="${companyNewsList.companyNewsList}" var="companynews">
                         			<div class="contents">
-                                        <div class="company_name">${companynews.memberVO.nickname}(${companyNewsVO.memberVO.email})</div>
+                                        <div class="company_name">${companynews.memberVO.nickname}(${companynews.postWriter})</div>
                                         <div class="news_title">
                                             <a href="/news/view/${companynews.companyNewsPostId}">
                                                 <c:out value="${companynews.postTitle}" />
@@ -109,7 +109,7 @@
                           </c:when>
                       </c:choose>
                   </div>
-                  <!-- 기업회원 로그인 시에만 보이는 버튼 => 기업회원컨트롤러에 작성한 SessionAttribute와 동일해야함 -->
+                  <!-- 기업회원 로그인 시에만 보이는 버튼 -->
                   <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.memberType eq 'COMPANY'}">
                       <div class="right-align" style="text-align: right; font-weight: bold">
                           <a href="/news/create">게시글 등록</a>
