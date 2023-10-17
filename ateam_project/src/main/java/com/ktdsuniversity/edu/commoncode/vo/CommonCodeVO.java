@@ -1,12 +1,13 @@
 /**
  * 작성자: 김태현
+ * 수정자: 장보늬(2023-10-17)
  * 작성일자: 2023-10-11
  * 내용: 공통 코드의 테이블을 저장할 VO클래스입니다. 
  */
 
 package com.ktdsuniversity.edu.commoncode.vo;
 
-public class CommonVO {
+public class CommonCodeVO {
 	private String codeId;
 	private String codeType;
 	private String codeContent;

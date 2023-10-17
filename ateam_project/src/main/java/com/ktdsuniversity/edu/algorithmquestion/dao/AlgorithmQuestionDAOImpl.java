@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 
 import com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionVO;
 import com.ktdsuniversity.edu.algorithmquestion.vo.SearchAlgorithmQuestionVO;
+import com.ktdsuniversity.edu.myalgorithm.vo.MyAlgorithmVO;
 
 @Repository
 public class AlgorithmQuestionDAOImpl extends SqlSessionDaoSupport implements AlgorithmQuestionDAO {
@@ -41,10 +42,15 @@ public class AlgorithmQuestionDAOImpl extends SqlSessionDaoSupport implements Al
 	}
 	
 	@Override
-	public int createNewsAlgorithmQuestion(AlgorithmQuestionVO algorithmQuestionVO) {
-		return getSqlSession().insert("createNewsAlgorithmQuestion", algorithmQuestionVO);
+	public int createNewAlgorithmQuestion(AlgorithmQuestionVO algorithmQuestionVO) {
+		return getSqlSession().insert("createNewAlgorithmQuestion", algorithmQuestionVO);
 	}
 
+	@Override
+	public int createNewMyAlgorithm(MyAlgorithmVO myalgorithmVO) {
+		return getSqlSession().insert("createNewMyAlgorithm", myalgorithmVO);
+	}
+	
 	@Override
 	public int increaseViewCount(String companyAlgorithmQuestionId) {
 		return getSqlSession().update("com.ktdsuniversity.edu.algorithmquestion.dao.AlgorithmQuestionDAO.increaseViewCount", companyAlgorithmQuestionId);
