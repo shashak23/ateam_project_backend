@@ -61,4 +61,13 @@
 		 WHERE EMAIL = #{email}
 		   AND PW = #{pw}
 	</select>
+	<select id="getOneFile"
+	        parameterType="string"
+	        resultType="com.ktdsuniversity.edu.member.vo.MemberVO">
+		SELECT EMAIL
+			 , PROFILE_PIC
+			 , REGIST_DATE
+		  FROM "MEMBER"
+		 WHERE EMAIL = #{_parameter}
+	</select>
 </mapper>

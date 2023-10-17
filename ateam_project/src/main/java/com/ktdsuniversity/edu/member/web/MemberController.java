@@ -12,9 +12,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 import com.ktdsuniversity.edu.generalpost.web.FreePostController;
@@ -109,5 +111,25 @@ public class MemberController {
 			responseMap.put("available", isAvailableNickname);
 		}
 		return responseMap;
+	}
+	/**
+	 * 프로필 사진 조회
+	 */
+	@GetMapping("/memberinfo/profilePicview/{email}")
+	public String viewOneProfilePic(@PathVariable String email, Model model) {
+		MemberVO memberVO = memberService.getOneFile(email);
+		model.addAttribute("memberVO", memberVO);
+		return "mypage/profilepicview";
+	}
+	
+	/**
+	 *  프로필 사진 수정
+	 */
+	@GetMapping("/memberInfo/modify/update-profile-pic/{email}")
+	public String updateProfilePic(@PathVariable String email
+								   , Model model) {
+		MemberVO memberVO = memberService.getOneFile(email);
+		model.addAttribute("memberVO", memberVO);
+		return "mypage/modifyprofilepic";
 	}
 }

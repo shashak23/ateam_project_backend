@@ -35,5 +35,19 @@ public class MemberDAOImpl extends SqlSessionDaoSupport implements MemberDAO{
 	public MemberVO getMember(MemberVO memberVO) {
 		return getSqlSession().selectOne("getMember",memberVO);
 	}
+	/**
+	 * 파일조회
+	 */
+	@Override
+	public MemberVO getOneFile(String email) {
+		return getSqlSession().selectOne("getOneFile",email);
+	}
+	/**
+	 * 파일수정
+	 */
+	@Override
+	public int updateOneFile(MemberVO memberVO) {
+		return getSqlSession().update("updateOneFile",memberVO );
+	}
 
 }
