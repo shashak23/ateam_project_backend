@@ -20,64 +20,89 @@ public class GeneralPostServiceImpl implements GeneralPostService{
 	@Autowired
 	private GeneralPostDAO generalPostDAO;
 	
-	// 전체조회
+	// 자유게시판
 	@Override
-	public GeneralPostListVO getAllBoard() {
+	public GeneralPostListVO getAllFreeBoard() {
 
 		System.out.println(generalPostDAO);
 		System.out.println(generalPostDAO.getClass().getSimpleName());
 		GeneralPostListVO generalPostListVO = new GeneralPostListVO();
 		
 		generalPostListVO.setBoardCnt( generalPostDAO.getBoardAllCount());
-		generalPostListVO.setGeneralPostList( generalPostDAO.getAllBoard());
+		generalPostListVO.setGeneralPostList( generalPostDAO.getAllFreeBoard());
 		return generalPostListVO;	
 	}
 
 	@Override
 	public boolean createNewFreeBoard(GeneralPostVO generalPostVO) {
 		int boardCount = generalPostDAO.createNewFreeBoard(generalPostVO);
-		
+		log.debug("2--컨트롤러---자유----------------------");
+
 		return boardCount > 0;
 	}
 
 	@Override
-	public GeneralPostVO getOneBoard(String generalPostId) {
+	public GeneralPostVO getOneFreeBoard(String generalPostId) {
 		GeneralPostVO result = null;
 		
-		result = generalPostDAO.getOneBoard(generalPostId);
+		result = generalPostDAO.getOneFreeBoard(generalPostId);
 		
 		return result;
 	}
 
 	@Override
-	public boolean updateOneBoard(GeneralPostVO generalPostVO) {
-		int updateCount = generalPostDAO.updateOneBoard(generalPostVO);
+	public boolean updateOneFreeBoard(GeneralPostVO generalPostVO) {
+		int updateCount = generalPostDAO.updateOneFreeBoard(generalPostVO);
 		return updateCount > 0;
 	}
 
 	@Override
-	public boolean deleteOneBoard(String generalPostId) {
-		int deleteCount = generalPostDAO.deleteOneBoard(generalPostId);
+	public boolean deleteOneFreeBoard(String generalPostId) {
+		int deleteCount = generalPostDAO.deleteOneFreeBoard(generalPostId);
 		
 		return deleteCount > 0;
 	}
+	
+	// 질답게시판 
+	@Override
+	public GeneralPostListVO getAllQnABoard() {
 
-//	@Override
-//	public GeneralPostVO getOneBoard(String generalPostId, boolean isIncrease) {
-//		log.debug("서비스 되나요? ------------------ ");
-//		if(isIncrease) {
-//			int updateCount = generalPostDAO.increaseViewCount(generalPostId);
-//			if(updateCount == 0) {
-//				// 예외가 발생한다면, 
-//				throw new IllegalArgumentException("잘못된 접근입니다");
-//			}
-//		}
-//		// 예외가 발생하지 않는다면,
-//		GeneralPostVO generalPostVO = generalPostDAO.getOneBoard(generalPostId);
-//		if(generalPostVO == null) {
-//			throw new IllegalArgumentException("잘못된 접근입니다");
-//
-//		}
-//		return generalPostVO;
-//	}
+		System.out.println(generalPostDAO);
+		System.out.println(generalPostDAO.getClass().getSimpleName());
+		GeneralPostListVO generalPostListVO = new GeneralPostListVO();
+		
+		generalPostListVO.setBoardCnt( generalPostDAO.getBoardAllCount());
+		generalPostListVO.setGeneralPostList( generalPostDAO.getAllQnABoard());
+		return generalPostListVO;	
+	}
+
+	@Override
+	public boolean createNewQnABoard(GeneralPostVO generalPostVO) {
+		int boardCount = generalPostDAO.createNewQnABoard(generalPostVO);
+		log.debug("2-----서비스---------------------------");
+
+		return boardCount > 0;
+	}
+
+	@Override
+	public GeneralPostVO getOneQnABoard(String generalPostId) {
+		GeneralPostVO result = null;
+		
+		result = generalPostDAO.getOneQnABoard(generalPostId);
+		
+		return result;
+	}
+
+	@Override
+	public boolean updateOneQnABoard(GeneralPostVO generalPostVO) {
+		int updateCount = generalPostDAO.updateOneQnABoard(generalPostVO);
+		return updateCount > 0;
+	}
+
+	@Override
+	public boolean deleteOneQnABoard(String generalPostId) {
+		int deleteCount = generalPostDAO.deleteOneQnABoard(generalPostId);
+		
+		return deleteCount > 0;
+	}
 }
