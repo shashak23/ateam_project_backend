@@ -18,5 +18,4 @@ public class MyAlgorithmServiceImpl implements MyAlgorithmService{
 		myList.setMyAlgorithmList(myAlgorithmDAO.getAllMyAlgorithmList(email));
 		return myList;
 	}
-
 }
