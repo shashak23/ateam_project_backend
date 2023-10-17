@@ -3,6 +3,7 @@ package com.ktdsuniversity.edu.generalmember.dao;
 import java.util.List;
 
 import com.ktdsuniversity.edu.career.vo.CareerVO;
+import com.ktdsuniversity.edu.education.vo.EducationVO;
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 
@@ -16,11 +17,15 @@ public interface GeneralMemberDAO {
 		 * 일반회원 전체 조회
 		 */
 		public List<GeneralMemberVO> getAllGeeralMemberList(String generalMemberEmail);
-		
 		/**
-		 * 일반회원 닉네임 조회
+		 * 학력 전체 조회
+		 */
+		public List<EducationVO> getAllEducationList(String generalMemberEmail);
+		/**
+		 * 일반회원  조회
 		 */
 		public MemberVO getSelectNickname(String generalMemberEmail);
+		
 		/**
 		 * 일반회원 컬럼 조회
 		 */

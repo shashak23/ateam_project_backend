@@ -49,18 +49,17 @@
     </style>
 </head>
 <body>
-    <form method="post" enctype="multipart/form-data">
-
-        <div class="profile-container">
-            <h1>프로필 사진 수정</h1>
-            <img src="https://w7.pngwing.com/pngs/384/868/png-transparent-person-profile-avatar-user-basic-ui-icon.png" alt="프로필 사진" class="profile-image" id="profile-image">
-            
-            <div class="file-input">
-                <input type="file" id="file">
-<!--                 현재 업로드된 파일: -->
-            </div>
-            <input class="btn" type="submit" value="저장"/>
+<form method="post" action="/memberInfo/modify/update-profile-pic" enctype="multipart/form-data">
+    <input type="hidden" name="email" value="${memberVO.email}" />
+    <div class="profile-container">
+        <h1>프로필 사진</h1>
+        <img src="${memberVO.profilePic}" alt="프로필 사진" class="profile-image" id="profile-image">
+        <div class="file-input">
+            <input type="file" id="profilePic" name="profilePic" />
+            현재 업로드된 파일: ${memberVO.profilePic}
         </div>
-    </form>
+        <input type="submit" value="저장" />
+    </div>
+</form>
 </body>
 </html>

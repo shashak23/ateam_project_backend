@@ -20,7 +20,8 @@
 <link rel="stylesheet" type="text/css" href="./myProfile.css" />
 <link rel="stylesheet" type="text/css" href="/css/myProfile.css" />
 </head>
-
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <body>
 	<!--아이디와 클래스 값을 부여함-->
 	<div id="wrap" class="wrap">
@@ -66,8 +67,6 @@
 				</div>
 			</div>
 		</header>
-		<script
-			src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 		<!--           메인 -------------------------------------------------------------------------------- -->
 		<div id="container">
 			<div class="flex_button">
@@ -87,7 +86,7 @@
 				</div>
 				<div class="profile">
 					<img
-						src="https://thumb.mt.co.kr/06/2023/07/2023073016215867372_2.jpg/dims/optimize/">
+						src="${memberVO.profilePic}" />
 					<div>
 						<ul class="introduction_list">
 							<li class="list_name">
@@ -158,9 +157,18 @@
 						</button>
 					</p>
 					<ul>
-						<li>Massachusetts Institute of Technology Institute for Data,
-							Systems</li>
-						<li>서울대학교 컴퓨터공학과 석사</li>
+						<c:choose>
+							<c:when test="${not empty educationList}">
+								<c:forEach items="${educationList}" var="education">
+									<li>${education.schoolName}-${education.schoolDepartment } ${education.degrees }
+									</li>
+								</c:forEach>
+							</c:when>
+							<c:otherwise>
+								<li><button>추가하기</button></li>
+							</c:otherwise>
+
+						</c:choose>
 					</ul>
 				</div>
 				<div class="career">

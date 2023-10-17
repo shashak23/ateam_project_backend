@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ktdsuniversity.edu.career.vo.CareerVO;
+import com.ktdsuniversity.edu.education.vo.EducationVO;
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 
@@ -31,6 +32,12 @@ public class GeneralMemberDAOImpl extends SqlSessionDaoSupport implements Genera
 	public List<GeneralMemberVO> getAllGeeralMemberList(String generalMemberEmail) {
 		return getSqlSession().selectList("getAllGeeralMemberList",generalMemberEmail);
 	}
+	
+	@Override
+	public List<EducationVO> getAllEducationList(String generalMemberEmail) {
+		return getSqlSession().selectList("getAllEducationList",generalMemberEmail);
+	}
+	
 	@Override
 	public MemberVO getSelectNickname(String generalMemberEmail) {
 		return getSqlSession().selectOne("getSelectNickname",generalMemberEmail);
