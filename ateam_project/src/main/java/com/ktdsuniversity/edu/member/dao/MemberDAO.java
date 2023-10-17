@@ -10,13 +10,4 @@ public interface MemberDAO {
 	//로그인
 	public String getSalt(String email);
 	public MemberVO getMember(MemberVO memberVO);
-	
-	/**
-	 * member 조회
-	 */
-	public MemberVO getSelectMember(String email);
-	/**
-	 * 마이 프로필 수정
-	 */
-	public int updateMyprofilePic(MemberVO memberVO);
 }

@@ -3,7 +3,6 @@ package com.ktdsuniversity.edu.generalmember.vo;
 import java.util.List;
 
 import com.ktdsuniversity.edu.career.vo.CareerVO;
-import com.ktdsuniversity.edu.education.vo.EducationVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 
 public class GeneralMemberVO extends MemberVO {
@@ -17,16 +16,9 @@ public class GeneralMemberVO extends MemberVO {
 	private String blogUrl;
 	private List<GeneralMemberVO> generalMemberList;
 	private List<CareerVO> careerVOList;
-	private List<EducationVO> educationList;
 	private MemberVO memberVO;
 	
 	
-	public List<EducationVO> getEducationList() {
-		return educationList;
-	}
-	public void setEducationList(List<EducationVO> educationList) {
-		this.educationList = educationList;
-	}
 	public List<GeneralMemberVO> getGeneralMemberList() {
 		return generalMemberList;
 	}

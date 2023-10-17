@@ -28,9 +28,7 @@ public class CareerController {
 		model.addAttribute("careerVO", careerVO);
 		return "career/careerview";
 	}
-	/**
-	 * 생성
-	 */
+	
 	
 	@GetMapping("/memberInfo/modify/create-career")
 	 public String createCareer() {
@@ -88,7 +86,7 @@ public class CareerController {
 			 return "redirect:/memberinfo/view";
 		 }
 		 else {
-			 return "redirect:/memberInfo/modify/view/"+careerId;
+			 return "redirect:/memberInfo/modify/view?careerId="+careerId;
 		 }
 	 }
 }

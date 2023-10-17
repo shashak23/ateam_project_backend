@@ -12,17 +12,12 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttribute;
-import org.springframework.web.multipart.MultipartFile;
 
-import com.ktdsuniversity.edu.beans.FileHandler;
-import com.ktdsuniversity.edu.beans.FileHandler.StoredFile;
-import com.ktdsuniversity.edu.exceptions.PageNotFoundException;
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
+import com.ktdsuniversity.edu.generalpost.web.FreePostController;
 import com.ktdsuniversity.edu.member.service.MemberService;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 import com.ktdsuniversity.edu.member.vo.validategroup.MemberAuthGroup;
@@ -34,8 +29,8 @@ import jakarta.servlet.http.HttpSession;
 public class MemberController {
 	@Autowired
 	private MemberService memberService;
-	@Autowired
-	private FileHandler fileHandler;
+	
+	private Logger log = LoggerFactory.getLogger(FreePostController.class);
 	
 	/**
 	 * 로그인 관련
@@ -110,35 +105,4 @@ public class MemberController {
 		}
 		return responseMap;
 	}
-	/**
-	 * 파일 수정
-	 */
-	@GetMapping("/memberInfo/modify/update-profile-pic/{email}")
-	public String updateProfilePic(@PathVariable String email
-								, Model model) {
-		
-		MemberVO memberVO = memberService.getSelectMember(email);
-		model.addAttribute("memberVO", memberVO);
-		return "mypage/modifymyprofiepic";
-	}
-    @PostMapping("/memberInfo/modify/update-profile-pic")
-    public String doUpdateProfilePic(@ModelAttribute MemberVO memberVO, Model model,
-            @RequestParam("file") MultipartFile file) {
-        // 파일 업로드 및 경로를 profilePic 필드에 저장
-        if (file != null && !file.isEmpty()) {
-            StoredFile storedFile = fileHandler.storeFile(file);
-            memberVO.setProfilePic(storedFile.getRealFileName());
-        }
-
-        boolean isSuccess = memberService.updateMyprofilePic(memberVO, file);
-
-        if (isSuccess) {
-            return "redirect:/memberInfo/modify/update-profile-pic/" + memberVO.getEmail();
-        } else {
-            // 실패 시 적절한 에러 핸들링
-            model.addAttribute("memberVO", memberVO);
-            return "mypage/modifymyprofilepic";
-        }
-    }
-
 }

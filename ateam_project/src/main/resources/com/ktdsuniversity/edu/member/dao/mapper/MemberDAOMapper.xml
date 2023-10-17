@@ -61,19 +61,4 @@
 		 WHERE EMAIL = #{email}
 		   AND PW = #{pw}
 	</select>
-	<select id="getSelectMember" parameterType="string" resultType="com.ktdsuniversity.edu.member.vo.MemberVO">
-  	  	SELECT EMAIL
-  	  	     , PROFILE_PIC
-   		  FROM MEMBER
-    	 WHERE EMAIL = #{email}
-</select>
-	<update id="updateMyprofilePic"
-			parameterType="com.ktdsuniversity.edu.member.vo.MemberVO">
-		UPDATE MEMBER
-		   SET 
-		   <if test='profilePic != null and profilePic != ""'>
-		   PROFILE_PIC = #{profilePic}
-		   </if>
-		   WHERE EMAIL = #{email}
-	</update>
 </mapper>

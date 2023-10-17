@@ -13,6 +13,7 @@ div.right align{
 </head>
 <body>
 <div>
+<h3>${careerVO.careerId}</h3>
 	<label for="previousCompanyName">회사명</label>
 	<div>${careerVO.previousCompanyName}</div>
 	<label for="jobTitle">직무</label>
