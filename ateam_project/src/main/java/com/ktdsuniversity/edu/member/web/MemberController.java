@@ -16,16 +16,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 import com.ktdsuniversity.edu.generalpost.web.FreePostController;
 import com.ktdsuniversity.edu.member.service.MemberService;
+import com.ktdsuniversity.edu.member.vo.CompanyVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 import com.ktdsuniversity.edu.member.vo.validategroup.MemberAuthGroup;
 import com.ktdsuniversity.edu.member.vo.validategroup.MemberSignupGroup;
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 
 @Controller
 public class MemberController {
@@ -132,4 +133,47 @@ public class MemberController {
 		model.addAttribute("memberVO", memberVO);
 		return "mypage/modifyprofilepic";
 	}
+	
+	/**
+	 * 기업회원 가입
+	 */
+	@GetMapping("/member/companysignup")
+	public String companyMemberSignUp() {
+		return "member/companyregist";
+	}
+	@PostMapping("/member/companysignup")
+	public String doComapnyMemberSignUp(@Valid @ModelAttribute CompanyVO companyVO
+							   , Model model
+							   , BindingResult bindingResult) {
+		
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("comapnyVO", companyVO);
+			return "member/companysignup"; 
+		}
+		
+		boolean isSuccess = memberService.createNewCompanyMemeber(companyVO);
+		if(isSuccess) {
+			return("redirect:/member/auth");
+		}
+		model.addAttribute("companyVO", companyVO);
+		return "member/membersignup";
+	}
+	
+	/**
+	 * 기업회원 검증
+	 */
+	@ResponseBody 
+	@GetMapping("/member/companysignup/vaildation")
+	public Map<String, Object> checkAvailableCompanyEmail(@RequestParam String email){
+		
+		boolean isAvailableCompanyEmail = memberService.checkAvailableCompanyEmail(email);
+		
+		Map<String, Object> responseMap = new HashMap<>();
+
+		responseMap.put("comapnyEmail", email);
+		responseMap.put("available", isAvailableCompanyEmail);
+
+		return responseMap;
+	}
+	
 }

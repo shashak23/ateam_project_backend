@@ -14,13 +14,18 @@ import com.ktdsuniversity.edu.exceptions.PageNotFoundException;
 import com.ktdsuniversity.edu.exceptions.UserIdentityNotMatchException;
 import com.ktdsuniversity.edu.generalmember.dao.GeneralMemberDAO;
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
+import com.ktdsuniversity.edu.member.dao.CompanyDAO;
 import com.ktdsuniversity.edu.member.dao.MemberDAO;
+import com.ktdsuniversity.edu.member.vo.CompanyVO;
+import com.ktdsuniversity.edu.member.vo.CompanyVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 
 @Service
 public class MemberServiceImpl implements MemberService{
 	@Autowired
 	private MemberDAO memberDAO;
+	@Autowired
+	private CompanyDAO companyDAO;
 	@Autowired
 	private GeneralMemberDAO generalMemberDAO;
 	@Autowired
@@ -104,5 +109,24 @@ public class MemberServiceImpl implements MemberService{
 		int updateCount = memberDAO.updateOneFile(memberVO);
 		return updateCount>0;
 	}
+	
+	@Override
+	public boolean createNewCompanyMemeber(GeneralMemberVO generalMemberVO) {
+		int emailCount = companyDAO.getCompanyEmailCount(generalMemberVO.getEmail());
+		if (emailCount > 0) {
+		throw new IllegalArgumentException("이미 사용중인 기업용 이메일입니다");
+		}
+		int insertCompapnyMemberCount = companyDAO.createNewCompanyMember(generalMemberVO);
+		int insertGeneralMemberCount = generalMemberDAO.createNewGeneralMember(generalMemberVO);
+		return insertCompapnyMemberCount > 0 && insertGeneralMemberCount > 0;
+	}
+	
+
+	@Override
+	public boolean checkAvailableCompanyEmail(String email) {
+		int emailCount = companyDAO.getCompanyEmailCount(email);
+		return emailCount == 0;
+	}
+	
 
 }
