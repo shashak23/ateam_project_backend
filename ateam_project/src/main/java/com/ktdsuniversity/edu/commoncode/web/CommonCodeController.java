@@ -52,9 +52,10 @@ public class CommonCodeController {
 		// 보내준 코드 리스트를 받아오기
 		List<CommonCodeVO> originCommonCodeList = commonCodeService.search(codeName);
 		
-		// Set을 이용해 중복된 값을 제거하기
+		// 띄어쓰기를 기준으로 배열에 저장
 		String[] newCommonContentArr = commonCodeVO.getCodeContent().split(" ");
-		
+
+		// Set을 이용해 중복된 값을 제거하기
 		Set<String> newCommonContentSet = new HashSet<>();
 		for (String str : newCommonContentArr) {
 			newCommonContentSet.add(str);
@@ -66,6 +67,7 @@ public class CommonCodeController {
 		boolean isExist = false;
 		boolean isSuccess = false;
 		
+		// DB에 중복된 값이 있는지 검사
 		for (String newContents : newCommonContentSet) {
 			for (CommonCodeVO originContents : originCommonCodeList) {
 				if(newContents.equals(originContents.getCodeContent())) {
@@ -77,6 +79,7 @@ public class CommonCodeController {
 			if (!isExist) {
 				commonCodeVO.setCodeType(codeName);
 				commonCodeVO.setCodeContent(newContents);
+				// 없으면 공통 코드 생성
 				isSuccess = commonCodeService.createCommonCode(commonCodeVO);
 				
 				if (isSuccess) {
