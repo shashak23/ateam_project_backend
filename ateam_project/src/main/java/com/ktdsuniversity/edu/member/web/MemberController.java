@@ -17,10 +17,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ktdsuniversity.edu.companymember.vo.CompanyVO;
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 import com.ktdsuniversity.edu.generalpost.web.FreePostController;
 import com.ktdsuniversity.edu.member.service.MemberService;
-import com.ktdsuniversity.edu.member.vo.CompanyVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 import com.ktdsuniversity.edu.member.vo.validategroup.MemberAuthGroup;
 import com.ktdsuniversity.edu.member.vo.validategroup.MemberSignupGroup;
@@ -152,6 +152,7 @@ public class MemberController {
 		}
 		
 		boolean isSuccess = memberService.createNewCompanyMemeber(companyVO);
+				
 		if(isSuccess) {
 			return("redirect:/member/auth");
 		}
@@ -162,18 +163,18 @@ public class MemberController {
 	/**
 	 * 기업회원 검증
 	 */
-	@ResponseBody 
-	@GetMapping("/member/companysignup/vaildation")
-	public Map<String, Object> checkAvailableCompanyEmail(@RequestParam String email){
-		
-		boolean isAvailableCompanyEmail = memberService.checkAvailableCompanyEmail(email);
-		
-		Map<String, Object> responseMap = new HashMap<>();
-
-		responseMap.put("comapnyEmail", email);
-		responseMap.put("available", isAvailableCompanyEmail);
-
-		return responseMap;
-	}
+//	@ResponseBody 
+//	@GetMapping("/member/companysignup/vaildation")
+//	public Map<String, Object> checkAvailableCompanyEmail(@RequestParam String email){
+//		
+//		boolean isAvailableCompanyEmail = memberService.checkAvailableCompanyEmail(email);
+//		
+//		Map<String, Object> responseMap = new HashMap<>();
+//
+//		responseMap.put("comapnyEmail", email);
+//		responseMap.put("available", isAvailableCompanyEmail);
+//
+//		return responseMap;
+//	}
 	
 }

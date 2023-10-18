@@ -13,6 +13,7 @@
 		FROM "MEMBER"
 		WHERE NICKNAME = #{_parameter}
 	</select>
+	
 	<insert id="createNewMember"
 		parameterType="com.ktdsuniversity.edu.member.vo.MemberVO">
 		INSERT INTO "MEMBER"
@@ -27,15 +28,46 @@
 		, WITHDRAW_YN)
 		VALUES
 		( #{email}
+		<if test='memberType == "COMPANY"'>
+		, 'abc123'
+		, 'SAMPLE'
+		, '관리자가설정하는사업자등록증기반사명'
+		</if>
+		<if test='memberType == null or memberType == ""'>
 		, #{pw}
 		, #{salt}
 		, #{nickname}
+		</if>
 		, 'Y'
 		, 'https://w7.pngwing.com/pngs/384/868/png-transparent-person-profile-avatar-user-basic-ui-icon.png'
 		, SYSDATE
-		, 'GENERAL_MEMBER'
+		, #{memberType}
 		, 'N' )
 	</insert>
+	
+	<!-- <insert id="createNewCompanyMember"
+		parameterType="com.ktdsuniversity.edu.member.vo.MemberVO">
+		INSERT INTO MEMBER
+		( EMAIL
+		, PW
+		, SALT
+		, NICKNAME
+		, INFO_AGREEMENT_YN
+		, PROFILE_PIC
+		, REGIST_DATE
+		, MEMBER_TYPE
+		, WITHDRAW_YN)
+		VALUES
+		( #{companyEmail}
+		, 'abc123'
+		, 'SAMPLE'
+		, '관리자가설정하는사업자등록증기반사명'
+		, 'Y'
+		, 'https://w7.pngwing.com/pngs/384/868/png-transparent-person-profile-avatar-user-basic-ui-icon.png'
+		, SYSDATE
+		, 'COMPANY'
+		, 'N' )
+	</insert> -->
 	
 <!-- 로그인 쿼리 -->
 	<select id="getSalt"

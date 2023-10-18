@@ -31,11 +31,7 @@ public class GeneralPostDAOImpl extends SqlSessionDaoSupport
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		super.setSqlSessionTemplate(sqlSessionTemplate);
 	}
-	
-	public int increaseViewCount(int likeCnt) {
-		return getSqlSession().update("increaseViewCount", likeCnt);
-	}
-	
+		
 	@Override
 	public int increaseViewCount(String generalPostId) {
 		return getSqlSession().update("increaseViewCount", generalPostId);

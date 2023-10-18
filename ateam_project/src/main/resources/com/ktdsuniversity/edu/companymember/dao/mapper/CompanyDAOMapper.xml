@@ -3,17 +3,17 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.ktdsuniversity.edu.member.dao.CompanyDAO">
+<mapper namespace="com.ktdsuniversity.edu.companymember.dao.CompanyDAO">
 
 	<select id="getCompanyEmailCount"
 			parameterType="string">
-		SELECT *
+		SELECT COUNT(*)
 	  	  FROM COMPANY
 	 	 WHERE COMPANY_EMAIL = #{_parameter}
 	</select>
 
 	<insert id="createNewCompanyMember"
-			parameterType="com.ktdsuniversity.edu.member.vo.CompanyVO">
+			parameterType="com.ktdsuniversity.edu.companymember.vo.CompanyVO">
 		INSERT INTO COMPANY (COMPANY_EMAIL
 			 , CONTACT_NUMBER
 			 , CONTACT_NAME
@@ -28,19 +28,19 @@
 			 , COMPANY_INTRO
 			 , HOME_URL
 			 , CONFIRM_YN)
-		VALUES (#{email}
-			  , #{contact}
-			  , #{name}
-			  , ''
-			  , ''
-			  , ''
-			  , 'https://image.fnnews.com/resource/media/image/2021/07/20/202107200834119404_l.jpg'
+		VALUES (#{companyEmail}
+			  , #{contactNumber}
+			  , #{contactName}
 			  , ''
 			  , ''
 			  , ''
 			  , ''
 			  , ''
-			  , 'COMPANY_MEMBER'
+			  , ''
+			  , ''
+			  , ''
+			  , ''
+			  , 'COMPANY'
 			  , 'N')
 	</insert>
 </mapper>

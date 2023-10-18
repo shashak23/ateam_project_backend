@@ -57,18 +57,18 @@
     <h1>기업회원가입</h1>
     <form:form modelAttribute="companyVO" method="post">
     	<div>
-    		<form:errors path="email" element="div" cssClass="errors" />
+    		<form:errors path="companyEmail" element="div" cssClass="errors" />
     	</div>
     	
         <div class="grid">
-            <label for="email">담당자 이메일</label>
-            <input id="email" type="email" name="email" value="${comapnyVO.companyEmail}" />
+            <label for="companyEmail">담당자 이메일</label>
+            <input id="companyEmail" type="companyEmail" name="companyEmail" value="${companyVO.companyEmail}" />
       
-            <label for="name">담당자 이름</label>
-            <input id="name" type="text" name="name" value="${companyVO.contactName}" />
+            <label for="contactName">담당자 이름</label>
+            <input id="contactName" type="text" name="contactName" value="${companyVO.contactName}" />
 
-            <label for="contact">담당자 연락처</label>
-            <input id="contact" type="text" name="contact" value="${companyVO.contactNumber}" />
+            <label for=contactNumber>담당자 연락처</label>
+            <input id="contactNumber" type="text" name="contactNumber" value="${companyVO.contactNumber}" />
        
        		<!-- 사업자 등록증 -->
                         

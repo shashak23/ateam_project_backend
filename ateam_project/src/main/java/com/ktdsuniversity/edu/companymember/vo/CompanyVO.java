@@ -1,6 +1,8 @@
-package com.ktdsuniversity.edu.member.vo;
+package com.ktdsuniversity.edu.companymember.vo;
 
-public class CompanyVO {
+import com.ktdsuniversity.edu.member.vo.MemberVO;
+
+public class CompanyVO extends MemberVO {
 	
 	private String companyEmail;
 	private String contactNumber;

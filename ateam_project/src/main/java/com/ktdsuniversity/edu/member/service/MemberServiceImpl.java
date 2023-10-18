@@ -4,20 +4,20 @@ import java.io.File;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ktdsuniversity.edu.beans.FileHandler;
 import com.ktdsuniversity.edu.beans.FileHandler.StoredFile;
 import com.ktdsuniversity.edu.beans.SHA;
+import com.ktdsuniversity.edu.companymember.dao.CompanyDAO;
+import com.ktdsuniversity.edu.companymember.vo.CompanyVO;
 import com.ktdsuniversity.edu.exceptions.AlreadyUseException;
 import com.ktdsuniversity.edu.exceptions.PageNotFoundException;
 import com.ktdsuniversity.edu.exceptions.UserIdentityNotMatchException;
 import com.ktdsuniversity.edu.generalmember.dao.GeneralMemberDAO;
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
-import com.ktdsuniversity.edu.member.dao.CompanyDAO;
 import com.ktdsuniversity.edu.member.dao.MemberDAO;
-import com.ktdsuniversity.edu.member.vo.CompanyVO;
-import com.ktdsuniversity.edu.member.vo.CompanyVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 
 @Service
@@ -111,16 +111,22 @@ public class MemberServiceImpl implements MemberService{
 	}
 	
 	@Override
-	public boolean createNewCompanyMemeber(GeneralMemberVO generalMemberVO) {
-		int emailCount = companyDAO.getCompanyEmailCount(generalMemberVO.getEmail());
-		if (emailCount > 0) {
+	public boolean createNewCompanyMemeber(CompanyVO companyVO) {
+		int companyEmailCount = memberDAO.getEmailCount(companyVO.getCompanyEmail());
+		
+		if (companyEmailCount > 0) {
 		throw new IllegalArgumentException("이미 사용중인 기업용 이메일입니다");
 		}
-		int insertCompapnyMemberCount = companyDAO.createNewCompanyMember(generalMemberVO);
-		int insertGeneralMemberCount = generalMemberDAO.createNewGeneralMember(generalMemberVO);
-		return insertCompapnyMemberCount > 0 && insertGeneralMemberCount > 0;
+		
+		companyVO.setEmail(companyVO.getCompanyEmail());
+		companyVO.setMemberType("COMPANY");
+		companyVO.setCompanyRegistCertificateUrl("notYet");
+		
+//		int insertMemberCount = memberDAO.createNewCompanyMember(companyVO);
+		int insertMemberCount = memberDAO.createNewMember(companyVO);
+		int insertCompapnyMemberCount = companyDAO.createNewCompanyMember(companyVO);
+		return insertCompapnyMemberCount > 0 && insertMemberCount > 0;
 	}
-	
 
 	@Override
 	public boolean checkAvailableCompanyEmail(String email) {

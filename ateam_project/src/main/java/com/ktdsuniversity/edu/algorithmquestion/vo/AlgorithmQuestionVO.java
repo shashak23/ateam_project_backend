@@ -9,8 +9,8 @@ package com.ktdsuniversity.edu.algorithmquestion.vo;
 import java.util.List;
 
 import com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO;
+import com.ktdsuniversity.edu.companymember.vo.CompanyVO;
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
-import com.ktdsuniversity.edu.member.vo.CompanyVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 import com.ktdsuniversity.edu.util.XssIgnore;
 
