@@ -8,35 +8,28 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                id="generalCommentVOMap"
                autoMapping="true">
         <id column="GENERAL_COMMENT_ID" property="generalCommentId" />
-        <association property="generalMemberVO"
-                     javaType="com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO"
+        <association property="generalPostVO"
+                     javaType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO"
                      autoMapping="true">
-            <id column="GENERAL_MEMBER_EMAIL" property="generalMemberEmail" />
-            <result column="GENERAL_MEMBER_EMAIL" property="generalMemberEmail" />
+                <id column="GENERAL_POST_ID" property="generalPostId" />
         </association>
-        
-       
     </resultMap>
     <select id="getAllComments"
             parameterType="_int"
             resultMap="generalCommentVOMap">
-        SELECT C.GENERAL_COMMENT_ID
-		     , C.COMMENT_WRITER_ID
-		     , C.GENERAL_POST_ID
-		     , C.COMMENT_CONTENT
-		     , C.POST_DATE
-		     , C.UPPER_COMMENT_ID
-		     , C.LIKE_CNT
-		     , C.DELETE_YN
-		     , M.GENERAL_MEMBER_EMAIL
-		  FROM GENERAL_COMMENT C
-		 INNER JOIN GENERAL_POST P
-		    ON C.GENERAL_POST_ID = P.GENERAL_POST_ID
-		 INNER JOIN GENERAL_MEMBER M
-		    ON C.COMMENT_WRITER_ID = M.GENERAL_MEMBER_EMAIL
-		 START WITH C.UPPER_COMMENT_ID=0
-		   AND C.GENERAL_POST_ID=#{_parameter}
-	   CONNECT BY PRIOR C.GENERAL_POST_ID = C.UPPER_COMMENT_ID
+               SELECT 
+              GC.GENERAL_COMMENT_ID
+             , GC.COMMENT_WRITER
+             , GC.GENERAL_POST_ID
+             , GC.COMMENT_CONTENT
+             , GC.POST_DATE
+             , GC.UPPER_COMMENT_ID
+             , GC.LIKE_CNT
+             , GC.DELETE_YN
+          FROM GENERAL_COMMENT GC
+         INNER JOIN GENERAL_POST GP
+            ON GC.GENERAL_POST_ID = GP.GENERAL_POST_ID  
+     <!--     WHERE GC.GENERAL_POST_ID  = #{_parameter}; -->
     </select>
     <select id="getOneComment"
             parameterType="_int"
