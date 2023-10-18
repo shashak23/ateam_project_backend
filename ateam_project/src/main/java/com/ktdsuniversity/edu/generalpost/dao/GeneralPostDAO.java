@@ -20,6 +20,7 @@ public interface GeneralPostDAO {
 	public int deleteOneBoard(int generalPostId);
 
 	public int increaseViewCount(String generalPostId);
+
 	
 //	public int increaseViewCount(String generalPostId);
 	

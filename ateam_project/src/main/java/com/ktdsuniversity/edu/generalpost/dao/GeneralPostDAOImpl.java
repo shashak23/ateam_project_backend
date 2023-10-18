@@ -47,10 +47,8 @@ public class GeneralPostDAOImpl extends SqlSessionDaoSupport
 	@Override
 	public GeneralPostVO getOneBoard(String generalPostId) {
 		return getSqlSession().selectOne("getOneBoard", generalPostId);
-	public int increaseViewCount(int likeCnt) {
-		return getSqlSession().update("com.ktdsuniversity.edu.generalpost.dao.GeneralPostDAO.increaseViewCount", likeCnt);
 	}
-
+		
 	@Override
 	public int increaseViewCount(String generalPostId) {
 		return getSqlSession().update("increaseViewCount", generalPostId);

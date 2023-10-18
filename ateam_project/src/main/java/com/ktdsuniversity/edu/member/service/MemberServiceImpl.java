@@ -6,13 +6,17 @@ import org.springframework.stereotype.Service;
 import com.ktdsuniversity.edu.beans.SHA;
 import com.ktdsuniversity.edu.generalmember.dao.GeneralMemberDAO;
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
+import com.ktdsuniversity.edu.member.dao.CompanyDAO;
 import com.ktdsuniversity.edu.member.dao.MemberDAO;
+import com.ktdsuniversity.edu.member.vo.CompanyVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 
 @Service
 public class MemberServiceImpl implements MemberService{
 	@Autowired
 	private MemberDAO memberDAO;
+	@Autowired
+	private CompanyDAO companyDAO;
 	@Autowired
 	private GeneralMemberDAO generalMemberDAO;
 	@Autowired
@@ -66,5 +70,21 @@ public class MemberServiceImpl implements MemberService{
 			throw new IllegalArgumentException("아이디 또는 비밀번호가 일치하지 않습니다.");
 		}
 		return member;
+	}
+
+	@Override
+	public boolean createNewCompanyMemeber(CompanyVO companyVO) {
+		int emailCount = companyDAO.getCompanyEmailCount(companyVO.getCompanyEmail());
+		if (emailCount > 0) {
+		throw new IllegalArgumentException("이미 사용중인 기업용 이메일입니다");
+		}
+		int insertCount = companyDAO.createNewCompanyMember(companyVO);
+		return insertCount > 0;
+	}
+
+	@Override
+	public boolean checkAvailableCompanyEmail(String email) {
+		int emailCount = companyDAO.getCompanyEmailCount(email);
+		return emailCount == 0;
 	}
 }

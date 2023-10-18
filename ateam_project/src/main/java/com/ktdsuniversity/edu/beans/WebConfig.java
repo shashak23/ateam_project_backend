@@ -48,11 +48,8 @@ public class WebConfig implements WebMvcConfigurer {
 		excludePatterns.add("/img/**");
 		excludePatterns.add("/news/**");
 		excludePatterns.add("/error");
-<<<<<<< HEAD
 		excludePatterns.add("/algorithm/**");
-=======
-		excludePatterns.add("/member/regist");
->>>>>>> main
+		excludePatterns.add("/member/**");
 		
 		registry.addInterceptor(new CheckSessionInterceptor())
 				.addPathPatterns("/**")
