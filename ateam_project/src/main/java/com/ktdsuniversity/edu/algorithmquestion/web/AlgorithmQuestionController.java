@@ -69,27 +69,12 @@ public class AlgorithmQuestionController {
 		
 		XssIgnoreUtil.ignore(algorithmQuestionVO);
 		
-//		System.out.println(algorithmCategoryId);
-//		System.out.println(algorithmTierId);
-		
 		if(bindingResult.hasErrors()) {
 			model.addAttribute("algorithmQuestionVO", algorithmQuestionVO);
 			return "company/algorithmquestion/questioncreate";
 		}
 		
 		algorithmQuestionVO.setAlgorithmWriter(memberVO.getEmail());
-		
-		// 알고리즘카테고리 & 난이도가 null인지 체크하는 if문
-//		if (StringUtils.isEmpty(algorithmCategoryId)) {
-//			model.addAttribute("message1", "알고리즘 카테고리를 선택해주세요.");
-//			model.addAttribute("algorithmQuestionVO", algorithmQuestionVO);
-//			return "company/algorithmquestion/questioncreate";
-//		}
-//		if (StringUtils.isEmpty(algorithmTierId)) {
-//			model.addAttribute("message2", "난이도를 선택해주세요.");
-//			model.addAttribute("algorithmQuestionVO", algorithmQuestionVO);
-//			return "company/algorithmquestion/questioncreate";
-//		}
 		
 		boolean isSuccess = algorithmQuestionService.createNewAlgorithmQuestion(algorithmQuestionVO);
 		if(isSuccess) {

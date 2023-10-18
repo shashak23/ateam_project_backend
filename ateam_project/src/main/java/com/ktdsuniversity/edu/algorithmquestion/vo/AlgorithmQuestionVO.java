@@ -26,7 +26,7 @@ public class AlgorithmQuestionVO {
 	@Size(min = 1, message = "알고리즘 카테고리를 선택해주세요.")
 	private List<String> algorithmCategoryIdList;
 
-	private String algorithmCategoryId;
+	private String mainAlgorithmCategoryId;
 
 	@NotBlank(message = "난이도를 선택해주세요.")
 	private String algorithmTierId;
@@ -106,12 +106,12 @@ public class AlgorithmQuestionVO {
 		this.algorithmCategoryIdList = algorithmCategoryIdList;
 	}
 
-	public String getAlgorithmCategoryId() {
-		return algorithmCategoryId;
+	public String getMainAlgorithmCategoryId() {
+		return mainAlgorithmCategoryId;
 	}
 
-	public void setAlgorithmCategoryId(String algorithmCategoryId) {
-		this.algorithmCategoryId = algorithmCategoryId;
+	public void setMainAlgorithmCategoryId(String mainAlgorithmCategoryId) {
+		this.mainAlgorithmCategoryId = mainAlgorithmCategoryId;
 	}
 
 	public String getAlgorithmTierId() {
