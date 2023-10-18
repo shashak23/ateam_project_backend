@@ -44,8 +44,8 @@
 			<label for = "postTitle"> 제목 </label>
 			<input id = "postTitle" type = "text" name="postTitle" />
 			
-			<!-- <label for = "postWriterId"> 이메일 </label>
-			<input id = "postWriterId" type = "email" name = "postWriterId"/> -->
+			<!-- <label for = "postWriter"> 이메일 </label>
+			<input id = "postWriter" type = "email" name = "postWriter"/> -->
 <!-- 
 			<label for = "file"> 첨부파일 </label>
 			<input id = "file" type = "file" name = "file" />

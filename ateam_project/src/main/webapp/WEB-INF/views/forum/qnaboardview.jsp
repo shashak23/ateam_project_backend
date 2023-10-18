@@ -44,8 +44,8 @@
 		<label for="postTitle">제목</label>
 		<div>${generalPostVO.postTitle}</div>
 		
-		<label for="postWriterId">이메일</label>
-		<div>${generalPostVO.postWriterId}</div>
+		<label for="postWriter">이메일</label>
+		<div>${generalPostVO.postWriter}</div>
 		
 		<label for="viewCnt">조회수</label>
 		<div>${generalPostVO.viewCnt}</div>

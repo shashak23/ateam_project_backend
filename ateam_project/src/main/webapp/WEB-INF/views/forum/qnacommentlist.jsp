@@ -17,7 +17,7 @@
 <h2>댓글 리스트</h2>
 <c:forEach var="comment" items="${commentList}">
     <div>
-        <p>댓글 작성자: ${comment.commentWriterId}</p>
+        <p>댓글 작성자: ${comment.commentWriter}</p>
         <p>댓글 내용: ${comment.commentContent}</p>
         <p>작성일: ${comment.postDate}</p>
         <!-- 여기에 필요한 댓글 정보 추가 -->

@@ -50,8 +50,8 @@
 			<label for="postTitle">제목</label>
 			<input id="postTitle" type="text" name="postTitle" value="${generalPostVO.postTitle}"/>
 			
- 			<label for="postWriterId">이메일</label>
-			<input id="postWriterId" type="email" name="postWriterId" value="${generalPostVO.postWriterId}"/>
+ 			<label for="postWriter">이메일</label>
+			<input id="postWriter" type="email" name="postWriter" value="${generalPostVO.postWriter}"/>
 			
 			<label for="viewCnt">조회수</label>
 			<input id="viewCnt" type="number" name="viewCnt" value="${generalPostVO.viewCnt}"/>	
