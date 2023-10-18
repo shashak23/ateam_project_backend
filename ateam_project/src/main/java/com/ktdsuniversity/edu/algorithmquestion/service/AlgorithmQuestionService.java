@@ -23,5 +23,9 @@ public interface AlgorithmQuestionService {
 	
 	public boolean deleteOneAlgorithmQuestion(String companyAlgorithmQuestionId);
 
+    public boolean deleteAlgorithmQuestionCategory(AlgorithmQuestionVO algorithmQuestionVO);
+	
+	public boolean insertAlgorithmQuestionCategory(AlgorithmQuestionVO algorithmQuestionVO);
+	
 	public boolean createNewMyAlgorithm(MyAlgorithmVO myAlgorithmVO);
 }

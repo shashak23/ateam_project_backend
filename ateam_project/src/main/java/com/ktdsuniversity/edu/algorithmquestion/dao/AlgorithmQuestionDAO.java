@@ -32,7 +32,9 @@ public interface AlgorithmQuestionDAO {
 	
 	public int updateOneAlgorithmQuestion(AlgorithmQuestionVO algorithmQuestionVO);
 	
-	public int updateAlgorithmQuestionCategory(AlgorithmQuestionVO algorithmQuestionVO);
+	public int deleteAlgorithmQuestionCategory(AlgorithmQuestionVO algorithmQuestionVO);
+	
+	public int insertAlgorithmQuestionCategory(AlgorithmQuestionVO algorithmQuestionVO);
 	
 	public int deleteOneAlgorithmQuestion(String companyAlgorithmQuestionId);
 }

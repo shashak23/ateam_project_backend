@@ -209,9 +209,28 @@
 		 WHERE COMPANY_ALGORITHM_QUESTION_ID = #{companyAlgorithmQuestionId}
 	</update>
 	
-	<insert id="updateAlgorithmQuestionCategory"
+	<delete id="deleteAlgorithmQuestionCategory"
+			parameterType="string">
+		DELETE FROM ALGORITHM_CATEGORY_LIST
+		 WHERE COMPANY_ALGORITHM_QUESTION_ID = #{companyAlgorithmQuestionId}
+	</delete>
+	
+	<insert id="insertAlgorithmQuestionCategory"
 			parameterType="com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionVO">
-		
+		INSERT INTO ALGORITHM_CATEGORY_LIST
+		 (ALGORITHM_CATEGORY_LIST_ID
+		, COMPANY_ALGORITHM_QUESTION_ID
+		, ALGORITHM_CATEGORY_ID)
+		SELECT 'AC-' || TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_ALGORITHM_CATEGORY_LIST_PK.NEXTVAL, 6, '0')
+		     , Q_ID
+		     , C_ID
+		  FROM (
+		<foreach collection="algorithmCategoryIdList" item="categoryId" separator="UNION ALL">
+		SELECT #{companyAlgorithmQuestionId} Q_ID
+		    , #{categoryId} C_ID
+		  FROM DUAL
+		</foreach>
+		)
 	</insert>
 	
 	<update id="deleteOneAlgorithmQuestion"

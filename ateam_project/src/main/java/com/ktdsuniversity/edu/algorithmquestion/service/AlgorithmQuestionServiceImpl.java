@@ -82,10 +82,26 @@ public class AlgorithmQuestionServiceImpl implements AlgorithmQuestionService {
 		int updateCount = algorithmQuestionDAO.updateOneAlgorithmQuestion(algorithmQuestionVO);
 		
 		if(updateCount > 0) {
-			int updateCategoryCount = algorithmQuestionDAO.updateAlgorithmQuestionCategory(algorithmQuestionVO);
-			logger.debug("{}: Update Category Count: {}", algorithmQuestionVO.getCompanyAlgorithmQuestionId(), updateCategoryCount);
+			int deleteCategoryCount = algorithmQuestionDAO.deleteAlgorithmQuestionCategory(algorithmQuestionVO);
+			logger.debug("{}: Delete Category Count: {}", algorithmQuestionVO.getCompanyAlgorithmQuestionId(), deleteCategoryCount);
+			int insertCategoryCount = algorithmQuestionDAO.insertAlgorithmQuestionCategory(algorithmQuestionVO);
+			logger.debug("{}: Insert Category Count: {}", algorithmQuestionVO.getCompanyAlgorithmQuestionId(), insertCategoryCount);
 		}
 		return updateCount > 0;
+	}
+	
+	@Override
+	public boolean deleteAlgorithmQuestionCategory(AlgorithmQuestionVO algorithmQuestionVO) {
+		int deleteCategoryCount = algorithmQuestionDAO.deleteAlgorithmQuestionCategory(algorithmQuestionVO);
+		logger.debug("{}: Delete Category Count: {}", algorithmQuestionVO.getCompanyAlgorithmQuestionId(), deleteCategoryCount);
+		
+		return deleteCategoryCount > 0;
+	}
+	@Override
+	public boolean insertAlgorithmQuestionCategory(AlgorithmQuestionVO algorithmQuestionVO) {
+		int insertCategoryCount = algorithmQuestionDAO.insertAlgorithmQuestionCategory(algorithmQuestionVO);
+		logger.debug("{}: Insert Category Count: {}", algorithmQuestionVO.getCompanyAlgorithmQuestionId(), insertCategoryCount);
+		return insertCategoryCount > 0;
 	}
 
 	@Override

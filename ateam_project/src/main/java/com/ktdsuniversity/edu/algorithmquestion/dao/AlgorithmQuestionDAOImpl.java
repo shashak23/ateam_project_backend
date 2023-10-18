@@ -72,8 +72,12 @@ public class AlgorithmQuestionDAOImpl extends SqlSessionDaoSupport implements Al
 	}
 	
 	@Override
-	public int updateAlgorithmQuestionCategory(AlgorithmQuestionVO algorithmQuestionVO) {
-		return getSqlSession().update("updateAlgorithmQuestionCategory", algorithmQuestionVO);
+	public int deleteAlgorithmQuestionCategory(AlgorithmQuestionVO algorithmQuestionVO) {
+		return getSqlSession().delete("deleteAlgorithmQuestionCategory", algorithmQuestionVO);
+	}
+	@Override
+	public int insertAlgorithmQuestionCategory(AlgorithmQuestionVO algorithmQuestionVO) {
+		return getSqlSession().insert("insertAlgorithmQuestionCategory", algorithmQuestionVO);
 	}
 
 	@Override
