@@ -119,14 +119,15 @@ public class CompanyNewsController {
 	
 	@GetMapping("/news/update/{companyNewsPostId}")
 	public String viewCompanyNewsUpdatePage(@PathVariable String companyNewsPostId
-			                              , Model model) {
+			                              , Model model
+			                              , @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 		logger.debug("PathVariable: " + companyNewsPostId);
 		
 		CompanyNewsVO companyNewsVO = companyNewsService.getOneCompanyNews(companyNewsPostId, false);
 		
-//		if(!companyNewsVO.getPostWriter().equals()) {
-//			throw new PageNotFoundException("잘못된 접근입니다.");
-//		}
+		if(!companyNewsVO.getPostWriter().equals(memberVO.getEmail())) {
+			throw new PageNotFoundException("잘못된 접근입니다.");
+		}
 		
 		model.addAttribute("companyNewsVO", companyNewsVO);
 		return "company/news/newsupdate";
@@ -135,13 +136,16 @@ public class CompanyNewsController {
 	@PostMapping("/news/update")
 	public String doCompanyNewsUpdate(@ModelAttribute CompanyNewsVO companyNewsVO
 									, @RequestParam MultipartFile file
-			                        , Model model) {
+			                        , Model model
+			                        , @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 		logger.debug("Post ID: " + companyNewsVO.getCompanyNewsPostId());
 		logger.debug("제목: " + companyNewsVO.getPostTitle());
 		logger.debug("내용: " + companyNewsVO.getPostContent());
 		
 		CompanyNewsVO originCompanyNewsVO = companyNewsService.getOneCompanyNews(companyNewsVO.getCompanyNewsPostId(), false);
-//		if(!originCompanyNewsVO.getPostWriter().equals())
+        if(!originCompanyNewsVO.getPostWriter().equals(memberVO.getEmail())) {
+        	throw new PageNotFoundException("잘못된 접근입니다!");
+        }
 		
 		boolean isSuccess = companyNewsService.updateOneCompanyNews(companyNewsVO, file);
 		if(isSuccess) {
@@ -154,14 +158,17 @@ public class CompanyNewsController {
 	}
 	
 	@GetMapping("/news/delete/{companyNewsPostId}")
-	public String doDeleteCompanyNews(@PathVariable String companyNewsPostId) {
+	public String doDeleteCompanyNews(@PathVariable String companyNewsPostId
+			                        , @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 		logger.debug("PathVariable: " + companyNewsPostId);
 		
         companyNewsService.deleteOneCompanyNews(companyNewsPostId);
 		
-//		if(!companyNewsVO.getPostWriter().equals()) {
-//			throw new PageNotFoundException("잘못된 접근입니다.");
-//		}
+        CompanyNewsVO companyNewsVO = companyNewsService.getOneCompanyNews(companyNewsPostId, false);
+		
+		if(!companyNewsVO.getPostWriter().equals(memberVO.getEmail())) {
+			throw new PageNotFoundException("잘못된 접근입니다.");
+		}
 		
 		return "redirect:/news/list";
 	}

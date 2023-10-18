@@ -16,14 +16,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.ktdsuniversity.edu.algorithmquestion.service.AlgorithmQuestionService;
 import com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionListVO;
 import com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionVO;
 import com.ktdsuniversity.edu.algorithmquestion.vo.SearchAlgorithmQuestionVO;
+import com.ktdsuniversity.edu.exceptions.PageNotFoundException;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 import com.ktdsuniversity.edu.myalgorithm.vo.MyAlgorithmVO;
+import com.ktdsuniversity.edu.util.StringUtils;
+import com.ktdsuniversity.edu.util.XssIgnoreUtil;
 
 import jakarta.validation.Valid;
 
@@ -51,21 +56,6 @@ public class AlgorithmQuestionController {
 		return "company/algorithmquestion/questionview";
 	}
 	
-	// 일반회원이 로그인 해서 제출하기 버튼을 클릭했을 때
-	@PostMapping("/myalgorithm/create")
-	public String doMyAlgorithmCreate(@ModelAttribute MyAlgorithmVO myAlgorithmVO
-			                        , Model model) {
-		boolean isSuccess = algorithmQuestionService.createNewMyAlgorithm(myAlgorithmVO);
-		if(isSuccess) {
-			return "redirect:/algorithm/question/list";
-		}
-		else {
-			model.addAttribute("myAlgorithmVO", myAlgorithmVO);
-			return "company/algorithmquestion/questionview";
-			
-		}
-	}
-	
 	@GetMapping("/algorithm/question/create")
 	public String viewAlgorithmQuestionCreatePage() {
 		return "company/algorithmquestion/questioncreate";
@@ -76,13 +66,30 @@ public class AlgorithmQuestionController {
 			                              , BindingResult bindingResult
 			                              , Model model
 			                              , @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
-
+		
+		XssIgnoreUtil.ignore(algorithmQuestionVO);
+		
+//		System.out.println(algorithmCategoryId);
+//		System.out.println(algorithmTierId);
+		
 		if(bindingResult.hasErrors()) {
 			model.addAttribute("algorithmQuestionVO", algorithmQuestionVO);
 			return "company/algorithmquestion/questioncreate";
 		}
 		
 		algorithmQuestionVO.setAlgorithmWriter(memberVO.getEmail());
+		
+		// 알고리즘카테고리 & 난이도가 null인지 체크하는 if문
+//		if (StringUtils.isEmpty(algorithmCategoryId)) {
+//			model.addAttribute("message1", "알고리즘 카테고리를 선택해주세요.");
+//			model.addAttribute("algorithmQuestionVO", algorithmQuestionVO);
+//			return "company/algorithmquestion/questioncreate";
+//		}
+//		if (StringUtils.isEmpty(algorithmTierId)) {
+//			model.addAttribute("message2", "난이도를 선택해주세요.");
+//			model.addAttribute("algorithmQuestionVO", algorithmQuestionVO);
+//			return "company/algorithmquestion/questioncreate";
+//		}
 		
 		boolean isSuccess = algorithmQuestionService.createNewAlgorithmQuestion(algorithmQuestionVO);
 		if(isSuccess) {
@@ -94,16 +101,35 @@ public class AlgorithmQuestionController {
 		}
 	}
 	
+	// 일반회원이 로그인 해서 제출하기 버튼을 클릭했을 때
+	@PostMapping("/myalgorithm/create")
+	public String doMyAlgorithmCreate(@ModelAttribute MyAlgorithmVO myAlgorithmVO
+			                        , Model model) {
+		
+		XssIgnoreUtil.ignore(myAlgorithmVO);
+		
+		boolean isSuccess = algorithmQuestionService.createNewMyAlgorithm(myAlgorithmVO);
+		if(isSuccess) {
+			return "redirect:/algorithm/question/list";
+		}
+		else {
+			model.addAttribute("myAlgorithmVO", myAlgorithmVO);
+			return "company/algorithmquestion/questionview";
+			
+		}
+	}
+	
 	@GetMapping("/algorithm/question/update/{companyAlgorithmQuestionId}")
 	public String viewAlgorithmQuestionUpdatePage(@PathVariable String companyAlgorithmQuestionId
-			                                    , Model model) {
+			                                    , Model model
+			                                    , @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 		logger.debug("PathVariable: " + companyAlgorithmQuestionId);
 		
 		AlgorithmQuestionVO algorithmQuestionVO = algorithmQuestionService.getOneAlgorithmQuestion(companyAlgorithmQuestionId, false);
 		
-//		if(!algorithmQuestionVO.algorithmWriter().equals()) {
-//			throw new PageNotFoundException("잘못된 접근입니다.");
-//		}
+		if(!algorithmQuestionVO.getAlgorithmWriter().equals(memberVO.getEmail())) {
+			throw new PageNotFoundException("잘못된 접근입니다.");
+		}
 		
 		model.addAttribute("algorithmQuestionVO", algorithmQuestionVO);
 		return "company/algorithmquestion/questionupdate";
@@ -111,14 +137,32 @@ public class AlgorithmQuestionController {
 	
 	@PostMapping("/algorithm/question/update")
 	public String doAlgorithmQuestionUpdate(@ModelAttribute AlgorithmQuestionVO algorithmQuestionVO
-			                        , Model model) {
+			                              , Model model
+			                              , @RequestParam String algorithmCategoryId
+			                              , @RequestParam String algorithmTierId
+			                              , @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 		logger.debug("Post ID: " + algorithmQuestionVO.getCompanyAlgorithmQuestionId());
 		logger.debug("제목: " + algorithmQuestionVO.getAlgorithmTitle());
 		logger.debug("내용: " + algorithmQuestionVO.getAlgorithmContent());
 		
 		AlgorithmQuestionVO originAlgorithmQuestionVO = algorithmQuestionService.getOneAlgorithmQuestion(algorithmQuestionVO.getCompanyAlgorithmQuestionId(), false);
 
-//		if(!originAlgorithmQuestionVO.getAlgorithmWriter().equals())
+		// 게시글 수정 url로도 접근 못하게
+		if(!originAlgorithmQuestionVO.getAlgorithmWriter().equals(memberVO.getEmail())) {
+			throw new PageNotFoundException("잘못된 접근입니다!");
+		}
+		
+		// 알고리즘카테고리 & 난이도가 null인지 체크하는 if문
+		if (algorithmCategoryId == null || algorithmCategoryId.isEmpty()) {
+			model.addAttribute("message", "알고리즘 카테고리를 선택해주세요.");
+			model.addAttribute("algorithmQuestionVO", algorithmQuestionVO);
+			return "company/algorithmquestion/questioncreate";
+		}
+		if (algorithmTierId == null || algorithmTierId.isEmpty()) {
+			model.addAttribute("message", "난이도를 선택해주세요.");
+			model.addAttribute("algorithmQuestionVO", algorithmQuestionVO);
+			return "company/algorithmquestion/questioncreate";
+		}
 		
 		boolean isSuccess = algorithmQuestionService.updateOneAlgorithmQuestion(algorithmQuestionVO);
 		if(isSuccess) {
@@ -129,17 +173,19 @@ public class AlgorithmQuestionController {
 			return "company/algorithmquestion/questionupdate";
 		}
 	}
-	
 
 	@GetMapping("/algorithm/question/delete/{companyAlgorithmQuestionId}")
-	public String doDeleteAlgorithmQuestion(@PathVariable String companyAlgorithmQuestionId) {
+	public String doDeleteAlgorithmQuestion(@PathVariable String companyAlgorithmQuestionId
+			                              , @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 		logger.debug("PathVariable: " + companyAlgorithmQuestionId);
 		
         algorithmQuestionService.deleteOneAlgorithmQuestion(companyAlgorithmQuestionId);
 		
-//		if(!algorithmQuestionVO.getAlgorithmWriter().equals()) {
-//			throw new PageNotFoundException("잘못된 접근입니다.");
-//		}
+        AlgorithmQuestionVO algorithmQuestionVO = algorithmQuestionService.getOneAlgorithmQuestion(companyAlgorithmQuestionId, false);
+		
+		if(!algorithmQuestionVO.getAlgorithmWriter().equals(memberVO.getEmail())) {
+			throw new PageNotFoundException("잘못된 접근입니다.");
+		}
 		
 		return "redirect:/algorithm/question/list";
 	}
