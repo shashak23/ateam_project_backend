@@ -15,39 +15,33 @@
 		$.get("/code/알고리즘카테고리", function(response) {
 			for (var i = 0; i < response.length; i++) {
 				var code = response[i]
-				var checkbox = $("<input type='checkbox' id='"+code.codeId+"' name='algorithmCategoryId' value='"+code.codeId+"' />");
-				$("#algorithm_category").append(label);
-				$("#algorithm_category").append(checkbox);
+				var checkbox = $("<input type='checkbox' id='"+code.codeId+"' name='algorithmCategoryIdList' value='"+code.codeId+"' />");
 				var label = $("<label for='"+code.codeId+"'>"+code.codeContent+"</label>");
+				$("#algorithm_category").append(checkbox);
+				$("#algorithm_category").append(label);
 			}
 		});
 		
-		$('input:checkbox[name=algorithmCategoryId]').each(function (index) {
+		/* $('input:checkbox[name=algorithmCategoryIdList]').each(function (index) {
 			if($(this).is(":checked")==true){
 				var category = $(this).val()
 				$("#algorithmCategoryId").val(category)
 			}
-		})
+		}) */
 		
         $("select[name=algorithmTierId]").change(function() {
             var tier = 
                 $("select[name=algorithmTierId] option:selected").text();
             $("#algorithmTierId").val(tier);
         })
+        
+        $("").keyup(function() {
+        	$.get("/")
+        })
 	})
 </script>
 </head>
 <style>
-    div.errors {
-	    background-color: #ff00004a;
-	    opacity: 0.8;
-	    padding: 10px;
-	    color: #333;
-	}
-	div.errors:last-child {
-	    margin-bottom: 15px;
-	}
-
     .ck-editor__editable { 
         height: 400px; 
     }
@@ -89,13 +83,28 @@
         margin-top: 10px;
         font-weight: bold;
     }
+        div.errors {
+	    background-color: #ff00004a;
+	    opacity: 0.8;
+	    padding: 10px;
+	    color: #333;
+	}
+	div.errors:last-child {
+	    margin-bottom: 15px;
+	}
 </style>
 <body>
 	<h3>알고리즘 문제 작성</h3>
 	<form:form modelAttribute="algorithmQuestionVO" method="post">
 	<div>
-	    <form:errors path="algorithmCategoryId" element="div" cssClass="errors"/>
-	    <form:errors path="algorithmTierId" element="div" cssClass="errors"/>
+	    <%-- <c:if test="${not empty message1}">
+	        <div class="errors" >${message1}</div>
+	    </c:if>
+	    <c:if test="${not empty message2}">
+	        <div class="errors" >${message2}</div>
+	    </c:if> --%>
+		<form:errors path="algorithmCategoryIdList" element="div" cssClass="errors"/>
+		<form:errors path="algorithmTierId" element="div" cssClass="errors"/>
 		<form:errors path="algorithmTitle" element="div" cssClass="errors"/>
 		<form:errors path="algorithmContent" element="div" cssClass="errors"/>
 	</div>

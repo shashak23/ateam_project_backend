@@ -16,6 +16,11 @@
 		    autoMapping="true">
 		    <id column="CODE_ID" property="codeId" />
 		</association>
+		<!-- <association  property="algorithmCategoryListVO"
+		              javaType="com.ktdsuniversity.edu.algorithmcategorylist.vo.AlgorithmCategoryListVO"
+		              autoMapping="true">
+		              <id column="ALGORITHM_CATEGORY_LIST_ID" property="algorithmCategoryListId"/>
+		</association> -->
 	</resultMap>
 	
 	<select id="getAlgorithmQuestionAllCount"
@@ -25,6 +30,8 @@
           FROM COMPANY_ALGORITHM_QUESTION CAQ
          INNER JOIN MEMBER M
             ON CAQ.ALGORITHM_WRITER = M.EMAIL
+         INNER JOIN ALGORITHM_CATEGORY_LIST ACL
+            ON CAQ.COMPANY_ALGORITHM_QUESTION_ID = ACL.COMPANY_ALGORITHM_QUESTION_ID
 	       WHERE DELETE_YN = 'N'
 		<if test='searchKeyword != null and searchKeyword != ""'>
 		    <if test='searchType == "algorithmTitle"'>
@@ -59,6 +66,8 @@
 		    ON CAQ.ALGORITHM_WRITER = M.EMAIL
 		 INNER JOIN COMMON_CODE C
 		    ON CAQ.ALGORITHM_CATEGORY_ID = C.CODE_ID
+		 INNER JOIN ALGORITHM_CATEGORY_LIST ACL
+            ON CAQ.COMPANY_ALGORITHM_QUESTION_ID = ACL.COMPANY_ALGORITHM_QUESTION_ID
 		 WHERE DELETE_YN = 'N'
 		 ORDER BY POST_DATE DESC <!-- 최신글순 -->
 	</select>
@@ -101,6 +110,10 @@
 	
 	<insert id="createNewAlgorithmQuestion"
 	        parameterType="com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionVO">
+		<selectKey keyProperty="companyAlgorithmQuestionId" resultType="string" order="BEFORE">
+			SELECT 'AQ-' || TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_COMPANY_ALGORITHM_QUESTION_PK.NEXTVAL, 6, '0')
+			  FROM DUAL
+		</selectKey>
 	    INSERT INTO COMPANY_ALGORITHM_QUESTION
 		 (COMPANY_ALGORITHM_QUESTION_ID
 		, ALGORITHM_CATEGORY_ID
@@ -114,7 +127,7 @@
 		, LIKE_CNT
 		, DELETE_YN)
 		VALUES
-		 ('AQ-' || TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_COMPANY_ALGORITHM_QUESTION_PK.NEXTVAL, 6, '0')
+		 (#{companyAlgorithmQuestionId}
 		, #{algorithmCategoryId}
 		, #{algorithmTierId}
 		, #{algorithmWriter}
@@ -125,6 +138,24 @@
 		, 0
 		, 0
 		, 'N')
+	</insert>
+	
+	<insert id="createNewAlgorithmQuestionCategory"
+			parameterType="com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionVO">
+		INSERT INTO ALGORITHM_CATEGORY_LIST
+		 (ALGORITHM_CATEGORY_LIST_ID
+		, COMPANY_ALGORITHM_QUESTION_ID
+		, ALGORITHM_CATEGORY_ID)
+		SELECT SEQ_ALGORITHM_CATEGORY_LIST_PK.NEXTVAL
+		     , Q_ID
+		     , C_ID
+		  FROM (
+		<foreach collection="algorithmCategoryIdList" item="categoryId" separator="UNION ALL">
+		SELECT #{companyAlgorithmQuestionId} Q_ID
+		    , #{categoryId} C_ID
+		  FROM DUAL
+		</foreach>
+		)
 	</insert>
 	
 	<insert id="createNewMyAlgorithm"
