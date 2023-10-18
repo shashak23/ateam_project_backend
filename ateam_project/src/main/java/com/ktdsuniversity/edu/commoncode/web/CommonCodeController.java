@@ -36,18 +36,10 @@ public class CommonCodeController {
 		return commonCodeService.search(codeName);
 	}
 	
-	@GetMapping("/home/hashtaglist")
-	public ModelAndView viewHashtagList() {
-		ModelAndView mav = new ModelAndView();
-		CommonCodeListVO commonCodeListVO = commonCodeService.getAllCommonType("해시태그");
-		mav.setViewName("temp/hashtagselect");
-		mav.addObject("commonCodeListVO", commonCodeListVO);
-		
-		return mav;
-	}
-	
-	@PostMapping("/home/hashtaglist")
-	public ModelAndView createCommonCode(@ModelAttribute CommonCodeVO commonCodeVO) {
+	@PostMapping("/code/create/{codeName}")
+	@ResponseBody
+	public ModelAndView createCommonCode(@PathVariable String codeName,
+										 @ModelAttribute CommonCodeVO commonCodeVO) {
 		ModelAndView mav = new ModelAndView();
 		CommonCodeListVO commonCodeListVO = commonCodeService.getAllCommonType("해시태그");
 		List<CommonCodeVO> originCommonType = commonCodeListVO.getCommonCodeList();
@@ -90,6 +82,5 @@ public class CommonCodeController {
 			mav.setViewName("/temp/errorpage");
 			return mav;
 		}
-		
 	}
 }
