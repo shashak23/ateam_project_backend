@@ -24,8 +24,6 @@ public class GeneralPostServiceImpl implements GeneralPostService{
 	@Override
 	public GeneralPostListVO getAllFreeBoard() {
 
-		System.out.println(generalPostDAO);
-		System.out.println(generalPostDAO.getClass().getSimpleName());
 		GeneralPostListVO generalPostListVO = new GeneralPostListVO();
 		
 		generalPostListVO.setBoardCnt( generalPostDAO.getBoardAllCount());
@@ -36,7 +34,6 @@ public class GeneralPostServiceImpl implements GeneralPostService{
 	@Override
 	public boolean createNewFreeBoard(GeneralPostVO generalPostVO) {
 		int boardCount = generalPostDAO.createNewFreeBoard(generalPostVO);
-		log.debug("2--컨트롤러---자유----------------------");
 
 		return boardCount > 0;
 	}
@@ -79,7 +76,6 @@ public class GeneralPostServiceImpl implements GeneralPostService{
 	@Override
 	public boolean createNewQnABoard(GeneralPostVO generalPostVO) {
 		int boardCount = generalPostDAO.createNewQnABoard(generalPostVO);
-		log.debug("2-----서비스---------------------------");
 
 		return boardCount > 0;
 	}
@@ -88,6 +84,7 @@ public class GeneralPostServiceImpl implements GeneralPostService{
 	public GeneralPostVO getOneQnABoard(String generalPostId) {
 		GeneralPostVO result = null;
 		
+		log.debug("2-----서비스---------------------------");
 		result = generalPostDAO.getOneQnABoard(generalPostId);
 		
 		return result;

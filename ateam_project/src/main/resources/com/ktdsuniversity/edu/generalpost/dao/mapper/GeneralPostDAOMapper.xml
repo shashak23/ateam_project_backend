@@ -35,7 +35,7 @@
 		VALUES 
 		 (SEQ_GENERAL_POST_PK.NEXTVAL
 	        , #{postWriter}
-			, 'CM-20231008-000029' 
+			, 'CC-20231017-000029' 
 			, #{postTitle}
 			, #{postContent}
 			, SYSDATE
@@ -73,6 +73,7 @@
 		     , DELETE_YN
 		  FROM GENERAL_POST
 		 WHERE DELETE_YN = 'N'
+		   AND BOARD_ID = 'CC-20231017-000029'
 		 ORDER BY POST_DATE DESC
 	</select>
 
@@ -107,7 +108,7 @@
 		     , DELETE_YN
 		  FROM GENERAL_POST
 		 WHERE DELETE_YN = 'N'
-		   AND BOARD_ID = 'CM-20231008-000028'
+		   AND BOARD_ID = 'CC-20231017-000030'
 		 ORDER BY POST_DATE DESC
 	</select>
 	
@@ -126,7 +127,7 @@
 		VALUES 
 		 (SEQ_GENERAL_POST_PK.NEXTVAL
 	         , #{postWriter}
-			 , 'CM-20231008-000028' 
+			 , 'CC-20231017-000030' 
 			 , #{postTitle}
 			 , #{postContent}
 			 , SYSDATE
@@ -148,8 +149,7 @@
 		     , VIEW_CNT
 		     , DELETE_YN
 		  FROM GENERAL_POST
-		 WHERE DELETE_YN = 'N'
-		 ORDER BY POST_DATE DESC
+		 WHERE GENERAL_POST_ID = #{_parameter}		 
 	</select>
 	
 	<update id="updateOneQnABoard"

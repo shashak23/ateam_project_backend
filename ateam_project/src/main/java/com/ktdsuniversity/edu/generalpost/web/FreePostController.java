@@ -56,7 +56,7 @@ public class FreePostController {
 					           , @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 
 		System.out.println("일반회원용 게시글ID: " + generalPostVO.getGeneralPostId());
-		System.out.println("게시글 작성자ID: " + generalPostVO.getPostWriterId());
+		System.out.println("게시글 작성자ID: " + generalPostVO.getPostWriter());
 		System.out.println("게시판ID: " + generalPostVO.getBoardId());
 		System.out.println("게시글 제목: " + generalPostVO.getPostTitle());
 		System.out.println("게시글 내용: " + generalPostVO.getPostContent());
@@ -77,7 +77,7 @@ public class FreePostController {
 			return modelAndView;
 		}
 		
-		generalPostVO.setPostWriterId(memberVO.getEmail());
+		generalPostVO.setPostWriter(memberVO.getEmail());
 		// 게시글을 등록한다.
 		boolean isSuccess = generalPostService.createNewFreeBoard(generalPostVO);
 		if (isSuccess) {
