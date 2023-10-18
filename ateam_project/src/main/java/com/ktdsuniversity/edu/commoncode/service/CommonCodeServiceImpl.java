@@ -30,7 +30,6 @@ public class CommonCodeServiceImpl implements CommonCodeService {
 		commonCodeListVO.setCommonCodeListVO(commonCodeDAO.getAllCommonType(codeName));
 		
 		return commonCodeListVO;
-		
 	}
 
 	@Override
