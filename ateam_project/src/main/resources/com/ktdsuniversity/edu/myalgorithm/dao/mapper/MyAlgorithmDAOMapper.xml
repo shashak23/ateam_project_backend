@@ -72,7 +72,7 @@
         , DELETE_YN)
         VALUES
          ('MA-' || TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_MY_ALGORITHM_QUESTION_PK.NEXTVAL, 6, '0')
-        , #{email}
+        , #{generalMemberEmail}
         , #{companyAlgorithmQuestionId}
         , #{myAnswer}
         , CASE WHEN DBMS_RANDOM.NORMAL >= 0 THEN 'Y' ELSE 'N' END <!-- 랜덤으로 줘야 함 -->
