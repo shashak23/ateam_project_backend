@@ -37,7 +37,9 @@ public class MemberServiceImpl implements MemberService{
 	 * 수정자: 신진영(2023-10-19)
 	 * 작성일자: 2023-10-19
 	 * 내용: createNewMember 쿼리 일반/기업회원별 if문 분기 세팅(setMemberType)
+	 * 		transactional 처리
 	 */
+	@Transactional
 	@Override
 	public boolean createNewMember(GeneralMemberVO generalMemberVO) {
 		int emailCount = memberDAO.getEmailCount(generalMemberVO.getEmail());
@@ -133,17 +135,18 @@ public class MemberServiceImpl implements MemberService{
 		throw new IllegalArgumentException("이미 사용중인 기업용 이메일입니다");
 		}
 		
-		// jsp에서 받아온 companyVO 객체
 		companyVO.setEmail(companyVO.getCompanyEmail());
 		companyVO.setPw("abc123"); // 기본 pw
-		companyVO.setSalt("SALT");
 		companyVO.setNickname("사명을 입력해주세요");
 		companyVO.setMemberType("COMPANY");
 		companyVO.setWithdrawYn("N");
-
-//		companyVO.setCompanyRegistCertificateUrl("예시입니다");
 		companyVO.setConfirmYn("N");
 
+		String salt= sha.generateSalt();
+		String password = companyVO.getPw();
+		String encryptedPassword = sha.getEncrypt(password, salt);
+		companyVO.setPw(encryptedPassword);
+		companyVO.setSalt(salt);
 		
 //		int insertMemberCount = memberDAO.createNewCompanyMember(companyVO);
 		int insertMemberCount = memberDAO.createNewMember(companyVO);
@@ -155,6 +158,12 @@ public class MemberServiceImpl implements MemberService{
 	public boolean checkAvailableCompanyEmail(String email) {
 		int emailCount = companyDAO.getCompanyEmailCount(email);
 		return emailCount == 0;
+	}
+
+	@Override
+	public boolean withdrawMember(MemberVO memberVO) {
+		int updatewithdrawMemberCount = memberDAO.updateWithdrawMember(memberVO);	
+		return updatewithdrawMemberCount > 0;
 	}
 	
 

@@ -46,30 +46,6 @@
 		, 'N' )
 	</insert>
 	
-	<!-- <insert id="createNewCompanyMember"
-		parameterType="com.ktdsuniversity.edu.member.vo.MemberVO">
-		INSERT INTO MEMBER
-		( EMAIL
-		, PW
-		, SALT
-		, NICKNAME
-		, INFO_AGREEMENT_YN
-		, PROFILE_PIC
-		, REGIST_DATE
-		, MEMBER_TYPE
-		, WITHDRAW_YN)
-		VALUES
-		( #{companyEmail}
-		, 'abc123'
-		, 'SAMPLE'
-		, '관리자가설정하는사업자등록증기반사명'
-		, 'Y'
-		, 'https://w7.pngwing.com/pngs/384/868/png-transparent-person-profile-avatar-user-basic-ui-icon.png'
-		, SYSDATE
-		, 'COMPANY'
-		, 'N' )
-	</insert> -->
-	
 <!-- 로그인 쿼리 -->
 	<select id="getSalt"
 			parameterType="string"
@@ -78,6 +54,7 @@
 	  FROM "MEMBER" 
 	 WHERE EMAIL =#{_parameter}
 	</select>
+	
 	<select id="getMember"
 			parameterType="com.ktdsuniversity.edu.member.vo.MemberVO"
 			resultType="com.ktdsuniversity.edu.member.vo.MemberVO">
@@ -94,6 +71,7 @@
 		 WHERE EMAIL = #{email}
 		   AND PW = #{pw}
 	</select>
+	
 	<select id="getOneFile"
 	        parameterType="string"
 	        resultType="com.ktdsuniversity.edu.member.vo.MemberVO">
@@ -103,4 +81,13 @@
 		  FROM "MEMBER"
 		 WHERE EMAIL = #{_parameter}
 	</select>
+	
+	<update id="updateWithdrawMember"
+			parameterType="com.ktdsuniversity.edu.member.vo.MemberVO">
+		UPDATE MEMBER
+   		   SET WITHDRAW_YN = 'Y'
+ 		 WHERE EMAIL = #{email}
+
+	</update>
+
 </mapper>

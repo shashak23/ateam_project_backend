@@ -63,6 +63,9 @@
     <form:form modelAttribute="companyVO" method="post" enctype="multipart/form-data">
     	<div>
     		<form:errors path="companyEmail" element="div" cssClass="errors" />
+    		<form:errors path="contactName" element="div" cssClass="errors" />
+    		<form:errors path="contactNumber" element="div" cssClass="errors" />
+    		<form:errors path="file" element="div" cssClass="errors" />
     	</div>
     	
         <div class="grid">

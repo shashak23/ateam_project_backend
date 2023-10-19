@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ktdsuniversity.edu.companymember.vo.CompanyVO;
@@ -38,6 +39,12 @@ public class MemberController {
 	
 	/**
 	 * 로그인 관련
+	 */
+	/**
+	 * 작성자: 김광원
+	 * 수정자: 신진영(2023-10-19)
+	 * 작성일자: 2023-10-19
+	 * 내용: 
 	 */
 	@GetMapping("/member/auth")
 	public String signIn() {
@@ -65,6 +72,17 @@ public class MemberController {
 	@GetMapping("/member/logout")
 	public String doLogout(HttpSession session) {
 		session.invalidate();
+		return "redirect:/home/main";
+	}
+	
+	/**
+	 * 회원탈퇴
+	 */
+	@GetMapping("/member/withdraw")
+	public String doWithdraw(HttpSession session
+							, @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+		session.invalidate();
+		memberService.withdrawMember(memberVO);
 		return "redirect:/home/main";
 	}
 	
@@ -147,8 +165,6 @@ public class MemberController {
 							   , Model model
 							   , BindingResult bindingResult
 							   , @RequestParam MultipartFile file) {
-		
-		System.out.println(file.getOriginalFilename());
 		
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("companyVO", companyVO);

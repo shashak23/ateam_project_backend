@@ -26,6 +26,11 @@ public interface MemberDAO {
 	public int updateOneFile(MemberVO memberVO);
 	
 	/**
+	 * 회원탈퇴
+	 */
+	public int updateWithdrawMember(MemberVO memberVO);
+	
+	/**
 	 * 기업회원가입
 	 */
 //	public int createNewCompanyMember(MemberVO memberVO);

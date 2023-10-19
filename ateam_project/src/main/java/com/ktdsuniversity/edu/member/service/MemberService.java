@@ -7,6 +7,7 @@ import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 
 public interface MemberService {
+	
 	/**
 	 * 일반회원가입
 	 */
@@ -27,10 +28,16 @@ public interface MemberService {
 	public boolean updateOneFile(MemberVO memberVO, MultipartFile file);
 	
 	
+	/**
+	 * 회원 탈퇴
+	 * @param memberVO 탈퇴할 사용자의 사용자 정보
+	 * @return 탈퇴 정상처리 여부 확인
+	 */
+	public boolean withdrawMember(MemberVO memberVO);
 	
 	
 	/**
-	 * 기업회원가입 처리
+	 * 기업회원가입
 	 * @param companyVO 사용자가 작성한 사용자 정보
 	 * @param file 사용자가 업로드한 파일
 	 * @return 기업회원가입 정상처리 여부 확인
