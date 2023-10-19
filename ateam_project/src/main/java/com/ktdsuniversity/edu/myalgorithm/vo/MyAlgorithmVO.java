@@ -14,9 +14,9 @@ public class MyAlgorithmVO extends AlgorithmQuestionVO {
 	private String myAlgorithmQuestionId;
 	private String generalMemberEmail;
 	private String companyAlgorithmQuestionId;
+	private String myAnswer;
 	private String correctAnswerYn;
 	private String deleteYn;
-	private String myAnswer;
 	
 	private AlgorithmQuestionVO algorithmQuestionVO;
 		
@@ -40,6 +40,12 @@ public class MyAlgorithmVO extends AlgorithmQuestionVO {
 	public void setCompanyAlgorithmQuestionId(String companyAlgorithmQuestionId) {
 		this.companyAlgorithmQuestionId = companyAlgorithmQuestionId;
 	}
+	public String getMyAnswer() {
+		return myAnswer;
+	}
+	public void setMyAnswer(String myAnswer) {
+		this.myAnswer = myAnswer;
+	}
 	public String getCorrectAnswerYn() {
 		return correctAnswerYn;
 	}
@@ -51,12 +57,6 @@ public class MyAlgorithmVO extends AlgorithmQuestionVO {
 	}
 	public void setDeleteYn(String deleteYn) {
 		this.deleteYn = deleteYn;
-	}
-	public String getMyAnswer() {
-		return myAnswer;
-	}
-	public void setMyAnswer(String myAnswer) {
-		this.myAnswer = myAnswer;
 	}
 	
 	public AlgorithmQuestionVO getAlgorithmQuestionVO() {

@@ -12,6 +12,7 @@ import com.ktdsuniversity.edu.algorithmcategorylist.vo.AlgorithmCategoryListVO;
 @Repository
 public class AlgorithmCategoryListDAOImpl extends SqlSessionDaoSupport implements AlgorithmCategoryListDAO{
 
+	
 	@Autowired
 	@Override
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {

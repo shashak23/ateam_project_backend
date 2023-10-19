@@ -1,11 +1,15 @@
 /**
  * 작성자: 김태현
+ * 수정자: 장보늬(2023-10-19)
  * 작성일자: 2023-10-12
  * 내용: 내가 푼 알고리즘들을 조회하고 처리하는 컨트롤러 클래스입니다.
  */
 
 package com.ktdsuniversity.edu.myalgorithm.web;
 
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,7 +17,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -27,13 +30,16 @@ import com.ktdsuniversity.edu.util.XssIgnoreUtil;
 
 @Controller
 public class MyAlgorithmController {
+
+	private Logger logger = LoggerFactory.getLogger(MyAlgorithmController.class);
+	
 	@Autowired
 	private MyAlgorithmService myAlgorithmService;
 
 	@Autowired
 	private AlgorithmQuestionService algorithmQuestionService;
 	
-	@GetMapping("home/my/algorithmlist")
+	@GetMapping("/home/my/algorithmlist")
 	public ModelAndView viewAllMyAlgorithm(@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 		ModelAndView mav = new ModelAndView();
 		String email = memberVO.getEmail();
@@ -77,7 +83,19 @@ public class MyAlgorithmController {
 			model.addAttribute("AlgorithmQuestionVO", algorithmQuestionVO);
 			model.addAttribute("MyAlgorithmVO", myAlgorithmVO);
 			return "company/algorithmquestion/questionview";
-		}
-		
+		}		
 	}
+	
+	@GetMapping("/home/myalgorithm/delete/{myAlgorithmQuestionId}")
+	public String doDeleteMyAlgorithm(@PathVariable String myAlgorithmQuestionId
+			                        , @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+		
+		logger.debug("PathVariable: " + myAlgorithmQuestionId);
+		
+		myAlgorithmService.deleteMyAlgorithm(myAlgorithmQuestionId);
+		
+		return "redirect:/home/my/algorithmlist";
+	}
+	
+	
 }

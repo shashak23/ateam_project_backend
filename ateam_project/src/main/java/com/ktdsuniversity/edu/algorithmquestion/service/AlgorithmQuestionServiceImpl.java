@@ -16,9 +16,6 @@ import com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionListVO;
 import com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionVO;
 import com.ktdsuniversity.edu.algorithmquestion.vo.SearchAlgorithmQuestionVO;
 import com.ktdsuniversity.edu.exceptions.PageNotFoundException;
-import com.ktdsuniversity.edu.myalgorithm.dao.MyAlgorithmDAO;
-import com.ktdsuniversity.edu.myalgorithm.vo.MyAlgorithmVO;
-
 @Service
 public class AlgorithmQuestionServiceImpl implements AlgorithmQuestionService {
 
