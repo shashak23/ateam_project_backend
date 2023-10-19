@@ -18,7 +18,6 @@ public class AlgorithmCategoryListDAOImpl extends SqlSessionDaoSupport implement
 		super.setSqlSessionTemplate(sqlSessionTemplate);
 	}
 	
-	
 	@Override
 	public List<AlgorithmCategoryListVO> categorySearch(String postId) {
 		return getSqlSession().selectList("categorySearch", postId);

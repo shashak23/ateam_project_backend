@@ -90,19 +90,6 @@ public class AlgorithmQuestionServiceImpl implements AlgorithmQuestionService {
 		return updateCount > 0;
 	}
 	
-	@Override
-	public boolean deleteAlgorithmQuestionCategory(AlgorithmQuestionVO algorithmQuestionVO) {
-		int deleteCategoryCount = algorithmQuestionDAO.deleteAlgorithmQuestionCategory(algorithmQuestionVO);
-		logger.debug("{}: Delete Category Count: {}", algorithmQuestionVO.getCompanyAlgorithmQuestionId(), deleteCategoryCount);
-		
-		return deleteCategoryCount > 0;
-	}
-	@Override
-	public boolean insertAlgorithmQuestionCategory(AlgorithmQuestionVO algorithmQuestionVO) {
-		int insertCategoryCount = algorithmQuestionDAO.insertAlgorithmQuestionCategory(algorithmQuestionVO);
-		logger.debug("{}: Insert Category Count: {}", algorithmQuestionVO.getCompanyAlgorithmQuestionId(), insertCategoryCount);
-		return insertCategoryCount > 0;
-	}
 
 	@Override
 	public boolean deleteOneAlgorithmQuestion(String companyAlgorithmQuestionId) {
