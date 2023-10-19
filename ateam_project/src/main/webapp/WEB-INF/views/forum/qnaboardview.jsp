@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@taglib prefix="c" uri="jakarta.tags.core" %>
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -58,7 +60,7 @@
 
 		<div class="btn-group">
 			<div class="right-align">
- 			<!-- <a href="/freeboard/update/${generalPostVO.generalPostId}">수정</a> -->
+ 				<c:if test="${sessionScope._LOGIN_USER_.email eq boardVO.email}">
 				<div class="update_btn">
 					<div class="btn">
 						<a href="/qnaboard/update/${generalPostVO.generalPostId}">수정</a>
@@ -68,6 +70,7 @@
 			</div> 
 		</div>
 	</div>
+	</c:if>
 	</form>
 </body>
 </html>

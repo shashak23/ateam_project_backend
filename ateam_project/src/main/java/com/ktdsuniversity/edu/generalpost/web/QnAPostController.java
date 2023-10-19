@@ -22,6 +22,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ktdsuniversity.edu.generalpost.service.GeneralPostService;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostListVO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
+import com.ktdsuniversity.edu.generalpost.vo.SearchForumVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -36,14 +37,26 @@ public class QnAPostController {
 	private Logger log = LoggerFactory.getLogger(FreePostController.class);
 
 	// 전체조회 
+	/*
+	 * @GetMapping("/qnaboard/list") public ModelAndView qnaBoardList() {
+	 * GeneralPostListVO generalPostListVO = generalPostService.getAllQnABoard();
+	 * 
+	 * ModelAndView view = new ModelAndView();
+	 * view.setViewName("forum/qnaboardlist"); view.addObject("generalPostListVO",
+	 * generalPostListVO); return view; }
+	 */
+	// 전체 및 검색 조회 
 	@GetMapping("/qnaboard/list")
-	public ModelAndView qnaBoardList() {
-		GeneralPostListVO generalPostListVO = generalPostService.getAllQnABoard();
-
-		ModelAndView view = new ModelAndView();
-		view.setViewName("forum/qnaboardlist");
-		view.addObject("generalPostListVO", generalPostListVO);
-		return view;
+	public ModelAndView freeBoardList(SearchForumVO searchForumVO) {
+		GeneralPostListVO generalPostListVO = generalPostService.getAllFreeBoard(searchForumVO);
+		// searchForumVO.setPageCount(generalPostListVO.getBoardCnt());
+		ModelAndView modelAndView = new ModelAndView();
+		
+		modelAndView.setViewName("forum/qnaboardlist");
+		modelAndView.addObject("generalPostListVO",generalPostListVO);
+		modelAndView.addObject("searchForumVO",searchForumVO);
+		
+		return modelAndView;
 	}
 	
 	// 글쓰기 화면 보이기
@@ -99,7 +112,7 @@ public class QnAPostController {
 	@GetMapping("/qnaboard/view/{generalPostId}")
 	public ModelAndView qnaBoardSingle(@PathVariable String generalPostId) {
 		ModelAndView view = new ModelAndView();
-		GeneralPostVO generalPostVO = generalPostService.getOneQnABoard(generalPostId);
+		GeneralPostVO generalPostVO = generalPostService.getOneQnABoard(generalPostId, true);
 		log.debug("--1------컨트롤러---------------------------");
 		log.debug("글번호 : " + generalPostVO.getBoardId());
 		view.setViewName("forum/qnaboardview");
@@ -109,25 +122,45 @@ public class QnAPostController {
 	
 	// 수정페이지 이동
 	@GetMapping("/qnaboard/update/{generalPostId}")
-	public ModelAndView viewUpdatePage(@PathVariable String generalPostId) {
-		   // 요런식으로다가 서비스에서 -> DB에서 게시글 ID로 게시글 가져오는 쿼리 실행
-	      GeneralPostVO generalPostVO  = generalPostService.getOneQnABoard(generalPostId); 
-	                              
-	      ModelAndView view = new ModelAndView();
-	      view.setViewName("forum/qnaboardupdate");
-	      view.addObject("generalPostVO", generalPostVO);
-	      
-	      return view;
-	   }
+	public ModelAndView viewUpdatePage(@PathVariable String generalPostId
+										, @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+		// 게시글 수정을 위해 게시글의 내용을 조회한다 
+		// 게시글 조회와 동일한 코드 호출한다
+		// 요런식으로다가 서비스에서 -> DB에서 게시글 ID로 게시글 가져오는 쿼리 실행
+	    GeneralPostVO generalPostVO  = generalPostService.getOneQnABoard(generalPostId, false); 
+	    if(!generalPostVO.getPostWriter().equals(memberVO.getEmail())) {
+	      throw new IllegalArgumentException("잘못된 접근입니다");
+	    }
+	    
+	    ModelAndView view = new ModelAndView();
+	    view.setViewName("forum/qnaboardupdate");
+	    view.addObject("generalPostVO", generalPostVO);
+	     
+	    return view;
+	}
 	
 	// 수정 처리
 	@PostMapping("/qnaboard/update")
-	public ModelAndView updateQnABoard(@ModelAttribute GeneralPostVO generalPostVO) {
+	public ModelAndView updateQnABoard(@ModelAttribute GeneralPostVO generalPostVO
+										, BindingResult bindingResult
+										, @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 		System.out.println("일반회원용 게시글ID: " + generalPostVO.getGeneralPostId());
 		System.out.println("게시글 제목: " + generalPostVO.getPostTitle());
 		System.out.println("게시글 내용: " + generalPostVO.getPostContent());
 		
 		ModelAndView view = new ModelAndView();
+		if(bindingResult.hasErrors()) {
+			view.setViewName("forum/qnaboardupdate");
+			view.addObject("generalPostVO", generalPostVO);
+			return view;
+		}
+		
+		GeneralPostVO origingeneralPostVO 
+			= generalPostService.getOneQnABoard(generalPostVO.getGeneralPostId(), false);
+		if(!origingeneralPostVO.getPostWriter().equals(memberVO.getEmail())) {
+			throw new IllegalArgumentException("잘못된 접근입니다");
+		}
+		
 		boolean isSuccess = generalPostService.updateOneQnABoard(generalPostVO);
 		if(isSuccess) {
 			// 게시글의 수정이 성공이라면
@@ -160,8 +193,8 @@ public class QnAPostController {
 			, @PathVariable String generalPostId) {
 
 		ModelAndView view = new ModelAndView();
-		
-		GeneralPostVO origingeneralPostVO  = generalPostService.getOneQnABoard(generalPostVO.getGeneralPostId());		
+		// boolean 수정
+		GeneralPostVO origingeneralPostVO  = generalPostService.getOneQnABoard(generalPostVO.getGeneralPostId(), false);		
 		log.debug("삭제여부 : " + origingeneralPostVO.getDeleteYn());
 
 		generalPostVO.getGeneralPostId();

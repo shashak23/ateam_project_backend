@@ -4,13 +4,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.ktdsuniversity.edu.generalpost.dao.GeneralPostDAO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostListVO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
+import com.ktdsuniversity.edu.generalpost.vo.SearchForumVO;
 import com.ktdsuniversity.edu.generalpost.web.FreePostController;
-import com.ktdsuniversity.edu.member.vo.MemberVO;
 
 @Service
 public class GeneralPostServiceImpl implements GeneralPostService{
@@ -22,12 +21,16 @@ public class GeneralPostServiceImpl implements GeneralPostService{
 	
 	// 자유게시판
 	@Override
-	public GeneralPostListVO getAllFreeBoard() {
+	public GeneralPostListVO getAllFreeBoard(SearchForumVO searchForumVO) {
 
 		GeneralPostListVO generalPostListVO = new GeneralPostListVO();
 		
-		generalPostListVO.setBoardCnt( generalPostDAO.getBoardAllCount());
-		generalPostListVO.setGeneralPostList( generalPostDAO.getAllFreeBoard());
+		if (searchForumVO == null) {
+//			generalPostListVO.setBoardCnt( generalPostDAO.getBoardAllCount(searchForumVO));
+			generalPostListVO.setGeneralPostList(generalPostDAO.getAllFreeBoard());
+		} else { 
+			generalPostListVO.setGeneralPostList(generalPostDAO.searchAllBoard(searchForumVO));
+		}
 		return generalPostListVO;	
 	}
 
@@ -39,11 +42,22 @@ public class GeneralPostServiceImpl implements GeneralPostService{
 	}
 
 	@Override
-	public GeneralPostVO getOneFreeBoard(String generalPostId) {
+	public GeneralPostVO getOneFreeBoard(String generalPostId, boolean isIncrease) {
+		if(isIncrease) {
+			int updateCount = generalPostDAO.increaseForumViewCount(generalPostId);
+			if (updateCount == 0) {
+				throw new IllegalArgumentException("잘못된 접근입니다");
+			}
+		}
+		// 예외가 발생하지 않았다면 게시글 정보를 조회한다.
 		GeneralPostVO result = null;
-		
 		result = generalPostDAO.getOneFreeBoard(generalPostId);
-		
+
+		if(result == null) {
+			// 파라미터로 전달받은 id값이 db에 존재하지 않을 경우
+			// 잘못된 접근입니다. 라고  사용자에게 예외 메세지를 보내준다.
+			throw new IllegalArgumentException("잘못된 접근입니다.");
+		}
 		return result;
 	}
 
@@ -62,15 +76,24 @@ public class GeneralPostServiceImpl implements GeneralPostService{
 	
 	// 질답게시판 
 	@Override
-	public GeneralPostListVO getAllQnABoard() {
-
-		System.out.println(generalPostDAO);
-		System.out.println(generalPostDAO.getClass().getSimpleName());
+	public GeneralPostListVO getAllQnABoard(SearchForumVO searchForumVO) {
+//
+//		System.out.println(generalPostDAO);
+//		System.out.println(generalPostDAO.getClass().getSimpleName());
+//		GeneralPostListVO generalPostListVO = new GeneralPostListVO();
+//		
+//		generalPostListVO.setBoardCnt( generalPostDAO.getBoardAllCount());
+//		generalPostListVO.setGeneralPostList( generalPostDAO.getAllQnABoard());
+//		return generalPostListVO;
 		GeneralPostListVO generalPostListVO = new GeneralPostListVO();
 		
-		generalPostListVO.setBoardCnt( generalPostDAO.getBoardAllCount());
-		generalPostListVO.setGeneralPostList( generalPostDAO.getAllQnABoard());
-		return generalPostListVO;	
+		if (searchForumVO == null) {
+//			generalPostListVO.setBoardCnt( generalPostDAO.getBoardAllCount(searchForumVO));
+			generalPostListVO.setGeneralPostList(generalPostDAO.getAllFreeBoard());
+		} else { 
+			generalPostListVO.setGeneralPostList(generalPostDAO.searchAllBoard(searchForumVO));
+		}
+		return generalPostListVO;
 	}
 
 	@Override
@@ -81,7 +104,7 @@ public class GeneralPostServiceImpl implements GeneralPostService{
 	}
 
 	@Override
-	public GeneralPostVO getOneQnABoard(String generalPostId) {
+	public GeneralPostVO getOneQnABoard(String generalPostId, boolean isIncrease) {
 		GeneralPostVO result = null;
 		
 		log.debug("2-----서비스---------------------------");

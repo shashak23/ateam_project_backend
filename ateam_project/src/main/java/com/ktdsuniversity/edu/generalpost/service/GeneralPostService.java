@@ -6,31 +6,29 @@
  */
 package com.ktdsuniversity.edu.generalpost.service;
 
-import org.springframework.web.multipart.MultipartFile;
-
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostListVO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
-import com.ktdsuniversity.edu.member.vo.MemberVO;
+import com.ktdsuniversity.edu.generalpost.vo.SearchForumVO;
 
 
 public interface GeneralPostService {
 	// 자유게시판
-	public GeneralPostListVO getAllFreeBoard();
+	public GeneralPostListVO getAllFreeBoard(SearchForumVO searchForumVO);
 
 	public boolean createNewFreeBoard(GeneralPostVO generalPostVO);
 
-	public GeneralPostVO getOneFreeBoard(String generalPostId);
+	public GeneralPostVO getOneFreeBoard(String generalPostId, boolean isIncrease);
 	
 	public boolean updateOneFreeBoard(GeneralPostVO generalPostVO);
 		
 	public boolean deleteOneFreeBoard(String generalPostId);
 	
 	// 질답게시판
-	public GeneralPostListVO getAllQnABoard();
+	public GeneralPostListVO getAllQnABoard(SearchForumVO searchForumVO);
 
 	public boolean createNewQnABoard(GeneralPostVO generalPostVO);
 
-	public GeneralPostVO getOneQnABoard(String generalPostId);
+	public GeneralPostVO getOneQnABoard(String generalPostId, boolean isIncrease);
 	
 	public boolean updateOneQnABoard(GeneralPostVO generalPostVO);
 		

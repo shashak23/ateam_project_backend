@@ -18,6 +18,49 @@
 		   SET VIEW_CNT = VIEW_CNT + 1
 		 WHERE GENERAL_POST_ID = #{_parameter}
 	</update>
+	
+	<!-- 검색 -->
+	<select id="searchAllBoard"
+			parameterType="com.ktdsuniversity.edu.generalpost.vo.SearchForumVO"
+			resultMap="generalPostVO">
+		SELECT GP.GENERAL_POST_ID
+			 , GP.POST_WRITER
+			 , GP.BOARD_ID
+			 , GP.POST_TITLE
+			 , GP.POST_CONTENT
+			 , TO_CHAR(GP.POST_DATE, 'YYYY-MM-DD') POST_DATE
+			 , GP.LIKE_CNT
+			 , GP.VIEW_CNT
+			 , GP.DELETE_YN
+			 , M.NICKNAME
+		  FROM GENERAL_POST GP
+		 INNER JOIN MEMBER M
+		    ON M.EMAIL = GP.POST_WRITER
+		 ORDER BY GP.GENERAL_POST_ID DESC
+		 
+	</select>
+	
+	<resultMap type="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO" 
+	           id="generalPostVO">
+	    <!-- PK 컬럼을 대상으로 작성. -->
+	    <id column="GENERALPOSTID" property="generalp]Posti]Id" />
+	    <!-- 일반 컬럼을 대상으로 작성. -->
+	    <result column="POSTWRITER" property="psotWriter" />
+	    <result column="BOARDID" property="boardId" />
+	    <result column="POSTTITLE" property="postTitle" />
+	    <result column="POSTCONTENT" property="postContent" />
+	    <result column="POSTDATE" property="postDate" />
+	    <result column="LIKECNT" property="likeCnt" />
+	    <result column="VIEWCNT" property="viewCnt" />
+	    <result column="DELETEYN" property="deleteYn" />
+	    <!-- 1:1 Has a 관계에서 사용한다. -->
+	    <association property="memberVO" 
+	                 javaType="com.ktdsuniversity.edu.member.vo.MemberVO">
+	        <id column="EMAIL" property="email" />
+	        <result column="NICKNAME" property="nickname" />
+	    </association>
+	</resultMap>
+	
 
 	<!-- 자유게시판 -->
 	<insert id="createNewFreeBoard"
@@ -96,20 +139,24 @@
 	
 	<!-- 질답게시판 -->
 	<select id="getAllQnABoard"
-	resultType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
-		SELECT GENERAL_POST_ID
-		     , POST_WRITER
-		     , BOARD_ID
-		     , POST_TITLE
-		     , POST_CONTENT
-		     , POST_DATE
-		     , LIKE_CNT
-		     , VIEW_CNT
-		     , DELETE_YN
-		  FROM GENERAL_POST
-		 WHERE DELETE_YN = 'N'
-		   AND BOARD_ID = 'CC-20231017-000030'
-		 ORDER BY POST_DATE DESC
+	resultMap="generalPostVO"
+	parameterType="string">
+		SELECT GP.GENERAL_POST_ID
+		     , GP.POST_WRITER
+		     , GP.BOARD_ID
+		     , GP.POST_TITLE
+		     , GP.POST_CONTENT
+		     , TO_CHAR(GP.POST_DATE, 'YYYY-MM-DD') POST_DATE
+		     , GP.LIKE_CNT
+		     , GP.VIEW_CNT
+		     , GP.DELETE_YN
+		  FROM GENERAL_POST GP
+		 INNER JOIN MEMBER M
+		    ON M.EMAIL = GP.POST_WRITER
+		 INNER JOIN COMMON_CODE CC
+		    ON CC.CODE_ID = GP.BOARD_ID
+		   AND BOARD_ID = #{_parameter} 
+		 ORDER BY POST_DATE DESC 
 	</select>
 	
 	<insert id="createNewQnABoard"

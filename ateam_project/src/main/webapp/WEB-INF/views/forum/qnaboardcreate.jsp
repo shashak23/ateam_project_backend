@@ -5,7 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
+<script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
 <style type= "text/css">
 		div.grid {
 			display: grid;
@@ -26,9 +26,18 @@
 		label {
 			padding-left: 10px; 
 		}
-		button, input, textarea { 
+		input, textarea { 
 			padding: 10px;
-		}	
+		}
+		.ck-editor__editable { height: 400px; }
+	    .ck-content { font-size: 12px; }
+	
+	    #hashtag {
+	      	margin-top: 5px;
+	    }
+	    .btn-group {
+	    	margin-top: 420px;
+	    }	
 </style>
 </head>
 <body>
@@ -39,17 +48,14 @@
 		<div class = "grid">
 			<label for = "postTitle"> 제목 </label>
 			<input id = "postTitle" type = "text" name="postTitle" />
-			
-			<!--  <label for = "postWriter"> 이메일 </label>
-			<input id = "postWriter" type = "email" name = "postWriter"/>  -->
-<!-- 
-			<label for = "file"> 첨부파일 </label>
-			<input id = "file" type = "file" name = "file" />
-			 -->
+
 			<label for = "postContent"> 내용 </label>
-			<textarea id ="postContent" 
-			name = "postContent" style = "height: 300px;"></textarea>
-			
+			 <textarea name="text" id="editor"></textarea>
+		        <script>
+		          ClassicEditor.create( document.querySelector( '#editor' ), {
+		                  language: "ko"
+		                } );    
+		        </script>
 			<div class = "btn-group">
 				<div class="right-align">
 					<input type="submit" value="저장" />

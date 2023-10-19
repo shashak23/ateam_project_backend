@@ -9,13 +9,19 @@ package com.ktdsuniversity.edu.generalpost.dao;
 import java.util.List;
 
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
-import com.ktdsuniversity.edu.member.vo.MemberVO;
+import com.ktdsuniversity.edu.generalpost.vo.SearchForumVO;
 
 public interface GeneralPostDAO {
 	// 게시글 수 
-	public int getBoardAllCount();
+	public int getBoardAllCount(SearchForumVO searchForumVO);
 	// 조회수 
-	public int increaseViewCount(String generalPostId);
+	public int increaseForumViewCount(String generalPostId);
+	/**
+	 * DB에 저장된 모든 게시글의 목록을 조회 
+	 * @param searchForumVO 검색할 조건 
+	 * @return D에서 조회된 게시글의 목록
+	 */
+	public List<GeneralPostVO> searchAllBoard(SearchForumVO searchForumVO);
 
 	// 자유게시판
 	public List<GeneralPostVO> getAllFreeBoard();
@@ -29,7 +35,7 @@ public interface GeneralPostDAO {
 	public int deleteOneFreeBoard(String generalPostId);
 
 	// 질답게시판
-	public List<GeneralPostVO> getAllQnABoard();
+	public List<GeneralPostVO> getAllQnABoard(SearchForumVO searchForumVO);
 	
 	public int createNewQnABoard(GeneralPostVO generalVO);
 	

@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ktdsuniversity.edu.generalpost.service.GeneralPostService;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostListVO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
+import com.ktdsuniversity.edu.generalpost.vo.SearchForumVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -31,16 +32,31 @@ public class FreePostController {
 
 	
 	// 전체조회
+//	@GetMapping("/freeboard/list")
+//	public ModelAndView freeBoardList() {
+//		GeneralPostListVO generalPostListVO = generalPostService.getAllFreeBoard();
+//		ModelAndView modelAndView = new ModelAndView();
+//		
+//		modelAndView.setViewName("forum/freeboardlist");
+//		modelAndView.addObject("generalPostListVO",generalPostListVO);
+//		
+//		return modelAndView;
+//	}
+
+	// 전체 및 검색 조회 
 	@GetMapping("/freeboard/list")
-	public ModelAndView freeBoardList() {
-		GeneralPostListVO generalPostListVO = generalPostService.getAllFreeBoard();
+	public ModelAndView freeBoardList(SearchForumVO searchForumVO) {
+		GeneralPostListVO generalPostListVO = generalPostService.getAllFreeBoard(searchForumVO);
+		// searchForumVO.setPageCount(generalPostListVO.getBoardCnt());
 		ModelAndView modelAndView = new ModelAndView();
 		
 		modelAndView.setViewName("forum/freeboardlist");
 		modelAndView.addObject("generalPostListVO",generalPostListVO);
+		modelAndView.addObject("searchForumVO",searchForumVO);
 		
 		return modelAndView;
 	}
+
 	
 	// 글쓰기 화면 보이기 
 	@GetMapping("/freeboard/create")
@@ -96,7 +112,7 @@ public class FreePostController {
 	public ModelAndView freeBoardSingle(@PathVariable String generalPostId) {
 //		log.debug("되는거 맞지요?--------------------------------------");
 //		log.debug("글번호: " + generalPostId);
-		GeneralPostVO generalPostVO = generalPostService.getOneFreeBoard(generalPostId);
+		GeneralPostVO generalPostVO = generalPostService.getOneFreeBoard(generalPostId, true);
 		ModelAndView view = new ModelAndView();
 		view.setViewName("forum/freeboardview");
 		view.addObject("generalPostVO", generalPostVO);
@@ -107,7 +123,7 @@ public class FreePostController {
 	   @GetMapping("/freeboard/update/{generalPostId}")
 	   public ModelAndView viewUpdatePage(@PathVariable String generalPostId) {
 		   // 요런식으로다가 서비스에서 -> DB에서 게시글 ID로 게시글 가져오는 쿼리 실행
-	      GeneralPostVO generalPostVO  = generalPostService.getOneFreeBoard(generalPostId); 
+	      GeneralPostVO generalPostVO = generalPostService.getOneFreeBoard(generalPostId, false); 
 	                              
 	      ModelAndView view = new ModelAndView();
 	      view.setViewName("forum/freeboardupdate");
@@ -156,8 +172,8 @@ public class FreePostController {
 										, @PathVariable String generalPostId) {
 
 		ModelAndView view = new ModelAndView();
-		
-		GeneralPostVO origingeneralPostVO  = generalPostService.getOneFreeBoard(generalPostVO.getGeneralPostId());		
+		// boolean값 추가함
+		GeneralPostVO origingeneralPostVO  = generalPostService.getOneFreeBoard(generalPostVO.getGeneralPostId(), false);		
 		log.debug("삭제여부 : " + origingeneralPostVO.getDeleteYn());
 		generalPostVO.getGeneralPostId();
 		// 게시글을 등록한다.

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
+import com.ktdsuniversity.edu.generalpost.vo.SearchForumVO;
 import com.ktdsuniversity.edu.generalpost.web.FreePostController;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 
@@ -32,17 +33,13 @@ public class GeneralPostDAOImpl extends SqlSessionDaoSupport
 		super.setSqlSessionTemplate(sqlSessionTemplate);
 	}
 	
-	public int increaseViewCount(int likeCnt) {
-		return getSqlSession().update("increaseViewCount", likeCnt);
+	@Override
+	public int increaseForumViewCount(String likeCnt) {
+		return getSqlSession().update("increaseForumViewCount", likeCnt);
 	}
 	
 	@Override
-	public int increaseViewCount(String generalPostId) {
-		return getSqlSession().update("increaseViewCount", generalPostId);
-	}
-	
-	@Override
-	public int getBoardAllCount() {
+	public int getBoardAllCount(SearchForumVO searchForumVO) {
 		return getSqlSession().selectOne("getBoardAllCount");
 	}
 	// 자유게시판
@@ -73,7 +70,7 @@ public class GeneralPostDAOImpl extends SqlSessionDaoSupport
 	
 	// 질답게시판
 	@Override
-	public List<GeneralPostVO> getAllQnABoard() {
+	public List<GeneralPostVO> getAllQnABoard(SearchForumVO searchForumVO) {
 		return getSqlSession().selectList("getAllQnABoard");
 	}
 
@@ -97,6 +94,13 @@ public class GeneralPostDAOImpl extends SqlSessionDaoSupport
 	@Override
 	public int deleteOneQnABoard(String generalPostId) {
 		return getSqlSession().delete("deleteOneQnABoard", generalPostId);
+	}
+
+	// 검색
+	
+	@Override
+	public List<GeneralPostVO> searchAllBoard(SearchForumVO searchForumVO) {
+		return getSqlSession().selectList("searchAllBoard", searchForumVO);
 	}
 	
 
