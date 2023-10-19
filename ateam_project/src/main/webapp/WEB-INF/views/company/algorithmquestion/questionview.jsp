@@ -16,23 +16,13 @@
 	       language: "ko"
 	    } );
     	
-    	var result = 'aaa'
-    	
-    	// 제출버튼 클릭
-    	$("#submit").click(function() {
-    		$("#result").val(result)
-    	})
-    	
-    	
     	// 모달 실행을 위한 문장
         $('.btn-primary').click(function() {
             $('.create_container, .overlay').addClass('active')
         })
-
         $('.btn-close, .overlay').click(function() {
             $('.create_container, .overlay').removeClass('active')
         })
-        
     })
 </script>
 </head>
@@ -162,17 +152,7 @@
         text-align: center;
     }
 
-    #postTitle {
-        border: 0px;
-        background-color: #e9f3ff;
-        width: 100%;
-        height: 35px;
-        padding: 0 15px;
-        outline: none;
-        color: #333;
-    }
-
-    #noticeContent {
+    #algorithmSolutionContent {
         border: 0px;
         background-color: #e9f3ff;
         width: 100%;
@@ -182,14 +162,12 @@
         color: #333;
         resize: none;
     }
-
-    #postTitle::placeholder,
-    #noticeContent::placeholder {
+    
+    #algorithmSolutionContent::placeholder {
         color: #bbb;
     }
 
-    #postTitle:focus::placeholder,
-    #noticeContent:focus::placeholder {
+    #algorithmSolutionContent:focus::placeholder {
         visibility: hidden;
     }
 
@@ -240,17 +218,13 @@
 		<div class="flex">
 		
 			<div class="btn-text-right">
-				<button class="btn btn-primary" href=>문제풀이</button>
+				<button class="btn btn-primary">문제풀이</button>
 			</div>
 			
-			<form:form modelAttrivute="myAlgorithmVO" method="post">
-			    <input type="hidden" name="myAlgorithmQuestionId" value="myAlgorithmVO.myAlgorithmQuestionId" />
-			
+			<form:form modelAttribute="myAlgorithmVO" method="post">			
 			    <label for="myAnswer">답변</label> <!-- 웹IDE 테이블에 신규생성? -->
-			    <textarea name="myAnswer" id="editor" placeholder="답변을 작성해주세요." value="${myAlgorithmVO.myAnswer}"></textarea>
-	            
+			    <textarea name="myAnswer" id="editor" placeholder="답변을 작성해주세요." value="${myAlgorithmVO.myAnswer}">${myAlgorithmVO.myAnswer}</textarea>
 			</form:form>
-			
 			
 		</div>
 	</div>
@@ -279,20 +253,13 @@
 	</div>
 	
 	<div class="create_container">
-            <div class="btn-close">&times;</div>
-            <h1 class="create_title">공지 생성</h1>
-            <div>
-                <label for="postTitle" class="mb10">제목</label>
-                <input type="text" name="postTitle" id="postTitle" placeholder="제목을 입력해주세요"
-                       value="${noticeVO.postTitle}"/>
-                <!-- <form:errors path="postTitle" element="div" cssClass="errors" /> -->
-            </div>
-            <label for="noticeContent" class="mb10">내용</label>
-            <div>
-                ${algorithmQuestionVO.algorithmTitle}
-            </div>
+        <div class="btn-close">&times;</div>
+        <h1 class="create_title">문제 풀이</h1>
+        <div>
+            ${algorithmQuestionVO.algorithmSolution}
         </div>
-        <div class="overlay"></div>
+    </div>
+    <div class="overlay"></div>
 	
 		
 </body>

@@ -24,8 +24,6 @@ public interface AlgorithmQuestionDAO {
 	
 	public int createNewAlgorithmQuestionCategory(AlgorithmQuestionVO algorithmQuestionVO);
 	
-	public int createNewMyAlgorithm(MyAlgorithmVO myalgorithmVO);
-	
 	public int increaseViewCount(String companyAlgorithmQuestionId);
 	
 	public AlgorithmQuestionVO getOneAlgorithmQuestion(String companyAlgorithmQuestionId);

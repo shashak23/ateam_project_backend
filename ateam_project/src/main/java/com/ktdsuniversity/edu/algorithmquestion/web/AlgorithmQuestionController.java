@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.ktdsuniversity.edu.algorithmquestion.service.AlgorithmQuestionService;
@@ -26,8 +25,6 @@ import com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionVO;
 import com.ktdsuniversity.edu.algorithmquestion.vo.SearchAlgorithmQuestionVO;
 import com.ktdsuniversity.edu.exceptions.PageNotFoundException;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
-import com.ktdsuniversity.edu.myalgorithm.vo.MyAlgorithmVO;
-import com.ktdsuniversity.edu.util.StringUtils;
 import com.ktdsuniversity.edu.util.XssIgnoreUtil;
 
 import jakarta.validation.Valid;
@@ -87,22 +84,7 @@ public class AlgorithmQuestionController {
 	}
 	
 	// 일반회원이 로그인 해서 제출하기 버튼을 클릭했을 때
-	@PostMapping("/myalgorithm/create")
-	public String doMyAlgorithmCreate(@ModelAttribute MyAlgorithmVO myAlgorithmVO
-			                        , Model model) {
-		
-		XssIgnoreUtil.ignore(myAlgorithmVO);
-		
-		boolean isSuccess = algorithmQuestionService.createNewMyAlgorithm(myAlgorithmVO);
-		if(isSuccess) {
-			return "redirect:/algorithm/question/list";
-		}
-		else {
-			model.addAttribute("myAlgorithmVO", myAlgorithmVO);
-			return "company/algorithmquestion/questionview";
-			
-		}
-	}
+	
 	
 	@GetMapping("/algorithm/question/update/{companyAlgorithmQuestionId}")
 	public String viewAlgorithmQuestionUpdatePage(@PathVariable String companyAlgorithmQuestionId

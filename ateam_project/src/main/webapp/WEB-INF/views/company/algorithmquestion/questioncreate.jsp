@@ -90,12 +90,6 @@
 	<h3>알고리즘 문제 작성</h3>
 	<form:form modelAttribute="algorithmQuestionVO" method="post">
 	<div>
-	    <%-- <c:if test="${not empty message1}">
-	        <div class="errors" >${message1}</div>
-	    </c:if>
-	    <c:if test="${not empty message2}">
-	        <div class="errors" >${message2}</div>
-	    </c:if> --%>
 		<form:errors path="algorithmCategoryIdList" element="div" cssClass="errors"/>
 		<form:errors path="algorithmTierId" element="div" cssClass="errors"/>
 		<form:errors path="algorithmTitle" element="div" cssClass="errors"/>
