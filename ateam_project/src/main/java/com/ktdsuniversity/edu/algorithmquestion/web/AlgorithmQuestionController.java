@@ -123,9 +123,11 @@ public class AlgorithmQuestionController {
 	@PostMapping("/algorithm/question/update")
 	public String doAlgorithmQuestionUpdate(@ModelAttribute AlgorithmQuestionVO algorithmQuestionVO
 			                              , Model model
-			                              , @RequestParam String algorithmCategoryId
+			                              , @RequestParam String algorithmCategoryIdList
 			                              , @RequestParam String algorithmTierId
 			                              , @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+		XssIgnoreUtil.ignore(algorithmQuestionVO);
+		
 		logger.debug("Post ID: " + algorithmQuestionVO.getCompanyAlgorithmQuestionId());
 		logger.debug("제목: " + algorithmQuestionVO.getAlgorithmTitle());
 		logger.debug("내용: " + algorithmQuestionVO.getAlgorithmContent());
@@ -138,7 +140,7 @@ public class AlgorithmQuestionController {
 		}
 		
 		// 알고리즘카테고리 & 난이도가 null인지 체크하는 if문
-		if (algorithmCategoryId == null || algorithmCategoryId.isEmpty()) {
+		if (algorithmCategoryIdList == null || algorithmCategoryIdList.isEmpty()) {
 			model.addAttribute("message", "알고리즘 카테고리를 선택해주세요.");
 			model.addAttribute("algorithmQuestionVO", algorithmQuestionVO);
 			return "company/algorithmquestion/questioncreate";

@@ -17,6 +17,7 @@ public class MyAlgorithmVO extends AlgorithmQuestionVO {
 	private String correctAnswerYn;
 	private String deleteYn;
 	private String myAnswer;
+	
 	private AlgorithmQuestionVO algorithmQuestionVO;
 		
 	private MemberVO memberVO;

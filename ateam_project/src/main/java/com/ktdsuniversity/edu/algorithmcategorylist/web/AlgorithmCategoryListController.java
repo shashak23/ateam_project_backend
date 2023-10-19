@@ -21,8 +21,6 @@ public class AlgorithmCategoryListController {
 	@GetMapping("/algorithm/category/{postId}")
 	@ResponseBody
 	public List<AlgorithmCategoryListVO> searchCategory(@PathVariable String postId) {
-		List<AlgorithmCategoryListVO> list = algorithmCategoryListService.categorySearch(postId);
-		
 		return algorithmCategoryListService.categorySearch(postId);
 	}
 }
