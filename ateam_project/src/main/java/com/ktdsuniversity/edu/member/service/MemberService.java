@@ -32,9 +32,11 @@ public interface MemberService {
 	/**
 	 * 기업회원가입 처리
 	 * @param companyVO 사용자가 작성한 사용자 정보
+	 * @param file 사용자가 업로드한 파일
 	 * @return 기업회원가입 정상처리 여부 확인
 	 */
-	public boolean createNewCompanyMemeber(CompanyVO companyVO);
+	public boolean createNewCompanyMember(CompanyVO companyVO
+										, MultipartFile file);
 	
 	/**
 	 * 파라미터로 전달 된 이메일이 사용가능한지 확인

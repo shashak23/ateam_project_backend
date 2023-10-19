@@ -32,6 +32,12 @@ public class MemberServiceImpl implements MemberService{
 	private SHA sha;
 	@Autowired FileHandler fileHandler;
 	
+	/**
+	 * 작성자: 김광원
+	 * 수정자: 신진영(2023-10-19)
+	 * 작성일자: 2023-10-19
+	 * 내용: createNewMember 쿼리 일반/기업회원별 if문 분기 세팅(setMemberType)
+	 */
 	@Override
 	public boolean createNewMember(GeneralMemberVO generalMemberVO) {
 		int emailCount = memberDAO.getEmailCount(generalMemberVO.getEmail());
@@ -47,6 +53,8 @@ public class MemberServiceImpl implements MemberService{
 		String encryptedPassword = sha.getEncrypt(password, salt);
 		generalMemberVO.setPw(encryptedPassword);
 		generalMemberVO.setSalt(salt);
+		
+		generalMemberVO.setMemberType("GENERAL");
 		
 		int insertMemberCount = memberDAO.createNewMember(generalMemberVO);
 		int insertGMemberCount = generalMemberDAO.createNewGeneralMember(generalMemberVO);
@@ -104,28 +112,43 @@ public class MemberServiceImpl implements MemberService{
 				}
 			}
 			StoredFile storedFile = fileHandler.storeFile(file);
+			System.out.println(storedFile.getFileName());
 			memberVO.setProfilePic(storedFile.getRealFileName());
 		}
 		int updateCount = memberDAO.updateOneFile(memberVO);
 		return updateCount>0;
 	}
 	
+	@Transactional
 	@Override
-	public boolean createNewCompanyMemeber(CompanyVO companyVO) {
+	public boolean createNewCompanyMember(CompanyVO companyVO
+										, MultipartFile file) {
+		
+		StoredFile storedFile = fileHandler.storeFile(file);
+		companyVO.setCompanyRegistCertificateUrl(storedFile.getRealFilePath());
+		
 		int companyEmailCount = memberDAO.getEmailCount(companyVO.getCompanyEmail());
 		
 		if (companyEmailCount > 0) {
 		throw new IllegalArgumentException("이미 사용중인 기업용 이메일입니다");
 		}
 		
+		// jsp에서 받아온 companyVO 객체
 		companyVO.setEmail(companyVO.getCompanyEmail());
+		companyVO.setPw("abc123"); // 기본 pw
+		companyVO.setSalt("SALT");
+		companyVO.setNickname("사명을 입력해주세요");
 		companyVO.setMemberType("COMPANY");
-		companyVO.setCompanyRegistCertificateUrl("notYet");
+		companyVO.setWithdrawYn("N");
+
+//		companyVO.setCompanyRegistCertificateUrl("예시입니다");
+		companyVO.setConfirmYn("N");
+
 		
 //		int insertMemberCount = memberDAO.createNewCompanyMember(companyVO);
 		int insertMemberCount = memberDAO.createNewMember(companyVO);
-		int insertCompapnyMemberCount = companyDAO.createNewCompanyMember(companyVO);
-		return insertCompapnyMemberCount > 0 && insertMemberCount > 0;
+		int insertCompanyMemberCount = companyDAO.createNewCompanyMember(companyVO);
+		return insertCompanyMemberCount > 0 && insertMemberCount > 0;
 	}
 
 	@Override

@@ -50,27 +50,33 @@
     .unusable {
         background-color: #F003;
     }
+    
+    input[type=file] {
+		padding: 0px;
+	}
+    
 </style>
 </head>
 
 <body>	
     <h1>기업회원가입</h1>
-    <form:form modelAttribute="companyVO" method="post">
+    <form:form modelAttribute="companyVO" method="post" enctype="multipart/form-data">
     	<div>
     		<form:errors path="companyEmail" element="div" cssClass="errors" />
     	</div>
     	
         <div class="grid">
             <label for="companyEmail">담당자 이메일</label>
-            <input id="companyEmail" type="companyEmail" name="companyEmail" value="${companyVO.companyEmail}" />
+            <input id="companyEmail" type="email" name="companyEmail" value="${comapnyVO.companyEmail}" />
       
             <label for="contactName">담당자 이름</label>
             <input id="contactName" type="text" name="contactName" value="${companyVO.contactName}" />
 
-            <label for=contactNumber>담당자 연락처</label>
+            <label for="contactNumber">담당자 연락처</label>
             <input id="contactNumber" type="text" name="contactNumber" value="${companyVO.contactNumber}" />
        
-       		<!-- 사업자 등록증 -->
+       		<label for="file">사업자등록증</label>
+			<input id="file" type="file" name="file"/>
                         
             <div class="btn-group">
                 <div class="right-align">

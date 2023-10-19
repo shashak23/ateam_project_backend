@@ -17,7 +17,7 @@ public class CompanyVO extends MemberVO {
 	private int investment;
 	private String companyINTRO;
 	private String homeURL;
-	private String confirmYN;
+	private String confirmYn;
 	
 	
 	public String getCompanyEmail() {
@@ -98,11 +98,12 @@ public class CompanyVO extends MemberVO {
 	public void setHomeURL(String homeURL) {
 		this.homeURL = homeURL;
 	}
-	public String getConfirmYN() {
-		return confirmYN;
+	public String getConfirmYn() {
+		return confirmYn;
 	}
-	public void setConfirmYN(String confirmYN) {
-		this.confirmYN = confirmYN;
+	public void setConfirmYn(String confirmYN) {
+		this.confirmYn = confirmYN;
 	}
+	
 	
 }

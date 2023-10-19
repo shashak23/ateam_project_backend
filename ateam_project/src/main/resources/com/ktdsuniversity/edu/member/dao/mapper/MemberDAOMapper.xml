@@ -27,13 +27,14 @@
 		, MEMBER_TYPE
 		, WITHDRAW_YN)
 		VALUES
-		( #{email}
 		<if test='memberType == "COMPANY"'>
-		, 'abc123'
-		, 'SAMPLE'
-		, '관리자가설정하는사업자등록증기반사명'
+		( #{companyEmail}
+		, #{pw}
+		, #{salt}
+		, #{nickname}
 		</if>
-		<if test='memberType == null or memberType == ""'>
+		<if test='memberType == "GENERAL"'>
+		( #{email}
 		, #{pw}
 		, #{salt}
 		, #{nickname}

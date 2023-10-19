@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.ktdsuniversity.edu.companymember.vo.CompanyVO;
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
@@ -142,16 +143,19 @@ public class MemberController {
 		return "member/companyregist";
 	}
 	@PostMapping("/member/companysignup")
-	public String doComapnyMemberSignUp(@Valid @ModelAttribute CompanyVO companyVO
+	public String doCompanyMemberSignUp(@Valid @ModelAttribute CompanyVO companyVO
 							   , Model model
-							   , BindingResult bindingResult) {
+							   , BindingResult bindingResult
+							   , @RequestParam MultipartFile file) {
+		
+		System.out.println(file.getOriginalFilename());
 		
 		if (bindingResult.hasErrors()) {
-			model.addAttribute("comapnyVO", companyVO);
+			model.addAttribute("companyVO", companyVO);
 			return "member/companysignup"; 
 		}
 		
-		boolean isSuccess = memberService.createNewCompanyMemeber(companyVO);
+		boolean isSuccess = memberService.createNewCompanyMember(companyVO, file);
 				
 		if(isSuccess) {
 			return("redirect:/member/auth");
