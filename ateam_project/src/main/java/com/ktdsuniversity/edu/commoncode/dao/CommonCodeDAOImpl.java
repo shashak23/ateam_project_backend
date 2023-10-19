@@ -29,21 +29,21 @@ public class CommonCodeDAOImpl extends SqlSessionDaoSupport implements CommonCod
 
 	@Override
 	public int getCommonTypeAllCount(String codeName) {
-		return getSqlSession().selectOne("getHashtagAllNumber", codeName);
+		return getSqlSession().selectOne("getCommonTypeAllCount", codeName);
 	}
 	
 	@Override
 	public List<CommonCodeVO> getAllCommonType(String codeName) {
-		return getSqlSession().selectList("getAllHashtag");
+		return getSqlSession().selectList("getAllCommonType");
 	}
 
 	@Override
 	public int createCommonCode(CommonCodeVO commonCodeVO) {
-		return getSqlSession().insert("createHashtag", commonCodeVO);
+		return getSqlSession().insert("createCommonCode", commonCodeVO);
 	}
 	
 	@Override
-	public List<CommonCodeListVO> search(String codeName) {
+	public List<CommonCodeVO> search(String codeName) {
 		return getSqlSession().selectList("search", codeName);
 	}
 }

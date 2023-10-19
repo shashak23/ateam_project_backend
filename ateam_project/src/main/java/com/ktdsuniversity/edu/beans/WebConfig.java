@@ -54,7 +54,7 @@ public class WebConfig implements WebMvcConfigurer {
 		checkSessionExcludePatterns.add("/news/**");
 		checkSessionExcludePatterns.add("/error");
 		checkSessionExcludePatterns.add("/algorithm/**");
-		checkSessionExcludePatterns.add("/member/regist");
+		checkSessionExcludePatterns.add("/member/**");
 		checkSessionExcludePatterns.add("/qnaboard/list");
 
 		

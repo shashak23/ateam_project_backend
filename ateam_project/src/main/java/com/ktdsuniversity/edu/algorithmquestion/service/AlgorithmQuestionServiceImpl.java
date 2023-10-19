@@ -6,6 +6,8 @@
 
 package com.ktdsuniversity.edu.algorithmquestion.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +22,8 @@ import com.ktdsuniversity.edu.myalgorithm.vo.MyAlgorithmVO;
 @Service
 public class AlgorithmQuestionServiceImpl implements AlgorithmQuestionService {
 
+	private Logger logger = LoggerFactory.getLogger(AlgorithmQuestionServiceImpl.class);
+	
 	@Autowired
 	private AlgorithmQuestionDAO algorithmQuestionDAO;
 	
@@ -39,8 +43,14 @@ public class AlgorithmQuestionServiceImpl implements AlgorithmQuestionService {
 	@Override
 	public boolean createNewAlgorithmQuestion(AlgorithmQuestionVO algorithmQuestionVO) {
 		
+		algorithmQuestionVO.setMainAlgorithmCategoryId(algorithmQuestionVO.getAlgorithmCategoryIdList().get(0));
 		int createCount = algorithmQuestionDAO.createNewAlgorithmQuestion(algorithmQuestionVO);
 	
+		if (createCount > 0) {
+			int createCategoryCount = algorithmQuestionDAO.createNewAlgorithmQuestionCategory(algorithmQuestionVO);
+			logger.debug("{}: Insert Category Count: {}", algorithmQuestionVO.getCompanyAlgorithmQuestionId(), createCategoryCount);
+		}
+		
 		return createCount > 0;
 	}
 
@@ -68,9 +78,18 @@ public class AlgorithmQuestionServiceImpl implements AlgorithmQuestionService {
 
 	@Override
 	public boolean updateOneAlgorithmQuestion(AlgorithmQuestionVO algorithmQuestionVO) {
+		algorithmQuestionVO.setMainAlgorithmCategoryId(algorithmQuestionVO.getAlgorithmCategoryIdList().get(0));
 		int updateCount = algorithmQuestionDAO.updateOneAlgorithmQuestion(algorithmQuestionVO);
+		
+		if(updateCount > 0) {
+			int deleteCategoryCount = algorithmQuestionDAO.deleteAlgorithmQuestionCategory(algorithmQuestionVO);
+			logger.debug("{}: Delete Category Count: {}", algorithmQuestionVO.getCompanyAlgorithmQuestionId(), deleteCategoryCount);
+			int insertCategoryCount = algorithmQuestionDAO.insertAlgorithmQuestionCategory(algorithmQuestionVO);
+			logger.debug("{}: Insert Category Count: {}", algorithmQuestionVO.getCompanyAlgorithmQuestionId(), insertCategoryCount);
+		}
 		return updateCount > 0;
 	}
+	
 
 	@Override
 	public boolean deleteOneAlgorithmQuestion(String companyAlgorithmQuestionId) {

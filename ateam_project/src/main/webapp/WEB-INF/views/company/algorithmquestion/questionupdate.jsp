@@ -15,36 +15,27 @@
 		$.get("/code/알고리즘카테고리", function(response) {
 			for (var i = 0; i < response.length; i++) {
 				var code = response[i]
-				var checkbox = $("<input type='checkbox' id='"+code.codeId+"' name='algorithmCategoryId' value='"+code.codeId+"' />");
+				var checkbox = $("<input type='checkbox' id='"+code.codeId+"' name='algorithmCategoryIdList' value='"+code.codeId+"' />");
 				$("#algorithm_category").append(label);
 				$("#algorithm_category").append(checkbox);
 				var label = $("<label for='"+code.codeId+"'>"+code.codeContent+"</label>");
 			}
+			
+			$.get("/algorithm/category/${algorithmQuestionVO.companyAlgorithmQuestionId}", function(categoryResponse) {
+				console.log(categoryResponse)
+				
+				for (var i = 0; i < categoryResponse.length; i++) {
+					var code = categoryResponse[i]
+					$("input[name=algorithmCategoryIdList][value="+code.algorithmCategoryId+"]").prop("checked", true);
+				}
+			});
+			
 		});
 		
-		// 선택했던 option이 선택되어있음
-		$("input[name=algorithmCategoryId]").each(function(){
-			var thisVal = $(this).val();
-			if(thisVal.length > 0) {
-				$(this).attr("checked", true);
-			}
-		});
+		// 이전에 선택한 select option 불러오기
         $("select[name=algorithmTierId]").val("${algorithmQuestionVO.algorithmTierId}")
         
         // option 선택이 바뀌면, 바뀐 값이 들어감
-		$('input:checkbox[name=algorithmCategoryId]').each(function (index) {
-			if($(this).is(":checked")==true){
-				var category = $(this).val()
-				$("#algorithmCategoryId").val(category)
-			}
-		})
-		<!--
-        $("select[name=algorithmCategoryId]").change(function() {
-            var category = 
-                $("select[name=algorithmCategoryId] option:selected").text();
-            $("#algorithmCategoryId").val(category);
-        })
-        -->
         $("select[name=algorithmTierId]").change(function() {
             var tier = 
                 $("select[name=algorithmTierId] option:selected").text();
@@ -102,7 +93,7 @@
 	           action="/algorithm/question/update">
 	    <input type="hidden" name="companyAlgorithmQuestionId" value="${algorithmQuestionVO.companyAlgorithmQuestionId}" />
 		<div class="grid">
-		    <label class="label" for="algorithmCategoryId">알고리즘 카테고리</label>
+		    <label class="label" for="algorithmCategoryIdList">알고리즘 카테고리</label>
 		    <div id="algorithm_category"></div>
 		    
             

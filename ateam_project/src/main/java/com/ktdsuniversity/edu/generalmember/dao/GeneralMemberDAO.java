@@ -14,6 +14,7 @@ import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 
 public interface GeneralMemberDAO {
+	
 	public int createNewGeneralMember(GeneralMemberVO generalMemberVO);
 
 	/**

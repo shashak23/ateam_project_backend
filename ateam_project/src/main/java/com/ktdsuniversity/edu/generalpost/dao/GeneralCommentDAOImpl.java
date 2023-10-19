@@ -9,13 +9,18 @@ import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ktdsuniversity.edu.AteamProjectApplication;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralCommentVO;
 
 @Repository
 public class GeneralCommentDAOImpl extends SqlSessionDaoSupport implements GeneralCommentDAO{
+
+	private Logger log = LoggerFactory.getLogger(AteamProjectApplication.class);
 
 	@Autowired
 	@Override
@@ -25,6 +30,8 @@ public class GeneralCommentDAOImpl extends SqlSessionDaoSupport implements Gener
 	
 	@Override
 	public List<GeneralCommentVO> getAllComments(String generalPostId){
+		  log.debug("--2----디에이오----------------------------");
+
 		return getSqlSession().selectList("getAllComments", generalPostId);
 	}
 	

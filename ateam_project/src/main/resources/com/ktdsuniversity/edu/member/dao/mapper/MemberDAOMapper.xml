@@ -13,6 +13,7 @@
 		FROM "MEMBER"
 		WHERE NICKNAME = #{_parameter}
 	</select>
+	
 	<insert id="createNewMember"
 		parameterType="com.ktdsuniversity.edu.member.vo.MemberVO">
 		INSERT INTO "MEMBER"
@@ -26,14 +27,22 @@
 		, MEMBER_TYPE
 		, WITHDRAW_YN)
 		VALUES
+		<if test='memberType == "COMPANY"'>
+		( #{companyEmail}
+		, #{pw}
+		, #{salt}
+		, #{nickname}
+		</if>
+		<if test='memberType == "GENERAL"'>
 		( #{email}
 		, #{pw}
 		, #{salt}
 		, #{nickname}
+		</if>
 		, 'Y'
 		, 'https://w7.pngwing.com/pngs/384/868/png-transparent-person-profile-avatar-user-basic-ui-icon.png'
 		, SYSDATE
-		, 'GENERAL_MEMBER'
+		, #{memberType}
 		, 'N' )
 	</insert>
 	
@@ -45,6 +54,7 @@
 	  FROM "MEMBER" 
 	 WHERE EMAIL =#{_parameter}
 	</select>
+	
 	<select id="getMember"
 			parameterType="com.ktdsuniversity.edu.member.vo.MemberVO"
 			resultType="com.ktdsuniversity.edu.member.vo.MemberVO">
@@ -61,6 +71,7 @@
 		 WHERE EMAIL = #{email}
 		   AND PW = #{pw}
 	</select>
+	
 	<select id="getOneFile"
 	        parameterType="string"
 	        resultType="com.ktdsuniversity.edu.member.vo.MemberVO">
@@ -70,4 +81,13 @@
 		  FROM "MEMBER"
 		 WHERE EMAIL = #{_parameter}
 	</select>
+	
+	<update id="updateWithdrawMember"
+			parameterType="com.ktdsuniversity.edu.member.vo.MemberVO">
+		UPDATE MEMBER
+   		   SET WITHDRAW_YN = 'Y'
+ 		 WHERE EMAIL = #{email}
+
+	</update>
+
 </mapper>

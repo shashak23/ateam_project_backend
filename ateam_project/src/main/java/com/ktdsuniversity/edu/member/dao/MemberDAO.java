@@ -1,5 +1,6 @@
 package com.ktdsuniversity.edu.member.dao;
 
+import com.ktdsuniversity.edu.companymember.vo.CompanyVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 
 public interface MemberDAO {
@@ -23,4 +24,15 @@ public interface MemberDAO {
 	 * 파일
 	 */
 	public int updateOneFile(MemberVO memberVO);
+	
+	/**
+	 * 회원탈퇴
+	 */
+	public int updateWithdrawMember(MemberVO memberVO);
+	
+	/**
+	 * 기업회원가입
+	 */
+//	public int createNewCompanyMember(MemberVO memberVO);
+	
 }

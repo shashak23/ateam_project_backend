@@ -32,6 +32,7 @@
 				<!-- 로그인 상태 -->
 				<li style="margin-right: 15px;">
 					${sessionScope._LOGIN_USER_.nickname}
+					<a href="/member/withdraw">회원탈퇴</a>
 					<a href="/member/logout">로그아웃</a>
 				</li>
 				<li>

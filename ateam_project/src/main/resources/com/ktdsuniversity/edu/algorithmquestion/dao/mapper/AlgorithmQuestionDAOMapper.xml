@@ -42,7 +42,7 @@
 	<select id="getAllAlgorithmQuestion"
 	        resultMap="AlgorithmQuestionDAOMap">
 	    SELECT CAQ.COMPANY_ALGORITHM_QUESTION_ID
-		     , CAQ.ALGORITHM_CATEGORY_ID
+		     , CAQ.MAIN_ALGORITHM_CATEGORY_ID
 		     , CAQ.ALGORITHM_TIER_ID
 		     , CAQ.ALGORITHM_WRITER
 		     , CAQ.ALGORITHM_TITLE
@@ -58,7 +58,7 @@
 		 INNER JOIN MEMBER M
 		    ON CAQ.ALGORITHM_WRITER = M.EMAIL
 		 INNER JOIN COMMON_CODE C
-		    ON CAQ.ALGORITHM_CATEGORY_ID = C.CODE_ID
+		    ON CAQ.MAIN_ALGORITHM_CATEGORY_ID = C.CODE_ID
 		 WHERE DELETE_YN = 'N'
 		 ORDER BY POST_DATE DESC <!-- 최신글순 -->
 	</select>
@@ -67,7 +67,7 @@
 	        parameterType="com.ktdsuniversity.edu.algorithmquestion.vo.SearchAlgorithmQuestionVO"
 	        resultMap="AlgorithmQuestionDAOMap">
 	    SELECT CAQ.COMPANY_ALGORITHM_QUESTION_ID
-		     , CAQ.ALGORITHM_CATEGORY_ID
+		     , CAQ.MAIN_ALGORITHM_CATEGORY_ID
 		     , CAQ.ALGORITHM_TIER_ID
 		     , CAQ.ALGORITHM_WRITER
 		     , CAQ.ALGORITHM_TITLE
@@ -83,7 +83,7 @@
 		 INNER JOIN MEMBER M
 		    ON CAQ.ALGORITHM_WRITER = M.EMAIL
 		 INNER JOIN COMMON_CODE C
-		    ON CAQ.ALGORITHM_CATEGORY_ID = C.CODE_ID
+		    ON CAQ.MAIN_ALGORITHM_CATEGORY_ID = C.CODE_ID
 		 WHERE DELETE_YN = 'N'
 		<if test='searchKeyword != null and searchKeyword != ""'>
 		    <if test='searchType == "algorithmTitle"'>
@@ -101,9 +101,13 @@
 	
 	<insert id="createNewAlgorithmQuestion"
 	        parameterType="com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionVO">
+		<selectKey keyProperty="companyAlgorithmQuestionId" resultType="string" order="BEFORE">
+			SELECT 'AQ-' || TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_COMPANY_ALGORITHM_QUESTION_PK.NEXTVAL, 6, '0')
+			  FROM DUAL
+		</selectKey>
 	    INSERT INTO COMPANY_ALGORITHM_QUESTION
 		 (COMPANY_ALGORITHM_QUESTION_ID
-		, ALGORITHM_CATEGORY_ID
+		, MAIN_ALGORITHM_CATEGORY_ID
 		, ALGORITHM_TIER_ID
 		, ALGORITHM_WRITER
 		, ALGORITHM_TITLE
@@ -114,8 +118,8 @@
 		, LIKE_CNT
 		, DELETE_YN)
 		VALUES
-		 ('AQ-' || TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_COMPANY_ALGORITHM_QUESTION_PK.NEXTVAL, 6, '0')
-		, #{algorithmCategoryId}
+		 (#{companyAlgorithmQuestionId}
+		, #{mainAlgorithmCategoryId}
 		, #{algorithmTierId}
 		, #{algorithmWriter}
 		, #{algorithmTitle}
@@ -125,6 +129,24 @@
 		, 0
 		, 0
 		, 'N')
+	</insert>
+	
+	<insert id="createNewAlgorithmQuestionCategory"
+			parameterType="com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionVO">
+		INSERT INTO ALGORITHM_CATEGORY_LIST
+		 (ALGORITHM_CATEGORY_LIST_ID
+		, COMPANY_ALGORITHM_QUESTION_ID
+		, ALGORITHM_CATEGORY_ID)
+		SELECT 'AC-' || TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_ALGORITHM_CATEGORY_LIST_PK.NEXTVAL, 6, '0')
+		     , Q_ID
+		     , C_ID
+		  FROM (
+		<foreach collection="algorithmCategoryIdList" item="categoryId" separator="UNION ALL">
+		SELECT #{companyAlgorithmQuestionId} Q_ID
+		    , #{categoryId} C_ID
+		  FROM DUAL
+		</foreach>
+		)
 	</insert>
 	
 	<insert id="createNewMyAlgorithm"
@@ -156,7 +178,7 @@
 	        parameterType="string"
 	        resultMap="AlgorithmQuestionDAOMap">
 	    SELECT CAQ.COMPANY_ALGORITHM_QUESTION_ID
-		     , CAQ.ALGORITHM_CATEGORY_ID
+		     , CAQ.MAIN_ALGORITHM_CATEGORY_ID
 		     , CAQ.ALGORITHM_TIER_ID
 		     , CAQ.ALGORITHM_WRITER
 		     , CAQ.ALGORITHM_TITLE
@@ -172,14 +194,14 @@
 		 INNER JOIN MEMBER M
 		    ON CAQ.ALGORITHM_WRITER = M.EMAIL
 		 INNER JOIN COMMON_CODE C
-		    ON CAQ.ALGORITHM_CATEGORY_ID = C.CODE_ID
+		    ON CAQ.MAIN_ALGORITHM_CATEGORY_ID = C.CODE_ID
 		 WHERE COMPANY_ALGORITHM_QUESTION_ID = #{_parameter}
 	</select>
 	
 	<update id="updateOneAlgorithmQuestion"
 	        parameterType="com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionVO">
 	    UPDATE COMPANY_ALGORITHM_QUESTION
-		   SET ALGORITHM_CATEGORY_ID = #{algorithmCategoryId}
+		   SET MAIN_ALGORITHM_CATEGORY_ID = #{mainAlgorithmCategoryId}
 		     , ALGORITHM_TIER_ID = #{algorithmTierId}
 		     , ALGORITHM_TITLE = #{algorithmTitle}
 		     , ALGORITHM_CONTENT = #{algorithmContent}
@@ -187,13 +209,36 @@
 		 WHERE COMPANY_ALGORITHM_QUESTION_ID = #{companyAlgorithmQuestionId}
 	</update>
 	
+	<delete id="deleteAlgorithmQuestionCategory"
+			parameterType="string">
+		DELETE FROM ALGORITHM_CATEGORY_LIST
+		 WHERE COMPANY_ALGORITHM_QUESTION_ID = #{companyAlgorithmQuestionId}
+	</delete>
+	
+	<insert id="insertAlgorithmQuestionCategory"
+			parameterType="com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionVO">
+		INSERT INTO ALGORITHM_CATEGORY_LIST
+		 (ALGORITHM_CATEGORY_LIST_ID
+		, COMPANY_ALGORITHM_QUESTION_ID
+		, ALGORITHM_CATEGORY_ID)
+		SELECT 'AC-' || TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_ALGORITHM_CATEGORY_LIST_PK.NEXTVAL, 6, '0')
+		     , Q_ID
+		     , C_ID
+		  FROM (
+		<foreach collection="algorithmCategoryIdList" item="categoryId" separator="UNION ALL">
+		SELECT #{companyAlgorithmQuestionId} Q_ID
+		    , #{categoryId} C_ID
+		  FROM DUAL
+		</foreach>
+		)
+	</insert>
+	
 	<update id="deleteOneAlgorithmQuestion"
 	        parameterType="string">
 	    UPDATE COMPANY_ALGORITHM_QUESTION
 	       SET DELETE_YN = 'Y'
 		 WHERE COMPANY_ALGORITHM_QUESTION_ID = #{_parameter}
 	</update>
-	
 	
 	
 </mapper>
