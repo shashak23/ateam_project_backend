@@ -15,20 +15,21 @@
 		$.get("/code/알고리즘카테고리", function(response) {
 			for (var i = 0; i < response.length; i++) {
 				var code = response[i]
-				var checkbox = $("<input type='checkbox' id='"+code.codeId+"' name='algorithmCategoryId' value='"+code.codeId+"' />");
+				var checkbox = $("<input type='checkbox' id='"+code.codeId+"' name='algorithmCategoryIdList' value='"+code.codeId+"' />");
 				$("#algorithm_category").append(label);
 				$("#algorithm_category").append(checkbox);
 				var label = $("<label for='"+code.codeId+"'>"+code.codeContent+"</label>");
 			}
 			
-		});
-		$.get("/algorithm/category/${algorithmQuestionVO.companyAlgorithmQuestionId}", function(categoryResponse) {
-			console.log(categoryResponse)
+			$.get("/algorithm/category/${algorithmQuestionVO.companyAlgorithmQuestionId}", function(categoryResponse) {
+				console.log(categoryResponse)
+				
+				for (var i = 0; i < categoryResponse.length; i++) {
+					var code = categoryResponse[i]
+					$("input[name=algorithmCategoryIdList][value="+code.algorithmCategoryId+"]").prop("checked", true);
+				}
+			});
 			
-			for (var i = 0; i < categoryResponse.length; i++) {
-				var code = categoryResponse[i]
-				$("input[name=algorithmCategoryId][value="+code.algorithmCategoryId+"]").prop("checked", true);
-			}
 		});
 		
 		// 이전에 선택한 select option 불러오기
@@ -92,7 +93,7 @@
 	           action="/algorithm/question/update">
 	    <input type="hidden" name="companyAlgorithmQuestionId" value="${algorithmQuestionVO.companyAlgorithmQuestionId}" />
 		<div class="grid">
-		    <label class="label" for="algorithmCategoryId">알고리즘 카테고리</label>
+		    <label class="label" for="algorithmCategoryIdList">알고리즘 카테고리</label>
 		    <div id="algorithm_category"></div>
 		    
             
