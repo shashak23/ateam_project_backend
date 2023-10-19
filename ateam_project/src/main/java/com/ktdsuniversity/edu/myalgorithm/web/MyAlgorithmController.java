@@ -8,20 +8,31 @@ package com.ktdsuniversity.edu.myalgorithm.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ktdsuniversity.edu.algorithmquestion.service.AlgorithmQuestionService;
+import com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 import com.ktdsuniversity.edu.myalgorithm.service.MyAlgorithmService;
 import com.ktdsuniversity.edu.myalgorithm.vo.MyAlgorithmListVO;
 import com.ktdsuniversity.edu.myalgorithm.vo.MyAlgorithmVO;
+import com.ktdsuniversity.edu.util.XssIgnoreUtil;
 
 @Controller
 public class MyAlgorithmController {
 	@Autowired
 	private MyAlgorithmService myAlgorithmService;
 
+	@Autowired
+	private AlgorithmQuestionService algorithmQuestionService;
+	
 	@GetMapping("home/my/algorithmlist")
 	public ModelAndView viewAllMyAlgorithm(@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 		ModelAndView mav = new ModelAndView();
@@ -43,5 +54,30 @@ public class MyAlgorithmController {
 		mav.addObject("myAlgorithmList", myList);
 		mav.addObject("MemberVO", memberVO);
 		return mav;
+	}
+	
+	@PostMapping("/algorithm/question/view/{companyAlgorithmQuestionId}")
+	public String createMyAlgorithm(@PathVariable String companyAlgorithmQuestionId 
+			                      , @ModelAttribute MyAlgorithmVO myAlgorithmVO 
+			                      , Model model
+			                      , @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+		
+		XssIgnoreUtil.ignore(myAlgorithmVO);
+		
+		myAlgorithmVO.setGeneralMemberEmail(memberVO.getEmail());
+		myAlgorithmVO.setCompanyAlgorithmQuestionId(companyAlgorithmQuestionId);
+		
+		boolean isSuccess = myAlgorithmService.createNewMyAlgorithm(myAlgorithmVO);
+		if(isSuccess) {
+			// 정답여부 팝업창으로 보여주기
+			return "redirect:/algorithm/question/list";
+		}
+		else {
+			AlgorithmQuestionVO algorithmQuestionVO = algorithmQuestionService.getOneAlgorithmQuestion(companyAlgorithmQuestionId, false);
+			model.addAttribute("AlgorithmQuestionVO", algorithmQuestionVO);
+			model.addAttribute("MyAlgorithmVO", myAlgorithmVO);
+			return "company/algorithmquestion/questionview";
+		}
+		
 	}
 }

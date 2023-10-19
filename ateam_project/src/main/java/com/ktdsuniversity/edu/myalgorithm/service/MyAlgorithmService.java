@@ -7,7 +7,10 @@
 package com.ktdsuniversity.edu.myalgorithm.service;
 
 import com.ktdsuniversity.edu.myalgorithm.vo.MyAlgorithmListVO;
+import com.ktdsuniversity.edu.myalgorithm.vo.MyAlgorithmVO;
 
 public interface MyAlgorithmService {
 	public MyAlgorithmListVO getAllMyAlgorithm(String email);
+	
+	public boolean createNewMyAlgorithm(MyAlgorithmVO myAlgorithmVO);
 }
