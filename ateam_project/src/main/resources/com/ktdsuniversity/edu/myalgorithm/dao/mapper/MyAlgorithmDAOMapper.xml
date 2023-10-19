@@ -1,4 +1,8 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<!-- 
+	작성자: 김태현
+	작성일자: 2023-10-01
+	내용: 내가 제출했던 문제들에 대한 쿼리
+ -->
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
@@ -56,7 +60,4 @@
 		    ON CAQ.COMPANY_ALGORITHM_QUESTION_ID = MAQ.COMPANY_ALGORITHM_QUESTION_ID
 		 WHERE M.EMAIL = #{_parameter}
 	</select>
-	
-	
-	
 </mapper>
