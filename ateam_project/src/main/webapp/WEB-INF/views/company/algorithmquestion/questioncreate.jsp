@@ -22,13 +22,6 @@
 			}
 		});
 		
-		/* $('input:checkbox[name=algorithmCategoryIdList]').each(function (index) {
-			if($(this).is(":checked")==true){
-				var category = $(this).val()
-				$("#algorithmCategoryId").val(category)
-			}
-		}) */
-		
         $("select[name=algorithmTierId]").change(function() {
             var tier = 
                 $("select[name=algorithmTierId] option:selected").text();

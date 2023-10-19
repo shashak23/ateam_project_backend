@@ -21,37 +21,20 @@
 				var label = $("<label for='"+code.codeId+"'>"+code.codeContent+"</label>");
 			}
 			
-			$.get("게시글의 카테고리 불러오기 URL", function(categoryResponse) {
-				for (var i = 0; i < response.length; i++) {
-					var code = response[i]
-					$("input[name=algorithmCategoryId][value=CD-1010123-12313]").prop("checked", true);
-				}
-			})
+		});
+		$.get("/algorithm/category/${algorithmQuestionVO.companyAlgorithmQuestionId}", function(categoryResponse) {
+			console.log(categoryResponse)
+			
+			for (var i = 0; i < categoryResponse.length; i++) {
+				var code = categoryResponse[i]
+				$("input[name=algorithmCategoryId][value="+code.algorithmCategoryId+"]").prop("checked", true);
+			}
 		});
 		
-		/* // 선택했던 option이 선택되어있음
-		$("input[name=algorithmCategoryId][value=CD-1010123-12313]").each(function(){
-			var thisVal = $(this).val();
-			if(thisVal.length > 0) {
-				$(this).attr("checked", true);
-			}
-		}); */
+		// 이전에 선택한 select option 불러오기
         $("select[name=algorithmTierId]").val("${algorithmQuestionVO.algorithmTierId}")
         
         // option 선택이 바뀌면, 바뀐 값이 들어감
-		$('input:checkbox[name=algorithmCategoryId]').each(function (index) {
-			if($(this).is(":checked")==true){
-				var category = $(this).val()
-				$("#algorithmCategoryId").val(category)
-			}
-		})
-		<!--
-        $("select[name=algorithmCategoryId]").change(function() {
-            var category = 
-                $("select[name=algorithmCategoryId] option:selected").text();
-            $("#algorithmCategoryId").val(category);
-        })
-        -->
         $("select[name=algorithmTierId]").change(function() {
             var tier = 
                 $("select[name=algorithmTierId] option:selected").text();

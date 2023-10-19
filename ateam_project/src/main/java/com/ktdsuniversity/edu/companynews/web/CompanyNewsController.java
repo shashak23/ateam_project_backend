@@ -86,11 +86,8 @@ public class CompanyNewsController {
 			model.addAttribute("companyNewsVO", companyNewsVO);
 			return "company/news/newscreate";
 		}
-		
-		companyNewsVO.setPostWriter(memberVO.getEmail());
-		
 		// 기업회원 로그인 시, 로그인한 회원 이메일을 postWriter에 넣어라
-//		companyNewsVO.setPostWriter(companyVO.getEmail());
+		companyNewsVO.setPostWriter(memberVO.getEmail());
 		
 		boolean isSuccess = companyNewsService.createNewCompanyNews(companyNewsVO, file);
 		if(isSuccess) {
