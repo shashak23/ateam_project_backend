@@ -30,6 +30,7 @@ import com.ktdsuniversity.edu.companynews.vo.CompanyNewsListVO;
 import com.ktdsuniversity.edu.companynews.vo.CompanyNewsVO;
 import com.ktdsuniversity.edu.exceptions.PageNotFoundException;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
+import com.ktdsuniversity.edu.util.XssIgnoreUtil;
 
 import jakarta.validation.Valid;
 
@@ -71,6 +72,8 @@ public class CompanyNewsController {
 			                        , @RequestParam MultipartFile file
 			                        , Model model
 			                        , @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+		
+		XssIgnoreUtil.ignore(companyNewsVO);
 		
 		logger.debug("첨부파일명: " + file.getOriginalFilename());
 
@@ -134,6 +137,8 @@ public class CompanyNewsController {
 									, @RequestParam MultipartFile file
 			                        , Model model
 			                        , @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+		XssIgnoreUtil.ignore(companyNewsVO);
+		
 		logger.debug("Post ID: " + companyNewsVO.getCompanyNewsPostId());
 		logger.debug("제목: " + companyNewsVO.getPostTitle());
 		logger.debug("내용: " + companyNewsVO.getPostContent());

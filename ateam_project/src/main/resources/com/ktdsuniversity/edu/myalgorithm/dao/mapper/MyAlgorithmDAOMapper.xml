@@ -78,4 +78,11 @@
         , CASE WHEN DBMS_RANDOM.NORMAL >= 0 THEN 'Y' ELSE 'N' END <!-- 랜덤으로 줘야 함 -->
         , 'N')
 	</insert>
+	
+	<update id="deleteMyAlgorithm"
+	        parameterType="string">
+	    UPDATE MY_ALGORITHM_QUESTION
+	       SET DELETE_YN = 'Y'
+	     WHERE MY_ALGORITHM_QUESTION_ID = #{_parameter}
+	</update>
 </mapper>

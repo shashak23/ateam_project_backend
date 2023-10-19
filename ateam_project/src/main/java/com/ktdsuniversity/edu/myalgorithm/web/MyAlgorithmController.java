@@ -39,7 +39,7 @@ public class MyAlgorithmController {
 	@Autowired
 	private AlgorithmQuestionService algorithmQuestionService;
 	
-	@GetMapping("/home/my/algorithmlist")
+	@GetMapping("home/my/algorithmlist")
 	public ModelAndView viewAllMyAlgorithm(@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 		ModelAndView mav = new ModelAndView();
 		String email = memberVO.getEmail();

@@ -7,6 +7,25 @@
 
 package com.ktdsuniversity.edu.algorithmexplanation.dao;
 
-public interface AlgorithmExplanationDAO {
+import java.util.List;
 
+import com.ktdsuniversity.edu.algorithmexplanation.vo.AlgorithmExplanationVO;
+
+public interface AlgorithmExplanationDAO {
+	
+	public int getAlgorithmExplanationAllCount();
+	
+	public List<AlgorithmExplanationVO> getAllAlgorithmExplanation();
+	
+	public int createNewAlgorithmExplanation (AlgorithmExplanationVO algorithmExplanationVO);
+	
+	public int increaseViewCount(String companyAlgorithmExplanationId);
+	
+	public AlgorithmExplanationVO getOneAlgorithmExplanation(String companyAlgorithmExplanationId);
+	
+	public int updateOneAlgorithmExplanation(AlgorithmExplanationVO algorithmExplanationVO);
+	
+	public int deleteOneAlgorithmExplanation(String companyAlgorithmExplanationId);
+	
+	
 }

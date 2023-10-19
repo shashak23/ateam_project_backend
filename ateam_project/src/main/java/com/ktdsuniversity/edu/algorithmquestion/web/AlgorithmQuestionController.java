@@ -83,9 +83,6 @@ public class AlgorithmQuestionController {
 		}
 	}
 	
-	// 일반회원이 로그인 해서 제출하기 버튼을 클릭했을 때
-	
-	
 	@GetMapping("/algorithm/question/update/{companyAlgorithmQuestionId}")
 	public String viewAlgorithmQuestionUpdatePage(@PathVariable String companyAlgorithmQuestionId
 			                                    , Model model

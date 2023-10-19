@@ -6,6 +6,25 @@
 
 package com.ktdsuniversity.edu.algorithmexplanation.vo;
 
-public class AlgorithmExplanationListVO {
+import java.util.List;
 
+public class AlgorithmExplanationListVO {
+	
+	private int algorithmExplanationCnt;
+	private List<AlgorithmExplanationVO> algorithmExplanationList;
+	public int getAlgorithmExplanationCnt() {
+		return algorithmExplanationCnt;
+	}
+	public void setAlgorithmExplanationCnt(int algorithmExplanationCnt) {
+		this.algorithmExplanationCnt = algorithmExplanationCnt;
+	}
+	public List<AlgorithmExplanationVO> getAlgorithmExplanationList() {
+		return algorithmExplanationList;
+	}
+	public void setAlgorithmExplanationList(List<AlgorithmExplanationVO> algorithmExplanationList) {
+		this.algorithmExplanationList = algorithmExplanationList;
+	}
+	
+
+	
 }
