@@ -27,9 +27,6 @@ public class AlgorithmQuestionServiceImpl implements AlgorithmQuestionService {
 	@Autowired
 	private AlgorithmQuestionDAO algorithmQuestionDAO;
 	
-	@Autowired
-	private MyAlgorithmDAO myAlgorithmDAO;
-	
 	@Override
 	public AlgorithmQuestionListVO getAllAlgorithmQuestion(SearchAlgorithmQuestionVO searchAlgorithmQuestionVO) {
 		
@@ -52,13 +49,6 @@ public class AlgorithmQuestionServiceImpl implements AlgorithmQuestionService {
 		}
 		
 		return createCount > 0;
-	}
-
-
-	@Override
-	public boolean createNewMyAlgorithm(MyAlgorithmVO myAlgorithmVO) {
-		int createMyAlgorithmCount = algorithmQuestionDAO.createNewMyAlgorithm(myAlgorithmVO);
-		return createMyAlgorithmCount > 0;
 	}
 	
 	@Override

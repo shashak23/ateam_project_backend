@@ -50,11 +50,6 @@ public class AlgorithmQuestionDAOImpl extends SqlSessionDaoSupport implements Al
 	public int createNewAlgorithmQuestionCategory(AlgorithmQuestionVO algorithmQuestionVO) {
 		return getSqlSession().insert("createNewAlgorithmQuestionCategory", algorithmQuestionVO);
 	}
-
-	@Override
-	public int createNewMyAlgorithm(MyAlgorithmVO myalgorithmVO) {
-		return getSqlSession().insert("createNewMyAlgorithm", myalgorithmVO);
-	}
 	
 	@Override
 	public int increaseViewCount(String companyAlgorithmQuestionId) {

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.ktdsuniversity.edu.myalgorithm.dao.MyAlgorithmDAO;
 import com.ktdsuniversity.edu.myalgorithm.vo.MyAlgorithmListVO;
+import com.ktdsuniversity.edu.myalgorithm.vo.MyAlgorithmVO;
 
 @Service
 public class MyAlgorithmServiceImpl implements MyAlgorithmService{
@@ -24,5 +25,14 @@ public class MyAlgorithmServiceImpl implements MyAlgorithmService{
 		myList.setMyAlgorithmList(myAlgorithmDAO.getAllMyAlgorithmList(email));
 		return myList;
 	}
+
+	@Override
+	public boolean createNewMyAlgorithm(MyAlgorithmVO myAlgorithmVO) {
+		int createCount = myAlgorithmDAO.createNewMyAlgorithm(myAlgorithmVO);
+		
+		return createCount > 0;
+	}
+	
+	
 
 }
