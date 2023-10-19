@@ -12,7 +12,6 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -20,61 +19,31 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.ktdsuniversity.edu.AteamProjectApplication;
+import com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionListVO;
+import com.ktdsuniversity.edu.algorithmquestion.vo.SearchAlgorithmQuestionVO;
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 import com.ktdsuniversity.edu.generalpost.service.GeneralCommentService;
-import com.ktdsuniversity.edu.generalpost.service.GeneralPostService;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralCommentVO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
 
-@Controller
 @RestController
 public class QnAPostCommentController {
-	@Autowired
-	private GeneralPostService generalPostService;
+
 	@Autowired
 	private GeneralCommentService generalCommentService;
 	
 	private Logger log = LoggerFactory.getLogger(AteamProjectApplication.class);
-
-	// CHAT-GPT
-//	 @GetMapping("/qnapost/comments/list/{generalPostId}")
-//	    public String showPostAndComments(@PathVariable String generalPostId, Model model) {
-//	        // 게시물 정보 가져오기
-//	        GeneralPostVO generalPostVO = generalPostService.getOneBoard(generalPostId);
-//
-//	        // 댓글 리스트 가져오기
-//	        List<GeneralCommentVO> commentList = generalCommentService.getAllComments(generalPostId);
-//
-//	        // 모델에 데이터 추가
-//	        model.addAttribute("generalPostVO", generalPostVO);
-//	        model.addAttribute("commentList", commentList);
-//
-//	        // JSP 파일의 경로를 반환
-//	        return "forum/qnacommentlist.jsp";
-//	    }
-
-//	// 전체조회
-//		@GetMapping("/qnapost/comments/list/{generalPostId}")
-//		public ModelAndView qnaCommentList(@PathVariable String generalPostId) {
-//			List<GeneralCommentVO> commentList = generalCommentService.getAllComments(generalPostId);
-//			ModelAndView modelAndView = new ModelAndView();
-//			
-//			modelAndView.setViewName("/forum/qnacommentlist");
-//			modelAndView.addObject("commentList", commentList);
-//			
-//			return modelAndView;
-//		}
-
 	
-	  @GetMapping("/qnapost/comments/{generalPostId}") public Map<String,Object>
-	  getAllComments(@PathVariable String generalPostId) { 
-		  List<GeneralCommentVO> commentList = generalCommentService.getAllComments(generalPostId);
+	  @GetMapping("/qnapost/comments/{generalPostId}") 
+	  public Map<String,Object> getAllComments(@PathVariable String generalPostId) { 
+	  List<GeneralCommentVO> commentList = generalCommentService.getAllComments(generalPostId);
 	  Map<String, Object> resultMap = new HashMap<>(); 
 	  log.debug("--1----컨트롤러----------------------------");
-	  resultMap.put("count", commentList.size()); resultMap.put("commentList", commentList); 
+	  resultMap.put("count", commentList.size());
+	  resultMap.put("comments", commentList); 
+	  log.debug("--5----컨트롤러 댓글 리스트----------------------------");
 	  return resultMap;
 	  }
 
@@ -119,7 +88,6 @@ public class QnAPostCommentController {
 			@SessionAttribute("_LOGIN_USER_") GeneralMemberVO generalMemberVO) {
 		boolean isSuccess = generalCommentService.deleteOneComment(generalCommentId,
 				generalMemberVO.getGeneralMemberEmail());
-
 		Map<String, Object> resultMap = new HashMap<>();
 		resultMap.put("result", isSuccess);
 		return resultMap;
