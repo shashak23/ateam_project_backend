@@ -10,6 +10,16 @@
 <script type="text/javascript" src="/js/lib/jquery-3.7.1.js"></script>
 <script type="text/javascript">
 	$().ready(function() {
+		$.get("/code/알고리즘카테고리", function(response) {
+			for (var i = 0; i < response.length; i++) {
+				var code = response[i]
+				var checkbox = $("<input type='checkbox' id='"+code.codeId+"' name='algorithmCategoryIdList' value='"+code.codeId+"' />");
+				var label = $("<label for='"+code.codeId+"'>"+code.codeContent+"</label>");
+				$("#algorithm_category").append(checkbox);
+				$("#algorithm_category").append(label);
+			}
+		});
+		
 		$.get("/member/COMPANY", function(response) {
 			for (var i = 0; i < response.length; i++) {
 				var member = response[i]
@@ -66,27 +76,42 @@
 </style>
 <body>
     <jsp:include page="../../member/membermenu.jsp"></jsp:include>
+    <label for="algorithmCategoryId">알고리즘 카테고리</label>
+	<div id="algorithm_category"></div>
+    
+    <label for="algorithmTier">문제 난이도</label>
+    <div>
+        <input type="checkbox" name="algorithmTier" value="Lv.1"/>Lv.1
+        <input type="checkbox" name="algorithmTier" value="Lv.2"/>Lv.2
+        <input type="checkbox" name="algorithmTier" value="Lv.3"/>Lv.3
+        <input type="checkbox" name="algorithmTier" value="Lv.4"/>Lv.4
+        <input type="checkbox" name="algorithmTier" value="Lv.5"/>Lv.5
+    </div>
+    
+    <label for="company">기업명</label>
     <form id="search-form"
 	      method="get"
 	      action="/algorithm/question/list">
 	      <div>
-		      <input type="text" name="searchKeyword" list="nicList" />
+		      <input autocomplete="off" type="text" name="searchKeyword" list="nicList" />
 		      <datalist id="nicList"></datalist>
 		      <button id="search-btn">검색</button>
 	      </div>
 	</form>
+	
 	<div class="btn-group">
 		<div class="right-align">
 			<!-- 로그인 하지 않았을 때 -->
 		    <c:if test="${empty sessionScope._LOGIN_USER_}">
 		        <a href="/member/auth">로그인하기</a>
 		    </c:if>
-			<!-- 기업회원에게만 보임 -->
+			<!-- 기업회원에게만 보임  -->
 			<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.memberType eq 'COMPANY'}">
 				<a href="/algorithm/question/create">게시글 등록</a>
 			</c:if>
 		</div>
 	</div>
+	
 	<table class="table">
 		<thead>
 			<colgroup>

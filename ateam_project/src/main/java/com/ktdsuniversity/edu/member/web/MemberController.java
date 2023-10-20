@@ -1,6 +1,3 @@
-/*
- * 수정자: 장보늬(2023-10-20)
- * */
 package com.ktdsuniversity.edu.member.web;
 
 import java.util.HashMap;
@@ -53,6 +50,7 @@ public class MemberController {
 	/**
 	 * 작성자: 김광원
 	 * 수정자: 신진영(2023-10-19)
+	 * 수정자: 장보늬(2023-10-20)
 	 * 작성일자: 2023-10-19
 	 * 내용: 
 	 */
