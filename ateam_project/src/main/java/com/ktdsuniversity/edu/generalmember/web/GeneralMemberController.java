@@ -21,11 +21,13 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ktdsuniversity.edu.career.vo.CareerVO;
+import com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO;
 import com.ktdsuniversity.edu.education.vo.EducationVO;
 import com.ktdsuniversity.edu.exceptions.PageNotFoundException;
 import com.ktdsuniversity.edu.generalmember.service.GeneralMemberService;
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
+import com.ktdsuniversity.edu.techstack.vo.TechstackVO;
 
 @Controller
 public class GeneralMemberController {
@@ -46,12 +48,14 @@ public class GeneralMemberController {
 		List<GeneralMemberVO> generalMemberListVO = generalMemberService.getAllGeeralMemberList(memberVO.getEmail());
 		List<EducationVO> educationListVO = generalMemberService.getAllEducationList(memberVO.getEmail());
 		MemberVO member = generalMemberService.getSelectNickname(memberVO.getEmail());
+		List<CommonCodeVO> commonCodeVO = generalMemberService.getSelectCommonCode(memberVO.getEmail());
 		GeneralMemberVO generalMemberVO = generalMemberService.getSelectGeneralMember(memberVO.getEmail());
 		modelAndView.setViewName("/mypage/myprofile");
 		modelAndView.addObject("careerList", careerListVO);
 		modelAndView.addObject("generalMemberList", generalMemberListVO);
 		modelAndView.addObject("generalMemberVO", generalMemberVO);
 		modelAndView.addObject("memberVO", member);
+		modelAndView.addObject("commonCodeList", commonCodeVO);
 		modelAndView.addObject("educationList", educationListVO);
 		return modelAndView;
 	}

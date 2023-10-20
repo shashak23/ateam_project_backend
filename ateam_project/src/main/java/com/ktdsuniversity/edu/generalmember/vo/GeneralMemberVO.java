@@ -9,8 +9,10 @@ package com.ktdsuniversity.edu.generalmember.vo;
 import java.util.List;
 
 import com.ktdsuniversity.edu.career.vo.CareerVO;
+import com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO;
 import com.ktdsuniversity.edu.education.vo.EducationVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
+import com.ktdsuniversity.edu.techstack.vo.TechstackVO;
 
 public class GeneralMemberVO extends MemberVO {
 	private String generalMemberEmail;
@@ -24,9 +26,26 @@ public class GeneralMemberVO extends MemberVO {
 	private List<GeneralMemberVO> generalMemberList;
 	private List<CareerVO> careerVOList;
 	private List<EducationVO> educationList;
+	private List<CommonCodeVO> commonCodeVO;
+	private TechstackVO techstackVO;
 	private MemberVO memberVO;
 	
 	
+	
+	
+	
+	public List<CommonCodeVO> getCommonCodeVO() {
+		return commonCodeVO;
+	}
+	public void setCommonCodeVO(List<CommonCodeVO> commonCodeVO) {
+		this.commonCodeVO = commonCodeVO;
+	}
+	public TechstackVO getTechstackVO() {
+		return techstackVO;
+	}
+	public void setTechstackVO(TechstackVO techstackVO) {
+		this.techstackVO = techstackVO;
+	}
 	public String getGeneralMemberEmail() {
 		return generalMemberEmail;
 	}

@@ -150,7 +150,17 @@
 						</button>
 					</p>
 					<ul>
-						<li><button></button></li>
+						<c:choose>
+							<c:when test="${not empty commonCodeList}">
+								<c:forEach items="${commonCodeList}" var="commonCode">
+									<li>#${commonCode.codeContent}</li>
+								</c:forEach>
+							</c:when>
+							<c:otherwise>
+								<li><button>추가하기</button></li>
+							</c:otherwise>
+
+						</c:choose>
 					</ul>
 				</div>
 				<div class="education">

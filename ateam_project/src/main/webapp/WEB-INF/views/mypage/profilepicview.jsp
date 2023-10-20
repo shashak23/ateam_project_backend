@@ -53,7 +53,7 @@
         <h1>프로필 사진</h1>
         <img src="${memberVO.profilePic}" alt="프로필 사진" class="profile-image" id="profile-image">
     </div>
-        <a href="/mypage/modifyprofilepic/${memberVO.email}">수정</a>
+        <a href="/memberInfo/modify/update-profile-pic/${memberVO.email}">수정</a>
 		<a href="/board/delete/${boardVO.id}">삭제</a>
 </body>
 </html>

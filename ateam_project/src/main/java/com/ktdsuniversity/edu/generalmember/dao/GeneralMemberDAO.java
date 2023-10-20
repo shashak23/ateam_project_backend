@@ -9,6 +9,7 @@ package com.ktdsuniversity.edu.generalmember.dao;
 import java.util.List;
 
 import com.ktdsuniversity.edu.career.vo.CareerVO;
+import com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO;
 import com.ktdsuniversity.edu.education.vo.EducationVO;
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
@@ -36,7 +37,10 @@ public interface GeneralMemberDAO {
 	 * 일반회원 조회
 	 */
 	public MemberVO getSelectNickname(String generalMemberEmail);
-
+	/**
+	 * 공통코드 조회
+	 */
+	public List<CommonCodeVO> getSelectCommonCode(String generalMemberEmail);
 	/**
 	 * 일반회원 컬럼 조회
 	 */

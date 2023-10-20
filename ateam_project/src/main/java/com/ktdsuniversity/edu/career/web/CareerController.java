@@ -29,7 +29,9 @@ public class CareerController {
 		return "career/careerview";
 	}
 	
-	
+	/**
+	 * 생성
+	 */
 	@GetMapping("/memberInfo/modify/create-career")
 	 public String createCareer() {
 		 return "career/careercreate";
@@ -58,6 +60,7 @@ public class CareerController {
 			 					, Model model
 			 					,@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 		 CareerVO careerVO =careerService.getOneCareer(careerId);
+		 careerVO.setGeneralMemberEmail(memberVO.getEmail());
 		 model.addAttribute("careerVO", careerVO);
 		 
 		 return "career/careermodify";
@@ -67,6 +70,7 @@ public class CareerController {
 	 public String doUpdateCareer(@ModelAttribute CareerVO careerVO
 			 					  ,Model model
 			 					 ,@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+		 careerVO.setGeneralMemberEmail(memberVO.getEmail());
 		 boolean isSuccess = careerService.updateOneCarrer(careerVO);
 		 if(isSuccess) {
 			 return "redirect:/memberInfo/modify/view/"+ careerVO.getCareerId();
@@ -86,7 +90,7 @@ public class CareerController {
 			 return "redirect:/memberinfo/view";
 		 }
 		 else {
-			 return "redirect:/memberInfo/modify/view?careerId="+careerId;
+			 return "redirect:/memberInfo/modify/view/"+careerId;
 		 }
 	 }
 }
