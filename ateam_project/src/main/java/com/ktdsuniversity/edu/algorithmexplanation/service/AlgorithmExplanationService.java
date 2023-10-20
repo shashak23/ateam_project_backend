@@ -6,6 +6,20 @@
 
 package com.ktdsuniversity.edu.algorithmexplanation.service;
 
+import com.ktdsuniversity.edu.algorithmexplanation.vo.AlgorithmExplanationListVO;
+import com.ktdsuniversity.edu.algorithmexplanation.vo.AlgorithmExplanationVO;
+
 public interface AlgorithmExplanationService {
+	
+    public AlgorithmExplanationListVO getAllAlgorithmExplanation();
+	
+	public boolean createNewAlgorithmExplanation (AlgorithmExplanationVO algorithmExplanationVO);
+	
+    public AlgorithmExplanationVO getOneAlgorithmExplanation(String companyAlgorithmExplanationId, boolean isIncrease);
+	
+	public boolean updateOneAlgorithmExplanation(AlgorithmExplanationVO algorithmExplanationVO);
+	
+	public boolean deleteOneAlgorithmExplanation(String companyAlgorithmExplanationId);
+	
 
 }

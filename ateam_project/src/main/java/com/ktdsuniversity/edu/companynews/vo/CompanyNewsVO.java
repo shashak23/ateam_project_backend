@@ -7,9 +7,9 @@
 package com.ktdsuniversity.edu.companynews.vo;
 
 import com.ktdsuniversity.edu.member.vo.MemberVO;
+import com.ktdsuniversity.edu.util.XssIgnore;
 
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 
 
 public class CompanyNewsVO {
@@ -17,9 +17,11 @@ public class CompanyNewsVO {
 	private String companyNewsPostId;
 	private String postWriter;
 	
+	@XssIgnore
 	@NotBlank(message = "제목을 입력해주세요.")
 	private String postTitle;
 	
+	@XssIgnore
 	@NotBlank(message = "내용을 입력해주세요.")
 	private String postContent;
 	

@@ -35,21 +35,20 @@
 	<jsp:include page="../member/membermenu.jsp"></jsp:include>
 
 	<h1> 질답게시판의 작성 페이지</h1>
-	<form method = "post" ModelAttribute="generalPostVO" >		
+	<form name="generalPostVO" method = "post">		
 		<div class = "grid">
 			<label for = "postTitle"> 제목 </label>
 			<input id = "postTitle" type = "text" name="postTitle" />
 			
-			<!-- <label for = "postWriterId"> 이메일 </label>
-			<input id = "postWriterId" type = "email" name = "postWriterId"/> -->
+			<!--  <label for = "postWriter"> 이메일 </label>
+			<input id = "postWriter" type = "email" name = "postWriter"/>  -->
 <!-- 
 			<label for = "file"> 첨부파일 </label>
 			<input id = "file" type = "file" name = "file" />
 			 -->
 			<label for = "postContent"> 내용 </label>
 			<textarea id ="postContent" 
-			name = "postContent" style = "height: 300px;"
-			></textarea>
+			name = "postContent" style = "height: 300px;"></textarea>
 			
 			<div class = "btn-group">
 				<div class="right-align">

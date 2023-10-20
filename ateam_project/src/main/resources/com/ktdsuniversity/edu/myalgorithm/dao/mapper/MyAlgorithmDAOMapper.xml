@@ -1,4 +1,8 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<!-- 
+	작성자: 김태현
+	작성일자: 2023-10-01
+	내용: 내가 제출했던 문제들에 대한 쿼리
+ -->
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
@@ -26,7 +30,7 @@
 			resultType="_int">
 		SELECT COUNT(1)
 		  FROM MEMBER M
-		 INNER JOIN MY_ALGOTIRHM_QUESTION MAQ
+		 INNER JOIN MY_ALGORITHM_QUESTION MAQ
 		    ON MAQ.GENERAL_MEMBER_EMAIL = M.EMAIL 
 		 INNER JOIN COMPANY_ALGORITHM_QUESTION CAQ
 		    ON CAQ.COMPANY_ALGORITHM_QUESTION_ID = MAQ.COMPANY_ALGORITHM_QUESTION_ID
@@ -39,22 +43,46 @@
 		     , M.NICKNAME 
 		     , CAQ.ALGORITHM_CATEGORY_ID 
 		     , CAQ.ALGORITHM_TIER_ID 
-		     , CAQ.POST_WRITER 
-		     , CAQ.POST_TITLE 
-		     , CAQ.POST_CONTENT 
+		     , CAQ.ALGORITHM_WRITER
+		     , CAQ.ALGORITHM_TITLE
+		     , CAQ.ALGORITHM_CONTENT
+		     . CAQ.ALGORITHM_SOLUTION
+		     , CAQ.POST_DATE
 		     , CAQ.VIEW_CNT 
 		     , CAQ.LIKE_CNT
 		     , MAQ.CORRECT_ANSWER_YN
 		     , MAQ.DELETE_YN
 		     , MAQ.MY_ANSWER 
 		  FROM MEMBER M
-		 INNER JOIN MY_ALGOTIRHM_QUESTION MAQ
+		 INNER JOIN MY_ALGORITHM_QUESTION MAQ
 		    ON MAQ.GENERAL_MEMBER_EMAIL = M.EMAIL 
 		 INNER JOIN COMPANY_ALGORITHM_QUESTION CAQ
 		    ON CAQ.COMPANY_ALGORITHM_QUESTION_ID = MAQ.COMPANY_ALGORITHM_QUESTION_ID
 		 WHERE M.EMAIL = #{_parameter}
 	</select>
 	
+	<insert id="createNewMyAlgorithm"
+	        parameterType="com.ktdsuniversity.edu.myalgorithm.vo.MyAlgorithmVO">
+	    INSERT INTO MY_ALGORITHM_QUESTION
+		 (MY_ALGORITHM_QUESTION_ID
+        , GENERAL_MEMBER_EMAIL
+        , COMPANY_ALGORITHM_QUESTION_ID
+        , MY_ANSWER
+        , CORRECT_ANSWER_YN
+        , DELETE_YN)
+        VALUES
+         ('MA-' || TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_MY_ALGORITHM_QUESTION_PK.NEXTVAL, 6, '0')
+        , #{generalMemberEmail}
+        , #{companyAlgorithmQuestionId}
+        , #{myAnswer}
+        , CASE WHEN DBMS_RANDOM.NORMAL >= 0 THEN 'Y' ELSE 'N' END <!-- 랜덤으로 줘야 함 -->
+        , 'N')
+	</insert>
 	
-	
+	<update id="deleteMyAlgorithm"
+	        parameterType="string">
+	    UPDATE MY_ALGORITHM_QUESTION
+	       SET DELETE_YN = 'Y'
+	     WHERE MY_ALGORITHM_QUESTION_ID = #{_parameter}
+	</update>
 </mapper>

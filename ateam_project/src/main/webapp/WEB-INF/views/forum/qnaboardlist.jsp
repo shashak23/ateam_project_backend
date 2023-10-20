@@ -26,6 +26,8 @@
 
 				<!-- 로그인/회원가입 -->
 				<div class="util">
+				    <jsp:include page="../member/membermenu.jsp"></jsp:include>
+				
 					<ul>
 						<li><a href="#">로그인</a></li>
 						<li><a href="#">회원가입</a></li>
@@ -119,7 +121,9 @@
 							<div class="btn btn_st_2">
 								<a href="#">조회</a>
 							</div>
-						
+							<div class="btn btn_st_2">
+                                <a href="/qnaboard/create">등록</a>
+                            </div>
 						</div>
 
 						<!-- 게시판 리스트 -->
@@ -156,7 +160,7 @@
                                                                         ${qnaboard.postTitle}
                                                                     </a>
                                                                 </td>
-                                                                <td>${qnaboard.postWriterId}</td>
+                                                                <td>${qnaboard.postWriter}</td>
                                                                 <td>${qnaboard.postDate}</td>
                                                                 <td>${qnaboard.viewCnt}</td>
                                                             </tr>
@@ -167,11 +171,11 @@
 								</div>
 
 								<!-- button -->
-								<div class="btn_set btn_right">
+								<<!-- div class="btn_set btn_right">
 										<div class="btn btn_st_1">
 												<a href="/qnaboard/create">글쓰기</a>
 										</div>
-								</div>
+								</div> -->
 
 								<!-- paginate -->
 								<div class="paginate">

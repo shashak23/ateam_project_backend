@@ -101,5 +101,4 @@ public class GeneralMemberVO extends MemberVO {
 	}
 	
 	
-	
 }

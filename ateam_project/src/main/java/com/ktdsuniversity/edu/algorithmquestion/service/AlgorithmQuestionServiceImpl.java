@@ -6,6 +6,8 @@
 
 package com.ktdsuniversity.edu.algorithmquestion.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,17 +16,13 @@ import com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionListVO;
 import com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionVO;
 import com.ktdsuniversity.edu.algorithmquestion.vo.SearchAlgorithmQuestionVO;
 import com.ktdsuniversity.edu.exceptions.PageNotFoundException;
-import com.ktdsuniversity.edu.myalgorithm.dao.MyAlgorithmDAO;
-import com.ktdsuniversity.edu.myalgorithm.vo.MyAlgorithmVO;
-
 @Service
 public class AlgorithmQuestionServiceImpl implements AlgorithmQuestionService {
 
-	@Autowired
-	private AlgorithmQuestionDAO algorithmQuestionDAO;
+	private Logger logger = LoggerFactory.getLogger(AlgorithmQuestionServiceImpl.class);
 	
 	@Autowired
-	private MyAlgorithmDAO myAlgorithmDAO;
+	private AlgorithmQuestionDAO algorithmQuestionDAO;
 	
 	@Override
 	public AlgorithmQuestionListVO getAllAlgorithmQuestion(SearchAlgorithmQuestionVO searchAlgorithmQuestionVO) {
@@ -39,16 +37,15 @@ public class AlgorithmQuestionServiceImpl implements AlgorithmQuestionService {
 	@Override
 	public boolean createNewAlgorithmQuestion(AlgorithmQuestionVO algorithmQuestionVO) {
 		
+		algorithmQuestionVO.setMainAlgorithmCategoryId(algorithmQuestionVO.getAlgorithmCategoryIdList().get(0));
 		int createCount = algorithmQuestionDAO.createNewAlgorithmQuestion(algorithmQuestionVO);
 	
+		if (createCount > 0) {
+			int createCategoryCount = algorithmQuestionDAO.createNewAlgorithmQuestionCategory(algorithmQuestionVO);
+			logger.debug("{}: Insert Category Count: {}", algorithmQuestionVO.getCompanyAlgorithmQuestionId(), createCategoryCount);
+		}
+		
 		return createCount > 0;
-	}
-
-
-	@Override
-	public boolean createNewMyAlgorithm(MyAlgorithmVO myAlgorithmVO) {
-		int createMyAlgorithmCount = algorithmQuestionDAO.createNewMyAlgorithm(myAlgorithmVO);
-		return createMyAlgorithmCount > 0;
 	}
 	
 	@Override
@@ -68,9 +65,18 @@ public class AlgorithmQuestionServiceImpl implements AlgorithmQuestionService {
 
 	@Override
 	public boolean updateOneAlgorithmQuestion(AlgorithmQuestionVO algorithmQuestionVO) {
+		algorithmQuestionVO.setMainAlgorithmCategoryId(algorithmQuestionVO.getAlgorithmCategoryIdList().get(0));
 		int updateCount = algorithmQuestionDAO.updateOneAlgorithmQuestion(algorithmQuestionVO);
+		
+		if(updateCount > 0) {
+			int deleteCategoryCount = algorithmQuestionDAO.deleteAlgorithmQuestionCategory(algorithmQuestionVO);
+			logger.debug("{}: Delete Category Count: {}", algorithmQuestionVO.getCompanyAlgorithmQuestionId(), deleteCategoryCount);
+			int insertCategoryCount = algorithmQuestionDAO.insertAlgorithmQuestionCategory(algorithmQuestionVO);
+			logger.debug("{}: Insert Category Count: {}", algorithmQuestionVO.getCompanyAlgorithmQuestionId(), insertCategoryCount);
+		}
 		return updateCount > 0;
 	}
+	
 
 	@Override
 	public boolean deleteOneAlgorithmQuestion(String companyAlgorithmQuestionId) {

@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotBlank;
 
 public class GeneralPostVO {
 	private String generalPostId;
-	private String postWriterId;
+	private String postWriter;
 	private String boardId;
 	@NotBlank(message = "제목을 입력해 주세요.")
 	private String postTitle;
@@ -31,12 +31,12 @@ public class GeneralPostVO {
 		this.generalPostId = generalPostId;
 	}
 
-	public String getPostWriterId() {
-		return postWriterId;
+	public String getPostWriter() {
+		return postWriter;
 	}
 
-	public void setPostWriterId(String postWriterId) {
-		this.postWriterId = postWriterId;
+	public void setPostWriter(String postWriter) {
+		this.postWriter = postWriter;
 	}
 
 	public String getBoardId() {

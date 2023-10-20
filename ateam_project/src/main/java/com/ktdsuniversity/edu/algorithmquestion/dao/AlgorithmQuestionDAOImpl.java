@@ -15,7 +15,6 @@ import org.springframework.stereotype.Repository;
 
 import com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionVO;
 import com.ktdsuniversity.edu.algorithmquestion.vo.SearchAlgorithmQuestionVO;
-import com.ktdsuniversity.edu.myalgorithm.vo.MyAlgorithmVO;
 
 @Repository
 public class AlgorithmQuestionDAOImpl extends SqlSessionDaoSupport implements AlgorithmQuestionDAO {
@@ -45,10 +44,10 @@ public class AlgorithmQuestionDAOImpl extends SqlSessionDaoSupport implements Al
 	public int createNewAlgorithmQuestion(AlgorithmQuestionVO algorithmQuestionVO) {
 		return getSqlSession().insert("createNewAlgorithmQuestion", algorithmQuestionVO);
 	}
-
+	
 	@Override
-	public int createNewMyAlgorithm(MyAlgorithmVO myalgorithmVO) {
-		return getSqlSession().insert("createNewMyAlgorithm", myalgorithmVO);
+	public int createNewAlgorithmQuestionCategory(AlgorithmQuestionVO algorithmQuestionVO) {
+		return getSqlSession().insert("createNewAlgorithmQuestionCategory", algorithmQuestionVO);
 	}
 	
 	@Override
@@ -64,6 +63,15 @@ public class AlgorithmQuestionDAOImpl extends SqlSessionDaoSupport implements Al
 	@Override
 	public int updateOneAlgorithmQuestion(AlgorithmQuestionVO algorithmQuestionVO) {
 		return getSqlSession().update("updateOneAlgorithmQuestion", algorithmQuestionVO);
+	}
+	
+	@Override
+	public int deleteAlgorithmQuestionCategory(AlgorithmQuestionVO algorithmQuestionVO) {
+		return getSqlSession().delete("deleteAlgorithmQuestionCategory", algorithmQuestionVO);
+	}
+	@Override
+	public int insertAlgorithmQuestionCategory(AlgorithmQuestionVO algorithmQuestionVO) {
+		return getSqlSession().insert("insertAlgorithmQuestionCategory", algorithmQuestionVO);
 	}
 
 	@Override

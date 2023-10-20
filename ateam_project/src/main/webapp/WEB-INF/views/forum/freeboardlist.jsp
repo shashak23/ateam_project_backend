@@ -102,7 +102,9 @@
                                 <div class="btn btn_st_2">
                                     <a href="#">조회</a>
                                 </div>
-                                
+                                <div class="btn btn_st_2">
+                                    <a href="/freeboard/create">등록</a>
+                                </div>
                             </div>
     
                             <!-- 게시판 리스트 -->
@@ -139,7 +141,7 @@
                                                                         ${freeboard.postTitle}
                                                                     </a>
                                                                 </td>
-                                                                <td>${freeboard.postWriterId}</td>
+                                                                <td>${freeboard.postWriter}</td>
                                                                 <td>${freeboard.postDate}</td>
                                                                 <td>${freeboard.viewCnt}</td>
                                                             </tr>

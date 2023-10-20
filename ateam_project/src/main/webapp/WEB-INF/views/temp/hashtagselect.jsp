@@ -14,6 +14,13 @@
     background-color: #333;
     color: #ddd;
   }
+
+  .Content {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 5px;
+  }
   .hashtag_wrap {
     display: flex;
     flex-wrap: wrap;
@@ -53,26 +60,56 @@
       })
     }
 
-    $('.')
 
+    $('#create_btn').click(function() {
+      let body = {'codeContent': $('#codeContent').val()}
+      if ($('#codeContent').val().trim() != '') {
+        $.post(
+          "/code/create/해시태그",
+          body,
+          function(response) {
+          let result = response.result
+          if (result) {
+            load_hashtag()
+            alert('성공')
+            $('#codeContent').val('')
+          }
+          else {
+            alert('실패!')
+            console.log($('#codeContent').val())
+            console.log(body)
+          }
+        })
+      }
+    })
+
+    load_hashtag = function() {
+      $('.hashtag_wrap').html('')
+      $.get('code/해시태그', function(response) {
+        console.log(response.length)
+        console.log(response[0].codeContent)
+        for (let i = 0; i < response.length; i++) {
+          let template = `<div class="Content">
+                            \${response[i].codeContent}
+                          </div>`
+          
+          $('.hashtag_wrap').append(template)
+        }
+      })
+    }
+    load_hashtag()
   })
 </script>
 </head>
 <body>
   <div>
-    총 ${commonListVO.hashtagCnt} 개의 해시태그
+    해시태그 생성
   </div>
   
-  <div class="hashtag_wrap">
-    <c:forEach items="${commonListVO.hashtagList}" var="hashtag">
-      <button class="hashtag">#${hashtag.codeContent}</button>
-    </c:forEach>
-  </div>
-  <form action="/home/hashtaglist" method="post">
+  <div class="hashtag_wrap"></div>
     <label for="codeContent">입력: </label>
     <input type="text" name="codeContent" id="codeContent" />
-    <input type="submit" value="생성">
-  </form>
+    <button id="create_btn">생성</button>
   <h1>선택된 해시태그</h1>
 </body>
 </html>

@@ -60,7 +60,7 @@ public class QnAPostController {
 					           , @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 
 		System.out.println("일반회원용 게시글ID: " + generalPostVO.getGeneralPostId());
-		System.out.println("게시글 작성자ID: " + generalPostVO.getPostWriterId());
+		System.out.println("게시글 작성자ID: " + generalPostVO.getPostWriter());
 		System.out.println("게시판ID: " + generalPostVO.getBoardId());
 		System.out.println("게시글 제목: " + generalPostVO.getPostTitle());
 		System.out.println("게시글 내용: " + generalPostVO.getPostContent());
@@ -72,14 +72,16 @@ public class QnAPostController {
 		ModelAndView modelAndView = new ModelAndView();
 		log.debug("1--컨트롤러---------------------------");
 		log.debug("데이터 =  " + generalPostVO.getBoardId());
-		log.debug("데이터 =  " + generalPostVO.getPostWriterId());
+		log.debug("데이터 =  " + generalPostVO.getPostWriter());
+		generalPostVO.setPostWriter(memberVO.getEmail());
+		System.out.println(generalPostVO.getPostWriter());
+		
 		if (bindingResult.hasErrors()) {
 			modelAndView.setViewName("qnaboard/create");
 			modelAndView.addObject("generalPostVO", generalPostVO);
 			return modelAndView;
 		}
 		
-		generalPostVO.setPostWriterId(memberVO.getEmail());
 		// 게시글을 등록한다.
 		boolean isSuccess = generalPostService.createNewQnABoard(generalPostVO);
 		if (isSuccess) {
@@ -96,8 +98,10 @@ public class QnAPostController {
 	// 단건 조회
 	@GetMapping("/qnaboard/view/{generalPostId}")
 	public ModelAndView qnaBoardSingle(@PathVariable String generalPostId) {
-		GeneralPostVO generalPostVO = generalPostService.getOneQnABoard(generalPostId);
 		ModelAndView view = new ModelAndView();
+		GeneralPostVO generalPostVO = generalPostService.getOneQnABoard(generalPostId);
+		log.debug("--1------컨트롤러---------------------------");
+		log.debug("글번호 : " + generalPostVO.getBoardId());
 		view.setViewName("forum/qnaboardview");
 		view.addObject("generalPostVO", generalPostVO);
 		return view;

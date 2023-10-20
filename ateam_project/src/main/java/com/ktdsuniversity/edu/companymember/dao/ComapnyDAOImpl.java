@@ -1,11 +1,11 @@
-package com.ktdsuniversity.edu.member.dao;
+package com.ktdsuniversity.edu.companymember.dao;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.ktdsuniversity.edu.member.vo.CompanyVO;
+import com.ktdsuniversity.edu.companymember.vo.CompanyVO;
 
 @Repository
 public class ComapnyDAOImpl extends SqlSessionDaoSupport implements CompanyDAO {

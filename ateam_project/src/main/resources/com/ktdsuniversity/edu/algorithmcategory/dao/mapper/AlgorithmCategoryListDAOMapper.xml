@@ -1,0 +1,16 @@
+<!-- 수정자: 김태현(2023-10-17) -->
+
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ktdsuniversity.edu.algorithmcategorylist.dao.AlgorithmCategoryListDAO">
+	<select id="categorySearch"
+	        parameterType="string"
+	        resultType="com.ktdsuniversity.edu.algorithmcategorylist.vo.AlgorithmCategoryListVO">
+	    SELECT ALGORITHM_CATEGORY_LIST_ID
+             , COMPANY_ALGORITHM_QUESTION_ID
+             , ALGORITHM_CATEGORY_ID
+          FROM ALGORITHM_CATEGORY_LIST
+         WHERE COMPANY_ALGORITHM_QUESTION_ID = #{_parameter}
+	</select>
+</mapper>

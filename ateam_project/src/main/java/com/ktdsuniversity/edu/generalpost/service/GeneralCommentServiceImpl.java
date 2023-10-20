@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ktdsuniversity.edu.AteamProjectApplication;
 import com.ktdsuniversity.edu.exceptions.PageNotFoundException;
@@ -24,7 +25,6 @@ public class GeneralCommentServiceImpl implements GeneralCommentService{
 	private GeneralCommentDAO generalCommentDAO;
 	
 	private Logger log = LoggerFactory.getLogger(AteamProjectApplication.class);
-
 	
 	@Override
 	public List<GeneralCommentVO> getAllComments(String generalPostId){
@@ -32,37 +32,42 @@ public class GeneralCommentServiceImpl implements GeneralCommentService{
 
 		return generalCommentDAO.getAllComments(generalPostId);
 	}
-	
+	@Transactional
 	@Override
 	public boolean createNewComment(GeneralCommentVO generalCommentVO) {
 		int insertCount = generalCommentDAO.createNewComment(generalCommentVO);
 		return insertCount > 0;
 	}
-	
+	@Transactional
 	@Override
 	public boolean deleteOneComment(String generalCommentId, String commentWriter) {
 		GeneralCommentVO generalCommentVO = generalCommentDAO.getOneComment(generalCommentId);
 		if(!commentWriter.equals(generalCommentVO.getCommentWriter())) {
 				throw new PageNotFoundException("잘못된 접근입니다.");
 		}
+		int deleteCount= generalCommentDAO.deleteOneComment(generalCommentId);
 		return generalCommentDAO.deleteOneComment(generalCommentId) > 0;
 	}
+	@Transactional
 	@Override
-	public boolean modifyOneComment(GeneralCommentVO generalCommentVO) {
+	public boolean updateOneComment(GeneralCommentVO generalCommentVO) {
 		GeneralCommentVO originCommentVO = generalCommentDAO.getOneComment(generalCommentVO.getGeneralCommentId());
 		if (!generalCommentVO.getCommentWriter().equals(originCommentVO.getCommentWriter())) {
 		throw new PageNotFoundException("잘못된 접근입니다.");
 		}
-		return generalCommentDAO.modifyOneComment(generalCommentVO) > 0;
+		int updateCount=generalCommentDAO.updateOneComment(generalCommentVO);
+		return generalCommentDAO.updateOneComment(generalCommentVO) > 0;
 	}
+	@Transactional
 	@Override
-	public boolean recommendOneComment(String generalCommentId, String commentWriter) {
+	public boolean likeOneComment(String generalCommentId, String commentWriter) {
 		GeneralCommentVO generalCommentVO = generalCommentDAO.getOneComment(generalCommentId);
 		if(commentWriter.equals(generalCommentVO.getCommentWriter())) {
 			throw new PageNotFoundException("잘못된 접근입니다.");
 		}
-		return generalCommentDAO.recommendOneComment(generalCommentId) > 0;
+		return generalCommentDAO.likeOneComment(generalCommentId) > 0;
 	}
+	
 	
 	/*
 	 * @Override public boolean reportOneComment(String generalCommentId, String

@@ -1,5 +1,6 @@
 /**
  * 작성자: 김태현
+ * 수정자: 장보늬(2023-10-19)
  * 작성일자: 2023-10-12
  * 내용: 내가 푼 알고리즘 문제들의 쿼리를 수행하는 클래스입니다.
  */
@@ -33,4 +34,13 @@ public class MyAlgorithmDAOImpl extends SqlSessionDaoSupport implements MyAlgori
 		return getSqlSession().selectList("getAllMyAlgorithmList", email);
 	}
 	
+	@Override
+	public int createNewMyAlgorithm(MyAlgorithmVO myAlgorithmVO) {
+		return getSqlSession().insert("createNewMyAlgorithm", myAlgorithmVO);
+	}
+	
+	@Override
+	public int deleteMyAlgorithm(String myAlgorithmQuestionId) {
+		return getSqlSession().update("deleteMyAlgorithm", myAlgorithmQuestionId);
+	}
 }

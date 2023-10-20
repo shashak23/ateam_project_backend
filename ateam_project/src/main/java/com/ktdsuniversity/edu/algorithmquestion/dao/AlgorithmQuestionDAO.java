@@ -22,13 +22,17 @@ public interface AlgorithmQuestionDAO {
 
 	public int createNewAlgorithmQuestion(AlgorithmQuestionVO algorithmQuestionVO);
 	
-	public int createNewMyAlgorithm(MyAlgorithmVO myalgorithmVO);
+	public int createNewAlgorithmQuestionCategory(AlgorithmQuestionVO algorithmQuestionVO);
 	
 	public int increaseViewCount(String companyAlgorithmQuestionId);
 	
 	public AlgorithmQuestionVO getOneAlgorithmQuestion(String companyAlgorithmQuestionId);
 	
 	public int updateOneAlgorithmQuestion(AlgorithmQuestionVO algorithmQuestionVO);
+	
+	public int deleteAlgorithmQuestionCategory(AlgorithmQuestionVO algorithmQuestionVO);
+	
+	public int insertAlgorithmQuestionCategory(AlgorithmQuestionVO algorithmQuestionVO);
 	
 	public int deleteOneAlgorithmQuestion(String companyAlgorithmQuestionId);
 }
