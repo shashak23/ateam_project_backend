@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ktdsuniversity.edu.generalpost.service.GeneralPostService;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostListVO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
+import com.ktdsuniversity.edu.generalpost.vo.SearchForumVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 
 import jakarta.servlet.http.HttpServletRequest;
