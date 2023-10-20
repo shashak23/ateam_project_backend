@@ -25,7 +25,7 @@
 	</resultMap>
 	
 	<select id="getAllNumber"
-			parameterType="string"
+			parameterType="com.ktdsuniversity.edu.myalgorithm.vo.SearchMyAlgorithmVO"
 			resultType="_int">
 		SELECT COUNT(1)
 		  FROM MY_ALGORITHM_QUESTION MAQ
@@ -33,9 +33,18 @@
 		    ON M.EMAIL = MAQ.GENERAL_MEMBER_EMAIL
 		 INNER JOIN COMPANY_ALGORITHM_QUESTION CAQ
 		    ON CAQ.COMPANY_ALGORITHM_QUESTION_ID = MAQ.COMPANY_ALGORITHM_QUESTION_ID
-		 WHERE MAQ.GENERAL_MEMBER_EMAIL = #{_parameter}
+		 WHERE MAQ.GENERAL_MEMBER_EMAIL = #{email}
 		   AND MAQ.DELETE_YN = 'N'
+		<if test='searchKeyword != null and searchKeyword != ""'>
+			<if test='searchType=="subject"'>
+		   AND CAQ.ALGORITHM_TITLE LIKE '%' || #{searchKeyword} || '%'
+			</if>
+			<if test='searchType=="content"'>
+		   AND CAQ.ALGORITHM_CONTENT LIKE '%' || #{searchKeyword} || '%'
+			</if>
+		</if>
 	</select>
+
 	<select id="getAllMyAlgorithmList"
 			parameterType="string"
 			resultMap="MyAlgorithmDAOMap">
@@ -58,6 +67,14 @@
 		    ON CAQ.COMPANY_ALGORITHM_QUESTION_ID = MAQ.COMPANY_ALGORITHM_QUESTION_ID
 		 WHERE MAQ.GENERAL_MEMBER_EMAIL = #{email}
 		   AND MAQ.DELETE_YN = 'N'
+		<if test='searchKeyword != null and searchKeyword != ""'>
+			<if test='searchType=="subject"'>
+		   AND CAQ.ALGORITHM_TITLE LIKE '%' || #{searchKeyword} || '%'
+			</if>
+			<if test='searchType=="content"'>
+		   AND CAQ.ALGORITHM_CONTENT LIKE '%' || #{searchKeyword} || '%'
+			</if>
+		</if>
 	</select>
 	
 	<insert id="createNewMyAlgorithm"
