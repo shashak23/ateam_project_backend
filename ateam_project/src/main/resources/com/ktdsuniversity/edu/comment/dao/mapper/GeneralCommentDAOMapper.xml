@@ -4,7 +4,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ktdsuniversity.edu.generalpost.dao.GeneralCommentDAO">
 
-    <resultMap type="com.ktdsuniversity.edu.generalpost.vo.GeneralCommentVO"
+    <!-- <resultMap type="com.ktdsuniversity.edu.generalpost.vo.GeneralCommentVO"
                id="generalCommentVOMap"
                autoMapping="true">
         <id column="GENERAL_COMMENT_ID" property="generalCommentId" />
@@ -13,7 +13,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                      autoMapping="true">
                 <id column="GENERAL_POST_ID" property="generalPostId" />
         </association>
-    </resultMap>
+    </resultMap> -->
+    
     <select id="getAllComments"
             parameterType="_int"
             resultMap="generalCommentVOMap">
@@ -31,7 +32,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ON GC.GENERAL_POST_ID = GP.GENERAL_POST_ID  
      <!--     WHERE GC.GENERAL_POST_ID  = #{_parameter}; -->
     </select>
-    <select id="getOneComment"
+    <!-- <select id="getOneComment"
             parameterType="_int"
             resultMap="generalCommentVOMap">
         SELECT C.GENERAL_COMMENT_ID
@@ -47,9 +48,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          INNER JOIN GENERAL_MEMBER M
             ON C.COMMENT_WRITER_ID = M.GENERAL_MEMBER_EMAIL
          WHERE C.GENERAL_COMMENT = #{_parameter}
-    </select>
+    </select> -->
     
-    <insert id="createNewComment"
+    <!-- <insert id="createNewComment"
             parameterType="com.ktdsuniversity.edu.generalpost.vo.GeneralCommentVO">
         INSERT INTO GENERAL_COMMENT (
              , GENERAL_COMMENT_ID
@@ -68,9 +69,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		     , SYSDATE
 		     , #{upperCommentId}
 		     , 0
-		     , 'N')   <!-- 삭제여부: 삭제되지 않았음을 나타내야 함. 맞는지? -->
-            </insert>
-    <delete id="deleteOneComment"
+		     , 'N')   삭제여부: 삭제되지 않았음을 나타내야 함. 맞는지?
+            </inse -->
+    <!-- <delete id="deleteOneComment"
             parameterType="_int">
        DELETE
          FROM GENERAL_COMMENT
@@ -109,7 +110,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             'N',
             'N'
             )
-    </insert>
+    </insert> -->
             
   </mapper>
             
