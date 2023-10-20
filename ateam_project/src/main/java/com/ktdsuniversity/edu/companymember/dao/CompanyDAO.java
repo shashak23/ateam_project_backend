@@ -14,7 +14,7 @@ public interface CompanyDAO {
 	/**
 	 * 기업회원가입 쿼리를 실행한다.
 	 * @param companyVO 사용자가 입력한 회원 정보
-	 * @return DB에 Insert한 회원의 개수
+	 * @return DB에 Insert한 회원의 수
 	 */
 	public int createNewCompanyMember(CompanyVO companyVO);
 	

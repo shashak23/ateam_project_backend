@@ -49,9 +49,21 @@ public class MemberDAOImpl extends SqlSessionDaoSupport implements MemberDAO{
 	public int updateOneFile(MemberVO memberVO) {
 		return getSqlSession().update("updateOneFile",memberVO );
 	}
+	
+	/**
+	 * 회원탈퇴
+	 */
 	@Override
 	public int updateWithdrawMember(MemberVO memberVO) {
 		return getSqlSession().update("updateWithdrawMember", memberVO);
+	}
+	
+	/**
+	 * 기업회원 비밀번호 수정
+	 */
+	@Override
+	public int updateCompanyPassword(MemberVO memberVO) {
+		return getSqlSession().update("updateCompanyPassword", memberVO);
 	}
 	
 	/**

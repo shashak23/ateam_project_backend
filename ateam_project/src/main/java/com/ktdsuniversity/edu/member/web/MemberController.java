@@ -86,7 +86,6 @@ public class MemberController {
 		return "redirect:/home/main";
 	}
 	
-	
 	/**
 	 * 회원가입 관련
 	 */

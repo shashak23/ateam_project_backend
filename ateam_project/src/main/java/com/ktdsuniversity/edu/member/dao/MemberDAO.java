@@ -31,6 +31,13 @@ public interface MemberDAO {
 	public int updateWithdrawMember(MemberVO memberVO);
 	
 	/**
+	 * 기업회원 비밀번호 수정
+	 * @param memberVO 수정 요청한 사용자 정보
+	 * @return DB에 update한 데이터의 수
+	 */
+	public int updateCompanyPassword(MemberVO memberVO);
+	
+	/**
 	 * 기업회원가입
 	 */
 //	public int createNewCompanyMember(MemberVO memberVO);

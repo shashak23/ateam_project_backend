@@ -1,5 +1,5 @@
 package com.ktdsuniversity.edu.companymypost.dao;
 
-public interface companyMyPostDAO {
+public interface CompanyMyPostDAO {
 
 }

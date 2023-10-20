@@ -87,7 +87,14 @@
 		UPDATE MEMBER
    		   SET WITHDRAW_YN = 'Y'
  		 WHERE EMAIL = #{email}
-
 	</update>
+	
+	<update id="updateCompanyPassword"
+			parameterType="com.ktdsuniversity.edu.member.vo.MemberVO">
+		UPDATE MEMBER
+   		   SET PW = #{pw}
+ 		 WHERE EMAIL = #{email}
+	</update>
+	
 
 </mapper>
