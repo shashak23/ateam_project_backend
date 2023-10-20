@@ -104,5 +104,19 @@
 		  FROM MEMBER
 		 WHERE MEMBER_TYPE = #{_parameter}
 	</select>
-
+	<select id="selectMemberinfo"
+	        parameterType="string"
+	        resultType="com.ktdsuniversity.edu.member.vo.MemberVO">
+		SELECT EMAIL
+			 , NICKNAME
+			 , PW
+		  FROM "MEMBER"
+		 WHERE EMAIL = #{_parameter}
+	</select>
+	<update id="updateMemberNickname"
+			parameterType="com.ktdsuniversity.edu.member.vo.MemberVO">
+		UPDATE MEMBER
+   		   SET NICKNAME = #{nickname}
+ 		 WHERE EMAIL = #{email}
+	</update>
 </mapper>

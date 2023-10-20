@@ -213,6 +213,9 @@ public class GeneralMemberController {
 			return "mypage/modifyintroduce";
 		}
 	}
+	/**
+	 * 소개글 삭제
+	 */
 	@GetMapping("/memberInfo/modify/delete-introduction/{generalMemberEmail}")
 	public String deleteIntroduction(@PathVariable String generalMemberEmail) {
 		boolean isSuccess = generalMemberService.deleteSelfIntro(generalMemberEmail);

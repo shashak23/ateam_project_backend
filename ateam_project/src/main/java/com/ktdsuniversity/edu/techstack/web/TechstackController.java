@@ -31,11 +31,11 @@ public class TechstackController {
 	 * 기술스택 생성 
 	 * @return
 	 */
-	@GetMapping("/techstack/create-tech")
+	@GetMapping("/memberInfo/modify/create-tech-stack")
 	 public String createTechstack() {
 		 return "techstack/createtech";
 	 }
-	 @PostMapping("/techstack/create-tech")
+	 @PostMapping("/memberInfo/modify/create-tech-stack")
 	 public String doCreateCareer(@ModelAttribute TechstackVO techstackVO
 			 					   ,Model model
 			 					   ,@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
@@ -55,7 +55,7 @@ public class TechstackController {
 		 return techstackService.techSearch(id);
 	 }
 	 
-	 @GetMapping("/techstack/update-tech/{email}")
+	 @GetMapping("/memberInfo/modify/update-tech/{email}")
 	 public String updateTechstack(@PathVariable String email
 			 					   , Model model
 			 					   , @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
@@ -63,7 +63,7 @@ public class TechstackController {
 		 model.addAttribute("techstackVO", techstackVO);
 		 return "techstack/modifytech";
 	 }
-	 @PostMapping("/techstack/update-tech")
+	 @PostMapping("/memberInfo/modify/update-tech")
 	 public String doUpdateTechstack(@ModelAttribute TechstackVO techstackVO
 			 					   ,Model model
 			 					   ,@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {

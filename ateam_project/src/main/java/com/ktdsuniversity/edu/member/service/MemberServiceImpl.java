@@ -171,5 +171,24 @@ public class MemberServiceImpl implements MemberService{
 	public List<MemberVO> searchMember(String memberType) {
 		return memberDAO.searchMember(memberType);
 	}
-
+	/**
+	 * 회원조회
+	 */
+	@Override
+	public MemberVO selectMemberinfo(String email) {
+		MemberVO memberVO = memberDAO.selectMemberinfo(email);
+		return memberVO;
+	}
+	/**
+	 * 회원 닉네임 비밀번호 수정
+	 */
+	@Override
+	public boolean updateMemberNickname(MemberVO memberVO) {
+		int nickNameCount = memberDAO.getNicknameCount(memberVO.getEmail());
+		if(nickNameCount >0) {
+			throw new AlreadyUseException(memberVO, "email이 이미 사용중 입니다.");
+		}
+		int updateCount = memberDAO.updateMemberNickname(memberVO);
+		return updateCount>0;
+	}
 }

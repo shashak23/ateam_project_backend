@@ -26,6 +26,7 @@ import com.ktdsuniversity.edu.generalpost.web.FreePostController;
 import com.ktdsuniversity.edu.member.service.MemberService;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 import com.ktdsuniversity.edu.member.vo.validategroup.MemberAuthGroup;
+import com.ktdsuniversity.edu.member.vo.validategroup.MemberEditNickGroup;
 import com.ktdsuniversity.edu.member.vo.validategroup.MemberSignupGroup;
 
 import jakarta.servlet.http.HttpSession;
@@ -203,5 +204,56 @@ public class MemberController {
 //
 //		return responseMap;
 //	}
+	/**
+	 * 일반회원 조회
+	 */
+	@GetMapping("/member/selectmember/{email}")
+	public String viewOneMember(@PathVariable String email
+								,Model model) {
+		MemberVO memberVO = memberService.selectMemberinfo(email);
+		model.addAttribute("memberVO", memberVO);
+		return "member/editmemberinfo/viewmember";
+	}
+	/**
+	 * 일반회원 닉네임 수정
+	 */
+	 @GetMapping("/memberInfo/modify/update-nickname/{email}")
+	 public String updateEducation(@PathVariable String email
+			 					, Model model) {
+		 MemberVO memberVO =memberService.selectMemberinfo(email);
+		 model.addAttribute("memberVO", memberVO);
+		 return "member/editmemberinfo/modifymemberinfo";
+	 }
 	
+	 @PostMapping("/memberInfo/modify/update-nickname")
+	 public String doUpdateEducation(@Validated(MemberEditNickGroup.class) @ModelAttribute MemberVO memberVO
+			 						 , BindingResult bindingResult
+			 						 ,Model model) {
+		 if(bindingResult.hasErrors()) {
+			 model.addAttribute("memberVO", memberVO);
+			 return "member/editmemberinfo/modifymemberinfo";
+			 }
+		 boolean isSuccess = memberService.updateMemberNickname(memberVO);
+		 if(isSuccess) {
+			 return "redirect:/member/selectmember/"+ memberVO.getEmail();
+		 }
+		 else {
+			 model.addAttribute("memberVO", memberVO);
+			 return "member/editmemberinfo/modifymemberinfo";
+		 }
+	 }
+	 /**
+	  * 일반회원 검증
+	  */
+	 @ResponseBody 
+	 @GetMapping("/memberInfo/modify/update-nickname/vaildation")
+	 public Map<String, Object> nickcheckAvailability(@RequestParam String nickname){
+		 Map<String, Object> responseMap = new HashMap<>();
+		 if(nickname!= null) {
+			 boolean isAvailableNickname= memberService.checkAvailableNickname(nickname);
+			 responseMap.put("nickname",nickname);
+			 responseMap.put("available", isAvailableNickname);
+		 }
+		 return responseMap;
+	 }
 }

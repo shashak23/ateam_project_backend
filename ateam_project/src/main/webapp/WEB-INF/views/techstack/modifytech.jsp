@@ -31,7 +31,7 @@
 })
 </script>
 <body>
- <form method="post" action="/techstack/update-tech">
+ <form method="post" action="/memberInfo/modify/update-tech">
         <input type="hidden" name="email" value="${sessionScope._LOGIN_USER_.email}" />
         <h1>기술스택</h1>
 		    <label class="label" for="hashtagId">알고리즘 카테고리</label>

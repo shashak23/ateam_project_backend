@@ -47,4 +47,13 @@ public interface MemberDAO {
 //	public int createNewCompanyMember(MemberVO memberVO);
 	
 	public List<MemberVO> searchMember(String memberType);
+	/**
+	 * 회원 조회
+	 */
+	public MemberVO selectMemberinfo(String email);
+	
+	/**
+	 * 회원 닉네임수정
+	 */
+	public int updateMemberNickname(MemberVO memberVO);
 }

@@ -58,4 +58,16 @@ public interface MemberService {
 	 * @return 사용가능한 이메일인지 여부 (true: 사용가능한 이메일)
 	 */
 	public boolean checkAvailableCompanyEmail(String companyEmail);
+	
+	/**
+	 * 회원 조회
+	 */
+	public MemberVO selectMemberinfo(String email);
+	
+	/**
+	 * 회원 닉네임 비밀번호 수정
+	 */
+	public boolean updateMemberNickname(MemberVO memberVO);
+
+	
 }
