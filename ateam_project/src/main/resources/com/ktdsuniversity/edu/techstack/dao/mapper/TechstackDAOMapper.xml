@@ -1,0 +1,66 @@
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ktdsuniversity.edu.techstack.dao.TechstackDAO">
+
+	<insert id="createNewTechstack"
+		    parameterType="com.ktdsuniversity.edu.techstack.vo.TechstackVO">
+		<selectKey keyProperty="techstackId" 
+		           resultType="string"
+				   order="BEFORE">
+			SELECT 'TS-' || TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_TECHSTACK_PK.NEXTVAL, 6, '0')
+			  FROM DUAL
+		</selectKey>
+		INSERT INTO TECHSTACK
+		( TECHSTACK_ID
+		, EMAIL
+		, HASHTAG_ID)
+		SELECT #{techstackId}
+		     , Q_ID
+		     , C_ID
+	      FROM (
+		<foreach collection="hashtagList" item="categoryId"
+			separator="UNION ALL">
+			SELECT #{email} Q_ID
+			     , #{categoryId} C_ID
+			  FROM DUAL
+		</foreach>)
+	</insert>
+	
+	<delete id="deleteTechstack"
+			parameterType="string">
+		 DELETE FROM TECHSTACK
+		 WHERE  EMAIL = #{email}
+	</delete>
+	<insert id="insertTechstack"
+		    parameterType="com.ktdsuniversity.edu.techstack.vo.TechstackVO">
+		INSERT INTO TECHSTACK
+		( TECHSTACK_ID
+		, EMAIL
+		, HASHTAG_ID)
+		VALUES 
+		( 'TS-' || TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_TECHSTACK_PK.NEXTVAL, 6, '0')
+		, #{email}
+		, #{hashtagId})
+	</insert>
+	
+	<select id="techSearch"
+		parameterType="string"
+		resultType="com.ktdsuniversity.edu.techstack.vo.TechstackVO">
+		SELECT TECHSTACK_ID
+			 , EMAIL
+			 , HASHTAG_ID
+		  FROM TECHSTACK
+		 WHERE EMAIL=#{_parameter}
+	</select>
+	<select id="getAllTechstack"
+		parameterType="string"
+		resultType="com.ktdsuniversity.edu.techstack.vo.TechstackVO">
+		SELECT TECHSTACK_ID
+			 , EMAIL
+			 , HASHTAG_ID
+		  FROM TECHSTACK
+		 WHERE EMAIL=#{_parameter}
+	</select>
+</mapper>

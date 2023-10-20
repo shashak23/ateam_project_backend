@@ -58,6 +58,7 @@
             <input type="file" id="profilePic" name="profilePic" />
         </div>
     </div>
+    	<input type="submit" value="수정" />
 </form>
 </body>
 </html>

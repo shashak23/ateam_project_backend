@@ -77,7 +77,6 @@ public class EducationController {
 			 					 ,@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 		 boolean isSuccess = educationService.updateOneEducation(educationVO);
 		 EducationVO education = educationService.getOneEducation(educationVO.getEducationId());
-		 System.out.println(educationVO.getGeneralMemberEmail());
 		 if(!education.getGeneralMemberEmail().equals(memberVO.getEmail())){
 			 throw new IllegalArgumentException("잘못된 접근입니다");
 		 }

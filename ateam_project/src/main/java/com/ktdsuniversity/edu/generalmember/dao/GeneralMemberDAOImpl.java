@@ -14,9 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ktdsuniversity.edu.career.vo.CareerVO;
+import com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO;
 import com.ktdsuniversity.edu.education.vo.EducationVO;
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
+import com.ktdsuniversity.edu.techstack.vo.TechstackVO;
 
 
 @Repository
@@ -43,7 +45,10 @@ public class GeneralMemberDAOImpl extends SqlSessionDaoSupport implements Genera
 	public List<EducationVO> getAllEducationList(String generalMemberEmail) {
 		return getSqlSession().selectList("getAllEducationList",generalMemberEmail);
 	}
-	
+	@Override
+	public List<CommonCodeVO> getSelectCommonCode(String generalMemberEmail) {
+		return getSqlSession().selectList("getSelectCommonCode",generalMemberEmail);
+	}
 	@Override
 	public MemberVO getSelectNickname(String generalMemberEmail) {
 		return getSqlSession().selectOne("getSelectNickname",generalMemberEmail);
@@ -84,6 +89,7 @@ public class GeneralMemberDAOImpl extends SqlSessionDaoSupport implements Genera
 	public int deleteSelfIntro(String generalMemberEmail) {
 		return getSqlSession().update("deleteSelfIntro",generalMemberEmail);
 	}
+
 	
 	
 

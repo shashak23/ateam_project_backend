@@ -118,4 +118,14 @@
 		   SET SELF_INTRO = NULL
 		 WHERE GENERAL_MEMBER_EMAIL = #{generalMemberEmail}	
 	</update>
+	<select id="getSelectCommonCode"
+			parameterType="string"
+			resultType="com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO">
+		SELECT CODE_CONTENT
+ 		  FROM COMMON_CODE 
+ 	 	 WHERE CODE_ID IN(SELECT HASHTAG_ID
+ 				  	        FROM TECHSTACK
+ 				           WHERE EMAIL = #{_parameter})
+	</select>
+	
 </mapper>

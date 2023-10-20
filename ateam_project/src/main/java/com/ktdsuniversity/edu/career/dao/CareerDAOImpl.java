@@ -1,3 +1,8 @@
+/**
+ * 작성자 : 김광원
+ * 작성일자 : 2023-10-18
+ * 내용 : 경력 생성, 조회, 수정, 삭제를 위한 DAOImpl
+ */
 package com.ktdsuniversity.edu.career.dao;
 
 
