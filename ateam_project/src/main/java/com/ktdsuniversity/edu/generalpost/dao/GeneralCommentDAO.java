@@ -19,9 +19,9 @@ public interface GeneralCommentDAO {
 	//댓글 삭제
 	public int deleteOneComment(String generalCommentId);
 	//댓글 수정
-	public int modifyOneComment(GeneralCommentVO generalCommentVO);
+	public int updateOneComment(GeneralCommentVO generalCommentVO);
 	//댓글 좋아요
-	public int recommendOneComment(String generalCommentId);
+	public int likeOneComment(String generalCommentId);
 	//댓글 신고
 	public int reportOneComment(String generalCommentId);	
 }

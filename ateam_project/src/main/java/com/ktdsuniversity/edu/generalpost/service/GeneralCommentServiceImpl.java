@@ -50,23 +50,24 @@ public class GeneralCommentServiceImpl implements GeneralCommentService{
 	}
 	@Transactional
 	@Override
-	public boolean modifyOneComment(GeneralCommentVO generalCommentVO) {
+	public boolean updateOneComment(GeneralCommentVO generalCommentVO) {
 		GeneralCommentVO originCommentVO = generalCommentDAO.getOneComment(generalCommentVO.getGeneralCommentId());
 		if (!generalCommentVO.getCommentWriter().equals(originCommentVO.getCommentWriter())) {
 		throw new PageNotFoundException("잘못된 접근입니다.");
 		}
-		int updateCount=generalCommentDAO.modifyOneComment(generalCommentVO);
-		return generalCommentDAO.modifyOneComment(generalCommentVO) > 0;
+		int updateCount=generalCommentDAO.updateOneComment(generalCommentVO);
+		return generalCommentDAO.updateOneComment(generalCommentVO) > 0;
 	}
 	@Transactional
 	@Override
-	public boolean recommendOneComment(String generalCommentId, String commentWriter) {
+	public boolean likeOneComment(String generalCommentId, String commentWriter) {
 		GeneralCommentVO generalCommentVO = generalCommentDAO.getOneComment(generalCommentId);
 		if(commentWriter.equals(generalCommentVO.getCommentWriter())) {
 			throw new PageNotFoundException("잘못된 접근입니다.");
 		}
-		return generalCommentDAO.recommendOneComment(generalCommentId) > 0;
+		return generalCommentDAO.likeOneComment(generalCommentId) > 0;
 	}
+	
 	
 	/*
 	 * @Override public boolean reportOneComment(String generalCommentId, String

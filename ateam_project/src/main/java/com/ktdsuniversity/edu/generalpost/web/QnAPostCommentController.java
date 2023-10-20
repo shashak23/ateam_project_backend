@@ -12,7 +12,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
+
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,12 +21,10 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.ktdsuniversity.edu.AteamProjectApplication;
-import com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionListVO;
-import com.ktdsuniversity.edu.algorithmquestion.vo.SearchAlgorithmQuestionVO;
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 import com.ktdsuniversity.edu.generalpost.service.GeneralCommentService;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralCommentVO;
-import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
+
 
 @RestController
 public class QnAPostCommentController {
@@ -70,13 +68,13 @@ public class QnAPostCommentController {
 		return resultMap;
 	}
 
-	@PostMapping("/qnapost/comments/modify/{generalCommentId}")
-	public Map<String, Object> doModifyComments(@PathVariable String generalCommentId,
+	@PostMapping("/qnapost/comments/update/{generalCommentId}")
+	public Map<String, Object> doUpdateComments(@PathVariable String generalCommentId,
 			@ModelAttribute GeneralCommentVO generalCommentVO,
 			@SessionAttribute("_LOGIN_USER") GeneralMemberVO generalMemberVO) {
 		generalCommentVO.setGeneralCommentId(generalCommentId);
 		generalCommentVO.setCommentWriter(generalMemberVO.getGeneralMemberEmail());
-		boolean isSuccess = generalCommentService.modifyOneComment(generalCommentVO);
+		boolean isSuccess = generalCommentService.updateOneComment(generalCommentVO);
 
 		Map<String, Object> resultMap = new HashMap<>();
 		resultMap.put("result", isSuccess);
@@ -84,7 +82,7 @@ public class QnAPostCommentController {
 	}
 
 	@GetMapping("/qnapost/comments/like/{generalCommentId}")
-	public Map<String, Object> doRecommendComments(@PathVariable String generalCommentId,
+	public Map<String, Object> doLikeComments(@PathVariable String generalCommentId,
 			@SessionAttribute("_LOGIN_USER_") GeneralMemberVO generalMemberVO) {
 		boolean isSuccess = generalCommentService.deleteOneComment(generalCommentId,
 				generalMemberVO.getGeneralMemberEmail());
