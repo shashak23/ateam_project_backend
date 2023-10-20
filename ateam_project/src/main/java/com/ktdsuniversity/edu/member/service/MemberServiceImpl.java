@@ -1,3 +1,9 @@
+/**
+ * 작성자: 김광원
+ * 수정자: 신진영(2023-10-20)
+ * 작성일자: 2023-10-19
+ * 내용: 일반회원 비밀번호 수정 및 닉네임 수정
+ */
 package com.ktdsuniversity.edu.member.service;
 
 import java.io.File;
@@ -33,13 +39,6 @@ public class MemberServiceImpl implements MemberService{
 	private SHA sha;
 	@Autowired FileHandler fileHandler;
 	
-	/**
-	 * 작성자: 김광원
-	 * 수정자: 신진영(2023-10-19)
-	 * 작성일자: 2023-10-19
-	 * 내용: createNewMember 쿼리 일반/기업회원별 if문 분기 세팅(setMemberType)
-	 * 		transactional 처리
-	 */
 	@Transactional
 	@Override
 	public boolean createNewMember(GeneralMemberVO generalMemberVO) {
@@ -189,6 +188,12 @@ public class MemberServiceImpl implements MemberService{
 			throw new AlreadyUseException(memberVO, "email이 이미 사용중 입니다.");
 		}
 		int updateCount = memberDAO.updateMemberNickname(memberVO);
+		return updateCount>0;
+	}
+
+	@Override
+	public boolean updateMemberPW(MemberVO memberVO) {
+		int updateCount = memberDAO.updateMemberPW(memberVO);
 		return updateCount>0;
 	}
 }

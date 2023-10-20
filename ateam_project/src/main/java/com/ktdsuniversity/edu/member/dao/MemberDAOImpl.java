@@ -1,3 +1,9 @@
+/**
+ * 작성자: 김광원
+ * 수정자: 김광원(2023-10-20)
+ * 작성일자: 2023-10-19
+ * 내용: 일반회원 비밀번호 수정 및 닉네임 수정
+ */
 package com.ktdsuniversity.edu.member.dao;
 
 import java.util.List;
@@ -93,5 +99,12 @@ public class MemberDAOImpl extends SqlSessionDaoSupport implements MemberDAO{
 	@Override
 	public int updateMemberNickname(MemberVO memberVO) {
 		return getSqlSession().update("updateMemberNickname",memberVO);
+	}
+	/**
+	 * 회원 비밀번호 수정
+	 */
+	@Override
+	public int updateMemberPW(MemberVO memberVO) {
+		return getSqlSession().update("updateMemberPW", memberVO);
 	}
 }

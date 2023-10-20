@@ -1,3 +1,10 @@
+/**
+ * 작성자: 김광원
+ * 수정자: 신진영(2023-10-19)
+ * 수정자: 장보늬(2023-10-20)
+ * 작성일자: 2023-10-19
+ * 내용: 
+ */
 package com.ktdsuniversity.edu.member.web;
 
 import java.util.HashMap;
@@ -20,6 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ktdsuniversity.edu.beans.SHA;
 import com.ktdsuniversity.edu.companymember.vo.CompanyVO;
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 import com.ktdsuniversity.edu.generalpost.web.FreePostController;
@@ -27,6 +35,7 @@ import com.ktdsuniversity.edu.member.service.MemberService;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 import com.ktdsuniversity.edu.member.vo.validategroup.MemberAuthGroup;
 import com.ktdsuniversity.edu.member.vo.validategroup.MemberEditNickGroup;
+import com.ktdsuniversity.edu.member.vo.validategroup.MemberEditPWGroup;
 import com.ktdsuniversity.edu.member.vo.validategroup.MemberSignupGroup;
 
 import jakarta.servlet.http.HttpSession;
@@ -36,45 +45,39 @@ import jakarta.validation.Valid;
 public class MemberController {
 	@Autowired
 	private MemberService memberService;
-	
+	@Autowired
+	private SHA sha;
 	private Logger log = LoggerFactory.getLogger(FreePostController.class);
-	
+
 	@GetMapping("/member/{memberType}")
 	@ResponseBody
 	public List<MemberVO> searchNickName(@PathVariable String memberType) {
 		return memberService.searchMember(memberType);
 	}
-	
+
 	/**
 	 * 로그인 관련
 	 */
-	/**
-	 * 작성자: 김광원
-	 * 수정자: 신진영(2023-10-19)
-	 * 수정자: 장보늬(2023-10-20)
-	 * 작성일자: 2023-10-19
-	 * 내용: 
-	 */
+
 	@GetMapping("/member/auth")
 	public String signIn() {
 		return "member/memberlogin";
 	}
+
 	@PostMapping("/member/auth")
-	public String doSignIn(@Validated(MemberAuthGroup.class) @ModelAttribute MemberVO memberVO
-						  , BindingResult bindingResult
-						  , @RequestParam(required = false, defaultValue = "/home/main") String next
-						  , HttpSession session
-						  , Model model) {
-		if(bindingResult.hasErrors()) {
+	public String doSignIn(@Validated(MemberAuthGroup.class) @ModelAttribute MemberVO memberVO,
+			BindingResult bindingResult, @RequestParam(required = false, defaultValue = "/home/main") String next,
+			HttpSession session, Model model) {
+		if (bindingResult.hasErrors()) {
 			model.addAttribute("memberVO", memberVO);
 			return "member/memberlogin";
 		}
-		
+
 		MemberVO member = memberService.getMember(memberVO);
 		session.setAttribute("_LOGIN_USER_", member);
 		return "redirect:" + next;
 	}
-	
+
 	/**
 	 * 로그아웃
 	 */
@@ -83,18 +86,17 @@ public class MemberController {
 		session.invalidate();
 		return "redirect:/home/main";
 	}
-	
+
 	/**
 	 * 회원탈퇴
 	 */
 	@GetMapping("/member/withdraw")
-	public String doWithdraw(HttpSession session
-							, @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+	public String doWithdraw(HttpSession session, @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 		session.invalidate();
 		memberService.withdrawMember(memberVO);
 		return "redirect:/home/main";
 	}
-	
+
 	/**
 	 * 회원가입 관련
 	 */
@@ -102,44 +104,44 @@ public class MemberController {
 	public String memberSignUp() {
 		return "member/membersignup";
 	}
+
 	@PostMapping("/member/signup")
-	public String doMemberSignUp(@Validated(MemberSignupGroup.class)
-							   @ModelAttribute GeneralMemberVO generalMemberVO
-							   , BindingResult bindingResult
-							   , Model model) {
-		if(bindingResult.hasErrors()) {
+	public String doMemberSignUp(@Validated(MemberSignupGroup.class) @ModelAttribute GeneralMemberVO generalMemberVO,
+			BindingResult bindingResult, Model model) {
+		if (bindingResult.hasErrors()) {
 			model.addAttribute("memberVO", generalMemberVO);
 			return "member/membersignup";
 		}
 		boolean isSuccess = memberService.createNewMember(generalMemberVO);
-		if(isSuccess) {
-			return("redirect:/member/auth");
+		if (isSuccess) {
+			return ("redirect:/member/auth");
 		}
 		model.addAttribute("memberVO", generalMemberVO);
 		return "member/membersignup";
 	}
-	
+
 	/**
 	 * 검증관련
 	 */
-	@ResponseBody 
+	@ResponseBody
 	@GetMapping("/member/signup/vaildation")
-	public Map<String, Object> checkAvailability(@RequestParam(required = false) String email
-												,@RequestParam(required = false) String nickname){
+	public Map<String, Object> checkAvailability(@RequestParam(required = false) String email,
+			@RequestParam(required = false) String nickname) {
 		Map<String, Object> responseMap = new HashMap<>();
 
-		if(email != null) {
+		if (email != null) {
 			boolean isAvailableEmail = memberService.checkAvailableEmail(email);
 			responseMap.put("email", email);
 			responseMap.put("available", isAvailableEmail);
 		}
-		if(nickname!= null) {
-			boolean isAvailableNickname= memberService.checkAvailableNickname(nickname);
-			responseMap.put("nickname",nickname);
+		if (nickname != null) {
+			boolean isAvailableNickname = memberService.checkAvailableNickname(nickname);
+			responseMap.put("nickname", nickname);
 			responseMap.put("available", isAvailableNickname);
 		}
 		return responseMap;
 	}
+
 	/**
 	 * 프로필 사진 조회
 	 */
@@ -149,18 +151,17 @@ public class MemberController {
 		model.addAttribute("memberVO", memberVO);
 		return "mypage/profilepicview";
 	}
-	
+
 	/**
-	 *  프로필 사진 수정
+	 * 프로필 사진 수정
 	 */
 	@GetMapping("/memberInfo/modify/update-profile-pic/{email}")
-	public String updateProfilePic(@PathVariable String email
-								   , Model model) {
+	public String updateProfilePic(@PathVariable String email, Model model) {
 		MemberVO memberVO = memberService.getOneFile(email);
 		model.addAttribute("memberVO", memberVO);
 		return "mypage/modifyprofilepic";
 	}
-	
+
 	/**
 	 * 기업회원 가입
 	 */
@@ -168,26 +169,25 @@ public class MemberController {
 	public String companyMemberSignUp() {
 		return "member/companyregist";
 	}
+
 	@PostMapping("/member/companysignup")
-	public String doCompanyMemberSignUp(@Valid @ModelAttribute CompanyVO companyVO
-							   , Model model
-							   , BindingResult bindingResult
-							   , @RequestParam MultipartFile file) {
-		
+	public String doCompanyMemberSignUp(@Valid @ModelAttribute CompanyVO companyVO, Model model,
+			BindingResult bindingResult, @RequestParam MultipartFile file) {
+
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("companyVO", companyVO);
-			return "member/companysignup"; 
+			return "member/companysignup";
 		}
-		
+
 		boolean isSuccess = memberService.createNewCompanyMember(companyVO, file);
-				
-		if(isSuccess) {
-			return("redirect:/member/auth");
+
+		if (isSuccess) {
+			return ("redirect:/member/auth");
 		}
 		model.addAttribute("companyVO", companyVO);
 		return "member/membersignup";
 	}
-	
+
 	/**
 	 * 기업회원 검증
 	 */
@@ -208,52 +208,88 @@ public class MemberController {
 	 * 일반회원 조회
 	 */
 	@GetMapping("/member/selectmember/{email}")
-	public String viewOneMember(@PathVariable String email
-								,Model model) {
+	public String viewOneMember(@PathVariable String email, Model model) {
 		MemberVO memberVO = memberService.selectMemberinfo(email);
 		model.addAttribute("memberVO", memberVO);
 		return "member/editmemberinfo/viewmember";
 	}
+
 	/**
 	 * 일반회원 닉네임 수정
 	 */
-	 @GetMapping("/memberInfo/modify/update-nickname/{email}")
-	 public String updateEducation(@PathVariable String email
-			 					, Model model) {
-		 MemberVO memberVO =memberService.selectMemberinfo(email);
-		 model.addAttribute("memberVO", memberVO);
-		 return "member/editmemberinfo/modifymemberinfo";
-	 }
-	
-	 @PostMapping("/memberInfo/modify/update-nickname")
-	 public String doUpdateEducation(@Validated(MemberEditNickGroup.class) @ModelAttribute MemberVO memberVO
-			 						 , BindingResult bindingResult
-			 						 ,Model model) {
-		 if(bindingResult.hasErrors()) {
-			 model.addAttribute("memberVO", memberVO);
-			 return "member/editmemberinfo/modifymemberinfo";
-			 }
-		 boolean isSuccess = memberService.updateMemberNickname(memberVO);
-		 if(isSuccess) {
-			 return "redirect:/member/selectmember/"+ memberVO.getEmail();
-		 }
-		 else {
-			 model.addAttribute("memberVO", memberVO);
-			 return "member/editmemberinfo/modifymemberinfo";
-		 }
-	 }
-	 /**
-	  * 일반회원 검증
-	  */
-	 @ResponseBody 
-	 @GetMapping("/memberInfo/modify/update-nickname/vaildation")
-	 public Map<String, Object> nickcheckAvailability(@RequestParam String nickname){
-		 Map<String, Object> responseMap = new HashMap<>();
-		 if(nickname!= null) {
-			 boolean isAvailableNickname= memberService.checkAvailableNickname(nickname);
-			 responseMap.put("nickname",nickname);
-			 responseMap.put("available", isAvailableNickname);
-		 }
-		 return responseMap;
-	 }
+	@GetMapping("/memberInfo/modify/update-nickname/{email}")
+	public String updateNickname(@PathVariable String email, Model model) {
+		MemberVO memberVO = memberService.selectMemberinfo(email);
+		model.addAttribute("memberVO", memberVO);
+		return "member/editmemberinfo/modifymemberinfo";
+	}
+
+	@PostMapping("/memberInfo/modify/update-nickname")
+	public String doUpdateNickname(@Validated(MemberEditNickGroup.class) @ModelAttribute MemberVO memberVO,
+			BindingResult bindingResult, Model model) {
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("memberVO", memberVO);
+			return "member/editmemberinfo/modifymembernick";
+		}
+		boolean isSuccess = memberService.updateMemberNickname(memberVO);
+		if (isSuccess) {
+			return "redirect:/member/selectmember/" + memberVO.getEmail();
+		} else {
+			model.addAttribute("memberVO", memberVO);
+			return "member/editmemberinfo/modifymembernick";
+		}
+	}
+
+	/**
+	 * 일반회원 검증
+	 */
+	@ResponseBody
+	@GetMapping("/memberInfo/modify/update-nickname/vaildation")
+	public Map<String, Object> nickcheckAvailability(@RequestParam String nickname) {
+		Map<String, Object> responseMap = new HashMap<>();
+		if (nickname != null) {
+			boolean isAvailableNickname = memberService.checkAvailableNickname(nickname);
+			responseMap.put("nickname", nickname);
+			responseMap.put("available", isAvailableNickname);
+		}
+		return responseMap;
+	}
+
+	/**
+	 * 일반회원 비밀번호 수정
+	 */
+	@GetMapping("/memberInfo/modify/update-password/{email}")
+	public String updatePassword(@PathVariable String email, Model model) {
+		MemberVO memberVO = memberService.selectMemberinfo(email);
+		model.addAttribute("memberVO", memberVO);
+		return "member/editmemberinfo/modifymemberpw";
+	}
+
+	@PostMapping("/memberInfo/modify/update-password")
+	public String doUpdatePassword(@Validated(MemberEditPWGroup.class) @ModelAttribute MemberVO memberVO
+									,BindingResult bindingResult
+									,Model model
+									,@SessionAttribute("_LOGIN_USER_") MemberVO loginMemberVO
+									,HttpSession session) {
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("memberVO", memberVO);
+			return "member/editmemberinfo/modifymemberpw";
+		}
+
+		if (memberVO.getPw() != null && memberVO.getPw() != "") {
+			memberVO.setEmail(loginMemberVO.getEmail());
+
+			String salt = loginMemberVO.getSalt();
+			String newPassword = memberVO.getPw();
+			String encryptedNewPassword = sha.getEncrypt(newPassword, salt);
+			memberVO.setPw(encryptedNewPassword);
+
+			boolean isSuccess = memberService.updateMemberPW(memberVO);
+			if (isSuccess) {
+				session.invalidate();
+				return ("redirect:/home/main");
+			}
+		}
+		return "member/editmemberinfo/modifymemberpw";
+	}
 }

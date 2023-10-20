@@ -119,4 +119,10 @@
    		   SET NICKNAME = #{nickname}
  		 WHERE EMAIL = #{email}
 	</update>
+	<update id="updateMemberPW"
+			parameterType="com.ktdsuniversity.edu.member.vo.MemberVO">
+		UPDATE MEMBER
+   		   SET PW = #{pw}
+ 		 WHERE EMAIL = #{email}
+	</update>
 </mapper>

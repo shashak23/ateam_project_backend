@@ -1,6 +1,9 @@
-/*
- * 수정자: 장보늬(2023-10-20)
- * */
+/**
+ * 작성자: 김광원
+ * 수정자: 김광원(2023-10-20)
+ * 작성일자: 2023-10-19
+ * 내용: 일반회원 비밀번호 수정 및 닉네임 수정
+ */
 package com.ktdsuniversity.edu.member.service;
 
 import java.util.List;
@@ -65,9 +68,12 @@ public interface MemberService {
 	public MemberVO selectMemberinfo(String email);
 	
 	/**
-	 * 회원 닉네임 비밀번호 수정
+	 * 회원 닉네임 수정
 	 */
 	public boolean updateMemberNickname(MemberVO memberVO);
 
-	
+	/**
+	 * 회원 비밀번호 수정
+	 */
+	public boolean updateMemberPW(MemberVO memberVO);
 }
