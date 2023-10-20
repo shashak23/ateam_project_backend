@@ -19,8 +19,10 @@ public interface AlgorithmQuestionDAO {
 	public List<AlgorithmQuestionVO> getAllAlgorithmQuestion();
 	
 	public List<AlgorithmQuestionVO> searchAllAlgorithmQuestion(SearchAlgorithmQuestionVO searchAlgorithmQuestionVO);
-	
+
 	public int createNewAlgorithmQuestion(AlgorithmQuestionVO algorithmQuestionVO);
+	
+	public int createNewAlgorithmQuestionCategory(AlgorithmQuestionVO algorithmQuestionVO);
 	
 	public int createNewMyAlgorithm(MyAlgorithmVO myalgorithmVO);
 	
@@ -29,6 +31,10 @@ public interface AlgorithmQuestionDAO {
 	public AlgorithmQuestionVO getOneAlgorithmQuestion(String companyAlgorithmQuestionId);
 	
 	public int updateOneAlgorithmQuestion(AlgorithmQuestionVO algorithmQuestionVO);
+	
+	public int deleteAlgorithmQuestionCategory(AlgorithmQuestionVO algorithmQuestionVO);
+	
+	public int insertAlgorithmQuestionCategory(AlgorithmQuestionVO algorithmQuestionVO);
 	
 	public int deleteOneAlgorithmQuestion(String companyAlgorithmQuestionId);
 }

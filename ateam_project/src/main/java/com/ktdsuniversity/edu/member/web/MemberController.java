@@ -12,10 +12,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.ktdsuniversity.edu.companymember.vo.CompanyVO;
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 import com.ktdsuniversity.edu.generalpost.web.FreePostController;
 import com.ktdsuniversity.edu.member.service.MemberService;
@@ -24,6 +28,7 @@ import com.ktdsuniversity.edu.member.vo.validategroup.MemberAuthGroup;
 import com.ktdsuniversity.edu.member.vo.validategroup.MemberSignupGroup;
 
 import jakarta.servlet.http.HttpSession;
+import jakarta.validation.Valid;
 
 @Controller
 public class MemberController {
@@ -34,6 +39,12 @@ public class MemberController {
 	
 	/**
 	 * 로그인 관련
+	 */
+	/**
+	 * 작성자: 김광원
+	 * 수정자: 신진영(2023-10-19)
+	 * 작성일자: 2023-10-19
+	 * 내용: 
 	 */
 	@GetMapping("/member/auth")
 	public String signIn() {
@@ -61,6 +72,17 @@ public class MemberController {
 	@GetMapping("/member/logout")
 	public String doLogout(HttpSession session) {
 		session.invalidate();
+		return "redirect:/home/main";
+	}
+	
+	/**
+	 * 회원탈퇴
+	 */
+	@GetMapping("/member/withdraw")
+	public String doWithdraw(HttpSession session
+							, @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+		session.invalidate();
+		memberService.withdrawMember(memberVO);
 		return "redirect:/home/main";
 	}
 	
@@ -110,4 +132,69 @@ public class MemberController {
 		}
 		return responseMap;
 	}
+	/**
+	 * 프로필 사진 조회
+	 */
+	@GetMapping("/memberinfo/profilePicview/{email}")
+	public String viewOneProfilePic(@PathVariable String email, Model model) {
+		MemberVO memberVO = memberService.getOneFile(email);
+		model.addAttribute("memberVO", memberVO);
+		return "mypage/profilepicview";
+	}
+	
+	/**
+	 *  프로필 사진 수정
+	 */
+	@GetMapping("/memberInfo/modify/update-profile-pic/{email}")
+	public String updateProfilePic(@PathVariable String email
+								   , Model model) {
+		MemberVO memberVO = memberService.getOneFile(email);
+		model.addAttribute("memberVO", memberVO);
+		return "mypage/modifyprofilepic";
+	}
+	
+	/**
+	 * 기업회원 가입
+	 */
+	@GetMapping("/member/companysignup")
+	public String companyMemberSignUp() {
+		return "member/companyregist";
+	}
+	@PostMapping("/member/companysignup")
+	public String doCompanyMemberSignUp(@Valid @ModelAttribute CompanyVO companyVO
+							   , Model model
+							   , BindingResult bindingResult
+							   , @RequestParam MultipartFile file) {
+		
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("companyVO", companyVO);
+			return "member/companysignup"; 
+		}
+		
+		boolean isSuccess = memberService.createNewCompanyMember(companyVO, file);
+				
+		if(isSuccess) {
+			return("redirect:/member/auth");
+		}
+		model.addAttribute("companyVO", companyVO);
+		return "member/membersignup";
+	}
+	
+	/**
+	 * 기업회원 검증
+	 */
+//	@ResponseBody 
+//	@GetMapping("/member/companysignup/vaildation")
+//	public Map<String, Object> checkAvailableCompanyEmail(@RequestParam String email){
+//		
+//		boolean isAvailableCompanyEmail = memberService.checkAvailableCompanyEmail(email);
+//		
+//		Map<String, Object> responseMap = new HashMap<>();
+//
+//		responseMap.put("comapnyEmail", email);
+//		responseMap.put("available", isAvailableCompanyEmail);
+//
+//		return responseMap;
+//	}
+	
 }

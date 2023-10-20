@@ -1,6 +1,6 @@
-package com.ktdsuniversity.edu.member.dao;
+package com.ktdsuniversity.edu.companymember.dao;
 
-import com.ktdsuniversity.edu.member.vo.CompanyVO;
+import com.ktdsuniversity.edu.companymember.vo.CompanyVO;
 
 public interface CompanyDAO {
 	

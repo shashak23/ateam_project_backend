@@ -16,5 +16,6 @@ public interface GeneralCommentService {
 	public boolean deleteOneComment(String generalCommentId,String commentWriter);
 	public boolean modifyOneComment(GeneralCommentVO generalCommentVO);
 	public boolean recommendOneComment(String generalCommentId, String commentWriter);
-	public boolean reportOneComment(String generalCommentId, String commentWriter);
+	//public boolean reportOneComment(String generalCommentId, String commentWriter);
+	
 }

@@ -1,35 +1,49 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<head>
-    <meta charset="UTF-8">
-    <title>게시물 및 댓글 리스트</title>
-</head>
-<body>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 
-<h2>게시물 내용</h2>
-<c:out value="${generalPostVO.postContent}" />
 
-<h2>댓글 리스트</h2>
-<c:forEach var="comment" items="${commentList}">
+ <h1>게시글 조회</h1>
+<div class="grid">
+    <label for="subject">제목</label>
+    <div>${generalPostVO.subject}</div>
+
+    <label for="email">이메일</label>
+    <div>${generalPostVO.generalMemberVO.name} (${generalPostVO.generalMemberVO.email}) / ${generalPostVO.ipAddr}</div>
+
+    <label for="viewCnt">조회수</label>
+    <div>${generalPostVO.viewCnt}</div>
+
+    <label for="originFileName">첨부파일</label>
     <div>
-        <p>댓글 작성자: ${comment.commentWriter}</p>
-        <p>댓글 내용: ${comment.commentContent}</p>
-        <p>작성일: ${comment.postDate}</p>
-        <!-- 여기에 필요한 댓글 정보 추가 -->
+        <a href="/generalPost/file/download/${generalPostVO.id}">
+            ${generalPostVO.originFileName}
+        </a>
     </div>
-</c:forEach>
 
-<!-- 댓글 입력 폼 -->
-<form action="/qnapost/comments/create" method="post">
-    <input type="hidden" name="generalPostId" value="${generalPostVO.generalPostId}" />
-    <textarea name="commentContent" placeholder="댓글을 입력하세요"></textarea>
-    <input type="submit" value="댓글 등록" />
-</form>
+    <label for="crtDt">등록일</label>
+    <div>${generalPostVO.crtDt}</div>
 
-</body>
-</html>
+    <label for="mdfyDt">수정일</label>
+    <div>${generalPostVO.mdfyDt}</div>
+
+    <label for="content">내용</label>
+    <div>${generalPostVO.content}</div>
+
+    <div class="replies">
+        <div class="generalComment-items"></div>
+        <div class="write-generalComment">
+            <textarea id="txt-generalComment"></textarea>
+            <button id="btn-save-generalComment">등록</button>
+            <button id="btn-cancel-generalComment">취소</button>
+        </div>
+    </div>
+
+    <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq generalPostVO.generalMemberVO.email}">
+        <div class="btn-group">
+            <div class="right-align">
+                <a href="/generalPost/modify/${generalPostVO.id}">수정</a>
+                <a href="/generalPost/delete/${generalPostVO.id}">삭제</a>
+            </div>
+        </div>
+    </c:if>
+</div>

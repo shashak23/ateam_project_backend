@@ -19,6 +19,15 @@ public class GeneralCommentVO {
 	private char deleteYn;
 	
 	private GeneralMemberVO generalMemberVO;
+	private GeneralPostVO generalPostVO;
+
+	public GeneralPostVO getGeneralPostVO() {
+		return generalPostVO;
+	}
+
+	public void setGeneralPostVO(GeneralPostVO generalPostVO) {
+		this.generalPostVO = generalPostVO;
+	}
 
 	public String getGeneralCommentId() {
 		return generalCommentId;

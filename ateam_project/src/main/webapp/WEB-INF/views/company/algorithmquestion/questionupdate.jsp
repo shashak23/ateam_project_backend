@@ -11,16 +11,31 @@
 <script type="text/javascript">
 	$().ready(function() {
 
-		// 선택했던 option의 value가 선택되어있음
-        $("select[name=algorithmCategoryId]").val("${algorithmQuestionVO.algorithmCategoryId}")
+		// 알고리즘카테고리 리스트 보여주기
+		$.get("/code/알고리즘카테고리", function(response) {
+			for (var i = 0; i < response.length; i++) {
+				var code = response[i]
+				var checkbox = $("<input type='checkbox' id='"+code.codeId+"' name='algorithmCategoryIdList' value='"+code.codeId+"' />");
+				$("#algorithm_category").append(label);
+				$("#algorithm_category").append(checkbox);
+				var label = $("<label for='"+code.codeId+"'>"+code.codeContent+"</label>");
+			}
+			
+			$.get("/algorithm/category/${algorithmQuestionVO.companyAlgorithmQuestionId}", function(categoryResponse) {
+				console.log(categoryResponse)
+				
+				for (var i = 0; i < categoryResponse.length; i++) {
+					var code = categoryResponse[i]
+					$("input[name=algorithmCategoryIdList][value="+code.algorithmCategoryId+"]").prop("checked", true);
+				}
+			});
+			
+		});
+		
+		// 이전에 선택한 select option 불러오기
         $("select[name=algorithmTierId]").val("${algorithmQuestionVO.algorithmTierId}")
         
         // option 선택이 바뀌면, 바뀐 값이 들어감
-		$("select[name=algorithmCategoryId]").change(function() {
-            var category = 
-                $("select[name=algorithmCategoryId] option:selected").text();
-            $("#algorithmCategoryId").val(category);
-        })
         $("select[name=algorithmTierId]").change(function() {
             var tier = 
                 $("select[name=algorithmTierId] option:selected").text();
@@ -40,7 +55,7 @@
     div.grid {
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: 40px 40px 40px 1fr 40px 1fr 1fr;
+        grid-template-rows: 40px 60px 40px 40px 40px 40px 1fr 40px 1fr 40px;
     }
 
     div.grid > div.btn-group {
@@ -62,8 +77,14 @@
         padding: 0px;
         margin-bottom: 12px;
     }
-    label {
+    .label {
         margin-top: 10px;
+        font-weight: bold;
+    }
+    select {
+        margin-bottom: 10px;
+        margin-right: 10px;
+        width: 280px;
     }
 </style>
 <body>
@@ -72,20 +93,11 @@
 	           action="/algorithm/question/update">
 	    <input type="hidden" name="companyAlgorithmQuestionId" value="${algorithmQuestionVO.companyAlgorithmQuestionId}" />
 		<div class="grid">
+		    <label class="label" for="algorithmCategoryIdList">알고리즘 카테고리</label>
+		    <div id="algorithm_category"></div>
 		    
-		    <label for="algorithmCategoryId">알고리즘 카테고리</label>
-		    <select id="algorithmCategoryId" name="algorithmCategoryId" required="required">
-                <option value="">선택하세요</option>
-                <option value="수학">수학</option>
-                <option value="그리디 알고리즘">그리디 알고리즘</option>
-                <option value="배열">배열</option>
-                <option value="동적 프로그래밍">동적 프로그래밍</option>
-                <option value="해싱">해싱</option>
-                <option value="자료구조">자료구조</option>
-                <option value="문자열">문자열</option>
-                <option value="기타">기타</option>
-            </select>
-            <label for="algorithmTierId">난이도</label>
+            
+            <label class="label" for="algorithmTierId">난이도</label>
 		    <select id="algorithmTierId" name="algorithmTierId" required="required">
                 <option value="">선택하세요 (난이도최하:1 / 난이도최상:5)</option>
                 <option value="Lv.1">Lv.1</option>
@@ -98,9 +110,7 @@
             <input id="algorithmTitle" type="text" name="algorithmTitle"
                    value="${algorithmQuestionVO.algorithmTitle}" />
             
-            <input id="email" type="email" name="algorithmWriter" value="test@test" />
-            
-            <label for="algorithmContent">문제내용</label>
+            <label class="label" for="algorithmContent">문제내용</label>
             <textarea name="algorithmContent" id="editor">${algorithmQuestionVO.algorithmContent}</textarea>
             <script>
 			    ClassicEditor.create( document.querySelector( '#editor' ), {
@@ -108,7 +118,7 @@
 			    } );
 			</script>
             
-            <label for="algorithmSolution">문제풀이</label>
+            <label class="label" for="algorithmSolution">문제풀이</label>
             <textarea name="algorithmSolution" id="editor2">${algorithmQuestionVO.algorithmSolution}</textarea>
             <script>
 			    ClassicEditor.create( document.querySelector( '#editor2' ), {

@@ -19,7 +19,7 @@
 	})
 </script>
 </head>
-<style >
+<style>
 	a:link, a:hover, a:active, a:visited {
 		color: #333;
 		text-decoration: none;
@@ -28,7 +28,7 @@
 	table.table {
 		border-collapse: collapse;
 		border: 1px solid #DDD;
-		margin: 10px;
+		font-size: 14px;
 	}
 	table.table > thead > tr {
 		background-color: #FFF;
@@ -84,6 +84,14 @@
 	</div>
 	<table class="table">
 		<thead>
+			<colgroup>
+				<col width="190px" />
+				<col width="100px" />
+				<col width="200px" />
+				<col width="500px" />
+				<col width="70px" />
+				<col width="80px" />
+			</colgroup>
 			<tr>
 				<th>카테고리</th>
 				<th>작성자</th>
@@ -98,9 +106,9 @@
 			<c:when test="${not empty algorithmQuestionList.algorithmQuestionList}">
 				<c:forEach items="${algorithmQuestionList.algorithmQuestionList}" var="algorithmquestion">
 					<tr>
-						<td>${algorithmquestion.algorithmCategoryId}</td>
+						<td>${algorithmquestion.commonCodeVO.codeContent}</td>
 						<td>${algorithmquestion.memberVO.nickname}</td>
-						<td>
+						<td style="font-weight: bold;">
 							<a href="/algorithm/question/view/${algorithmquestion.companyAlgorithmQuestionId}">
 								<c:out value="${algorithmquestion.algorithmTitle}" />
 							</a>

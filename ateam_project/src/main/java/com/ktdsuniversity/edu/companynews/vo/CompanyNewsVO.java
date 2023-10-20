@@ -33,7 +33,6 @@ public class CompanyNewsVO {
 	private int likeCnt;
 	private String deleteYn;
 
-
 	private MemberVO memberVO;
 	
 	public MemberVO getMemberVO() {

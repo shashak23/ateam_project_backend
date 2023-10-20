@@ -57,7 +57,7 @@
 
 		<div class="btn-group">
 			<div class="right-align">
- 			<!-- <a href="/freeboard/update/${generalPostVO.generalPostId}">수정</a> -->
+ 			<c:if test="${sessionScope._LOGIN_USER_.email eq generalPostVO.postWriter}">
 				<div class="update_btn">
 					<div class="btn">
 						<a href="/freeboard/update/${generalPostVO.generalPostId}">수정</a>
@@ -65,6 +65,7 @@
 					</div>
 				</div>
 			</div> 
+			</c:if>
 		</div>
 	</div>
 	</form>

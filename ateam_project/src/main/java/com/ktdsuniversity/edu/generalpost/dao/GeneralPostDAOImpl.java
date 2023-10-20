@@ -32,14 +32,14 @@ public class GeneralPostDAOImpl extends SqlSessionDaoSupport
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		super.setSqlSessionTemplate(sqlSessionTemplate);
 	}
-	
+		
 	@Override
-	public int increaseForumViewCount(String likeCnt) {
-		return getSqlSession().update("increaseForumViewCount", likeCnt);
+	public int increaseViewCount(String generalPostId) {
+		return getSqlSession().update("increaseViewCount", generalPostId);
 	}
 	
 	@Override
-	public int getBoardAllCount(SearchForumVO searchForumVO) {
+	public int getBoardAllCount() {
 		return getSqlSession().selectOne("getBoardAllCount");
 	}
 	// 자유게시판
@@ -70,7 +70,7 @@ public class GeneralPostDAOImpl extends SqlSessionDaoSupport
 	
 	// 질답게시판
 	@Override
-	public List<GeneralPostVO> getAllQnABoard(SearchForumVO searchForumVO) {
+	public List<GeneralPostVO> getAllQnABoard() {
 		return getSqlSession().selectList("getAllQnABoard");
 	}
 
@@ -94,13 +94,6 @@ public class GeneralPostDAOImpl extends SqlSessionDaoSupport
 	@Override
 	public int deleteOneQnABoard(String generalPostId) {
 		return getSqlSession().delete("deleteOneQnABoard", generalPostId);
-	}
-
-	// 검색
-	
-	@Override
-	public List<GeneralPostVO> searchAllBoard(SearchForumVO searchForumVO) {
-		return getSqlSession().selectList("searchAllBoard", searchForumVO);
 	}
 	
 

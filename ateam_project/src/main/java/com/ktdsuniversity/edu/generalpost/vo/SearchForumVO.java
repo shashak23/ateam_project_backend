@@ -1,3 +1,9 @@
+/**
+ * 작성자 : 김시하
+ * 수정자 : 김시하
+ * 작성일자 : 2023-10-19
+ * 내용: 포럼 검색을 위한 vo
+ */
 package com.ktdsuniversity.edu.generalpost.vo;
 
 import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;

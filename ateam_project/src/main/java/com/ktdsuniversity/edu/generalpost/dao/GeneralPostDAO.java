@@ -13,15 +13,9 @@ import com.ktdsuniversity.edu.generalpost.vo.SearchForumVO;
 
 public interface GeneralPostDAO {
 	// 게시글 수 
-	public int getBoardAllCount(SearchForumVO searchForumVO);
+	public int getBoardAllCount();
 	// 조회수 
-	public int increaseForumViewCount(String generalPostId);
-	/**
-	 * DB에 저장된 모든 게시글의 목록을 조회 
-	 * @param searchForumVO 검색할 조건 
-	 * @return D에서 조회된 게시글의 목록
-	 */
-	public List<GeneralPostVO> searchAllBoard(SearchForumVO searchForumVO);
+	public int increaseViewCount(String generalPostId);
 
 	// 자유게시판
 	public List<GeneralPostVO> getAllFreeBoard();
@@ -35,7 +29,7 @@ public interface GeneralPostDAO {
 	public int deleteOneFreeBoard(String generalPostId);
 
 	// 질답게시판
-	public List<GeneralPostVO> getAllQnABoard(SearchForumVO searchForumVO);
+	public List<GeneralPostVO> getAllQnABoard();
 	
 	public int createNewQnABoard(GeneralPostVO generalVO);
 	
@@ -44,6 +38,5 @@ public interface GeneralPostDAO {
 	public int updateOneQnABoard(GeneralPostVO generaVO);
 	
 	public int deleteOneQnABoard(String generalPostId);
-
 
 }

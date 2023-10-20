@@ -1,6 +1,8 @@
-package com.ktdsuniversity.edu.member.vo;
+package com.ktdsuniversity.edu.companymember.vo;
 
-public class CompanyVO {
+import com.ktdsuniversity.edu.member.vo.MemberVO;
+
+public class CompanyVO extends MemberVO {
 	
 	private String companyEmail;
 	private String contactNumber;
@@ -15,7 +17,7 @@ public class CompanyVO {
 	private int investment;
 	private String companyINTRO;
 	private String homeURL;
-	private String confirmYN;
+	private String confirmYn;
 	
 	
 	public String getCompanyEmail() {
@@ -96,11 +98,12 @@ public class CompanyVO {
 	public void setHomeURL(String homeURL) {
 		this.homeURL = homeURL;
 	}
-	public String getConfirmYN() {
-		return confirmYN;
+	public String getConfirmYn() {
+		return confirmYn;
 	}
-	public void setConfirmYN(String confirmYN) {
-		this.confirmYN = confirmYN;
+	public void setConfirmYn(String confirmYN) {
+		this.confirmYn = confirmYN;
 	}
+	
 	
 }

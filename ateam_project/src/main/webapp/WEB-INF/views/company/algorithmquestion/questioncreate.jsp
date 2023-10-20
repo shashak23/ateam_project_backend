@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@taglib prefix="c" uri="jakarta.tags.core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,30 +11,30 @@
 <script type="text/javascript" src="/js/lib/jquery-3.7.1.js"></script>
 <script type="text/javascript">
 	$().ready(function() {
-		$("select[name=algorithmCategoryId]").change(function() {
-            var category = 
-                $("select[name=algorithmCategoryId] option:selected").text();
-            $("#algorithmCategoryId").val(category);
-        })
+		
+		$.get("/code/알고리즘카테고리", function(response) {
+			for (var i = 0; i < response.length; i++) {
+				var code = response[i]
+				var checkbox = $("<input type='checkbox' id='"+code.codeId+"' name='algorithmCategoryIdList' value='"+code.codeId+"' />");
+				var label = $("<label for='"+code.codeId+"'>"+code.codeContent+"</label>");
+				$("#algorithm_category").append(checkbox);
+				$("#algorithm_category").append(label);
+			}
+		});
+		
         $("select[name=algorithmTierId]").change(function() {
             var tier = 
                 $("select[name=algorithmTierId] option:selected").text();
             $("#algorithmTierId").val(tier);
         })
+        
+        $("").keyup(function() {
+        	$.get("/")
+        })
 	})
 </script>
 </head>
 <style>
-    div.errors {
-	    background-color: #ff00004a;
-	    opacity: 0.8;
-	    padding: 10px;
-	    color: #333;
-	}
-	div.errors:last-child {
-	    margin-bottom: 15px;
-	}
-
     .ck-editor__editable { 
         height: 400px; 
     }
@@ -44,7 +45,7 @@
     div.grid {
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: 40px 40px 40px 1fr 40px 1fr 1fr;
+        grid-template-rows: 40px 60px 40px 40px 40px 40px 1fr 40px 1fr 40px;
     }
 
     div.grid > div.btn-group {
@@ -66,52 +67,46 @@
         padding: 0px;
         margin-bottom: 12px;
     }
-    label {
-        margin: 10px;
-    }
-    label:first-child {
-        margin-left: 0px;
-    }
-    
-    div.flex {
-        display: flex;
-        flex-direction: row;
-        margin-left: 0px;
-    }
     select {
         margin-bottom: 10px;
         margin-right: 10px;
-        width: 150px;
-    }
-    select:last-child {
         width: 280px;
-    }    
+    }
+    .label {
+        margin-top: 10px;
+        font-weight: bold;
+    }
+        div.errors {
+	    background-color: #ff00004a;
+	    opacity: 0.8;
+	    padding: 10px;
+	    color: #333;
+	}
+	div.errors:last-child {
+	    margin-bottom: 15px;
+	}
 </style>
 <body>
 	<h3>알고리즘 문제 작성</h3>
 	<form:form modelAttribute="algorithmQuestionVO" method="post">
 	<div>
-	    <form:errors path="algorithmCategoryId" element="div" cssClass="errors"/>
-	    <form:errors path="algorithmTierId" element="div" cssClass="errors"/>
+	    <%-- <c:if test="${not empty message1}">
+	        <div class="errors" >${message1}</div>
+	    </c:if>
+	    <c:if test="${not empty message2}">
+	        <div class="errors" >${message2}</div>
+	    </c:if> --%>
+		<form:errors path="algorithmCategoryIdList" element="div" cssClass="errors"/>
+		<form:errors path="algorithmTierId" element="div" cssClass="errors"/>
 		<form:errors path="algorithmTitle" element="div" cssClass="errors"/>
 		<form:errors path="algorithmContent" element="div" cssClass="errors"/>
 	</div>
 	
 		<div class="grid">
-		    <div class=flex>
-		    <label for="algorithmCategoryId">알고리즘 카테고리</label>
-		    <select name="algorithmCategoryId">
-                <option value="">선택하세요</option>
-                <option value="수학">수학</option>
-                <option value="그리디 알고리즘">그리디 알고리즘</option>
-                <option value="배열">배열</option>
-                <option value="동적 프로그래밍">동적 프로그래밍</option>
-                <option value="해싱">해싱</option>
-                <option value="자료구조">자료구조</option>
-                <option value="문자열">문자열</option>
-                <option value="기타">기타</option>
-            </select>
-            <label for="algorithmTierId">난이도</label>
+		    <label class="label" for="algorithmCategoryId">알고리즘 카테고리</label>
+		    <div id="algorithm_category"></div>
+			
+            <label class="label" for="algorithmTierId">난이도</label>
 		    <select name="algorithmTierId" >
                 <option value="">선택하세요 (난이도최하:1 / 난이도최상:5)</option>
                 <option value="Lv.1">Lv.1</option>
@@ -120,12 +115,11 @@
                 <option value="Lv.4">Lv.4</option>
                 <option value="Lv.5">Lv.5</option>
             </select>
-		    </div>
 		    
             <input id="algorithmTitle" type="text" name="algorithmTitle" placeholder="제목을 입력해 주세요."
                    value="${algorithmQuestionVO.algorithmTitle}" />
             
-            <label for="algorithmContent">문제내용</label>
+            <label class="label" for="algorithmContent">문제내용</label>
             <textarea name="algorithmContent" id="editor">${algorithmQuestionVO.algorithmContent}</textarea>
             <script>
 			    ClassicEditor.create( document.querySelector( '#editor' ), {
@@ -133,8 +127,7 @@
 			    } );
 			</script>
 
-
-            <label for="algorithmSolution">문제풀이</label>
+            <label class="label" for="algorithmSolution">문제풀이</label>
             <textarea name="algorithmSolution" id="editor2"></textarea>
             <script>
 			    ClassicEditor.create( document.querySelector( '#editor2' ), {

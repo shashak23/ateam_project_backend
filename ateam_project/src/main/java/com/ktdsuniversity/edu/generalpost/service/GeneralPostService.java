@@ -13,22 +13,22 @@ import com.ktdsuniversity.edu.generalpost.vo.SearchForumVO;
 
 public interface GeneralPostService {
 	// 자유게시판
-	public GeneralPostListVO getAllFreeBoard(SearchForumVO searchForumVO);
+	public GeneralPostListVO getAllFreeBoard();
 
 	public boolean createNewFreeBoard(GeneralPostVO generalPostVO);
 
-	public GeneralPostVO getOneFreeBoard(String generalPostId, boolean isIncrease);
+	public GeneralPostVO getOneFreeBoard(String generalPostId);
 	
 	public boolean updateOneFreeBoard(GeneralPostVO generalPostVO);
 		
 	public boolean deleteOneFreeBoard(String generalPostId);
 	
 	// 질답게시판
-	public GeneralPostListVO getAllQnABoard(SearchForumVO searchForumVO);
+	public GeneralPostListVO getAllQnABoard();
 
 	public boolean createNewQnABoard(GeneralPostVO generalPostVO);
 
-	public GeneralPostVO getOneQnABoard(String generalPostId, boolean isIncrease);
+	public GeneralPostVO getOneQnABoard(String generalPostId);
 	
 	public boolean updateOneQnABoard(GeneralPostVO generalPostVO);
 		
