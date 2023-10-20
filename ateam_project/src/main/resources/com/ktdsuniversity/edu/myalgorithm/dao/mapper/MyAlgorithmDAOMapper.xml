@@ -18,10 +18,9 @@
 			<id column="EMAIL" property="email" />
 		</association>
 		<association property="algorithmQuestionVO"
-			javaType="com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionVO"
-			autoMapping="true">
-			<id column="COMPANY_ALGORITHM_QUESTION_ID"
-				property="companyAlgorithmQuestionId" />
+		    javaType="com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionVO"
+		    autoMapping="true">
+		    <id column="COMPANY_ALGORITHM_QUESTION_ID" property="companyAlgorithmQuestionId" />
 		</association>
 	</resultMap>
 	
@@ -29,36 +28,36 @@
 			parameterType="string"
 			resultType="_int">
 		SELECT COUNT(1)
-		  FROM MEMBER M
-		 INNER JOIN MY_ALGORITHM_QUESTION MAQ
-		    ON MAQ.GENERAL_MEMBER_EMAIL = M.EMAIL 
+		  FROM MY_ALGORITHM_QUESTION MAQ
+		 INNER JOIN MEMBER M
+		    ON M.EMAIL = MAQ.GENERAL_MEMBER_EMAIL
 		 INNER JOIN COMPANY_ALGORITHM_QUESTION CAQ
 		    ON CAQ.COMPANY_ALGORITHM_QUESTION_ID = MAQ.COMPANY_ALGORITHM_QUESTION_ID
-		 WHERE M.EMAIL = #{_parameter}
+		 WHERE MAQ.GENERAL_MEMBER_EMAIL = #{_parameter}
+		   AND MAQ.DELETE_YN = 'N'
 	</select>
 	<select id="getAllMyAlgorithmList"
 			parameterType="string"
 			resultMap="MyAlgorithmDAOMap">
-		SELECT M.EMAIL 
-		     , M.NICKNAME 
-		     , CAQ.ALGORITHM_CATEGORY_ID 
-		     , CAQ.ALGORITHM_TIER_ID 
-		     , CAQ.ALGORITHM_WRITER
-		     , CAQ.ALGORITHM_TITLE
-		     , CAQ.ALGORITHM_CONTENT
-		     . CAQ.ALGORITHM_SOLUTION
-		     , CAQ.POST_DATE
-		     , CAQ.VIEW_CNT 
-		     , CAQ.LIKE_CNT
+		SELECT MAQ.MY_ALGORITHM_QUESTION_ID
+		     , MAQ.GENERAL_MEMBER_EMAIL
+		     , MAQ.COMPANY_ALGORITHM_QUESTION_ID
+		     , MAQ.MY_ANSWER
 		     , MAQ.CORRECT_ANSWER_YN
 		     , MAQ.DELETE_YN
-		     , MAQ.MY_ANSWER 
-		  FROM MEMBER M
-		 INNER JOIN MY_ALGORITHM_QUESTION MAQ
-		    ON MAQ.GENERAL_MEMBER_EMAIL = M.EMAIL 
+		     , CAQ.ALGORITHM_TITLE 
+		     , CAQ.ALGORITHM_WRITER
+		     , CAQ.ALGORITHM_CONTENT
+		     , CAQ.VIEW_CNT 
+             , CAQ.LIKE_CNT 
+		     , M.NICKNAME
+		  FROM MY_ALGORITHM_QUESTION MAQ
+		 INNER JOIN MEMBER M
+		    ON M.EMAIL = MAQ.GENERAL_MEMBER_EMAIL
 		 INNER JOIN COMPANY_ALGORITHM_QUESTION CAQ
 		    ON CAQ.COMPANY_ALGORITHM_QUESTION_ID = MAQ.COMPANY_ALGORITHM_QUESTION_ID
-		 WHERE M.EMAIL = #{_parameter}
+		 WHERE MAQ.GENERAL_MEMBER_EMAIL = #{email}
+		   AND MAQ.DELETE_YN = 'N'
 	</select>
 	
 	<insert id="createNewMyAlgorithm"

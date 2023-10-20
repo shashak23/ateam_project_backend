@@ -193,7 +193,15 @@
         opacity: 1;
         pointer-events: all;
     }
-	
+    div.errors {
+        background-color: #ff00004a;
+        opacity: 0.8;
+        padding: 10px;
+        color: #333;
+	}
+	div.errors:last-child {
+	    margin-bottom: 15px;
+	}
 </style>
 <body>
     <jsp:include page="../../member/membermenu.jsp"></jsp:include>
@@ -221,7 +229,10 @@
 				<button class="btn btn-primary">문제풀이</button>
 			</div>
 			
-			<form:form modelAttribute="myAlgorithmVO" method="post">			
+			<form:form modelAttribute="myAlgorithmVO" method="post">	
+			<div>
+				<form:errors path="myAnswer" element="div" cssClass="errors" />
+			</div>
 			    <label for="myAnswer">답변</label> <!-- 웹IDE 테이블에 신규생성? -->
 			    <textarea name="myAnswer" id="editor" placeholder="답변을 작성해주세요.">${myAlgorithmVO.myAnswer}</textarea>
 			    <!-- 일반회원이 로그인 했을 시 -->

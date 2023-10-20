@@ -28,6 +28,8 @@ import com.ktdsuniversity.edu.myalgorithm.vo.MyAlgorithmListVO;
 import com.ktdsuniversity.edu.myalgorithm.vo.MyAlgorithmVO;
 import com.ktdsuniversity.edu.util.XssIgnoreUtil;
 
+import jakarta.validation.Valid;
+
 @Controller
 public class MyAlgorithmController {
 
@@ -39,22 +41,12 @@ public class MyAlgorithmController {
 	@Autowired
 	private AlgorithmQuestionService algorithmQuestionService;
 	
-	@GetMapping("home/my/algorithmlist")
+	@GetMapping("/home/myalgorithm/list")
 	public ModelAndView viewAllMyAlgorithm(@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 		ModelAndView mav = new ModelAndView();
-		String email = memberVO.getEmail();
-		System.out.println("email: " + email);
-		MyAlgorithmListVO myList = myAlgorithmService.getAllMyAlgorithm(email);
-		
-		System.out.println(myList.getMyAlgotirhmListCnt());
-		
-		for (MyAlgorithmVO list : myList.getMyAlgorithmList()) {
-			System.out.println("start!");
-			System.out.println(list.getCompanyAlgorithmQuestionId());
-			System.out.println(list.getAlgorithmQuestionVO().getAlgorithmTitle());
-			System.out.println(list.getAlgorithmQuestionVO().getAlgorithmContent());
-			System.out.println(list.getMemberVO().getNickname());
-		}
+		String generalMemberEmail = memberVO.getEmail();
+		System.out.println("email: " + generalMemberEmail);
+		MyAlgorithmListVO myList = myAlgorithmService.getAllMyAlgorithm(generalMemberEmail);
 		
 		mav.setViewName("myalgorithm/myalgorithmlist");
 		mav.addObject("myAlgorithmList", myList);
@@ -63,7 +55,7 @@ public class MyAlgorithmController {
 	}
 	
 	@PostMapping("/algorithm/question/view/{companyAlgorithmQuestionId}")
-	public String createMyAlgorithm(@PathVariable String companyAlgorithmQuestionId 
+	public String createMyAlgorithm(@Valid @PathVariable String companyAlgorithmQuestionId 
 			                      , @ModelAttribute MyAlgorithmVO myAlgorithmVO 
 			                      , Model model
 			                      , @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
@@ -83,18 +75,17 @@ public class MyAlgorithmController {
 			model.addAttribute("AlgorithmQuestionVO", algorithmQuestionVO);
 			model.addAttribute("MyAlgorithmVO", myAlgorithmVO);
 			return "company/algorithmquestion/questionview";
-		}		
+		}
 	}
 	
 	@GetMapping("/home/myalgorithm/delete/{myAlgorithmQuestionId}")
-	public String doDeleteMyAlgorithm(@PathVariable String myAlgorithmQuestionId
-			                        , @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+	public String doDeleteMyAlgorithm(@PathVariable String myAlgorithmQuestionId) {
 		
 		logger.debug("PathVariable: " + myAlgorithmQuestionId);
 		
 		myAlgorithmService.deleteMyAlgorithm(myAlgorithmQuestionId);
 		
-		return "redirect:/home/my/algorithmlist";
+		return "redirect:/home/myalgorithm/list";
 	}
 	
 	

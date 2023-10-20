@@ -6,6 +6,9 @@
 
 package com.ktdsuniversity.edu.algorithmexplanation.vo;
 
+import com.ktdsuniversity.edu.member.vo.MemberVO;
+import com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO;
+import com.ktdsuniversity.edu.member.vo.MemberVO;
 import com.ktdsuniversity.edu.util.XssIgnore;
 
 import jakarta.validation.constraints.NotBlank;
@@ -13,6 +16,10 @@ import jakarta.validation.constraints.NotBlank;
 public class AlgorithmExplanationVO {
 	
 	private String companyAlgorithmExplanationId;
+	
+	@NotBlank(message = "알고리즘 카테고리를 선택해주세요.")
+	private String algorithmCategoryId;
+	
 	private String postWriter;
 	
 	@XssIgnore
@@ -28,11 +35,34 @@ public class AlgorithmExplanationVO {
 	private int likeCnt;
 	private String deleteYn;
 	
+	private MemberVO memberVO;
+	
+	private CommonCodeVO commonCodeVO;
+	
+	public MemberVO getMemberVO() {
+		return memberVO;
+	}
+	public void setMemberVO(MemberVO memberVO) {
+		this.memberVO = memberVO;
+	}
+	public CommonCodeVO getCommonCodeVO() {
+		return commonCodeVO;
+	}
+	public void setCommonCodeVO(CommonCodeVO commonCodeVO) {
+		this.commonCodeVO = commonCodeVO;
+	}
 	public String getCompanyAlgorithmExplanationId() {
 		return companyAlgorithmExplanationId;
 	}
 	public void setCompanyAlgorithmExplanationId(String companyAlgorithmExplanationId) {
 		this.companyAlgorithmExplanationId = companyAlgorithmExplanationId;
+	}
+	
+	public String getAlgorithmCategoryId() {
+		return algorithmCategoryId;
+	}
+	public void setAlgorithmCategoryId(String algorithmCategoryId) {
+		this.algorithmCategoryId = algorithmCategoryId;
 	}
 	public String getPostWriter() {
 		return postWriter;

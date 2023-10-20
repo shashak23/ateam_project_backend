@@ -11,7 +11,7 @@ import com.ktdsuniversity.edu.myalgorithm.vo.MyAlgorithmListVO;
 import com.ktdsuniversity.edu.myalgorithm.vo.MyAlgorithmVO;
 
 public interface MyAlgorithmService {
-	public MyAlgorithmListVO getAllMyAlgorithm(String email);
+	public MyAlgorithmListVO getAllMyAlgorithm(String generalMemberEmail);
 	
 	public boolean createNewMyAlgorithm(MyAlgorithmVO myAlgorithmVO);
 	

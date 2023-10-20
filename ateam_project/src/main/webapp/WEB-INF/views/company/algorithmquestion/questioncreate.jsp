@@ -89,12 +89,12 @@
 <body>
 	<h3>알고리즘 문제 작성</h3>
 	<form:form modelAttribute="algorithmQuestionVO" method="post">
-	<div>
-		<form:errors path="algorithmCategoryIdList" element="div" cssClass="errors"/>
-		<form:errors path="algorithmTierId" element="div" cssClass="errors"/>
-		<form:errors path="algorithmTitle" element="div" cssClass="errors"/>
-		<form:errors path="algorithmContent" element="div" cssClass="errors"/>
-	</div>
+		<div>
+			<form:errors path="algorithmCategoryIdList" element="div" cssClass="errors"/>
+			<form:errors path="algorithmTierId" element="div" cssClass="errors"/>
+			<form:errors path="algorithmTitle" element="div" cssClass="errors"/>
+			<form:errors path="algorithmContent" element="div" cssClass="errors"/>
+		</div>
 	
 		<div class="grid">
 		    <label class="label" for="algorithmCategoryId">알고리즘 카테고리</label>

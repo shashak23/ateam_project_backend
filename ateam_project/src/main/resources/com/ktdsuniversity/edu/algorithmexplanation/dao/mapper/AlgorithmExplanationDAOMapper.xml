@@ -3,7 +3,119 @@
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ktdsuniversity.edu.algorithmexplanation.dao.AlgorithmExplanationDAO">
+	<resultMap type="com.ktdsuniversity.edu.algorithmexplanation.vo.AlgorithmExplanationVO"
+	           id="AlgorithmExplanationDAOMap"
+	           autoMapping="true">
+	           <id column="COMPANY_ALGORITHM_EXPLANATION_ID" property="companyAlgorithmExplanationId" />
+	    <association property="memberVO"
+	        javaType="com.ktdsuniversity.edu.member.vo.MemberVO"
+			autoMapping="true">
+			<id column="EMAIL" property="email" />
+		</association>
+	    <association property="commonCodeVO"
+		    javaType="com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO"
+		    autoMapping="true">
+		    <id column="CODE_ID" property="codeId" />
+		</association>
+	</resultMap>
 	
+	<select id="getAlgorithmExplanationAllCount"
+	        resultType="_int">
+	    SELECT COUNT(CAE.COMPANY_ALGORITHM_EXPLANATION_ID)
+		  FROM COMPANY_ALGORITHM_EXPLANATION CAE
+		 INNER JOIN MEMBER M
+		    ON CAE.POST_WRITER = M.EMAIL
+		 WHERE CAE.DELETE_YN = 'N'
+	</select>
 	
+	<select id="getAllAlgorithmExplanation"
+	        resultMap="AlgorithmExplanationDAOMap">
+	    SELECT CAE.COMPANY_ALGORITHM_EXPLANATION_ID 
+		     , CAE.ALGORITHM_CATEGORY_ID
+		     , CAE.POST_WRITER
+		     , CAE.POST_TITLE
+		     , CAE.POST_CONTENT
+		     , TO_CHAR(CAE.POST_DATE, 'YYYY-MM-DD HH24:MI:SS') POST_DATE
+		     , CAE.VIEW_CNT
+		     , CAE.LIKE_CNT
+		     , CAE.DELETE_YN
+		     , M.NICKNAME
+		     , C.CODE_CONTENT
+		  FROM COMPANY_ALGORITHM_EXPLANATION CAE
+		 INNER JOIN MEMBER M
+		    ON CAE.POST_WRITER = M.EMAIL 
+		 INNER JOIN COMMON_CODE C
+		    ON CAE.ALGORITHM_CATEGORY_ID = C.CODE_ID
+		 WHERE CAE.DELETE_YN = 'N'
+		 ORDER BY POST_DATE DESC
+	</select>
 	
+	<insert id="createNewAlgorithmExplanation"
+	        parameterType="com.ktdsuniversity.edu.algorithmexplanation.vo.AlgorithmExplanationVO">
+	    INSERT INTO COMPANY_ALGORITHM_EXPLANATION CAE
+		 (COMPANY_ALGORITHM_EXPLANATION_ID
+		, ALGORITHM_CATEGORY_ID
+		, POST_WRITER
+		, POST_TITLE
+		, POST_CONTENT
+		, POST_DATE
+		, VIEW_CNT
+		, LIKE_CNT
+		, DELETE_YN)
+		VALUES
+		 ('AE-' || TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_COMPANY_ALGORITHM_EXPLANATION_PK.NEXTVAL, 6, '0')
+		, #{algorithmCategoryId}
+		, #{postWriter}
+		, #{postTitle}
+		, #{postContent}
+		, SYSDATE
+		, 0
+		, 0
+		, 'N')
+	</insert>
+	
+	<update id="increaseViewCount"
+	        parameterType="string">
+	    UPDATE COMPANY_ALGORITHM_EXPLANATION
+	       SET VIEW_CNT = VIEW_CNT + 1
+	     WHERE COMPANY_ALGORITHM_EXPLANATION_ID = #{_parameter}
+	</update>
+	
+	<select id="getOneAlgorithmExplanation"
+	        parameterType="string"
+	        resultMap="AlgorithmExplanationDAOMap">
+	    SELECT CAE.COMPANY_ALGORITHM_EXPLANATION_ID
+		     , CAE.ALGORITHM_CATEGORY_ID
+		     , CAE.POST_WRITER
+		     , CAE.POST_TITLE
+		     , CAE.POST_CONTENT
+		     , TO_CHAR(CAE.POST_DATE, 'YYYY-MM-DD HH24:MI:SS') POST_DATE
+		     , CAE.VIEW_CNT
+		     , CAE.LIKE_CNT
+		     , CAE.DELETE_YN
+		     , M.NICKNAME 
+		     , C.CODE_CONTENT 
+		  FROM COMPANY_ALGORITHM_EXPLANATION CAE
+		 INNER JOIN MEMBER M
+		    ON CAE.POST_WRITER = M.EMAIL 
+		 INNER JOIN COMMON_CODE C
+		    ON CAE.ALGORITHM_CATEGORY_ID = C.CODE_ID
+		 WHERE CAE.COMPANY_ALGORITHM_EXPLANATION_ID = #{_parameter}
+	</select>
+	
+	<update id="updateOneAlgorithmExplanation"
+	        parameterType="com.ktdsuniversity.edu.algorithmexplanation.vo.AlgorithmExplanationVO">
+	    UPDATE COMPANY_ALGORITHM_EXPLANATION
+	       SET ALGORITHM_CATEGORY_ID = #{algorithmCategoryId}
+	         , POST_TITLE = #{postTitle}
+	         , POST_CONTENT = #{postContent}
+	     WHERE COMPANY_ALGORITHM_EXPLANATION_ID = #{companyAlgorithmExplanationId}
+	</update>
+	
+	<update id="deleteOneAlgorithmExplanation"
+	        parameterType="string">
+	    UPDATE COMPANY_ALGORITHM_EXPLANATION
+	       SET DELETE_YN = 'Y'
+	     WHERE COMPANY_ALGORITHM_EXPLANATION_ID = #{_parameter}
+	</update>
 </mapper>

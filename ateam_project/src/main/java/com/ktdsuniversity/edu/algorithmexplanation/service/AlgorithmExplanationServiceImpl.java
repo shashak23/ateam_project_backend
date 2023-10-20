@@ -40,7 +40,6 @@ public class AlgorithmExplanationServiceImpl implements AlgorithmExplanationServ
 		return createCount > 0;
 	}
 
-	@Transactional
 	@Override
 	public AlgorithmExplanationVO getOneAlgorithmExplanation(String companyAlgorithmExplanationId, boolean isIncrease) {
 		if (isIncrease) {

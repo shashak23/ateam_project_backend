@@ -1,6 +1,6 @@
 /**
  * 작성자: 김태현
- * 수정자: 장보늬(2023-10-15)
+ * 수정자: 장보늬(2023-10-20)
  * 작성일자: 2023-10-12
  * 내용: 내가 푼 알고리즘 문제를 저장할 VO클래스입니다.
  */
@@ -9,12 +9,19 @@ package com.ktdsuniversity.edu.myalgorithm.vo;
 
 import com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
+import com.ktdsuniversity.edu.util.XssIgnore;
+
+import jakarta.validation.constraints.NotBlank;
 
 public class MyAlgorithmVO extends AlgorithmQuestionVO {
 	private String myAlgorithmQuestionId;
 	private String generalMemberEmail;
 	private String companyAlgorithmQuestionId;
+	
+	@XssIgnore
+	@NotBlank(message = "답을 입력해주세요.")
 	private String myAnswer;
+	
 	private String correctAnswerYn;
 	private String deleteYn;
 	
