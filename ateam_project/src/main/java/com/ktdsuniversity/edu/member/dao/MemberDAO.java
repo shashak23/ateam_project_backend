@@ -1,6 +1,10 @@
+/*
+ * 수정자: 장보늬(2023-10-20)
+ * */
 package com.ktdsuniversity.edu.member.dao;
 
-import com.ktdsuniversity.edu.companymember.vo.CompanyVO;
+import java.util.List;
+
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 
 public interface MemberDAO {
@@ -42,4 +46,5 @@ public interface MemberDAO {
 	 */
 //	public int createNewCompanyMember(MemberVO memberVO);
 	
+	public List<MemberVO> searchMember(String memberType);
 }

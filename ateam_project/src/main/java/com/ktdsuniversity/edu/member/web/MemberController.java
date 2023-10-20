@@ -1,6 +1,10 @@
+/*
+ * 수정자: 장보늬(2023-10-20)
+ * */
 package com.ktdsuniversity.edu.member.web;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.slf4j.Logger;
@@ -36,6 +40,12 @@ public class MemberController {
 	private MemberService memberService;
 	
 	private Logger log = LoggerFactory.getLogger(FreePostController.class);
+	
+	@GetMapping("/member/{memberType}")
+	@ResponseBody
+	public List<MemberVO> searchNickName(@PathVariable String memberType) {
+		return memberService.searchMember(memberType);
+	}
 	
 	/**
 	 * 로그인 관련

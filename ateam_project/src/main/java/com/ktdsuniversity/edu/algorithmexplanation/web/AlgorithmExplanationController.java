@@ -114,7 +114,7 @@ public class AlgorithmExplanationController {
 			throw new PageNotFoundException("잘못된 접근입니다!");
 		}
 		
-		boolean isSuccess = algorithmExplanationService.updateOneAlgorithmExplanation(originAlgorithmExplanationVO);
+		boolean isSuccess = algorithmExplanationService.updateOneAlgorithmExplanation(algorithmExplanationVO);
 		if(isSuccess) {
 			return "redirect:/algorithm/explanation/view/" + algorithmExplanationVO.getCompanyAlgorithmExplanationId();
 		}

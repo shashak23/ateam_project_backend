@@ -1,4 +1,9 @@
+/*
+ * 수정자: 장보늬(2023-10-20)
+ * */
 package com.ktdsuniversity.edu.member.service;
+
+import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
@@ -7,6 +12,8 @@ import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 
 public interface MemberService {
+	
+	public List<MemberVO> searchMember(String memberType);
 	
 	/**
 	 * 일반회원가입

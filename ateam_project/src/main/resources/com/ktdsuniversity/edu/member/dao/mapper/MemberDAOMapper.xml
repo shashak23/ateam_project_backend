@@ -96,5 +96,13 @@
  		 WHERE EMAIL = #{email}
 	</update>
 	
+	<select id="searchMember"
+	        parameterType="string"
+	        resultType="com.ktdsuniversity.edu.member.vo.MemberVO">
+	   SELECT NICKNAME
+		     , MEMBER_TYPE
+		  FROM MEMBER
+		 WHERE MEMBER_TYPE = #{_parameter}
+	</select>
 
 </mapper>

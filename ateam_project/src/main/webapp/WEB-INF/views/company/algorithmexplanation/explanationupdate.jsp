@@ -18,18 +18,9 @@
 				var option = $("<option value='" +code.codeId+"'>"+code.codeContent+"</option>");
 				$("#algorithm_category").append(option);
 			}
-		});
-		
 		// 이전에 선택한 select option 불러오기
         $("select[name=algorithmCategoryId]").val("${algorithmExplanationVO.commonCodeVO.codeId}")
-        
-        
-        // option 선택이 바뀌면, 바뀐 값이 들어감
-        $("select[name=algorithmCategoryId]").change(function() {
-            var category = 
-                $("select[name=algorithmCategoryId] option:selected").val();
-            $("#algorithmCategoryId").val(category);
-        })
+		});
 	    
 	    ClassicEditor.create( document.querySelector( '#editor' ), {
 		   language: "ko"

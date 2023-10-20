@@ -27,15 +27,7 @@
             ON CAQ.ALGORITHM_WRITER = M.EMAIL
 	     WHERE CAQ.DELETE_YN = 'N'
 		<if test='searchKeyword != null and searchKeyword != ""'>
-		    <if test='searchType == "algorithmTitle"'>
-		   AND CAQ.ALGORITHM_TITLE LIKE '%' || #{searchKeyword} || '%'
-		    </if>
-		    <if test='searchType == "algorithmContent"'>
-		   AND CAQ.ALGORITHM_CONTENT LIKE '%' || #{searchKeyword} || '%'
-		    </if>
-		    <if test='searchType == "algorithmWriter"'>
 		   AND M.NICKNAME LIKE '%' || #{searchKeyword} || '%'
-		    </if>
 		</if>
 	</select>
 	
@@ -86,15 +78,7 @@
 		    ON CAQ.MAIN_ALGORITHM_CATEGORY_ID = C.CODE_ID
 		 WHERE DELETE_YN = 'N'
 		<if test='searchKeyword != null and searchKeyword != ""'>
-		    <if test='searchType == "algorithmTitle"'>
-		   AND CAQ.ALGORITHM_TITLE LIKE '%' || #{searchKeyword} || '%'
-		    </if>
-		    <if test='searchType == "algorithmContent"'>
-		   AND CAQ.ALGORITHM_CONTENT LIKE '%' || #{searchKeyword} || '%'
-		    </if>
-		    <if test='searchType == "algorithmWriter"'>
 		   AND M.NICKNAME LIKE '%' || #{searchKeyword} || '%'
-		    </if>
 		</if>
 		 ORDER BY POST_DATE DESC <!-- 최신글순 -->
 	</select>

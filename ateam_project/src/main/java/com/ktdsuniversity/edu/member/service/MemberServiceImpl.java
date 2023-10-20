@@ -1,6 +1,7 @@
 package com.ktdsuniversity.edu.member.service;
 
 import java.io.File;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -166,5 +167,9 @@ public class MemberServiceImpl implements MemberService{
 		return updatewithdrawMemberCount > 0;
 	}
 	
+	@Override
+	public List<MemberVO> searchMember(String memberType) {
+		return memberDAO.searchMember(memberType);
+	}
 
 }

@@ -1,5 +1,7 @@
 package com.ktdsuniversity.edu.member.dao;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -74,4 +76,8 @@ public class MemberDAOImpl extends SqlSessionDaoSupport implements MemberDAO{
 //		return getSqlSession().insert("createNewCompanyMember", memberVO);
 //	}
 	
+	@Override
+	public List<MemberVO> searchMember(String memberType) {
+		return getSqlSession().selectList("searchMember", memberType);
+	}
 }

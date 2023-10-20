@@ -10,12 +10,21 @@
 <script type="text/javascript" src="/js/lib/jquery-3.7.1.js"></script>
 <script type="text/javascript">
 	$().ready(function() {
+		$.get("/member/COMPANY", function(response) {
+			for (var i = 0; i < response.length; i++) {
+				var member = response[i]
+				var option = $("<option value='"+member.nickname+"'></option>");
+				$("#nicList").append(option);
+			}
+		});
+		
 		$("#search-btn").click(function() {
 			$("#search-form").attr({
 				"method": "get",
 				"action": "/algorithm/question/list"
 			}).submit()
-		})
+		});
+		
 	})
 </script>
 </head>
@@ -60,14 +69,10 @@
     <form id="search-form"
 	      method="get"
 	      action="/algorithm/question/list">
-	      	<div>
-			    <select name="searchType">
-			        <option value="algorithmTitle" ${searchAlgorithmQuestionVO.searchType eq 'algorithmTitle' ? 'selected':''}>제목</option>
-			        <option value="algorithmContent" ${searchAlgorithmQuestionVO.searchType eq 'algorithmContent' ? 'selected':''}>내용</option>
-			        <option value="algorithmWriter" ${searchAlgorithmQuestionVO.searchType eq 'algorithmWriter' ? 'selected':''}>기업명</option>
-			    </select>
-			    <input type="text" name="searchKeyword" value="${searchAlgorithmQuestionVO.searchKeyword}"/>
-			    <button id="search-btn">검색</button>
+	      <div>
+		      <input type="text" name="searchKeyword" list="nicList" />
+		      <datalist id="nicList"></datalist>
+		      <button id="search-btn">검색</button>
 	      </div>
 	</form>
 	<div class="btn-group">

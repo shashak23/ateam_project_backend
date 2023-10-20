@@ -22,12 +22,6 @@
 			}
 		});
 		
-        $("select[name=algorithmTierId]").change(function() {
-            var tier = 
-                $("select[name=algorithmTierId] option:selected").text();
-            $("#algorithmTierId").val(tier);
-        })
-        
         $("").keyup(function() {
         	$.get("/")
         })
