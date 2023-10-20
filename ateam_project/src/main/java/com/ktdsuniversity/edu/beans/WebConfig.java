@@ -48,6 +48,7 @@ public class WebConfig implements WebMvcConfigurer {
 		checkSessionExcludePatterns.add("/member/auth");
 		checkSessionExcludePatterns.add("/freeboard/list");
 		checkSessionExcludePatterns.add("/home/main");
+		checkSessionExcludePatterns.add("/home/home");
 		checkSessionExcludePatterns.add("/js/**");
 		checkSessionExcludePatterns.add("/css/**");
 		checkSessionExcludePatterns.add("/img/**");
@@ -56,7 +57,6 @@ public class WebConfig implements WebMvcConfigurer {
 		checkSessionExcludePatterns.add("/algorithm/**");
 		checkSessionExcludePatterns.add("/member/**");
 		checkSessionExcludePatterns.add("/qnaboard/list");
-//		checkSessionExcludePatterns.add("/test/**");
 
 		
 		registry.addInterceptor(new CheckSessionInterceptor())

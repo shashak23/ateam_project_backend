@@ -11,6 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
 <!-- <link rel="stylesheet" href="/css/style.css"> -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+<script src="/js/lib/jquery-3.7.1.js"></script>
 <style>
 :root {
   --light-blue: #75C2F6;
@@ -55,19 +56,20 @@
 
 .logo_wrap {
   display: flex;
-  height: 50px;
+  height: 30px;
 }
+
 .logo_wrap .logo_img {
   width: 50px;
   text-align: center;
-  line-height: 50px;
+  line-height: 30px;
   font-size: var(--font-big);
 }
 
 .logo_wrap .logo_name {
   width: 120px;
   text-align: center;
-  line-height: 50px;
+  line-height: 30px;
   font-size: var(--font-big);
 }
 
@@ -75,19 +77,47 @@
   display: flex;
 }
 
-.gnb ul a {
-    margin: 10px;
-    padding: 13px 15px;
+.gnb > ul > li > a {
+    margin: 0 10px;
+    padding: 8px 15px;
     border-radius: 10px;
     font-weight: bold;
-    font-size: var(--font-big);
+    font-size: var(--font-medium);
     color: var(--deep-blue);
 }
 
-.gnb ul a:hover {
+.gnb ul li a:hover {
   background-color: var(--deep-blue);
   box-shadow: 0 0 5px var(--gray);
   color: white;
+}
+
+.gnb ul .list_company {
+  position: relative;
+}
+
+.company_sublist {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: absolute;
+  top: 30px;
+  left: 10px;
+  z-index: 10;
+  height: 90px;
+}
+
+.company_sublist li {
+  margin-top: 15px;
+}
+
+.company_sublist li a {
+  color: white;
+  padding: 5px 15px;
+  border-radius: 10px;
+  background-color: var(--deep-blue);
+  font-weight: bold;
+  text-align: center;
 }
 
 /* 프로필 영역 */
@@ -112,6 +142,7 @@
   width: 100%;
   background-color: var(--light-blue);
 }
+
 .search_container .for_search_align {
   padding: 0 30px;
   width: 1140px;
@@ -156,6 +187,46 @@
   opacity: 0.3;
 }
 
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 200px;
+  height: 100px;
+  background-color: white;
+  font-weight: bold;
+  font-size: var(--font-x-big);
+  box-shadow: 0 0 5px;
+  z-index: 10;
+  opacity: 0;
+  transition: 0.5s;
+}
+
+.modal.modal_active {
+  opacity: 1;
+}
+
+.overlay {
+  background-color: var(--dark);
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  transition: 0.5s;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.overlay.modal_active {
+  opacity: 0.3;
+  pointer-events: all;
+}
+
 </style>
 </head>
 <body>
@@ -167,40 +238,77 @@
       </div>
       <nav class="gnb">
         <ul>
-          <a href="#"><li>자유게시판</li></a>
-          <a href="#"><li>질문게시판</li></a>
-          <a href="#"><li>기업게시판</li></a>
-          <a href="#"><li>팀게시판</li></a>
+          <li><a href="/qnaboard/list">자유게시판</a></li>
+          <li><a href="/freeboard/list">질문게시판</a></li>
+          <li class="list_company"><a href="#">기업게시판</a>
+            <ul class="company_sublist visible">
+              <li><a href="#">채용게시판</a></li>
+              <li><a href="#">알고리즘</a></li>
+            </ul>
+          </li>
+          <li><a href="#" class="incomplete">팀게시판</a></li>
         </ul>
       </nav>
       <div class="my_icon">
         <a href="#">
           <img src="/images/profile_default.svg" alt="default">
-          <span>{이름hh}</span>
+          <span class="incomplete">{이름}</span>
         </a>
         <a href="#">
-          <span>{알림}</span>
+          <span class="incomplete">{알림}</span>
         </a>
         <a href="#">
-          <span>{채팅}</span>
+          <span class="incomplete">{채팅}</span>
         </a>
       </div>
     </section>
   </div>
-  <section class="search_container">
-    <div class="for_search_align">
-      <div class="searchbox">
-        <div class="inner">
-          <input type="text" placeholder="검색어를 입력해주세요.">
-          <button type="submit" class="btn_search">
-            <img src="/images/search.svg" alt="search">
-          </button>
-        </div>
+  <c:choose>
+    <c:when test="${empty sessionScope._LOGIN_USER_}">
+      <div>
+        로그인 하지 않았습니다.
       </div>
-    </div>
-  </section>
+    </c:when>
+    <c:otherwise>
+        <section class="search_container">
+          <div class="for_search_align">
+            <div class="searchbox">
+              <div class="inner">
+                <input type="text" placeholder="검색어를 입력해주세요.">
+                <button type="submit" class="btn_search">
+                  <img src="/images/search.svg" alt="search">
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+    </c:otherwise>
+  </c:choose>
 
 <jsp:include page="../member/membermenu.jsp"></jsp:include>
-
+<div class="modal">
+  준비중입니다.
+</div>
+<div class="overlay"></div>
 </body>
+<script>
+  // 미완성된 모달창
+  $('.incomplete').click(function() {
+    $('.modal, .overlay').addClass('modal_active')
+  })
+  $('.overlay').click(function() {
+    $('.modal, .overlay').removeClass('modal_active')
+  })
+
+  // 서브 리스트가 있다면? 아래로 떨군다.
+  $('.visible').hide()
+  $('.list_company').mouseover(function() {
+    $('.visible').show()
+  })
+  $('.list_company').mouseleave(function() {
+    $('.visible').removeClass('list_active')
+  })
+  
+
+</script>
 </html>
