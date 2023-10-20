@@ -30,6 +30,10 @@
             <select name="searchType">
                 <option value="subject" ${searchMyAlgorithmVO.searchType eq 'subject' ? 'selected' : ''}>제목</option>
                 <option value="content" ${searchMyAlgorithmVO.searchType eq 'content' ? 'selected' : ''}>내용</option>
+                <option value="category" ${searchMyAlgorithmVO.searchType eq 'content' ? 'selected' : ''}>카테고리</option>
+                <option value="tier" ${searchMyAlgorithmVO.searchType eq 'content' ? 'selected' : ''}>티어</option>
+                <option value="company_name" ${searchMyAlgorithmVO.searchType eq 'content' ? 'selected' : ''}>기업명</option>
+                <option value="correctYN" ${searchMyAlgorithmVO.searchType eq 'content' ? 'selected' : ''}>정답여부별</option>
             </select>
             <input type="text" name="searchKeyword" value="${searchMyAlgorithmVO.searchKeyword}"/>
             <input type="hidden" name="pageNo" class="pageNo" />
@@ -41,10 +45,12 @@
         <c:forEach items="${myAlgorithmList.myAlgorithmList}" var="myAlgo">
             <div class="box">
                 <div>제목: ${myAlgo.algorithmQuestionVO.algorithmTitle}</div>
-                <div>제출회사: ${myAlgo.memberVO.nickname}</div>
+                <div>제출회사: ${myAlgo.companyInfoVO.companyName}</div>
+                <div>카테고리: ${myAlgo.commonCodeVO.codeContent}</div>
                 <p>내용: ${myAlgo.algorithmQuestionVO.algorithmContent}</p>
                 <p>조회수: ${myAlgo.algorithmQuestionVO.viewCnt}</p>
                 <p>좋아요 수: ${myAlgo.algorithmQuestionVO.likeCnt}</p>
+                <p>난이도: ${myAlgo.algorithmQuestionVO.algorithmTierId}</p>
                 <p>정답여부: ${myAlgo.correctAnswerYn}</p>
                 <p>제출한 답: ${myAlgo.myAnswer}</p>
             </div>
