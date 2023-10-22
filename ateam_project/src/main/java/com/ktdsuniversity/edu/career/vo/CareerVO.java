@@ -4,11 +4,16 @@ import java.util.List;
 
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 
+import jakarta.validation.constraints.NotBlank;
+
 public class CareerVO {
 	private String careerId;
 	private String generalMemberEmail;
+	@NotBlank(message = "회사명을 입력해주세요.")
 	private String previousCompanyName;
+	@NotBlank(message = "직무명을 입력해주세요.")
 	private String jobTitle;
+	@NotBlank(message = "입사일을 입력해주세요.")
 	private String hireDate;
 	private String resignDate;
 	private List<CareerVO> careerList;

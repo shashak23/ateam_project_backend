@@ -10,6 +10,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,6 +23,8 @@ import com.ktdsuniversity.edu.exceptions.PageNotFoundException;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 import com.ktdsuniversity.edu.techstack.service.TechstackService;
 import com.ktdsuniversity.edu.techstack.vo.TechstackVO;
+
+import jakarta.validation.Valid;
 
 @Controller
 public class TechstackController {
@@ -59,6 +62,7 @@ public class TechstackController {
 	 public String updateTechstack(@PathVariable String email
 			 					   , Model model
 			 					   , @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+		 
 		 List<TechstackVO> techstackVO = techstackService.getAllTechstack(memberVO.getEmail());
 		 model.addAttribute("techstackVO", techstackVO);
 		 return "techstack/modifytech";
@@ -67,10 +71,6 @@ public class TechstackController {
 	 public String doUpdateTechstack(@ModelAttribute TechstackVO techstackVO
 			 					   ,Model model
 			 					   ,@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
-		 List<String> hashtagListTest = techstackVO.getHashtagList();
-		 for (String hashtag: hashtagListTest) {
-			 System.out.println(hashtag);
-		 }
 
 		 boolean isSuccess = techstackService.deleteUpTechstack(techstackVO);
 		 if(isSuccess) {

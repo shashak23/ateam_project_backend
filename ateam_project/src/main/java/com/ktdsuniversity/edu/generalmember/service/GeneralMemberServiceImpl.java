@@ -73,7 +73,6 @@ public class GeneralMemberServiceImpl implements GeneralMemberService {
 		GeneralMemberVO generalMemberVO = generalMemberDAO.getSelectGeneralMember(generalMemberEmail);
 		return generalMemberVO;
 	}
-
 	/**
 	 * 주소 수정
 	 */
@@ -145,6 +144,8 @@ public class GeneralMemberServiceImpl implements GeneralMemberService {
 		int deleteCount = generalMemberDAO.deleteSelfIntro(generalMemberEmail);
 		return deleteCount > 0;
 	}
+
+
 
 
 

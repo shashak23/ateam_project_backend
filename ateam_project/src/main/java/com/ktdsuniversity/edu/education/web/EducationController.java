@@ -8,6 +8,7 @@ package com.ktdsuniversity.edu.education.web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -17,6 +18,8 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import com.ktdsuniversity.edu.education.service.EducationService;
 import com.ktdsuniversity.edu.education.vo.EducationVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
+
+import jakarta.validation.Valid;
 @Controller
 public class EducationController {
 	@Autowired
@@ -40,9 +43,14 @@ public class EducationController {
 		 return "education/educationcreate";
 	 }
 	 @PostMapping("/memberInfo/modify/create-education")
-	 public String doCreateEducation(@ModelAttribute EducationVO educationVO
+	 public String doCreateEducation(@Valid @ModelAttribute EducationVO educationVO
+			 					   ,BindingResult bindingResult
 			 					   ,Model model
 			 					   ,@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+		 if (bindingResult.hasErrors()) {
+				model.addAttribute("educationVO", educationVO);
+				return "education/educationcreate";
+			}
 		 educationVO.setGeneralMemberEmail(memberVO.getEmail());
 		 boolean isSuccess = educationService.createNewEducation(educationVO);
 		 if(isSuccess) {
@@ -72,16 +80,21 @@ public class EducationController {
 	 }
 	
 	 @PostMapping("/memberInfo/modify/update-education")
-	 public String doUpdateEducation(@ModelAttribute EducationVO educationVO
-			 					  ,Model model
-			 					 ,@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+	 public String doUpdateEducation(@Valid @ModelAttribute EducationVO educationVO
+			 					    ,BindingResult bindingResult
+			 					    ,Model model
+			 					    ,@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+		 if (bindingResult.hasErrors()) {
+				model.addAttribute("educationVO", educationVO);
+				return "education/educationmodify";
+			}
 		 boolean isSuccess = educationService.updateOneEducation(educationVO);
 		 EducationVO education = educationService.getOneEducation(educationVO.getEducationId());
 		 if(!education.getGeneralMemberEmail().equals(memberVO.getEmail())){
 			 throw new IllegalArgumentException("잘못된 접근입니다");
 		 }
 		 if(isSuccess) {
-			 return "redirect:/memberInfo/educationview/"+ educationVO.getEducationId();
+			 return "redirect:/memberinfo/view";
 		 }
 		 else {
 			 model.addAttribute("educationVO", educationVO);

@@ -108,8 +108,14 @@
 	        parameterType="string"
 	        resultType="com.ktdsuniversity.edu.member.vo.MemberVO">
 		SELECT EMAIL
-			 , NICKNAME
 			 , PW
+			 , SALT
+			 , NICKNAME
+			 , INFO_AGREEMENT_YN
+			 , PROFILE_PIC
+			 , REGIST_DATE
+			 , MEMBER_TYPE
+			 , WITHDRAW_YN
 		  FROM "MEMBER"
 		 WHERE EMAIL = #{_parameter}
 	</select>
@@ -124,5 +130,18 @@
 		UPDATE MEMBER
    		   SET PW = #{pw}
  		 WHERE EMAIL = #{email}
+	</update>
+	
+	<update id="updateOneFile"
+		parameterType="com.ktdsuniversity.edu.member.vo.MemberVO">
+		UPDATE "MEMBER"
+		   SET 	PROFILE_PIC=#{profilePic}
+		 WHERE EMAIL=#{email}
+	</update>
+	<update id="deleteProfile"
+		parameterType="com.ktdsuniversity.edu.member.vo.MemberVO">
+		UPDATE "MEMBER"
+		   SET 	PROFILE_PIC='https://w7.pngwing.com/pngs/384/868/png-transparent-person-profile-avatar-user-basic-ui-icon.png'
+		 WHERE EMAIL=#{email}
 	</update>
 </mapper>

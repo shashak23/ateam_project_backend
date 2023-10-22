@@ -16,7 +16,7 @@
 		, HIRE_DATE
 		, RESIGN_DATE)
 		VALUES
-		( SEQ_CAREER_PK.NEXTVAL
+		(  'CA-' || TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_CAREER_PK.NEXTVAL, 6, '0')
 		, #{generalMemberEmail}
 		, #{previousCompanyName}
 		, #{jobTitle}

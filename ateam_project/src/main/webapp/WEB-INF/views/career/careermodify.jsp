@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="form" uri ="http://www.springframework.org/tags/form"%>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -68,20 +69,30 @@
 </script>
 </head>
 <body>
-    <form method="post" action="/memberInfo/modify/update-career">
+    <form:form modelAttribute="careerVO" method="post" action="/memberInfo/modify/update-career" enctype ="multipart/form-data">
         <input type="hidden" name="careerId" value="${careerVO.careerId}" />
         <div>
             <label for="previousCompanyName">근무 회사명:</label>
-            <input type="text" id="previousCompanyName" name="previousCompanyName" value="${careerVO.previousCompanyName }" required>
+            <input type="text" id="previousCompanyName" name="previousCompanyName" value="${careerVO.previousCompanyName }" >
+        <div>
+            <form:errors path="previousCompanyName" element="div" cssClass="errors" />
         </div>
+        </div>
+        
         <div>
             <label for="jobTitle">직무명:</label>
             <input type="text" id="jobTitle" name="jobTitle" value="${careerVO.jobTitle }">
+        <div>
+            <form:errors path="jobTitle" element="div" cssClass="errors" />
+        </div>
         </div>
         <div>
             <label for="hireDate">입사일:</label>
             <input type="text" id="hireDate" name="hireDate" class="date-picker" placeholder="YYYY-MM-DD"
             value="${careerVO.hireDate }" readonly="readonly">
+        <div>
+            <form:errors path="hireDate" element="div" cssClass="errors" />
+        </div>	
         </div>
         <div>
             <label for="resignDate">퇴사일:</label>
@@ -89,6 +100,7 @@
             value="${careerVO.resignDate }" readonly="readonly">
         </div>
         <input type="submit" value="수정">
-    </form>
+        <a href="/memberInfo/modify/delete-career/${careerVO.careerId}">삭제</a>
+    </form:form>
 </body>
 </html>

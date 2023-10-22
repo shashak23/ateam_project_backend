@@ -50,7 +50,7 @@
 </head>
 <body>
 <form method="post" action="/memberInfo/modify/update-profile-pic" enctype="multipart/form-data">
-    <input type="hidden" name="email" value="${memberVO.email}" />
+    <input type="hidden" name="email" value="${sessionScope._LOGIN_USER_.email}" />
     <div class="profile-container">
         <h1>프로필 사진</h1>
         <img src="${memberVO.profilePic}" alt="프로필 사진" class="profile-image" id="profile-image">

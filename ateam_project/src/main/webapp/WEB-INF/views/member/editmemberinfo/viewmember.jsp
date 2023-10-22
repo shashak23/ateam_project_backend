@@ -24,6 +24,7 @@ div.right align{
 		<label for="nickname">비밀번호</label>
 		<a href="/memberInfo/modify/update-password/${memberVO.email}">수정</a>	
 	</div>
+	
 </div>
 </body>
 </html>

@@ -2,11 +2,13 @@
  * 작성자: 김광원
  * 수정자: 신진영(2023-10-19)
  * 수정자: 장보늬(2023-10-20)
+ * 수정자: 김광원(2023-10-21)
  * 작성일자: 2023-10-19
  * 내용: 
  */
 package com.ktdsuniversity.edu.member.web;
 
+import java.io.File;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,6 +16,8 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -26,9 +30,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.ktdsuniversity.edu.beans.FileHandler;
 import com.ktdsuniversity.edu.beans.SHA;
 import com.ktdsuniversity.edu.companymember.vo.CompanyVO;
+import com.ktdsuniversity.edu.companynews.vo.CompanyNewsVO;
+import com.ktdsuniversity.edu.exceptions.PageNotFoundException;
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 import com.ktdsuniversity.edu.generalpost.web.FreePostController;
 import com.ktdsuniversity.edu.member.service.MemberService;
@@ -47,6 +55,8 @@ public class MemberController {
 	private MemberService memberService;
 	@Autowired
 	private SHA sha;
+	@Autowired
+	private FileHandler fileHandler;
 	private Logger log = LoggerFactory.getLogger(FreePostController.class);
 
 	@GetMapping("/member/{memberType}")
@@ -151,17 +161,6 @@ public class MemberController {
 		model.addAttribute("memberVO", memberVO);
 		return "mypage/profilepicview";
 	}
-
-	/**
-	 * 프로필 사진 수정
-	 */
-	@GetMapping("/memberInfo/modify/update-profile-pic/{email}")
-	public String updateProfilePic(@PathVariable String email, Model model) {
-		MemberVO memberVO = memberService.getOneFile(email);
-		model.addAttribute("memberVO", memberVO);
-		return "mypage/modifyprofilepic";
-	}
-
 	/**
 	 * 기업회원 가입
 	 */
@@ -221,7 +220,7 @@ public class MemberController {
 	public String updateNickname(@PathVariable String email, Model model) {
 		MemberVO memberVO = memberService.selectMemberinfo(email);
 		model.addAttribute("memberVO", memberVO);
-		return "member/editmemberinfo/modifymemberinfo";
+		return "member/editmemberinfo/modifymembernick";
 	}
 
 	@PostMapping("/memberInfo/modify/update-nickname")
@@ -292,4 +291,62 @@ public class MemberController {
 		}
 		return "member/editmemberinfo/modifymemberpw";
 	}
+	/**
+	 * 일반회원 프로필사진 수정
+	 */
+	@GetMapping("/memberInfo/modify/modify-profile-pic/{email}")
+	public String createProfilePic(@PathVariable String email,MemberVO memberVO, Model model) {
+		memberVO = memberService.selectMemberinfo(memberVO.getEmail());
+		model.addAttribute("memberVO", memberVO);
+		return "mypage/profilepic/modifyprofilepic";
+	}
+	
+	@PostMapping("/memberInfo/modify/modify-profile-pic")
+	public ModelAndView doCreateProfilePic(@ModelAttribute MemberVO memberVO
+			                       			, @RequestParam MultipartFile file
+			                       			, @SessionAttribute("_LOGIN_USER_") MemberVO member) {
+		ModelAndView modelAndView = new ModelAndView();
+		
+		memberVO.setEmail(member.getEmail());
+		boolean isSuccess = memberService.updateOneFile(memberVO, file);
+		if (isSuccess) {
+			modelAndView.setViewName("redirect:/memberinfo/view");
+			return modelAndView;
+		}
+		else {
+			modelAndView.setViewName("mypage/profilepic/modifyprofilepic");
+			modelAndView.addObject("memberVO", memberVO);
+			return modelAndView;
+		}
+	}
+	/**
+	 * 파일다운로드
+	 */
+	@GetMapping("/member/file/download/{email}")
+	public ResponseEntity<Resource> downloadFile (@PathVariable String email) {
+		
+		// 파일 정보를 얻어오기 위해 게시글을 조회한다.
+		MemberVO memberVO = memberService.getOneFile(email);
+		if(memberVO == null) {
+			throw new PageNotFoundException("잘못된 접근입니다.");
+		}
+		// 서버에 등록되어있는 파일을 가져온다.
+		File storedFile = fileHandler.getStoredFile(memberVO.getProfilePic());
+		
+		return fileHandler.getResponseEntity(storedFile, 
+                                             memberVO.getProfilePic());
+	}
+	/**
+	 * 프로필사진 삭제
+	 */
+	@GetMapping("/memberInfo/modify/delete-profile-pic/{email}")
+	public String deletProfile(@PathVariable String email) {
+		boolean isSuccess = memberService.deleteProfile(email);
+		if (isSuccess) {
+			return "redirect:/memberInfo/modify/modify-profile-pic/"+ email;
+		} else {
+			return "redirect:/memberInfo/modify/modify-profile-pic/"+ email;
+		}
+	}
+	
 }

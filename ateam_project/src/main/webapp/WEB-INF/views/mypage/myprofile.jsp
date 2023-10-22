@@ -17,18 +17,19 @@
 <!--스타일 입히기-->
 <link rel="stylesheet"
 	href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-<link rel="stylesheet" type="text/css" href="./myProfile.css" />
-<link rel="stylesheet" type="text/css" href="/css/myProfile.css" />
 </head>
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<link rel="stylesheet" type="text/css" href="/css/myProfile.css" />
+<script
+	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script
+	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <body>
 	<!--아이디와 클래스 값을 부여함-->
 	<div id="wrap" class="wrap">
 
 
 		<header id="header" class="header">
-<jsp:include page="../member/membermenu.jsp"></jsp:include>
+			<jsp:include page="../member/membermenu.jsp"></jsp:include>
 			<!-- 로그인/회원가입 -->
 			<!-- <li><a href="#">로그인</a></li> 링크를 통해 # 사용자가 지정 할수있고 버튼을 누르면 그곳으로 이동해 달라는 태그 -->
 
@@ -85,25 +86,48 @@
 					<button class="message_icon">✉ 메시지</button>
 				</div>
 				<div class="profile">
-					<img
-						src="${memberVO.profilePic}" />
+					<c:choose>
+						<c:when
+							test="${memberVO.profilePic eq 'https://w7.pngwing.com/pngs/384/868/png-transparent-person-profile-avatar-user-basic-ui-icon.png'}">
+							<img src="${memberVO.profilePic}" />
+						</c:when>
+						<c:otherwise>
+							<img src="/member/file/download/${memberVO.email}" />
+						</c:otherwise>
+					</c:choose>
 					<div>
-						<ul class="introduction_list">
-							<li class="list_name">
-								<h2>${memberVO.nickname}</h2>
-							</li>
-							<c:choose>
-								<c:when test="${not empty generalMemberList}">
-									<li class="list_intro">${generalMemberList[0].selfIntro}
-									<button>수정</button>
-									</li>
-								</c:when>
-								<c:otherwise>
-									<li class="list_intro"><button>추가하기</button></li>
-								</c:otherwise>
+						<button>
+							<a
+								href="/memberInfo/modify/modify-profile-pic/${memberVO.email }">프사수정버튼</a>
+						</button>
+						<div>
+							<ul class="introduction_list">
+								<li class="list_name">
+									<h2>${memberVO.nickname}</h2>
+								</li>
+								<c:choose>
+									<c:when test="${not empty generalMemberVO.selfIntro}">
+										<li class="list_intro">${generalMemberVO.selfIntro}
+											<button>
+												<a
+													href="/memberInfo/modify/update-introduction/${memberVO.email}">
+													수정 </a>
+											</button>
+										</li>
+									</c:when>
+									<c:otherwise>
+										<li class="list_intro">
+											<button>
+												<a
+													href="/memberInfo/modify/update-introduction/${memberVO.email}">
+													자기소개 추가하기</a>
+											</button>
+										</li>
+									</c:otherwise>
 
-							</c:choose>
-						</ul>
+								</c:choose>
+							</ul>
+						</div>
 					</div>
 				</div>
 				<div class="follow">
@@ -113,19 +137,17 @@
 				<div class="related_link">
 					<a href="${generalMemberVO.githubUrl}"><img
 						src="https://cdn-icons-png.flaticon.com/512/25/25231.png"
-						alt="Icon 1"></a>
-						
-						<a href="${generalMemberVO.additionalEmail}"><img
+						alt="Icon 1"></a> <a href="${generalMemberVO.additionalEmail}"><img
 						src="https://w7.pngwing.com/pngs/863/247/png-transparent-email-computer-icons-email-miscellaneous-angle-text.png"
-						alt="Icon 2"> </a> 
-						
-						<a href="${generalMemberVO.blogUrl}"><img
+						alt="Icon 2"> </a> <a href="${generalMemberVO.blogUrl}"><img
 						src="https://i.pinimg.com/originals/f8/0b/dd/f80bdd79a51358da6ee41a0fda520394.png"
 						alt="Icon 3"></a>
-						
+
 					<button id="edit_button1">
-						<img
-							src="https://cdn.icon-icons.com/icons2/1462/PNG/512/101edit_99874.png">
+						<a href="/memberInfo/modify/update-sns-link/${memberVO.email}">
+							<img
+							src="https://cdn.icon-icons.com/icons2/1462/PNG/512/101edit_99874.png" />
+						</a>
 					</button>
 				</div>
 				<div class="show_pwf">
@@ -142,45 +164,52 @@
 					<p></p>
 				</div>
 				<div id="technology_stack">
-					<p>
-						기술스택
-						<button id="edit_button2">
-							<img
-								src="https://cdn.icon-icons.com/icons2/1462/PNG/512/101edit_99874.png">
-						</button>
-					</p>
+					<p>기술스택</p>
 					<ul>
 						<c:choose>
 							<c:when test="${not empty commonCodeList}">
 								<c:forEach items="${commonCodeList}" var="commonCode">
 									<li>#${commonCode.codeContent}</li>
 								</c:forEach>
+								<button id="edit_button2">
+									<a href="/memberInfo/modify/update-tech/${memberVO.email }">
+										수정 </a>
+								</button>
 							</c:when>
 							<c:otherwise>
-								<li><button>추가하기</button></li>
+								<li><button>
+										<a href="/memberInfo/modify/create-tech-stack">
+											추가하기 </a>
+									</button></li>
 							</c:otherwise>
 
 						</c:choose>
 					</ul>
 				</div>
 				<div class="education">
-					<p>
-						학력
-						<button id="edit_button3">
-							<img
-								src="https://cdn.icon-icons.com/icons2/1462/PNG/512/101edit_99874.png">
-						</button>
-					</p>
+					<p>학력</p>
 					<ul>
 						<c:choose>
 							<c:when test="${not empty educationList}">
 								<c:forEach items="${educationList}" var="education">
-									<li>${education.schoolName}-${education.schoolDepartment } ${education.degrees }
+									<li>${education.schoolName}-${education.schoolDepartment }
+										${education.degrees }
+										<button>
+											<a
+												href="/memberInfo/modify/update-education/${education.educationId}">
+												수정 </a>
+										</button>
 									</li>
+
 								</c:forEach>
+								<button>
+									<a href="/memberInfo/modify/create-education"> 추가하기 </a>
+								</button>
 							</c:when>
 							<c:otherwise>
-								<li><button>추가하기</button></li>
+								<li><button>
+										<a href="/memberInfo/modify/create-education"> 추가하기 </a>
+									</button></li>
 							</c:otherwise>
 
 						</c:choose>
@@ -188,22 +217,25 @@
 				</div>
 				<div class="career">
 					<p>경력</p>
-					<button id="edit_button4">
-						<img
-							src="https://cdn.icon-icons.com/icons2/1462/PNG/512/101edit_99874.png">
-					</button>
 					<ul>
 						<c:choose>
 							<c:when test="${not empty careerList}">
 								<c:forEach items="${careerList}" var="career">
 									<li>${career.previousCompanyName}-${career.jobTitle }
 									<li class="career_list_year">${career.hireDate}~
-										${career.resignDate}</li>
+										${career.resignDate}
+									<a href="/memberInfo/modify/update-career/${career.careerId}"> 수정 </a>
+										</li>
 									</li>
 								</c:forEach>
+								<button>
+									<a href="/memberInfo/modify/create-career"> 추가하기 </a>
+								</button>
 							</c:when>
 							<c:otherwise>
-								<li><button>추가하기</button></li>
+								<li><button>
+										<a href="/memberInfo/modify/create-career"> 추가하기 </a>
+									</button></li>
 							</c:otherwise>
 
 						</c:choose>
@@ -220,11 +252,14 @@
 
 					<ul>
 						<c:choose>
-							<c:when test="${not empty generalMemberList}">
-								<li>${generalMemberList[0].region}</li>
+							<c:when test="${not empty generalMemberVO.region}">
+								<li>${generalMemberVO.region}</li>
+								<a href="/memberInfo/modify/update-location/${generalMemberVO.generalMemberEmail}"> 수정 </a>
 							</c:when>
 							<c:otherwise>
-								<li><button>추가하기</button></li>
+								<li><button>
+								<a href="/memberInfo/modify/create-location/${generalMemberVO.generalMemberEmail}"> 추가하기 </a>
+								</button></li>
 							</c:otherwise>
 
 						</c:choose>

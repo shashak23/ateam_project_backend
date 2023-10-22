@@ -27,6 +27,11 @@ import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 import com.ktdsuniversity.edu.member.dao.MemberDAO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 
+import io.github.seccoding.web.mimetype.ExtFilter;
+import io.github.seccoding.web.mimetype.MimeType;
+import io.github.seccoding.web.mimetype.abst.ExtensionFilter;
+import io.github.seccoding.web.mimetype.factory.ExtensionFilterFactory;
+
 @Service
 public class MemberServiceImpl implements MemberService{
 	@Autowired
@@ -39,6 +44,9 @@ public class MemberServiceImpl implements MemberService{
 	private SHA sha;
 	@Autowired FileHandler fileHandler;
 	
+	/**
+	 * 회원생성
+	 */
 	@Transactional
 	@Override
 	public boolean createNewMember(GeneralMemberVO generalMemberVO) {
@@ -63,12 +71,17 @@ public class MemberServiceImpl implements MemberService{
 		return insertMemberCount>0 && insertGMemberCount>0;
 	}
 
+	/**
+	 * email체크
+	 */
 	@Override
 	public boolean checkAvailableEmail(String email) {
 		int emailCount = memberDAO.getEmailCount(email);
 		return emailCount==0;
 	}
-
+	/**
+	 * 닉네임 체크
+	 */
 	@Override
 	public boolean checkAvailableNickname(String nickname) {
 		int nicknameCount = memberDAO.getNicknameCount(nickname);
@@ -102,9 +115,12 @@ public class MemberServiceImpl implements MemberService{
 		}
 		return memberVO;
 	}
-
+	/**
+	 * 프로필사진 수정
+	 */
 	@Override
 	public boolean updateOneFile(MemberVO memberVO, MultipartFile file) {	
+		StoredFile storedFile = fileHandler.storeFile(file);
 		if(file!= null && !file.isEmpty()) {
 			MemberVO originMemberVO = memberDAO.getOneFile(memberVO.getEmail());
 			if(originMemberVO != null && originMemberVO.getProfilePic() !=null) {
@@ -113,12 +129,20 @@ public class MemberServiceImpl implements MemberService{
 					originFile.delete();
 				}
 			}
-			StoredFile storedFile = fileHandler.storeFile(file);
-			System.out.println(storedFile.getFileName());
 			memberVO.setProfilePic(storedFile.getRealFileName());
 		}
+		
+		
 		int updateCount = memberDAO.updateOneFile(memberVO);
 		return updateCount>0;
+	}
+	/**
+	 * 프로필사진 삭제
+	 */
+	@Override
+	public boolean deleteProfile(String email) {
+		int deleteCount = memberDAO.deleteProfile(email);
+		return deleteCount>0;
 	}
 	
 	@Transactional
@@ -171,7 +195,7 @@ public class MemberServiceImpl implements MemberService{
 		return memberDAO.searchMember(memberType);
 	}
 	/**
-	 * 회원조회
+	 * 일반회원조회
 	 */
 	@Override
 	public MemberVO selectMemberinfo(String email) {
@@ -179,7 +203,7 @@ public class MemberServiceImpl implements MemberService{
 		return memberVO;
 	}
 	/**
-	 * 회원 닉네임 비밀번호 수정
+	 * 일반회원 닉네임 비밀번호 수정
 	 */
 	@Override
 	public boolean updateMemberNickname(MemberVO memberVO) {
@@ -190,10 +214,15 @@ public class MemberServiceImpl implements MemberService{
 		int updateCount = memberDAO.updateMemberNickname(memberVO);
 		return updateCount>0;
 	}
-
+	/**
+	 * 일반회원 비밀번호 수정
+	 */
 	@Override
 	public boolean updateMemberPW(MemberVO memberVO) {
 		int updateCount = memberDAO.updateMemberPW(memberVO);
 		return updateCount>0;
 	}
+
+
+	
 }

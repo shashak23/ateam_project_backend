@@ -16,7 +16,7 @@
 		( TECHSTACK_ID
 		, EMAIL
 		, HASHTAG_ID)
-		SELECT #{techstackId}
+		SELECT 'TS-' || TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_TECHSTACK_PK.NEXTVAL, 6, '0')
 		     , Q_ID
 		     , C_ID
 	      FROM (

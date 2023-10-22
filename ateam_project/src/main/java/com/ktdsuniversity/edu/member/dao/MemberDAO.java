@@ -1,6 +1,6 @@
 /**
  * 작성자: 김광원
- * 수정자: 김광원(2023-10-20)
+ * 수정자: 김광원(2023-10-21)
  * 작성일자: 2023-10-19
  * 내용: 일반회원 비밀번호 수정 및 닉네임 수정
  */
@@ -17,20 +17,17 @@ public interface MemberDAO {
 	public int getEmailCount(String email);
 	public int getNicknameCount(String nickname);
 	public int createNewMember(MemberVO memberVO);
+	/**
+	 * 파일생성
+	 */
+	public int createNewFile(MemberVO memberVO);
 	
 	/**
 	 * 로그인
 	 */
 	public String getSalt(String email);
 	public MemberVO getMember(MemberVO memberVO);
-	/**
-	 * 파일 조회
-	 */
-	public MemberVO getOneFile(String email);
-	/**
-	 * 파일
-	 */
-	public int updateOneFile(MemberVO memberVO);
+	
 	
 	/**
 	 * 회원탈퇴
@@ -63,4 +60,16 @@ public interface MemberDAO {
 	 * 회원 비밀번호 수정 
 	 */
 	public int updateMemberPW(MemberVO memberVO);
+	/**
+	 * 파일 조회
+	 */
+	public MemberVO getOneFile(String email);
+	/**
+	 * 파일 수정
+	 */
+	public int updateOneFile(MemberVO memberVO);
+	/**
+	 * 파일 삭제
+	 */
+	public int deleteProfile(String email);
 }

@@ -42,7 +42,6 @@ public interface GeneralMemberService {
 	 * 일반회원 조회
 	 */
 	public GeneralMemberVO getSelectGeneralMember(String generalMemberEmail);
-	
 	/**
 	 * 주소 수정
 	 */

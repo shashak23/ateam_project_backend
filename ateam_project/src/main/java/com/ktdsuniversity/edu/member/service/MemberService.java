@@ -25,6 +25,10 @@ public interface MemberService {
 	public boolean checkAvailableEmail(String email);
 	public boolean checkAvailableNickname(String nickname);
 	/**
+	 * 파일생성
+	 */
+//	public boolean createNewFile(MemberVO memberVO,MultipartFile file );
+	/**
 	 * 로그인
 	 */
 	public MemberVO getMember(MemberVO memberVO);
@@ -33,11 +37,13 @@ public interface MemberService {
 	 */
 	public MemberVO getOneFile(String email);
 	/**
-	 * 파일 수정
+	 * 프로필사진 수정
 	 */
 	public boolean updateOneFile(MemberVO memberVO, MultipartFile file);
-	
-	
+	/**
+	 * 프로필사진 삭제
+	 */
+	public boolean deleteProfile(String email);
 	/**
 	 * 회원 탈퇴
 	 * @param memberVO 탈퇴할 사용자의 사용자 정보

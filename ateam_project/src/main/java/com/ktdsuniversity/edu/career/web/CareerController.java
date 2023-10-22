@@ -3,6 +3,7 @@ package com.ktdsuniversity.edu.career.web;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,6 +14,8 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import com.ktdsuniversity.edu.career.service.CareerService;
 import com.ktdsuniversity.edu.career.vo.CareerVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
+
+import jakarta.validation.Valid;
 
 @Controller
 public class CareerController {
@@ -37,9 +40,14 @@ public class CareerController {
 		 return "career/careercreate";
 	 }
 	 @PostMapping("/memberInfo/modify/create-career")
-	 public String doCreateCareer(@ModelAttribute CareerVO careerVO
-			 					   ,Model model
-			 					   ,@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+	 public String doCreateCareer(@Valid @ModelAttribute CareerVO careerVO
+			 					  ,BindingResult bindingResult 
+			 					  ,Model model
+			 					  ,@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+		 if (bindingResult.hasErrors()) {
+				model.addAttribute("careerVO", careerVO);
+				return "career/careercreate";
+			}
 		 careerVO.setGeneralMemberEmail(memberVO.getEmail());
 		 boolean isSuccess = careerService.createNewCareer(careerVO);
 		 if(isSuccess) {
@@ -56,7 +64,7 @@ public class CareerController {
 	  * 수정
 	  */
 	 @GetMapping("/memberInfo/modify/update-career/{careerId}")
-	 public String updateCareer(@PathVariable String careerId
+	 public String updateCareer(@Valid @PathVariable String careerId
 			 					, Model model
 			 					,@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 		 CareerVO careerVO =careerService.getOneCareer(careerId);
@@ -67,13 +75,18 @@ public class CareerController {
 	 }
 	
 	 @PostMapping("/memberInfo/modify/update-career")
-	 public String doUpdateCareer(@ModelAttribute CareerVO careerVO
-			 					  ,Model model
+	 public String doUpdateCareer(@Valid @ModelAttribute CareerVO careerVO
+			 					 ,BindingResult bindingResult  
+			 				     ,Model model
 			 					 ,@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+		 if (bindingResult.hasErrors()) {
+			 model.addAttribute("careerVO", careerVO);
+			 return "career/careermodify";
+		 }
 		 careerVO.setGeneralMemberEmail(memberVO.getEmail());
 		 boolean isSuccess = careerService.updateOneCarrer(careerVO);
 		 if(isSuccess) {
-			 return "redirect:/memberInfo/modify/view/"+ careerVO.getCareerId();
+			 return "redirect:/memberinfo/view";
 		 }
 		 else {
 			 model.addAttribute("careerVO", careerVO);

@@ -52,16 +52,15 @@
     }
 </script>
 </head>
-<form:form modelAttribute="generalMemberVO" method="post" action="/memberInfo/modify/update-location">
-	<input type="hidden" name="generalMemberEmail" value="${sessionScope._LOGIN_USER_.email}"/>
-	<input type="text" id="sample6_postcode" placeholder="우편번호" readonly>
-	<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-	<input type="text" id="region" name ="region" value="${generalMemberVO.region}" placeholder="주소" readonly><br>
-	<div>
-	 	<form:errors path="region" element="div" cssClass="errors" />
-	 </div>
-	<input type="submit" value="수정" />
-	<a href="/memberInfo/modify/delete-location/${generalMemberVO.generalMemberEmail}">삭제</a>
+<form:form modelAttribute="generalMemberVO" method="post" action="/memberInfo/modify/create-location">
+	<input type="hidden" name="generalMemberEmail" value="${generalMemberVO.generalMemberEmail }"/>
+<input type="text" id="sample6_postcode" placeholder="우편번호" readonly>
+<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" ><br>
+<input type="text" id="region" name ="region" placeholder="주소" readonly ><br>
+<div>
+	<form:errors path="region" element="div" cssClass="errors" />
+</div>
+<input type="submit" value="작성" />
 </form:form>
 </body>
 </html>
