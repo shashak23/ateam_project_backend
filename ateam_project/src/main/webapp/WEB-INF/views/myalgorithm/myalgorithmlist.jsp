@@ -28,12 +28,12 @@
     <form action="/home/myalgorithm/list" class="search_form" method="get">
         <div>
             <select name="searchType">
-                <option value="subject" ${searchMyAlgorithmVO.searchType eq 'subject' ? 'selected' : ''}>제목</option>
+				<option value="subject" ${searchMyAlgorithmVO.searchType eq 'subject' ? 'selected' : ''}>제목</option>
                 <option value="content" ${searchMyAlgorithmVO.searchType eq 'content' ? 'selected' : ''}>내용</option>
-                <option value="category" ${searchMyAlgorithmVO.searchType eq 'content' ? 'selected' : ''}>카테고리</option>
-                <option value="tier" ${searchMyAlgorithmVO.searchType eq 'content' ? 'selected' : ''}>티어</option>
-                <option value="company_name" ${searchMyAlgorithmVO.searchType eq 'content' ? 'selected' : ''}>기업명</option>
-                <option value="correctYN" ${searchMyAlgorithmVO.searchType eq 'content' ? 'selected' : ''}>정답여부별</option>
+                <option value="category" ${searchMyAlgorithmVO.searchType eq 'category' ? 'selected' : ''}>카테고리</option>
+                <option value="tier" ${searchMyAlgorithmVO.searchType eq 'tier' ? 'selected' : ''}>티어</option>
+                <option value="company_name" ${searchMyAlgorithmVO.searchType eq 'company_name' ? 'selected' : ''}>기업명</option>
+                <option value="correctYN" ${searchMyAlgorithmVO.searchType eq 'correctYN' ? 'selected' : ''}>정답여부별</option>
             </select>
             <input type="text" name="searchKeyword" value="${searchMyAlgorithmVO.searchKeyword}"/>
             <input type="hidden" name="pageNo" class="pageNo" />

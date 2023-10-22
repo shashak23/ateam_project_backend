@@ -57,16 +57,16 @@
 		   AND CAQ.ALGORITHM_CONTENT LIKE '%' || #{searchKeyword} || '%'
 			</if>
 			<if test='searchType=="category"'>
-		   AND CAQ.ALGORITHM_TITLE LIKE '%' || #{searchKeyword} || '%'
+		   AND CC.CODE_CONTENT LIKE '%' || #{searchKeyword} || '%'
 			</if>
 			<if test='searchType=="tier"'>
-		   AND CAQ.ALGORITHM_CONTENT LIKE '%' || #{searchKeyword} || '%'
+		   AND CAQ.ALGORITHM_TIER_ID LIKE '%' || #{searchKeyword} || '%'
 			</if>
 			<if test='searchType=="company_name"'>
-		   AND CAQ.ALGORITHM_CONTENT LIKE '%' || #{searchKeyword} || '%'
+		   AND CAQ.ALGORITHM_WRITER LIKE '%' || #{searchKeyword} || '%'
 			</if>
 			<if test='searchType=="correctYN"'>
-		   AND CAQ.ALGORITHM_CONTENT LIKE '%' || #{searchKeyword} || '%'
+		   AND MAQ.CORRECT_ANSWER_YN LIKE '%' || #{searchKeyword} || '%'
 			</if>
 		</if>
 	</select>
