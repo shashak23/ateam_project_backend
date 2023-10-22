@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
@@ -23,8 +22,6 @@ import com.ktdsuniversity.edu.exceptions.PageNotFoundException;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 import com.ktdsuniversity.edu.techstack.service.TechstackService;
 import com.ktdsuniversity.edu.techstack.vo.TechstackVO;
-
-import jakarta.validation.Valid;
 
 @Controller
 public class TechstackController {
@@ -43,9 +40,12 @@ public class TechstackController {
 			 					   ,Model model
 			 					   ,@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 		 techstackVO.setEmail(memberVO.getEmail());
+		 if (!techstackVO.getEmail().equals(memberVO.getEmail())) {
+				throw new PageNotFoundException("잘못된 접근입니다.");
+			}
 		 boolean isSuccess = techstackService.createNewTechstack(techstackVO);
 		 if(isSuccess) {
-			 return "redirect:/memberinfo/view";
+			 return "redirect:/memberinfo/view/"+techstackVO.getEmail();
 		 }
 		 else {
 			 model.addAttribute("techstackVO", techstackVO);
@@ -62,7 +62,11 @@ public class TechstackController {
 	 public String updateTechstack(@PathVariable String email
 			 					   , Model model
 			 					   , @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
-		 
+		 TechstackVO techstack = techstackService.getOneTechstack(email);
+		 techstack.setEmail(memberVO.getEmail());
+		 if (!techstack.getEmail().equals(memberVO.getEmail())) {
+				throw new PageNotFoundException("잘못된 접근입니다.");
+			}
 		 List<TechstackVO> techstackVO = techstackService.getAllTechstack(memberVO.getEmail());
 		 model.addAttribute("techstackVO", techstackVO);
 		 return "techstack/modifytech";
@@ -71,10 +75,14 @@ public class TechstackController {
 	 public String doUpdateTechstack(@ModelAttribute TechstackVO techstackVO
 			 					   ,Model model
 			 					   ,@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
-
+		 TechstackVO techstack = techstackService.getOneTechstack(techstackVO.getEmail());
+		 techstack.setEmail(memberVO.getEmail());
+		 if (!techstack.getEmail().equals(memberVO.getEmail())) {
+				throw new PageNotFoundException("잘못된 접근입니다.");
+			}
 		 boolean isSuccess = techstackService.deleteUpTechstack(techstackVO);
 		 if(isSuccess) {
-			 return "redirect:/memberinfo/view";
+			 return "redirect:/memberinfo/view/"+techstackVO.getEmail();
 		 }
 		 else {
 			 model.addAttribute("techstackVO", techstackVO);
