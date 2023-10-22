@@ -10,9 +10,11 @@ import java.util.List;
 
 
 import com.ktdsuniversity.edu.career.vo.CareerVO;
+import com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO;
 import com.ktdsuniversity.edu.education.vo.EducationVO;
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
+import com.ktdsuniversity.edu.techstack.vo.TechstackVO;
 
 public interface GeneralMemberService {
 	/**
@@ -32,12 +34,14 @@ public interface GeneralMemberService {
 	 * 회원 닉네임 조회
 	 */
 	public MemberVO getSelectNickname(String generalMemberEmail);
-	
+	/**
+	 * 회원 기술스택 조회
+	 */
+	public List<CommonCodeVO> getSelectCommonCode(String generalMemberEmail);
 	/**
 	 * 일반회원 조회
 	 */
 	public GeneralMemberVO getSelectGeneralMember(String generalMemberEmail);
-	
 	/**
 	 * 주소 수정
 	 */

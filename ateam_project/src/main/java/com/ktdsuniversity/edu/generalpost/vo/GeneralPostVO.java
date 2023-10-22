@@ -1,5 +1,6 @@
 package com.ktdsuniversity.edu.generalpost.vo;
 
+import com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 
 import jakarta.validation.constraints.NotBlank;
@@ -19,9 +20,9 @@ public class GeneralPostVO {
 
 	// 게시글을 작성하는 회원의 정보
 	private MemberVO memberVO;
-	
-//	//공통코드 받아오기
-//	private CommonVO commonVO;
+
+	// 공통코드 받아오기
+	private CommonCodeVO commonCodeVO;
 
 	public String getGeneralPostId() {
 		return generalPostId;
@@ -103,6 +104,12 @@ public class GeneralPostVO {
 		this.memberVO = memberVO;
 	}
 
-	
-	
+	public CommonCodeVO getCommonCodeVO() {
+		return commonCodeVO;
+	}
+
+	public void setCommonCodeVO(CommonCodeVO commonCodeVO) {
+		this.commonCodeVO = commonCodeVO;
+	}
+
 }

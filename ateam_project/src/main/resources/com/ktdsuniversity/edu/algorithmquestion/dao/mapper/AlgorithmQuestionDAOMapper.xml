@@ -25,17 +25,23 @@
           FROM COMPANY_ALGORITHM_QUESTION CAQ
          INNER JOIN MEMBER M
             ON CAQ.ALGORITHM_WRITER = M.EMAIL
-	       WHERE DELETE_YN = 'N'
+         INNER JOIN ALGORITHM_CATEGORY_LIST ACL
+            ON ACL.COMPANY_ALGORITHM_QUESTION_ID = CAQ.COMPANY_ALGORITHM_QUESTION_ID
+	     WHERE CAQ.DELETE_YN = 'N'
 		<if test='searchKeyword != null and searchKeyword != ""'>
-		    <if test='searchType == "algorithmTitle"'>
-		   AND CAQ.ALGORITHM_TITLE LIKE '%' || #{searchKeyword} || '%'
-		    </if>
-		    <if test='searchType == "algorithmContent"'>
-		   AND CAQ.ALGORITHM_CONTENT LIKE '%' || #{searchKeyword} || '%'
-		    </if>
-		    <if test='searchType == "algorithmWriter"'>
 		   AND M.NICKNAME LIKE '%' || #{searchKeyword} || '%'
-		    </if>
+		</if>
+		<if test='algorithmCategoryIdList != null'>
+		   AND ACL.ALGORITHM_CATEGORY_ID IN
+		<foreach collection="algorithmCategoryIdList" item="category" open="(" close=")" separator=",">
+		    #{category}
+		</foreach>
+		</if>
+		<if test='algorithmTierList != null'>
+		   AND CAQ.ALGORITHM_TIER_ID IN
+		<foreach collection="algorithmTierList" item="tier" open="(" close=")" separator=",">
+		    #{tier}
+		</foreach>
 		</if>
 	</select>
 	
@@ -59,7 +65,7 @@
 		    ON CAQ.ALGORITHM_WRITER = M.EMAIL
 		 INNER JOIN COMMON_CODE C
 		    ON CAQ.MAIN_ALGORITHM_CATEGORY_ID = C.CODE_ID
-		 WHERE DELETE_YN = 'N'
+		 WHERE CAQ.DELETE_YN = 'N'
 		 ORDER BY POST_DATE DESC <!-- 최신글순 -->
 	</select>
 	
@@ -78,23 +84,30 @@
 		     , CAQ.LIKE_CNT
 		     , CAQ.DELETE_YN
 		     , M.NICKNAME
+		     , C.CODE_ID
 		     , C.CODE_CONTENT
 		  FROM COMPANY_ALGORITHM_QUESTION CAQ
 		 INNER JOIN MEMBER M
 		    ON CAQ.ALGORITHM_WRITER = M.EMAIL
 		 INNER JOIN COMMON_CODE C
 		    ON CAQ.MAIN_ALGORITHM_CATEGORY_ID = C.CODE_ID
-		 WHERE DELETE_YN = 'N'
+		 INNER JOIN ALGORITHM_CATEGORY_LIST ACL
+            ON ACL.COMPANY_ALGORITHM_QUESTION_ID = CAQ.COMPANY_ALGORITHM_QUESTION_ID
+	     WHERE CAQ.DELETE_YN = 'N'
 		<if test='searchKeyword != null and searchKeyword != ""'>
-		    <if test='searchType == "algorithmTitle"'>
-		   AND CAQ.ALGORITHM_TITLE LIKE '%' || #{searchKeyword} || '%'
-		    </if>
-		    <if test='searchType == "algorithmContent"'>
-		   AND CAQ.ALGORITHM_CONTENT LIKE '%' || #{searchKeyword} || '%'
-		    </if>
-		    <if test='searchType == "algorithmWriter"'>
 		   AND M.NICKNAME LIKE '%' || #{searchKeyword} || '%'
-		    </if>
+		</if>
+		<if test='algorithmCategoryIdList != null'>
+		   AND ACL.ALGORITHM_CATEGORY_ID IN
+		<foreach collection="algorithmCategoryIdList" item="category" open="(" close=")" separator=",">
+		    #{category}
+		</foreach>
+		</if>
+		<if test='algorithmTierList != null'>
+		   AND CAQ.ALGORITHM_TIER_ID IN
+		<foreach collection="algorithmTierList" item="tier" open="(" close=")" separator=",">
+		    #{tier}
+		</foreach>
 		</if>
 		 ORDER BY POST_DATE DESC <!-- 최신글순 -->
 	</select>
@@ -177,7 +190,7 @@
 		    ON CAQ.ALGORITHM_WRITER = M.EMAIL
 		 INNER JOIN COMMON_CODE C
 		    ON CAQ.MAIN_ALGORITHM_CATEGORY_ID = C.CODE_ID
-		 WHERE COMPANY_ALGORITHM_QUESTION_ID = #{_parameter}
+		 WHERE CAQ.COMPANY_ALGORITHM_QUESTION_ID = #{_parameter}
 	</select>
 	
 	<update id="updateOneAlgorithmQuestion"

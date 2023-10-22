@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,11 +22,15 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ktdsuniversity.edu.career.vo.CareerVO;
+import com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO;
 import com.ktdsuniversity.edu.education.vo.EducationVO;
 import com.ktdsuniversity.edu.exceptions.PageNotFoundException;
 import com.ktdsuniversity.edu.generalmember.service.GeneralMemberService;
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
+import com.ktdsuniversity.edu.techstack.vo.TechstackVO;
+
+import jakarta.validation.Valid;
 
 @Controller
 public class GeneralMemberController {
@@ -46,16 +51,18 @@ public class GeneralMemberController {
 		List<GeneralMemberVO> generalMemberListVO = generalMemberService.getAllGeeralMemberList(memberVO.getEmail());
 		List<EducationVO> educationListVO = generalMemberService.getAllEducationList(memberVO.getEmail());
 		MemberVO member = generalMemberService.getSelectNickname(memberVO.getEmail());
+		List<CommonCodeVO> commonCodeVO = generalMemberService.getSelectCommonCode(memberVO.getEmail());
 		GeneralMemberVO generalMemberVO = generalMemberService.getSelectGeneralMember(memberVO.getEmail());
 		modelAndView.setViewName("/mypage/myprofile");
 		modelAndView.addObject("careerList", careerListVO);
 		modelAndView.addObject("generalMemberList", generalMemberListVO);
 		modelAndView.addObject("generalMemberVO", generalMemberVO);
 		modelAndView.addObject("memberVO", member);
+		modelAndView.addObject("commonCodeList", commonCodeVO);
 		modelAndView.addObject("educationList", educationListVO);
 		return modelAndView;
 	}
-
+	
 	/**
 	 * 지역 조회
 	 */
@@ -67,6 +74,37 @@ public class GeneralMemberController {
 		return "mypage/addressview";
 	}
 
+	/**
+	 * 지역 생성
+	 */
+	@GetMapping("/memberInfo/modify/create-location/{generalMemberEmail}")
+	public String createLocation(@PathVariable String generalMemberEmail, Model model,
+			@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+		GeneralMemberVO generalMemberVO = generalMemberService.getSelectGeneralMember(generalMemberEmail);
+		if (!generalMemberVO.getGeneralMemberEmail().equals(memberVO.getEmail())) {
+			throw new PageNotFoundException("잘못된 접근입니다.");
+		}
+		model.addAttribute("generalMemberVO", generalMemberVO);
+		return "mypage/createaddress";
+	}
+
+	@PostMapping("/memberInfo/modify/create-location")
+	public String doCreateLocation(@Valid @ModelAttribute GeneralMemberVO generalMemberVO
+								   ,BindingResult bindingResult
+								   , Model model
+					               ,@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("generalMemberVO", generalMemberVO);
+			return "mypage/createaddress";
+		}
+		boolean isSuccess = generalMemberService.updateOneAddress(generalMemberVO);
+		if (isSuccess) {
+			return "redirect:/memberinfo/view";
+		} else {
+			model.addAttribute("generalMemberVO", generalMemberVO);
+			return "mypage/createaddress";
+		}
+	}
 	/**
 	 * 지역 수정
 	 */
@@ -82,19 +120,24 @@ public class GeneralMemberController {
 	}
 
 	@PostMapping("/memberInfo/modify/update-location")
-	public String doUpdateLocation(@ModelAttribute GeneralMemberVO generalMemberVO, Model model,
-			@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+	public String doUpdateLocation(@Valid @ModelAttribute GeneralMemberVO generalMemberVO
+								   ,BindingResult bindingResult
+								   , Model model
+			                       ,@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+		 if (bindingResult.hasErrors()) {
+				model.addAttribute("generalMemberVO", generalMemberVO);
+				return "mypage/modifyaddress";
+			}
 		boolean isSuccess = generalMemberService.updateOneAddress(generalMemberVO);
 		if (isSuccess) {
-			return "redirect:/memberinfo/addressview/" + generalMemberVO.getGeneralMemberEmail();
+			return "redirect:/memberinfo/view";
 		} else {
 			model.addAttribute("generalMemberVO", generalMemberVO);
 			return "mypage/modifyaddress";
 		}
 	}
-
 	/**
-	 * 주소 삭제
+	 * 지역 삭제
 	 */
 	@GetMapping("/memberInfo/modify/delete-location/{generalMemberEmail}")
 	public String deleteLocation(@PathVariable String generalMemberEmail) {
@@ -136,7 +179,7 @@ public class GeneralMemberController {
 			@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 		boolean isSuccess = generalMemberService.updateSns(generalMemberVO);
 		if (isSuccess) {
-			return "redirect:/memberinfo/viewsns/" + generalMemberVO.getGeneralMemberEmail();
+			return "redirect:/memberinfo/view" ;
 		} else {
 			model.addAttribute("generalMemberVO", generalMemberVO);
 			return "mypage/modifysns";
@@ -203,12 +246,15 @@ public class GeneralMemberController {
 			@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 		boolean isSuccess = generalMemberService.updateselfIntro(generalMemberVO);
 		if (isSuccess) {
-			return "redirect:/memberInfo/my-introduction/" + generalMemberVO.getGeneralMemberEmail();
+			return "redirect:/memberinfo/view";
 		} else {
 			model.addAttribute("generalMemberVO", generalMemberVO);
 			return "mypage/modifyintroduce";
 		}
 	}
+	/**
+	 * 소개글 삭제
+	 */
 	@GetMapping("/memberInfo/modify/delete-introduction/{generalMemberEmail}")
 	public String deleteIntroduction(@PathVariable String generalMemberEmail) {
 		boolean isSuccess = generalMemberService.deleteSelfIntro(generalMemberEmail);

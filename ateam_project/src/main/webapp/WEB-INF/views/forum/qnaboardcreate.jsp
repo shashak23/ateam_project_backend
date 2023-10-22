@@ -5,30 +5,49 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-
+<script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
 <style type= "text/css">
-		div.grid {
-			display: grid;
-			grid-template-columns: 80px 1fr;
-			grid-template-rows: 28px 28px 28px 320px 1fr;
-			row-gap: 10px;
-		}
 
-		div.grid > div.btn-group {
-			display: grid;
-			grid-column: 1 / 3;
-		}
+	div.grid div.right-align {
+		text-align: right;
+	}
 
-		div.grid div.right-align {
-			text-align: right;
-		}
+	label {
+		padding-left: 10px; 
+		
+	}
+	
+	#write-page > #editor{
+	margin-top:10px;
+	
+	}
+	textarea { 
+		padding: 10px;
+		margin-top:100px;
+		width:500px;
+		height:500px;
+	}
+	#write-page > input:first-child {
+		
+	}
+	
+	#write-page > input:2th-child(2) {
+		position: absolute;
+		top:500px;
+	}
+	.ck-editor__editable { height: 400px; }
+    .ck-content { font-size: 12px; }
+    
+    #write-page > .hash{
+    margin-top:50px;
+    }
 
-		label {
-			padding-left: 10px; 
-		}
-		button, input, textarea { 
-			padding: 10px;
-		}	
+   
+    .btn-group {
+    width:70px;
+    height:70px;
+    margin-left:600px;
+    }	
 </style>
 </head>
 <body>
@@ -36,20 +55,22 @@
 
 	<h1> 질답게시판의 작성 페이지</h1>
 	<form name="generalPostVO" method = "post">		
-		<div class = "grid">
+		<div id="write-page">
 			<label for = "postTitle"> 제목 </label>
-			<input id = "postTitle" type = "text" name="postTitle" />
-			
-			<!--  <label for = "postWriter"> 이메일 </label>
-			<input id = "postWriter" type = "email" name = "postWriter"/>  -->
-<!-- 
-			<label for = "file"> 첨부파일 </label>
-			<input id = "file" type = "file" name = "file" />
-			 -->
-			<label for = "postContent"> 내용 </label>
-			<textarea id ="postContent" 
-			name = "postContent" style = "height: 300px;"></textarea>
-			
+			<input id = "postTitle" type = "text" name="postTitle" 
+					value="${generalPostVO.postTitle}"/>
+			<p><label for = "postContent"> 내용 </label>
+			 <textarea name="text" id="editor">${generalPostVO.postContent}</textarea>
+		        <script>
+		          ClassicEditor.create( document.querySelector( '#editor' ), {
+		                  language: "ko"
+		                } );    
+		        </script></p>
+		        
+		   <div class="hash"> 
+		    <label for="hashTag" >해시태그</label>
+		    <input id="hashTag" type="text" name="hashTag" />
+		   </div>
 			<div class = "btn-group">
 				<div class="right-align">
 					<input type="submit" value="저장" />

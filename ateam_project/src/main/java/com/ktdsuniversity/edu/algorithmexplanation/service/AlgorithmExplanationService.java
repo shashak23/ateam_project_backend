@@ -8,10 +8,11 @@ package com.ktdsuniversity.edu.algorithmexplanation.service;
 
 import com.ktdsuniversity.edu.algorithmexplanation.vo.AlgorithmExplanationListVO;
 import com.ktdsuniversity.edu.algorithmexplanation.vo.AlgorithmExplanationVO;
+import com.ktdsuniversity.edu.algorithmexplanation.vo.SearchAlgorithmExplanationVO;
 
 public interface AlgorithmExplanationService {
 	
-    public AlgorithmExplanationListVO getAllAlgorithmExplanation();
+    public AlgorithmExplanationListVO getAllAlgorithmExplanation(SearchAlgorithmExplanationVO searchAlgorithmExplanationVO);
 	
 	public boolean createNewAlgorithmExplanation (AlgorithmExplanationVO algorithmExplanationVO);
 	

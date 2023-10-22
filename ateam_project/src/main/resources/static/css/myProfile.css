@@ -367,7 +367,7 @@ a:hover {
 
 .profile {
   display: grid;
-  grid-template-columns: 170px 1fr;
+  grid-template-columns: 170px 20px 1fr;
   margin: 20px;
 }
 

@@ -13,7 +13,7 @@
 		, SCHOOL_DEPARTMENT
 		, DEGREES)
 		VALUES
-		( SEQ_EDUCATION_PK.NEXTVAL
+		( 'ED-' || TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_EDUCATION_PK.NEXTVAL, 6, '0')
 		, #{generalMemberEmail}
 		, #{schoolName}
 		, #{schoolDepartment}

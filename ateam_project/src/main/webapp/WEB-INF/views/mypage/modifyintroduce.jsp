@@ -8,7 +8,7 @@
 
 </head>
 <form method="post" action="/memberInfo/modify/update-introduction">
-<input type="hidden" name="generalMemberEmail" value="${generalMemberVO.generalMemberEmail }"/>
+<input type="hidden" name="generalMemberEmail" value="${sessionScope._LOGIN_USER_.email}"/>
 <label>자기소개 </label>
 <textarea name="selfIntro" id="selfIntro" placeholder="간단한 문구를 입력해 주세요 😊" style="height: 50px">
 ${generalMemberVO.selfIntro}

@@ -17,9 +17,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
+import org.jsoup.Jsoup;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+
+import com.ktdsuniversity.edu.util.XssIgnoreUtil;
 
 @Component
 @Scope("prototype")
@@ -70,12 +73,14 @@ public class CodeRuntime {
 	}
 
 	public void makeFile() {
-		makeFile(this.code.toString());
+		String code = this.code.toString();
+		code = XssIgnoreUtil.ignoreText(code);
+		code = Jsoup.parse(code).text();
+		makeFile(code);
 //		makeFile(CodeRuntime.runFileCode.toString());
 	}
 	
 	public void makeRunFile(String code, String testCode) {
-		
 		if (testCode != null) {
 			code = code.replace("#codeHear#", testCode);
 		}

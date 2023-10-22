@@ -1,6 +1,10 @@
+/**
+ * 작성자 : 김광원
+ * 작성일자 : 2023-10-18
+ * 내용 : 경력 Service
+ */
 package com.ktdsuniversity.edu.career.service;
 
-import java.util.List;
 
 import com.ktdsuniversity.edu.career.vo.CareerVO;
 

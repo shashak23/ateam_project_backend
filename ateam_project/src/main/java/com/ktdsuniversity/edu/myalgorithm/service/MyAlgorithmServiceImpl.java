@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ktdsuniversity.edu.myalgorithm.dao.MyAlgorithmDAO;
 import com.ktdsuniversity.edu.myalgorithm.vo.MyAlgorithmListVO;
 import com.ktdsuniversity.edu.myalgorithm.vo.MyAlgorithmVO;
+import com.ktdsuniversity.edu.myalgorithm.vo.SearchMyAlgorithmVO;
 
 @Service
 public class MyAlgorithmServiceImpl implements MyAlgorithmService{
@@ -21,10 +22,10 @@ public class MyAlgorithmServiceImpl implements MyAlgorithmService{
 	private MyAlgorithmDAO myAlgorithmDAO;
 	
 	@Override
-	public MyAlgorithmListVO getAllMyAlgorithm(String email) {
+	public MyAlgorithmListVO getAllMyAlgorithm(SearchMyAlgorithmVO searchMyAlgorithmVO) {
 		MyAlgorithmListVO myList = new MyAlgorithmListVO();
-		myList.setMyAlgotirhmListCnt(myAlgorithmDAO.getAllNumber(email));
-		myList.setMyAlgorithmList(myAlgorithmDAO.getAllMyAlgorithmList(email));
+		myList.setMyAlgotirhmListCnt(myAlgorithmDAO.getAllNumber(searchMyAlgorithmVO));
+		myList.setMyAlgorithmList(myAlgorithmDAO.getAllMyAlgorithmList(searchMyAlgorithmVO));
 		return myList;
 	}
 

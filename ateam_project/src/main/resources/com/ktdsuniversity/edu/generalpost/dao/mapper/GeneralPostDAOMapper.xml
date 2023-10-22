@@ -6,7 +6,7 @@
 
 <mapper namespace="com.ktdsuniversity.edu.generalpost.dao.GeneralPostDAO">
 
-	<select id="getBoardAllCount"
+<select id="getBoardAllCount"
 			resultType="_int">
 		SELECT COUNT(1)
 		  FROM GENERAL_POST

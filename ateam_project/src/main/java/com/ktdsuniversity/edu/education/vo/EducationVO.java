@@ -7,10 +7,14 @@ package com.ktdsuniversity.edu.education.vo;
 
 
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
+
+import jakarta.validation.constraints.NotBlank;
 public class EducationVO {
 	private String educationId;
 	private String generalMemberEmail;
+	@NotBlank(message = "학교명을 입력해주세요.")
 	private String schoolName;
+	@NotBlank(message = "학과를 입력해주세요.")
 	private String schoolDepartment;
 	private String degrees;
 	private GeneralMemberVO generalMemberVO;

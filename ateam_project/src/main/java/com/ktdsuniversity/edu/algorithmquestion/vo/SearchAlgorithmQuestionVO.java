@@ -8,6 +8,12 @@ package com.ktdsuniversity.edu.algorithmquestion.vo;
 
 public class SearchAlgorithmQuestionVO {
 
+	private String[] algorithmCategoryIdList;
+	private String[] algorithmTierList;
+	private String category;
+	private String tier;
+	
+//	private String[] checkboxList;
 	
 	/**
 	 * 검색을 하기위한 구분자
@@ -15,20 +21,19 @@ public class SearchAlgorithmQuestionVO {
 	 * 내용검색: algorithmContent
 	 * 출제기업검색: algorithmWriter
 	 */
-	private String searchType;
+//	private String searchType;
 	
 	/**
 	 * 검색 키워드
 	 */
 	private String searchKeyword;
 
-	public String getSearchType() {
-		return searchType;
-	}
-
-	public void setSearchType(String searchType) {
-		this.searchType = searchType;
-	}
+	
+//	public String getSearchType() { return searchType; }
+	
+//	public void setSearchType(String searchType) { this.searchType = searchType;
+//	}
+	
 
 	public String getSearchKeyword() {
 		return searchKeyword;
@@ -37,6 +42,41 @@ public class SearchAlgorithmQuestionVO {
 	public void setSearchKeyword(String searchKeyword) {
 		this.searchKeyword = searchKeyword;
 	}
+
+	public String[] getAlgorithmCategoryIdList() {
+		return algorithmCategoryIdList;
+	}
+
+	public void setAlgorithmCategoryIdList(String[] algorithmCategoryIdList) {
+		this.algorithmCategoryIdList = algorithmCategoryIdList;
+	}
+
+	public String[] getAlgorithmTierList() {
+		return algorithmTierList;
+	}
+
+	public void setAlgorithmTierList(String[] algorithmTierList) {
+		this.algorithmTierList = algorithmTierList;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public String getTier() {
+		return tier;
+	}
+
+	public void setTier(String tier) {
+		this.tier = tier;
+	}
 	
+	
+
+	 	
 	
 }

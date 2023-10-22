@@ -3,6 +3,8 @@ package com.ktdsuniversity.edu.member.vo;
 import java.util.List;
 
 import com.ktdsuniversity.edu.member.vo.validategroup.MemberAuthGroup;
+import com.ktdsuniversity.edu.member.vo.validategroup.MemberEditNickGroup;
+import com.ktdsuniversity.edu.member.vo.validategroup.MemberEditPWGroup;
 import com.ktdsuniversity.edu.member.vo.validategroup.MemberSignupGroup;
 import com.ktdsuniversity.edu.myalgorithm.vo.MyAlgorithmVO;
 
@@ -17,17 +19,20 @@ public class MemberVO {
 		   		  message = "이메일 형태로 입력해주세요.")
 	private String email;
 	
-	@NotBlank(groups=MemberSignupGroup.class,
+	@NotBlank(groups= {MemberSignupGroup.class,
+				       MemberEditPWGroup.class},
 			message = "비밀번호를 입력해주세요.")
 	private String pw;
 	
-	@NotBlank(groups=MemberSignupGroup.class,
-			message = "비밀번호 확인을 입력해주세요.")
+	@NotBlank(groups={MemberSignupGroup.class,
+					  MemberEditPWGroup.class},
+			          message = "비밀번호 확인을 입력해주세요.")
 	
 	private String confirmPw;
 	private String salt;
-	@NotBlank(groups=MemberSignupGroup.class,
-			   		 message = "닉네임을 입력해주세요.")
+	@NotBlank(groups= {MemberSignupGroup.class,
+					   MemberEditNickGroup.class},
+			   		   message = "닉네임을 입력해주세요.")
 	private String nickname;
 	private String infoAgreementYn;
 	private String profilePic;

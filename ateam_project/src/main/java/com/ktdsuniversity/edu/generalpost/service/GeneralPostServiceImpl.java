@@ -4,16 +4,17 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ktdsuniversity.edu.generalpost.dao.GeneralPostDAO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostListVO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
+import com.ktdsuniversity.edu.generalpost.vo.SearchForumVO;
 import com.ktdsuniversity.edu.generalpost.web.FreePostController;
-import com.ktdsuniversity.edu.member.vo.MemberVO;
 
 @Service
 public class GeneralPostServiceImpl implements GeneralPostService{
+
 
 	private Logger log = LoggerFactory.getLogger(FreePostController.class);
 	
@@ -21,6 +22,7 @@ public class GeneralPostServiceImpl implements GeneralPostService{
 	private GeneralPostDAO generalPostDAO;
 	
 	// 자유게시판
+	@Transactional
 	@Override
 	public GeneralPostListVO getAllFreeBoard() {
 
@@ -31,6 +33,7 @@ public class GeneralPostServiceImpl implements GeneralPostService{
 		return generalPostListVO;	
 	}
 
+	@Transactional
 	@Override
 	public boolean createNewFreeBoard(GeneralPostVO generalPostVO) {
 		int boardCount = generalPostDAO.createNewFreeBoard(generalPostVO);
@@ -38,6 +41,7 @@ public class GeneralPostServiceImpl implements GeneralPostService{
 		return boardCount > 0;
 	}
 
+	@Transactional
 	@Override
 	public GeneralPostVO getOneFreeBoard(String generalPostId) {
 		GeneralPostVO result = null;
@@ -47,12 +51,14 @@ public class GeneralPostServiceImpl implements GeneralPostService{
 		return result;
 	}
 
+	@Transactional
 	@Override
 	public boolean updateOneFreeBoard(GeneralPostVO generalPostVO) {
 		int updateCount = generalPostDAO.updateOneFreeBoard(generalPostVO);
 		return updateCount > 0;
 	}
 
+	@Transactional
 	@Override
 	public boolean deleteOneFreeBoard(String generalPostId) {
 		int deleteCount = generalPostDAO.deleteOneFreeBoard(generalPostId);
@@ -61,6 +67,7 @@ public class GeneralPostServiceImpl implements GeneralPostService{
 	}
 	
 	// 질답게시판 
+	@Transactional
 	@Override
 	public GeneralPostListVO getAllQnABoard() {
 
@@ -72,7 +79,8 @@ public class GeneralPostServiceImpl implements GeneralPostService{
 		generalPostListVO.setGeneralPostList( generalPostDAO.getAllQnABoard());
 		return generalPostListVO;	
 	}
-
+	
+	@Transactional
 	@Override
 	public boolean createNewQnABoard(GeneralPostVO generalPostVO) {
 		int boardCount = generalPostDAO.createNewQnABoard(generalPostVO);
@@ -80,6 +88,7 @@ public class GeneralPostServiceImpl implements GeneralPostService{
 		return boardCount > 0;
 	}
 
+	@Transactional
 	@Override
 	public GeneralPostVO getOneQnABoard(String generalPostId) {
 		GeneralPostVO result = null;
@@ -90,12 +99,14 @@ public class GeneralPostServiceImpl implements GeneralPostService{
 		return result;
 	}
 
+	@Transactional
 	@Override
 	public boolean updateOneQnABoard(GeneralPostVO generalPostVO) {
 		int updateCount = generalPostDAO.updateOneQnABoard(generalPostVO);
 		return updateCount > 0;
 	}
 
+	@Transactional
 	@Override
 	public boolean deleteOneQnABoard(String generalPostId) {
 		int deleteCount = generalPostDAO.deleteOneQnABoard(generalPostId);

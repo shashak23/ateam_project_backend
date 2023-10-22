@@ -1,6 +1,6 @@
 /**
  * 작성자 : 김광원
- * 작성일자 : 2023-10-24
+ * 작성일자 : 2023-10-14
  * 수정일자 : 2023-10-25 수정자(김광원)
  * 내용 : 일반회원을 위한 ServiceImpl입니다.
  */
@@ -13,10 +13,12 @@ import org.springframework.stereotype.Service;
 
 import com.ktdsuniversity.edu.beans.FileHandler;
 import com.ktdsuniversity.edu.career.vo.CareerVO;
+import com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO;
 import com.ktdsuniversity.edu.education.vo.EducationVO;
 import com.ktdsuniversity.edu.generalmember.dao.GeneralMemberDAO;
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
+import com.ktdsuniversity.edu.techstack.vo.TechstackVO;
 
 @Service
 public class GeneralMemberServiceImpl implements GeneralMemberService {
@@ -56,7 +58,13 @@ public class GeneralMemberServiceImpl implements GeneralMemberService {
 	public MemberVO getSelectNickname(String generalMemberEmail) {
 		return generalMemberDAO.getSelectNickname(generalMemberEmail);
 	}
-
+	/**
+	 * 기술스택 조회
+	 */
+	@Override
+	public List<CommonCodeVO> getSelectCommonCode(String generalMemberEmail) {
+		return generalMemberDAO.getSelectCommonCode(generalMemberEmail);
+	}
 	/**
 	 * 일반회원 조회
 	 */
@@ -65,7 +73,6 @@ public class GeneralMemberServiceImpl implements GeneralMemberService {
 		GeneralMemberVO generalMemberVO = generalMemberDAO.getSelectGeneralMember(generalMemberEmail);
 		return generalMemberVO;
 	}
-
 	/**
 	 * 주소 수정
 	 */
@@ -137,5 +144,9 @@ public class GeneralMemberServiceImpl implements GeneralMemberService {
 		int deleteCount = generalMemberDAO.deleteSelfIntro(generalMemberEmail);
 		return deleteCount > 0;
 	}
+
+
+
+
 
 }

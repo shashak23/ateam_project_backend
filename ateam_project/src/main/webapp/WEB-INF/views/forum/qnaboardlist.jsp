@@ -5,18 +5,39 @@
     <html lang="ko">
       <head>
         <meta charset="utf-8" />
-        
-        
         <title>SnapChat</title>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta
           name="viewport"
           id="viewport"
-          content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, width=device-width"
-        />
+          content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, width=device-width"/>
             <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
             <link rel="stylesheet" type="text/css" href="/css/swiper.min.css">
         <link rel="stylesheet" type="text/css" href="/css/style.css" />
+        <script src="js/lib/jquery-3.7.1.js"></script>
+        <script>
+        	$().ready(funtion() {
+        		alert('힘내용ㅎㅎ')
+        		
+//         		$.get('/code/질답게시판', function(response) {
+//         			for (let i = 0; i < response.length; i++) {
+//         				let template = `
+//         					<tr>
+//         				    	<td>${qnaboard.generalPostId}</td>
+//         				    		<td>
+//         				      			<a href="/qnaboard/view/${qnaboard.generalPostId}">
+//         				        			${qnaboard.postTitle}
+//         				      			</a>
+//         				    		</td>
+//         				    	<td>${qnaboard.postWriter}</td>
+//         				    	<td>${qnaboard.postDate}</td>
+//         				    	<td>${qnaboard.viewCnt}</td>
+//         				  	</tr>
+//         				`
+//         			}
+//         		})
+        	})
+        </script>
       </head>
       <body>
     <div id="wrap" class="wrap">
@@ -113,17 +134,21 @@
 						
 						<!-- 게시물검색 -->
 						<div class="list_search">
-							<select class="selelct">
-								<option value="">제목</option>
-								<option value="">작성자</option>
-							</select>
-							<input type="text" class="sc_text" placeholder="검색어 입력">
+							<select name="searchType">
+						            <option value="subject" ${searchForumVO.searchType eq 'subject' ? 'selected' : ''}>제목</option>
+						            <option value="content" ${searchForumVO.searchType eq 'content' ? 'selected' : ''}>내용</option>
+						            <option value="writer" ${searchForumVO.searchType eq 'email' ? 'selected' : ''}>이메일</option>
+						    </select>
+							<input type="text" class="sc_text" placeholder="검색어 입력" name="searchKeyword" value="${searchForumVO.searchKeyword}" />
 							<div class="btn btn_st_2">
-								<a href="#">조회</a>
+								<button>조회</button>
 							</div>
 							<div class="btn btn_st_2">
                                 <a href="/qnaboard/create">등록</a>
                             </div>
+                            <div class="right-align">
+								총 ${generalPostListVO.boardCnt} 건의 게시글이 검색되었습니다.
+							</div>
 						</div>
 
 						<!-- 게시판 리스트 -->
@@ -164,7 +189,7 @@
                                                                 <td>${qnaboard.postDate}</td>
                                                                 <td>${qnaboard.viewCnt}</td>
                                                             </tr>
-                                                        </c:forEach>	
+                                                     </c:forEach>	
 														
 												</tbody>
 										</table>

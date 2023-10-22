@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ktdsuniversity.edu.companyinfo.dao.CompanyInfoDAO">
+
+	<update id="updateCompanyContactName"
+			parameterType="com.ktdsuniversity.edu.companyinfo.vo.CompanyInfoVO">
+		UPDATE COMPANY
+		   SET CONTACT_NAME = #{contactName}
+ 		 WHERE COMPANY_EMAIL = #{companyEmail}
+	</update>
+	
+	<update id="updateCompanyContactNumber"
+			parameterType="com.ktdsuniversity.edu.companyinfo.vo.CompanyInfoVO">
+		UPDATE COMPANY
+   		   SET CONTACT_NUMBER = #{contactNumber}
+ 		 WHERE COMPANY_EMAIL = #{companyEmail}
+	</update>
+
+</mapper>

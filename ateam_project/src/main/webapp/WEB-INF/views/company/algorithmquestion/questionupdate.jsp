@@ -35,12 +35,6 @@
 		// 이전에 선택한 select option 불러오기
         $("select[name=algorithmTierId]").val("${algorithmQuestionVO.algorithmTierId}")
         
-        // option 선택이 바뀌면, 바뀐 값이 들어감
-        $("select[name=algorithmTierId]").change(function() {
-            var tier = 
-                $("select[name=algorithmTierId] option:selected").text();
-            $("#algorithmTierId").val(tier);
-        })
 	})
 </script>
 </head>

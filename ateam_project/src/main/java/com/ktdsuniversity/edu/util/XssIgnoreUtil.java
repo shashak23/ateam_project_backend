@@ -112,7 +112,7 @@ public class XssIgnoreUtil {
 		}
 	}
 
-	private static String ignoreText(String dirtyStr) {
+	public static String ignoreText(String dirtyStr) {
 		if (dirtyStr != null) {
 			dirtyStr = dirtyStr.replace("&lt;", "<")
 							   .replace("&gt;", ">")

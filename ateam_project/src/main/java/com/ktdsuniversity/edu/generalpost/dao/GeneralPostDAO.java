@@ -9,7 +9,7 @@ package com.ktdsuniversity.edu.generalpost.dao;
 import java.util.List;
 
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
-import com.ktdsuniversity.edu.member.vo.MemberVO;
+import com.ktdsuniversity.edu.generalpost.vo.SearchForumVO;
 
 public interface GeneralPostDAO {
 	// 게시글 수 
@@ -38,6 +38,5 @@ public interface GeneralPostDAO {
 	public int updateOneQnABoard(GeneralPostVO generaVO);
 	
 	public int deleteOneQnABoard(String generalPostId);
-
 
 }

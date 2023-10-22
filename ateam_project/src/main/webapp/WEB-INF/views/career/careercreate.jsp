@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="form" uri ="http://www.springframework.org/tags/form"%>    
 <!DOCTYPE html>
 <html>
 <head>
@@ -68,24 +69,33 @@
 </script>
 </head>
 <body>
-    <form method="post">
+    <form:form modelAttribute="careerVO" method="post">
         <div>
             <label for="previousCompanyName">근무 회사명:</label>
-            <input type="text" id="previousCompanyName" name="previousCompanyName" required>
+            <input type="text" id="previousCompanyName" name="previousCompanyName" >
+        <div>
+            <form:errors path="previousCompanyName" element="div" cssClass="errors" />
+        </div>
         </div>
         <div>
             <label for="jobTitle">직무명:</label>
-            <input type="text" id="jobTitle" name="jobTitle" required>
+            <input type="text" id="jobTitle" name="jobTitle">
+        <div>
+            <form:errors path="jobTitle" element="div" cssClass="errors" />
+        </div>
         </div>
         <div>
             <label for="hireDate">입사일:</label>
             <input type="text" id="hireDate" name="hireDate" class="date-picker" placeholder="YYYY-MM-DD" readonly="readonly">
+        <div>
+            <form:errors path="hireDate" element="div" cssClass="errors" />
+        </div>	
         </div>
         <div>
             <label for="resignDate">퇴사일:</label>
             <input type="text" id="resignDate" name="resignDate" class="date-picker" placeholder="YYYY-MM-DD" readonly="readonly">
         </div>
         <input type="submit" value="저장">
-    </form>
+    </form:form>
 </body>
 </html>

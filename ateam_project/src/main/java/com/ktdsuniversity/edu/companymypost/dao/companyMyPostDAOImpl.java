@@ -1,6 +1,10 @@
 package com.ktdsuniversity.edu.companymypost.dao;
 
+<<<<<<< HEAD:ateam_project/src/main/java/com/ktdsuniversity/edu/companymypost/dao/companyMyPostDAOImpl.java
 import java.util.List;
+=======
+public class CompanyMyPostDAOImpl {
+>>>>>>> main:ateam_project/src/main/java/com/ktdsuniversity/edu/companymypost/dao/CompanyMyPostDAOImpl.java
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;

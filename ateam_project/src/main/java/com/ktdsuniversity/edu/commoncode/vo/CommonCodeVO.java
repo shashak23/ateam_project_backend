@@ -8,11 +8,15 @@
 
 package com.ktdsuniversity.edu.commoncode.vo;
 
+import java.util.List;
+
+import com.ktdsuniversity.edu.techstack.vo.TechstackVO;
+
 public class CommonCodeVO {
 	private String codeId;
 	private String codeType;
 	private String codeContent;
-	
+	private List<TechstackVO> techstackVO;
 	
 	public String getCodeId() {
 		return codeId;
@@ -31,5 +35,11 @@ public class CommonCodeVO {
 	}
 	public void setCodeContent(String codeContent) {
 		this.codeContent = codeContent;
+	}
+	public List<TechstackVO> getTechstackVO() {
+		return techstackVO;
+	}
+	public void setTechstackVO(List<TechstackVO> techstackVO) {
+		this.techstackVO = techstackVO;
 	}
 }

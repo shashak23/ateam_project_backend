@@ -1,6 +1,13 @@
+/**
+ * 작성자: 김광원
+ * 수정자: 신진영(2023-10-20)
+ * 작성일자: 2023-10-19
+ * 내용: 일반회원 비밀번호 수정 및 닉네임 수정
+ */
 package com.ktdsuniversity.edu.member.service;
 
 import java.io.File;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,6 +27,11 @@ import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 import com.ktdsuniversity.edu.member.dao.MemberDAO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 
+import io.github.seccoding.web.mimetype.ExtFilter;
+import io.github.seccoding.web.mimetype.MimeType;
+import io.github.seccoding.web.mimetype.abst.ExtensionFilter;
+import io.github.seccoding.web.mimetype.factory.ExtensionFilterFactory;
+
 @Service
 public class MemberServiceImpl implements MemberService{
 	@Autowired
@@ -33,11 +45,7 @@ public class MemberServiceImpl implements MemberService{
 	@Autowired FileHandler fileHandler;
 	
 	/**
-	 * 작성자: 김광원
-	 * 수정자: 신진영(2023-10-19)
-	 * 작성일자: 2023-10-19
-	 * 내용: createNewMember 쿼리 일반/기업회원별 if문 분기 세팅(setMemberType)
-	 * 		transactional 처리
+	 * 회원생성
 	 */
 	@Transactional
 	@Override
@@ -63,12 +71,17 @@ public class MemberServiceImpl implements MemberService{
 		return insertMemberCount>0 && insertGMemberCount>0;
 	}
 
+	/**
+	 * email체크
+	 */
 	@Override
 	public boolean checkAvailableEmail(String email) {
 		int emailCount = memberDAO.getEmailCount(email);
 		return emailCount==0;
 	}
-
+	/**
+	 * 닉네임 체크
+	 */
 	@Override
 	public boolean checkAvailableNickname(String nickname) {
 		int nicknameCount = memberDAO.getNicknameCount(nickname);
@@ -102,9 +115,12 @@ public class MemberServiceImpl implements MemberService{
 		}
 		return memberVO;
 	}
-
+	/**
+	 * 프로필사진 수정
+	 */
 	@Override
 	public boolean updateOneFile(MemberVO memberVO, MultipartFile file) {	
+		StoredFile storedFile = fileHandler.storeFile(file);
 		if(file!= null && !file.isEmpty()) {
 			MemberVO originMemberVO = memberDAO.getOneFile(memberVO.getEmail());
 			if(originMemberVO != null && originMemberVO.getProfilePic() !=null) {
@@ -113,12 +129,20 @@ public class MemberServiceImpl implements MemberService{
 					originFile.delete();
 				}
 			}
-			StoredFile storedFile = fileHandler.storeFile(file);
-			System.out.println(storedFile.getFileName());
 			memberVO.setProfilePic(storedFile.getRealFileName());
 		}
+		
+		
 		int updateCount = memberDAO.updateOneFile(memberVO);
 		return updateCount>0;
+	}
+	/**
+	 * 프로필사진 삭제
+	 */
+	@Override
+	public boolean deleteProfile(String email) {
+		int deleteCount = memberDAO.deleteProfile(email);
+		return deleteCount>0;
 	}
 	
 	@Transactional
@@ -166,5 +190,39 @@ public class MemberServiceImpl implements MemberService{
 		return updatewithdrawMemberCount > 0;
 	}
 	
+	@Override
+	public List<MemberVO> searchMember(String memberType) {
+		return memberDAO.searchMember(memberType);
+	}
+	/**
+	 * 일반회원조회
+	 */
+	@Override
+	public MemberVO selectMemberinfo(String email) {
+		MemberVO memberVO = memberDAO.selectMemberinfo(email);
+		return memberVO;
+	}
+	/**
+	 * 일반회원 닉네임 비밀번호 수정
+	 */
+	@Override
+	public boolean updateMemberNickname(MemberVO memberVO) {
+		int nickNameCount = memberDAO.getNicknameCount(memberVO.getEmail());
+		if(nickNameCount >0) {
+			throw new AlreadyUseException(memberVO, "email이 이미 사용중 입니다.");
+		}
+		int updateCount = memberDAO.updateMemberNickname(memberVO);
+		return updateCount>0;
+	}
+	/**
+	 * 일반회원 비밀번호 수정
+	 */
+	@Override
+	public boolean updateMemberPW(MemberVO memberVO) {
+		int updateCount = memberDAO.updateMemberPW(memberVO);
+		return updateCount>0;
+	}
 
+
+	
 }

@@ -58,7 +58,6 @@ public class CompanyNewsServiceImpl implements CompanyNewsService {
 		return createCount > 0;	
 	}
 
-	@Transactional
 	@Override
 	public CompanyNewsVO getOneCompanyNews(String companyNewsPostId, boolean isIncrease) {
 		if (isIncrease) {

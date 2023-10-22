@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ktdsuniversity.edu.algorithmexplanation.dao.AlgorithmExplanationDAO;
 import com.ktdsuniversity.edu.algorithmexplanation.vo.AlgorithmExplanationListVO;
 import com.ktdsuniversity.edu.algorithmexplanation.vo.AlgorithmExplanationVO;
+import com.ktdsuniversity.edu.algorithmexplanation.vo.SearchAlgorithmExplanationVO;
 import com.ktdsuniversity.edu.exceptions.PageNotFoundException;
 
 @Service
@@ -26,10 +27,15 @@ public class AlgorithmExplanationServiceImpl implements AlgorithmExplanationServ
 	private AlgorithmExplanationDAO algorithmExplanationDAO;
 	
 	@Override
-	public AlgorithmExplanationListVO getAllAlgorithmExplanation() {
+	public AlgorithmExplanationListVO getAllAlgorithmExplanation(SearchAlgorithmExplanationVO searchAlgorithmExplanationVO) {
 		AlgorithmExplanationListVO algorithmExplanationListVO = new AlgorithmExplanationListVO();
-		algorithmExplanationListVO.setAlgorithmExplanationCnt(algorithmExplanationDAO.getAlgorithmExplanationAllCount());
-		algorithmExplanationListVO.setAlgorithmExplanationList(algorithmExplanationDAO.getAllAlgorithmExplanation());
+		algorithmExplanationListVO.setAlgorithmExplanationCnt(algorithmExplanationDAO.getAlgorithmExplanationAllCount(searchAlgorithmExplanationVO));
+		if( searchAlgorithmExplanationVO == null) {
+			algorithmExplanationListVO.setAlgorithmExplanationList(algorithmExplanationDAO.getAllAlgorithmExplanation());
+		}
+		else {
+			algorithmExplanationListVO.setAlgorithmExplanationList(algorithmExplanationDAO.searchAllAlgorithmExplanation(searchAlgorithmExplanationVO));
+		}
 		return algorithmExplanationListVO;
 	}
 
@@ -40,7 +46,6 @@ public class AlgorithmExplanationServiceImpl implements AlgorithmExplanationServ
 		return createCount > 0;
 	}
 
-	@Transactional
 	@Override
 	public AlgorithmExplanationVO getOneAlgorithmExplanation(String companyAlgorithmExplanationId, boolean isIncrease) {
 		if (isIncrease) {

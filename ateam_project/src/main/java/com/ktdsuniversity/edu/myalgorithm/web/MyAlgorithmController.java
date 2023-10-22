@@ -26,7 +26,10 @@ import com.ktdsuniversity.edu.member.vo.MemberVO;
 import com.ktdsuniversity.edu.myalgorithm.service.MyAlgorithmService;
 import com.ktdsuniversity.edu.myalgorithm.vo.MyAlgorithmListVO;
 import com.ktdsuniversity.edu.myalgorithm.vo.MyAlgorithmVO;
+import com.ktdsuniversity.edu.myalgorithm.vo.SearchMyAlgorithmVO;
 import com.ktdsuniversity.edu.util.XssIgnoreUtil;
+
+import jakarta.validation.Valid;
 
 @Controller
 public class MyAlgorithmController {
@@ -39,31 +42,29 @@ public class MyAlgorithmController {
 	@Autowired
 	private AlgorithmQuestionService algorithmQuestionService;
 	
-	@GetMapping("home/my/algorithmlist")
-	public ModelAndView viewAllMyAlgorithm(@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+	@GetMapping("/home/myalgorithm/list")
+	public ModelAndView viewAllMyAlgorithm(@SessionAttribute("_LOGIN_USER_") MemberVO memberVO,
+										   @ModelAttribute SearchMyAlgorithmVO searchMyAlgorithmVO) {
+		System.out.println("search my keyword: " + searchMyAlgorithmVO.getSearchKeyword());
+		System.out.println("search my type: " + searchMyAlgorithmVO.getSearchType());
+		System.out.println("search my pageNo: " + searchMyAlgorithmVO.getPageNo());
+		
 		ModelAndView mav = new ModelAndView();
-		String email = memberVO.getEmail();
-		System.out.println("email: " + email);
-		MyAlgorithmListVO myList = myAlgorithmService.getAllMyAlgorithm(email);
+		searchMyAlgorithmVO.setEmail(memberVO.getEmail());
 		
-		System.out.println(myList.getMyAlgotirhmListCnt());
-		
-		for (MyAlgorithmVO list : myList.getMyAlgorithmList()) {
-			System.out.println("start!");
-			System.out.println(list.getCompanyAlgorithmQuestionId());
-			System.out.println(list.getAlgorithmQuestionVO().getAlgorithmTitle());
-			System.out.println(list.getAlgorithmQuestionVO().getAlgorithmContent());
-			System.out.println(list.getMemberVO().getNickname());
-		}
+		MyAlgorithmListVO myList = myAlgorithmService.getAllMyAlgorithm(searchMyAlgorithmVO);
+		System.out.println("myList: " + myList.getMyAlgotirhmListCnt());
+		searchMyAlgorithmVO.setPageCount(myList.getMyAlgotirhmListCnt());
 		
 		mav.setViewName("myalgorithm/myalgorithmlist");
 		mav.addObject("myAlgorithmList", myList);
 		mav.addObject("MemberVO", memberVO);
+		mav.addObject("searchMyAlgorithmVO", searchMyAlgorithmVO);
 		return mav;
 	}
 	
 	@PostMapping("/algorithm/question/view/{companyAlgorithmQuestionId}")
-	public String createMyAlgorithm(@PathVariable String companyAlgorithmQuestionId 
+	public String createMyAlgorithm(@Valid @PathVariable String companyAlgorithmQuestionId 
 			                      , @ModelAttribute MyAlgorithmVO myAlgorithmVO 
 			                      , Model model
 			                      , @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
@@ -83,18 +84,17 @@ public class MyAlgorithmController {
 			model.addAttribute("AlgorithmQuestionVO", algorithmQuestionVO);
 			model.addAttribute("MyAlgorithmVO", myAlgorithmVO);
 			return "company/algorithmquestion/questionview";
-		}		
+		}
 	}
 	
 	@GetMapping("/home/myalgorithm/delete/{myAlgorithmQuestionId}")
-	public String doDeleteMyAlgorithm(@PathVariable String myAlgorithmQuestionId
-			                        , @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+	public String doDeleteMyAlgorithm(@PathVariable String myAlgorithmQuestionId) {
 		
 		logger.debug("PathVariable: " + myAlgorithmQuestionId);
 		
 		myAlgorithmService.deleteMyAlgorithm(myAlgorithmQuestionId);
 		
-		return "redirect:/home/my/algorithmlist";
+		return "redirect:/home/myalgorithm/list";
 	}
 	
 	

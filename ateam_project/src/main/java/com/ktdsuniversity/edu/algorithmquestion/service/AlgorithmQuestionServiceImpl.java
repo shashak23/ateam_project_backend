@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ktdsuniversity.edu.algorithmquestion.dao.AlgorithmQuestionDAO;
 import com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionListVO;
@@ -29,11 +30,16 @@ public class AlgorithmQuestionServiceImpl implements AlgorithmQuestionService {
 		
 		AlgorithmQuestionListVO algorithmQuestionListVO = new AlgorithmQuestionListVO();
 		algorithmQuestionListVO.setAlgorithmQuestionCnt(algorithmQuestionDAO.getAlgorithmQuestionAllCount(searchAlgorithmQuestionVO));
-		algorithmQuestionListVO.setAlgorithmQuestionList(algorithmQuestionDAO.searchAllAlgorithmQuestion(searchAlgorithmQuestionVO));
-		
+		if(searchAlgorithmQuestionVO == null) {
+			algorithmQuestionListVO.setAlgorithmQuestionList(algorithmQuestionDAO.getAllAlgorithmQuestion());
+		}
+		else {			
+			algorithmQuestionListVO.setAlgorithmQuestionList(algorithmQuestionDAO.searchAllAlgorithmQuestion(searchAlgorithmQuestionVO));
+		}
 		return algorithmQuestionListVO;
 	}
 
+	@Transactional
 	@Override
 	public boolean createNewAlgorithmQuestion(AlgorithmQuestionVO algorithmQuestionVO) {
 		
@@ -63,6 +69,7 @@ public class AlgorithmQuestionServiceImpl implements AlgorithmQuestionService {
 		return algorithmQuestionVO;
 	}
 
+	@Transactional
 	@Override
 	public boolean updateOneAlgorithmQuestion(AlgorithmQuestionVO algorithmQuestionVO) {
 		algorithmQuestionVO.setMainAlgorithmCategoryId(algorithmQuestionVO.getAlgorithmCategoryIdList().get(0));
@@ -77,7 +84,7 @@ public class AlgorithmQuestionServiceImpl implements AlgorithmQuestionService {
 		return updateCount > 0;
 	}
 	
-
+	@Transactional
 	@Override
 	public boolean deleteOneAlgorithmQuestion(String companyAlgorithmQuestionId) {
 		int deleteCount = algorithmQuestionDAO.deleteOneAlgorithmQuestion(companyAlgorithmQuestionId);

@@ -10,10 +10,14 @@ package com.ktdsuniversity.edu.myalgorithm.dao;
 import java.util.List;
 
 import com.ktdsuniversity.edu.myalgorithm.vo.MyAlgorithmVO;
+import com.ktdsuniversity.edu.myalgorithm.vo.SearchMyAlgorithmVO;
 
 public interface MyAlgorithmDAO {
-	public int getAllNumber(String email);
-	public List<MyAlgorithmVO> getAllMyAlgorithmList(String email);
+	public int getAllNumber(SearchMyAlgorithmVO searchMyAlgorithmVO);
+	
+	public List<MyAlgorithmVO> getAllMyAlgorithmList(SearchMyAlgorithmVO searchMyAlgorithmVO);
+	
+	public List<MyAlgorithmVO> searchAllMyAlgorithm(SearchMyAlgorithmVO searchMyAlgorithmVO);
 	
 	public int createNewMyAlgorithm(MyAlgorithmVO myAlgorithmVO);
 	
