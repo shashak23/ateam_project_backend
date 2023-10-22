@@ -217,18 +217,26 @@ public class MemberController {
 	 * 일반회원 닉네임 수정
 	 */
 	@GetMapping("/memberInfo/modify/update-nickname/{email}")
-	public String updateNickname(@PathVariable String email, Model model) {
+	public String updateNickname(@PathVariable String email, Model model
+								 ,@SessionAttribute("_LOGIN_USER_") MemberVO loginMemberVO) {
 		MemberVO memberVO = memberService.selectMemberinfo(email);
+		if (!memberVO.getEmail().equals(loginMemberVO.getEmail())) {
+			throw new PageNotFoundException("잘못된 접근입니다.");
+		}
 		model.addAttribute("memberVO", memberVO);
 		return "member/editmemberinfo/modifymembernick";
 	}
 
 	@PostMapping("/memberInfo/modify/update-nickname")
 	public String doUpdateNickname(@Validated(MemberEditNickGroup.class) @ModelAttribute MemberVO memberVO,
-			BindingResult bindingResult, Model model) {
+									BindingResult bindingResult, Model model
+									,@SessionAttribute("_LOGIN_USER_") MemberVO loginMemberVO) {
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("memberVO", memberVO);
 			return "member/editmemberinfo/modifymembernick";
+		}
+		if (!memberVO.getEmail().equals(loginMemberVO.getEmail())) {
+			throw new PageNotFoundException("잘못된 접근입니다.");
 		}
 		boolean isSuccess = memberService.updateMemberNickname(memberVO);
 		if (isSuccess) {
@@ -258,8 +266,13 @@ public class MemberController {
 	 * 일반회원 비밀번호 수정
 	 */
 	@GetMapping("/memberInfo/modify/update-password/{email}")
-	public String updatePassword(@PathVariable String email, Model model) {
+	public String updatePassword(@PathVariable String email
+								, Model model
+								, @SessionAttribute("_LOGIN_USER_") MemberVO loginMemberVO) {
 		MemberVO memberVO = memberService.selectMemberinfo(email);
+		if (!memberVO.getEmail().equals(loginMemberVO.getEmail())) {
+			throw new PageNotFoundException("잘못된 접근입니다.");
+		}
 		model.addAttribute("memberVO", memberVO);
 		return "member/editmemberinfo/modifymemberpw";
 	}
@@ -274,7 +287,9 @@ public class MemberController {
 			model.addAttribute("memberVO", memberVO);
 			return "member/editmemberinfo/modifymemberpw";
 		}
-
+		if (!memberVO.getEmail().equals(loginMemberVO.getEmail())) {
+			throw new PageNotFoundException("잘못된 접근입니다.");
+		}
 		if (memberVO.getPw() != null && memberVO.getPw() != "") {
 			memberVO.setEmail(loginMemberVO.getEmail());
 
@@ -295,8 +310,14 @@ public class MemberController {
 	 * 일반회원 프로필사진 수정
 	 */
 	@GetMapping("/memberInfo/modify/modify-profile-pic/{email}")
-	public String createProfilePic(@PathVariable String email,MemberVO memberVO, Model model) {
-		memberVO = memberService.selectMemberinfo(memberVO.getEmail());
+	public String createProfilePic(@PathVariable String email
+								   , Model model
+								   , @SessionAttribute("_LOGIN_USER_") MemberVO loginMemberVO) {
+		MemberVO memberVO = memberService.selectMemberinfo(email);
+		memberVO.setEmail(loginMemberVO.getEmail());
+		if (!memberVO.getEmail().equals(loginMemberVO.getEmail())) {
+			throw new PageNotFoundException("잘못된 접근입니다.");
+		}
 		model.addAttribute("memberVO", memberVO);
 		return "mypage/profilepic/modifyprofilepic";
 	}
@@ -304,13 +325,16 @@ public class MemberController {
 	@PostMapping("/memberInfo/modify/modify-profile-pic")
 	public ModelAndView doCreateProfilePic(@ModelAttribute MemberVO memberVO
 			                       			, @RequestParam MultipartFile file
-			                       			, @SessionAttribute("_LOGIN_USER_") MemberVO member) {
+			                       			, @SessionAttribute("_LOGIN_USER_") MemberVO loginMemberVO) {
+		memberVO.setEmail(loginMemberVO.getEmail());
+		if (!memberVO.getEmail().equals(loginMemberVO.getEmail())) {
+			throw new PageNotFoundException("잘못된 접근입니다.");
+		}
 		ModelAndView modelAndView = new ModelAndView();
 		
-		memberVO.setEmail(member.getEmail());
 		boolean isSuccess = memberService.updateOneFile(memberVO, file);
 		if (isSuccess) {
-			modelAndView.setViewName("redirect:/memberinfo/view");
+			modelAndView.setViewName("redirect:/memberinfo/view/"+memberVO.getEmail());
 			return modelAndView;
 		}
 		else {
@@ -340,7 +364,12 @@ public class MemberController {
 	 * 프로필사진 삭제
 	 */
 	@GetMapping("/memberInfo/modify/delete-profile-pic/{email}")
-	public String deletProfile(@PathVariable String email) {
+	public String deletProfile(@PathVariable String email
+							   ,@SessionAttribute("_LOGIN_USER_") MemberVO loginMemberVO) {
+		MemberVO member = memberService.selectMemberinfo(email);
+		if (!member.getEmail().equals(loginMemberVO.getEmail())) {
+			throw new PageNotFoundException("잘못된 접근입니다.");
+		}
 		boolean isSuccess = memberService.deleteProfile(email);
 		if (isSuccess) {
 			return "redirect:/memberInfo/modify/modify-profile-pic/"+ email;

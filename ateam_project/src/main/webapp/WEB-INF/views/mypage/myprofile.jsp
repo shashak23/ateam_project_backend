@@ -96,10 +96,12 @@
 						</c:otherwise>
 					</c:choose>
 					<div>
+					<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
 						<button>
 							<a
 								href="/memberInfo/modify/modify-profile-pic/${memberVO.email }">프사수정버튼</a>
 						</button>
+						</c:if>
 						<div>
 							<ul class="introduction_list">
 								<li class="list_name">
@@ -108,20 +110,23 @@
 								<c:choose>
 									<c:when test="${not empty generalMemberVO.selfIntro}">
 										<li class="list_intro">${generalMemberVO.selfIntro}
+											<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
 											<button>
-												<a
-													href="/memberInfo/modify/update-introduction/${memberVO.email}">
+												<a href="/memberInfo/modify/update-introduction/${memberVO.email}">
 													수정 </a>
 											</button>
+											</c:if>
 										</li>
 									</c:when>
 									<c:otherwise>
 										<li class="list_intro">
+										<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
 											<button>
 												<a
 													href="/memberInfo/modify/update-introduction/${memberVO.email}">
 													자기소개 추가하기</a>
 											</button>
+											</c:if>
 										</li>
 									</c:otherwise>
 
@@ -142,13 +147,14 @@
 						alt="Icon 2"> </a> <a href="${generalMemberVO.blogUrl}"><img
 						src="https://i.pinimg.com/originals/f8/0b/dd/f80bdd79a51358da6ee41a0fda520394.png"
 						alt="Icon 3"></a>
-
+					<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
 					<button id="edit_button1">
 						<a href="/memberInfo/modify/update-sns-link/${memberVO.email}">
 							<img
 							src="https://cdn.icon-icons.com/icons2/1462/PNG/512/101edit_99874.png" />
 						</a>
 					</button>
+					</c:if>
 				</div>
 				<div class="show_pwf">
 					<p></p>
@@ -171,16 +177,22 @@
 								<c:forEach items="${commonCodeList}" var="commonCode">
 									<li>#${commonCode.codeContent}</li>
 								</c:forEach>
+								<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
 								<button id="edit_button2">
 									<a href="/memberInfo/modify/update-tech/${memberVO.email }">
 										수정 </a>
 								</button>
+								</c:if>
 							</c:when>
 							<c:otherwise>
-								<li><button>
+								<li>
+								<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
+								<button>
 										<a href="/memberInfo/modify/create-tech-stack">
 											추가하기 </a>
-									</button></li>
+									</button>
+								</c:if>
+								</li>
 							</c:otherwise>
 
 						</c:choose>
@@ -194,22 +206,30 @@
 								<c:forEach items="${educationList}" var="education">
 									<li>${education.schoolName}-${education.schoolDepartment }
 										${education.degrees }
+										<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
 										<button>
 											<a
 												href="/memberInfo/modify/update-education/${education.educationId}">
 												수정 </a>
 										</button>
+										</c:if>
 									</li>
 
 								</c:forEach>
+								<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
 								<button>
 									<a href="/memberInfo/modify/create-education"> 추가하기 </a>
 								</button>
+								</c:if>
 							</c:when>
 							<c:otherwise>
-								<li><button>
+								<li>
+								<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
+								<button>
 										<a href="/memberInfo/modify/create-education"> 추가하기 </a>
-									</button></li>
+									</button>
+								</c:if>	
+								</li>
 							</c:otherwise>
 
 						</c:choose>
@@ -224,18 +244,26 @@
 									<li>${career.previousCompanyName}-${career.jobTitle }
 									<li class="career_list_year">${career.hireDate}~
 										${career.resignDate}
+									<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">	
 									<a href="/memberInfo/modify/update-career/${career.careerId}"> 수정 </a>
+									</c:if>
 										</li>
 									</li>
 								</c:forEach>
+								<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
 								<button>
 									<a href="/memberInfo/modify/create-career"> 추가하기 </a>
 								</button>
+								</c:if>
 							</c:when>
 							<c:otherwise>
-								<li><button>
+								<li>
+								<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
+								<button>
 										<a href="/memberInfo/modify/create-career"> 추가하기 </a>
-									</button></li>
+									</button>
+								</c:if>	
+									</li>
 							</c:otherwise>
 
 						</c:choose>
@@ -254,12 +282,18 @@
 						<c:choose>
 							<c:when test="${not empty generalMemberVO.region}">
 								<li>${generalMemberVO.region}</li>
+								<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
 								<a href="/memberInfo/modify/update-location/${generalMemberVO.generalMemberEmail}"> 수정 </a>
+								</c:if>
 							</c:when>
 							<c:otherwise>
-								<li><button>
+								<li>
+								<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
+								<button>
 								<a href="/memberInfo/modify/create-location/${generalMemberVO.generalMemberEmail}"> 추가하기 </a>
-								</button></li>
+								</button>
+								</c:if>
+								</li>
 							</c:otherwise>
 
 						</c:choose>

@@ -68,5 +68,11 @@ public class TechstackServiceImpl implements TechstackService{
 	public List<TechstackVO> techSearch(String id) {
 		return techstackDAO.techSearch(id);
 	}
+	@Transactional
+	@Override
+	public boolean deleteTechstack(String techstackId) {
+		int deleteCount= techstackDAO.deleteTechstack(techstackId);
+		return deleteCount>0 ;
+	}
 
 }

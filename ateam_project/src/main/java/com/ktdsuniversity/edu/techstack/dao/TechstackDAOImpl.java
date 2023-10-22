@@ -51,11 +51,16 @@ public class TechstackDAOImpl extends SqlSessionDaoSupport implements TechstackD
 	public int insertTechstack(TechstackVO techstackVO) {
 		return getSqlSession().insert("insertTechstack",techstackVO );
 	}
-
+	
 	@Override
 	public List<TechstackVO> techSearch(String id) {
 		// TODO Auto-generated method stub
 		return getSqlSession().selectList("techSearch",id);
+	}
+
+	@Override
+	public int deleteTech(String id) {
+		return getSqlSession().delete("deleteTech",id);
 	}
 
 }
