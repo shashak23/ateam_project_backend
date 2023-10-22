@@ -20,6 +20,17 @@
 			}
 		});
 		
+		document.querySelectorAll('input[type="checkbox"]:checked')
+		const ul = document.querySelector('ul')
+		let selected = [];
+		
+		ul.addEventListener('change', event => {
+			if(event.target.type == 'checkbox') {
+				const checked = document.querySelectorAll('input[type="checkbox"]:checked')
+				selected = Array.from(checked).map(x => x.value)
+			}
+		})
+		
 		$.get("/member/COMPANY", function(response) {
 			for (var i = 0; i < response.length; i++) {
 				var member = response[i]
@@ -76,28 +87,32 @@
 </style>
 <body>
     <jsp:include page="../../member/membermenu.jsp"></jsp:include>
-    <label for="algorithmCategoryId">알고리즘 카테고리</label>
-	<div id="algorithm_category"></div>
-    
-    <label for="algorithmTier">문제 난이도</label>
-    <div>
-        <input type="checkbox" name="algorithmTier" value="Lv.1"/>Lv.1
-        <input type="checkbox" name="algorithmTier" value="Lv.2"/>Lv.2
-        <input type="checkbox" name="algorithmTier" value="Lv.3"/>Lv.3
-        <input type="checkbox" name="algorithmTier" value="Lv.4"/>Lv.4
-        <input type="checkbox" name="algorithmTier" value="Lv.5"/>Lv.5
+    <div class="search_area">
+	    <form id="search-form"
+		      method="get"
+		      action="/algorithm/question/list">
+		    <label for="algorithmCategoryId">알고리즘 카테고리</label>
+			<div id="algorithm_category"></div>
+		    
+		    <label for="algorithmTier">문제 난이도</label>
+		    <div>
+		        <input type="checkbox" name="algorithmTierList" value="Lv.1"/><label for="Lv.1">Lv.1</label>
+		        <input type="checkbox" name="algorithmTierList" value="Lv.2"/><label for="Lv.2">Lv.2</label>
+		        <input type="checkbox" name="algorithmTierList" value="Lv.3"/><label for="Lv.3">Lv.3</label>
+		        <input type="checkbox" name="algorithmTierList" value="Lv.4"/><label for="Lv.4">Lv.4</label>
+		        <input type="checkbox" name="algorithmTierList" value="Lv.5"/><label for="Lv.5">Lv.5</label>
+		    </div>
+		    <label for="company">기업명</label>
+			<div>
+				<input autocomplete="off" type="text" name="searchKeyword" list="nicList" />
+				<datalist id="nicList"></datalist>
+				<button id="search-btn">검색</button>
+			</div>
+			<div>
+				<button id="search-btn">적용</button>	
+			</div>
+		</form>
     </div>
-    
-    <label for="company">기업명</label>
-    <form id="search-form"
-	      method="get"
-	      action="/algorithm/question/list">
-	      <div>
-		      <input autocomplete="off" type="text" name="searchKeyword" list="nicList" />
-		      <datalist id="nicList"></datalist>
-		      <button id="search-btn">검색</button>
-	      </div>
-	</form>
 	
 	<div class="btn-group">
 		<div class="right-align">

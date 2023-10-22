@@ -25,9 +25,23 @@
           FROM COMPANY_ALGORITHM_QUESTION CAQ
          INNER JOIN MEMBER M
             ON CAQ.ALGORITHM_WRITER = M.EMAIL
+         INNER JOIN ALGORITHM_CATEGORY_LIST ACL
+            ON ACL.COMPANY_ALGORITHM_QUESTION_ID = CAQ.COMPANY_ALGORITHM_QUESTION_ID
 	     WHERE CAQ.DELETE_YN = 'N'
 		<if test='searchKeyword != null and searchKeyword != ""'>
 		   AND M.NICKNAME LIKE '%' || #{searchKeyword} || '%'
+		</if>
+		<if test='algorithmCategoryIdList != null'>
+		   AND ACL.ALGORITHM_CATEGORY_ID IN
+		<foreach collection="algorithmCategoryIdList" item="category" open="(" close=")" separator=",">
+		    #{category}
+		</foreach>
+		</if>
+		<if test='algorithmTierList != null'>
+		   AND CAQ.ALGORITHM_TIER_ID IN
+		<foreach collection="algorithmTierList" item="tier" open="(" close=")" separator=",">
+		    #{tier}
+		</foreach>
 		</if>
 	</select>
 	
@@ -77,9 +91,23 @@
 		    ON CAQ.ALGORITHM_WRITER = M.EMAIL
 		 INNER JOIN COMMON_CODE C
 		    ON CAQ.MAIN_ALGORITHM_CATEGORY_ID = C.CODE_ID
-		 WHERE DELETE_YN = 'N'
+		 INNER JOIN ALGORITHM_CATEGORY_LIST ACL
+            ON ACL.COMPANY_ALGORITHM_QUESTION_ID = CAQ.COMPANY_ALGORITHM_QUESTION_ID
+	     WHERE CAQ.DELETE_YN = 'N'
 		<if test='searchKeyword != null and searchKeyword != ""'>
 		   AND M.NICKNAME LIKE '%' || #{searchKeyword} || '%'
+		</if>
+		<if test='algorithmCategoryIdList != null'>
+		   AND ACL.ALGORITHM_CATEGORY_ID IN
+		<foreach collection="algorithmCategoryIdList" item="category" open="(" close=")" separator=",">
+		    #{category}
+		</foreach>
+		</if>
+		<if test='algorithmTierList != null'>
+		   AND CAQ.ALGORITHM_TIER_ID IN
+		<foreach collection="algorithmTierList" item="tier" open="(" close=")" separator=",">
+		    #{tier}
+		</foreach>
 		</if>
 		 ORDER BY POST_DATE DESC <!-- 최신글순 -->
 	</select>
