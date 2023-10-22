@@ -1,180 +1,197 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<script type="text/javascript" src="/js/lib/jquery-3.7.1.js"></script>
-<script type="text/javascript">
-        $(document).ready(function () {
-        	   // 댓글 수정
-            var modifyGeneralComment = function(event) {
-            var generalComment= $(event.currentTarget).closest(".generalComment");
-            var generalCommentId = generalComment.data("generalCommentId");
-            var content = generalComment.find(".content").text();
-
-            $("#txt-generalComment").val(content);
-            $("#txt-generalComment").focus();
-
-            $("#txt-generalComment").data("mode", "modify");
-            $("#txt-generalComment").data("target", generalCommentId);
-        }
-
-        $('#textBox').keyup(function (e) {
-	let content = $(this).val();
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
    
-});
 
-$(#txt)
-});
-        // 댓글 삭제
-            var deleteGeneralComment  = function(event) {
-            var generalComment = $(event.currentTarget).closest(".generalComment");
-            var generalCommentId = generalComment.data("generalCommentId");
+<script type='text/javascript'>
+    $().ready(function() {
+        // 댓글 수정
+        var updateComment = function(event) {
+            // event.currentTarget => 이벤트가 발생한 대상.
+            // 클릭한 대상.
+            var comment = $(event.currentTarget).closest(".comment")
+            var commentId = comment.data("commentId")
 
-            $("#txt-generalComment").removeData("mode");
-            $("#txt-generalComment").removeData("target");
+            // 작성되어있던 댓글의 내용
+            var content = comment.find(".text-content").text()
+            $("#text-comment").val(content)
+            $("#text-comment").focus()
 
-            if (confirm("댓글을 삭제하시겠습니까?")) {
-                $.get(`/generalPost/generalComment/delete/\${generalCommentId}`, 
-            function (response) {
-                    var result = response.result;
-
-                    if (result) {
-                        loadComments();
-                        $("#txt-generalComment").val("");
-                    }
-                })     
-            }
+            // 수정모드로 변경.
+            $("#text-comment").data("mode", "update")
+            $("#text-comment").data("target", commentId)
         }
-    
-        
+
+        // 댓글 삭제
+        var deleteComment = function(event) {
+            // event.currentTarget => 이벤트가 발생한 대상.
+            // 클릭한 대상.
+            var comment = $(event.currentTarget).closest(".comment")
+            var commentId = comment.data("commentId")
+
+            // txt-reply에 할당된 data-변수를 제거.
+            $("#text-comment").removeData("mode")
+            $("#text-comment").removeData("target")
+
+            if ( confirm("댓글을 삭제하시겠습니까?") ) {
+                // ajax 요청
+                $.get(`/qnaboard/comments/delete/${generalCommentId}`, function(response) {
+                    // 삭제 성공 여부를 받아온다.
+                    var result = response.result
+
+                    // 삭제에 성공했다면
+                    if (result) {
+                        // 댓글을 다시 조회한다.
+                        loadComments()
+                        // 댓글 입력 칸은 비워준다.
+                        $("#text-comment").val("")
+                    }
+                })
+            }
+
+        }
 
         // 대댓글 등록
-        var reGeneralComment  = function(event) {
-             var generalComment = $(event.currentTarget).closest(".generalComment");
-             var generalCommentId = generalComment.data("generalCommentId");
+        var reComment = function(event) {
+            // event.currentTarget => 이벤트가 발생한 대상.
+            // 클릭한 대상.
+            var comment = $(event.currentTarget).closest(".comment")
+            var commentId = comment.data("commentId")
 
-             $("#txt-generalComment").data("mode", "re-omment");
-             $("#txt-generalComment").data("target", generalCommentId);
-             $("#txt-generalComment").focus();
+            $("#text-comment").data("mode", "re-reply")
+            $("#text-comment").data("target", commentId)
+            $("#text-comment").focus()
         }
 
         // 댓글 추천
-        var recommendGeneralComment = function(event) {
-            var generalComment = $(event.currentTarget).closest(".generalComment");
-            var generalCommentId = generalComment.data("generalCommentId");
+        var likeComment = function(event) {
+            // event.currentTarget => 이벤트가 발생한 대상.
+            // 클릭한 대상.
+            var comment = $(event.currentTarget).closest(".comment")
+            var commentId = reply.data("commentId")
 
-            $("#txt-generalComment").removeData("mode");
-            $("#txt-generalComment").removeData("target");
+            $("#text-comment").removeData("mode")
+            $("#text-comment").removeData("target")
 
-            $.get(`/generalPost/generalComment/recommend/\${generalCommentId}`, function (response) {
-                var result = response.result;
+            // 추천 ajax 요청.
+            $.get(`/qnaboard/comments/like/${generalCommentId}`, function(response) {
+                var result = response.result
 
                 if (result) {
                     loadComments();
-                    $("#txt-generalComment").val("");
+                    $("#text-comment").val("")
                 }
-            });
+            })
         }
 
         // 댓글 조회
         var loadComments = function() {
-              $(".generalComment-items").html("");
+            // 댓글 목록 삭제.
+            $(".comment-items").html("")
 
-              $.get("/qnapost/comments/${generalPostVO.generalPostId}", function (response) {
-                  var replies = response.commentList;
-                  for (var i = 0; i < commentList.length; i++) {
-                      var generalComment = commentList[i];
+            // 댓글 조회.
+            // `` <- backtick template literal 변수 바인딩 \${}
+            $.get("/qnaboard/comments/${generalPostId}", function(response) {
+                var comments = response.comments // <-- Java: List, JS: Array
+                for (var i = 0; i < comments.length; i++) {
+                    // 배열에서 댓글 하나를 가져온다.
+                    var comment = comments[i]
 
-                      var generalCommentTemplate =
-                          `<div class="generalComment"
-                                data-generalComment-id="${generalComment.generalCommentId}"
-                                style="padding-left: ${(generalComment.level - 1) * 40}px">
-                              <div class="author">
-                                  \${generalComment.generalMemberVO.generalMemberEmail} (\${generalComment.commentWriter})
-                              </div>
-                              <div class="recommend-count">
-                                  추천수: \${generalComment.recommendCnt}
-                              </div>
-                              <div class="datetime">
-                                  <span class="postDt">등록: \${generalComment.postDate}</span>
-                              //    \${generalComment.mdfyDt != generalComment.post ?
-                                      `<span class="mdfydt">수정: \${generalComment.mdfyDt}</span>`
-                                      : ""}
-                              </div>
-                              <pre class="content">\${generalComment.content}</pre>
-                              \${generalComment.email == "${sessionScope._LOGIN_USER_.email}" ?
-                                  `<div>
-                                      <span class="modify-generalComment">수정</span>
-                                      <span class="delete-generalComment">삭제</span>
-                                      <span class="re-generalComment">답변하기</span>
-                                  </div>`
-                                  : `<div>
-                                      <span class="recommend-generalComment">추천하기</span>
-                                      <span class="re-generalComment">답변하기</span>
-                                      <span class="report-generalComment">신고하기</span>
-                                  </div>`}
-                          </div>`
+                    // 댓글이 표현될 template을 만들어준다.
+                    var commentTemplate = 
+                        `<div class="comment"
+                              data-comment-id="\${generalCommentId}"
+                              style="padding-left: \${(comment.level - 1) * 40}px">
+                            <div class="author">
+                                \${reply.memberVO.name} (\${reply.email})
+                            </div>
+                            <div class="like-count">
+                                추천수: \${comment.likeCnt}
+                            </div>
+                            <div class="datetime">
+                                <span class="crtdt">등록: \${reply.crtDt}</span>
+                                \${reply.mdfyDt != reply.crtDt ? 
+                                    `<span class="mdfydt">수정: \${reply.mdfyDt}</span>`
+                                    : ""}
+                            </div>
+                            <pre class="content">\${reply.content}</pre>
+                            \${reply.email == "${sessionScope._LOGIN_USER_.email}" ? 
+                                `<div>
+                                    <span class="update-reply">수정</span>
+                                    <span class="delete-reply">삭제</span>
+                                    <span class="re-comment">답변하기</span>
+                                </div>`
+                                : `<div>
+                                    <span class="like-comment">추천하기</span>
+                                    <span class="re-comment">답변하기</span>
+                                </div>`}
+                        </div>`
 
-                      var generalCommentDom = $(generalCommentTemplate);
-                      generalCommentDom.find(".modify-generalComment").click(modifyGeneralComment);
-                      generalCommentDom.find(".delete-generalComment").click(deleteGeneralComment);
-                      generalCommentDom.find(".recommend-generalComment").click(recommendGeneralComment);
-                      generalCommentDom.find(".re-generalComment").click(reGeneralComment);
-                     // generalCommentDom.find(".report-generalComment").click(reportGeneralComment);
+                        var commentDom = $(commentTemplate)
+                        commentDom.find(".update-comment").click(updateComment)
+                        commentDom.find(".delete-comment").click(deleteComment)
+                        commentDom.find(".like-comment").click(likeComment)
+                        commentDom.find(".re-comment").click(reComment)
 
-                      $(".generalComment-items").append(generalCommentDom);
-                  }
-              })
-            }
-    
+                        $(".comment-items").append( commentDom)
+                }
+            })
+        }
 
-        loadComments();
+        loadComments()
 
         // 등록버튼 클릭
-         $("#btn-save-generalComment").click(function () {
-        var generalComment = $("#txt-generalComment").val().trim();
-        var mode = $("#txt-generalComment").data("mode");
-        var target = $("#txt-generalComment").data("target");
+        $("#btn-save-comment").click(function() {
+            // 작성한 댓글 내용을 가져온다.
+            var comment = $("#text-content").val().trim()
+            // 저장 모드? 등록, 수정 구분하는 구분자 가져온다.
+            var mode = $("#text-content").data("mode")
+            // 대댓글일 경우, 상위 댓글의 아이디를 가져온다.
+            var target = $("#text-content").data("target")
 
-        if (generalComment != "") {
-            var body = { "content": generalComment };
-            var url = `/qnapost/comments/create/${generalPostVO.generalPostId}`;
+            // 댓글 내용을 입력했다면 등록을 진행한다.
+            if (reply != "") {
+                // Ajax 요청을 위한 데이터를 생성한다.
+                var body = { "content": comment }
+                // 등록 URL을 생성한다.
+                var url = `/qnaboard/comments/create/${generalPostId}`
 
-            if (mode == "re-generalComment") {
-                body.parentGeneralCommentId = target;
-            }
-
-            if (mode == "modify") {
-                url = `/qnapost/comments/modify/${target}`;
-            }
-
-            $.post(url, body, function (response) {
-                var result = response.result;
-
-                if (result) {
-                    loadGeneralComments();
-                    $("#txt-generalComment").val("");
-                    $("#txt-generalComment").removeData("mode");
-                    $("#txt-generalComment").removeData("target");
+                // 대댓글일 경우 부모댓글 ID를 데이터에 넣어준다.
+                if (mode == "re-comment") {
+                    body.upperCommentId = target
                 }
-            });
-        }
-    })
+
+                // 댓글 수정일 경우 URL을 변경한다.
+                if (mode == "update") {
+                    url = `/qnaboard/comments/update/\${target}`
+                }
+
+                // 등록을 진행한다.
+                $.post(url, body, function(response) {
+                    // 댓글 등록 및 수정의 결과를 받아온다
+                    var result = response.result
+                    // 댓글 등록 및 수정이 성공했다면 댓글을 다시 조회해온다.
+                    if (result) {
+                        loadReplies()
+                        $("#text-content").val("")
+                        $("#text-content").removeData("mode")
+                        $("#text-content").removeData("target")
+                    }
+                })
+
+            }
+
+        })
 
         // 취소버튼 클릭
-        $("#btn-cancel-generalComment").click(function(){
-        $("#txt-generalComment").val("");
-        $("#txt-generalComment").removeData("mode");
-        $("#txt-generalComment").removeData("target");
-    })
-
-  
-  
-
-    </script>
+        // $("#btn-cancel-reply").click(function() {
+        //     $("#txt-reply").val("")
+        //     $("#txt-reply").removeData("mode")
+        //     $("#txt-reply").removeData("target")
+        // })
+    });
+</script>
+</head>
 <style type="text/css">
 a:link, a:hover, a:visited, a:active {
 	color: #333;
@@ -231,45 +248,42 @@ button, input, textarea {
 	align-items: center;
 	font-size: small;
 	font-weight: 300;
-	color: lightgray;
+	
 	padding-left: 530px;
 }
 
 .comments>.write-comment {
-	margin-bottom: 15px;
 	display: grid;
-	grid-template-columns: 1fr 80px;
-	grid-template-rows: 1fr 40px;
-	row-gap: 10px;
+	grid-template-rows: 1fr;
 	column-gap: 10px;
 	align-items: center;
+    
 }
 
 .comments>.write-comment>textarea {
 	height: 150px;
-	display: grid;
-	grid-column: 1/3;
 	resize: none;
+    border-color: lightgray;
 }
 
-.comments>.write-comment>#btn-save-comment {
+.comments> .comment-option{
+border-color: #333;
+border:1px solid lightgrey;
+}
+
+.comments>.comment-option> #btn-save-comment {
 	background-color: #7BCA30;
-	width: 100px;
+	width: 70px;
+    cursor: pointer;
+    border:lightgray;
 }
 
-.comments>.comment-items {
-	display: grid;
-	grid-template-columns: 1fr;
-	grid-template-rows: 1fr;
-	row-gap: 10px;
-}
+
 
 pre.content {
 	margin: 0px;
 }
 </style>
-
-</head>
 <body>
 
 	<jsp:include page="../member/membermenu.jsp"></jsp:include>
@@ -312,31 +326,25 @@ pre.content {
 			<div class="comments-count">2,058</div>
 			<div class="str-count"></div>
 		</div>
-
-		<div class="comment-items"></div>
+        <div class="comment-items"></div>
 		<div class="write-comment">
-
-			<textarea class="text-content" style="resize: none;" maxlength="500">
-        </textarea>
-
-			<button id="btn-save-comment">등록</button>
-
+			<textarea id="text-content" style="resize: none;" maxlength="500">의견을 입력하세요</textarea>
 			<!-- 신고 버튼은 조회할때 사용<button id="btn-report-comment">신고</button> -->
 		</div>
+        <div class="comment-option">
+			<button id="btn-save-comment">등록</button>
+        </div>
 	</div>
 
-	<%-- <c:if test="${not empty sessionScope._LOGIN_USER_ 
+	 <c:if test="${not empty sessionScope._LOGIN_USER_ 
                       && sessionScope._LOGIN_USER_.generalMemberEmail 
                       eq generalPostVO.generalMemberVO.generalMemberEmail}">
             <div class="btn-group">
                 <div class="right-align">
-                    <a href="/generalPost/modify/${generalPostVO.generalPostId}">수정</a>
+                    <a href="/qnaboard/comments/update/${generalPostVO.generalPostId}">수정</a>
                    
                 </div>
             </div>
-        </c:if> --%>
-	</div>
-
-
+        </c:if> 
 </body>
 </html>

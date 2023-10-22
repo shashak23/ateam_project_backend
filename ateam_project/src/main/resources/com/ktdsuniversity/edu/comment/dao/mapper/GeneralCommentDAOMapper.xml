@@ -51,9 +51,9 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          INNER JOIN GENERAL_POST GP
             ON GC.GENERAL_POST_ID = GP.GENERAL_POST_ID 
           WHERE GC.GENERAL_POST_ID = #{_parameter}
-       <!--   START WITH GC.UPPER_COMMENT_ID = 0
+       START WITH GC.UPPER_COMMENT_ID = 0
            AND GC.GENERAL_POST_ID=#{_parameter}
-         CONNECT BY PRIOR GC.GENERAL_COMMENT_ID = GC.UPPER_COMMENT_ID -->
+         CONNECT BY PRIOR GC.GENERAL_COMMENT_ID = GC.UPPER_COMMENT_ID
     </select>
     <select id="getOneComment"
             parameterType="string"
@@ -77,7 +77,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             parameterType="com.ktdsuniversity.edu.generalpost.vo.GeneralCommentVO">
         INSERT INTO GENERAL_COMMENT (
              , GENERAL_COMMENT_ID
-		     , COMMENT_WRITER_ID
+		     , COMMENT_WRITER
 		     , GENERAL_POST_ID
 		     , COMMENT_CONTENT
 		     , POST_DATE
@@ -85,15 +85,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 		     , LIKE_CNT
 		     , DELETE_YN)
 		VALUES (
-		   SEQ_GENERAL_COMMENT_ID.NEXTVAL,
+		    SEQ_GENERAL_COMMENT_PK.NEXTVAL
 		     , #{generalCommentId}
 		     , #{commentWriterId}
 		     , #{generalPostId}
 		     , #{commentContent}
 		     , SYSDATE
 		     , #{upperCommentId}
-		     , 0
-		     , 'N')   <!-- 삭제여부: 삭제되지 않았음을 나타내야 함. 맞는지? -->
+		     , #{likeCnt}
+		     , 'N')
             </insert>
     <delete id="deleteOneComment"
             parameterType="string">
