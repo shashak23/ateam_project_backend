@@ -88,6 +88,7 @@
 			<form:errors path="algorithmTierId" element="div" cssClass="errors"/>
 			<form:errors path="algorithmTitle" element="div" cssClass="errors"/>
 			<form:errors path="algorithmContent" element="div" cssClass="errors"/>
+			<form:errors path="algorithmSolution" element="div" cssClass="errors"/>
 		</div>
 	
 		<div class="grid">

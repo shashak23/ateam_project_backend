@@ -42,7 +42,7 @@ public class AlgorithmQuestionVO {
 	private String algorithmContent;
 
 	@XssIgnore
-	@NotBlank(message = "풀이내용을 입력해주세요.")
+	@NotBlank(message = "문제풀이내용을 입력해주세요.")
 	private String algorithmSolution;
 	
 	private String postDate;
