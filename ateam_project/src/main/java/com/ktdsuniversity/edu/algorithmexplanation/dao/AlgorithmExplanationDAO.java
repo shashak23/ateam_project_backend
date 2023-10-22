@@ -10,12 +10,15 @@ package com.ktdsuniversity.edu.algorithmexplanation.dao;
 import java.util.List;
 
 import com.ktdsuniversity.edu.algorithmexplanation.vo.AlgorithmExplanationVO;
+import com.ktdsuniversity.edu.algorithmexplanation.vo.SearchAlgorithmExplanationVO;
 
 public interface AlgorithmExplanationDAO {
 	
-	public int getAlgorithmExplanationAllCount();
+	public int getAlgorithmExplanationAllCount(SearchAlgorithmExplanationVO searchAlgorithmExplanationVO);
 	
 	public List<AlgorithmExplanationVO> getAllAlgorithmExplanation();
+	
+	public List<AlgorithmExplanationVO> searchAllAlgorithmExplanation(SearchAlgorithmExplanationVO searchAlgorithmExplanationVO);
 	
 	public int createNewAlgorithmExplanation (AlgorithmExplanationVO algorithmExplanationVO);
 	

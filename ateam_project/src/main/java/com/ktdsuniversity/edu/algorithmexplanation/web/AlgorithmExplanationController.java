@@ -21,11 +21,10 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import com.ktdsuniversity.edu.algorithmexplanation.service.AlgorithmExplanationService;
 import com.ktdsuniversity.edu.algorithmexplanation.vo.AlgorithmExplanationListVO;
 import com.ktdsuniversity.edu.algorithmexplanation.vo.AlgorithmExplanationVO;
+import com.ktdsuniversity.edu.algorithmexplanation.vo.SearchAlgorithmExplanationVO;
 import com.ktdsuniversity.edu.exceptions.PageNotFoundException;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 import com.ktdsuniversity.edu.util.XssIgnoreUtil;
-
-import jakarta.validation.Valid;
 
 import jakarta.validation.Valid;
 
@@ -38,9 +37,11 @@ public class AlgorithmExplanationController {
 	private AlgorithmExplanationService algorithmExplanationService;
 
 	@GetMapping("/algorithm/explanation/list")
-	public String viewAlgorithmExplanationList(Model model) {
-		AlgorithmExplanationListVO algorithmExplanationListVO = algorithmExplanationService.getAllAlgorithmExplanation();
+	public String viewAlgorithmExplanationList(@ModelAttribute SearchAlgorithmExplanationVO searchAlgorithmExplanationVO
+			                                 , Model model) {
+		AlgorithmExplanationListVO algorithmExplanationListVO = algorithmExplanationService.getAllAlgorithmExplanation(searchAlgorithmExplanationVO);
 		model.addAttribute("algorithmExplanationList", algorithmExplanationListVO);
+		model.addAttribute("searchAlgorithmExplanationVO", searchAlgorithmExplanationVO);
 		return "company/algorithmexplanation/explanationlist";
 	}
 	
@@ -124,7 +125,7 @@ public class AlgorithmExplanationController {
 		}
 	}
 	
-	@GetMapping("/algorithm/question/delete/{companyAlgorithmExplanationId}")
+	@GetMapping("/algorithm/explanation/delete/{companyAlgorithmExplanationId}")
 	public String doDeleteAlgorithmExplanation(@PathVariable String companyAlgorithmExplanationId
 			                                 , @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 		logger.debug("PathVariable: " + companyAlgorithmExplanationId);
