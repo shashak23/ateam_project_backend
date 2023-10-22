@@ -25,9 +25,17 @@
 		  FROM COMPANY_ALGORITHM_EXPLANATION CAE
 		 INNER JOIN MEMBER M
 		    ON CAE.POST_WRITER = M.EMAIL
-		 WHERE CAE.DELETE_YN = 'N'
+		 WHERE CAE.DELETE_YN = 'N' 
 		<if test='searchKeyword != null and searchKeyword != ""'>
+		  <if test='searchType == "postTitle"'>
+		   AND CAE.POST_TITLE LIKE '%' || #{searchKeyword} || '%'
+		  </if>
+		  <if test='searchType == "postContent"'>
+		   AND CAE.POST_CONTENT LIKE '%' || #{searchKeyword} || '%'
+		  </if>
+		  <if test='searchType == "postWriter"'>
 		   AND M.NICKNAME LIKE '%' || #{searchKeyword} || '%'
+		  </if>
 		</if>
 		<if test='algorithmCategoryIdList != null'>
 		   AND CAE.ALGORITHM_CATEGORY_ID IN
@@ -81,7 +89,15 @@
 		    ON CAE.ALGORITHM_CATEGORY_ID = C.CODE_ID
 		 WHERE CAE.DELETE_YN = 'N'
 		<if test='searchKeyword != null and searchKeyword != ""'>
+		  <if test='searchType == "postTitle"'>
+		   AND CAE.POST_TITLE LIKE '%' || #{searchKeyword} || '%'
+		  </if>
+		  <if test='searchType == "postContent"'>
+		   AND CAE.POST_CONTENT LIKE '%' || #{searchKeyword} || '%'
+		  </if>
+		  <if test='searchType == "postWriter"'>
 		   AND M.NICKNAME LIKE '%' || #{searchKeyword} || '%'
+		  </if>
 		</if>
 		<if test='algorithmCategoryIdList != null'>
 		   AND CAE.ALGORITHM_CATEGORY_ID IN

@@ -1,3 +1,6 @@
+/**
+ * 수정자: 장보늬(23023-10-22)
+ * **/
 package com.ktdsuniversity.edu.generalpost.vo;
 
 import com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO;
@@ -17,13 +20,13 @@ public class GeneralPostVO {
 	private int likeCnt;
 	private int viewCnt;
 	private String deleteYn;
-
+	
 	// 게시글을 작성하는 회원의 정보
 	private MemberVO memberVO;
 
 	// 공통코드 받아오기
 	private CommonCodeVO commonCodeVO;
-
+	
 	public String getGeneralPostId() {
 		return generalPostId;
 	}

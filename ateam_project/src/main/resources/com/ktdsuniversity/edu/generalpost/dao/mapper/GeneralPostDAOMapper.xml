@@ -5,11 +5,28 @@
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ktdsuniversity.edu.generalpost.dao.GeneralPostDAO">
-
-<select id="getBoardAllCount"
+	<resultMap type="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO"
+	           id="GeneralPostDAOMap"
+	           autoMapping="true">
+	           <id column="GENERAL_POST_ID" property="generalPostId" />
+	    <association property="memberVO"
+	                 javaType="com.ktdsuniversity.edu.member.vo.MemberVO"
+			         autoMapping="true">
+			         <id column="EMAIL" property="email" />
+	    </association>
+	    <association property="commonCodeVO"
+		    javaType="com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO"
+		    autoMapping="true">
+		    <id column="CODE_ID" property="codeId" />
+		</association>
+	</resultMap>
+	
+	<select id="getBoardAllCount"
 			resultType="_int">
 		SELECT COUNT(1)
-		  FROM GENERAL_POST
+		  FROM GENERAL_POST GP
+		 INNER JOIN MEMBER M
+		    ON GP.POST_WRITER = M.EMAIL
 	</select>
 	
 	<update id="increaseViewCount"
@@ -167,4 +184,33 @@
 		   SET DELETE_YN = 'Y'
 		 WHERE GENERAL_POST_ID = #{generalPostId}
 	</update>
+	
+	<!-- 내게시글 조회 쿼리 -->
+	<select id="getMyPost"
+	        resultMap="GeneralPostDAOMap"
+	        parameterType="string">
+	    SELECT GP.GENERAL_POST_ID
+		     , GP.POST_WRITER
+		     , GP.BOARD_ID
+		     , GP.POST_TITLE
+		     , GP.POST_CONTENT
+		     , TO_CHAR(GP.POST_DATE, 'YYYY-MM-DD')POST_DATE
+		     , GP.LIKE_CNT
+		     , GP.VIEW_CNT
+		     , GP.DELETE_YN
+		     , M.NICKNAME
+		  FROM GENERAL_POST GP
+		 INNER JOIN MEMBER M
+		    ON M.EMAIL = GP.POST_WRITER
+		 WHERE GP.DELETE_YN = 'N'
+		 <!-- <if test='searchType == null'> 
+		   AND BOARD_ID = 'CC-20231017-000029'
+		 </if>
+		 <if test='searchType == qnaboard'>
+		   AND BOARD_ID = 'CC-20231017-000030'
+		 </if>
+		 -->
+		   AND GP.POST_WRITER = #{_parameter}
+		 ORDER BY POST_DATE DESC  
+	</select>
 </mapper>

@@ -6,7 +6,6 @@
 
 package com.ktdsuniversity.edu.algorithmquestion.dao;
 
-import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
