@@ -1,9 +1,6 @@
 package com.ktdsuniversity.edu.companymypost.vo;
 
-<<<<<<< HEAD:ateam_project/src/main/java/com/ktdsuniversity/edu/companymypost/vo/companyMyPostVO.java
-=======
-public class CompanyMyPostVO {
->>>>>>> main:ateam_project/src/main/java/com/ktdsuniversity/edu/companymypost/vo/CompanyMyPostVO.java
+
 
 import java.util.List;
 

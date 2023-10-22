@@ -1,10 +1,9 @@
 package com.ktdsuniversity.edu.companymypost.dao;
 
-<<<<<<< HEAD:ateam_project/src/main/java/com/ktdsuniversity/edu/companymypost/dao/companyMyPostDAO.java
+
+
+
 import java.util.List;
-=======
-public interface CompanyMyPostDAO {
->>>>>>> main:ateam_project/src/main/java/com/ktdsuniversity/edu/companymypost/dao/CompanyMyPostDAO.java
 
 import com.ktdsuniversity.edu.companymypost.vo.CompanyMyPostVO;
 import com.ktdsuniversity.edu.companymypost.vo.SearchCompanyMyPostVO;
