@@ -4,618 +4,220 @@
 <!-- 작성자: 김태현
      작성일자: 2023-10-20
      내용: 메인 페이지 -->
-<!DOCTYPE html>
-<html lang="ko-KR">
-<head>
-<meta charset="UTF-8">
-<title>Buffer Overflow</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
-<!-- <link rel="stylesheet" href="/css/style.css"> -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-<script src="/js/lib/jquery-3.7.1.js"></script>
+
+
+<jsp:include page="../layout/header.jsp" />
 <style>
-:root {
-  --light-blue: #75C2F6;
-  --blue: #5E69F5;
-  --deep-blue: #470FF4;
-  --hashtag-blue: #d6e9f5;
-  --light-gray: #e5e5e5;
-  --gray: #ccc;
-  --dark-gray: #888;
-  --white: #fff;
-  --deep-dark: #191919;
-  --dark: #333;
-  --red: #ff4444;
-  --font-x-big: 16pt;
-  --font-big: 14pt;
-  --font-medium: 12pt;
-  --font-small: 10pt;
-  --font-x-small: 9pt;
-}
-
-html {
-  scroll-behavior: smooth;
-}
-
-svg {
-  fill: var(--blue);
-}
-
-*:lang(en) {
-  font-family: 'Open Sans', sans-serif;
-}
-*:lang(ko-KR) {
-  font-family: 'Noto Sans KR', sans-serif;
-}
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  list-style: none;
-  text-decoration: none;
-  color: var(--dark);
-}
-
-.header_container {
-  width: 1140px;
-  padding: 0 30px;
-  margin: 0 auto;
-}
-
-/* 헤더 영역 */
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 10px 0;
-}
-
-.logo_wrap {
-  display: flex;
-  height: 30px;
-}
-
-.logo_wrap .logo_img {
-  width: 50px;
-  text-align: center;
-  line-height: 30px;
-  font-size: var(--font-big);
-}
-
-.logo_wrap .logo_name {
-  width: 120px;
-  text-align: center;
-  line-height: 30px;
-  font-size: var(--font-big);
-}
-
-/* 메뉴 영역 */
-.gnb ul {
-  display: flex;
-}
-
-.gnb > ul > li > a {
-    margin: 0 10px;
-    padding: 8px 15px;
-    border-radius: 10px;
-    font-weight: bold;
-    font-size: var(--font-medium);
-    color: var(--blue);
-}
-
-.gnb ul li a:hover {
-  background-color: var(--blue);
-  box-shadow: 0 0 5px var(--gray);
-  color: white;
-}
-
-.gnb ul .list_company {
-  position: relative;
-}
-
-.company_sublist {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: absolute;
-  top: 30px;
-  left: 10px;
-  z-index: 10;
-  height: 90px;
-}
-
-.company_sublist li {
-  margin-top: 15px;
-}
-
-.company_sublist li a {
-  color: white;
-  padding: 5px 15px;
-  border-radius: 10px;
-  background-color: var(--blue);
-  font-weight: bold;
-  text-align: center;
-}
-
-/* 회원 프로필 영역 */
-.my_icon {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.my_icon .user_name {
-  margin-left: 6px;
-  color: var(--blue);
-}
-
-.my_icon a {
-    margin-left: 10px;
-}
-
-.my_icon a:first-child {
-  display: flex;
-  align-items: center;
-  margin-right: 10px;
-}
-
-/* 비회원 프로필 영역 */
-.login_btn {
-  margin-right: 10px;
-}
-
-/* 검색바 영역 */
-.search_container {
-  width: 100%;
-  background-color: var(--light-blue);
-}
-
-.search_container .for_search_align {
-  padding: 0 30px;
-  width: 1140px;
-  margin: 0 auto;
-}
-
-.searchbox {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 1080px;
-  height: 120px;
-}
-
-.searchbox .inner {
-  display: flex;
-  align-items: center;
-  position: relative;
-  width: 900px;
-}
-
-.searchbox .inner input {
-  width: 100%;
-  height: 46px;
-  border: none;
-  border-radius: 50px;
-  padding: 0 20px;
-  font-size: var(--font-small);
-  outline: none;
-}
-
-.searchbox .inner .btn_search{
-  position: absolute;
-  right: 20px;
-  top: 8px;
-  background-color: transparent;
-  border: none;
-}
-
-.searchbox .inner .btn_search img {
-  width: 30px;
-  opacity: 0.3;
-}
-
-/* 메인 컨텐츠 영역 */
-.body_container {
-  width: 1140px;
-  height: 1000px;
-  padding: 30px;
-  margin: 0 auto;
-}
-
-.body_container .body {
-  display: flex;
-  justify-content: space-between;
-}
-
-/* 왼쪽 */
-.body_container .body .body_left {
-  border: 1px solid;
-  width: 800px;
-  margin-right: 30px;
-}
-
-.body_left .home_edit_container {
-  display: flex;
-  padding: 20px;
-  cursor: pointer;
-  margin-bottom: 20px;
-}
-
-/* 글쓰기 영역 */
-.body_left .home_edit_container .text_area {
-  position: sticky;
-  top: 100px;
-  z-index: 10;
-  width: 670px;
-  height: 80px;
-  border: 1px solid var(--gray);
-  border-radius: 5px;
-  margin-right: 10px;
-}
-
-.body_left .home_edit_container .edit_btn {
-  width: 80px;
-  height: 80px;
-  border: 1px solid;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border: 1px solid var(--gray);
-  border-radius: 5px;
-  font-size: var(--font-x-big);
-}
-
-.body_left .home_edit_container .edit_btn svg {
-  fill: var(--dark-gray);
-}
-
-/* 게시글 영역 */
-.body_left .content_container {
-  width: 100%;
-  height: 250px;
-  border: 1px solid var(--light-gray);
-  margin: 45px 0;
-  border-radius: 10px;
-  padding: 24px 36px;
-}
-
-.body_left .content_container .writer_info_area {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding-bottom: 10px;
-  border-bottom: 1px solid var(--gray);
-}
-
-.body_left .content_container .writer_info_area .flex_left {
-  display: flex;
-  align-items: center;
-}
-
-.body_left .content_container .writer_info_area .flex_left img {
-  width: 36px;
-  height: 36px;
-  background-color: var(--light-gray);
-  margin-right: 10px;
-  border-radius: 50%;
-}
-
-.body_left .content_container .writer_info_area .flex_left .writer_name {
-  font-size: var(--font-medium);
-}
-
-.body_left .content_container .writer_info_area .flex_left .writer_name .follow_btn {
-  border: 1px solid var(--light-gray);
-  border-radius: 10px;
-  margin-left: 20px;
-  padding: 0 3px;
-  font-size: var(--font-x-small);
-  color: var(--blue);
-  cursor: pointer;
-}
-
-.body_left .content_container .writer_info_area .flex_left .posting_date {
-  font-size: var(--font-small);
-  color: #ccc;
-}
-
-.body_left .content_container .writer_info_area .flex_right .utility {
-  display: flex;
-  align-items: center;
-}
-
-.body_left .content_container .writer_info_area .flex_right .utility > button {
-  width: 24px;
-  height: 24px;
-  background-color: transparent;
-  border: none;
-  margin-right: 10px;
-}
-
-.body_left .content_container .writer_info_area .flex_right .utility > button > svg {
-  width: 20px;
-  height: 20px;
-  cursor: pointer;
-}
-
-.body_left .content_container .writer_info_area .flex_right .utility > svg {
-  width: 24px;
-  height: 24px;
-  padding: 2px;
-  fill: var(--dark);
-  border: 1px solid var(--gray);
-  border-radius: 50%;
-  cursor: pointer;
-}
-
-.body_left .content_container .q_title {
-  display: flex;
-  align-items: flex-end;
-  margin: 7px 0;
-}
-
-.body_left .content_container .q_title > .big_letter {
-  font-size: var(--font-x-big);
-  font-weight: bold;
-  margin-right: 8px;
-  color: var(--deep-blue);
-}
-
-.body_left .content_container .q_title > div {
-  display: flex;
-  align-items: center;
-}
-
-.body_left .content_container .q_title > div .title {
-  font-size: var(--big);
-  margin-right: 10px;
-  color: var(--deep-darkdark);
-}
-
-.body_left .content_container .q_title > div .comment_number {
-  font-size: var(--font-medium);
-  margin-right: 10px;
-  color: var(--red);
-}
-
-.body_left .content_container .q_title > div svg {
-  font-size: var(--font-medium);
-  fill: var(--blue);
-}
-
-.body_left .content_container .q_title  .thumbs_up_number {
-  font-size: var(--font-medium);
-  margin-left: 7px;
-}
-
-.body_left .content_container .q_content {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.body_left .content_container .q_content p {
-  margin-bottom: 20px;
-  font-size: var(--font-small);
-  color: var(--dark);
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  -webkit-line-clamp: 3;
-}
-
-.body_left .content_container .q_content ul {
-  display: flex;
-}
-
-.body_left .content_container .q_content li {
-  padding: 3px 10px;
-  margin-right: 20px;
-  border-radius: 50px;
-  background-color: var(--hashtag-blue);
-  color: var(--blue);
-  font-size: var(--font-x-small);
-}
-
-
-/* 오른쪽 */
-.body_container .body .body_right {
-  border: 1px solid;
-  width: 250px;
-}
-
-/* 푸터 영역 */
-.footer {
-  background-color: var(--light-blue);
-  color: var(--white);
-}
-
-.footer .inner {
-  width: 1080px;
-  margin: 0 auto;
-  padding: 40px 0;
-}
-
-.footer .inner address {
-  text-align: center;
-  font-size: var(--font-small);
-  padding: 0 0 30px 0;
-}
-
-.footer .inner address span {
-  color: var(--dark);
-}
-
-.footer .inner .copyright {
-  text-align: center;
-  color: var(--dark);
-  font-size: var(--font-x-small);
-  border-top: 1px solid var(--blue);
-  padding: 30px 0 0 0;
-}
-
-/* 스크롤 버튼, IDE 영역 */
-#progress {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  height: 40px;
-  width: 40px;
-  display: inline-block;
-  place-items: center;
-  border-radius: 50%;
-  box-shadow: 0 0 10px;
-  cursor: pointer;
-}
-
-#progress_value {
-  display: block;
-  height: 100%;
-  width: 100%;
-  background-color: #fff;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  font-size: var(--font-medium);
-  color: #001a2e;
-}
-
-/* 모달창 css 영역 */
-.modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 200px;
-  height: 100px;
-  background-color: white;
-  font-weight: bold;
-  font-size: var(--font-x-big);
-  box-shadow: 0 0 5px;
-  z-index: 999;
-  opacity: 0;
-  transition: 0.5s;
-  visibility: hidden;
-  cursor: default;
-}
-
-.modal.modal_active {
-  opacity: 1;
-  visibility: visible;
-
-}
-
-.signup_modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 200px;
-  height: 100px;
-  background-color: white;
-  font-weight: bold;
-  font-size: var(--font-x-big);
-  box-shadow: 0 0 5px;
-  z-index: 999;
-  opacity: 0;
-  transition: 0.5s;
-  visibility: hidden;
-}
-
-.signup_modal.modal_active {
-  opacity: 1;
-  visibility: visible;
-}
-
-.overlay {
-  background-color: var(--dark);
-  position: fixed;
-  width: 100%;
-  height: 100vh;
-  top: 0;
-  left: 0;
-  transition: 0.5s;
-  opacity: 0;
-  pointer-events: none;
-  z-index: 998;
-}
-
-.overlay.modal_active {
-  opacity: 0.3;
-  pointer-events: all;
-}
+  /* 메인 컨텐츠 영역 */
+	.body_container {
+		width: 1140px;
+		height: 1000px;
+		padding: 30px;
+		margin: 0 auto;
+	}
+
+	.body_container .body {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	/* 왼쪽 */
+	.body_container .body .body_left {
+		border: 1px solid;
+		width: 800px;
+		margin-right: 30px;
+	}
+
+	.body_left .home_edit_container {
+		display: flex;
+		padding: 20px;
+		cursor: pointer;
+		margin-bottom: 20px;
+	}
+
+	/* 글쓰기 영역 */
+	.body_left .home_edit_container .text_area {
+		position: sticky;
+		top: 100px;
+		z-index: 10;
+		width: 670px;
+		height: 80px;
+		border: 1px solid var(--gray);
+		border-radius: 5px;
+		margin-right: 10px;
+	}
+
+	.body_left .home_edit_container .edit_btn {
+		width: 80px;
+		height: 80px;
+		border: 1px solid;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		border: 1px solid var(--gray);
+		border-radius: 5px;
+		font-size: var(--font-x-big);
+	}
+
+	.body_left .home_edit_container .edit_btn svg {
+		fill: var(--dark-gray);
+	}
+
+	/* 게시글 영역 */
+	.body_left .content_container {
+		width: 100%;
+		height: 250px;
+		border: 1px solid var(--light-gray);
+		margin: 45px 0;
+		border-radius: 10px;
+		padding: 24px 36px;
+	}
+
+	.body_left .content_container .writer_info_area {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding-bottom: 10px;
+		border-bottom: 1px solid var(--gray);
+	}
+
+	.body_left .content_container .writer_info_area .flex_left {
+		display: flex;
+		align-items: center;
+	}
+
+	.body_left .content_container .writer_info_area .flex_left img {
+		width: 36px;
+		height: 36px;
+		background-color: var(--light-gray);
+		margin-right: 10px;
+		border-radius: 50%;
+	}
+
+	.body_left .content_container .writer_info_area .flex_left .writer_name {
+		font-size: var(--font-medium);
+	}
+
+	.body_left .content_container .writer_info_area .flex_left .writer_name .follow_btn {
+		border: 1px solid var(--light-gray);
+		border-radius: 10px;
+		margin-left: 20px;
+		padding: 0 3px;
+		font-size: var(--font-x-small);
+		color: var(--blue);
+		cursor: pointer;
+	}
+
+	.body_left .content_container .writer_info_area .flex_left .posting_date {
+		font-size: var(--font-small);
+		color: #ccc;
+	}
+
+	.body_left .content_container .writer_info_area .flex_right .utility {
+		display: flex;
+		align-items: center;
+	}
+
+	.body_left .content_container .writer_info_area .flex_right .utility > button {
+		width: 24px;
+		height: 24px;
+		background-color: transparent;
+		border: none;
+		margin-right: 10px;
+	}
+
+	.body_left .content_container .writer_info_area .flex_right .utility > button > svg {
+		width: 20px;
+		height: 20px;
+		cursor: pointer;
+	}
+
+	.body_left .content_container .writer_info_area .flex_right .utility > svg {
+		width: 24px;
+		height: 24px;
+		padding: 2px;
+		fill: var(--dark);
+		border: 1px solid var(--gray);
+		border-radius: 50%;
+		cursor: pointer;
+	}
+
+	.body_left .content_container .q_title {
+		display: flex;
+		align-items: flex-end;
+		margin: 7px 0;
+	}
+
+	.body_left .content_container .q_title > .big_letter {
+		font-size: var(--font-x-big);
+		font-weight: bold;
+		margin-right: 8px;
+		color: var(--deep-blue);
+	}
+
+	.body_left .content_container .q_title > div {
+		display: flex;
+		align-items: center;
+	}
+
+	.body_left .content_container .q_title > div .title {
+		font-size: var(--big);
+		margin-right: 10px;
+		color: var(--deep-darkdark);
+	}
+
+	.body_left .content_container .q_title > div .comment_number {
+		font-size: var(--font-medium);
+		margin-right: 10px;
+		color: var(--red);
+	}
+
+	.body_left .content_container .q_title > div svg {
+		font-size: var(--font-medium);
+		fill: var(--blue);
+	}
+
+	.body_left .content_container .q_title  .thumbs_up_number {
+		font-size: var(--font-medium);
+		margin-left: 7px;
+	}
+
+	.body_left .content_container .q_content {
+		display: flex;
+		flex-direction: column;
+		justify-content: space-between;
+	}
+
+	.body_left .content_container .q_content p {
+		margin-bottom: 20px;
+		font-size: var(--font-small);
+		color: var(--dark);
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+		-webkit-line-clamp: 3;
+	}
+
+	.body_left .content_container .q_content ul {
+		display: flex;
+	}
+
+	.body_left .content_container .q_content li {
+		padding: 3px 10px;
+		margin-right: 20px;
+		border-radius: 50px;
+		background-color: var(--hashtag-blue);
+		color: var(--blue);
+		font-size: var(--font-x-small);
+	}
+
+
+	/* 오른쪽 */
+	.body_container .body .body_right {
+		border: 1px solid;
+		width: 250px;
+	}
 </style>
-</head>
-<body>
-  <div class="header_container">
-    <section class="header">
-      <div class="logo_wrap">
-        <span class="logo_img"><a href="./home">🎃</a></span>
-        <div class="logo_name"><a href="./home">Name</a></div>
-      </div>
-      <nav class="gnb">
-        <ul>
-          <li><a href="/qnaboard/list">자유게시판</a></li>
-          <li><a href="/freeboard/list">질문게시판</a></li>
-          <li class="list_company"><a href="#" class="incomplete">기업게시판</a>
-            <ul class="company_sublist visible">
-              <li><a href="#" class="incomplete">채용게시판</a></li>
-              <li><a href="#" class="incomplete">알고리즘</a></li>
-            </ul>
-          </li>
-          <li><a href="#" class="incomplete">팀게시판</a></li>
-        </ul>
-      </nav>
-      <c:choose>
-        <c:when test="${empty sessionScope._LOGIN_USER_}">
-          <div>
-            <span class="login_btn"><a href="/member/auth">로그인</a></span>
-            <span class="regist_btn"><a href="/member/signup">회원가입</a></span>
-          </div>
-        </c:when>
-        <c:otherwise>
-          <div class="my_icon">
-            <a href="#" class="incomplete">
-              <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M304 128a80 80 0 1 0 -160 0 80 80 0 1 0 160 0zM96 128a128 128 0 1 1 256 0A128 128 0 1 1 96 128zM49.3 464H398.7c-8.9-63.3-63.3-112-129-112H178.3c-65.7 0-120.1 48.7-129 112zM0 482.3C0 383.8 79.8 304 178.3 304h91.4C368.2 304 448 383.8 448 482.3c0 16.4-13.3 29.7-29.7 29.7H29.7C13.3 512 0 498.7 0 482.3z"/></svg>
-              <span class="user_name incomplete"><strong>${sessionScope._LOGIN_USER_.nickname}</strong></span>
-            </a>
-            <a href="#">
-              <span class="incomplete"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 448 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M224 0c-17.7 0-32 14.3-32 32V49.9C119.5 61.4 64 124.2 64 200v33.4c0 45.4-15.5 89.5-43.8 124.9L5.3 377c-5.8 7.2-6.9 17.1-2.9 25.4S14.8 416 24 416H424c9.2 0 17.6-5.3 21.6-13.6s2.9-18.2-2.9-25.4l-14.9-18.6C399.5 322.9 384 278.8 384 233.4V200c0-75.8-55.5-138.6-128-150.1V32c0-17.7-14.3-32-32-32zm0 96h8c57.4 0 104 46.6 104 104v33.4c0 47.9 13.9 94.6 39.7 134.6H72.3C98.1 328 112 281.3 112 233.4V200c0-57.4 46.6-104 104-104h8zm64 352H224 160c0 17 6.7 33.3 18.7 45.3s28.3 18.7 45.3 18.7s33.3-6.7 45.3-18.7s18.7-28.3 18.7-45.3z"/></svg></span>
-            </a>
-            <a href="#">
-              <span class="incomplete"><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M123.6 391.3c12.9-9.4 29.6-11.8 44.6-6.4c26.5 9.6 56.2 15.1 87.8 15.1c124.7 0 208-80.5 208-160s-83.3-160-208-160S48 160.5 48 240c0 32 12.4 62.8 35.7 89.2c8.6 9.7 12.8 22.5 11.8 35.5c-1.4 18.1-5.7 34.7-11.3 49.4c17-7.9 31.1-16.7 39.4-22.7zM21.2 431.9c1.8-2.7 3.5-5.4 5.1-8.1c10-16.6 19.5-38.4 21.4-62.9C17.7 326.8 0 285.1 0 240C0 125.1 114.6 32 256 32s256 93.1 256 208s-114.6 208-256 208c-37.1 0-72.3-6.4-104.1-17.9c-11.9 8.7-31.3 20.6-54.3 30.6c-15.1 6.6-32.3 12.6-50.1 16.1c-.8 .2-1.6 .3-2.4 .5c-4.4 .8-8.7 1.5-13.2 1.9c-.2 0-.5 .1-.7 .1c-5.1 .5-10.2 .8-15.3 .8c-6.5 0-12.3-3.9-14.8-9.9c-2.5-6-1.1-12.8 3.4-17.4c4.1-4.2 7.8-8.7 11.3-13.5c1.7-2.3 3.3-4.6 4.8-6.9c.1-.2 .2-.3 .3-.5z"/></svg></span>
-            </a>
-            <a href="/member/logout">
-              <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M502.6 278.6c12.5-12.5 12.5-32.8 0-45.3l-128-128c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3L402.7 224 192 224c-17.7 0-32 14.3-32 32s14.3 32 32 32l210.7 0-73.4 73.4c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0l128-128zM160 96c17.7 0 32-14.3 32-32s-14.3-32-32-32L96 32C43 32 0 75 0 128L0 384c0 53 43 96 96 96l64 0c17.7 0 32-14.3 32-32s-14.3-32-32-32l-64 0c-17.7 0-32-14.3-32-32l0-256c0-17.7 14.3-32 32-32l64 0z"/></svg>
-            </a>
-          </div>
-        </c:otherwise>
-      </c:choose>
-    </section>
-  </div>
-
-  <!-- 검색 영역 -->
-  <section class="search_container">
-    <div class="for_search_align">
-      <div class="searchbox">
-        <div class="inner">
-          <input type="text" placeholder="검색어를 입력해주세요.">
-          <button type="submit" class="btn_search">
-            <img src="/images/search.svg" alt="search">
-          </button>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- 메인 컨텐츠 영역 -->
   <section class="body_container">
     <div class="body">
@@ -672,49 +274,38 @@ svg {
       </div>
     </div>
   </section>
-
-  <!-- 푸터 영역 -->
-  <footer class="footer">
-    <div class="inner">
-      <address>
-        <span>상호명: ?</span>
-        <span>개인정보책임관리자 : 홍길동</span>
-        <span>주소 : kt ds</span>
-        <span>ssss</span>
-      </address>
-      <div class="copyright">
-        &copy; 2023 by ???. All rights reserved
-      </div>
-    </div>
-  </footer>
-
-  <!-- 스크롤 버튼, IDE 영역 -->
-  <div id="progress">
-    <span id="progress_value">&#x1F815;</span>
-  </div>
-
-  <!-- 모달창 영역입니다. -->
-<div class="modal">
-  준비중입니다.
-</div>
-<div class="signup_modal">
-  <div>
-    기업으로 가입
-  </div>
-  <div>
-    개인으로 가입
-  </div>
-</div>
-<div class="overlay"></div>
+  <jsp:include page="../layout/footer.jsp" />
 </body>
 <script>
-  // 미완성된 기능 모달창
+  // 미완성된 기능을 알려주는 모달창
   $('.incomplete').click(function() {
     $('.modal, .overlay').addClass('modal_active')
   })
   $('.overlay').click(function() {
     $('.modal, .overlay').removeClass('modal_active')
+  })	
+
+  // 스크롤 버튼, IDE
+  let calcScrollValue = () => {
+  let scrollProgress = document.getElementById('progress')
+  let progressValue = document.getElementById('progress-value')
+  let pos = document.documentElement.scrollTop
+  let calcHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight
+  let scrollValue = Math.round((pos * 100) / calcHeight)
+
+  if (pos > 100) {
+    scrollProgress.style.display = 'grid'
+  }
+  else {
+    scrollProgress.style.display = 'none'
+  }
+  scrollProgress.addEventListener('click', () => {
+    document.documentElement.scrollTop = 0
   })
+  }
+
+  window.onscroll = calcScrollValue;
+  window.onload = calcScrollValue;
 
   // 서브 리스트가 있다면? 아래로 떨군다.
   $('.visible').hide()
@@ -738,27 +329,5 @@ svg {
   $('.home_edit_container').mouseleave(function() {
     $('.edit_btn').css('background-color', '')
   })
-
-  // 스크롤 버튼, IDE
-  let calcScrollValue = () => {
-  let scrollProgress = document.getElementById('progress')
-  let progressValue = document.getElementById('progress-value')
-  let pos = document.documentElement.scrollTop
-  let calcHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight
-  let scrollValue = Math.round((pos * 100) / calcHeight)
-
-  if (pos > 100) {
-    scrollProgress.style.display = 'grid'
-  }
-  else {
-    scrollProgress.style.display = 'none'
-  }
-  scrollProgress.addEventListener('click', () => {
-    document.documentElement.scrollTop = 0
-  })
-  }
-
-  window.onscroll = calcScrollValue;
-  window.onload = calcScrollValue;
 </script>
 </html>
