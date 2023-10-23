@@ -63,6 +63,6 @@ public interface ReportDAO {
 	public int completeProgressYn(String reportId);
 
 	// 게시글 신고
-	int createReport(ReportVO reportVO);
+	public int createReport(ReportVO reportVO);
 
 }

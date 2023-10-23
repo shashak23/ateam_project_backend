@@ -1,5 +1,7 @@
 package com.ktdsuniversity.edu.report.service;
 
+import java.util.List;
+
 import com.ktdsuniversity.edu.report.vo.ReportListVO;
 import com.ktdsuniversity.edu.report.vo.ReportVO;
 
@@ -56,6 +58,5 @@ public interface ReportService {
 	public boolean doCompleteProgressYn(String reportId);
 	
 	
-	boolean createReport(ReportVO reportVO);
-
+	public boolean createReport(ReportVO reportVO);
 }

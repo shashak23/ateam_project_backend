@@ -4,8 +4,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.ktdsuniversity.edu.generalpost.web.FreePostController;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.ktdsuniversity.edu.report.dao.ReportDAO;
 import com.ktdsuniversity.edu.report.vo.ReportListVO;
 import com.ktdsuniversity.edu.report.vo.ReportVO;
@@ -35,6 +39,9 @@ public class ReportServiceImpl implements ReportService{
 	public ReportListVO getMemberReportList() {
 		ReportListVO reportListVO = new ReportListVO();
 		reportListVO.setReportList(reportDAO.memberReportList());
+//		reportListVO.setReportCnt(reportDAO.);
+		reportListVO.setReportList(reportDAO.memberReportList());
+		System.out.println(reportListVO);
 		return reportListVO;
 	}
 

@@ -2,7 +2,6 @@ package com.ktdsuniversity.edu.report.dao;
 
 import java.util.List;
 
-import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.slf4j.Logger;
@@ -10,18 +9,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import com.ktdsuniversity.edu.generalpost.web.FreePostController;
 import com.ktdsuniversity.edu.report.vo.ReportVO;
+import com.ktdsuniversity.edu.report.web.ReportController;
 
 @Repository
-public class ReportDAOImpl extends SqlSessionDaoSupport implements ReportDAO{
-
-
-	@Autowired
-	private SqlSession sqlSession;
+public class ReportDAOImpl extends SqlSessionDaoSupport implements ReportDAO {
 	
-	private Logger log = LoggerFactory.getLogger(FreePostController.class);
-	
+	private Logger log = LoggerFactory.getLogger(ReportController.class);
 
 	@Autowired
 	@Override

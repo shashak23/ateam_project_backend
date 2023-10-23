@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
@@ -72,17 +71,20 @@
 	
 	<select id="reportAllList"
 			resultMap="reportVOMap">
-		SELECT REPORT_ID
-			  , REPORT_MEMBER
-			  , REPORT_TYPE_ID
-			  , RECEIVED_REPORT_MEMBER
-			  , REPORT_CONTENT_ID
-			  , REPORT_DATE
-			  , REPORT_REASON
-			  , REPORT_REASON_CONTENT
-			  , ATTACHED_IMG
-		 	  , PROGRESS_YN
-  		   FROM REPORT
+		 SELECT R.REPORT_ID
+			  , R.REPORT_MEMBER
+			  , R.REPORT_TYPE_ID
+			  , R.RECEIVED_REPORT_MEMBER
+			  , R.REPORT_CONTENT_ID
+			  , R.REPORT_DATE
+			  , R.REPORT_REASON
+			  , R.REPORT_REASON_CONTENT
+			  , R.ATTACHED_IMG
+		 	  , R.PROGRESS_YN
+		 	  , CC.CODE_CONTENT
+		   FROM REPORT R
+		   JOIN COMMON_CODE CC
+		     ON R.REPORT_TYPE_ID = CC.CODE_ID
   		  WHERE PROGRESS_YN = 'N'
   	</select>
 
@@ -105,18 +107,20 @@
 	
 	<select id="memberReportList"
 			resultMap="reportVOMap">
-		SELECT REPORT_ID
-			 , REPORT_MEMBER
-			 , REPORT_TYPE_ID
-			 , RECEIVED_REPORT_MEMBER
-			 , REPORT_CONTENT_ID
-			 , REPORT_DATE
-			 , REPORT_REASON
-			 , REPORT_REASON_CONTENT
-			 , ATTACHED_IMG
-			 , PROGRESS_YN
-		  FROM REPORT
- 		 WHERE REPORT_TYPE_ID = 'CC-20231018-000104'
+		 SELECT R.REPORT_ID
+			  , R.REPORT_MEMBER
+			  , R.REPORT_TYPE_ID
+			  , R.RECEIVED_REPORT_MEMBER
+			  , R.REPORT_CONTENT_ID
+			  , R.REPORT_DATE
+			  , R.REPORT_REASON
+			  , R.REPORT_REASON_CONTENT
+			  , R.ATTACHED_IMG
+			  , R.PROGRESS_YN
+		  FROM REPORT R
+   		  JOIN COMMON_CODE CC
+  			ON R.REPORT_TYPE_ID = CC.CODE_ID
+ 		 WHERE R.REPORT_TYPE_ID = 'CC-20231018-000104'
 	</select>
 	
 	<select id="freeBoardReportList"
@@ -195,9 +199,9 @@
 			parameterType="string">
 		UPDATE REPORT
    		   SET PROGRESS_YN = 'Y'
- 		 WHERE REPORT_ID = #{reportId} 
+ 		 WHERE REPORT_ID = #{reportId}
 	</update>
-	     
+	
 	<!-- 게시글, 댓글, 유저 신고 -->
 	<insert id="createReport"
 		parameterType="com.ktdsuniversity.edu.report.vo.ReportVO">
@@ -224,5 +228,5 @@
 		  , #{attachedImg}
 		  , 'N')
 	</insert>
-	
+
 </mapper>

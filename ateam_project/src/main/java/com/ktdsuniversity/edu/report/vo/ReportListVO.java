@@ -3,6 +3,7 @@ package com.ktdsuniversity.edu.report.vo;
 import java.util.List;
 
 public class ReportListVO {
+	
 	private int reportCnt;
 	private List<ReportVO> reportList;
 	
