@@ -1,7 +1,6 @@
 /**
  * 작성자: 김시하 
- * 수정자: 김시하(2023-10-17)
- * 수정자: 장보늬(2023-10-22)
+ * 수정자: 김시하(2023-10-23)
  * 작성일자: 2023-10-16
  * 내용: 질답게시판의 view와 연동되는 controller입니다 
  */
@@ -188,5 +187,22 @@ public class QnAPostController {
 		GeneralPostListVO generalPostListVO = generalPostService.getMyPost(memberVO.getEmail());
 		model.addAttribute("generalPostList", generalPostListVO);
 		return "mypage/mypost";
+	}
+	
+	// 좋아요 기능
+	@PostMapping("/qnaboard/like")
+    public ModelAndView likeQnABoard(@ModelAttribute GeneralPostVO generalPostVO) {
+
+		ModelAndView view = new ModelAndView();
+		boolean isSuccess = generalPostService.likeQnABoard(generalPostVO);
+		if(isSuccess) {
+			view.setViewName("redirect:/qnaboard/list");
+			return view;
+		}
+		else {
+			view.setViewName("forum/qnaboardview");
+			view.addObject("generalPostVO", generalPostVO);
+			return view;
+		}
 	}
 }

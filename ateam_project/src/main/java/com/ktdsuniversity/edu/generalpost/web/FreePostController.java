@@ -1,3 +1,9 @@
+/**
+ * 작성자: 김시하
+ * 수정자: 김시하(2023-10-23)
+ * 작성일자: 2023-10-16
+ * 내용: 자유게시판을 위한 Controller
+ */
 package com.ktdsuniversity.edu.generalpost.web;
 
 import org.slf4j.Logger;
@@ -184,7 +190,7 @@ public class FreePostController {
     public ModelAndView likeFreeBoard(@ModelAttribute GeneralPostVO generalPostVO) {
 
 		ModelAndView view = new ModelAndView();
-		boolean isSuccess = generalPostService.likeQnABoard(generalPostVO);
+		boolean isSuccess = generalPostService.likeFreeBoard(generalPostVO);
 		if(isSuccess) {
 			view.setViewName("redirect:/freeboard/list");
 			return view;
@@ -196,5 +202,4 @@ public class FreePostController {
 		}
 	}
 	
-	
-}
+	}

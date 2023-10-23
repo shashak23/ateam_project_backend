@@ -185,6 +185,12 @@
 		 WHERE GENERAL_POST_ID = #{generalPostId}
 	</update>
 	
+	<update id="">
+		UPDATE GENERAL_POST
+		   SET LIKE_CNT = #{likeCnt} + 1
+		 WHERE GENERAL_POST_ID = #{generalPostId}
+	</update>
+	
 	<!-- 내게시글 조회 쿼리 -->
 	<select id="getMyPost"
 	        resultMap="GeneralPostDAOMap"
