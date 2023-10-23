@@ -35,4 +35,7 @@ public interface AlgorithmQuestionDAO {
 	public int insertAlgorithmQuestionCategory(AlgorithmQuestionVO algorithmQuestionVO);
 	
 	public int deleteOneAlgorithmQuestion(String companyAlgorithmQuestionId);
+	
+	// 통합검색
+	public List<AlgorithmQuestionVO> searchAllAlgorithmQuestionByKeyword(SearchAlgorithmQuestionVO searchAlgorithmQuestionVO);
 }

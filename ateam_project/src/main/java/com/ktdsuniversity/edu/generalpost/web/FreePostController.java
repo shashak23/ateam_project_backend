@@ -189,21 +189,21 @@ public class FreePostController {
 	}
 	
 
-	// 좋아요 기능
-	@PostMapping("/freeboard/like")
-    public ModelAndView likeFreeBoard(@ModelAttribute GeneralPostVO generalPostVO) {
-
-		ModelAndView view = new ModelAndView();
-		boolean isSuccess = generalPostService.likeFreeBoard(generalPostVO);
-		if(isSuccess) {
-			view.setViewName("redirect:/freeboard/list");
-			return view;
-		}
-		else {
-			view.setViewName("forum/freeboardview");
-			view.addObject("generalPostVO", generalPostVO);
-			return view;
-		}
-	}
+//	// 좋아요 기능
+//	@PostMapping("/freeboard/like")
+//    public ModelAndView likeFreeBoard(@ModelAttribute GeneralPostVO generalPostVO) {
+//
+//		ModelAndView view = new ModelAndView();
+//		boolean isSuccess = generalPostService.likeFreeBoard(generalPostVO);
+//		if(isSuccess) {
+//			view.setViewName("redirect:/freeboard/list");
+//			return view;
+//		}
+//		else {
+//			view.setViewName("forum/freeboardview");
+//			view.addObject("generalPostVO", generalPostVO);
+//			return view;
+//		}
+//	}
 	
 	}

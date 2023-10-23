@@ -29,7 +29,7 @@ public class AlgorithmQuestionDAOImpl extends SqlSessionDaoSupport implements Al
 	public int getAlgorithmQuestionAllCount(SearchAlgorithmQuestionVO searchAlgorithmQuestionVO) {
 		return getSqlSession().selectOne("getAlgorithmQuestionAllCount", searchAlgorithmQuestionVO);
 	}
-
+	
 	@Override
 	public List<AlgorithmQuestionVO> getAllAlgorithmQuestion() {
 		return getSqlSession().selectList("getAllAlgorithmQuestion");
@@ -79,5 +79,9 @@ public class AlgorithmQuestionDAOImpl extends SqlSessionDaoSupport implements Al
 		return getSqlSession().update("deleteOneAlgorithmQuestion", companyAlgorithmQuestionId);
 	}
 
-	
+	//통합검색
+	@Override
+	public List<AlgorithmQuestionVO> searchAllAlgorithmQuestionByKeyword(SearchAlgorithmQuestionVO searchAlgorithmQuestionVO) {
+		return getSqlSession().selectList("searchAllAlgorithmQuestionByKeyword", searchAlgorithmQuestionVO);
+	}
 }
