@@ -50,7 +50,7 @@
 			, VIEW_CNT
 			, DELETE_YN) 
 		VALUES 
-		 (SEQ_GENERAL_POST_PK.NEXTVAL
+		 ('GP-' || TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_GENERAL_POST_PK.NEXTVAL, 6, '0')
 	        , #{postWriter}
 			, 'CC-20231017-000029' 
 			, #{postTitle}
@@ -58,7 +58,7 @@
 			, SYSDATE
 			, #{likeCnt}
 			, #{viewCnt}
-			, 'N' )
+			, 'N')
 	</insert>
 	
 	<select id="getOneFreeBoard"

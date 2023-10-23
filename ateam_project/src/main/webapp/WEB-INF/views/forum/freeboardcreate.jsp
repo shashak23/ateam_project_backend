@@ -52,7 +52,7 @@
 	<form method = "post" >		
 		<div class = "grid">
 			<label for = "postTitle"> 제목 </label>
-			<input id = "postTitle" type = "text" name="postTitle" />
+			<input id = "postTitle" type ="text" name="postTitle" />
 			
 			<label for = "postContent"> 내용 </label>
 			<textarea name="text" id="editor"></textarea>

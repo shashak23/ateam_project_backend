@@ -74,7 +74,7 @@ public class FreePostController {
 		System.out.println("삭제여부: " + generalPostVO.getDeleteYn());
 		
 		ModelAndView modelAndView = new ModelAndView();
-		log.debug("1--컨트롤러---자유----------------------");
+		log.debug("1--자유컨트롤러-------------------------------");
 
 		// Validation 체크한 것 중 실패한 것이 있다면.
 		if (bindingResult.hasErrors()) {
