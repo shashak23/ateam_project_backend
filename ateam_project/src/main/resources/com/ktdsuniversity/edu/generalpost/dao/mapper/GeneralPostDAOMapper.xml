@@ -110,6 +110,12 @@
 		 WHERE GENERAL_POST_ID = #{generalPostId}
 	</update>
 	
+	<update id="updateLikeFreePost">
+		UPDATE GENERAL_POST
+		   SET LIKE_CNT = #{likeCnt} + 1
+		 WHERE GENERAL_POST_ID = #{generalPostId}
+	</update>
+	
 	<!-- 질답게시판 -->
 	<select id="getAllQnABoard"
 	resultType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
@@ -184,7 +190,7 @@
 		 WHERE GENERAL_POST_ID = #{generalPostId}
 	</update>
 	
-	<update id="">
+	<update id="updateLikeQnAPost">
 		UPDATE GENERAL_POST
 		   SET LIKE_CNT = #{likeCnt} + 1
 		 WHERE GENERAL_POST_ID = #{generalPostId}

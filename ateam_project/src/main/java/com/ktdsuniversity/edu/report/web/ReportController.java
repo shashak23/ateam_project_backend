@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
@@ -29,24 +30,23 @@ public class ReportController {
 
 	
 	// 게시글 신고 화면 보이기
-	@GetMapping("/report/reportview")
-	public String createReport() {
-		return "report/reportview";
-	}
+//	@GetMapping("/report/reportview")
+//	public String createReport() {
+//		return "report/reportview";
+//	}
 	
 	// 게시글 신고하기 (등록)
-	@PostMapping("/report/view")
+	@PostMapping("/report/view/{reportTypeId}")
 	public ModelAndView createReport(@Valid @ModelAttribute ReportVO reportVO
 									   , BindingResult bindingResult 
 							           , HttpServletRequest request
-							           , @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+							           , @SessionAttribute("_LOGIN_USER_") MemberVO memberVO
+							           , @PathVariable String reportTypeId) {
 		log.debug("--1--컨트롤러----------------------------------------");
 		//System.out.println("신고고유번호: " + reportVO.getReportId());
 		ModelAndView view = new ModelAndView();
 		reportVO.setReportMember(memberVO.getEmail());
-	
-//		String reportTypeId = request.getParameter("reportTypeId");
-		String reportTypeId = reportVO.getReportTypeId();
+
 		 /**
 		  * reportTypeId = 신고 유형 받아오기
 		  * 1유형: CC-20231018-000097 (자유게시판 게시글)
@@ -61,11 +61,13 @@ public class ReportController {
 		        reportVO.setReportTypeId("CC-20231018-000102");
 		    } else if (reportTypeId.equals("3")) {
 		        reportVO.setReportTypeId("CC-20231018-000101");
-		    } else {
+		    } else if (reportTypeId.equals("4")) {
 		        reportVO.setReportTypeId("CC-20231018-000103");
+		    } else {
+		    	reportVO.setReportTypeId("CC-20231018-000104");
 		    }
 		} else {
-		    reportVO.setReportTypeId("CC-20231018-000103");
+		    reportVO.setReportTypeId("CC-20231018-000104");
 		}
 		log.debug("신고 유형 구분: " + reportTypeId);
 		log.debug("신고자: " + reportVO.getReportMember());
