@@ -231,7 +231,7 @@ button, input, textarea {
  		$("#txt-reply").removeData("target")	
 	 })
     });
-	
+
 	// 신고버튼, 좋아요 버튼
 	$().ready(function() {
 	    // "신고" 버튼 클릭 시 모달 열기
@@ -263,12 +263,12 @@ button, input, textarea {
 	    });
 
 	});
- </script>  	
+ </script>  	  	
 </head>
 <body>
 
 	<jsp:include page="../member/membermenu.jsp"></jsp:include>
-
+		
 	<h1>게시글 조회</h1>
 	
 	<!-- 좋아요 기능 -->
@@ -304,13 +304,13 @@ button, input, textarea {
 				<button id="btn-save-reply">등록</button>
 				<button id="btn-cancel-reply">취소</button>
 			</div>
-		</div> -->
+		</div>
 	</div>
 	</form>	
-
-    <div class="btn-group">
-<%-- 		<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq boardVO.memberVO.email}">
- --%>	        <div class="right-align">
+	<div class="update_btn">
+	<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq generalPostVO.postWriter}">					
+	    <div class="btn-group">
+	        <div class="right-align">
 	            <div class="update_btn">
 	                <div class="btn">
 	                    <a href="/freeboard/update/${generalPostVO.generalPostId}">수정</a>
@@ -318,6 +318,7 @@ button, input, textarea {
 	                </div>
 	            </div>
 	        </div>
-<%-- 		</c:if>
- --%>    </div>
+	        </div>
+		</c:if>
+    </div>
 </body>

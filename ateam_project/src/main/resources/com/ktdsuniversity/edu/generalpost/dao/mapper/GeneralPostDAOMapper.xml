@@ -9,16 +9,32 @@
 	           id="GeneralPostDAOMap"
 	           autoMapping="true">
 	           <id column="GENERAL_POST_ID" property="generalPostId" />
-	    <association property="memberVO"
-	                 javaType="com.ktdsuniversity.edu.member.vo.MemberVO"
-			         autoMapping="true">
-			         <id column="EMAIL" property="email" />
-	    </association>
-	    <association property="commonCodeVO"
-		    javaType="com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO"
-		    autoMapping="true">
-		    <id column="CODE_ID" property="codeId" />
-		</association>
+    
+    <association property="memberVO"
+                 javaType="com.ktdsuniversity.edu.member.vo.MemberVO"
+		         autoMapping="true">
+		         <id column="EMAIL" property="email" />
+    </association>
+    
+    <association property="commonCodeVO"
+	    javaType="com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO"
+	    autoMapping="true">
+	    <id column="CODE_ID" property="codeId" />
+	</association>
+	
+	<association property="generalPostVO"
+					javaType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
+			<id column="GENERAL_POST_ID" property="generalPostId" />
+			<result column="POST_WRITER" property="postWriter" />
+			<result column="BOARD_ID" property="boardId" />
+			<result column="POST_TITLE" property="postTitle" />
+			<result column="POST_CONTENT" property="postContent" />
+			<result column="POST_DATE" property="postDate" />
+			<result column="LIKE_CNT" property="likeCnt" />
+			<result column="VIEW_CNT" property="viewCnt" />
+			<result column="DELETE_YN" property="deleteYn" />
+	</association>
+	
 	</resultMap>
 	
 	<select id="getBoardAllCount"
@@ -50,50 +66,55 @@
 			, VIEW_CNT
 			, DELETE_YN) 
 		VALUES 
-		 ('GP-' || TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_GENERAL_POST_PK.NEXTVAL, 6, '0')
+		 ( 'GP-' || TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_GENERAL_POST_PK.NEXTVAL, 6, '0')
 	        , #{postWriter}
 			, 'CC-20231017-000029' 
 			, #{postTitle}
 			, #{postContent}
 			, SYSDATE
-			, #{likeCnt}
-			, #{viewCnt}
-			, 'N')
+			, 0
+			, 0
+			, 'N' )
 	</insert>
 	
 	<select id="getOneFreeBoard"
 		parameterType="string"
 		resultType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
-		SELECT GENERAL_POST_ID
-		     , POST_WRITER
-		     , BOARD_ID
-		     , POST_TITLE
-		     , POST_CONTENT
-		     , POST_DATE
-		     , LIKE_CNT
-		     , VIEW_CNT
-		     , DELETE_YN
-		  FROM GENERAL_POST
+		SELECT GP.GENERAL_POST_ID
+		     , GP.POST_WRITER
+		     , GP.BOARD_ID
+		     , GP.POST_TITLE
+		     , GP.POST_CONTENT
+		     , GP.POST_DATE
+		     , GP.LIKE_CNT
+		     , GP.VIEW_CNT
+		     , GP.DELETE_YN
+		     , M.NICKNAME
+		  FROM GENERAL_POST GP
+		 INNER JOIN MEMBER M
+		    ON M.EMAIL = GP.POST_WRITER
 		 WHERE GENERAL_POST_ID = #{_parameter}
 	</select>
 	
 	<select id="getAllFreeBoard"
 	resultType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
-		SELECT GENERAL_POST_ID
-		     , POST_WRITER
-		     , BOARD_ID
-		     , POST_TITLE
-		     , POST_CONTENT
-		     , POST_DATE
-		     , LIKE_CNT
-		     , VIEW_CNT
-		     , DELETE_YN
-		  FROM GENERAL_POST
+		SELECT GP.GENERAL_POST_ID
+		     , GP.POST_WRITER
+		     , GP.BOARD_ID
+		     , GP.POST_TITLE
+		     , GP.POST_CONTENT
+		     , GP.POST_DATE
+		     , GP.LIKE_CNT
+		     , GP.VIEW_CNT
+		     , GP.DELETE_YN
+		     , M.NICKNAME
+		  FROM GENERAL_POST GP
+		 INNER JOIN MEMBER M
+		    ON M.EMAIL = GP.POST_WRITER
 		 WHERE DELETE_YN = 'N'
 		   AND BOARD_ID = 'CC-20231017-000029'
 		 ORDER BY POST_DATE DESC
 	</select>
-
 	
 	<update id="updateOneFreeBoard"
 		parameterType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
@@ -111,19 +132,28 @@
 		 WHERE GENERAL_POST_ID = #{generalPostId}
 	</update>
 	
+	<update id="updateLikeFreePost">
+		UPDATE GENERAL_POST
+		   SET LIKE_CNT = #{likeCnt} + 1
+		 WHERE GENERAL_POST_ID = #{generalPostId}
+	</update>
+	
 	<!-- 질답게시판 -->
 	<select id="getAllQnABoard"
 	resultType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
-		SELECT GENERAL_POST_ID
-		     , POST_WRITER
-		     , BOARD_ID
-		     , POST_TITLE
-		     , POST_CONTENT
-		     , POST_DATE
-		     , LIKE_CNT
-		     , VIEW_CNT
-		     , DELETE_YN
-		  FROM GENERAL_POST
+		SELECT GP.GENERAL_POST_ID
+		     , GP.POST_WRITER
+		     , GP.BOARD_ID
+		     , GP.POST_TITLE
+		     , GP.POST_CONTENT
+		     , GP.POST_DATE
+		     , GP.LIKE_CNT
+		     , GP.VIEW_CNT
+		     , GP.DELETE_YN
+		     , M.NICKNAME
+		  FROM GENERAL_POST GP
+		 INNER JOIN MEMBER M
+		    ON M.EMAIL = GP.POST_WRITER
 		 WHERE DELETE_YN = 'N'
 		   AND BOARD_ID = 'CC-20231017-000030'
 		 ORDER BY POST_DATE DESC
@@ -142,7 +172,7 @@
 			 , VIEW_CNT
 		 	 , DELETE_YN) 
 		VALUES 
-		 (SEQ_GENERAL_POST_PK.NEXTVAL
+		 ( 'GP-' || TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_GENERAL_POST_PK.NEXTVAL, 6, '0')
 	         , #{postWriter}
 			 , 'CC-20231017-000030' 
 			 , #{postTitle}
@@ -156,16 +186,19 @@
 	<select id="getOneQnABoard"
 		parameterType="string"
 		resultType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
-		SELECT GENERAL_POST_ID
-		     , POST_WRITER
-		     , BOARD_ID
-		     , POST_TITLE
-		     , POST_CONTENT
-		     , POST_DATE
-		     , LIKE_CNT
-		     , VIEW_CNT
-		     , DELETE_YN
-		  FROM GENERAL_POST
+		SELECT GP.GENERAL_POST_ID
+		     , GP.POST_WRITER
+		     , GP.BOARD_ID
+		     , GP.POST_TITLE
+		     , GP.POST_CONTENT
+		     , GP.POST_DATE
+		     , GP.LIKE_CNT
+		     , GP.VIEW_CNT
+		     , GP.DELETE_YN
+		     , M.NICKNAME
+		  FROM GENERAL_POST GP
+		 INNER JOIN MEMBER M
+		    ON M.EMAIL = GP.POST_WRITER
 		 WHERE GENERAL_POST_ID = #{_parameter}		 
 	</select>
 	
@@ -185,7 +218,7 @@
 		 WHERE GENERAL_POST_ID = #{generalPostId}
 	</update>
 	
-	<update id="">
+	<update id="updateLikeQnAPost">
 		UPDATE GENERAL_POST
 		   SET LIKE_CNT = #{likeCnt} + 1
 		 WHERE GENERAL_POST_ID = #{generalPostId}
@@ -200,7 +233,7 @@
 		     , GP.BOARD_ID
 		     , GP.POST_TITLE
 		     , GP.POST_CONTENT
-		     , TO_CHAR(GP.POST_DATE, 'YYYY-MM-DD')POST_DATE
+		     , TO_CHAR(GP.POST_DATE, 'YYYY-MM-DD') POST_DATE
 		     , GP.LIKE_CNT
 		     , GP.VIEW_CNT
 		     , GP.DELETE_YN
@@ -209,13 +242,12 @@
 		 INNER JOIN MEMBER M
 		    ON M.EMAIL = GP.POST_WRITER
 		 WHERE GP.DELETE_YN = 'N'
-		 <!-- <if test='searchType == null'> 
+		 <if test='boardId == "CC-20231017-000029"'>
 		   AND BOARD_ID = 'CC-20231017-000029'
 		 </if>
-		 <if test='searchType == qnaboard'>
+		 <if test='boardId == "CC-20231017-000030"'>
 		   AND BOARD_ID = 'CC-20231017-000030'
 		 </if>
-		 -->
 		   AND GP.POST_WRITER = #{_parameter}
 		 ORDER BY POST_DATE DESC  
 	</select>

@@ -33,14 +33,14 @@ public class GeneralPostServiceImpl implements GeneralPostService{
 		
 		generalPostListVO.setBoardCnt( generalPostDAO.getBoardAllCount());
 		generalPostListVO.setGeneralPostList( generalPostDAO.getAllFreeBoard());
-		return generalPostListVO;
+		return generalPostListVO;	
 	}
 
 	@Transactional
 	@Override
 	public boolean createNewFreeBoard(GeneralPostVO generalPostVO) {
 		int boardCount = generalPostDAO.createNewFreeBoard(generalPostVO);
-		
+
 		return boardCount > 0;
 	}
 
@@ -48,7 +48,7 @@ public class GeneralPostServiceImpl implements GeneralPostService{
 	@Override
 	public GeneralPostVO getOneFreeBoard(String generalPostId) {
 		GeneralPostVO result = null;
-		log.debug("2-----서비스---------------------------");		
+		
 		result = generalPostDAO.getOneFreeBoard(generalPostId);
 		
 		return result;
@@ -68,12 +68,7 @@ public class GeneralPostServiceImpl implements GeneralPostService{
 		
 		return deleteCount > 0;
 	}
-	@Transactional
-	@Override
-	public boolean likeFreeBoard(GeneralPostVO generalPostVO) {
-		int likeCount = generalPostDAO.updateListFreePost(generalPostVO);
-		return likeCount > 0;
-	}
+
 	
 	// 질답게시판 
 	@Transactional
@@ -102,6 +97,7 @@ public class GeneralPostServiceImpl implements GeneralPostService{
 	public GeneralPostVO getOneQnABoard(String generalPostId) {
 		GeneralPostVO result = null;
 		
+		log.debug("2-----서비스---------------------------");
 		result = generalPostDAO.getOneQnABoard(generalPostId);
 		
 		return result;
@@ -122,12 +118,7 @@ public class GeneralPostServiceImpl implements GeneralPostService{
 		return deleteCount > 0;
 	}
 
-	@Transactional
-	@Override
-	public boolean likeQnABoard(GeneralPostVO generalPostVO) {
-		int likeCount = generalPostDAO.updateLikeQnAPost(generalPostVO);
-		return likeCount > 0;
-	}
+
 	// 내게시글 조회
 	@Transactional
 	@Override

@@ -1,6 +1,7 @@
 /*
  * 작성자: 장보늬
  * 작성일자: 2023-10-15
+ * 수정자: 장보늬(2023-10-23)
  * 내용: 알고리즘문제 게시판의 검색관련 VO를 가집니다.
  */
 
@@ -12,8 +13,7 @@ public class SearchAlgorithmQuestionVO {
 	private String[] algorithmTierList;
 	private String category;
 	private String tier;
-	
-//	private String[] checkboxList;
+
 	
 	/**
 	 * 검색을 하기위한 구분자
@@ -27,13 +27,6 @@ public class SearchAlgorithmQuestionVO {
 	 * 검색 키워드
 	 */
 	private String searchKeyword;
-
-	
-//	public String getSearchType() { return searchType; }
-	
-//	public void setSearchType(String searchType) { this.searchType = searchType;
-//	}
-	
 
 	public String getSearchKeyword() {
 		return searchKeyword;
@@ -74,9 +67,5 @@ public class SearchAlgorithmQuestionVO {
 	public void setTier(String tier) {
 		this.tier = tier;
 	}
-	
-	
-
-	 	
 	
 }

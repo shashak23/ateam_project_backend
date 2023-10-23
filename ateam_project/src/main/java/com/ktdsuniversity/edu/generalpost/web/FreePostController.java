@@ -25,6 +25,8 @@ import com.ktdsuniversity.edu.generalpost.vo.GeneralPostListVO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
 import com.ktdsuniversity.edu.generalpost.vo.SearchForumVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
+import com.ktdsuniversity.edu.util.XssIgnore;
+import com.ktdsuniversity.edu.util.XssIgnoreUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -73,8 +75,11 @@ public class FreePostController {
 		System.out.println("조회수: " + generalPostVO.getViewCnt());
 		System.out.println("삭제여부: " + generalPostVO.getDeleteYn());
 		
+		
 		ModelAndView modelAndView = new ModelAndView();
-		log.debug("1--자유컨트롤러-------------------------------");
+		log.debug("1--컨트롤러---자유----------------------");
+		
+		XssIgnoreUtil.ignore(generalPostVO);
 
 		// Validation 체크한 것 중 실패한 것이 있다면.
 		if (bindingResult.hasErrors()) {
@@ -185,21 +190,21 @@ public class FreePostController {
 	}
 	
 
-	// 좋아요 기능
-	@PostMapping("/freeboard/like")
-    public ModelAndView likeFreeBoard(@ModelAttribute GeneralPostVO generalPostVO) {
-
-		ModelAndView view = new ModelAndView();
-		boolean isSuccess = generalPostService.likeFreeBoard(generalPostVO);
-		if(isSuccess) {
-			view.setViewName("redirect:/freeboard/list");
-			return view;
-		}
-		else {
-			view.setViewName("forum/freeboardview");
-			view.addObject("generalPostVO", generalPostVO);
-			return view;
-		}
-	}
+//	// 좋아요 기능
+//	@PostMapping("/freeboard/like")
+//    public ModelAndView likeFreeBoard(@ModelAttribute GeneralPostVO generalPostVO) {
+//
+//		ModelAndView view = new ModelAndView();
+//		boolean isSuccess = generalPostService.likeFreeBoard(generalPostVO);
+//		if(isSuccess) {
+//			view.setViewName("redirect:/freeboard/list");
+//			return view;
+//		}
+//		else {
+//			view.setViewName("forum/freeboardview");
+//			view.addObject("generalPostVO", generalPostVO);
+//			return view;
+//		}
+//	}
 	
 	}

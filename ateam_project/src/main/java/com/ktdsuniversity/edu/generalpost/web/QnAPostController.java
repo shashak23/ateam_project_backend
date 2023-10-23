@@ -25,6 +25,7 @@ import com.ktdsuniversity.edu.generalpost.vo.GeneralPostListVO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
 import com.ktdsuniversity.edu.generalpost.vo.SearchForumVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
+import com.ktdsuniversity.edu.util.XssIgnoreUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -72,6 +73,9 @@ public class QnAPostController {
 		System.out.println("삭제여부: " + generalPostVO.getDeleteYn());
 		
 		ModelAndView modelAndView = new ModelAndView();
+		
+		XssIgnoreUtil.ignore(generalPostVO);
+		
 		log.debug("1--컨트롤러---------------------------");
 		log.debug("데이터 =  " + generalPostVO.getBoardId());
 		log.debug("데이터 =  " + generalPostVO.getPostWriter());
@@ -190,19 +194,19 @@ public class QnAPostController {
 	}
 	
 	// 좋아요 기능
-	@PostMapping("/qnaboard/like")
-    public ModelAndView likeQnABoard(@ModelAttribute GeneralPostVO generalPostVO) {
-
-		ModelAndView view = new ModelAndView();
-		boolean isSuccess = generalPostService.likeQnABoard(generalPostVO);
-		if(isSuccess) {
-			view.setViewName("redirect:/qnaboard/list");
-			return view;
-		}
-		else {
-			view.setViewName("forum/qnaboardview");
-			view.addObject("generalPostVO", generalPostVO);
-			return view;
-		}
-	}
+//	@PostMapping("/qnaboard/like")
+//    public ModelAndView likeQnABoard(@ModelAttribute GeneralPostVO generalPostVO) {
+//
+//		ModelAndView view = new ModelAndView();
+//		boolean isSuccess = generalPostService.likeQnABoard(generalPostVO);
+//		if(isSuccess) {
+//			view.setViewName("redirect:/qnaboard/list");
+//			return view;
+//		}
+//		else {
+//			view.setViewName("forum/qnaboardview");
+//			view.addObject("generalPostVO", generalPostVO);
+//			return view;
+//		}
+//	}
 }

@@ -60,7 +60,7 @@
 			<input id = "postTitle" type = "text" name="postTitle" 
 					value="${generalPostVO.postTitle}"/>
 			<p><label for = "postContent"> 내용 </label>
-			 <textarea name="text" id="editor">${generalPostVO.postContent}</textarea>
+			 <textarea name="postContent" id="editor">${generalPostVO.postContent}</textarea>
 		        <script>
 		          ClassicEditor.create( document.querySelector( '#editor' ), {
 		                  language: "ko"

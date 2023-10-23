@@ -2,332 +2,292 @@
 	 작성일: 23-10-23
 	 내용: 공통 CSS 요소를 모아놓은 공간 -->
 
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	 <%@ page language="java" contentType="text/html; charset=UTF-8"
+	 pageEncoding="UTF-8"%>
 <style>
-	:root {
-		--light-blue: #75C2F6;
-		--blue: #5E69F5;
-		--deep-blue: #470FF4;
-		--hashtag-blue: #d6e9f5;
-		--light-gray: #e5e5e5;
-		--gray: #ccc;
-		--dark-gray: #888;
-		--white: #fff;
-		--deep-dark: #191919;
-		--dark: #333;
-		--red: #ff4444;
-		--font-x-big: 16pt;
-		--font-big: 14pt;
-		--font-medium: 12pt;
-		--font-small: 10pt;
-		--font-x-small: 9pt;
-	}
-	html {
-  scroll-behavior: smooth;
+ :root {
+	 --light-blue: #75C2F6;
+	 --blue: #5E69F5;
+	 --deep-blue: #470FF4;
+	 --hashtag-blue: #d6e9f5;
+	 --light-gray: #e5e5e5;
+	 --gray: #ccc;
+	 --dark-gray: #888;
+	 --white: #fff;
+	 --deep-dark: #191919;
+	 --dark: #333;
+	 --red: #ff4444;
+	 --font-x-big: 16pt;
+	 --font-big: 14pt;
+	 --font-medium: 12pt;
+	 --font-small: 10pt;
+	 --font-x-small: 9pt;
+ }
+ html {
+ scroll-behavior: smooth;
 }
-
-	svg {
-		fill: var(--blue);
-	}
-
-	*:lang(en) {
-		font-family: 'Open Sans', sans-serif;
-	}
-	*:lang(ko-KR) {
-		font-family: 'Noto Sans KR', sans-serif;
-	}
-	* {
-		margin: 0;
-		padding: 0;
-		box-sizing: border-box;
-		list-style: none;
-		text-decoration: none;
-		color: var(--dark);
-	}
-
-	.header_container {
-		width: 1140px;
-		padding: 0 30px;
-		margin: 0 auto;
-	}
-
-	/* 헤더 영역 */
-	.header {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		padding: 10px 0;
-	}
-
-	.logo_wrap {
-		display: flex;
-		height: 30px;
-	}
-
-	.logo_wrap .logo_img {
-		width: 50px;
-		text-align: center;
-		line-height: 30px;
-		font-size: var(--font-big);
-	}
-
-	.logo_wrap .logo_name {
-		width: 120px;
-		text-align: center;
-		line-height: 30px;
-		font-size: var(--font-big);
-	}
-
-	/* 메뉴 영역 */
-	.gnb ul {
-		display: flex;
-	}
-
-	.gnb > ul > li > a {
-			margin: 0 10px;
-			padding: 8px 15px;
-			border-radius: 10px;
-			font-weight: bold;
-			font-size: var(--font-medium);
-			color: var(--blue);
-	}
-
-	.gnb ul li a:hover {
-		background-color: var(--blue);
-		box-shadow: 0 0 5px var(--gray);
-		color: white;
-	}
-
-	.gnb ul .list_company {
-		position: relative;
-	}
-
-	.company_sublist {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		position: absolute;
-		top: 30px;
-		left: 10px;
-		z-index: 10;
-		height: 90px;
-	}
-
-	.company_sublist li {
-		margin-top: 15px;
-	}
-
-	.company_sublist li a {
-		color: white;
-		padding: 5px 15px;
-		border-radius: 10px;
-		background-color: var(--blue);
-		font-weight: bold;
-		text-align: center;
-	}
-
-	/* 회원 프로필 영역 */
-	.my_icon {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-	}
-
-	.my_icon .user_name {
-		margin-left: 6px;
-		color: var(--blue);
-	}
-
-	.my_icon a {
-			margin-left: 10px;
-	}
-
-	.my_icon a:first-child {
-		display: flex;
-		align-items: center;
-		margin-right: 10px;
-	}
-
-	/* 비회원 프로필 영역 */
-	.login_btn {
-		margin-right: 10px;
-	}
-
-	/* 검색바 영역 */
-	.search_container {
-		width: 100%;
-		background-color: var(--light-blue);
-	}
-
-	.search_container .for_search_align {
-		padding: 0 30px;
-		width: 1140px;
-		margin: 0 auto;
-	}
-
-	.searchbox {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		width: 1080px;
-		height: 120px;
-	}
-
-	.searchbox .inner {
-		display: flex;
-		align-items: center;
-		position: relative;
-		width: 900px;
-	}
-
-	.searchbox .inner input {
-		width: 100%;
-		height: 46px;
-		border: none;
-		border-radius: 50px;
-		padding: 0 20px;
-		font-size: var(--font-small);
-		outline: none;
-	}
-
-	.searchbox .inner .btn_search{
-		position: absolute;
-		right: 20px;
-		top: 8px;
-		background-color: transparent;
-		border: none;
-	}
-
-	.searchbox .inner .btn_search img {
-		width: 30px;
-		opacity: 0.3;
-	}
-
-	/* 푸터 영역 */
-	.footer {
-		background-color: var(--light-blue);
-		color: var(--white);
-	}
-
-	.footer .inner {
-		width: 1080px;
-		margin: 0 auto;
-		padding: 40px 0;
-	}
-
-	.footer .inner address {
-		text-align: center;
-		font-size: var(--font-small);
-		padding: 0 0 30px 0;
-	}
-
-	.footer .inner address span {
-		color: var(--dark);
-	}
-
-	.footer .inner .copyright {
-		text-align: center;
-		color: var(--dark);
-		font-size: var(--font-x-small);
-		border-top: 1px solid var(--blue);
-		padding: 30px 0 0 0;
-	}
-
-	/* 스크롤 버튼, IDE 영역 */
-	#progress {
-		position: fixed;
-		bottom: 20px;
-		right: 20px;
-		height: 40px;
-		width: 40px;
-		display: inline-block;
-		place-items: center;
-		border-radius: 50%;
-		box-shadow: 0 0 10px;
-		cursor: pointer;
-	}
-
-	#progress_value {
-		display: block;
-		height: 100%;
-		width: 100%;
-		background-color: #fff;
-		border-radius: 50%;
-		display: grid;
-		place-items: center;
-		font-size: var(--font-medium);
-		color: #001a2e;
-	}
-
-	/* 모달창 css 영역 */
-	.modal {
-		position: fixed;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		width: 200px;
-		height: 100px;
-		background-color: white;
-		font-weight: bold;
-		font-size: var(--font-x-big);
-		box-shadow: 0 0 5px;
-		z-index: 999;
-		opacity: 0;
-		transition: 0.5s;
-		visibility: hidden;
-		cursor: default;
-	}
-
-	.modal.modal_active {
-		opacity: 1;
-		visibility: visible;
-
-	}
-
-	.signup_modal {
-		position: fixed;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -50%);
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		width: 200px;
-		height: 100px;
-		background-color: white;
-		font-weight: bold;
-		font-size: var(--font-x-big);
-		box-shadow: 0 0 5px;
-		z-index: 999;
-		opacity: 0;
-		transition: 0.5s;
-		visibility: hidden;
-	}
-
-	.signup_modal.modal_active {
-		opacity: 1;
-		visibility: visible;
-	}
-
-	.overlay {
-		background-color: var(--dark);
-		position: fixed;
-		width: 100%;
-		height: 100vh;
-		top: 0;
-		left: 0;
-		transition: 0.5s;
-		opacity: 0;
-		pointer-events: none;
-		z-index: 998;
-	}
-
-	.overlay.modal_active {
-		opacity: 0.3;
-		pointer-events: all;
-	}
+ svg {
+	 fill: var(--blue);
+ }
+ *:lang(en) {
+	 font-family: 'Open Sans', sans-serif;
+ }
+ *:lang(ko-KR) {
+	 font-family: 'Noto Sans KR', sans-serif;
+ }
+ * {
+	 margin: 0;
+	 padding: 0;
+	 box-sizing: border-box;
+	 list-style: none;
+	 text-decoration: none;
+	 color: var(--dark);
+ }
+ .header_container {
+	 width: 1140px;
+	 padding: 0 30px;
+	 margin: 0 auto;
+ }
+ /* 헤더 영역 */
+ .header {
+	 display: flex;
+	 justify-content: space-between;
+	 align-items: center;
+	 padding: 10px 0;
+ }
+ .logo_wrap {
+	 display: flex;
+	 height: 30px;
+ }
+ .logo_wrap .logo_img {
+	 width: 50px;
+	 text-align: center;
+	 line-height: 30px;
+	 font-size: var(--font-big);
+ }
+ .logo_wrap .logo_name {
+	 width: 120px;
+	 text-align: center;
+	 line-height: 30px;
+	 font-size: var(--font-big);
+ }
+ /* 메뉴 영역 */
+ .gnb ul {
+	 display: flex;
+ }
+ .gnb > ul > li > a {
+		 margin: 0 10px;
+		 padding: 8px 15px;
+		 border-radius: 10px;
+		 font-weight: bold;
+		 font-size: var(--font-medium);
+		 color: var(--blue);
+ }
+ .gnb ul li a:hover {
+	 background-color: var(--blue);
+	 box-shadow: 0 0 5px var(--gray);
+	 color: white;
+ }
+ .gnb ul .list_company {
+	 position: relative;
+ }
+ .company_sublist {
+	 display: flex;
+	 flex-direction: column;
+	 align-items: center;
+	 position: absolute;
+	 top: 30px;
+	 left: 10px;
+	 z-index: 10;
+	 height: 90px;
+ }
+ .company_sublist li {
+	 margin-top: 15px;
+ }
+ .company_sublist li a {
+	 color: white;
+	 padding: 5px 15px;
+	 border-radius: 10px;
+	 background-color: var(--blue);
+	 font-weight: bold;
+	 text-align: center;
+ }
+ /* 회원 프로필 영역 */
+ .my_icon {
+	 display: flex;
+	 justify-content: center;
+	 align-items: center;
+ }
+ .my_icon .user_name {
+	 margin-left: 6px;
+	 color: var(--blue);
+ }
+ .my_icon a {
+		 margin-left: 10px;
+ }
+ .my_icon a:first-child {
+	 display: flex;
+	 align-items: center;
+	 margin-right: 10px;
+ }
+ /* 비회원 프로필 영역 */
+ .login_btn {
+	 margin-right: 10px;
+ }
+ /* 검색바 영역 */
+ .search_container {
+	 width: 100%;
+	 background-color: var(--light-blue);
+ }
+ .search_container .for_search_align {
+	 padding: 0 30px;
+	 width: 1140px;
+	 margin: 0 auto;
+ }
+ .searchbox {
+	 display: flex;
+	 align-items: center;
+	 justify-content: center;
+	 width: 1080px;
+	 height: 120px;
+ }
+ .searchbox .inner {
+	 display: flex;
+	 align-items: center;
+	 position: relative;
+	 width: 900px;
+ }
+ .searchbox .inner input {
+	 width: 100%;
+	 height: 46px;
+	 border: none;
+	 border-radius: 50px;
+	 padding: 0 20px;
+	 font-size: var(--font-small);
+	 outline: none;
+ }
+ .searchbox .inner .btn_search{
+	 position: absolute;
+	 right: 20px;
+	 top: 8px;
+	 background-color: transparent;
+	 border: none;
+ }
+ .searchbox .inner .btn_search img {
+	 width: 30px;
+	 opacity: 0.3;
+ }
+ /* 푸터 영역 */
+ .footer {
+	 background-color: var(--light-blue);
+	 color: var(--white);
+ }
+ .footer .inner {
+	 width: 1080px;
+	 margin: 0 auto;
+	 padding: 40px 0;
+ }
+ .footer .inner address {
+	 text-align: center;
+	 font-size: var(--font-small);
+	 padding: 0 0 30px 0;
+ }
+ .footer .inner address span {
+	 color: var(--dark);
+ }
+ .footer .inner .copyright {
+	 text-align: center;
+	 color: var(--dark);
+	 font-size: var(--font-x-small);
+	 border-top: 1px solid var(--blue);
+	 padding: 30px 0 0 0;
+ }
+ /* 스크롤 버튼, IDE 영역 */
+ #progress {
+	 position: fixed;
+	 bottom: 20px;
+	 right: 20px;
+	 height: 40px;
+	 width: 40px;
+	 display: inline-block;
+	 place-items: center;
+	 border-radius: 50%;
+	 box-shadow: 0 0 10px;
+	 cursor: pointer;
+ }
+ #progress_value {
+	 display: block;
+	 height: 100%;
+	 width: 100%;
+	 background-color: #fff;
+	 border-radius: 50%;
+	 display: grid;
+	 place-items: center;
+	 font-size: var(--font-medium);
+	 color: #001a2e;
+ }
+ /* 모달창 css 영역 */
+ .modal {
+	 position: fixed;
+	 top: 50%;
+	 left: 50%;
+	 transform: translate(-50%, -50%);
+	 display: flex;
+	 justify-content: center;
+	 align-items: center;
+	 width: 200px;
+	 height: 100px;
+	 background-color: white;
+	 font-weight: bold;
+	 font-size: var(--font-x-big);
+	 box-shadow: 0 0 5px;
+	 z-index: 999;
+	 opacity: 0;
+	 transition: 0.5s;
+	 visibility: hidden;
+	 cursor: default;
+ }
+ .modal.modal_active {
+	 opacity: 1;
+	 visibility: visible;
+ }
+ .signup_modal {
+	 position: fixed;
+	 top: 50%;
+	 left: 50%;
+	 transform: translate(-50%, -50%);
+	 display: flex;
+	 justify-content: center;
+	 align-items: center;
+	 width: 200px;
+	 height: 100px;
+	 background-color: white;
+	 font-weight: bold;
+	 font-size: var(--font-x-big);
+	 box-shadow: 0 0 5px;
+	 z-index: 999;
+	 opacity: 0;
+	 transition: 0.5s;
+	 visibility: hidden;
+ }
+ .signup_modal.modal_active {
+	 opacity: 1;
+	 visibility: visible;
+ }
+ .overlay {
+	 background-color: var(--dark);
+	 position: fixed;
+	 width: 100%;
+	 height: 100vh;
+	 top: 0;
+	 left: 0;
+	 transition: 0.5s;
+	 opacity: 0;
+	 pointer-events: none;
+	 z-index: 998;
+ }
+ .overlay.modal_active {
+	 opacity: 0.3;
+	 pointer-events: all;
+ }
 </style>
