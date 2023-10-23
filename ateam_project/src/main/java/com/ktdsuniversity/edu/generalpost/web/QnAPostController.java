@@ -1,6 +1,6 @@
 /**
  * 작성자: 김시하 
- * 수정자: 김시하(2023-10-17)
+ * 수정자: 김시하(2023-10-23)
  * 작성일자: 2023-10-16
  * 내용: 질답게시판의 view와 연동되는 controller입니다 
  */
@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -22,7 +23,9 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ktdsuniversity.edu.generalpost.service.GeneralPostService;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostListVO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
+import com.ktdsuniversity.edu.generalpost.vo.SearchForumVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
+import com.ktdsuniversity.edu.util.XssIgnoreUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -70,6 +73,9 @@ public class QnAPostController {
 		System.out.println("삭제여부: " + generalPostVO.getDeleteYn());
 		
 		ModelAndView modelAndView = new ModelAndView();
+		
+		XssIgnoreUtil.ignore(generalPostVO);
+		
 		log.debug("1--컨트롤러---------------------------");
 		log.debug("데이터 =  " + generalPostVO.getBoardId());
 		log.debug("데이터 =  " + generalPostVO.getPostWriter());
@@ -175,7 +181,32 @@ public class QnAPostController {
 			view.setViewName("forum/qnaboarddelete");
 			view.addObject("generalPostVO", origingeneralPostVO);
 			return view;
+		}
 	}
-}
 	
+	// 내 게시글 조회
+	@GetMapping("/mypost")
+	public String viewMyPost(Model model
+			               , @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+		GeneralPostListVO generalPostListVO = generalPostService.getMyPost(memberVO.getEmail());
+		model.addAttribute("generalPostList", generalPostListVO);
+		return "mypage/mypost";
+	}
+	
+	// 좋아요 기능
+//	@PostMapping("/qnaboard/like")
+//    public ModelAndView likeQnABoard(@ModelAttribute GeneralPostVO generalPostVO) {
+//
+//		ModelAndView view = new ModelAndView();
+//		boolean isSuccess = generalPostService.likeQnABoard(generalPostVO);
+//		if(isSuccess) {
+//			view.setViewName("redirect:/qnaboard/list");
+//			return view;
+//		}
+//		else {
+//			view.setViewName("forum/qnaboardview");
+//			view.addObject("generalPostVO", generalPostVO);
+//			return view;
+//		}
+//	}
 }

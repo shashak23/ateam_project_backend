@@ -1,0 +1,89 @@
+<!-- 작성자: 김태현
+	 작성일: 2023-10-23
+	 내용: 북마크한 컨텐츠의 쿼리를 쓰는 매퍼입니다. -->
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ktdsuniversity.edu.bookmark.dao.BookmarkDAO">
+	<resultMap type="com.ktdsuniversity.edu.bookmark.vo.BookmarkVO" 
+			   id="BookmarkDAOMap" autoMapping="true">
+		<id column="BOOKMARK_ID" property="bookmarkId"/>
+		<association property="memberVO"
+					 javaType="com.ktdsuniversity.edu.member.vo.MemberVO"
+					 autoMapping="true">
+			<id column="EMAIL" property="email" />
+		</association>
+		<association property="GeneralPostVO"
+					 javaType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO"
+					 autoMapping="true">
+			<id column="GENERAL_POST_ID" property="generalPostId" />
+		</association>
+		<association property="commonCodeVO"
+					 javaType="com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO"
+					 autoMapping="true">
+			<id column="CODE_ID" property="codeId" />
+		</association>
+	</resultMap>
+	
+	<select id="getAllBookmark"
+			parameterType="string"
+			resultMap="BookmarkDAOMap">
+		SELECT B.BOOKMARK_ID
+			 , B.GENERAL_MEMBER_EMAIL
+			 , B.BOARD_ID
+			 , B.POST_ID
+			 , B.BOOKMARK_YN
+			 , M.EMAIL
+			 , M.NICKNAME
+			 , M.INFO_AGREEMENT_YN
+			 , M.PROFILE_PIC
+			 , M.REGIST_DATE
+			 , GP.GENERAL_POST_ID
+			 , GP.POST_WRITER
+			 , GP.BOARD_ID
+			 , GP.POST_TITLE
+			 , GP.POST_CONTENT
+			 , GP.POST_DATE
+			 , GP.LIKE_CNT
+			 , GP.VIEW_CNT
+			 , CC.CODE_ID
+			 , CC.CODE_TYPE
+			 , CC.CODE_CONTENT
+		  FROM BOOKMARK B
+		 INNER JOIN MEMBER M
+		    ON M.EMAIL = B.GENERAL_MEMBER_EMAIL 
+		 INNER JOIN GENERAL_POST GP
+		    ON GP.GENERAL_POST_ID = B.POST_ID 
+		 INNER JOIN GENERAL_POST_HASHTAG GPH
+		    ON GP.GENERAL_POST_ID = GPH.GENERAL_POST_ID 
+		 INNER JOIN COMMON_CODE CC
+		    ON CC.CODE_ID = GPH.HASHTAG_ID 
+		 WHERE BOOKMARK_YN = 'Y'
+		   AND M.EMAIL = #{_parameter}
+	</select>
+	
+	<insert id="createBookmark"
+			parameterType="com.ktdsuniversity.edu.bookmark.vo.BookmarkVO">
+		INSERT INTO BOOKMARK (
+			   BOOKMARK_ID
+			 , GENERAL_MEMBER_EMAIL
+			 , BOARD_ID
+			 , POST_ID
+			 , BOOKMARK_YN)
+		VALUES (
+			   'BM-' || TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_BOOKMARK_PK.NEXTVAL, 6, 0)
+			 , #{generalMemberEmail}
+			 , #{boardId}
+			 , #{postId}
+			 , 'Y')
+	</insert>
+	
+	<update id="deleteBookmark"
+			parameterType="string">
+	    UPDATE BOOKMARK
+	       SET BOOKMARK_YN = 'N'
+	     WHERE BOOKMARK_ID = #{_parameter}	
+		
+	</update>
+</mapper>

@@ -1,48 +1,34 @@
 package com.ktdsuniversity.edu.report.vo;
 
+import com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO;
+import com.ktdsuniversity.edu.generalpost.vo.GeneralCommentVO;
+import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
+import com.ktdsuniversity.edu.member.vo.MemberVO;
+
 public class ReportVO {
-	private String reportId;
+	
 	private String reportTypeId;
-	private String reportContentId;
-	private String reportDate;
-	private String reportReason;
 	private String reportReasonContent;
-	private String attachedImg;
+	private String reportReason;
+	private String reportMember;
+	private String reportId;
+	private String reportDate;
+	private String reportContentId;
+	private String receivedReportMember;
 	private String progressYn;
-	private String cancelYn;
-	private String reportMemberEmail  ;
-	private String receivedReportMemberEmail;
+	private String attachedImg;
+	
+	private MemberVO memberVO;
+	private CommonCodeVO commonCodeVO;
+	private GeneralPostVO generalPostVO;
+	private GeneralCommentVO generalCommentVO;
 	
 	
-	public String getReportId() {
-		return reportId;
-	}
-	public void setReportId(String reportId) {
-		this.reportId = reportId;
-	}
 	public String getReportTypeId() {
 		return reportTypeId;
 	}
 	public void setReportTypeId(String reportTypeId) {
 		this.reportTypeId = reportTypeId;
-	}
-	public String getReportContentId() {
-		return reportContentId;
-	}
-	public void setReportContentId(String reportContentId) {
-		this.reportContentId = reportContentId;
-	}
-	public String getReportDate() {
-		return reportDate;
-	}
-	public void setReportDate(String reportDate) {
-		this.reportDate = reportDate;
-	}
-	public String getReportReason() {
-		return reportReason;
-	}
-	public void setReportReason(String reportReason) {
-		this.reportReason = reportReason;
 	}
 	public String getReportReasonContent() {
 		return reportReasonContent;
@@ -50,11 +36,41 @@ public class ReportVO {
 	public void setReportReasonContent(String reportReasonContent) {
 		this.reportReasonContent = reportReasonContent;
 	}
-	public String getAttachedImg() {
-		return attachedImg;
+	public String getReportReason() {
+		return reportReason;
 	}
-	public void setAttachedImg(String attachedImg) {
-		this.attachedImg = attachedImg;
+	public void setReportReason(String reportReason) {
+		this.reportReason = reportReason;
+	}
+	public String getReportMember() {
+		return reportMember;
+	}
+	public void setReportMember(String reportMember) {
+		this.reportMember = reportMember;
+	}
+	public String getReportId() {
+		return reportId;
+	}
+	public void setReportId(String reportId) {
+		this.reportId = reportId;
+	}
+	public String getReportDate() {
+		return reportDate;
+	}
+	public void setReportDate(String reportDate) {
+		this.reportDate = reportDate;
+	}
+	public String getReportContentId() {
+		return reportContentId;
+	}
+	public void setReportContentId(String reportContentId) {
+		this.reportContentId = reportContentId;
+	}
+	public String getReceivedReportMember() {
+		return receivedReportMember;
+	}
+	public void setReceivedReportMember(String receivedReportMember) {
+		this.receivedReportMember = receivedReportMember;
 	}
 	public String getProgressYn() {
 		return progressYn;
@@ -62,24 +78,35 @@ public class ReportVO {
 	public void setProgressYn(String progressYn) {
 		this.progressYn = progressYn;
 	}
-	public String getCancelYn() {
-		return cancelYn;
+	public String getAttachedImg() {
+		return attachedImg;
 	}
-	public void setCancelYn(String cancelYn) {
-		this.cancelYn = cancelYn;
+	public void setAttachedImg(String attachedImg) {
+		this.attachedImg = attachedImg;
 	}
-	public String getReportMemberEmail() {
-		return reportMemberEmail;
+	public MemberVO getMemberVO() {
+		return memberVO;
 	}
-	public void setReportMemberEmail(String reportMemberEmail) {
-		this.reportMemberEmail = reportMemberEmail;
+	public void setMemberVO(MemberVO memberVO) {
+		this.memberVO = memberVO;
 	}
-	public String getReceivedReportMemberEmail() {
-		return receivedReportMemberEmail;
+	public CommonCodeVO getCommonCodeVO() {
+		return commonCodeVO;
 	}
-	public void setReceivedReportMemberEmail(String receivedReportMemberEmail) {
-		this.receivedReportMemberEmail = receivedReportMemberEmail;
+	public void setCommonCodeVO(CommonCodeVO commonCodeVO) {
+		this.commonCodeVO = commonCodeVO;
 	}
-	
+	public GeneralPostVO getGeneralPostVO() {
+		return generalPostVO;
+	}
+	public void setGeneralPostVO(GeneralPostVO generalPostVO) {
+		this.generalPostVO = generalPostVO;
+	}
+	public GeneralCommentVO getGeneralCommentVO() {
+		return generalCommentVO;
+	}
+	public void setGeneralCommentVO(GeneralCommentVO generalCommentVO) {
+		this.generalCommentVO = generalCommentVO;
+	}
 	
 }

@@ -1,3 +1,6 @@
+/**
+ * 수정자: 장보늬(2023-10-22)
+ * **/
 package com.ktdsuniversity.edu.generalpost.service;
 
 import org.slf4j.Logger;
@@ -65,6 +68,7 @@ public class GeneralPostServiceImpl implements GeneralPostService{
 		
 		return deleteCount > 0;
 	}
+
 	
 	// 질답게시판 
 	@Transactional
@@ -113,4 +117,15 @@ public class GeneralPostServiceImpl implements GeneralPostService{
 		
 		return deleteCount > 0;
 	}
+
+
+	// 내게시글 조회
+	@Transactional
+	@Override
+	public GeneralPostListVO getMyPost(String postWriter) {
+		GeneralPostListVO generalPostListVO = new GeneralPostListVO();
+		generalPostListVO.setGeneralPostList(generalPostDAO.getMyPost(postWriter));
+		return generalPostListVO;
+	}
+
 }

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.ktdsuniversity.edu.education.service.EducationService;
 import com.ktdsuniversity.edu.education.vo.EducationVO;
+import com.ktdsuniversity.edu.exceptions.PageNotFoundException;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 
 import jakarta.validation.Valid;
@@ -52,10 +53,13 @@ public class EducationController {
 				return "education/educationcreate";
 			}
 		 educationVO.setGeneralMemberEmail(memberVO.getEmail());
+		 if (!educationVO.getGeneralMemberEmail().equals(memberVO.getEmail())) {
+				throw new PageNotFoundException("잘못된 접근입니다.");
+			}
 		 boolean isSuccess = educationService.createNewEducation(educationVO);
 		 if(isSuccess) {
 			 model.addAttribute("isSuccess", true);
-			 return "redirect:/memberinfo/view";
+			 return "redirect:/memberinfo/view/"+educationVO.getGeneralMemberEmail();
 		 }
 		 else {
 			 model.addAttribute("educationVO", educationVO);
@@ -70,12 +74,13 @@ public class EducationController {
 	 public String updateEducation(@PathVariable String educationId
 			 					, Model model
 			 					,@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
-		 EducationVO educationVO =educationService.getOneEducation(educationId);
-		 if(!educationVO.getGeneralMemberEmail().equals(memberVO.getEmail())){
-		 throw new IllegalArgumentException("잘못된 접근입니다");
-		 }
-		 model.addAttribute("educationVO", educationVO);
 		 
+		 EducationVO educationVO =educationService.getOneEducation(educationId);
+		 educationVO.setGeneralMemberEmail(memberVO.getEmail());
+		 if (!educationVO.getGeneralMemberEmail().equals(memberVO.getEmail())) {
+				throw new PageNotFoundException("잘못된 접근입니다.");
+			}
+		 model.addAttribute("educationVO", educationVO);
 		 return "education/educationmodify";
 	 }
 	
@@ -88,13 +93,14 @@ public class EducationController {
 				model.addAttribute("educationVO", educationVO);
 				return "education/educationmodify";
 			}
+		 
 		 boolean isSuccess = educationService.updateOneEducation(educationVO);
-		 EducationVO education = educationService.getOneEducation(educationVO.getEducationId());
-		 if(!education.getGeneralMemberEmail().equals(memberVO.getEmail())){
-			 throw new IllegalArgumentException("잘못된 접근입니다");
-		 }
+		 educationVO.setGeneralMemberEmail(memberVO.getEmail());
+		 if (!educationVO.getGeneralMemberEmail().equals(memberVO.getEmail())) {
+				throw new PageNotFoundException("잘못된 접근입니다.");
+			}
 		 if(isSuccess) {
-			 return "redirect:/memberinfo/view";
+			 return "redirect:/memberinfo/view/"+educationVO.getGeneralMemberEmail();
 		 }
 		 else {
 			 model.addAttribute("educationVO", educationVO);
@@ -105,10 +111,16 @@ public class EducationController {
 	  * Education 삭제
 	  */
 	 @GetMapping("/memberInfo/modify/delete-education/{educationId}")
-	 public String doDeleteEducation(@PathVariable String educationId) {
+	 public String doDeleteEducation(@PathVariable String educationId
+			 						 ,@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+		 EducationVO educationVO = educationService.getOneEducation(educationId);
+		 educationVO.setGeneralMemberEmail(memberVO.getEmail());
+		 if (!educationVO.getGeneralMemberEmail().equals(memberVO.getEmail())) {
+				throw new PageNotFoundException("잘못된 접근입니다.");
+			}
 		 boolean isSuccess = educationService.deleteOneEducation(educationId);
 		 if(isSuccess) {
-			 return "redirect:/memberinfo/view";
+			 return "redirect:/memberinfo/view/"+educationVO.getGeneralMemberEmail();
 		 }
 		 else {
 			 return "redirect:/memberInfo/educationview/"+educationId;

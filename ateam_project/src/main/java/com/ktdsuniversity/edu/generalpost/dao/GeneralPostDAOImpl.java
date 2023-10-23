@@ -1,4 +1,5 @@
 /**
+ * 수정자: 장보늬(2023-10-22)
  */
 package com.ktdsuniversity.edu.generalpost.dao;
 
@@ -95,6 +96,10 @@ public class GeneralPostDAOImpl extends SqlSessionDaoSupport
 	public int deleteOneQnABoard(String generalPostId) {
 		return getSqlSession().delete("deleteOneQnABoard", generalPostId);
 	}
-	
 
+	// 내 게시글 조회
+	@Override
+	public List<GeneralPostVO> getMyPost(String postWriter) {
+		return getSqlSession().selectList("getMyPost", postWriter);
+	}
 }

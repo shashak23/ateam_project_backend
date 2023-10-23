@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.ktdsuniversity.edu.exceptions.PageNotFoundException;
+import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 import com.ktdsuniversity.edu.techstack.service.TechstackService;
 import com.ktdsuniversity.edu.techstack.vo.TechstackVO;
@@ -62,11 +63,6 @@ public class TechstackController {
 	 public String updateTechstack(@PathVariable String email
 			 					   , Model model
 			 					   , @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
-		 TechstackVO techstack = techstackService.getOneTechstack(email);
-		 techstack.setEmail(memberVO.getEmail());
-		 if (!techstack.getEmail().equals(memberVO.getEmail())) {
-				throw new PageNotFoundException("잘못된 접근입니다.");
-			}
 		 List<TechstackVO> techstackVO = techstackService.getAllTechstack(memberVO.getEmail());
 		 model.addAttribute("techstackVO", techstackVO);
 		 return "techstack/modifytech";
@@ -75,9 +71,8 @@ public class TechstackController {
 	 public String doUpdateTechstack(@ModelAttribute TechstackVO techstackVO
 			 					   ,Model model
 			 					   ,@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
-		 TechstackVO techstack = techstackService.getOneTechstack(techstackVO.getEmail());
-		 techstack.setEmail(memberVO.getEmail());
-		 if (!techstack.getEmail().equals(memberVO.getEmail())) {
+		 techstackVO.setEmail(memberVO.getEmail());
+		 if (!techstackVO.getEmail().equals(memberVO.getEmail())) {
 				throw new PageNotFoundException("잘못된 접근입니다.");
 			}
 		 boolean isSuccess = techstackService.deleteUpTechstack(techstackVO);
@@ -89,4 +84,21 @@ public class TechstackController {
 			 return "redirect:/home/main";
 		 }
 	 }
+	 /**
+	  * 기술스택 삭제
+	  */
+	 @GetMapping("/memberInfo/modify/delete-tech/{techstackId}")
+		public String deletEmailURL(@PathVariable String techstackId
+									,@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+			TechstackVO techstackVO = techstackService.getOneTechstack(techstackId);
+			if (!techstackVO.getEmail().equals(memberVO.getEmail())) {
+				throw new PageNotFoundException("잘못된 접근입니다.");
+			}
+			boolean isSuccess = techstackService.deleteTechstack(techstackId);
+			if (isSuccess) {
+				return "redirect:/memberinfo/view/"+techstackVO.getEmail();
+			} else {
+				return "redirect:/memberinfo/view/"+techstackVO.getEmail();
+			}
+		}
 }

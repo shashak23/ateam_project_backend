@@ -1,7 +1,11 @@
+/**
+ * 수정자: 장보늬(23023-10-22)
+ * **/
 package com.ktdsuniversity.edu.generalpost.vo;
 
 import com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
+import com.ktdsuniversity.edu.util.XssIgnore;
 
 import jakarta.validation.constraints.NotBlank;
 
@@ -9,21 +13,23 @@ public class GeneralPostVO {
 	private String generalPostId;
 	private String postWriter;
 	private String boardId;
+	@XssIgnore
 	@NotBlank(message = "제목을 입력해 주세요.")
 	private String postTitle;
+	@XssIgnore
 	@NotBlank(message = "내용을 입력해 주세요")
 	private String postContent;
 	private String postDate;
 	private int likeCnt;
 	private int viewCnt;
 	private String deleteYn;
-
+	
 	// 게시글을 작성하는 회원의 정보
 	private MemberVO memberVO;
 
 	// 공통코드 받아오기
 	private CommonCodeVO commonCodeVO;
-
+	
 	public String getGeneralPostId() {
 		return generalPostId;
 	}

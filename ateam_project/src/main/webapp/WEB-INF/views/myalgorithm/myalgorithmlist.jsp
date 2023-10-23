@@ -44,7 +44,9 @@
     <div class="container">
         <c:forEach items="${myAlgorithmList.myAlgorithmList}" var="myAlgo">
             <div class="box">
-                <div>제목: ${myAlgo.algorithmQuestionVO.algorithmTitle}</div>
+                <div>
+                    <a href="/algorithm/question/view/${myAlgo.algorithmQuestionVO.companyAlgorithmQuestionId}">제목: ${myAlgo.algorithmQuestionVO.algorithmTitle}</a>
+                </div>
                 <div>제출회사: ${myAlgo.companyInfoVO.companyName}</div>
                 <div>카테고리: ${myAlgo.commonCodeVO.codeContent}</div>
                 <p>내용: ${myAlgo.algorithmQuestionVO.algorithmContent}</p>

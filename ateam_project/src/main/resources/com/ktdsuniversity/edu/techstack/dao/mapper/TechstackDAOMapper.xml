@@ -63,4 +63,18 @@
 		  FROM TECHSTACK
 		 WHERE EMAIL=#{_parameter}
 	</select>
+	<select id="getOneTechstack"
+		parameterType="string"
+		resultType="com.ktdsuniversity.edu.techstack.vo.TechstackVO">
+		SELECT TECHSTACK_ID
+			 , EMAIL
+			 , HASHTAG_ID
+		  FROM TECHSTACK
+		 WHERE EMAIL=#{_parameter}
+	</select>
+	<delete id="deleteTech"
+			parameterType="string">
+		 DELETE FROM TECHSTACK
+		 WHERE  TECHSTACK_ID = #{techstackId}
+	</delete>
 </mapper>

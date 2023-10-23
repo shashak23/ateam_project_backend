@@ -1,6 +1,7 @@
 /**
  * 작성자: 김시하
  * 수정자: 김시하(2023-10-16)
+ * 수정자: 장보늬(2023-10-22)
  * 작성일자: 2023-10-16
  * 내용: 자유 및 질답게시판의 mapper를 실행하기 위한 interface DAO입니다.
  */
@@ -28,6 +29,7 @@ public interface GeneralPostDAO {
 	
 	public int deleteOneFreeBoard(String generalPostId);
 
+	
 	// 질답게시판
 	public List<GeneralPostVO> getAllQnABoard();
 	
@@ -39,4 +41,6 @@ public interface GeneralPostDAO {
 	
 	public int deleteOneQnABoard(String generalPostId);
 
+	// 내 게시글 조회
+	public List<GeneralPostVO> getMyPost(String postWriter);
 }

@@ -1,9 +1,16 @@
+/**
+ * 작성자: 김시하
+ * 수정자: 김시하(2023-10-23)
+ * 작성일자: 2023-10-16
+ * 내용: 자유게시판을 위한 Controller
+ */
 package com.ktdsuniversity.edu.generalpost.web;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -18,6 +25,8 @@ import com.ktdsuniversity.edu.generalpost.vo.GeneralPostListVO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
 import com.ktdsuniversity.edu.generalpost.vo.SearchForumVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
+import com.ktdsuniversity.edu.util.XssIgnore;
+import com.ktdsuniversity.edu.util.XssIgnoreUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -68,6 +77,8 @@ public class FreePostController {
 		
 		ModelAndView modelAndView = new ModelAndView();
 		log.debug("1--컨트롤러---자유----------------------");
+		
+		XssIgnoreUtil.ignore(generalPostVO);
 
 		// Validation 체크한 것 중 실패한 것이 있다면.
 		if (bindingResult.hasErrors()) {
@@ -94,10 +105,13 @@ public class FreePostController {
 	
 	// 단건 조회 처리
 	@GetMapping("/freeboard/view/{generalPostId}")
-	public ModelAndView freeBoardSingle(@PathVariable String generalPostId) {
+	public ModelAndView freeBoardSingle(@PathVariable String generalPostId
+										, @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 //		log.debug("되는거 맞지요?--------------------------------------");
 //		log.debug("글번호: " + generalPostId);
 		GeneralPostVO generalPostVO = generalPostService.getOneFreeBoard(generalPostId);
+		generalPostVO.setPostWriter(memberVO.getEmail());
+		System.out.println(generalPostVO.getPostWriter());
 		ModelAndView view = new ModelAndView();
 		view.setViewName("forum/freeboardview");
 		view.addObject("generalPostVO", generalPostVO);
@@ -174,4 +188,22 @@ public class FreePostController {
 		}
 	}
 	
-}
+
+//	// 좋아요 기능
+//	@PostMapping("/freeboard/like")
+//    public ModelAndView likeFreeBoard(@ModelAttribute GeneralPostVO generalPostVO) {
+//
+//		ModelAndView view = new ModelAndView();
+//		boolean isSuccess = generalPostService.likeFreeBoard(generalPostVO);
+//		if(isSuccess) {
+//			view.setViewName("redirect:/freeboard/list");
+//			return view;
+//		}
+//		else {
+//			view.setViewName("forum/freeboardview");
+//			view.addObject("generalPostVO", generalPostVO);
+//			return view;
+//		}
+//	}
+	
+	}

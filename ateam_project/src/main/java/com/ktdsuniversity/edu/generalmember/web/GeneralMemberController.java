@@ -28,7 +28,6 @@ import com.ktdsuniversity.edu.exceptions.PageNotFoundException;
 import com.ktdsuniversity.edu.generalmember.service.GeneralMemberService;
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
-import com.ktdsuniversity.edu.techstack.vo.TechstackVO;
 
 import jakarta.validation.Valid;
 
@@ -43,16 +42,15 @@ public class GeneralMemberController {
 	/**
 	 * 마이페이지 조회
 	 */
-	@GetMapping("/memberinfo/view")
-	public ModelAndView viewMemberInfo(@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+	@GetMapping("/memberinfo/view/{generalMemberEmail}")
+	public ModelAndView viewMemberInfo(@PathVariable String generalMemberEmail) {
 		ModelAndView modelAndView = new ModelAndView();
-		System.out.println(memberVO.getEmail());
-		List<CareerVO> careerListVO = generalMemberService.getAllCareerListByMemberEmail(memberVO.getEmail());
-		List<GeneralMemberVO> generalMemberListVO = generalMemberService.getAllGeeralMemberList(memberVO.getEmail());
-		List<EducationVO> educationListVO = generalMemberService.getAllEducationList(memberVO.getEmail());
-		MemberVO member = generalMemberService.getSelectNickname(memberVO.getEmail());
-		List<CommonCodeVO> commonCodeVO = generalMemberService.getSelectCommonCode(memberVO.getEmail());
-		GeneralMemberVO generalMemberVO = generalMemberService.getSelectGeneralMember(memberVO.getEmail());
+		List<CareerVO> careerListVO = generalMemberService.getAllCareerListByMemberEmail(generalMemberEmail);
+		List<GeneralMemberVO> generalMemberListVO = generalMemberService.getAllGeeralMemberList(generalMemberEmail);
+		List<EducationVO> educationListVO = generalMemberService.getAllEducationList(generalMemberEmail);
+		MemberVO member = generalMemberService.getSelectNickname(generalMemberEmail);
+		List<CommonCodeVO> commonCodeVO = generalMemberService.getSelectCommonCode(generalMemberEmail);
+		GeneralMemberVO generalMemberVO = generalMemberService.getSelectGeneralMember(generalMemberEmail);
 		modelAndView.setViewName("/mypage/myprofile");
 		modelAndView.addObject("careerList", careerListVO);
 		modelAndView.addObject("generalMemberList", generalMemberListVO);
@@ -97,9 +95,10 @@ public class GeneralMemberController {
 			model.addAttribute("generalMemberVO", generalMemberVO);
 			return "mypage/createaddress";
 		}
+		
 		boolean isSuccess = generalMemberService.updateOneAddress(generalMemberVO);
 		if (isSuccess) {
-			return "redirect:/memberinfo/view";
+			return "redirect:/memberinfo/view/"+generalMemberVO.getGeneralMemberEmail();
 		} else {
 			model.addAttribute("generalMemberVO", generalMemberVO);
 			return "mypage/createaddress";
@@ -128,9 +127,12 @@ public class GeneralMemberController {
 				model.addAttribute("generalMemberVO", generalMemberVO);
 				return "mypage/modifyaddress";
 			}
+		 if (!generalMemberVO.getGeneralMemberEmail().equals(memberVO.getEmail())) {
+				throw new PageNotFoundException("잘못된 접근입니다.");
+			}
 		boolean isSuccess = generalMemberService.updateOneAddress(generalMemberVO);
 		if (isSuccess) {
-			return "redirect:/memberinfo/view";
+			return "redirect:/memberinfo/view/"+generalMemberVO.getGeneralMemberEmail();
 		} else {
 			model.addAttribute("generalMemberVO", generalMemberVO);
 			return "mypage/modifyaddress";
@@ -140,10 +142,15 @@ public class GeneralMemberController {
 	 * 지역 삭제
 	 */
 	@GetMapping("/memberInfo/modify/delete-location/{generalMemberEmail}")
-	public String deleteLocation(@PathVariable String generalMemberEmail) {
+	public String deleteLocation(@PathVariable String generalMemberEmail
+								,@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+		GeneralMemberVO  generalMemberVO=generalMemberService.getSelectGeneralMember(generalMemberEmail);
+		if (!generalMemberVO.getGeneralMemberEmail().equals(memberVO.getEmail())) {
+			throw new PageNotFoundException("잘못된 접근입니다.");
+		}
 		boolean isSuccess = generalMemberService.deleteOneAddress(generalMemberEmail);
 		if (isSuccess) {
-			return "redirect:/memberinfo/view";
+			return "redirect:/memberinfo/view/"+generalMemberVO.getGeneralMemberEmail();
 		} else {
 			return "redirect:/memberinfo/addressview/" + generalMemberEmail;
 		}
@@ -177,9 +184,13 @@ public class GeneralMemberController {
 	@PostMapping("/memberInfo/modify/update-sns-link")
 	public String doUpdateSnsLink(@ModelAttribute GeneralMemberVO generalMemberVO, Model model,
 			@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+		
+		if (!generalMemberVO.getGeneralMemberEmail().equals(memberVO.getEmail())) {
+			throw new PageNotFoundException("잘못된 접근입니다.");
+		}
 		boolean isSuccess = generalMemberService.updateSns(generalMemberVO);
 		if (isSuccess) {
-			return "redirect:/memberinfo/view" ;
+			return "redirect:/memberinfo/view/"+generalMemberVO.getGeneralMemberEmail();
 		} else {
 			model.addAttribute("generalMemberVO", generalMemberVO);
 			return "mypage/modifysns";
@@ -189,7 +200,13 @@ public class GeneralMemberController {
 	 * Github 삭제
 	 */
 	@GetMapping("/memberInfo/modify/delete-git-link/{generalMemberEmail}")
-	public String deletGitURL(@PathVariable String generalMemberEmail) {
+	public String deletGitURL(@PathVariable String generalMemberEmail
+							  ,@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+		GeneralMemberVO generalMemberVO = generalMemberService.getSelectGeneralMember(generalMemberEmail);
+		
+		if (!generalMemberVO.getGeneralMemberEmail().equals(memberVO.getEmail())) {
+			throw new PageNotFoundException("잘못된 접근입니다.");
+		}
 		boolean isSuccess = generalMemberService.deleteGithub(generalMemberEmail);
 		if (isSuccess) {
 			return "redirect:/memberinfo/viewsns/" + generalMemberEmail;
@@ -197,8 +214,16 @@ public class GeneralMemberController {
 			return "redirect:/memberinfo/viewsns/" + generalMemberEmail;
 		}
 	}
+	/**
+	 * Email 삭제
+	 */
 	@GetMapping("/memberInfo/modify/delete-email-link/{generalMemberEmail}")
-	public String deletEmailURL(@PathVariable String generalMemberEmail) {
+	public String deletEmailURL(@PathVariable String generalMemberEmail
+								,@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+		GeneralMemberVO generalMemberVO = generalMemberService.getSelectGeneralMember(generalMemberEmail);
+		if (!generalMemberVO.getGeneralMemberEmail().equals(memberVO.getEmail())) {
+			throw new PageNotFoundException("잘못된 접근입니다.");
+		}
 		boolean isSuccess = generalMemberService.deleteEmail(generalMemberEmail);
 		if (isSuccess) {
 			return "redirect:/memberinfo/viewsns/" + generalMemberEmail;
@@ -206,8 +231,16 @@ public class GeneralMemberController {
 			return "redirect:/memberinfo/viewsns/" + generalMemberEmail;
 		}
 	}
+	/**
+	 * blog삭제
+	 */
 	@GetMapping("/memberInfo/modify/delete-blog-link/{generalMemberEmail}")
-	public String deletBlogURL(@PathVariable String generalMemberEmail) {
+	public String deletBlogURL(@PathVariable String generalMemberEmail
+							   ,@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+		GeneralMemberVO generalMemberVO = generalMemberService.getSelectGeneralMember(generalMemberEmail);
+		if (!generalMemberVO.getGeneralMemberEmail().equals(memberVO.getEmail())) {
+			throw new PageNotFoundException("잘못된 접근입니다.");
+		}
 		boolean isSuccess = generalMemberService.deleteBlog(generalMemberEmail);
 		if (isSuccess) {
 			return "redirect:/memberinfo/viewsns/" + generalMemberEmail;
@@ -243,10 +276,13 @@ public class GeneralMemberController {
 
 	@PostMapping("/memberInfo/modify/update-introduction")
 	public String doUpdateIntroduction(@ModelAttribute GeneralMemberVO generalMemberVO, Model model,
-			@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+									   @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+		if (!generalMemberVO.getGeneralMemberEmail().equals(memberVO.getEmail())) {
+			throw new PageNotFoundException("잘못된 접근입니다.");
+		}
 		boolean isSuccess = generalMemberService.updateselfIntro(generalMemberVO);
 		if (isSuccess) {
-			return "redirect:/memberinfo/view";
+			return "redirect:/memberinfo/view/"+generalMemberVO.getGeneralMemberEmail();
 		} else {
 			model.addAttribute("generalMemberVO", generalMemberVO);
 			return "mypage/modifyintroduce";
@@ -256,10 +292,15 @@ public class GeneralMemberController {
 	 * 소개글 삭제
 	 */
 	@GetMapping("/memberInfo/modify/delete-introduction/{generalMemberEmail}")
-	public String deleteIntroduction(@PathVariable String generalMemberEmail) {
+	public String deleteIntroduction(@PathVariable String generalMemberEmail
+									 ,@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+		GeneralMemberVO generalMemberVO = generalMemberService.getSelectGeneralMember(generalMemberEmail);
+		if (!generalMemberVO.getGeneralMemberEmail().equals(memberVO.getEmail())) {
+			throw new PageNotFoundException("잘못된 접근입니다.");
+		}
 		boolean isSuccess = generalMemberService.deleteSelfIntro(generalMemberEmail);
 		if (isSuccess) {
-			return "redirect:/memberinfo/view";
+			return "redirect:/memberinfo/view/"+generalMemberVO.getGeneralMemberEmail();
 		} else {
 			return "redirect:/memberInfo/my-introduction/" + generalMemberEmail;
 		}
