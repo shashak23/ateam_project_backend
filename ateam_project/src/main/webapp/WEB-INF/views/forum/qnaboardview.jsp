@@ -302,7 +302,7 @@ pre.content {
 				<div class="right-align">
 					<!-- <a href="/freeboard/update/${generalPostVO.generalPostId}">수정</a> -->
 					<div class="update_btn">
-						<div class="btn">
+						<div class="btn">/
 							<a href="/qnaboard/update/${generalPostVO.generalPostId}">수정</a>
 							<a href="/qnaboard/delete/${generalPostVO.generalPostId}">삭제</a>
 						</div>

@@ -51,6 +51,7 @@ public class GeneralPostDAOImpl extends SqlSessionDaoSupport
 
 	@Override
 	public int createNewFreeBoard(GeneralPostVO generalPostVO) {
+		log.debug("--3-----------자유디에이오-------------------------");
 		return getSqlSession().insert("createNewFreeBoard", generalPostVO);
 	}
 
@@ -82,7 +83,6 @@ public class GeneralPostDAOImpl extends SqlSessionDaoSupport
 
 	@Override
 	public GeneralPostVO getOneQnABoard(String generalPostId) {
-		log.debug("--3--------------디에이오-------------------------");
 
 		return getSqlSession().selectOne("getOneQnABoard", generalPostId);
 	}
