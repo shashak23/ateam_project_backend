@@ -39,6 +39,7 @@ public class GeneralPostServiceImpl implements GeneralPostService{
 	@Transactional
 	@Override
 	public boolean createNewFreeBoard(GeneralPostVO generalPostVO) {
+		log.debug("2-----서비스---------------------------");		
 		int boardCount = generalPostDAO.createNewFreeBoard(generalPostVO);
 		
 		return boardCount > 0;
@@ -48,7 +49,6 @@ public class GeneralPostServiceImpl implements GeneralPostService{
 	@Override
 	public GeneralPostVO getOneFreeBoard(String generalPostId) {
 		GeneralPostVO result = null;
-		log.debug("2-----서비스---------------------------");		
 		result = generalPostDAO.getOneFreeBoard(generalPostId);
 		
 		return result;
@@ -71,7 +71,7 @@ public class GeneralPostServiceImpl implements GeneralPostService{
 	@Transactional
 	@Override
 	public boolean likeFreeBoard(GeneralPostVO generalPostVO) {
-		int likeCount = generalPostDAO.updateListFreePost(generalPostVO);
+		int likeCount = generalPostDAO.updateLikeFreePost(generalPostVO);
 		return likeCount > 0;
 	}
 	

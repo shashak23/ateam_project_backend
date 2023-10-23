@@ -76,6 +76,37 @@ label {
 button, input, textarea {
 	padding: 10px;
 }
+
+.modal {
+    display: none; 
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); 
+    z-index: 1;
+}
+
+/* 모달 내용 스타일 */
+.modal-content {
+    position: relative;
+    margin: 15% auto;
+    padding: 20px;
+    width: 60%;
+    background-color: #fff;
+    border-radius: 5px;
+}
+
+/* 모달 닫기 버튼 스타일 */
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #888;
+}
 </style>
 <script type="text/javascript">
 	$().ready(function(){
@@ -230,39 +261,46 @@ button, input, textarea {
  		$("#txt-reply").removeData("mode")
  		$("#txt-reply").removeData("target")	
 	 })
-    });
+    
+		    // "신고" 버튼 클릭 시 모달 열기
+		    $(".report-btn").click(function() {
+		    	let reportType = $("#reportQnABoard").val()
+			    console.log(reportType);
+		        $("#report-modal").css("display", "block");
+		    
+		    	// 모달 내부 "취소" 버튼 클릭 시 모달 닫기
+		    	$(".close").click(function() {
+		    		console.log("!")
+		    	 	$("#report-modal").css("display", "none");
+		   		});
+		    });
+		    console.log($("jsp:param[name='reportType']"))
 	
-	// 신고버튼, 좋아요 버튼
-	$().ready(function() {
-	    // "신고" 버튼 클릭 시 모달 열기
-	    $(".report-btn").click(function() {
-	    	let reportType = $("#reportQnABoard").val()
-	        $("#report-modal").css("display", "block");
-	    });
-	    console.log($("jsp:param[name='reportType']"))
+		    
+		    // "좋아요" 버튼 클릭 시 이벤트 발생
+		    $("#like-btn").click(function () {
+				// 클라이언트에서 AJAX 요청 생성
+		        $.ajax({
+		        	method: "POST",
+		        	url: "/qnaboard/like",
+		        	data: { 
+		        		"generalPostId": "${generalPostVO.generalPostId}",
+		        		"likeCnt": ${generalPostVO.likeCnt}
+		        	},
+		        	success: function(response) {
+		        		/* $("likeModal").hide(); */
+		        		alert("좋아요가 눌렸습니다!!!!!!!!!!!!");
+		        	},
+		        	error: function(error){
+		        		/* $("#likeModal").hide(); */
+		        		alert("오류가 발생했습니다~~~~~~~~~~~~");
+		        	}
+		        })
+		    });
 
-	    // "좋아요" 버튼 클릭 시 이벤트 발생
-	    $("#like-btn").click(function () {
-			// 클라이언트에서 AJAX 요청 생성
-	        $.ajax({
-	        	method: "POST",
-	        	url: "/qnaboard/like",
-	        	data: { 
-	        		"generalPostId": "${generalPostVO.generalPostId}",
-	        		"likeCnt": ${generalPostVO.likeCnt}
-	        	},
-	        	success: function(response) {
-	        		/* $("likeModal").hide(); */
-	        		alert("좋아요가 눌렸습니다!!!!!!!!!!!!");
-	        	},
-	        	error: function(error){
-	        		/* $("#likeModal").hide(); */
-	        		alert("오류가 발생했습니다~~~~~~~~~~~~");
-	        	}
-	        })
-	    });
-
+	
 	});
+	
  </script>  	
 </head>
 <body>
@@ -274,12 +312,56 @@ button, input, textarea {
 	<!-- 좋아요 기능 -->
 	<button id="like-btn">좋아요</button>
 	
-	<button id="reportFreeBoard" value="3" class="report-btn">신고</button>
-	<%-- <jsp:include page="../report/reportview.jsp">
-		<jsp:param name="id" value="${generalPostVO.generalPostId}" />
-		<jsp:param name="reportType" value="3" />
-	</jsp:include> --%>
+	<!-- 신고 기능 -->
+	<button id="reportQnABoard" value="1" class="report-btn">신고</button>
+		<!-- 모달 창 -->
+			<div id="report-modal" class="modal">
+			    <div class="modal-content">
+			        <span class="close" id="cancle-modal">취소</span>
+			        	<!-- 모달 내용 추가 -->
+						<h2>신고 내용</h2>
+						<form name="reportVO" method="post" action="/report/view/1">
+							<div>
+								<label for="reportReason" >신고사유${reportVO.reportReason}
+									<select name="reportReason">
+										<option value="6">영리 및 홍보 목적</option>
+										<option value="7">개인정보노출</option>
+										<option value="8">음란성/선정성</option>
+										<option value="9">같은 내용 반복(도배)</option>
+										<option value="10">이용규칙위반</option>
+										<option value="11">기타</option>
+									</select>
+								</label>
+					
+								<label for = "reportReasonContent">신고 상세내용
+								<textarea name="reportReasonContent" id="reportReasonContent">${reportVO.reportReasonContent}</textarea></label>
+							
+								<label for="attachedImg">첨부파일${reportVO.attachedImg}</label>
+								<input id="attachedImg" type="file" name="attachedImg"/>
+								
+								<label for="reportTypeId">${reportVO.reportTypeId}</label>
+								<input id="reportTypeId" type="hidden" name="reportTypeId" value="1"/>
+								
+								<label for="reportMemberEmail">${reportVO.reportMemberEmail}</label>
+								<input id="reportMemberEmail" type="hidden" name="reportMember" value="${reportVO.reportMember}"/>
+							
+								<label for="receivedReportMemberEmail">${reportVO.receivedReportMemberEmail}</label>
+								<input id="receivedReportMemberEmail" type="hidden" name="receivedReportMember" value="${generalPostVO.postWriter}"/>
+							
+								<label for="reportContentId">${reportVO.reportContentId}</label>
+								<input id="reportContentId" type="hidden" name="reportContentId" value="${generalPostVO.generalPostId}"/>
+							</div>
+							<div class="btn-group">
+								<div class="right-align">
+									<input type="submit" value="완료" />
+				
+								</div>
+							</div>		
+						</form>
+					</div>
+				</div>
 	
+
 	<form name="generalPostVO" method="post" ModelAttribute="generalPostVO" >
 	<div class="grid">
 		<label for="postTitle">제목</label>

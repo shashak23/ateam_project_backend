@@ -73,6 +73,7 @@ public class FreePostController {
 		System.out.println("조회수: " + generalPostVO.getViewCnt());
 		System.out.println("삭제여부: " + generalPostVO.getDeleteYn());
 		
+		
 		ModelAndView modelAndView = new ModelAndView();
 		log.debug("1--자유컨트롤러-------------------------------");
 

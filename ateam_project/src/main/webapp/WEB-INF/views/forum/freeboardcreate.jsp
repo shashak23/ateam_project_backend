@@ -49,10 +49,11 @@
 	<jsp:include page="../member/membermenu.jsp"></jsp:include>
 
 	<h1> 자유게시판의 게시글 작성 </h1>
-	<form method = "post" >		
+	<form name="generalPostVO" method = "post" >		
 		<div class = "grid">
 			<label for = "postTitle"> 제목 </label>
-			<input id = "postTitle" type ="text" name="postTitle" />
+			<input id = "postTitle" type ="text" name="postTitle"
+	" />
 			
 			<label for = "postContent"> 내용 </label>
 			<textarea name="text" id="editor"></textarea>

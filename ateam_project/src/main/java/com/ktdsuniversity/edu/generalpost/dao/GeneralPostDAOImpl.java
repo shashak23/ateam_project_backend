@@ -104,8 +104,8 @@ public class GeneralPostDAOImpl extends SqlSessionDaoSupport
 	}
 
 	@Override
-	public int updateListFreePost(GeneralPostVO generalPostVO) {
-		return getSqlSession().update("updateListFreePost", generalPostVO);
+	public int updateLikeFreePost(GeneralPostVO generalPostVO) {
+		return getSqlSession().update("updateLikeFreePost", generalPostVO);
 	}
 
 	@Override

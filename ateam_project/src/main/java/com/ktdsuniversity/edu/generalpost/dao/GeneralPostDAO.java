@@ -29,7 +29,7 @@ public interface GeneralPostDAO {
 	
 	public int deleteOneFreeBoard(String generalPostId);
 
-	public int updateListFreePost(GeneralPostVO generalPostVO);
+	public int updateLikeFreePost(GeneralPostVO generalPostVO);
 	
 	// 질답게시판
 	public List<GeneralPostVO> getAllQnABoard();
