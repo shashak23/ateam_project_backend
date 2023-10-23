@@ -25,6 +25,7 @@ import com.ktdsuniversity.edu.generalpost.vo.GeneralPostListVO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
 import com.ktdsuniversity.edu.generalpost.vo.SearchForumVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
+import com.ktdsuniversity.edu.util.XssIgnoreUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -72,6 +73,9 @@ public class QnAPostController {
 		System.out.println("삭제여부: " + generalPostVO.getDeleteYn());
 		
 		ModelAndView modelAndView = new ModelAndView();
+		
+		XssIgnoreUtil.ignore(generalPostVO);
+		
 		log.debug("1--컨트롤러---------------------------");
 		log.debug("데이터 =  " + generalPostVO.getBoardId());
 		log.debug("데이터 =  " + generalPostVO.getPostWriter());

@@ -25,6 +25,8 @@ import com.ktdsuniversity.edu.generalpost.vo.GeneralPostListVO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
 import com.ktdsuniversity.edu.generalpost.vo.SearchForumVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
+import com.ktdsuniversity.edu.util.XssIgnore;
+import com.ktdsuniversity.edu.util.XssIgnoreUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -75,6 +77,8 @@ public class FreePostController {
 		
 		ModelAndView modelAndView = new ModelAndView();
 		log.debug("1--컨트롤러---자유----------------------");
+		
+		XssIgnoreUtil.ignore(generalPostVO);
 
 		// Validation 체크한 것 중 실패한 것이 있다면.
 		if (bindingResult.hasErrors()) {

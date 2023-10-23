@@ -5,6 +5,7 @@ package com.ktdsuniversity.edu.generalpost.vo;
 
 import com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
+import com.ktdsuniversity.edu.util.XssIgnore;
 
 import jakarta.validation.constraints.NotBlank;
 
@@ -12,8 +13,10 @@ public class GeneralPostVO {
 	private String generalPostId;
 	private String postWriter;
 	private String boardId;
+	@XssIgnore
 	@NotBlank(message = "제목을 입력해 주세요.")
 	private String postTitle;
+	@XssIgnore
 	@NotBlank(message = "내용을 입력해 주세요")
 	private String postContent;
 	private String postDate;

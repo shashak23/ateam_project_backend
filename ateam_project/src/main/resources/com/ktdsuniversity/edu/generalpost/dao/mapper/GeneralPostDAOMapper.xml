@@ -50,14 +50,14 @@
 			, VIEW_CNT
 			, DELETE_YN) 
 		VALUES 
-		 (SEQ_GENERAL_POST_PK.NEXTVAL
+		 ( 'GP-' || TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_GENERAL_POST_PK.NEXTVAL, 6, '0')
 	        , #{postWriter}
 			, 'CC-20231017-000029' 
 			, #{postTitle}
 			, #{postContent}
 			, SYSDATE
-			, #{likeCnt}
-			, #{viewCnt}
+			, 0
+			, 0
 			, 'N' )
 	</insert>
 	
@@ -93,7 +93,6 @@
 		   AND BOARD_ID = 'CC-20231017-000029'
 		 ORDER BY POST_DATE DESC
 	</select>
-
 	
 	<update id="updateOneFreeBoard"
 		parameterType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
@@ -142,7 +141,7 @@
 			 , VIEW_CNT
 		 	 , DELETE_YN) 
 		VALUES 
-		 (SEQ_GENERAL_POST_PK.NEXTVAL
+		 ( 'GP-' || TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_GENERAL_POST_PK.NEXTVAL, 6, '0')
 	         , #{postWriter}
 			 , 'CC-20231017-000030' 
 			 , #{postTitle}
@@ -200,7 +199,7 @@
 		     , GP.BOARD_ID
 		     , GP.POST_TITLE
 		     , GP.POST_CONTENT
-		     , TO_CHAR(GP.POST_DATE, 'YYYY-MM-DD')POST_DATE
+		     , TO_CHAR(GP.POST_DATE, 'YYYY-MM-DD') POST_DATE
 		     , GP.LIKE_CNT
 		     , GP.VIEW_CNT
 		     , GP.DELETE_YN
