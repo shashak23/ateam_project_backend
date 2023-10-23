@@ -231,14 +231,54 @@ button, input, textarea {
  		$("#txt-reply").removeData("target")	
 	 })
     });
-  
+
+	// 신고버튼, 좋아요 버튼
+	$().ready(function() {
+	    // "신고" 버튼 클릭 시 모달 열기
+	    $(".report-btn").click(function() {
+	    	let reportType = $("#reportQnABoard").val()
+	        $("#report-modal").css("display", "block");
+	    });
+	    console.log($("jsp:param[name='reportType']"))
+
+	    // "좋아요" 버튼 클릭 시 이벤트 발생
+	    $("#like-btn").click(function () {
+			// 클라이언트에서 AJAX 요청 생성
+	        $.ajax({
+	        	method: "POST",
+	        	url: "/qnaboard/like",
+	        	data: { 
+	        		"generalPostId": "${generalPostVO.generalPostId}",
+	        		"likeCnt": ${generalPostVO.likeCnt}
+	        	},
+	        	success: function(response) {
+	        		/* $("likeModal").hide(); */
+	        		alert("좋아요가 눌렸습니다!!!!!!!!!!!!");
+	        	},
+	        	error: function(error){
+	        		/* $("#likeModal").hide(); */
+	        		alert("오류가 발생했습니다~~~~~~~~~~~~");
+	        	}
+	        })
+	    });
+
+	});
  </script>  	
 </head>
 <body>
 
 	<jsp:include page="../member/membermenu.jsp"></jsp:include>
-
+		
 	<h1>게시글 조회</h1>
+	
+	<!-- 좋아요 기능 -->
+	<button id="like-btn">좋아요</button>
+	
+	<button id="reportFreeBoard" value="3" class="report-btn">신고</button>
+	<%-- <jsp:include page="../report/reportview.jsp">
+		<jsp:param name="id" value="${generalPostVO.generalPostId}" />
+		<jsp:param name="reportType" value="3" />
+	</jsp:include> --%>
 	
 	<form name="generalPostVO" method="post" ModelAttribute="generalPostVO" >
 	<div class="grid">
@@ -267,8 +307,8 @@ button, input, textarea {
 		</div>
 	</div>
 	</form>	
-
-	<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq boardVO.memberVO.email}">
+	<div class="update_btn">
+	<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq generalPostVO.postWriter}">					
 	    <div class="btn-group">
 	        <div class="right-align">
 	            <div class="update_btn">
@@ -278,6 +318,7 @@ button, input, textarea {
 	                </div>
 	            </div>
 	        </div>
-	    </div>
-	</c:if>
+	        </div>
+		</c:if>
+    </div>
 </body>

@@ -33,7 +33,7 @@
 			, VIEW_CNT
 			, DELETE_YN) 
 		VALUES 
-		 (SEQ_GENERAL_POST_PK.NEXTVAL
+		 ('GP-' || TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_GENERAL_POST_PK.NEXTVAL, 6, '0')
 	        , #{postWriter}
 			, 'CC-20231017-000029' 
 			, #{postTitle}
@@ -94,6 +94,14 @@
 		 WHERE GENERAL_POST_ID = #{generalPostId}
 	</update>
 	
+	<!-- 좋아요 기능 -->
+	<update id="updateLikeFreePost"
+	parameterType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
+		UPDATE GENERAL_POST
+		   SET LIKE_CNT = #{likeCnt} + 1
+		 WHERE GENERAL_POST_ID = #{generalPostId}
+	</update>
+	
 	<!-- 질답게시판 -->
 	<select id="getAllQnABoard"
 	resultType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
@@ -125,7 +133,7 @@
 			 , VIEW_CNT
 		 	 , DELETE_YN) 
 		VALUES 
-		 (SEQ_GENERAL_POST_PK.NEXTVAL
+		 ('GP-' || TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_GENERAL_POST_PK.NEXTVAL, 6, '0')
 	         , #{postWriter}
 			 , 'CC-20231017-000030' 
 			 , #{postTitle}
@@ -165,6 +173,14 @@
 	parameterType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
 		UPDATE GENERAL_POST
 		   SET DELETE_YN = 'Y'
+		 WHERE GENERAL_POST_ID = #{generalPostId}
+	</update>
+	
+	<!-- 좋아요 기능 -->
+	<update id="updateLikeQnAPost"
+	parameterType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
+		UPDATE GENERAL_POST
+		   SET LIKE_CNT = #{likeCnt} + 1
 		 WHERE GENERAL_POST_ID = #{generalPostId}
 	</update>
 </mapper>

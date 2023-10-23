@@ -67,6 +67,11 @@ public class GeneralPostDAOImpl extends SqlSessionDaoSupport
 	public int deleteOneFreeBoard (String generalPostId) {
 		return getSqlSession().delete("deleteOneFreeBoard", generalPostId);
 	}
+	// 좋아요
+	@Override
+	public int updateLikeFreePost(GeneralPostVO generalPost) {
+		return getSqlSession().update("updateLikeFreePost", generalPost);
+	}
 	
 	// 질답게시판
 	@Override
@@ -94,6 +99,12 @@ public class GeneralPostDAOImpl extends SqlSessionDaoSupport
 	@Override
 	public int deleteOneQnABoard(String generalPostId) {
 		return getSqlSession().delete("deleteOneQnABoard", generalPostId);
+	}
+
+	// 좋아요
+	@Override
+	public int updateLikeQnAPost(GeneralPostVO generalPost) {
+		return getSqlSession().update("updateLikeQnAPost", generalPost);
 	}
 	
 

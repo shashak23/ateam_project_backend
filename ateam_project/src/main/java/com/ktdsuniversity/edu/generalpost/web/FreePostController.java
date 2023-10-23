@@ -94,10 +94,13 @@ public class FreePostController {
 	
 	// 단건 조회 처리
 	@GetMapping("/freeboard/view/{generalPostId}")
-	public ModelAndView freeBoardSingle(@PathVariable String generalPostId) {
+	public ModelAndView freeBoardSingle(@PathVariable String generalPostId
+										, @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 //		log.debug("되는거 맞지요?--------------------------------------");
 //		log.debug("글번호: " + generalPostId);
 		GeneralPostVO generalPostVO = generalPostService.getOneFreeBoard(generalPostId);
+		generalPostVO.setPostWriter(memberVO.getEmail());
+		System.out.println(generalPostVO.getPostWriter());
 		ModelAndView view = new ModelAndView();
 		view.setViewName("forum/freeboardview");
 		view.addObject("generalPostVO", generalPostVO);
@@ -173,5 +176,24 @@ public class FreePostController {
 			return view;
 		}
 	}
+	
+
+	// 좋아요 기능
+	@PostMapping("/freeboard/like")
+    public ModelAndView likeFreeBoard(@ModelAttribute GeneralPostVO generalPostVO) {
+
+		ModelAndView view = new ModelAndView();
+		boolean isSuccess = generalPostService.likeQnABoard(generalPostVO);
+		if(isSuccess) {
+			view.setViewName("redirect:/freeboard/list");
+			return view;
+		}
+		else {
+			view.setViewName("forum/freeboardview");
+			view.addObject("generalPostVO", generalPostVO);
+			return view;
+		}
+	}
+	
 	
 }

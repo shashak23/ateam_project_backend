@@ -28,6 +28,8 @@ public interface GeneralPostDAO {
 	
 	public int deleteOneFreeBoard(String generalPostId);
 
+	public int updateLikeFreePost(GeneralPostVO generalPostVO);
+	
 	// 질답게시판
 	public List<GeneralPostVO> getAllQnABoard();
 	
@@ -38,5 +40,8 @@ public interface GeneralPostDAO {
 	public int updateOneQnABoard(GeneralPostVO generaVO);
 	
 	public int deleteOneQnABoard(String generalPostId);
+
+	public int updateLikeQnAPost(GeneralPostVO post);
+	
 
 }

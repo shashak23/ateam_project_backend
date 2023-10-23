@@ -66,6 +66,12 @@ public class GeneralPostServiceImpl implements GeneralPostService{
 		return deleteCount > 0;
 	}
 	
+	@Transactional
+	@Override
+	public boolean likeFreeBoard(GeneralPostVO generalPostVO) {
+		int likeCount = generalPostDAO.updateLikeFreePost(generalPostVO);
+		return likeCount > 0;
+	}
 	// 질답게시판 
 	@Transactional
 	@Override
@@ -113,4 +119,14 @@ public class GeneralPostServiceImpl implements GeneralPostService{
 		
 		return deleteCount > 0;
 	}
+
+	@Transactional
+	@Override
+	public boolean likeQnABoard(GeneralPostVO generalPostVO) {
+		int likeCount = generalPostDAO.updateLikeQnAPost(generalPostVO);
+		return likeCount > 0;
+	}
+
+
+	
 }

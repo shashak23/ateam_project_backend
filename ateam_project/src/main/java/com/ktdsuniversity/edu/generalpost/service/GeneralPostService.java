@@ -23,6 +23,8 @@ public interface GeneralPostService {
 		
 	public boolean deleteOneFreeBoard(String generalPostId);
 	
+	public boolean likeFreeBoard(GeneralPostVO generalPostVO);
+	
 	// 질답게시판
 	public GeneralPostListVO getAllQnABoard();
 
@@ -33,4 +35,7 @@ public interface GeneralPostService {
 	public boolean updateOneQnABoard(GeneralPostVO generalPostVO);
 		
 	public boolean deleteOneQnABoard(String generalPostId);
+	
+	public boolean likeQnABoard(GeneralPostVO generalPostVO);
+	
 }
