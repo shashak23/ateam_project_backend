@@ -37,4 +37,5 @@ public interface GeneralPostService {
 
 	// 내 게시글 조회
 	public GeneralPostListVO getMyPost(String postWriter);
+	
 }

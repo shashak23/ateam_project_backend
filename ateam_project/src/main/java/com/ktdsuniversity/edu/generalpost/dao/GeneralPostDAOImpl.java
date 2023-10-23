@@ -101,5 +101,5 @@ public class GeneralPostDAOImpl extends SqlSessionDaoSupport
 	@Override
 	public List<GeneralPostVO> getMyPost(String postWriter) {
 		return getSqlSession().selectList("getMyPost", postWriter);
-	}
+	}	
 }

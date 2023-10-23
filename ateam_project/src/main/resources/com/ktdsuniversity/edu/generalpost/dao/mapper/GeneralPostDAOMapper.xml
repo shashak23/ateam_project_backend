@@ -203,13 +203,12 @@
 		 INNER JOIN MEMBER M
 		    ON M.EMAIL = GP.POST_WRITER
 		 WHERE GP.DELETE_YN = 'N'
-		 <!-- <if test='searchType == null'> 
+		 <if test='boardId == "CC-20231017-000029"'>
 		   AND BOARD_ID = 'CC-20231017-000029'
 		 </if>
-		 <if test='searchType == qnaboard'>
+		 <if test='boardId == "CC-20231017-000030"'>
 		   AND BOARD_ID = 'CC-20231017-000030'
 		 </if>
-		 -->
 		   AND GP.POST_WRITER = #{_parameter}
 		 ORDER BY POST_DATE DESC  
 	</select>

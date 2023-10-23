@@ -23,4 +23,6 @@ public interface AlgorithmQuestionService {
 	
 	public boolean deleteOneAlgorithmQuestion(String companyAlgorithmQuestionId);
 
+	// 통합검색
+	public AlgorithmQuestionListVO getAllAlgorithmQuestionByKeyword(SearchAlgorithmQuestionVO searchAlgorithmQuestionVO);
 }

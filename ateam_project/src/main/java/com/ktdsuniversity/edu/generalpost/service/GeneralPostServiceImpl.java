@@ -124,4 +124,5 @@ public class GeneralPostServiceImpl implements GeneralPostService{
 		generalPostListVO.setGeneralPostList(generalPostDAO.getMyPost(postWriter));
 		return generalPostListVO;
 	}
+
 }
