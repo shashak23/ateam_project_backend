@@ -51,7 +51,7 @@ public class QnAPostCommentController {
 			@SessionAttribute("_LOGIN_USER_") GeneralMemberVO generalMemberVO) {
 		generalCommentVO.setGeneralPostId(generalPostId);
 		generalCommentVO.setCommentWriter(generalMemberVO.getGeneralMemberEmail());
-		boolean isSuccess = generalCommentService.createNewComment(generalCommentVO);
+		boolean isSuccess = generalCommentService.createNewComment(generalPostId, generalCommentVO);
 
 		Map<String, Object> resultMap = new HashMap<>();
 		resultMap.put("result", isSuccess);
@@ -74,7 +74,7 @@ public class QnAPostCommentController {
 			@SessionAttribute("_LOGIN_USER") GeneralMemberVO generalMemberVO) {
 		generalCommentVO.setGeneralCommentId(generalCommentId);
 		generalCommentVO.setCommentWriter(generalMemberVO.getGeneralMemberEmail());
-		boolean isSuccess = generalCommentService.updateOneComment(generalCommentVO);
+		boolean isSuccess = generalCommentService.updateOneComment(generalCommentId, generalCommentVO);
 
 		Map<String, Object> resultMap = new HashMap<>();
 		resultMap.put("result", isSuccess);

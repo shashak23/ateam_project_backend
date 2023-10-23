@@ -52,7 +52,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             ON GC.GENERAL_POST_ID = GP.GENERAL_POST_ID 
           WHERE GC.GENERAL_POST_ID = #{_parameter}
        START WITH GC.UPPER_COMMENT_ID = 0
-           AND GC.GENERAL_POST_ID=#{_parameter}
          CONNECT BY PRIOR GC.GENERAL_COMMENT_ID = GC.UPPER_COMMENT_ID
     </select>
     <select id="getOneComment"

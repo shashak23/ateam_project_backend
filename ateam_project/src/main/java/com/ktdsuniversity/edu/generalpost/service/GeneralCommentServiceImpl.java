@@ -1,5 +1,7 @@
 /**
  * 작성자: 남현욱
+
+ 수정자 :장윤경
  * 작성일자: 2023-10-16
  * 내용: 질문 답변 게시판 댓글을 위한 ServiceImpl입니다.
  */
@@ -28,15 +30,23 @@ public class GeneralCommentServiceImpl implements GeneralCommentService{
 	
 	@Override
 	public List<GeneralCommentVO> getAllComments(String generalPostId){
-		  log.debug("--3----서비스----------------------------");
-
 		return generalCommentDAO.getAllComments(generalPostId);
 	}
 	@Transactional
 	@Override
-	public boolean createNewComment(GeneralCommentVO generalCommentVO) {
-		int insertCount = generalCommentDAO.createNewComment(generalCommentVO);
+	public boolean createNewComment(String generalCommentId, GeneralCommentVO generalCommentVO) {
+		int insertCount = generalCommentDAO.createNewComment(generalCommentId, generalCommentVO);
 		return insertCount > 0;
+	}
+	@Transactional
+	@Override
+	public boolean updateOneComment(String generalCommentId, GeneralCommentVO generalCommentVO) {
+	    GeneralCommentVO originCommentVO = generalCommentDAO.getOneComment(generalCommentVO.getGeneralCommentId());
+	    if (!generalCommentVO.getCommentWriter().equals(originCommentVO.getCommentWriter())) {
+	        throw new PageNotFoundException("잘못된 접근입니다.");
+	    }
+	    int updateCount = generalCommentDAO.updateOneComment(generalCommentVO);
+	    return updateCount > 0;
 	}
 	@Transactional
 	@Override
@@ -46,17 +56,7 @@ public class GeneralCommentServiceImpl implements GeneralCommentService{
 				throw new PageNotFoundException("잘못된 접근입니다.");
 		}
 		int deleteCount= generalCommentDAO.deleteOneComment(generalCommentId);
-		return generalCommentDAO.deleteOneComment(generalCommentId) > 0;
-	}
-	@Transactional
-	@Override
-	public boolean updateOneComment(GeneralCommentVO generalCommentVO) {
-		GeneralCommentVO originCommentVO = generalCommentDAO.getOneComment(generalCommentVO.getGeneralCommentId());
-		if (!generalCommentVO.getCommentWriter().equals(originCommentVO.getCommentWriter())) {
-		throw new PageNotFoundException("잘못된 접근입니다.");
-		}
-		int updateCount=generalCommentDAO.updateOneComment(generalCommentVO);
-		return generalCommentDAO.updateOneComment(generalCommentVO) > 0;
+		return deleteCount > 0;
 	}
 	@Transactional
 	@Override
@@ -66,6 +66,16 @@ public class GeneralCommentServiceImpl implements GeneralCommentService{
 			throw new PageNotFoundException("잘못된 접근입니다.");
 		}
 		return generalCommentDAO.likeOneComment(generalCommentId) > 0;
+	}
+	@Override
+	public boolean doUpdateComment(String generalPostId, GeneralCommentVO generalCommentVO) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
+	
+	
+	
 	}
 	
 	
@@ -77,5 +87,4 @@ public class GeneralCommentServiceImpl implements GeneralCommentService{
 	 * PageNotFoundException("잘못된 접근입니다."); } return
 	 * generalCommentDAO.reportOneComment(generalCommentId) > 0; }
 	 */
-	}
-
+	
