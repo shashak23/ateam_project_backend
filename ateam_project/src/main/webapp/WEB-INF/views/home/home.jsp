@@ -269,6 +269,32 @@
     white-space: nowrap;
     line-height: 70px;
   }
+
+  .body_right .hashtag_wrap {
+    display: flex;
+    width: 250px;
+    flex-wrap: wrap;
+    margin-top: 30px;
+    border: 1px solid var(--gray);
+    border-radius: 10px;
+    padding: 10px;
+  }
+
+  .body_right .hashtag_wrap .hashtag {
+    background-color: var(--gray);
+    color: var(--dark-gray);
+    margin: 5px;
+    padding: 3px 8px;
+    border-radius: 20px;
+    border: none;
+    font-size: var(--font-x-small);
+    text-align: center;
+  }
+
+  .body_right .hashtag_wrap .hashtag:hover {
+    box-shadow: 0 0 2px var(--dark-gray);
+    cursor: pointer;
+  }
 </style>
 
   <!-- 메인 컨텐츠 영역 -->
@@ -287,6 +313,8 @@
           <h2>주간랭킹</h2>
           <ul class="ranking_list">
           </ul>
+        </div>
+        <div class="hashtag_wrap">
         </div>
       </div>
     </div>
@@ -341,7 +369,6 @@
     $('.edit_btn').css('background-color', '')
   })
 
-          
   // 무한 스크롤 컨텐츠
   $().ready(function() {
     let skip = 0
@@ -394,14 +421,12 @@
                 </ul>
               </div>
             </article>`
-            console.log(article.boardId)
             if(article.boardId === 'CC-20231017-000029') {
               $('.big_letter').text('').css('margin-right', '0px')
             }
             $('.body_left').append(template)
           }
           skip += 10
-          console.log(skip)
         }
 
         $(window).scroll(function() {
@@ -485,6 +510,14 @@
           <a href="#" class="incomplete">\${list[i].postTitle}</a>
           </li>`
         $('.ranking_list').append(ranking_template)
+      }
+    })
+
+    // 해시태그 가져오기
+    $.get('/code/해시태그', function(response) {
+      for (let i = 0; i < response.length; i++) {
+        let hash_template = `<button class="hashtag incomplete">#\${response[i].codeContent}</button>`
+        $('.hashtag_wrap').append(hash_template)
       }
     })
   })
