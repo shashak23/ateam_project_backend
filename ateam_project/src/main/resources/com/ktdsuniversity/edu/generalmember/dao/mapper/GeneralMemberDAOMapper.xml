@@ -6,7 +6,9 @@
 	<select id="getAllCareerListByMemberEmail"
 			parameterType="string"
 			resultType="com.ktdsuniversity.edu.career.vo.CareerVO">
-		SELECT PREVIOUS_COMPANY_NAME
+		SELECT CAREER_ID
+			 , GENERAL_MEMBER_EMAIL
+			 , PREVIOUS_COMPANY_NAME
 			 , JOB_TITLE
 			 , TO_CHAR(HIRE_DATE,'yyyy-MM-dd') HIRE_DATE
 			 , TO_CHAR(RESIGN_DATE,'yyyy-MM-dd') RESIGN_DATE
@@ -31,7 +33,9 @@
 	<select id="getAllEducationList"
 			parameterType="string"
 			resultType="com.ktdsuniversity.edu.education.vo.EducationVO">
-		SELECT SCHOOL_NAME
+		SELECT EDUCATION_ID
+			 , GENERAL_MEMBER_EMAIL
+			 , SCHOOL_NAME
 			 , SCHOOL_DEPARTMENT
 			 , DEGREES
 	      FROM EDUCATION
@@ -44,6 +48,7 @@
 			resultType="com.ktdsuniversity.edu.member.vo.MemberVO">
 			SELECT NICKNAME
 			     , PROFILE_PIC
+			     , EMAIL
 			  FROM MEMBER
 			 WHERE EMAIL =#{_parameter}
 	

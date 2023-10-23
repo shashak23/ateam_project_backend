@@ -22,10 +22,20 @@
 		    autoMapping="true">
 		    <id column="COMPANY_ALGORITHM_QUESTION_ID" property="companyAlgorithmQuestionId" />
 		</association>
+		<association property="commonCodeVO"
+		    javaType="com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO"
+		    autoMapping="true">
+		    <id column="CODE_ID" property="codeId" />
+		</association>
+		<association property="companyInfoVO"
+		    javaType="com.ktdsuniversity.edu.companyinfo.vo.CompanyInfoVO"
+		    autoMapping="true">
+		    <id column="COMPANY_EMAIL" property="companyEmail" />
+		</association>
 	</resultMap>
 	
 	<select id="getAllNumber"
-			parameterType="string"
+			parameterType="com.ktdsuniversity.edu.myalgorithm.vo.SearchMyAlgorithmVO"
 			resultType="_int">
 		SELECT COUNT(1)
 		  FROM MY_ALGORITHM_QUESTION MAQ
@@ -33,9 +43,34 @@
 		    ON M.EMAIL = MAQ.GENERAL_MEMBER_EMAIL
 		 INNER JOIN COMPANY_ALGORITHM_QUESTION CAQ
 		    ON CAQ.COMPANY_ALGORITHM_QUESTION_ID = MAQ.COMPANY_ALGORITHM_QUESTION_ID
-		 WHERE MAQ.GENERAL_MEMBER_EMAIL = #{_parameter}
+		 INNER JOIN COMMON_CODE CC
+		    ON CC.CODE_ID = CAQ.MAIN_ALGORITHM_CATEGORY_ID
+		 INNER JOIN COMPANY C
+		    ON C.COMPANY_NAME = CAQ.ALGORITHM_WRITER 
+		 WHERE MAQ.GENERAL_MEMBER_EMAIL = #{email}
 		   AND MAQ.DELETE_YN = 'N'
+		<if test='searchKeyword != null and searchKeyword != ""'>
+			<if test='searchType=="subject"'>
+		   AND CAQ.ALGORITHM_TITLE LIKE '%' || #{searchKeyword} || '%'
+			</if>
+			<if test='searchType=="content"'>
+		   AND CAQ.ALGORITHM_CONTENT LIKE '%' || #{searchKeyword} || '%'
+			</if>
+			<if test='searchType=="category"'>
+		   AND CC.CODE_CONTENT LIKE '%' || #{searchKeyword} || '%'
+			</if>
+			<if test='searchType=="tier"'>
+		   AND CAQ.ALGORITHM_TIER_ID LIKE '%' || #{searchKeyword} || '%'
+			</if>
+			<if test='searchType=="company_name"'>
+		   AND CAQ.ALGORITHM_WRITER LIKE '%' || #{searchKeyword} || '%'
+			</if>
+			<if test='searchType=="correctYN"'>
+		   AND MAQ.CORRECT_ANSWER_YN LIKE '%' || #{searchKeyword} || '%'
+			</if>
+		</if>
 	</select>
+
 	<select id="getAllMyAlgorithmList"
 			parameterType="string"
 			resultMap="MyAlgorithmDAOMap">
@@ -45,19 +80,47 @@
 		     , MAQ.MY_ANSWER
 		     , MAQ.CORRECT_ANSWER_YN
 		     , MAQ.DELETE_YN
+		     , CAQ.COMPANY_ALGORITHM_QUESTION_ID
 		     , CAQ.ALGORITHM_TITLE 
 		     , CAQ.ALGORITHM_WRITER
 		     , CAQ.ALGORITHM_CONTENT
 		     , CAQ.VIEW_CNT 
              , CAQ.LIKE_CNT 
+             , CAQ.ALGORITHM_TIER_ID 
+             , CC.CODE_CONTENT
+		     , C.COMPANY_NAME 
 		     , M.NICKNAME
 		  FROM MY_ALGORITHM_QUESTION MAQ
 		 INNER JOIN MEMBER M
 		    ON M.EMAIL = MAQ.GENERAL_MEMBER_EMAIL
 		 INNER JOIN COMPANY_ALGORITHM_QUESTION CAQ
 		    ON CAQ.COMPANY_ALGORITHM_QUESTION_ID = MAQ.COMPANY_ALGORITHM_QUESTION_ID
+		 INNER JOIN COMMON_CODE CC
+		    ON CC.CODE_ID = CAQ.MAIN_ALGORITHM_CATEGORY_ID
+		 INNER JOIN COMPANY C
+		    ON C.COMPANY_NAME = CAQ.ALGORITHM_WRITER 
 		 WHERE MAQ.GENERAL_MEMBER_EMAIL = #{email}
 		   AND MAQ.DELETE_YN = 'N'
+		<if test='searchKeyword != null and searchKeyword != ""'>
+			<if test='searchType=="subject"'>
+		   AND CAQ.ALGORITHM_TITLE LIKE '%' || #{searchKeyword} || '%'
+			</if>
+			<if test='searchType=="content"'>
+		   AND CAQ.ALGORITHM_CONTENT LIKE '%' || #{searchKeyword} || '%'
+			</if>
+			<if test='searchType=="category"'>
+		   AND CC.CODE_CONTENT LIKE '%' || #{searchKeyword} || '%'
+			</if>
+			<if test='searchType=="tier"'>
+		   AND CAQ.ALGORITHM_TIER_ID  LIKE '%' || #{searchKeyword} || '%'
+			</if>
+			<if test='searchType=="company_name"'>
+		   AND C.COMPANY_NAME LIKE '%' || #{searchKeyword} || '%'
+			</if>
+			<if test='searchType=="correctYN"'>
+		   AND MAQ.CORRECT_ANSWER_YN LIKE '%' || #{searchKeyword} || '%'
+			</if>
+		</if>
 	</select>
 	
 	<insert id="createNewMyAlgorithm"

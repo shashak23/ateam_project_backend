@@ -227,6 +227,7 @@
 		
 			<div class="btn-text-right">
 				<button class="btn btn-primary">문제풀이</button>
+				<a href="/algorithm/explanation/list">알고리즘 해설 보러가기</a>
 			</div>
 			
 			<form:form modelAttribute="myAlgorithmVO" method="post">	

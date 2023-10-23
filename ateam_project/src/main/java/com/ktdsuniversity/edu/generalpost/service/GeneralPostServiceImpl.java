@@ -1,3 +1,6 @@
+/**
+ * 수정자: 장보늬(2023-10-22)
+ * **/
 package com.ktdsuniversity.edu.generalpost.service;
 
 import org.slf4j.Logger;
@@ -66,12 +69,6 @@ public class GeneralPostServiceImpl implements GeneralPostService{
 		return deleteCount > 0;
 	}
 	
-	@Transactional
-	@Override
-	public boolean likeFreeBoard(GeneralPostVO generalPostVO) {
-		int likeCount = generalPostDAO.updateLikeFreePost(generalPostVO);
-		return likeCount > 0;
-	}
 	// 질답게시판 
 	@Transactional
 	@Override
@@ -120,13 +117,11 @@ public class GeneralPostServiceImpl implements GeneralPostService{
 		return deleteCount > 0;
 	}
 
-	@Transactional
+	// 내게시글 조회
 	@Override
-	public boolean likeQnABoard(GeneralPostVO generalPostVO) {
-		int likeCount = generalPostDAO.updateLikeQnAPost(generalPostVO);
-		return likeCount > 0;
+	public GeneralPostListVO getMyPost(String postWriter) {
+		GeneralPostListVO generalPostListVO = new GeneralPostListVO();
+		generalPostListVO.setGeneralPostList(generalPostDAO.getMyPost(postWriter));
+		return generalPostListVO;
 	}
-
-
-	
 }

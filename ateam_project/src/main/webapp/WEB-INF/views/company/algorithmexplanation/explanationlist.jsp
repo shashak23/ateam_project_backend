@@ -7,6 +7,39 @@
 <head>
 <meta charset="UTF-8">
 <title>알고리즘 해설 게시판</title>
+<script type="text/javascript" src="/js/lib/jquery-3.7.1.js"></script>
+<script type="text/javascript">
+$().ready(function() {
+	$.get("/code/알고리즘카테고리", function(response) {
+		for (var i = 0; i < response.length; i++) {
+			var code = response[i]
+			var checkbox = $("<input type='checkbox' id='"+code.codeId+"' name='algorithmCategoryIdList' value='"+code.codeId+"' />");
+			var label = $("<label for='"+code.codeId+"'>"+code.codeContent+"</label>");
+			$("#algorithm_category").append(checkbox);
+			$("#algorithm_category").append(label);
+		}
+	});
+	
+	document.querySelectorAll('input[type="checkbox"]:checked')
+	const ul = document.querySelector('ul')
+	let selected = [];
+	
+	ul.addEventListener('change', event => {
+		if(event.target.type == 'checkbox') {
+			const checked = document.querySelectorAll('input[type="checkbox"]:checked')
+			selected = Array.from(checked).map(x => x.value)
+		}
+	})
+	
+	$("#search-btn").click(function() {
+		$("#search-form").attr({
+			"method": "get",
+			"action": "/algorithm/explanation/list"
+		}).submit()
+	});
+	
+})
+</script>
 </head>
 <style>
 	a:link, a:hover, a:active, a:visited {
@@ -43,6 +76,23 @@
 	}
 </style>
 <body>
+	<div class="search_area">
+	    <form id="search-form"
+		      method="get"
+		      action="/algorithm/explanation/list">
+		    <label for="algorithmCategoryId">알고리즘 카테고리</label>
+			<div id="algorithm_category"></div>
+			
+			<select name="searchType">
+		        <option value="postTitle" ${searchAlgorithmExplanationVO.searchType eq 'postTitle' ? 'selected' : ''}>제목</option>
+		        <option value="postContent" ${searchAlgorithmExplanationVO.searchType eq 'postContent' ? 'selected' : ''}>내용</option>
+		        <option value="postWriter" ${searchAlgorithmExplanationVO.searchType eq 'postWriter' ? 'selected' : ''}>작성자</option>
+		    </select>
+		    <input type="text" name="searchKeyword" value="${searchAlgorithmExplanationVO.searchKeyword}" />
+			<button id="search-btn">검색</button>
+		</form>
+		
+	</div>	
 	<div class="btn-group">
 		<div class="right-align">
 			<!-- 로그인 하지 않았을 때 -->

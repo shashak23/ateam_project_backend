@@ -26,6 +26,7 @@ import com.ktdsuniversity.edu.member.vo.MemberVO;
 import com.ktdsuniversity.edu.myalgorithm.service.MyAlgorithmService;
 import com.ktdsuniversity.edu.myalgorithm.vo.MyAlgorithmListVO;
 import com.ktdsuniversity.edu.myalgorithm.vo.MyAlgorithmVO;
+import com.ktdsuniversity.edu.myalgorithm.vo.SearchMyAlgorithmVO;
 import com.ktdsuniversity.edu.util.XssIgnoreUtil;
 
 import jakarta.validation.Valid;
@@ -42,15 +43,23 @@ public class MyAlgorithmController {
 	private AlgorithmQuestionService algorithmQuestionService;
 	
 	@GetMapping("/home/myalgorithm/list")
-	public ModelAndView viewAllMyAlgorithm(@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+	public ModelAndView viewAllMyAlgorithm(@SessionAttribute("_LOGIN_USER_") MemberVO memberVO,
+										   @ModelAttribute SearchMyAlgorithmVO searchMyAlgorithmVO) {
+		System.out.println("search my keyword: " + searchMyAlgorithmVO.getSearchKeyword());
+		System.out.println("search my type: " + searchMyAlgorithmVO.getSearchType());
+		System.out.println("search my pageNo: " + searchMyAlgorithmVO.getPageNo());
+		
 		ModelAndView mav = new ModelAndView();
-		String generalMemberEmail = memberVO.getEmail();
-		System.out.println("email: " + generalMemberEmail);
-		MyAlgorithmListVO myList = myAlgorithmService.getAllMyAlgorithm(generalMemberEmail);
+		searchMyAlgorithmVO.setEmail(memberVO.getEmail());
+		
+		MyAlgorithmListVO myList = myAlgorithmService.getAllMyAlgorithm(searchMyAlgorithmVO);
+		System.out.println("myList: " + myList.getMyAlgotirhmListCnt());
+		searchMyAlgorithmVO.setPageCount(myList.getMyAlgotirhmListCnt());
 		
 		mav.setViewName("myalgorithm/myalgorithmlist");
 		mav.addObject("myAlgorithmList", myList);
 		mav.addObject("MemberVO", memberVO);
+		mav.addObject("searchMyAlgorithmVO", searchMyAlgorithmVO);
 		return mav;
 	}
 	

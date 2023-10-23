@@ -1,4 +1,5 @@
 /**
+ * 수정자: 장보늬(2023-10-22)
  */
 package com.ktdsuniversity.edu.generalpost.dao;
 
@@ -67,11 +68,6 @@ public class GeneralPostDAOImpl extends SqlSessionDaoSupport
 	public int deleteOneFreeBoard (String generalPostId) {
 		return getSqlSession().delete("deleteOneFreeBoard", generalPostId);
 	}
-	// 좋아요
-	@Override
-	public int updateLikeFreePost(GeneralPostVO generalPost) {
-		return getSqlSession().update("updateLikeFreePost", generalPost);
-	}
 	
 	// 질답게시판
 	@Override
@@ -101,11 +97,9 @@ public class GeneralPostDAOImpl extends SqlSessionDaoSupport
 		return getSqlSession().delete("deleteOneQnABoard", generalPostId);
 	}
 
-	// 좋아요
+	// 내 게시글 조회
 	@Override
-	public int updateLikeQnAPost(GeneralPostVO generalPost) {
-		return getSqlSession().update("updateLikeQnAPost", generalPost);
+	public List<GeneralPostVO> getMyPost(String postWriter) {
+		return getSqlSession().selectList("getMyPost", postWriter);
 	}
-	
-
 }

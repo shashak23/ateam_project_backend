@@ -8,6 +8,8 @@
 package com.ktdsuniversity.edu.myalgorithm.vo;
 
 import com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionVO;
+import com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO;
+import com.ktdsuniversity.edu.companyinfo.vo.CompanyInfoVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 import com.ktdsuniversity.edu.util.XssIgnore;
 
@@ -26,9 +28,11 @@ public class MyAlgorithmVO extends AlgorithmQuestionVO {
 	private String deleteYn;
 	
 	private AlgorithmQuestionVO algorithmQuestionVO;
-		
+	private CommonCodeVO commonCodeVO;
 	private MemberVO memberVO;
-		
+	private CompanyInfoVO companyInfoVO;
+	
+	
 	public String getMyAlgorithmQuestionId() {
 		return myAlgorithmQuestionId;
 	}
@@ -79,5 +83,16 @@ public class MyAlgorithmVO extends AlgorithmQuestionVO {
 	public void setMemberVO(MemberVO memberVO) {
 		this.memberVO = memberVO;
 	}
-	
+	public CommonCodeVO getCommonCodeVO() {
+		return commonCodeVO;
+	}
+	public void setCommonCodeVO(CommonCodeVO commonCodeVO) {
+		this.commonCodeVO = commonCodeVO;
+	}
+	public CompanyInfoVO getCompanyInfoVO() {
+		return companyInfoVO;
+	}
+	public void setCompanyInfoVO(CompanyInfoVO companyInfoVO) {
+		this.companyInfoVO = companyInfoVO;
+	}
 }

@@ -1,6 +1,7 @@
 /**
  * 작성자 : 김시하 
  * 수정자 : 김시하(2023-10-17)
+ * 수정자 : 장보늬(2023-10-22)
  * 작성일자 : 2023-10-16
  * 내용 : 자유 및 질답게시판을 위한 Service
  */
@@ -23,8 +24,6 @@ public interface GeneralPostService {
 		
 	public boolean deleteOneFreeBoard(String generalPostId);
 	
-	public boolean likeFreeBoard(GeneralPostVO generalPostVO);
-	
 	// 질답게시판
 	public GeneralPostListVO getAllQnABoard();
 
@@ -35,7 +34,7 @@ public interface GeneralPostService {
 	public boolean updateOneQnABoard(GeneralPostVO generalPostVO);
 		
 	public boolean deleteOneQnABoard(String generalPostId);
-	
-	public boolean likeQnABoard(GeneralPostVO generalPostVO);
-	
+
+	// 내 게시글 조회
+	public GeneralPostListVO getMyPost(String postWriter);
 }

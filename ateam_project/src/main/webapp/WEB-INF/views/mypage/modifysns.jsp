@@ -8,7 +8,7 @@
 
 </head>
 <form method="post" action="/memberInfo/modify/update-sns-link">
-	<input type="hidden" name="generalMemberEmail" value="${generalMemberVO.generalMemberEmail }"/>
+	<input type="hidden" name="generalMemberEmail" value="${sessionScope._LOGIN_USER_.email}"/>
 <label>Github 주소</label>
 <input type="text" id="githubUrl" name="githubUrl" value="${generalMemberVO.githubUrl}" placeholder="Github Url">
 <label>이메일 주소</label>

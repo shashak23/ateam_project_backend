@@ -34,7 +34,7 @@ public class QnAPostCommentController {
 	
 	private Logger log = LoggerFactory.getLogger(AteamProjectApplication.class);
 	
-	  @GetMapping("/qnapost/comments/{generalPostId}") 
+	  @GetMapping("/qnaboard/comments/{generalPostId}") 
 	  public Map<String,Object> getAllComments(@PathVariable String generalPostId) { 
 	  List<GeneralCommentVO> commentList = generalCommentService.getAllComments(generalPostId);
 	  Map<String, Object> resultMap = new HashMap<>(); 
@@ -45,7 +45,7 @@ public class QnAPostCommentController {
 	  return resultMap;
 	  }
 
-	@PostMapping("/qnapost/comments/create/{generalPostId}")
+	@PostMapping("/qnaboard/comments/create/{generalPostId}")
 	public Map<String, Object> doCreateNewComments(@PathVariable String generalPostId,
 			@ModelAttribute GeneralCommentVO generalCommentVO,
 			@SessionAttribute("_LOGIN_USER_") GeneralMemberVO generalMemberVO) {
@@ -58,7 +58,7 @@ public class QnAPostCommentController {
 		return resultMap;
 	}
 
-	@PostMapping("/qnapost/comments/delete/{generalCommentId}")
+	@PostMapping("/qnaboard/comments/delete/{generalCommentId}")
 	public Map<String, Object> doDeleteComments(@PathVariable String generalCommentId,
 			@SessionAttribute("_LOGIN_USER_") GeneralMemberVO generalMemberVO) {
 		boolean isSuccess = generalCommentService.deleteOneComment(generalCommentId,
@@ -68,7 +68,7 @@ public class QnAPostCommentController {
 		return resultMap;
 	}
 
-	@PostMapping("/qnapost/comments/update/{generalCommentId}")
+	@PostMapping("/qnaboard/comments/update/{generalCommentId}")
 	public Map<String, Object> doUpdateComments(@PathVariable String generalCommentId,
 			@ModelAttribute GeneralCommentVO generalCommentVO,
 			@SessionAttribute("_LOGIN_USER") GeneralMemberVO generalMemberVO) {
@@ -81,7 +81,7 @@ public class QnAPostCommentController {
 		return resultMap;
 	}
 
-	@GetMapping("/qnapost/comments/like/{generalCommentId}")
+	@GetMapping("/qnaboard/comments/like/{generalCommentId}")
 	public Map<String, Object> doLikeComments(@PathVariable String generalCommentId,
 			@SessionAttribute("_LOGIN_USER_") GeneralMemberVO generalMemberVO) {
 		boolean isSuccess = generalCommentService.deleteOneComment(generalCommentId,
@@ -92,7 +92,7 @@ public class QnAPostCommentController {
 	}
 
 	// 댓글 신고
-//	@PostMapping ("/qnapost/comments/report/{generalCommentId}")
+//	@PostMapping ("/qnaboard/comments/report/{generalCommentId}")
 //	public Map<String,Object> doReportComment(@PathVariable String generalCommentId,
 //											  @SessionAttribute("_LOGIN_USER_")GeneralMemberVO generalMemberVO){
 //		

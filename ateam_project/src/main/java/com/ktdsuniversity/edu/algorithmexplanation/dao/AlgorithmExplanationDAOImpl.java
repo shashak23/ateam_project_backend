@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ktdsuniversity.edu.algorithmexplanation.vo.AlgorithmExplanationVO;
+import com.ktdsuniversity.edu.algorithmexplanation.vo.SearchAlgorithmExplanationVO;
 
 @Repository
 public class AlgorithmExplanationDAOImpl extends SqlSessionDaoSupport implements AlgorithmExplanationDAO {
@@ -25,13 +26,19 @@ public class AlgorithmExplanationDAOImpl extends SqlSessionDaoSupport implements
 	}
 	
 	@Override
-	public int getAlgorithmExplanationAllCount() {
-		return getSqlSession().selectOne("getAlgorithmExplanationAllCount");
+	public int getAlgorithmExplanationAllCount(SearchAlgorithmExplanationVO searchAlgorithmExplanationVO) {
+		return getSqlSession().selectOne("getAlgorithmExplanationAllCount", searchAlgorithmExplanationVO);
 	}
 
 	@Override
 	public List<AlgorithmExplanationVO> getAllAlgorithmExplanation() {
 		return getSqlSession().selectList("getAllAlgorithmExplanation");
+	}
+	
+	@Override
+	public List<AlgorithmExplanationVO> searchAllAlgorithmExplanation(
+			SearchAlgorithmExplanationVO searchAlgorithmExplanationVO) {
+		return getSqlSession().selectList("searchAllAlgorithmExplanation", searchAlgorithmExplanationVO);
 	}
 
 	@Override

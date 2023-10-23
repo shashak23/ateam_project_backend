@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ktdsuniversity.edu.myalgorithm.vo.MyAlgorithmVO;
+import com.ktdsuniversity.edu.myalgorithm.vo.SearchMyAlgorithmVO;
 
 @Repository
 public class MyAlgorithmDAOImpl extends SqlSessionDaoSupport implements MyAlgorithmDAO {
@@ -25,13 +26,18 @@ public class MyAlgorithmDAOImpl extends SqlSessionDaoSupport implements MyAlgori
 	}
 	
 	@Override
-	public int getAllNumber(String email) {
-		return getSqlSession().selectOne("getAllNumber", email);
+	public int getAllNumber(SearchMyAlgorithmVO searchMyAlgorithmVO) {
+		return getSqlSession().selectOne("getAllNumber", searchMyAlgorithmVO);
 	}
 
 	@Override
-	public List<MyAlgorithmVO> getAllMyAlgorithmList(String email) {
-		return getSqlSession().selectList("getAllMyAlgorithmList", email);
+	public List<MyAlgorithmVO> getAllMyAlgorithmList(SearchMyAlgorithmVO searchMyAlgorithmVO) {
+		return getSqlSession().selectList("getAllMyAlgorithmList", searchMyAlgorithmVO);
+	}
+	
+	@Override
+	public List<MyAlgorithmVO> searchAllMyAlgorithm(SearchMyAlgorithmVO searchMyAlgorithmVO) {
+		return getSqlSession().selectList("searchAllMyAlgorithm", searchMyAlgorithmVO);
 	}
 	
 	@Override

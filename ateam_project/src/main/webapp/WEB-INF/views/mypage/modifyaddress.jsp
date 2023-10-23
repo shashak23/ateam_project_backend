@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="form" uri ="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,13 +52,17 @@
     }
 </script>
 </head>
-<form method="post" action="/memberInfo/modify/update-location">
-	<input type="hidden" name="generalMemberEmail" value="${generalMemberVO.generalMemberEmail }"/>
-<input type="text" id="sample6_postcode" placeholder="우편번호">
-<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
-<input type="text" id="region" name ="region" value="${generalMemberVO.region}" placeholder="주소" ><br>
-<input type="submit" value="수정" />
-</form>
+<form:form modelAttribute="generalMemberVO" method="post" action="/memberInfo/modify/update-location">
+	<input type="hidden" name="generalMemberEmail" value="${sessionScope._LOGIN_USER_.email}"/>
+	<input type="text" id="sample6_postcode" placeholder="우편번호" readonly>
+	<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기"><br>
+	<input type="text" id="region" name ="region" value="${generalMemberVO.region}" placeholder="주소" readonly><br>
+	<div>
+	 	<form:errors path="region" element="div" cssClass="errors" />
+	 </div>
+	<input type="submit" value="수정" />
+	<a href="/memberInfo/modify/delete-location/${generalMemberVO.generalMemberEmail}">삭제</a>
+</form:form>
 </body>
 </html>
 

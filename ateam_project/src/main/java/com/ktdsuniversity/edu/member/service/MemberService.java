@@ -1,6 +1,9 @@
-/*
- * 수정자: 장보늬(2023-10-20)
- * */
+/**
+ * 작성자: 김광원
+ * 수정자: 김광원(2023-10-20)
+ * 작성일자: 2023-10-19
+ * 내용: 일반회원 비밀번호 수정 및 닉네임 수정
+ */
 package com.ktdsuniversity.edu.member.service;
 
 import java.util.List;
@@ -22,6 +25,10 @@ public interface MemberService {
 	public boolean checkAvailableEmail(String email);
 	public boolean checkAvailableNickname(String nickname);
 	/**
+	 * 파일생성
+	 */
+//	public boolean createNewFile(MemberVO memberVO,MultipartFile file );
+	/**
 	 * 로그인
 	 */
 	public MemberVO getMember(MemberVO memberVO);
@@ -30,11 +37,13 @@ public interface MemberService {
 	 */
 	public MemberVO getOneFile(String email);
 	/**
-	 * 파일 수정
+	 * 프로필사진 수정
 	 */
 	public boolean updateOneFile(MemberVO memberVO, MultipartFile file);
-	
-	
+	/**
+	 * 프로필사진 삭제
+	 */
+	public boolean deleteProfile(String email);
 	/**
 	 * 회원 탈퇴
 	 * @param memberVO 탈퇴할 사용자의 사용자 정보
@@ -58,4 +67,19 @@ public interface MemberService {
 	 * @return 사용가능한 이메일인지 여부 (true: 사용가능한 이메일)
 	 */
 	public boolean checkAvailableCompanyEmail(String companyEmail);
+	
+	/**
+	 * 회원 조회
+	 */
+	public MemberVO selectMemberinfo(String email);
+	
+	/**
+	 * 회원 닉네임 수정
+	 */
+	public boolean updateMemberNickname(MemberVO memberVO);
+
+	/**
+	 * 회원 비밀번호 수정
+	 */
+	public boolean updateMemberPW(MemberVO memberVO);
 }

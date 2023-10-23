@@ -1,3 +1,9 @@
+/**
+ * 작성자: 김광원
+ * 수정자: 김광원(2023-10-20)
+ * 작성일자: 2023-10-19
+ * 내용: 일반회원 비밀번호 수정 및 닉네임 수정
+ */
 package com.ktdsuniversity.edu.member.dao;
 
 import java.util.List;
@@ -16,19 +22,30 @@ public class MemberDAOImpl extends SqlSessionDaoSupport implements MemberDAO{
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		super.setSqlSessionTemplate(sqlSessionTemplate);
 	}
+	/**
+	 * 이메일 중복
+	 */
 	@Override
 	public int getEmailCount(String email) {
 		return getSqlSession().selectOne("getEmailCount",email);
 	}
+	/**
+	 * 닉네임 중복
+	 */
 	@Override
 	public int getNicknameCount(String nickname) {
 		return getSqlSession().selectOne("getNicknameCount",nickname);
 	}
-
+	/**
+	 * 회원생성
+	 */
 	@Override
 	public int createNewMember(MemberVO memberVO) {
 		return getSqlSession().insert("createNewMember",memberVO);
 	}
+	/**
+	 * salt키
+	 */
 	@Override
 	public String getSalt(String email) {
 		return getSqlSession().selectOne("getSalt",email);
@@ -38,7 +55,7 @@ public class MemberDAOImpl extends SqlSessionDaoSupport implements MemberDAO{
 		return getSqlSession().selectOne("getMember",memberVO);
 	}
 	/**
-	 * 파일조회
+	 * 프로필사진 조회
 	 */
 	@Override
 	public MemberVO getOneFile(String email) {
@@ -79,5 +96,40 @@ public class MemberDAOImpl extends SqlSessionDaoSupport implements MemberDAO{
 	@Override
 	public List<MemberVO> searchMember(String memberType) {
 		return getSqlSession().selectList("searchMember", memberType);
+	}
+	/**
+	 * 회원 조회
+	 */
+	@Override
+	public MemberVO selectMemberinfo(String email) {
+		return getSqlSession().selectOne("selectMemberinfo",email);
+	}
+	/**
+	 * 회원 닉네임 수정
+	 */
+	@Override
+	public int updateMemberNickname(MemberVO memberVO) {
+		return getSqlSession().update("updateMemberNickname",memberVO);
+	}
+	/**
+	 * 회원 비밀번호 수정
+	 */
+	@Override
+	public int updateMemberPW(MemberVO memberVO) {
+		return getSqlSession().update("updateMemberPW", memberVO);
+	}
+	/**
+	 * 프로필사진 수정
+	 */
+	@Override
+	public int createNewFile(MemberVO memberVO) {
+		return getSqlSession().update("createNewFile", memberVO);
+	}
+	/**
+	 * 프로필사진 삭제
+	 */
+	@Override
+	public int deleteProfile(String email) {
+		return getSqlSession().update("deleteProfile",email);
 	}
 }

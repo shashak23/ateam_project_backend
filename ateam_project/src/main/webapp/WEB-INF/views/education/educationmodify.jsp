@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="form" uri ="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -89,14 +90,16 @@
     </script>
 </head>
 <body>
-<form method ="post" action="/memberInfo/modify/update-education">
+<form:form modelAttribute="educationVO" method ="post" action="/memberInfo/modify/update-education">
 <input type="hidden" name="educationId" value="${educationVO.educationId}" />
     <h2>대학교 및 학과 검색</h2>
 
     <div id="university-section">
         <h3>대학교 검색</h3>
         <input type="text" id="search-university-input" name="schoolName" value="${educationVO.schoolName}" placeholder="대학교 검색">
-
+		<div>
+            <form:errors path="schoolName" element="div" cssClass="errors" />
+        </div>
         <div id="search-university-results">
             <!-- 지우면 안됩니다 -->
         </div>
@@ -105,7 +108,9 @@
     <div id="department-section">
         <h3>학과 검색</h3>
         <input type="text" id="search-department-input" name="schoolDepartment" value="${educationVO.schoolDepartment}" placeholder="학과 검색">
-
+		<div>
+            <form:errors path="schoolDepartment" element="div" cssClass="errors" />
+        </div>
         <div id="search-department-results">
             <!-- 검색 결과를 여기에 표시할 예정입니다. -->
         </div>
@@ -117,6 +122,7 @@
         <option value="박사">박사</option>
     </select>
     <input type="submit" value="저장"/>
-</form>
+    <a href="/memberInfo/modify/delete-education/${educationVO.educationId}">삭제</a>
+</form:form>
 </body>
 </html>

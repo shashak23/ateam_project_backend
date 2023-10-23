@@ -10,10 +10,15 @@ import java.util.List;
 import com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Size;
+
 public class TechstackVO {
 	private String techstackId;
 	private String email;
 	private String hashtagId;
+	@NotEmpty(message = "기술스택 카테고리를 선택해주세요.")
+	@Size(min = 1, message = "기술스택 카테고리를 선택해주세요.")
 	private List<String> hashtagList;
 	
 	private MemberVO memberVO;

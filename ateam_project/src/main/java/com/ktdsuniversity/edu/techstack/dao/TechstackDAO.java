@@ -19,10 +19,6 @@ public interface TechstackDAO {
 	 */
 	public List<TechstackVO> getAllTechstack(String email);
 	/**
-	 * 기술스택 수정
-	 */
-//	public int updateTechstack(TechstackVO techstackVO);
-	/**
 	 * 기술스택 한건조회
 	 */
 	public TechstackVO getOneTechstack(String email);
@@ -32,6 +28,7 @@ public interface TechstackDAO {
 	public int deleteTechstack(String email);
 	public int insertTechstack(TechstackVO techstackVO);	
 	public List<TechstackVO> techSearch(String id);
+	public int deleteTech(String id);
 
 }
 

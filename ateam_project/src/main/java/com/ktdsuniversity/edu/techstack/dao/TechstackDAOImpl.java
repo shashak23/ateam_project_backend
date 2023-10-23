@@ -36,13 +36,6 @@ public class TechstackDAOImpl extends SqlSessionDaoSupport implements TechstackD
 	public List<TechstackVO> getAllTechstack(String email) {
 		return getSqlSession().selectList("getAllTechstack",email);
 	}
-	/**
-	 * 기술스택 수정
-	 */
-//	@Override
-//	public int updateTechstack(TechstackVO techstackVO) {
-//		return getSqlSession().update("updateTechstack",techstackVO);
-//	}
 
 	@Override
 	public TechstackVO getOneTechstack(String email) {
@@ -58,11 +51,16 @@ public class TechstackDAOImpl extends SqlSessionDaoSupport implements TechstackD
 	public int insertTechstack(TechstackVO techstackVO) {
 		return getSqlSession().insert("insertTechstack",techstackVO );
 	}
-
+	
 	@Override
 	public List<TechstackVO> techSearch(String id) {
 		// TODO Auto-generated method stub
 		return getSqlSession().selectList("techSearch",id);
+	}
+
+	@Override
+	public int deleteTech(String id) {
+		return getSqlSession().delete("deleteTech",id);
 	}
 
 }

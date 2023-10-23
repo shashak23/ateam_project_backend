@@ -19,7 +19,7 @@ public interface AlgorithmQuestionDAO {
 	public List<AlgorithmQuestionVO> getAllAlgorithmQuestion();
 	
 	public List<AlgorithmQuestionVO> searchAllAlgorithmQuestion(SearchAlgorithmQuestionVO searchAlgorithmQuestionVO);
-
+	
 	public int createNewAlgorithmQuestion(AlgorithmQuestionVO algorithmQuestionVO);
 	
 	public int createNewAlgorithmQuestionCategory(AlgorithmQuestionVO algorithmQuestionVO);
