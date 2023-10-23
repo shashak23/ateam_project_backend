@@ -38,7 +38,7 @@ public class AlgorithmQuestionServiceImpl implements AlgorithmQuestionService {
 		}
 		return algorithmQuestionListVO;
 	}
-
+	
 	@Transactional
 	@Override
 	public boolean createNewAlgorithmQuestion(AlgorithmQuestionVO algorithmQuestionVO) {
@@ -91,4 +91,10 @@ public class AlgorithmQuestionServiceImpl implements AlgorithmQuestionService {
 		return deleteCount > 0;
 	}
 
+	@Override
+	public AlgorithmQuestionListVO getAllAlgorithmQuestionByKeyword(SearchAlgorithmQuestionVO searchAlgorithmQuestionVO) {
+		AlgorithmQuestionListVO algorithmQuestionListVO = new AlgorithmQuestionListVO();
+		algorithmQuestionListVO.setAlgorithmQuestionList(algorithmQuestionDAO.searchAllAlgorithmQuestionByKeyword(searchAlgorithmQuestionVO));
+		return algorithmQuestionListVO;
+	}
 }

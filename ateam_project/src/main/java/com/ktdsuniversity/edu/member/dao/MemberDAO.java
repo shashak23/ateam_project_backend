@@ -1,6 +1,6 @@
 /**
  * 작성자: 김광원
- * 수정자: 김광원(2023-10-21)
+ * 수정자: 장보늬(2023-10-23)
  * 작성일자: 2023-10-19
  * 내용: 일반회원 비밀번호 수정 및 닉네임 수정
  */
@@ -72,4 +72,5 @@ public interface MemberDAO {
 	 * 파일 삭제
 	 */
 	public int deleteProfile(String email);
+	
 }

@@ -20,18 +20,7 @@ $().ready(function() {
 </script>
 </head>
 <body>
-<!-- 
-	<div>
-		<form id="select-form"
-		      method="get"
-		      action="/mypost">
-		    <select id="search" name="searchType">
-		    	<option value="" ${SearchForumVO.searchType eq '""' ? 'selected' : ''}>자유게시판</option>
-				<option value="" ${SearchForumVO.searchType eq 'qnaboard' ? 'selected' : ''}>QnA게시판</option>
-		    </select>
-		</form>
-	</div>
- -->
+ 	<label for="qnaboard">QnA 게시판</label>
 	<table class="table">
 		<thead>
 			<colgroup>
@@ -52,12 +41,17 @@ $().ready(function() {
 		<tbody>
 		<c:choose>
 			<c:when test="${not empty generalPostList.generalPostList}">
-				<c:forEach items="${generalPostList.generalPostList}" var="mypost">
+				<c:forEach items="${generalPostList.generalPostList}" var="myqnapost">
 					<tr>
-						<td>${mypost.postTitle}</td>
-						<td>${mypost.memberVO.nickname}</td>
-						<td>${mypost.viewCnt}</td>
-						<td>${mypost.likeCnt}</td>
+						<td style="font-weight: bold;">
+							<a href="/qnaboard/view/${myqnapost.generalPostId}">
+								<c:out value="${myqnapost.postTitle}" />
+							</a>
+						</td>
+						<td>${myqnapost.memberVO.nickname}</td>
+						<td>${myqnapost.postDate}</td>
+						<td>${myqnapost.viewCnt}</td>
+						<td>${myqnapost.likeCnt}</td>
 					</tr>
 				</c:forEach>
 			</c:when>
@@ -72,10 +66,7 @@ $().ready(function() {
 	</table>
 
 	
-	<!-- 
-	
-	
-	<label for="myQnABoard">QnA게시판</label>
+	<label for="freepost">자유 게시판</label>
 	<table class="table">
 		<thead>
 			<colgroup>
@@ -96,16 +87,17 @@ $().ready(function() {
 		<tbody>
 		<c:choose>
 			<c:when test="${not empty generalPostList.generalPostList}">
-				<c:forEach items="${generalPostList.generalPostList}" var="myqnaboard">
+				<c:forEach items="${generalPostList.generalPostList}" var="myfreepost">
 					<tr>
 						<td style="font-weight: bold;">
-							<a href="/qnaboard/view/${myqnaboard.generalPostId}">
-								<c:out value="${myqnaboard.postTitle}" />
+							<a href="/freeboard/view/${myfreepost.generalPostId}">
+								<c:out value="${myfreepost.postTitle}" />
 							</a>
 						</td>
-						<td>${myqnaboard.memberVO.nickname}</td>
-						<td>${myqnaboard.viewCnt}</td>
-						<td>${myqnaboard.likeCnt}</td>
+						<td>${myfreepost.memberVO.nickname}</td>
+						<td>${myfreepost.postDate}</td>
+						<td>${myfreepost.viewCnt}</td>
+						<td>${myfreepost.likeCnt}</td>
 					</tr>
 				</c:forEach>
 			</c:when>
@@ -118,6 +110,5 @@ $().ready(function() {
 		</c:choose>
 		</tbody>
 	</table>
- -->
 </body>
 </html>

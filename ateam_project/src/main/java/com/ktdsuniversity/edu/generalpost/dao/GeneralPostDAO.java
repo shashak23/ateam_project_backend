@@ -29,6 +29,7 @@ public interface GeneralPostDAO {
 	
 	public int deleteOneFreeBoard(String generalPostId);
 
+	
 	// 질답게시판
 	public List<GeneralPostVO> getAllQnABoard();
 	

@@ -55,7 +55,7 @@
 			<input id = "postTitle" type = "text" name="postTitle" />
 			
 			<label for = "postContent"> 내용 </label>
-			<textarea name="text" id="postContent"></textarea>
+			<textarea name="postContent" id="editor"></textarea>
 		        <script>
 		          ClassicEditor.create( document.querySelector( '#editor' ), {
 		                  language: "ko"

@@ -117,12 +117,31 @@
                                         '<span class="re-comment">답변하기</span>' +
                                     '</div>'}
                             </div>`;
-                        console.log(commentTemplate);
+                      
                         var commentDom = $(commentTemplate);
-                        // commentDom.find('.update-comment').click(updatecomment);
-                        // commentDom.find('.delete-comment').click(deletecomment);
-                        // commentDom.find('.recommend-comment').click(recommendcomment);
-                        // commentDom.find('.re-comment').click(recomment); 
+                        commentDom.find('.update-comment').click(event(){
+                        	var comment = $(event.currentTarget).closet(".comment");
+                        	var commentId = comment.data("comment-id");
+                        	
+                        	var content = comment.find(".content").text();
+                        	$("txt-comment").val(content);
+                        	$("txt-comment").focus();
+                        	
+                        	$("txt-comment").data("mode","modify");
+                        	$("txt-comment").data("target",commentId);          	
+                        }
+                        
+                        commentDom.find('.delete-comment').click(event(){
+                        	deleteComment(comment.generalCommentId);
+                        	
+                        });
+                        commentDom.find('.recommend-comment').click(event(){
+                        	recommendComment(comment.generalCommentId);
+                        	
+                        });
+                        commentDom.find('.re-comment').click(event(){
+                        	replyToComment(comment.generalCommentId);
+                        });
 
                         $(".comment-items").append(commentDom);
                     }
