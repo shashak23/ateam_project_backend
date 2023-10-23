@@ -67,15 +67,5 @@ public class GeneralCommentServiceImpl implements GeneralCommentService{
 		}
 		return generalCommentDAO.likeOneComment(generalCommentId) > 0;
 	}
-	
-	
-	/*
-	 * @Override public boolean reportOneComment(String generalCommentId, String
-	 * commentWriter) { GeneralCommentVO generalCommentVO =
-	 * generalCommentDAO.getOneComment(generalCommentId);
-	 * if(!commentWriter.equals(generalCommentVO.getCommentWriter())) { throw new
-	 * PageNotFoundException("잘못된 접근입니다."); } return
-	 * generalCommentDAO.reportOneComment(generalCommentId) > 0; }
-	 */
 	}
 

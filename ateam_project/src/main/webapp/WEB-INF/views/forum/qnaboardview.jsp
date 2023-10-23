@@ -1,9 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+   pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
-   
 
-<script type='text/javascript'>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Insert title here</title>
+<script src="/js/lib/jquery-3.7.1.js"></script>
+<script type="text/javascript">
     $().ready(function() {
         // 댓글 수정
         var updateComment = function(event) {
@@ -58,7 +64,7 @@
             var comment = $(event.currentTarget).closest(".comment")
             var commentId = comment.data("commentId")
 
-            $("#text-comment").data("mode", "re-reply")
+            $("#text-comment").data("mode", "re-comment")
             $("#text-comment").data("target", commentId)
             $("#text-comment").focus()
         }
@@ -68,13 +74,13 @@
             // event.currentTarget => 이벤트가 발생한 대상.
             // 클릭한 대상.
             var comment = $(event.currentTarget).closest(".comment")
-            var commentId = reply.data("commentId")
+            var commentId = comment.data("commentId")
 
             $("#text-comment").removeData("mode")
             $("#text-comment").removeData("target")
 
             // 추천 ajax 요청.
-            $.get(`/qnaboard/comments/like/${generalCommentId}`, function(response) {
+            $.get('/qnaboard/comments/like/${generalCommentId}', function(response) {
                 var result = response.result
 
                 if (result) {
@@ -102,29 +108,29 @@
                         `<div class="comment"
                               data-comment-id="\${generalCommentId}"
                               style="padding-left: \${(comment.level - 1) * 40}px">
-                            <div class="author">
-                                \${reply.memberVO.name} (\${reply.email})
+                             <div class="author">
+                                \${comment.generalCommentVO.commentWriter} (\${comment.commentWriter})
                             </div>
                             <div class="like-count">
                                 추천수: \${comment.likeCnt}
-                            </div>
+                            </div> 
                             <div class="datetime">
-                                <span class="crtdt">등록: \${reply.crtDt}</span>
+                                <span class="crtdt">등록: \${postDate}</span>
                                 \${reply.mdfyDt != reply.crtDt ? 
-                                    `<span class="mdfydt">수정: \${reply.mdfyDt}</span>`
+                                    `<span class="mdfydt">수정: \${postDate}</span>`
                                     : ""}
-                            </div>
-                            <pre class="content">\${reply.content}</pre>
+                            </div> 
+                            <pre class="content">\${commenContent}</pre>
                             \${reply.email == "${sessionScope._LOGIN_USER_.email}" ? 
                                 `<div>
-                                    <span class="update-reply">수정</span>
-                                    <span class="delete-reply">삭제</span>
+                                    <span class="update-comment">수정</span>
+                                    <span class="delete-comment">삭제</span>
                                     <span class="re-comment">답변하기</span>
                                 </div>`
                                 : `<div>
                                     <span class="like-comment">추천하기</span>
                                     <span class="re-comment">답변하기</span>
-                                </div>`}
+                                </div>`} 
                         </div>`
 
                         var commentDom = $(commentTemplate)
@@ -150,9 +156,9 @@
             var target = $("#text-content").data("target")
 
             // 댓글 내용을 입력했다면 등록을 진행한다.
-            if (reply != "") {
+            if (comment != "") {
                 // Ajax 요청을 위한 데이터를 생성한다.
-                var body = { "content": comment }
+                var body = { "text-content": comment }
                 // 등록 URL을 생성한다.
                 var url = `/qnaboard/comments/create/${generalPostId}`
 
@@ -163,7 +169,7 @@
 
                 // 댓글 수정일 경우 URL을 변경한다.
                 if (mode == "update") {
-                    url = `/qnaboard/comments/update/\${target}`
+                    url = '/qnaboard/comments/update/\${target}'
                 }
 
                 // 등록을 진행한다.
@@ -178,17 +184,41 @@
                         $("#text-content").removeData("target")
                     }
                 })
-
             }
-
         })
-
-        // 취소버튼 클릭
-        // $("#btn-cancel-reply").click(function() {
-        //     $("#txt-reply").val("")
-        //     $("#txt-reply").removeData("mode")
-        //     $("#txt-reply").removeData("target")
-        // })
+        
+        // "신고" 버튼 클릭 시 모달 열기
+        $(".report-btn").click(function() {
+            let reportType = $("#reportQnABoard").val()
+             $("#report-modal").css("display", "block");
+         });
+          
+         console.log($(this).parent())
+         // 모달 내부 "취소" 버튼 클릭 시 모달 닫기
+         $("#cancle-modal").click(function() {
+             $("#report-modal").css("display", "none");
+         });
+     
+         // "좋아요" 버튼 클릭 시 이벤트 발생
+         $("#like-btn").click(function () {
+           // 클라이언트에서 AJAX 요청 생성
+             $.ajax({
+                method: "POST",
+                url: "/qnaboard/like",
+                data: { 
+                   "generalPostId": "${generalPostVO.generalPostId}",
+                   "likeCnt": ${generalPostVO.likeCnt}
+                },
+                success: function(response) {
+                   /* $("likeModal").hide(); */
+                   alert("좋아요가 눌렸습니다!!!!!!!!!!!!");
+                },
+                error: function(error){
+                   /* $("#likeModal").hide(); */
+                   alert("오류가 발생했습니다~~~~~~~~~~~~");
+                }
+             })
+         });
     });
 </script>
 </head>
@@ -283,43 +313,129 @@ border:1px solid lightgrey;
 pre.content {
 	margin: 0px;
 }
+
+.modal {
+    display: none; /* 초기에 모달 숨김 */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* 반투명 배경 */
+    z-index: 1;
+}
+
+/* 모달 내용 스타일 */
+.modal-content {
+    position: relative;
+    margin: 15% auto;
+    padding: 20px;
+    width: 60%;
+    background-color: #fff;
+    border-radius: 5px;
+}
+
+/* 모달 닫기 버튼 스타일 */
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #888;
+}
+
 </style>
 <body>
 
 	<jsp:include page="../member/membermenu.jsp"></jsp:include>
 
-	<h1>게시글 조회</h1>
+	 <h1>게시글 조회</h1>
+   
+   <!-- 좋아요 기능 -->
+   <button id="like-btn">좋아요</button>
+   
+   <!-- 신고 기능 -->
+   <button id="reportQnABoard" value="3" class="report-btn">신고</button>
+      <!-- 모달 창 -->
+         <div id="report-modal" class="modal">
+             <div class="modal-content">
+                 <span class="close" id="cancel-modal">취소</span>
+                    <!-- 모달 내용 추가 -->
+                  <h2>신고 내용</h2>
+                  <form name="reportVO" method="post" action="/report/view">
+                     <div>
+                        <label for="reportReason" >신고사유${reportVO.reportReason}
+                           <select name="reportReason">
+                              <option value="6">영리 및 홍보 목적</option>
+                              <option value="7">개인정보노출</option>
+                              <option value="8">음란성/선정성</option>
+                              <option value="9">같은 내용 반복(도배)</option>
+                              <option value="10">이용규칙위반</option>
+                              <option value="11">기타</option>
+                           </select>
+                        </label>
+               
+                        <label for = "reportReasonContent">신고 상세내용
+                        <textarea name="reportReasonContent" id="reportReasonContent">${reportVO.reportReasonContent}</textarea></label>
+                     
+                        <label for="attachedImg">첨부파일${reportVO.attachedImg}</label>
+                        <input id="attachedImg" type="file" name="attachedImg"/>
+                        
+                        <label for="reportTypeId">${reportVO.reportTypeId}</label>
+                        <input id="reportTypeId" type="hidden" name="reportTypeId" value="1"/>
+                        
+                        <label for="reportMemberEmail">${reportVO.reportMemberEmail}</label>
+                        <input id="reportMemberEmail" type="hidden" name="reportMember" value="${reportVO.reportMember}"/>
+                     
+                        <label for="receivedReportMemberEmail">${reportVO.receivedReportMemberEmail}</label>
+                        <input id="receivedReportMemberEmail" type="hidden" name="receivedReportMember" value="${generalPostVO.postWriter}"/>
+                     
+                        <label for="reportContentId">${reportVO.reportContentId}</label>
+                        <input id="reportContentId" type="hidden" name="reportContentId" value="${generalPostVO.generalPostId}"/>
+                     </div>
+                     <div class="btn-group">
+                        <div class="right-align">
+                           <input type="submit" value="완료" />
+            
+                        </div>
+                     </div>      
+                  </form>
+               </div>
+            </div>
+   
+   <form name="generalPostVO" method="post">
+      <div class="grid">
+         <label for="postTitle">제목</label>
+         <div>${generalPostVO.postTitle}</div>
 
-	<form name="generalPostVO" method="post" ModelAttribute="generalPostVO">
-		<div class="grid">
-			<label for="postTitle">제목</label>
-			<div>${generalPostVO.postTitle}</div>
+         <label for="postWriter">이메일</label>
+         <div>${generalPostVO.postWriter}</div>
 
-			<label for="postWriter">이메일</label>
-			<div>${generalPostVO.postWriter}</div>
+         <label for="viewCnt">조회수</label>
+         <div>${generalPostVO.viewCnt}</div>
 
-			<label for="viewCnt">조회수</label>
-			<div>${generalPostVO.viewCnt}</div>
+         <label for="postDate">등록일</label>
+         <div>${generalPostVO.postDate}</div>
 
-			<label for="postDate">등록일</label>
-			<div>${generalPostVO.postDate}</div>
+         <label for="postContent">내용</label>
+         <div>${generalPostVO.postContent}</div>
 
-			<label for="postContent">내용</label>
-			<div>${generalPostVO.postContent}</div>
+         <div class="btn-group">
+            <div class="right-align">
+                   <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq generalPostVO.postWriter}">
+               <div class="update_btn">
+                  <div class="btn">
+                     <a href="/qnaboard/update/${generalPostVO.generalPostId}">수정</a>
+                     <a href="/qnaboard/delete/${generalPostVO.generalPostId}">삭제</a>
+                  </div>
+               </div>
+               </c:if>
+            </div>
+         </div>
+      </div>
+   </form>
 
-			<div class="btn-group">
-				<div class="right-align">
-					<!-- <a href="/freeboard/update/${generalPostVO.generalPostId}">수정</a> -->
-					<div class="update_btn">
-						<div class="btn">
-							<a href="/qnaboard/update/${generalPostVO.generalPostId}">수정</a>
-							<a href="/qnaboard/delete/${generalPostVO.generalPostId}">삭제</a>
-						</div>
-					</div>
-				</div>
-			</div>
-		</div>
-	</form>
 	<div class="comments">
 		<div class="comment-header">
 			<h3>댓글 작성</h3>
@@ -336,7 +452,7 @@ pre.content {
         </div>
 	</div>
 
-	 <c:if test="${not empty sessionScope._LOGIN_USER_ 
+	<%--  <c:if test="${not empty sessionScope._LOGIN_USER_ 
                       && sessionScope._LOGIN_USER_.generalMemberEmail 
                       eq generalPostVO.generalMemberVO.generalMemberEmail}">
             <div class="btn-group">
@@ -345,6 +461,6 @@ pre.content {
                    
                 </div>
             </div>
-        </c:if> 
+        </c:if>  --%>
 </body>
 </html>

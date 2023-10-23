@@ -13,7 +13,7 @@
 	      action="/companymypost/list">
 	      	<div>
 			    <select name="searchType">
-			        <option value="myPostTitle" ${searchAlgorithmQuestionVO.searchType eq 'algorithmTitle' ? 'selected':''}>제목</option>
+			        <option value="myPostTitle" ${searchCompanyMyPostVO.searchType eq 'algorithmTitle' ? 'selected':''}>제목</option>
 			        <option value="myPostContent" ${searchAlgorithmQuestionVO.searchType eq 'algorithmContent' ? 'selected':''}>내용</option>
 			      
 			    </select>

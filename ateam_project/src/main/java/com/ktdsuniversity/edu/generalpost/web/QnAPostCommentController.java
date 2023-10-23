@@ -50,7 +50,7 @@ public class QnAPostCommentController {
 			@ModelAttribute GeneralCommentVO generalCommentVO,
 			@SessionAttribute("_LOGIN_USER_") GeneralMemberVO generalMemberVO) {
 		generalCommentVO.setGeneralPostId(generalPostId);
-		generalCommentVO.setCommentWriter(generalMemberVO.getGeneralMemberEmail());
+		generalCommentVO.setCommentWriter(generalCommentVO.getCommentWriter());
 		boolean isSuccess = generalCommentService.createNewComment(generalCommentVO);
 
 		Map<String, Object> resultMap = new HashMap<>();
@@ -90,11 +90,4 @@ public class QnAPostCommentController {
 		resultMap.put("result", isSuccess);
 		return resultMap;
 	}
-
-	// 댓글 신고
-//	@PostMapping ("/qnaboard/comments/report/{generalCommentId}")
-//	public Map<String,Object> doReportComment(@PathVariable String generalCommentId,
-//											  @SessionAttribute("_LOGIN_USER_")GeneralMemberVO generalMemberVO){
-//		
-//	}
 }
