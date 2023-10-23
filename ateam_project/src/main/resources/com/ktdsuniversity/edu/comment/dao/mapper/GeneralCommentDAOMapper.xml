@@ -38,27 +38,27 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="getAllComments"
             parameterType="string"
             resultMap="generalCommentVOMap">
-               SELECT 
-               GC.GENERAL_COMMENT_ID
-             , GC.COMMENT_WRITER
-             , GC.GENERAL_POST_ID
-             , GC.COMMENT_CONTENT
-             , GC.POST_DATE
-             , GC.UPPER_COMMENT_ID
-             , GC.LIKE_CNT
-             , GC.DELETE_YN
-          FROM GENERAL_COMMENT GC
-         INNER JOIN GENERAL_POST GP
-            ON GC.GENERAL_POST_ID = GP.GENERAL_POST_ID 
-          WHERE GC.GENERAL_POST_ID = #{_parameter}
-       START WITH GC.UPPER_COMMENT_ID = 0
-         CONNECT BY PRIOR GC.GENERAL_COMMENT_ID = GC.UPPER_COMMENT_ID
+	               SELECT 
+	               GC.GENERAL_COMMENT_ID
+	             , GC.COMMENT_WRITER
+	             , GC.GENERAL_POST_ID
+	             , GC.COMMENT_CONTENT
+	             , GC.POST_DATE
+	             , GC.UPPER_COMMENT_ID
+	             , GC.LIKE_CNT
+	             , GC.DELETE_YN
+	          FROM GENERAL_COMMENT GC
+	         INNER JOIN GENERAL_POST GP
+	            ON GC.GENERAL_POST_ID = GP.GENERAL_POST_ID 
+	          WHERE GC.GENERAL_POST_ID = #{_parameter}
+	       START WITH GC.UPPER_COMMENT_ID IS NULL
+	         CONNECT BY PRIOR GC.GENERAL_COMMENT_ID = GC.UPPER_COMMENT_ID
     </select>
     <select id="getOneComment"
             parameterType="string"
             resultMap="generalCommentVOMap">
         SELECT GC.GENERAL_COMMENT_ID
-             , GC.COMMENT_WRITER_ID
+             , GC.COMMENT_WRITER
              , GC.GENERAL_POST_ID
              , GC.COMMENT_CONTENT
              , GC.POST_DATE
@@ -68,32 +68,30 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              , GM.GENERAL_MEMBER_EMAIL
           FROM GENERAL_COMMENT GC
          INNER JOIN GENERAL_MEMBER GM
-            ON GC.COMMENT_WRITER_ID = GM.GENERAL_MEMBER_EMAIL
-         WHERE GC.GENERAL_COMMENT = #{_parameter}
+            ON GC.COMMENT_WRITER = GM.GENERAL_MEMBER_EMAIL
+         WHERE GC.GENERAL_COMMENT_ID = #{generalCommentId}
     </select>
     
-    <insert id="createNewComment"
-            parameterType="com.ktdsuniversity.edu.generalpost.vo.GeneralCommentVO">
-        INSERT INTO GENERAL_COMMENT (
-             , GENERAL_COMMENT_ID
-		     , COMMENT_WRITER
-		     , GENERAL_POST_ID
-		     , COMMENT_CONTENT
-		     , POST_DATE
-		     , UPPER_COMMENT_ID
-		     , LIKE_CNT
-		     , DELETE_YN)
-		VALUES (
-		    SEQ_GENERAL_COMMENT_PK.NEXTVAL
-		     , #{generalCommentId}
-		     , #{commentWriterId}
-		     , #{generalPostId}
-		     , #{commentContent}
-		     , SYSDATE
-		     , #{upperCommentId}
-		     , #{likeCnt}
-		     , 'N')
-            </insert>
+    <insert id="createNewComment" parameterType="com.ktdsuniversity.edu.generalpost.vo.GeneralCommentVO">
+    INSERT INTO GENERAL_COMMENT (
+            GENERAL_COMMENT_ID
+           , COMMENT_WRITER
+           , GENERAL_POST_ID
+           , COMMENT_CONTENT
+           , POST_DATE
+           , UPPER_COMMENT_ID
+           , LIKE_CNT
+           , DELETE_YN)
+      VALUES (
+            'GC-'||TO_CHAR(SYSDATE,'YYYYMMDD')||'-'||LPAD(SEQ_GENERAL_COMMENT_PK.NEXTVAL,6,'0')
+           , #{commentWriter}
+           , #{generalPostId}
+           , #{commentContent}
+           , SYSDATE
+           , #{upperCommentId}
+           , 0
+           , 'N')
+	</insert>
     <delete id="deleteOneComment"
             parameterType="string">
        DELETE

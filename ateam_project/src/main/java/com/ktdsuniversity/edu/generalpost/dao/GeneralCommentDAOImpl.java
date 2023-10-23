@@ -53,15 +53,12 @@ public class GeneralCommentDAOImpl extends SqlSessionDaoSupport implements Gener
         return getSqlSession().insert("reportOneComment", generalpostid);
     }
 
-	@Override
-	public int createNewComment(String generalPostId, GeneralCommentVO generalCommentVO) {
-		
-		return 0;
-	}
-
+    @Override
+    public int createNewComment(String  generalpostid, GeneralCommentVO generalCommentVO) {	
+        return getSqlSession().insert("createNewComment", generalCommentVO);
+    }
 	@Override
 	public int updateOneComment(GeneralCommentVO generalCommentVO) {
-		
-		return 0;
+		return getSqlSession().update("updateOneComment", generalCommentVO);
 	}
 }

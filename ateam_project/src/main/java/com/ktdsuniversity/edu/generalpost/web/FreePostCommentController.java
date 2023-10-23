@@ -42,15 +42,18 @@ public class FreePostCommentController {
 		Map<String, Object> resultMap = new HashMap<>();
 		resultMap.put("count", commentList.size());
 		resultMap.put("comments", commentList);
-		//return resultMap;
-	return ResponseEntity.ok(resultMap);
+		return ResponseEntity.ok(resultMap);
+	// return resultMap;
 	}
+
+	
+	
 
 	// 댓글 작성
 	@PostMapping("/freeboard/comment/write/{generalPostId}")
 	public ResponseEntity<Map<String, Object>> createComment(
 	    @PathVariable String generalPostId,
-	    GeneralCommentVO generalCommentVO,
+	     GeneralCommentVO generalCommentVO,
 	    @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 
 	    generalCommentVO.setGeneralPostId(generalPostId);
@@ -60,6 +63,7 @@ public class FreePostCommentController {
 	    Map<String, Object> resultMap = new HashMap<>();
 	    resultMap.put("result", isSuccess);
 	    return ResponseEntity.ok(resultMap);
+	    //return resultMap;
 	}
 
 

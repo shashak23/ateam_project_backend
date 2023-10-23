@@ -1,5 +1,6 @@
 /**
  * 수정자: 장보늬(23023-10-22)
+수정자:장윤경(postWriterId로변경)
  * **/
 package com.ktdsuniversity.edu.generalpost.vo;
 
@@ -10,7 +11,7 @@ import jakarta.validation.constraints.NotBlank;
 
 public class GeneralPostVO {
 	private String generalPostId;
-	private String postWriter;
+	private String postWriterId;
 	private String boardId;
 	@NotBlank(message = "제목을 입력해 주세요.")
 	private String postTitle;
@@ -36,11 +37,11 @@ public class GeneralPostVO {
 	}
 
 	public String getPostWriter() {
-		return postWriter;
+		return postWriterId;
 	}
 
 	public void setPostWriter(String postWriter) {
-		this.postWriter = postWriter;
+		this.postWriterId = postWriterId;
 	}
 
 	public String getBoardId() {

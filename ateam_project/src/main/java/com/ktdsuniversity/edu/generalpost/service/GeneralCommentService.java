@@ -14,7 +14,7 @@ import com.ktdsuniversity.edu.generalpost.vo.GeneralCommentVO;
 public interface GeneralCommentService {
 
 	public List<GeneralCommentVO> getAllComments(String generalPostId);
-	public boolean createNewComment(String generalPostId, GeneralCommentVO generalCommentVO);
+	public boolean createNewComment(String generalpostId, GeneralCommentVO generalCommentVO);
 	public boolean doUpdateComment(String generalPostId, GeneralCommentVO generalCommentVO);
 	public boolean deleteOneComment(String generalPostId, String commentWriter);
 	public boolean likeOneComment(String generalPostId, String commentWriter);

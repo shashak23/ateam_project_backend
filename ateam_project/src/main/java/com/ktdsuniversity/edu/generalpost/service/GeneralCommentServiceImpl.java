@@ -34,8 +34,8 @@ public class GeneralCommentServiceImpl implements GeneralCommentService{
 	}
 	@Transactional
 	@Override
-	public boolean createNewComment(String generalCommentId, GeneralCommentVO generalCommentVO) {
-		int insertCount = generalCommentDAO.createNewComment(generalCommentId, generalCommentVO);
+	public boolean createNewComment(String generalPostId, GeneralCommentVO generalCommentVO) {
+		int insertCount = generalCommentDAO.createNewComment(generalPostId, generalCommentVO);
 		return insertCount > 0;
 	}
 	@Transactional
