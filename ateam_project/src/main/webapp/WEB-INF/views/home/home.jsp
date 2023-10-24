@@ -278,6 +278,8 @@
     border: 1px solid var(--gray);
     border-radius: 10px;
     padding: 10px;
+    cursor: default;
+
   }
 
   .body_right .hashtag_wrap .hashtag {
@@ -289,6 +291,7 @@
     border: none;
     font-size: var(--font-x-small);
     text-align: center;
+    cursor: default;
   }
 
   .body_right .hashtag_wrap .hashtag:hover {
@@ -368,6 +371,8 @@
   $('.home_edit_container').mouseleave(function() {
     $('.edit_btn').css('background-color', '')
   })
+
+  // 게시글 클릭 시 단건 조회 창으로 이동
 
   // 무한 스크롤 컨텐츠
   $().ready(function() {

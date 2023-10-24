@@ -1,3 +1,8 @@
+/**
+ * 작성자: 김태현
+ * 작성일: 2023-10-20
+ * 내용: 메인화면을 출력하고 관련된 API를 가지는 클래스입니다.
+ */
 package com.ktdsuniversity.edu.home.web;
 
 

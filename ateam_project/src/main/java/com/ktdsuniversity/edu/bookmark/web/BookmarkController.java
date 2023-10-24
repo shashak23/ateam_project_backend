@@ -29,6 +29,7 @@ public class BookmarkController {
 	
 	@GetMapping("/bookmark/general-post")
 	public Map<String, Object> getAllGeneralPostBookmark(@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+		System.out.println("이메일: " + memberVO.getEmail());
 		BookmarkListVO bookmarkListVO = bookmarkService.getAllBookmark(memberVO.getEmail());
 		List<BookmarkVO> bookmarkList = bookmarkListVO.getBookmarkList();
 		

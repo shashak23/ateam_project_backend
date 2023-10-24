@@ -14,7 +14,7 @@
 					 autoMapping="true">
 			<id column="EMAIL" property="email" />
 		</association>
-		<association property="GeneralPostVO"
+		<association property="generalPostVO"
 					 javaType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO"
 					 autoMapping="true">
 			<id column="GENERAL_POST_ID" property="generalPostId" />
