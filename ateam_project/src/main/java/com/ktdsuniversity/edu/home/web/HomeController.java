@@ -9,20 +9,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import com.ktdsuniversity.edu.generalpost.service.GeneralPostService;
-import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
-import com.ktdsuniversity.edu.home.service.HomeBoardService;
-
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ktdsuniversity.edu.algorithmexplanation.service.AlgorithmExplanationService;
 import com.ktdsuniversity.edu.algorithmexplanation.vo.AlgorithmExplanationListVO;
@@ -31,7 +26,11 @@ import com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionListVO;
 import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
 import com.ktdsuniversity.edu.companynews.service.CompanyNewsService;
 import com.ktdsuniversity.edu.companynews.vo.CompanyNewsListVO;
+import com.ktdsuniversity.edu.generalpost.service.GeneralPostService;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostListVO;
+import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
+import com.ktdsuniversity.edu.home.service.HomeBoardService;
+import com.ktdsuniversity.edu.home.vo.HomeBoardVO;
 import com.ktdsuniversity.edu.member.service.MemberService;
 import com.ktdsuniversity.edu.member.vo.MemberListVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
@@ -82,6 +81,15 @@ public class HomeController {
 		RankingList.addAll(homeBoardService.getWeeklyRanking(date));
 		resultMap.put("rankings", RankingList);
 		return resultMap;
+	}
+	
+	@ResponseBody
+	@GetMapping("/home/hashtag/{postId}")
+	public List<HomeBoardVO> getPostHashtag(@PathVariable String postId) {
+//		List<HomeBoardVO> hashtagList = new ArrayList<>();
+//		hashtagList.addAll(homeBoardService.getHashtag(postId));
+		
+		return homeBoardService.getHashtag(postId);
 	}
 		
 	@GetMapping("/home/search")

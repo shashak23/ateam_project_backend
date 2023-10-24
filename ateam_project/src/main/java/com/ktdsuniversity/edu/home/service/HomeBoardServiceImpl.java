@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
 import com.ktdsuniversity.edu.home.dao.HomeBoardDAO;
+import com.ktdsuniversity.edu.home.vo.HomeBoardVO;
 
 @Service
 public class HomeBoardServiceImpl implements HomeBoardService {
@@ -20,5 +21,10 @@ public class HomeBoardServiceImpl implements HomeBoardService {
 	
 	public List<GeneralPostVO> getWeeklyRanking(String date) {
 		return homeBoardDAO.getWeeklyRanking(date);
+	}
+
+	@Override
+	public List<HomeBoardVO> getHashtag(String postId) {
+		return homeBoardDAO.getHashtag(postId);
 	}
 }

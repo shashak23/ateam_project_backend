@@ -72,7 +72,7 @@
 			 , POST_ID
 			 , BOOKMARK_YN)
 		VALUES (
-			   'BM-' || TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_BOOKMARK_PK.NEXTVAL, 6, 0)
+			   'BK-' || TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_BOOKMARK_PK.NEXTVAL, 6, 0)
 			 , #{generalMemberEmail}
 			 , #{boardId}
 			 , #{postId}
