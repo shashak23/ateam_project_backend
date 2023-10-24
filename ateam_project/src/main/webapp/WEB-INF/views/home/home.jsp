@@ -161,7 +161,7 @@
 	.body_left .content_container .q_title > div .title {
 		font-size: var(--big);
 		margin-right: 10px;
-		color: var(--deep-darkdark);
+		color: var(--deep-dark);
 	}
 
 	.body_left .content_container .q_title > div .comment_number {
@@ -212,10 +212,91 @@
 
 	/* 오른쪽 */
 	.body_container .body .body_right {
-		border: 1px solid;
 		width: 250px;
 	}
+
+  .body_right .ranking_wrap {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid var(--gray);
+    border-radius: 10px;
+    margin-top: 20px;
+  }
+
+  .body_right .ranking_wrap h2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 0;
+    border-bottom: 2px solid var(--gray);
+    width: 100%;
+  }
+
+  .body_right .ranking_wrap ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 700px;
+    margin-bottom: 20px;
+  }
+
+  .body_right .ranking_wrap ul .hot_post {
+    flex: 1;
+    font-size: var(--font-medium);
+    width: 100%;
+    border-bottom: 1px solid var(--light-gray);
+    transition: all 0.1s;
+    color: var(--dark);
+    cursor: pointer;
+  }
+
+  .body_right .ranking_wrap ul .hot_post:hover {
+    background-color: var(--hashtag-blue);
+  }
+
+  .body_right .ranking_wrap ul .hot_post a {
+    width: 250px;
+    height: 100%;
+    font-size: var(--font-small);
+    color: var(--dark);
+    display: block;
+    padding: 0 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    line-height: 70px;
+  }
+
+  .body_right .hashtag_wrap {
+    display: flex;
+    width: 250px;
+    flex-wrap: wrap;
+    margin-top: 30px;
+    border: 1px solid var(--gray);
+    border-radius: 10px;
+    padding: 10px;
+  }
+
+  .body_right .hashtag_wrap .hashtag {
+    background-color: var(--gray);
+    color: var(--dark-gray);
+    margin: 5px;
+    padding: 3px 8px;
+    border-radius: 20px;
+    border: none;
+    font-size: var(--font-x-small);
+    text-align: center;
+  }
+
+  .body_right .hashtag_wrap .hashtag:hover {
+    box-shadow: 0 0 2px var(--dark-gray);
+    cursor: pointer;
+  }
 </style>
+
   <!-- 메인 컨텐츠 영역 -->
   <section class="body_container">
     <div class="body">
@@ -228,7 +309,13 @@
         </div>
       </div>
       <div class="body_right">
-        오른쪽
+        <div class="ranking_wrap">
+          <h2>주간랭킹</h2>
+          <ul class="ranking_list">
+          </ul>
+        </div>
+        <div class="hashtag_wrap">
+        </div>
       </div>
     </div>
   </section>
@@ -282,7 +369,6 @@
     $('.edit_btn').css('background-color', '')
   })
 
-          
   // 무한 스크롤 컨텐츠
   $().ready(function() {
     let skip = 0
@@ -310,7 +396,7 @@
                 </div>
                 <div class="flex_right">
                   <div class="utility">
-                    <button><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><style>svg{fill: var(--blue)}</style><path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/></svg></button>
+                    <button><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><style>svg{fill: var(--gray)}</style><path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/></svg></button>
                     <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 128 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M64 360a56 56 0 1 0 0 112 56 56 0 1 0 0-112zm0-160a56 56 0 1 0 0 112 56 56 0 1 0 0-112zM120 96A56 56 0 1 0 8 96a56 56 0 1 0 112 0z"/></svg>
                   </div>
                 </div>
@@ -335,10 +421,12 @@
                 </ul>
               </div>
             </article>`
+            if(article.boardId === 'CC-20231017-000029') {
+              $('.big_letter').text('').css('margin-right', '0px')
+            }
             $('.body_left').append(template)
           }
           skip += 10
-          console.log(skip)
         }
 
         $(window).scroll(function() {
@@ -396,6 +484,42 @@
       })
     }
     loadContents()
+
+    // 랭킹 컨텐츠
+
+    // 월요일마다 갱신함
+    const today = new Date()
+    const currentDay = today.getDay() // (0: 일요일, 1:월요일)
+    const targetDay = 0
+    const daysAfterTargetDay = currentDay - targetDay
+
+    const prevMonday = new Date(today)
+    prevMonday.setDate(today.getDate() - daysAfterTargetDay + 1)
+    
+    const year = prevMonday.getFullYear()
+    const month = String(prevMonday.getMonth() + 1).padStart(2, '0')
+    const day = String(prevMonday.getDate()).padStart(2, '0')
+
+    const formattedMonday = year + '-' + month + '-' + day
+
+    $.get('/home/ranking/\${formattedMonday}', function(response) {
+      let list = response.rankings
+      for (let i = 0; i < 10; i++) {
+        let ranking_template = `
+          <li class="hot_post">
+          <a href="#" class="incomplete">\${list[i].postTitle}</a>
+          </li>`
+        $('.ranking_list').append(ranking_template)
+      }
+    })
+
+    // 해시태그 가져오기
+    $.get('/code/해시태그', function(response) {
+      for (let i = 0; i < response.length; i++) {
+        let hash_template = `<button class="hashtag incomplete">#\${response[i].codeContent}</button>`
+        $('.hashtag_wrap').append(hash_template)
+      }
+    })
   })
 </script>
 </html>

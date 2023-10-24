@@ -20,6 +20,4 @@ public interface GeneralCommentService {
 	public boolean likeOneComment(String generalPostId, String commentWriter);
 	boolean updateOneComment(String generalPostId,GeneralCommentVO generalCommentVO);
 	//public boolean reportOneComment(String generalCommentId, String commentWriter);
-	
-	
 }

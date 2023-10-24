@@ -1,0 +1,20 @@
+<!-- 작성자: 김태현
+	 작성일: 2023-10-23
+	 내용: 주간 랭킹을 가져올 쿼리입니다. -->
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ktdsuniversity.edu.home.dao.HomeBoardDAO">
+	<select id="getWeeklyRanking"
+			parameterType="string"
+			resultType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
+		SELECT *
+		  FROM GENERAL_POST GP
+		 WHERE TO_CHAR(POST_DATE, 'YYYY-MM-DD') > #{_parameter}
+		 ORDER BY VIEW_CNT DESC
+	</select>
+	
+	
+</mapper>

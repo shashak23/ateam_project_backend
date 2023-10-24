@@ -16,7 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ktdsuniversity.edu.AteamProjectApplication;
-import com.ktdsuniversity.edu.exceptions.PageNotFoundException;
+import com.ktdsuniversity.edu.exceptions.AjaxPageNotFoundException;
 import com.ktdsuniversity.edu.generalpost.dao.GeneralCommentDAO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralCommentVO;
 
@@ -43,7 +43,7 @@ public class GeneralCommentServiceImpl implements GeneralCommentService{
 	public boolean updateOneComment(String generalCommentId, GeneralCommentVO generalCommentVO) {
 	    GeneralCommentVO originCommentVO = generalCommentDAO.getOneComment(generalCommentVO.getGeneralCommentId());
 	    if (!generalCommentVO.getCommentWriter().equals(originCommentVO.getCommentWriter())) {
-	        throw new PageNotFoundException("잘못된 접근입니다.");
+	        throw new AjaxPageNotFoundException("잘못된 접근입니다.");
 	    }
 	    int updateCount = generalCommentDAO.updateOneComment(generalCommentVO);
 	    return updateCount > 0;
@@ -53,7 +53,7 @@ public class GeneralCommentServiceImpl implements GeneralCommentService{
 	public boolean deleteOneComment(String generalCommentId, String commentWriter) {
 		GeneralCommentVO generalCommentVO = generalCommentDAO.getOneComment(generalCommentId);
 		if(!commentWriter.equals(generalCommentVO.getCommentWriter())) {
-				throw new PageNotFoundException("잘못된 접근입니다.");
+				throw new AjaxPageNotFoundException("잘못된 접근입니다.");
 		}
 		int deleteCount= generalCommentDAO.deleteOneComment(generalCommentId);
 		return deleteCount > 0;
@@ -61,11 +61,12 @@ public class GeneralCommentServiceImpl implements GeneralCommentService{
 	@Transactional
 	@Override
 	public boolean likeOneComment(String generalCommentId, String commentWriter) {
-		GeneralCommentVO generalCommentVO = generalCommentDAO.getOneComment(generalCommentId);
-		if(commentWriter.equals(generalCommentVO.getCommentWriter())) {
-			throw new PageNotFoundException("잘못된 접근입니다.");
-		}
-		return generalCommentDAO.likeOneComment(generalCommentId) > 0;
+//		GeneralCommentVO generalCommentVO = generalCommentDAO.getOneComment(generalCommentId);
+		int isRecommend = generalCommentDAO.likeOneComment(generalCommentId);
+//		if(commentWriter.equals(generalCommentVO.getCommentWriter())) {
+//			throw new AjaxPageNotFoundException("잘못된 접근입니다.");
+//		}
+		return isRecommend > 0;
 	}
 	@Override
 	public boolean doUpdateComment(String generalPostId, GeneralCommentVO generalCommentVO) {
@@ -77,6 +78,12 @@ public class GeneralCommentServiceImpl implements GeneralCommentService{
 	
 	
 	}
+	@Override
+	public boolean doUpdateComment(String generalPostId, GeneralCommentVO generalCommentVO) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	
 	
 	
 	/*
@@ -87,4 +94,4 @@ public class GeneralCommentServiceImpl implements GeneralCommentService{
 	 * PageNotFoundException("잘못된 접근입니다."); } return
 	 * generalCommentDAO.reportOneComment(generalCommentId) > 0; }
 	 */
-	
+

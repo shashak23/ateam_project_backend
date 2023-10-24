@@ -98,11 +98,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          FROM GENERAL_COMMENT
         WHERE GENERAL_COMMENT_ID = #{_parameter}
     </delete>
-    <update id="recommendOneComment"
+    <update id="likeOneComment"
             parameterType="string">
         UPDATE GENERAL_COMMENT
            SET LIKE_CNT = LIKE_CNT + 1
-         WHERE GENERAL_COMMENT_ID = #{_parameter}        
+         WHERE GENERAL_COMMENT_ID = #{_parameter}
     </update>
   <!--   <insert id="reportOneComment"
             parameterType="com.ktdsuniversity.edu.generalpost.vo.GeneralCommentVO">

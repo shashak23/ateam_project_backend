@@ -80,7 +80,7 @@ public class FreePostCommentController {
 	    return ResponseEntity.ok(resultMap);
 	}
 	// 댓글 삭제
-	@PostMapping("/freeboard/comment/delete/{generalPostId}")
+	@GetMapping("/freeboard/comment/delete/{generalPostId}")
 	public ResponseEntity<Map<String, Object>> deleteComment(@PathVariable String generalPostId,
 			@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 		boolean isSuccess = generalCommentService.deleteOneComment(generalPostId, memberVO.getEmail());
@@ -91,8 +91,8 @@ public class FreePostCommentController {
 	}
 
 	// 댓글 좋아요
-	@PostMapping("/freeboard/comment/like/{generalPostId}")
-	public ResponseEntity<Map<String, Object>> likeComment(@PathVariable String generalPostId,
+	@GetMapping("/freeboard/comment/like/{generalPostId}")
+	public ResponseEntity<Map<String, Object>> likeOneComment(@PathVariable String generalPostId,
 			@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 		boolean isSuccess = generalCommentService.likeOneComment(generalPostId, memberVO.getEmail());
 
