@@ -21,7 +21,7 @@ import com.ktdsuniversity.edu.generalpost.web.FreePostController;
 public class GeneralPostServiceImpl implements GeneralPostService{
 
 
-	private Logger log = LoggerFactory.getLogger(FreePostController.class);
+private Logger log = LoggerFactory.getLogger(FreePostController.class);
 	
 	@Autowired
 	private GeneralPostDAO generalPostDAO;
@@ -35,14 +35,15 @@ public class GeneralPostServiceImpl implements GeneralPostService{
 		
 		generalPostListVO.setBoardCnt( generalPostDAO.getBoardAllCount());
 		generalPostListVO.setGeneralPostList( generalPostDAO.getAllFreeBoard());
-		return generalPostListVO;	
+		return generalPostListVO;
 	}
 
 	@Transactional
 	@Override
 	public boolean createNewFreeBoard(GeneralPostVO generalPostVO) {
+		log.debug("2-----서비스---------------------------");		
 		int boardCount = generalPostDAO.createNewFreeBoard(generalPostVO);
-
+		
 		return boardCount > 0;
 	}
 
@@ -50,7 +51,6 @@ public class GeneralPostServiceImpl implements GeneralPostService{
 	@Override
 	public GeneralPostVO getOneFreeBoard(String generalPostId) {
 		GeneralPostVO result = null;
-		
 		result = generalPostDAO.getOneFreeBoard(generalPostId);
 		
 		return result;
@@ -70,7 +70,12 @@ public class GeneralPostServiceImpl implements GeneralPostService{
 		
 		return deleteCount > 0;
 	}
-
+	@Transactional
+	@Override
+	public boolean likeFreeBoard(GeneralPostVO generalPostVO) {
+		int likeCount = generalPostDAO.updateLikeFreePost(generalPostVO);
+		return likeCount > 0;
+	}
 	
 	// 질답게시판 
 	@Transactional
@@ -99,7 +104,6 @@ public class GeneralPostServiceImpl implements GeneralPostService{
 	public GeneralPostVO getOneQnABoard(String generalPostId) {
 		GeneralPostVO result = null;
 		
-		log.debug("2-----서비스---------------------------");
 		result = generalPostDAO.getOneQnABoard(generalPostId);
 		
 		return result;
@@ -120,7 +124,12 @@ public class GeneralPostServiceImpl implements GeneralPostService{
 		return deleteCount > 0;
 	}
 
-
+	@Transactional
+	@Override
+	public boolean likeQnABoard(GeneralPostVO generalPostVO) {
+		int likeCount = generalPostDAO.updateLikeQnAPost(generalPostVO);
+		return likeCount > 0;
+	}
 	// 내게시글 조회
 	@Override
 	public GeneralPostListVO getMyPost(GeneralPostVO generalPostVO) {

@@ -29,6 +29,7 @@ public interface GeneralPostDAO {
 	
 	public int deleteOneFreeBoard(String generalPostId);
 
+	public int updateLikeFreePost(GeneralPostVO generalPostVO);
 	
 	// 질답게시판
 	public List<GeneralPostVO> getAllQnABoard();
@@ -41,6 +42,7 @@ public interface GeneralPostDAO {
 	
 	public int deleteOneQnABoard(String generalPostId);
 
+	public int updateLikeQnAPost(GeneralPostVO generalPostVO);
 	// 내 게시글 조회
 	public List<GeneralPostVO> getMyPost(GeneralPostVO GeneralPostVO);
 	

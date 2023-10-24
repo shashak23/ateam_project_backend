@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ktdsuniversity.edu.companyrecruit.dao.CompanyRecruitDAO">
+	<!-- resultMap -->
+	
+	
+	<!-- 게시글 수 -->
+	<select id="getBoardAllCount"
+			resultType="_int">
+		SELECT COUNT(1)
+		  FROM COMPANY_RECRUIT CR
+		 INNER JOIN MEMBER M
+		    ON M.EMAIL = CR.POST_WRITER
+	</select>
+	
+	<!-- 조회 카운트 -->
+	
+	
+	<!-- 전체 조회 -->
+	<select id="getAllBoard">
+		SELECT CR.COMPANY_RECRUIT_POST_ID
+			 , CR.POST_WRITER
+			 , CR.POST_TITLE
+			 , CR.POST_CONTENT
+			 , CR.POST_DATE
+			 , CR.RECRUIT_START_DATE
+			 , CR.RECRUIT_END_DATE
+			 , CR.RECRUIT_PROGRESS_YN
+			 , CR.RECRUIT_TYPE
+			 , CR.MIN_CAREER_YEAR
+			 , CR.MAX_CAREER_YEAR
+			 , CR.VIEW_CNT
+			 , CR.LIKE_CNT
+			 , CR.DELETE_YN
+		     , M.NICKNAME
+		  FROM COMPANY_RECRUIT CR
+		 INNER JOIN MEMBER M
+		    ON M.EMAIL = CR.POST_WRITER
+		 WHERE DELETE_YN = 'N'
+		 ORDER BY POST_DATE DESC
+	</select>
+	
+	<!-- 등록 -->
+	
+	
+	<!-- 단건 조회 -->
+	
+	
+	<!-- 수정 -->
+	
+	
+	<!-- 삭제 -->
+
+</mapper>
