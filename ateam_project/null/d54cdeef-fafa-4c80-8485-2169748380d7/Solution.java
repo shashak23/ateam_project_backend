@@ -1,0 +1,1 @@
+class Solution { ; ;public long solution() { ; ; ; ;long answer = 1111110; ; ; ; ;return answer; ; ;} }

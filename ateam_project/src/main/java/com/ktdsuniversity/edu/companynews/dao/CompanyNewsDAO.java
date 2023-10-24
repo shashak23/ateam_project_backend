@@ -8,15 +8,19 @@ package com.ktdsuniversity.edu.companynews.dao;
 
 import java.util.List;
 
+import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
 import com.ktdsuniversity.edu.companynews.vo.CompanyNewsVO;
+import com.ktdsuniversity.edu.companynews.vo.SearchCompanyNewsVO;
 
 public interface CompanyNewsDAO {
 	
 	// DB에 저장된 모든 기업소식 게시글의 수를 조회
-	public int getCompanyNewsAllCount();
+	public int getCompanyNewsAllCount(SearchCompanyNewsVO searchCompanyNewsVO);
 	
 	// DB에 저장된 모든 기업소식 게시글의 목록을 조회
 	public List<CompanyNewsVO> getAllCompanyNews();
+	
+	public List<CompanyNewsVO> searchAllCompanyNews(SearchCompanyNewsVO searchCompanyNewsVO);
 	
 	// DB에 새로운 기업소식 게시글을 등록한다.
 	public int createNewCompanyNews(CompanyNewsVO companyNewsVO);
@@ -31,4 +35,7 @@ public interface CompanyNewsDAO {
 	
 	public int deleteOneCompanyNews(String companyNewsPostId);
 
+	// 통합검색
+	public List<CompanyNewsVO> searchAllCompanyNewsByKeyword(AbstractSearchVO abstractSearchVO);
+	
 }

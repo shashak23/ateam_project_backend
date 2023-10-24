@@ -28,6 +28,7 @@ import com.ktdsuniversity.edu.beans.FileHandler;
 import com.ktdsuniversity.edu.companynews.service.CompanyNewsService;
 import com.ktdsuniversity.edu.companynews.vo.CompanyNewsListVO;
 import com.ktdsuniversity.edu.companynews.vo.CompanyNewsVO;
+import com.ktdsuniversity.edu.companynews.vo.SearchCompanyNewsVO;
 import com.ktdsuniversity.edu.exceptions.PageNotFoundException;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 import com.ktdsuniversity.edu.util.XssIgnoreUtil;
@@ -46,9 +47,11 @@ public class CompanyNewsController {
 	private CompanyNewsService companyNewsService;
 	
 	@GetMapping("/news/list")
-	public String viewCompanyNewsList(Model model) {
-		CompanyNewsListVO companyNewsListVO = companyNewsService.getAllCompanyNews();
+	public String viewCompanyNewsList(@ModelAttribute SearchCompanyNewsVO searchCompanyNewsVO
+			                        , Model model) {
+		CompanyNewsListVO companyNewsListVO = companyNewsService.getAllCompanyNews(searchCompanyNewsVO);
 		model.addAttribute("companyNewsList", companyNewsListVO);
+		model.addAttribute("searchCompanyNewsVO", searchCompanyNewsVO);
 		return "company/news/newslist";
 	}
 	

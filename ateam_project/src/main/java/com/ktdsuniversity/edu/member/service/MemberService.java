@@ -1,6 +1,7 @@
 /**
  * 작성자: 김광원
  * 수정자: 김광원(2023-10-20)
+ * 수정자: 장보늬(2023-10-23)
  * 작성일자: 2023-10-19
  * 내용: 일반회원 비밀번호 수정 및 닉네임 수정
  */
@@ -10,13 +11,14 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
 import com.ktdsuniversity.edu.companymember.vo.CompanyVO;
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
+import com.ktdsuniversity.edu.member.vo.MemberListVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 
 public interface MemberService {
 	
-	public List<MemberVO> searchMember(String memberType);
 	
 	/**
 	 * 일반회원가입
@@ -82,4 +84,10 @@ public interface MemberService {
 	 * 회원 비밀번호 수정
 	 */
 	public boolean updateMemberPW(MemberVO memberVO);
+	
+	// 회원유형구분해서 회원찾기
+	public List<MemberVO> searchMember(String memberType);
+	
+	// 통합검색
+	public MemberListVO searchAllMemberByKeyword(AbstractSearchVO abstractSearchVO);
 }

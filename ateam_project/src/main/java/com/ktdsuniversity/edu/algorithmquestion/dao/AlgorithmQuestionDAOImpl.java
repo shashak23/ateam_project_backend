@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 
 import com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionVO;
 import com.ktdsuniversity.edu.algorithmquestion.vo.SearchAlgorithmQuestionVO;
+import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
 
 @Repository
 public class AlgorithmQuestionDAOImpl extends SqlSessionDaoSupport implements AlgorithmQuestionDAO {
@@ -81,7 +82,7 @@ public class AlgorithmQuestionDAOImpl extends SqlSessionDaoSupport implements Al
 
 	//통합검색
 	@Override
-	public List<AlgorithmQuestionVO> searchAllAlgorithmQuestionByKeyword(SearchAlgorithmQuestionVO searchAlgorithmQuestionVO) {
-		return getSqlSession().selectList("searchAllAlgorithmQuestionByKeyword", searchAlgorithmQuestionVO);
+	public List<AlgorithmQuestionVO> searchAllAlgorithmQuestionByKeyword(AbstractSearchVO abstractSearchVO) {
+		return getSqlSession().selectList("searchAllAlgorithmQuestionByKeyword", abstractSearchVO);
 	}
 }

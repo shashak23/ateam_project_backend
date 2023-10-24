@@ -45,6 +45,9 @@ public class AlgorithmQuestionVO {
 	@NotBlank(message = "문제풀이내용을 입력해주세요.")
 	private String algorithmSolution;
 	
+	@NotBlank(message = "기본제공 템플릿을 입력해주세요")
+	private String defaultCode;
+	
 	private String postDate;
 	private int viewCnt;
 	private int likeCnt;
@@ -187,6 +190,14 @@ public class AlgorithmQuestionVO {
 
 	public void setDeleteYn(String deleteYn) {
 		this.deleteYn = deleteYn;
+	}
+
+	public String getDefaultCode() {
+		return defaultCode;
+	}
+
+	public void setDefaultCode(String defaultCode) {
+		this.defaultCode = defaultCode;
 	}
 
 }

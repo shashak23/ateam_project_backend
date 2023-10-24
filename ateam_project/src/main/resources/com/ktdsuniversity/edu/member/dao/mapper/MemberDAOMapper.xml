@@ -3,6 +3,7 @@
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ktdsuniversity.edu.member.dao.MemberDAO">
+		
 	<select id="getEmailCount" parameterType="string">
 		SELECT COUNT(1)
 		FROM "MEMBER"
@@ -80,6 +81,25 @@
 			 , REGIST_DATE
 		  FROM "MEMBER"
 		 WHERE EMAIL = #{_parameter}
+	</select>
+	
+	<select id="searchAllMemberByKeyword"
+	        parameterType="com.ktdsuniversity.edu.member.vo.SearchMemberVO"
+	        resultType="com.ktdsuniversity.edu.member.vo.MemberVO">
+	    SELECT EMAIL
+			 , PW
+			 , SALT
+			 , NICKNAME
+			 , INFO_AGREEMENT_YN
+			 , PROFILE_PIC
+			 , TO_CHAR(REGIST_DATE, 'YYYY-MM-DD HH24:MI:SS') REGIST_DATE
+			 , MEMBER_TYPE
+			 , WITHDRAW_YN
+		  FROM MEMBER
+		 WHERE WITHDRAW_YN = 'N'
+		<if test='searchKeyword != null and searchKeyword != ""'>
+		   AND NICKNAME LIKE '%' || #{searchKeyword} || '%'
+		</if>
 	</select>
 	
 	<update id="updateWithdrawMember"

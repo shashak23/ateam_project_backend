@@ -5,7 +5,9 @@
  * **/
 package com.ktdsuniversity.edu.algorithmexplanation.vo;
 
-public class SearchAlgorithmExplanationVO {
+import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
+
+public class SearchAlgorithmExplanationVO extends AbstractSearchVO{
 	
 	private String searchType;
 	private String searchKeyword;

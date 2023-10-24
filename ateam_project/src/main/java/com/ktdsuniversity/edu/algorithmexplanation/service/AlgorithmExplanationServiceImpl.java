@@ -16,6 +16,7 @@ import com.ktdsuniversity.edu.algorithmexplanation.dao.AlgorithmExplanationDAO;
 import com.ktdsuniversity.edu.algorithmexplanation.vo.AlgorithmExplanationListVO;
 import com.ktdsuniversity.edu.algorithmexplanation.vo.AlgorithmExplanationVO;
 import com.ktdsuniversity.edu.algorithmexplanation.vo.SearchAlgorithmExplanationVO;
+import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
 import com.ktdsuniversity.edu.exceptions.PageNotFoundException;
 
 @Service
@@ -76,4 +77,14 @@ public class AlgorithmExplanationServiceImpl implements AlgorithmExplanationServ
 		return deleteCount > 0;
 	}
 
+	@Override
+	public AlgorithmExplanationListVO searchAllAlgorithmExplanationByKeyword(AbstractSearchVO abstractSearchVO) {
+		
+		if (abstractSearchVO == null || abstractSearchVO.getSearchKeyword() == null || abstractSearchVO.getSearchKeyword().length() == 0) {
+			return new AlgorithmExplanationListVO();
+		}
+		AlgorithmExplanationListVO algorithmExplanationListVO = new AlgorithmExplanationListVO();
+		algorithmExplanationListVO.setAlgorithmExplanationList(algorithmExplanationDAO.searchAllAlgorithmExplanationByKeyword(abstractSearchVO));
+		return algorithmExplanationListVO;
+	}
 }

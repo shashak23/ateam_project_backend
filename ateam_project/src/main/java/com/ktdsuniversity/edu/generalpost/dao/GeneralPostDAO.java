@@ -9,8 +9,8 @@ package com.ktdsuniversity.edu.generalpost.dao;
 
 import java.util.List;
 
+import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
-import com.ktdsuniversity.edu.generalpost.vo.SearchForumVO;
 
 public interface GeneralPostDAO {
 	// 게시글 수 
@@ -42,5 +42,8 @@ public interface GeneralPostDAO {
 	public int deleteOneQnABoard(String generalPostId);
 
 	// 내 게시글 조회
-	public List<GeneralPostVO> getMyPost(String postWriter);
+	public List<GeneralPostVO> getMyPost(GeneralPostVO GeneralPostVO);
+	
+	// 통합검색
+	public List<GeneralPostVO> searchAllBoardByKeyword(AbstractSearchVO abstractSearchVO);
 }

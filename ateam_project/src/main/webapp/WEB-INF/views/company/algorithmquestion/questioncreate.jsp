@@ -30,7 +30,7 @@
 </head>
 <style>
     .ck-editor__editable { 
-        height: 400px; 
+        height: 300px; 
     }
     .ck-content { 
         font-size: 12px; 
@@ -39,7 +39,7 @@
     div.grid {
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: 40px 60px 40px 40px 40px 40px 1fr 40px 1fr 40px;
+        grid-template-rows: 40px 40px 40px 40px 40px 40px 1fr 40px 1fr 40px;
     }
 
     div.grid > div.btn-group {
@@ -123,6 +123,10 @@
 			       language: "ko"
 			    } );
 			</script>
+            
+            <input id="testData" type="text" name="testData" placeholder="테스트 데이터" />
+            
+            <input id="defaultCode" type="text" name="defaultCode" placeholder="기본제공코드" />
             
             <div class="btn-group">
                 <div class="right-align">

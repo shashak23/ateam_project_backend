@@ -33,7 +33,7 @@ public class CommonCodeController {
 	@GetMapping("/code/{codeName}")
 	@ResponseBody
 	public List<CommonCodeVO> searchCode(@PathVariable String codeName) {
-		return commonCodeService.search(codeName);
+		return commonCodeService.searchCode(codeName);
 	}
 	
 	/**
@@ -50,7 +50,7 @@ public class CommonCodeController {
 		Map<String, Object> resultMap = new HashMap<>();
 		
 		// 보내준 코드 리스트를 받아오기
-		List<CommonCodeVO> originCommonCodeList = commonCodeService.search(codeName);
+		List<CommonCodeVO> originCommonCodeList = commonCodeService.searchCode(codeName);
 		
 		// 띄어쓰기를 기준으로 배열에 저장
 		String[] newCommonContentArr = commonCodeVO.getCodeContent().split(" ");

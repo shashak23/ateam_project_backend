@@ -29,7 +29,7 @@ import com.ktdsuniversity.edu.util.XssIgnoreUtil;
 public class CodeRuntime {
 
 	@Value("${app.multipart.base-dir:C:/uploadFiles}")
-	private String baseDir;
+	private String baseDir = "C:/uploadFiles";
 
 	private StringBuffer code;
 	
@@ -50,8 +50,7 @@ public class CodeRuntime {
 		runFileCode.append("}");
 	}
 	
-	public CodeRuntime(String code, String fileName) {
-		this.baseDir += "\\" + UUID.randomUUID().toString();
+	public void setCode(String code) {
 		this.code = new StringBuffer();
 		
 		String[] codeLine = code.split("\n");
@@ -59,6 +58,13 @@ public class CodeRuntime {
 			this.code.append(line.replace("\r", "") + "\n");
 		}
 		
+		fileName = code.substring(code.indexOf("class") + 5, code.indexOf("{"));
+		fileName = fileName.trim() + ".java";
+		setFileName(fileName);
+	}
+	
+	public void setFileName(String fileName) {
+		this.baseDir += "\\" + UUID.randomUUID().toString();
 		this.fileName = fileName;
 
 		javaFile = new File(baseDir, this.fileName);
@@ -80,7 +86,8 @@ public class CodeRuntime {
 //		makeFile(CodeRuntime.runFileCode.toString());
 	}
 	
-	public void makeRunFile(String code, String testCode) {
+	public void makeRunFile(String testCode) {
+		String code = CodeRuntime.runFileCode.toString();
 		if (testCode != null) {
 			code = code.replace("#codeHear#", testCode);
 		}
@@ -139,12 +146,13 @@ public class CodeRuntime {
 		}
 		
 		BufferedReader reader = new BufferedReader(new InputStreamReader(process.getInputStream()));
-		StringBuilder builder = new StringBuilder();
+		StringBuffer buffer = new StringBuffer();
 		String line = null;
 		try {
+			
 			while ((line = reader.readLine()) != null) {
-				builder.append(line);
-				builder.append(System.getProperty("line.separator"));
+				buffer.append(line);
+				buffer.append(System.getProperty("line.separator"));
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -159,7 +167,9 @@ public class CodeRuntime {
 	}
 
 	public List<String> run(String ... params) {
-		String command = this.runFile.getParentFile().getAbsolutePath() + " " + this.runFile.getAbsolutePath();
+		String classFile = this.runFile.getAbsolutePath();
+//		classFile = classFile.replace(".java", "");
+		String command = "java -cp " + this.runFile.getParentFile().getAbsolutePath() + " " + classFile;
 		
 		if (params != null) {
 			for (String args: params) {
@@ -167,8 +177,7 @@ public class CodeRuntime {
 			}
 		}
 		
-		
-		ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "java -cp " + command);
+		ProcessBuilder pb = new ProcessBuilder("cmd", "/c", command);
 		Process process = null;
 		try {
 			process = pb.start();
@@ -182,7 +191,9 @@ public class CodeRuntime {
 		String line = null;
 		try {
 			while ((line = reader.readLine()) != null) {
-				runResult.add(line);
+				if (line.trim().length() > 0) {
+					runResult.add(line);
+				}
 			}
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -195,20 +206,6 @@ public class CodeRuntime {
 			}
 		}
 		return runResult;
-	}
-
-	public static void main(String[] args) {
-		CodeRuntime cr = new CodeRuntime(
-				// 일반회원이 작성한 코드
-				"public class A {\n    public void solution(String hello) {\n        System.out.println(hello);}\n}", "A.java");
-		cr.makeFile();
-		                                                   // #codeHear#
-		cr.makeRunFile(CodeRuntime.runFileCode.toString(), "A a = new A(); a.solution(args[0]);");
-		cr.doCompileJava();
-		cr.doCompileRun();
-		                                    // 파라미터
-		List<String> processResult = cr.run("2341231", "Hello~~RunJava~~~~");
-		System.out.println("결과: " + processResult);
 	}
 
 }
