@@ -44,7 +44,7 @@ public class BookmarkVO {
 	/**
 	 * 북마크된 해시태그리스트의 정보
 	 */
-	private List<CommonCodeVO> commonCodeListVO;
+	private CommonCodeVO commonCodeVO;
 	
 	
 	public String getBookmarkId() {
@@ -89,10 +89,10 @@ public class BookmarkVO {
 	public void setGeneralPostVO(GeneralPostVO generalPostVO) {
 		this.generalPostVO = generalPostVO;
 	}
-	public List<CommonCodeVO> getCommonCodeListVO() {
-		return commonCodeListVO;
+	public CommonCodeVO getCommonCodeVO() {
+		return commonCodeVO;
 	}
-	public void setCommonCodeListVO(List<CommonCodeVO> commonCodeListVO) {
-		this.commonCodeListVO = commonCodeListVO;
+	public void setCommonCodeVO(CommonCodeVO commonCodeVO) {
+		this.commonCodeVO = commonCodeVO;
 	}
 }

@@ -9,6 +9,7 @@
 <title>알고리즘 문제 작성하기</title>
 <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
 <script type="text/javascript" src="/js/lib/jquery-3.7.1.js"></script>
+<script src="/js/Table.js"></script>
 <script type="text/javascript">
 	$().ready(function() {
 		
@@ -22,6 +23,22 @@
 			}
 		});
 		
+		const table = new Table("grid", 5, ["A", "B", "C", "D", "E"])
+        table.view($, "#table-div");
+
+        $("#add-row").click(function() {
+            table.addRow($, "#grid")
+        })
+
+        $("#add-col").click(function() {
+            table.addColumn($, "#grid", "F")
+        })
+
+        $("#to-json").click(function() {
+            let json = table.toJson($, "#grid")
+            $("#JSON").text(JSON.stringify(json))
+        })
+		
         $("").keyup(function() {
         	$.get("/")
         })
@@ -30,7 +47,7 @@
 </head>
 <style>
     .ck-editor__editable { 
-        height: 400px; 
+        height: 300px; 
     }
     .ck-content { 
         font-size: 12px; 
@@ -39,7 +56,7 @@
     div.grid {
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: 40px 60px 40px 40px 40px 40px 1fr 40px 1fr 40px;
+        grid-template-rows: 40px 40px 40px 40px 40px 40px 1fr 40px 1fr 40px;
     }
 
     div.grid > div.btn-group {
@@ -124,6 +141,8 @@
 			    } );
 			</script>
             
+            <input id="defaultCode" type="text" name="defaultCode" placeholder="기본제공코드" />
+            
             <div class="btn-group">
                 <div class="right-align">
                     <input type="submit" value="저장" />
@@ -132,5 +151,12 @@
         </div>
 	</form:form>
 
+	<label>테스트데이터</label>
+    <div id="table-div"></div>
+    <button id="add-row">행 추가</button>
+    <button id="add-col">열 추가</button>
+    <button id="to-json">JSON으로 변환</button>
+
+    <div id="JSON"></div>
 </body>
 </html>

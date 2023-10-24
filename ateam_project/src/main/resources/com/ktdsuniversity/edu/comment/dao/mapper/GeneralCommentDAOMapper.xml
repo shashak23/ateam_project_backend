@@ -38,28 +38,26 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <select id="getAllComments"
             parameterType="string"
             resultMap="generalCommentVOMap">
-              SELECT GC.GENERAL_COMMENT_ID
-             , GC.COMMENT_WRITER
-             , GC.GENERAL_POST_ID
-             , GC.COMMENT_CONTENT
-             , GC.POST_DATE
-             , GC.UPPER_COMMENT_ID
-             , GC.LIKE_CNT
-             , GC.DELETE_YN
-          FROM GENERAL_COMMENT GC
-         INNER JOIN GENERAL_POST GP 
-            ON GC.GENERAL_POST_ID = GP.GENERAL_POST_ID 
-         INNER JOIN COMMON_CODE CC
-            ON GP.GENERAL_POST_ID =CC.CODE_ID 
-         WHERE CC.CODE_ID LIKE'CC-20231023-000146';
-         START WITH GC.UPPER_COMMENT_ID = 0
-           AND GC.GENERAL_POST_ID=#{_parameter}
-         CONNECT BY PRIOR GC.GENERAL_COMMENT_ID = GC.UPPER_COMMENT_ID
+	               SELECT 
+	               GC.GENERAL_COMMENT_ID
+	             , GC.COMMENT_WRITER
+	             , GC.GENERAL_POST_ID
+	             , GC.COMMENT_CONTENT
+	             , GC.POST_DATE
+	             , GC.UPPER_COMMENT_ID
+	             , GC.LIKE_CNT
+	             , GC.DELETE_YN
+	          FROM GENERAL_COMMENT GC
+	         INNER JOIN GENERAL_POST GP
+	            ON GC.GENERAL_POST_ID = GP.GENERAL_POST_ID 
+	          WHERE GC.GENERAL_POST_ID = #{_parameter}
+	       START WITH GC.UPPER_COMMENT_ID IS NULL
+	         CONNECT BY PRIOR GC.GENERAL_COMMENT_ID = GC.UPPER_COMMENT_ID
     </select>
     <select id="getOneComment"
             parameterType="string"
             resultMap="generalCommentVOMap">
-       SELECT GC.GENERAL_COMMENT_ID
+        SELECT GC.GENERAL_COMMENT_ID
              , GC.COMMENT_WRITER
              , GC.GENERAL_POST_ID
              , GC.COMMENT_CONTENT
@@ -67,33 +65,33 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              , GC.UPPER_COMMENT_ID
              , GC.LIKE_CNT
              , GC.DELETE_YN
+             , GM.GENERAL_MEMBER_EMAIL
           FROM GENERAL_COMMENT GC
-         INNER JOIN GENERAL_POST GP 
-            ON GC.GENERAL_POST_ID = GP.GENERAL_POST_ID 
-         WHERE GP.GENERAL_POST_ID = #{_parameter}
+         INNER JOIN GENERAL_MEMBER GM
+            ON GC.COMMENT_WRITER = GM.GENERAL_MEMBER_EMAIL
+         WHERE GC.GENERAL_COMMENT_ID = #{generalCommentId}
     </select>
     
-    <insert id="createNewComment"
-            parameterType="com.ktdsuniversity.edu.generalpost.vo.GeneralCommentVO">
-        INSERT INTO GENERAL_COMMENT (
-             , GENERAL_COMMENT_ID
-		     , COMMENT_WRITER
-		     , GENERAL_POST_ID
-		     , COMMENT_CONTENT
-		     , POST_DATE
-		     , UPPER_COMMENT_ID
-		     , LIKE_CNT
-		     , DELETE_YN)
-		VALUES (
-		    'GC-'||TO_CHAR(SYSDATE,'YYYYMMDD')||'-'||LPAD(SEQ_GENERAL_COMMENT_PK.NEXTVAL,6,'0')
-		     , #{commentWriterId}
-		     , #{generalPostId}
-		     , #{commentContent}
-		     , SYSDATE
-		     , #{upperCommentId}
-		     , 0
-		     , 'N')
-            </insert>
+    <insert id="createNewComment" parameterType="com.ktdsuniversity.edu.generalpost.vo.GeneralCommentVO">
+    INSERT INTO GENERAL_COMMENT (
+            GENERAL_COMMENT_ID
+           , COMMENT_WRITER
+           , GENERAL_POST_ID
+           , COMMENT_CONTENT
+           , POST_DATE
+           , UPPER_COMMENT_ID
+           , LIKE_CNT
+           , DELETE_YN)
+      VALUES (
+            'GC-'||TO_CHAR(SYSDATE,'YYYYMMDD')||'-'||LPAD(SEQ_GENERAL_COMMENT_PK.NEXTVAL,6,'0')
+           , #{commentWriter}
+           , #{generalPostId}
+           , #{commentContent}
+           , SYSDATE
+           , #{upperCommentId}
+           , 0
+           , 'N')
+	</insert>
     <delete id="deleteOneComment"
             parameterType="string">
        DELETE
@@ -104,8 +102,36 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
             parameterType="string">
         UPDATE GENERAL_COMMENT
            SET LIKE_CNT = LIKE_CNT + 1
-         WHERE GENERAL_COMMENT_ID = #{_parameter}        
+         WHERE GENERAL_COMMENT_ID = #{_parameter}
     </update>
-
+  <!--   <insert id="reportOneComment"
+            parameterType="com.ktdsuniversity.edu.generalpost.vo.GeneralCommentVO">
+            INSERT INTO REPORT (
+                 , REPORT_ID
+                 , REPORT_MEMBER_ID
+                 , REPORT_TYPE_ID
+                 , RECEIVED_REPORT_MEMBER_ID
+                 , REPORT_CONTENT_ID
+                 , REPORT_DATE
+                 , REPORT_REASON
+                 , REPORT_REASON_CONTENT
+                 , ATTACHED_IMG
+                 , PROGRESS_YN
+                 , CANCEL_YN)
+            VALUES (
+            SEQ_REPORT_PK.NEXTVAL,
+            #{reportMemberId},
+            #{reportTypeId},
+            #{receivedReportMemberId},
+            #{reportContentId},
+            SYSDATE,
+            #{reportReason},
+            #{reportReasonContent},
+            #{attachedImg},
+            'N',
+            'N'
+            )
+    </insert> -->
+            
   </mapper>
             

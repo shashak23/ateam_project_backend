@@ -50,8 +50,8 @@ public class QnAPostCommentController {
 			@ModelAttribute GeneralCommentVO generalCommentVO,
 			@SessionAttribute("_LOGIN_USER_") GeneralMemberVO generalMemberVO) {
 		generalCommentVO.setGeneralPostId(generalPostId);
-		generalCommentVO.setCommentWriter(generalCommentVO.getCommentWriter());
-		boolean isSuccess = generalCommentService.createNewComment(generalCommentVO);
+		generalCommentVO.setCommentWriter(generalMemberVO.getGeneralMemberEmail());
+		boolean isSuccess = generalCommentService.createNewComment(generalPostId, generalCommentVO);
 
 		Map<String, Object> resultMap = new HashMap<>();
 		resultMap.put("result", isSuccess);
@@ -74,7 +74,7 @@ public class QnAPostCommentController {
 			@SessionAttribute("_LOGIN_USER") GeneralMemberVO generalMemberVO) {
 		generalCommentVO.setGeneralCommentId(generalCommentId);
 		generalCommentVO.setCommentWriter(generalMemberVO.getGeneralMemberEmail());
-		boolean isSuccess = generalCommentService.updateOneComment(generalCommentVO);
+		boolean isSuccess = generalCommentService.updateOneComment(generalCommentId, generalCommentVO);
 
 		Map<String, Object> resultMap = new HashMap<>();
 		resultMap.put("result", isSuccess);
@@ -90,4 +90,52 @@ public class QnAPostCommentController {
 		resultMap.put("result", isSuccess);
 		return resultMap;
 	}
+
+	// 댓글 신고
+//	@PostMapping ("/qnaboard/comments/report/{generalCommentId}")
+//	public Map<String,Object> doReportComment(@PathVariable String generalCommentId,
+//											  @SessionAttribute("_LOGIN_USER_")GeneralMemberVO generalMemberVO){
+//		
+
+//	}
+//
+//	@PostMapping("/qnaboard/comments/delete/{generalCommentId}")
+//	public Map<String, Object> doDeleteComments(@PathVariable String generalCommentId,
+//			@SessionAttribute("_LOGIN_USER_") GeneralMemberVO generalMemberVO) {
+//		boolean isSuccess = generalCommentService.deleteOneComment(generalCommentId,
+//				generalMemberVO.getGeneralMemberEmail());
+//		Map<String, Object> resultMap = new HashMap<>();
+//		resultMap.put("result", isSuccess);
+//		return resultMap;
+//	}
+//
+//	@PostMapping("/qnaboard/comments/update/{generalCommentId}")
+//	public Map<String, Object> doUpdateComments(@PathVariable String generalCommentId,
+//			@ModelAttribute GeneralCommentVO generalCommentVO,
+//			@SessionAttribute("_LOGIN_USER") GeneralMemberVO generalMemberVO) {
+//		generalCommentVO.setGeneralCommentId(generalCommentId);
+//		generalCommentVO.setCommentWriter(generalMemberVO.getGeneralMemberEmail());
+//		boolean isSuccess = generalCommentService.updateOneComment(generalCommentVO);
+//
+//		Map<String, Object> resultMap = new HashMap<>();
+//		resultMap.put("result", isSuccess);
+//		return resultMap;
+//	}
+//
+//	@GetMapping("/qnaboard/comments/like/{generalCommentId}")
+//	public Map<String, Object> doLikeComments(@PathVariable String generalCommentId,
+//			@SessionAttribute("_LOGIN_USER_") GeneralMemberVO generalMemberVO) {
+//		boolean isSuccess = generalCommentService.deleteOneComment(generalCommentId,
+//				generalMemberVO.getGeneralMemberEmail());
+//		Map<String, Object> resultMap = new HashMap<>();
+//		resultMap.put("result", isSuccess);
+//		return resultMap;
+//	}
+//
+//	// 댓글 신고
+////	@PostMapping ("/qnaboard/comments/report/{generalCommentId}")
+////	public Map<String,Object> doReportComment(@PathVariable String generalCommentId,
+////											  @SessionAttribute("_LOGIN_USER_")GeneralMemberVO generalMemberVO){
+////		
+////	}
 }

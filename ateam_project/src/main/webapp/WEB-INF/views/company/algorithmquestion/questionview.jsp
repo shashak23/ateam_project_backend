@@ -235,9 +235,9 @@
 				<form:errors path="myAnswer" element="div" cssClass="errors" />
 			</div>
 			    <label for="myAnswer">답변</label> <!-- 웹IDE 테이블에 신규생성? -->
-			    <textarea name="myAnswer" id="editor" placeholder="답변을 작성해주세요.">${myAlgorithmVO.myAnswer}</textarea>
+			    <textarea name="myAnswer" id="editor" value="${algorithmQuestionVO.defaultCode}">${myAlgorithmVO.myAnswer}</textarea>
 			    <!-- 일반회원이 로그인 했을 시 -->
-			    <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.memberType eq 'GENERAL_MEMBER'}">
+			    <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.memberType eq 'GENERAL'}">
 			        <input type="submit" id="submit" value="제출 후 채점하기" />
 				</c:if>
 			</form:form>
@@ -247,7 +247,13 @@
 	<div class="grid">
 		<!-- 추후 작업 -->
 		<label for="result" id="result" >실행결과</label>
-		<textarea name="result">${result}</textarea>
+		<div id="result">
+			<c:if test="${not empty codeResultList}">
+				<c:forEach items="${codeResultList}" var="code">
+					<p>${code}<p>
+				</c:forEach>
+			</c:if>
+		</div>
 		
 		<div class="btn-group">
 				<div class="right-align">

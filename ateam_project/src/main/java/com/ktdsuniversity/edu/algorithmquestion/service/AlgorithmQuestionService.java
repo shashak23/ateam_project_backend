@@ -9,6 +9,7 @@ package com.ktdsuniversity.edu.algorithmquestion.service;
 import com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionListVO;
 import com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionVO;
 import com.ktdsuniversity.edu.algorithmquestion.vo.SearchAlgorithmQuestionVO;
+import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
 import com.ktdsuniversity.edu.myalgorithm.vo.MyAlgorithmVO;
 
 public interface AlgorithmQuestionService {
@@ -24,5 +25,5 @@ public interface AlgorithmQuestionService {
 	public boolean deleteOneAlgorithmQuestion(String companyAlgorithmQuestionId);
 
 	// 통합검색
-	public AlgorithmQuestionListVO getAllAlgorithmQuestionByKeyword(SearchAlgorithmQuestionVO searchAlgorithmQuestionVO);
+	public AlgorithmQuestionListVO searchAllAlgorithmQuestionByKeyword(AbstractSearchVO abstractSearchVO);
 }

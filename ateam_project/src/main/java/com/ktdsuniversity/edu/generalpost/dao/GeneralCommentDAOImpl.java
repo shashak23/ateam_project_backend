@@ -18,51 +18,47 @@ import com.ktdsuniversity.edu.AteamProjectApplication;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralCommentVO;
 
 @Repository
-public class GeneralCommentDAOImpl extends SqlSessionDaoSupport implements GeneralCommentDAO{
+public class GeneralCommentDAOImpl extends SqlSessionDaoSupport implements GeneralCommentDAO {
 
-	private Logger log = LoggerFactory.getLogger(AteamProjectApplication.class);
+    private Logger log = LoggerFactory.getLogger(AteamProjectApplication.class);
 
 	@Autowired
 	@Override
 	public void setSqlSessionTemplate(SqlSessionTemplate sqlSessionTemplate) {
 		super.setSqlSessionTemplate(sqlSessionTemplate);
 	}
-	
-	@Override
-	public List<GeneralCommentVO> getAllComments(String generalPostId){
-		  log.debug("--2----디에이오----------------------------");
+    
+    @Override
+    public List<GeneralCommentVO> getAllComments(String generalpostid) {
+        return getSqlSession().selectList("getAllComments", generalpostid);
+    }
 
-		return getSqlSession().selectList("getAllComments", generalPostId);
-	}
-	
-	@Override
-	public GeneralCommentVO getOneComment(String generalCommentId) {
-		return getSqlSession().selectOne("getOneComment",generalCommentId);
-	}
-	
-	@Override
-	public int createNewComment(GeneralCommentVO generalCommentVO) {
-		return getSqlSession().insert("createNewComment", generalCommentVO);
-	}
-	
-	@Override
-	public int deleteOneComment(String generalCommentId) {
-		return getSqlSession().delete("deleteOneComment", generalCommentId);
-	}
-	
+    @Override
+    public GeneralCommentVO getOneComment(String generalpostid) {
+        return getSqlSession().selectOne("getOneComment", generalpostid);
+    }
+
+    @Override
+    public int deleteOneComment(String generalpostid) {
+        return getSqlSession().delete("deleteOneComment", generalpostid);
+    }
+
+    @Override
+    public int likeOneComment(String generalpostid) {
+        return getSqlSession().update("likeOneComment", generalpostid);
+    }
+
+    @Override
+    public int reportOneComment(String generalpostid) {
+        return getSqlSession().insert("reportOneComment", generalpostid);
+    }
+
+    @Override
+    public int createNewComment(String  generalpostid, GeneralCommentVO generalCommentVO) {	
+        return getSqlSession().insert("createNewComment", generalCommentVO);
+    }
 	@Override
 	public int updateOneComment(GeneralCommentVO generalCommentVO) {
 		return getSqlSession().update("updateOneComment", generalCommentVO);
 	}
-	
-	@Override
-	public int likeOneComment(String generalCommentId) {
-		return getSqlSession().update("likeOneComment", generalCommentId);
-	}
-	
-	@Override
-	public int reportOneComment(String generalCommentId) {
-		return getSqlSession().insert("reportOneComment", generalCommentId);
-	}
-
 }

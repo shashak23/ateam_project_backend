@@ -24,6 +24,7 @@ import com.ktdsuniversity.edu.algorithmquestion.service.AlgorithmQuestionService
 import com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 import com.ktdsuniversity.edu.myalgorithm.service.MyAlgorithmService;
+import com.ktdsuniversity.edu.myalgorithm.vo.AnswerResultVO;
 import com.ktdsuniversity.edu.myalgorithm.vo.MyAlgorithmListVO;
 import com.ktdsuniversity.edu.myalgorithm.vo.MyAlgorithmVO;
 import com.ktdsuniversity.edu.myalgorithm.vo.SearchMyAlgorithmVO;
@@ -74,17 +75,19 @@ public class MyAlgorithmController {
 		myAlgorithmVO.setGeneralMemberEmail(memberVO.getEmail());
 		myAlgorithmVO.setCompanyAlgorithmQuestionId(companyAlgorithmQuestionId);
 		
-		boolean isSuccess = myAlgorithmService.createNewMyAlgorithm(myAlgorithmVO);
-		if(isSuccess) {
-			// 정답여부 팝업창으로 보여주기
-			return "redirect:/algorithm/question/list";
-		}
-		else {
+		AnswerResultVO arVO = myAlgorithmService.createNewMyAlgorithm(myAlgorithmVO);
+//		if(arVO.isInsertResult()) {
+//			// 정답여부 팝업창으로 보여주기
+//			return "redirect:/algorithm/question/list";
+//		}
+//		else {
 			AlgorithmQuestionVO algorithmQuestionVO = algorithmQuestionService.getOneAlgorithmQuestion(companyAlgorithmQuestionId, false);
 			model.addAttribute("AlgorithmQuestionVO", algorithmQuestionVO);
 			model.addAttribute("MyAlgorithmVO", myAlgorithmVO);
+			model.addAttribute("codeResultList", arVO.getCodeResultList());
+			
 			return "company/algorithmquestion/questionview";
-		}
+//		}
 	}
 	
 	@GetMapping("/home/myalgorithm/delete/{myAlgorithmQuestionId}")

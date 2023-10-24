@@ -8,13 +8,15 @@ package com.ktdsuniversity.edu.companynews.service;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
 import com.ktdsuniversity.edu.companynews.vo.CompanyNewsListVO;
 import com.ktdsuniversity.edu.companynews.vo.CompanyNewsVO;
+import com.ktdsuniversity.edu.companynews.vo.SearchCompanyNewsVO;
 
 public interface CompanyNewsService {
 	
 	// 기업소식 게시글 목록과 게시글의 건수를 모두 조회한다.
-	public CompanyNewsListVO getAllCompanyNews();
+	public CompanyNewsListVO getAllCompanyNews(SearchCompanyNewsVO searchCompanyNewsVO);
 
 	public boolean createNewCompanyNews(CompanyNewsVO companyNewsVO, MultipartFile file);
 	
@@ -23,4 +25,7 @@ public interface CompanyNewsService {
 	public boolean updateOneCompanyNews(CompanyNewsVO companyNewsVO, MultipartFile file);
 	
 	public boolean deleteOneCompanyNews(String companyNewsPostId);
+	
+	// 통합검색
+	public CompanyNewsListVO searchAllCompanyNewsByKeyword(AbstractSearchVO abstractSearchVO);
 }

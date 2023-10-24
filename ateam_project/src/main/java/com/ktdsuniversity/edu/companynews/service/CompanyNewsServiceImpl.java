@@ -17,9 +17,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ktdsuniversity.edu.beans.FileHandler;
 import com.ktdsuniversity.edu.beans.FileHandler.StoredFile;
+import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
 import com.ktdsuniversity.edu.companynews.dao.CompanyNewsDAO;
 import com.ktdsuniversity.edu.companynews.vo.CompanyNewsListVO;
 import com.ktdsuniversity.edu.companynews.vo.CompanyNewsVO;
+import com.ktdsuniversity.edu.companynews.vo.SearchCompanyNewsVO;
 import com.ktdsuniversity.edu.exceptions.PageNotFoundException;
 
 @Service
@@ -34,10 +36,15 @@ public class CompanyNewsServiceImpl implements CompanyNewsService {
 	private CompanyNewsDAO companyNewsDAO;
 	
 	@Override
-	public CompanyNewsListVO getAllCompanyNews() {
+	public CompanyNewsListVO getAllCompanyNews(SearchCompanyNewsVO searchCompanyNewsVO) {
 		CompanyNewsListVO companyNewsListVO = new CompanyNewsListVO();
-		companyNewsListVO.setCompanyNewsCnt(companyNewsDAO.getCompanyNewsAllCount());
-		companyNewsListVO.setCompanyNewsList(companyNewsDAO.getAllCompanyNews());
+		companyNewsListVO.setCompanyNewsCnt(companyNewsDAO.getCompanyNewsAllCount(searchCompanyNewsVO));
+		if(searchCompanyNewsVO == null) {
+			companyNewsListVO.setCompanyNewsList(companyNewsDAO.getAllCompanyNews());
+		}
+		else {
+			companyNewsListVO.setCompanyNewsList(companyNewsDAO.searchAllCompanyNews(searchCompanyNewsVO));
+		}
 		return companyNewsListVO;
 	}
 
@@ -110,7 +117,16 @@ public class CompanyNewsServiceImpl implements CompanyNewsService {
 		return deleteCount > 0;
 	}
 	
-	
+	@Override
+	public CompanyNewsListVO searchAllCompanyNewsByKeyword(AbstractSearchVO abstractSearchVO) {
+		
+		if (abstractSearchVO == null || abstractSearchVO.getSearchKeyword() == null || abstractSearchVO.getSearchKeyword().length() == 0) {
+			return new CompanyNewsListVO();
+		}
+		CompanyNewsListVO companyNewsListVO = new CompanyNewsListVO();
+		companyNewsListVO.setCompanyNewsList(companyNewsDAO.searchAllCompanyNewsByKeyword(abstractSearchVO));
+		return companyNewsListVO;
+	}
 
 	
 	

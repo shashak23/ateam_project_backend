@@ -186,9 +186,11 @@ public class QnAPostController {
 	
 	// 내 게시글 조회
 	@GetMapping("/mypost")
-	public String viewMyPost(Model model
+	public String viewMyPost(@ModelAttribute GeneralPostVO generalPostVO
+			, Model model
 			               , @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
-		GeneralPostListVO generalPostListVO = generalPostService.getMyPost(memberVO.getEmail());
+		generalPostVO.setPostWriter(memberVO.getEmail());
+		GeneralPostListVO generalPostListVO = generalPostService.getMyPost(generalPostVO);
 		model.addAttribute("generalPostList", generalPostListVO);
 		return "mypage/mypost";
 	}

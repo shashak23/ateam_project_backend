@@ -38,7 +38,7 @@ public class CommonCodeServiceImpl implements CommonCodeService {
 	}
 	
 	@Override
-	public List<CommonCodeVO> search(String codeName) {
-		return commonCodeDAO.search(codeName);
+	public List<CommonCodeVO> searchCode(String codeName) {
+		return commonCodeDAO.searchCode(codeName);
 	}
 }

@@ -6,6 +6,17 @@
 <head>
 <meta charset="UTF-8">
 <title>기업소식 페이지</title>
+<script type="text/javascript" src="/js/lib/jquery-3.7.1.js"></script>
+<script type="text/javascript">
+$().ready(function() {
+	$("#search-btn").click(function() {
+		$("#search-form").attr({
+			"method": "get",
+			"action": "/news/list"
+		}).submit()
+	});
+})
+</script>
 <!--브라우저에게 현재 페이지를 가장 최신 버전으로 렌더링-->
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <!--뷰포트는 화면에 표시되는 웹영역 표시, 모바일 등에서 상호작용 할 수있는지 제어-->
@@ -90,7 +101,20 @@
                                   자유롭게 컨텐츠를 넣기 !
                               </div>
                   </aside> 
-                  <div class="news_container">
+                <div class="news_container">
+				<div class="search_area">
+				    <form id="search-form"
+				          method="get"
+				          action="/news/list">
+					<select name="searchType">
+				        <option value="postTitle" ${searchCompanyNewsVO.searchType eq 'postTitle' ? 'selected' : ''}>제목</option>
+				        <option value="postContent" ${searchCompanyNewsVO.searchType eq 'postContent' ? 'selected' : ''}>내용</option>
+				        <option value="postWriter" ${searchCompanyNewsVO.searchType eq 'postWriter' ? 'selected' : ''}>작성자</option>
+				    </select>
+				    <input type="text" name="searchKeyword" value="${searchCompanyNewsVO.searchKeyword}" />
+						<button id="search-btn">검색</button>
+					</form>
+				</div>	
                       <c:choose>
                           <c:when test="${not empty companyNewsList.companyNewsList}">
                               <c:forEach items="${companyNewsList.companyNewsList}" var="companynews">

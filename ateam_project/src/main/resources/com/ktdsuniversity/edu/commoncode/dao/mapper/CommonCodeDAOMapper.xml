@@ -31,7 +31,7 @@
 			 , #{codeType}
 			 , #{codeContent})
 	</insert>
-	<select id="search"
+	<select id="searchCode"
 			parameterType="string"
 			resultType="com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO">
 		SELECT CODE_ID
