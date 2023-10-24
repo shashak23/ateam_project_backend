@@ -79,8 +79,9 @@ public class FreePostController {
 		ModelAndView modelAndView = new ModelAndView();
 		log.debug("1--컨트롤러---자유----------------------");
 		
-		XssIgnoreUtil.ignore(generalPostVO);
-
+		/*
+		 * XssIgnoreUtil.ignore(generalPostVO);
+		 */
 		// Validation 체크한 것 중 실패한 것이 있다면.
 		if (bindingResult.hasErrors()) {
 			// 글쓰기 화면을 보여준다.
@@ -190,21 +191,21 @@ public class FreePostController {
 	}
 	
 
-//	// 좋아요 기능
-//	@PostMapping("/freeboard/like")
-//    public ModelAndView likeFreeBoard(@ModelAttribute GeneralPostVO generalPostVO) {
-//
-//		ModelAndView view = new ModelAndView();
-//		boolean isSuccess = generalPostService.likeFreeBoard(generalPostVO);
-//		if(isSuccess) {
-//			view.setViewName("redirect:/freeboard/list");
-//			return view;
-//		}
-//		else {
-//			view.setViewName("forum/freeboardview");
-//			view.addObject("generalPostVO", generalPostVO);
-//			return view;
-//		}
-//	}
-	
+	// 좋아요 기능
+	@PostMapping("/freeboard/like")
+    public ModelAndView likeFreeBoard(@ModelAttribute GeneralPostVO generalPostVO) {
+
+		ModelAndView view = new ModelAndView();
+		boolean isSuccess = generalPostService.likeFreeBoard(generalPostVO);
+		if(isSuccess) {
+			view.setViewName("redirect:/freeboard/list");
+			return view;
+		}
+		else {
+			view.setViewName("forum/freeboardview");
+			view.addObject("generalPostVO", generalPostVO);
+			return view;
+		}
 	}
+		
+}

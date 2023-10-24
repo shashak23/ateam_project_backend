@@ -51,6 +51,7 @@ public class GeneralPostDAOImpl extends SqlSessionDaoSupport
 
 	@Override
 	public int createNewFreeBoard(GeneralPostVO generalPostVO) {
+		log.debug("--3-----------자유디에이오-------------------------");
 		return getSqlSession().insert("createNewFreeBoard", generalPostVO);
 	}
 
@@ -69,6 +70,11 @@ public class GeneralPostDAOImpl extends SqlSessionDaoSupport
 		return getSqlSession().delete("deleteOneFreeBoard", generalPostId);
 	}
 	
+	@Override
+	public int updateLikeFreePost(GeneralPostVO generalPostVO) {
+		return getSqlSession().update("updateLikeFreePost", generalPostVO);
+	}
+	
 	// 질답게시판
 	@Override
 	public List<GeneralPostVO> getAllQnABoard() {
@@ -82,7 +88,6 @@ public class GeneralPostDAOImpl extends SqlSessionDaoSupport
 
 	@Override
 	public GeneralPostVO getOneQnABoard(String generalPostId) {
-		log.debug("--3--------------디에이오-------------------------");
 
 		return getSqlSession().selectOne("getOneQnABoard", generalPostId);
 	}
@@ -101,5 +106,10 @@ public class GeneralPostDAOImpl extends SqlSessionDaoSupport
 	@Override
 	public List<GeneralPostVO> getMyPost(String postWriter) {
 		return getSqlSession().selectList("getMyPost", postWriter);
+	}
+
+	@Override
+	public int updateLikeQnAPost(GeneralPostVO generalPostVO) {
+		return getSqlSession().update("updateLikeQnAPost", generalPostVO);
 	}
 }
