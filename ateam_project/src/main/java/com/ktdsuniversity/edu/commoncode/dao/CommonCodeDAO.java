@@ -17,5 +17,5 @@ public interface CommonCodeDAO {
 	public int getCommonTypeAllCount(String codeName);
 	public List<CommonCodeVO> getAllCommonType(String codeName);
 	public int createCommonCode(CommonCodeVO commonCodeVO);
-	public List<CommonCodeVO> search(String codeName);
+	public List<CommonCodeVO> searchCode(String codeName);
 }

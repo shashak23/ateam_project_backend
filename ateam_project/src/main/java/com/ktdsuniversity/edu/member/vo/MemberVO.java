@@ -1,7 +1,11 @@
+/**
+ * 수정자: 장보늬(2023-10-23)
+ * **/
 package com.ktdsuniversity.edu.member.vo;
 
 import java.util.List;
 
+import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 import com.ktdsuniversity.edu.member.vo.validategroup.MemberAuthGroup;
 import com.ktdsuniversity.edu.member.vo.validategroup.MemberEditNickGroup;
 import com.ktdsuniversity.edu.member.vo.validategroup.MemberEditPWGroup;
@@ -41,9 +45,6 @@ public class MemberVO {
 	private String withdrawYn;
 	private List<MyAlgorithmVO> myAlgorithmVO;
 
-	
-	
-	
 	public String getEmail() {
 		return email;
 	}

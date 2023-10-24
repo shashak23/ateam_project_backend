@@ -43,7 +43,7 @@ public class CommonCodeDAOImpl extends SqlSessionDaoSupport implements CommonCod
 	}
 	
 	@Override
-	public List<CommonCodeVO> search(String codeName) {
-		return getSqlSession().selectList("search", codeName);
+	public List<CommonCodeVO> searchCode(String codeName) {
+		return getSqlSession().selectList("searchCode", codeName);
 	}
 }

@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ktdsuniversity.edu.algorithmexplanation.vo.AlgorithmExplanationListVO;
+import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
 import com.ktdsuniversity.edu.generalpost.dao.GeneralPostDAO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostListVO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
@@ -120,12 +122,21 @@ public class GeneralPostServiceImpl implements GeneralPostService{
 
 
 	// 내게시글 조회
-	@Transactional
 	@Override
-	public GeneralPostListVO getMyPost(String postWriter) {
+	public GeneralPostListVO getMyPost(GeneralPostVO generalPostVO) {
 		GeneralPostListVO generalPostListVO = new GeneralPostListVO();
-		generalPostListVO.setGeneralPostList(generalPostDAO.getMyPost(postWriter));
+		generalPostListVO.setGeneralPostList(generalPostDAO.getMyPost(generalPostVO));
 		return generalPostListVO;
 	}
-
+	
+	// 통합검색
+	@Override
+	public GeneralPostListVO searchAllBoardByKeyword(AbstractSearchVO abstractSearchVO) {
+		if (abstractSearchVO == null || abstractSearchVO.getSearchKeyword() == null || abstractSearchVO.getSearchKeyword().length() == 0) {
+			return new GeneralPostListVO();
+		}
+		GeneralPostListVO generalPostListVO = new GeneralPostListVO();
+		generalPostListVO.setGeneralPostList(generalPostDAO.searchAllBoardByKeyword(abstractSearchVO));
+		return generalPostListVO;
+	}
 }

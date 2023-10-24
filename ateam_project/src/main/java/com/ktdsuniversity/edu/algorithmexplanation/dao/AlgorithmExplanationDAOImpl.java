@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 
 import com.ktdsuniversity.edu.algorithmexplanation.vo.AlgorithmExplanationVO;
 import com.ktdsuniversity.edu.algorithmexplanation.vo.SearchAlgorithmExplanationVO;
+import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
 
 @Repository
 public class AlgorithmExplanationDAOImpl extends SqlSessionDaoSupport implements AlgorithmExplanationDAO {
@@ -66,4 +67,9 @@ public class AlgorithmExplanationDAOImpl extends SqlSessionDaoSupport implements
 		return getSqlSession().update("deleteOneAlgorithmExplanation", companyAlgorithmExplanationId);
 	}
 
+	// 통합검색
+	@Override
+	public List<AlgorithmExplanationVO> searchAllAlgorithmExplanationByKeyword(AbstractSearchVO abstractSearchVO) {
+		return getSqlSession().selectList("searchAllAlgorithmExplanationByKeyword", abstractSearchVO);
+	}
 }

@@ -16,6 +16,7 @@ import com.ktdsuniversity.edu.algorithmquestion.dao.AlgorithmQuestionDAO;
 import com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionListVO;
 import com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionVO;
 import com.ktdsuniversity.edu.algorithmquestion.vo.SearchAlgorithmQuestionVO;
+import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
 import com.ktdsuniversity.edu.exceptions.PageNotFoundException;
 @Service
 public class AlgorithmQuestionServiceImpl implements AlgorithmQuestionService {
@@ -92,9 +93,14 @@ public class AlgorithmQuestionServiceImpl implements AlgorithmQuestionService {
 	}
 
 	@Override
-	public AlgorithmQuestionListVO getAllAlgorithmQuestionByKeyword(SearchAlgorithmQuestionVO searchAlgorithmQuestionVO) {
+	public AlgorithmQuestionListVO searchAllAlgorithmQuestionByKeyword(AbstractSearchVO abstractSearchVO) {
+		
+		if ( abstractSearchVO == null || abstractSearchVO.getSearchKeyword() == null || abstractSearchVO.getSearchKeyword().length() == 0) {
+			return new AlgorithmQuestionListVO();
+		}
+		
 		AlgorithmQuestionListVO algorithmQuestionListVO = new AlgorithmQuestionListVO();
-		algorithmQuestionListVO.setAlgorithmQuestionList(algorithmQuestionDAO.searchAllAlgorithmQuestionByKeyword(searchAlgorithmQuestionVO));
+		algorithmQuestionListVO.setAlgorithmQuestionList(algorithmQuestionDAO.searchAllAlgorithmQuestionByKeyword(abstractSearchVO));
 		return algorithmQuestionListVO;
 	}
 }

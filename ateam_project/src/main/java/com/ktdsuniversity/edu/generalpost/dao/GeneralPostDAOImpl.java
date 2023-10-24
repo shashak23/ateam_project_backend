@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
 import com.ktdsuniversity.edu.generalpost.vo.SearchForumVO;
 import com.ktdsuniversity.edu.generalpost.web.FreePostController;
@@ -99,7 +100,14 @@ public class GeneralPostDAOImpl extends SqlSessionDaoSupport
 
 	// 내 게시글 조회
 	@Override
-	public List<GeneralPostVO> getMyPost(String postWriter) {
-		return getSqlSession().selectList("getMyPost", postWriter);
+	public List<GeneralPostVO> getMyPost(GeneralPostVO GeneralPostVO) {
+		return getSqlSession().selectList("getMyPost", GeneralPostVO);
 	}
+	
+	// 통합검색
+	@Override
+	public List<GeneralPostVO> searchAllBoardByKeyword(AbstractSearchVO abstractSearchVO) {
+		return getSqlSession().selectList("searchAllBoardByKeyword", abstractSearchVO);
+	}
+	
 }

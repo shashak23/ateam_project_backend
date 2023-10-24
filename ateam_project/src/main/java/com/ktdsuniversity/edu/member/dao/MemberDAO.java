@@ -8,6 +8,7 @@ package com.ktdsuniversity.edu.member.dao;
 
 import java.util.List;
 
+import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 
 public interface MemberDAO {
@@ -46,7 +47,6 @@ public interface MemberDAO {
 	 */
 //	public int createNewCompanyMember(MemberVO memberVO);
 	
-	public List<MemberVO> searchMember(String memberType);
 	/**
 	 * 회원 조회
 	 */
@@ -73,4 +73,9 @@ public interface MemberDAO {
 	 */
 	public int deleteProfile(String email);
 	
+	// 회원유형구분해서 회원찾기
+	public List<MemberVO> searchMember(String memberType);
+	
+	// 통합검색
+	public List<MemberVO> searchAllMemberByKeyword(AbstractSearchVO abstractSearchVO);
 }

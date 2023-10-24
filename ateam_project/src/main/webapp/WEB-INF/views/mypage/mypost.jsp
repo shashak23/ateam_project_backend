@@ -7,17 +7,6 @@
 <head>
 <meta charset="UTF-8">
 <title>내 게시글 조회</title>
-<script type="text/javascript" src="/js/lib/jquery-3.7.1.js"></script>
-<script type="text/javascript">
-$().ready(function() {
-	$("#search").selected(function(){
-		$("#select-form").attr({
-			"method": "get",
-			"action": "/mypost"
-		}).submit()
-	});
-});
-</script>
 </head>
 <body>
  	<label for="qnaboard">QnA 게시판</label>
@@ -42,6 +31,7 @@ $().ready(function() {
 		<c:choose>
 			<c:when test="${not empty generalPostList.generalPostList}">
 				<c:forEach items="${generalPostList.generalPostList}" var="myqnapost">
+					<c:if test="${myqnapost.boardId eq 'CC-20231017-000029'}">
 					<tr>
 						<td style="font-weight: bold;">
 							<a href="/qnaboard/view/${myqnapost.generalPostId}">
@@ -53,6 +43,7 @@ $().ready(function() {
 						<td>${myqnapost.viewCnt}</td>
 						<td>${myqnapost.likeCnt}</td>
 					</tr>
+					</c:if>
 				</c:forEach>
 			</c:when>
 			<c:otherwise>
@@ -88,17 +79,20 @@ $().ready(function() {
 		<c:choose>
 			<c:when test="${not empty generalPostList.generalPostList}">
 				<c:forEach items="${generalPostList.generalPostList}" var="myfreepost">
+					<c:if test="${myfreepost.boardId eq 'CC-20231017-000030'}">
 					<tr>
 						<td style="font-weight: bold;">
 							<a href="/freeboard/view/${myfreepost.generalPostId}">
 								<c:out value="${myfreepost.postTitle}" />
 							</a>
+							
 						</td>
 						<td>${myfreepost.memberVO.nickname}</td>
 						<td>${myfreepost.postDate}</td>
 						<td>${myfreepost.viewCnt}</td>
 						<td>${myfreepost.likeCnt}</td>
 					</tr>
+					</c:if>
 				</c:forEach>
 			</c:when>
 			<c:otherwise>
