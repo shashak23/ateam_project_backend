@@ -13,6 +13,18 @@
 <script type="text/javascript">
 	$().ready(function() {
 		
+		ClassicEditor.create( document.querySelector( '#algorithmContent' ), {
+		       language: "ko"
+		    } );
+		
+		ClassicEditor.create( document.querySelector( '#algorithmSolution' ), {
+		      language: "ko"
+		   } );
+		
+		ClassicEditor.create( document.querySelector( '#defaultCode' ), {
+		      language: "ko"
+		   } );
+		
 		$.get("/code/알고리즘카테고리", function(response) {
 			for (var i = 0; i < response.length; i++) {
 				var code = response[i]
@@ -26,17 +38,22 @@
 		const table = new Table("grid", 5, ["A", "B", "C", "D", "E"])
         table.view($, "#table-div");
 
-        $("#add-row").click(function() {
+        $("#add-row").click(function(event) {
+        	event.preventDefault()
             table.addRow($, "#grid")
         })
 
-        $("#add-col").click(function() {
+        $("#add-col").click(function(event) {
+        	event.preventDefault()
             table.addColumn($, "#grid", "F")
         })
 
-        $("#to-json").click(function() {
-            let json = table.toJson($, "#grid")
-            $("#JSON").text(JSON.stringify(json))
+        $("#submit-btn").click(function(event) {
+        	event.preventDefault()
+        	let json = table.toJson($, "#grid")
+        	alert(JSON.stringify(json))
+        	$("#answerJson").val(JSON.stringify(json));
+        	$("#algorithmQuestionVO").submit();
         })
 		
         $("").keyup(function() {
@@ -126,37 +143,32 @@
                    value="${algorithmQuestionVO.algorithmTitle}" />
             
             <label class="label" for="algorithmContent">문제내용</label>
-            <textarea name="algorithmContent" id="editor">${algorithmQuestionVO.algorithmContent}</textarea>
+            <textarea name="algorithmContent" id="algorithmContent"></textarea>
             <script>
-			    ClassicEditor.create( document.querySelector( '#editor' ), {
-			       language: "ko"
-			    } );
+			    
 			</script>
 
             <label class="label" for="algorithmSolution">문제풀이</label>
-            <textarea name="algorithmSolution" id="editor2"></textarea>
+            <textarea name="algorithmSolution" id="algorithmSolution"></textarea>
             <script>
-			    ClassicEditor.create( document.querySelector( '#editor2' ), {
-			       language: "ko"
-			    } );
+			   
 			</script>
             
-            <input id="defaultCode" type="text" name="defaultCode" placeholder="기본제공코드" />
+            <label for="defaultCode">기본제공코드</label>
+            <textarea id="defaultCode" name="defaultCode" ></textarea>
             
+			<label>테스트데이터</label>
+		    <div id="table-div"></div>
+		    <button id="add-row">행 추가</button>
+		    <button id="add-col">열 추가</button>
+            <input type="hidden" name="content" id="answerJson"/>
             <div class="btn-group">
                 <div class="right-align">
-                    <input type="submit" value="저장" />
+                    <button id="submit-btn">저장</button>
                 </div>
             </div>
         </div>
 	</form:form>
 
-	<label>테스트데이터</label>
-    <div id="table-div"></div>
-    <button id="add-row">행 추가</button>
-    <button id="add-col">열 추가</button>
-    <button id="to-json">JSON으로 변환</button>
-
-    <div id="JSON"></div>
 </body>
 </html>

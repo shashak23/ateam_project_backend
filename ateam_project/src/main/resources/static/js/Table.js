@@ -12,9 +12,10 @@ Table.prototype.view = function(jQuery, appendTo) {
 	tableHtml += `<table id="${this.id}">`
 	tableHtml += `<thead>`
 	tableHtml += `<tr>`
-	for (let i = 0; i < this.titles; i++) {
+	for (let i = 0; i < this.titles.length; i++) {
 		tableHtml += `<th>${this.titles[i]}</th>`
 	}
+	tableHtml += `<th class="result">result</th>`
 	tableHtml += `</tr>`
 	tableHtml += `</thead>`
 	tableHtml += `<tbody>`
@@ -22,6 +23,7 @@ Table.prototype.view = function(jQuery, appendTo) {
 	for (let c = 0; c < this.cols; c++) {
 		tableHtml += `<td><input type="text" name="${this.titles[c]}" /></td>`
 	}
+	tableHtml += `<td class="result"><input type="text" name="result" /></td>`
 	tableHtml += `</tr>`
 	tableHtml += `</tbody>`
 	tableHtml += `</table>`
@@ -33,6 +35,7 @@ Table.prototype.addRow = function(jQuery, tableElement) {
 	for (let c = 0; c < this.cols; c++) {
 		tableHtml += `<td><input type="text" name="${this.titles[c]}" /></td>`
 	}
+	tableHtml += `<td class="result"><input type="text" name="result" /></td>`
 	tableHtml += `</tr>`
 	
 	jQuery(tableElement).append(jQuery(tableHtml))
@@ -42,10 +45,19 @@ Table.prototype.addColumn = function(jQuery, tableElement, title) {
 	this.titles.push(title)
 	this.cols += 1
 
+	let newTitle = `<th>${title}</th>`
 	let column = `<td><input type="text" name="${title}" /></td>`
-	jQuery(tableElement).find("tbody").find("tr").each(function() {
-		jQuery(this).append( jQuery(column) )
+	
+	jQuery(tableElement).find("thead").find("tr").each(function() {
+		console.log(jQuery(this))
+		console.log(jQuery(this).find(".result"))
+		jQuery(this).find(".result").before( jQuery(newTitle) )
 	})
+	
+	jQuery(tableElement).find("tbody").find("tr").each(function() {
+		jQuery(this).find(".result").before( jQuery(column) )
+	})
+	
 }
 
 Table.prototype.toJson = function(jQuery, tableElement) {

@@ -12,16 +12,20 @@
 <script type="text/javascript">
     $().ready(function() {
     	
-	    ClassicEditor.create( document.querySelector( '#editor' ), {
+	    ClassicEditor.create( document.querySelector( '#myAnswer' ), {
 	       language: "ko"
 	    } );
-    	
+	    
     	// 모달 실행을 위한 문장
         $('.btn-primary').click(function() {
             $('.create_container, .overlay').addClass('active')
         })
         $('.btn-close, .overlay').click(function() {
             $('.create_container, .overlay').removeClass('active')
+        })
+        
+        $("#submit-btn").click(function() {
+        	$("#myAlgorithmVO").submit();
         })
     })
 </script>
@@ -230,18 +234,17 @@
 				<a href="/algorithm/explanation/list">알고리즘 해설 보러가기</a>
 			</div>
 			
-			<form:form modelAttribute="myAlgorithmVO" method="post">	
-			<div>
-				<form:errors path="myAnswer" element="div" cssClass="errors" />
-			</div>
-			    <label for="myAnswer">답변</label> <!-- 웹IDE 테이블에 신규생성? -->
-			    <textarea name="myAnswer" id="editor" value="${algorithmQuestionVO.defaultCode}">${myAlgorithmVO.myAnswer}</textarea>
-			    <!-- 일반회원이 로그인 했을 시 -->
-			    <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.memberType eq 'GENERAL'}">
-			        <input type="submit" id="submit" value="제출 후 채점하기" />
-				</c:if>
+			<form:form modelAttribute="myAlgorithmVO" method="post" action="/algorithm/question/view/${companyAlgorithmQuestionId}">	
+				<div>
+					<form:errors path="myAnswer" element="div" cssClass="errors" />
+				</div>
+				    <label for="myAnswer">답변</label> <!-- 웹IDE 테이블에 신규생성? -->
+				    <textarea name="myAnswer" id="myAnswer">${algorithmQuestionVO.defaultCode}</textarea>
+				    <!-- 일반회원이 로그인 했을 시 -->
+				    <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.memberType eq 'GENERAL'}">
+				        <button id="submit-btn">제출 후 채점하기</button>
+					</c:if>
 			</form:form>
-			
 		</div>
 	</div>
 	<div class="grid">
