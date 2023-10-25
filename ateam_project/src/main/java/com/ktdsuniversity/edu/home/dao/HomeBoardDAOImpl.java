@@ -14,6 +14,8 @@ import org.springframework.stereotype.Repository;
 
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
 import com.ktdsuniversity.edu.home.vo.HomeBoardVO;
+import com.ktdsuniversity.edu.home.vo.HomeNickNameVO;
+import com.ktdsuniversity.edu.home.vo.HomecommentCntVO;
 
 @Repository
 public class HomeBoardDAOImpl extends SqlSessionDaoSupport implements HomeBoardDAO {
@@ -23,6 +25,22 @@ public class HomeBoardDAOImpl extends SqlSessionDaoSupport implements HomeBoardD
 		super.setSqlSessionTemplate(sqlSessionTemplate);
 	}
 	
+	@Override
+	public List<GeneralPostVO> getAllGeneralPost() {
+		return getSqlSession().selectList("getAllGeneralPost");
+	}
+		
+	@Override
+	public List<HomecommentCntVO> getAllGeneralCommentCnt() {
+		return getSqlSession().selectList("getAllGeneralCommentCnt");
+	}
+	
+	@Override
+	public List<HomeNickNameVO> getNicknameList() {
+		return getSqlSession().selectList("getNicknameList");
+	}
+	
+	@Override
 	public List<GeneralPostVO> getWeeklyRanking(String date) {
 		return getSqlSession().selectList("getWeeklyRanking", date);
 	}
