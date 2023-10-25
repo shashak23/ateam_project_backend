@@ -74,7 +74,7 @@ public class QnAPostController {
 		
 		ModelAndView modelAndView = new ModelAndView();
 		
-		XssIgnoreUtil.ignore(generalPostVO);
+		/* XssIgnoreUtil.ignore(generalPostVO); */
 		
 		log.debug("1--컨트롤러---------------------------");
 		log.debug("데이터 =  " + generalPostVO.getBoardId());
@@ -196,19 +196,19 @@ public class QnAPostController {
 	}
 	
 	// 좋아요 기능
-//	@PostMapping("/qnaboard/like")
-//    public ModelAndView likeQnABoard(@ModelAttribute GeneralPostVO generalPostVO) {
-//
-//		ModelAndView view = new ModelAndView();
-//		boolean isSuccess = generalPostService.likeQnABoard(generalPostVO);
-//		if(isSuccess) {
-//			view.setViewName("redirect:/qnaboard/list");
-//			return view;
-//		}
-//		else {
-//			view.setViewName("forum/qnaboardview");
-//			view.addObject("generalPostVO", generalPostVO);
-//			return view;
-//		}
-//	}
+	@PostMapping("/qnaboard/like")
+    public ModelAndView likeQnABoard(@ModelAttribute GeneralPostVO generalPostVO) {
+
+		ModelAndView view = new ModelAndView();
+		boolean isSuccess = generalPostService.likeQnABoard(generalPostVO);
+		if(isSuccess) {
+			view.setViewName("redirect:/qnaboard/list");
+			return view;
+		}
+		else {
+			view.setViewName("forum/qnaboardview");
+			view.addObject("generalPostVO", generalPostVO);
+			return view;
+		}
+	}
 }

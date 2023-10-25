@@ -54,23 +54,18 @@
 	<jsp:include page="../member/membermenu.jsp"></jsp:include>
 
 	<h1> 질답게시판의 작성 페이지</h1>
-	<form name="generalPostVO" method = "post">		
+	<form name="companyRecruitVO" method = "post">		
 		<div id="write-page">
 			<label for = "postTitle"> 제목 </label>
 			<input id = "postTitle" type = "text" name="postTitle" 
-					value="${generalPostVO.postTitle}"/>
+					value="${companyRecruitVO.postTitle}"/>
 			<p><label for = "postContent"> 내용 </label>
-			 <textarea name="postContent" id="editor">${generalPostVO.postContent}</textarea>
+			 <textarea name="postContent" id="editor">${companyRecruitVO.postContent}</textarea>
 		        <script>
 		          ClassicEditor.create( document.querySelector( '#editor' ), {
 		                  language: "ko"
 		                } );    
 		        </script></p>
-		        
-		   <div class="hash"> 
-		    <label for="hashTag" >해시태그</label>
-		    <input id="hashTag" type="text" name="hashTag" />
-		   </div>
 			<div class = "btn-group">
 				<div class="right-align">
 					<input type="submit" value="저장" />

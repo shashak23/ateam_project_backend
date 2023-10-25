@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
+import com.ktdsuniversity.edu.algorithmanswer.service.AlgorithmAnswerService;
+import com.ktdsuniversity.edu.algorithmanswer.vo.AlgorithmAnswerVO;
 import com.ktdsuniversity.edu.algorithmquestion.service.AlgorithmQuestionService;
 import com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionListVO;
 import com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionVO;
@@ -37,6 +39,7 @@ public class AlgorithmQuestionController {
 	@Autowired
 	private AlgorithmQuestionService algorithmQuestionService;
 
+	
 	@GetMapping("/algorithm/question/list")
 	public String viewAlgorithmQuestionList( @ModelAttribute SearchAlgorithmQuestionVO searchAlgorithmQuestionVO, Model model) {
 		AlgorithmQuestionListVO algorithmQuestionListVO = algorithmQuestionService.getAllAlgorithmQuestion(searchAlgorithmQuestionVO);

@@ -7,6 +7,50 @@
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ktdsuniversity.edu.home.dao.HomeBoardDAO">
+	<resultMap type="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO"
+	           id="GeneralPostDAOMap"
+	           autoMapping="true">
+	    <association property="commonCodeVO"
+				     javaType="com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO"
+				     autoMapping="true">
+		    <id column="CODE_ID" property="codeId" />
+		</association>
+	</resultMap>
+	<select id="getAllGeneralPost"
+			resultType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
+		SELECT GENERAL_POST_ID
+		     , POST_WRITER
+		     , BOARD_ID
+		     , POST_TITLE
+		     , POST_CONTENT
+		     , POST_DATE
+		     , LIKE_CNT
+		     , VIEW_CNT
+		     , DELETE_YN
+		  FROM GENERAL_POST
+		 ORDER BY POST_DATE DESC
+	</select>
+	
+	<select id="getAllGeneralCommentCnt"
+			resultType="com.ktdsuniversity.edu.home.vo.HomecommentCntVO">
+		SELECT COUNT(GC.GENERAL_COMMENT_ID) COMMENT_CNT
+		     , GP.GENERAL_POST_ID 
+		  FROM GENERAL_POST GP
+		  LEFT JOIN GENERAL_COMMENT GC
+		    ON GC.GENERAL_POST_ID = GP.GENERAL_POST_ID 
+		 GROUP BY GP.GENERAL_POST_ID
+	</select>
+	
+	<select id="getNicknameList"
+			resultType="com.ktdsuniversity.edu.home.vo.HomeNickNameVO">
+		SELECT M.NICKNAME 
+			 , M.EMAIL 
+		     , GP.GENERAL_POST_ID 
+		  FROM GENERAL_POST GP
+		 INNER JOIN MEMBER M
+		    ON GP.POST_WRITER = M.EMAIL 
+	</select>
+	
 	<select id="getWeeklyRanking"
 			parameterType="string"
 			resultType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
@@ -14,6 +58,18 @@
 		  FROM GENERAL_POST GP
 		 WHERE TO_CHAR(POST_DATE, 'YYYY-MM-DD') > #{_parameter}
 		 ORDER BY VIEW_CNT DESC
+	</select>
+	<select id="getHashtag"
+			parameterType="string"
+			resultMap="GeneralPostDAOMap">
+		SELECT CC.CODE_CONTENT 
+			 , GP.GENERAL_POST_ID
+		  FROM GENERAL_POST GP
+		 INNER JOIN GENERAL_POST_HASHTAG GPH
+		    ON GP.GENERAL_POST_ID = GPH.GENERAL_POST_ID 
+		 INNER JOIN COMMON_CODE CC
+		    ON CC.CODE_ID = GPH.HASHTAG_ID 
+		 WHERE GP.GENERAL_POST_ID = #{_parameter}
 	</select>
 	
 	
