@@ -28,8 +28,10 @@ import com.ktdsuniversity.edu.util.XssIgnoreUtil;
 @Scope("prototype")
 public class CodeRuntime {
 
+	public static StringBuffer runFileCode;
+	
 	@Value("${app.multipart.base-dir:C:/uploadFiles}")
-	private String baseDir = "C:/uploadFiles";
+	private String baseDir;
 
 	private StringBuffer code;
 	
@@ -37,16 +39,69 @@ public class CodeRuntime {
 	private File javaFile;
 	
 	private File runFile;
-	public static StringBuffer runFileCode;
 	
 	static {
 		runFileCode = new StringBuffer();
+		runFileCode.append("import com.google.gson.Gson;\n");
+		runFileCode.append("import java.lang.reflect.Method;\n");
+		runFileCode.append("import java.lang.reflect.Parameter;\n");
+		runFileCode.append("import java.lang.reflect.InvocationTargetException;\n");
+		runFileCode.append("import java.util.List;\n");
+		runFileCode.append("import java.util.Map;\n");
+		runFileCode.append("import java.util.HashMap;\n");
+		
 		runFileCode.append("public class Run {\n");
-		runFileCode.append("");
-		runFileCode.append("    public static void main(String[] args) {");
-		runFileCode.append("        #codeHear#");
-		runFileCode.append("    }");
-		runFileCode.append("");
+		runFileCode.append("\n");
+		runFileCode.append("    public static void main(String[] args) {\n");
+		runFileCode.append("        Gson gson = new Gson();\n");
+		runFileCode.append("        Map<String, Object> param = args.length > 0 ? gson.fromJson(args[0], Map.class) : new HashMap<>();\n");
+		runFileCode.append("        Solution solution = new Solution();\n");
+		runFileCode.append("        Method[] methodArray = solution.getClass().getDeclaredMethods();\n");
+		runFileCode.append("        for (Method method: methodArray) {\n");
+		runFileCode.append("        	String name = method.getName();\n");
+		runFileCode.append("        	if (name.equals(\"solution\")) { \n");
+		runFileCode.append("        		int paramCount = method.getParameterCount();\n");
+		runFileCode.append("        		\n");
+		runFileCode.append("        		Object[] parameters = null;\n");
+		runFileCode.append("        		if (paramCount > 0) {\n");
+		runFileCode.append("        			parameters = new Object[paramCount];\n");
+		runFileCode.append("        			Parameter[] paramList = method.getParameters();\n");
+		runFileCode.append("        			for(int i = 0; i < paramList.length; i++) { \n");
+		runFileCode.append("        				Parameter each = paramList[i];\n");
+		runFileCode.append("        				\n");
+		runFileCode.append("        				String paramName = each.getName();\n");
+		runFileCode.append("        				String typeName = each.getParameterizedType().getTypeName();\n");
+		runFileCode.append("        				\n");
+		runFileCode.append("        				parameters[i] = param.get(paramName);\n");
+		runFileCode.append("        				if (typeName.equals(\"int\")) {\n");
+		runFileCode.append("        					parameters[i] = (int) Double.parseDouble(parameters[i].toString());\n");
+		runFileCode.append("        				}\n");
+		runFileCode.append("        				else if (typeName.equals(\"int[]\")) {\n");
+		runFileCode.append("        					List tempList = (List)parameters[i];\n");
+		runFileCode.append("        					int[] tempArray = new int[tempList.size()];\n");
+		runFileCode.append("        					\n");
+		runFileCode.append("        					for(int j = 0; j < tempList.size(); j++) {\n");
+		runFileCode.append("        						tempArray[j] = (int) Double.parseDouble(tempList.get(j).toString());\n");
+		runFileCode.append("        					}\n");
+		runFileCode.append("        					\n");
+		runFileCode.append("        					parameters[i] = tempArray;\n");
+		runFileCode.append("        				}\n");
+		runFileCode.append("        			}\n");
+		runFileCode.append("        		}\n");
+		runFileCode.append("        		\n");
+		runFileCode.append("        		try {\n");
+		runFileCode.append("        			Object result = method.invoke(solution, parameters);\n");
+		runFileCode.append("        			if (result != null) {\n");
+		runFileCode.append("        				System.out.println(result);\n");
+		runFileCode.append("        			}\n");
+		runFileCode.append("        		} catch (IllegalAccessException | InvocationTargetException e) {\n");
+		runFileCode.append("        			e.printStackTrace();\n");
+		runFileCode.append("        		}\n");
+		runFileCode.append("        		break;\n");
+		runFileCode.append("        	}\n");
+		runFileCode.append("        }\n");
+		runFileCode.append("    }\n");
+		runFileCode.append("\n");
 		runFileCode.append("}");
 	}
 	
@@ -86,11 +141,11 @@ public class CodeRuntime {
 //		makeFile(CodeRuntime.runFileCode.toString());
 	}
 	
-	public void makeRunFile(String testCode) {
+	public void makeRunFile() {
 		String code = CodeRuntime.runFileCode.toString();
-		if (testCode != null) {
-			code = code.replace("#codeHear#", testCode);
-		}
+//		if (testCode != null) {
+//			code = code.replace("#codeHear#", testCode);
+//		}
 		
 		BufferedWriter bw = null;
 		try {
@@ -136,7 +191,10 @@ public class CodeRuntime {
 	}
 	
 	private synchronized void doCompile(File file) {
-		ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "javac -cp " + file.getParentFile().getAbsolutePath() + " " + file.getAbsolutePath());
+		
+		System.out.println("compile: " + "javac -parameters --class-path " + file.getParentFile().getParentFile().getAbsolutePath() + "/gson-2.10.1.jar;" + file.getParentFile().getAbsolutePath() + " " + file.getAbsolutePath());
+		
+		ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "javac -parameters --class-path " + file.getParentFile().getParentFile().getAbsolutePath() + "/gson-2.10.1.jar;" + file.getParentFile().getAbsolutePath() + " " + file.getAbsolutePath());
 		Process process = null;
 		try {
 			process = pb.start();
@@ -165,17 +223,16 @@ public class CodeRuntime {
 			}
 		}
 	}
-
-	public List<String> run(String ... params) {
+	
+	public List<String> run(String paramJson) {
 		String classFile = this.runFile.getAbsolutePath();
-//		classFile = classFile.replace(".java", "");
-		String command = "java -cp " + this.runFile.getParentFile().getAbsolutePath() + " " + classFile;
+		String command = "java --class-path " + this.runFile.getParentFile().getParentFile().getAbsolutePath() + "/gson-2.10.1.jar;" + this.runFile.getParentFile().getAbsolutePath() + " " + classFile;
 		
-		if (params != null) {
-			for (String args: params) {
-				command += " " + args;
-			}
+		if (paramJson != null) {
+			command += " \"" + paramJson + "\"";
 		}
+		
+		System.out.println("Run: " + command);
 		
 		ProcessBuilder pb = new ProcessBuilder("cmd", "/c", command);
 		Process process = null;
@@ -207,5 +264,22 @@ public class CodeRuntime {
 		}
 		return runResult;
 	}
-
+	
+	public static void main(String[] args) {
+		CodeRuntime codeRuntime = new CodeRuntime();
+		codeRuntime.setCode("public class Solution { public int solution() { return 0;} }");
+		codeRuntime.makeFile();
+		codeRuntime.doCompileJava();
+		
+		                        // #codeHear#
+		codeRuntime.makeRunFile();
+		codeRuntime.doCompileRun();
+		
+		List<String> processResult = codeRuntime.run(null);
+		List<String> processResult2 = codeRuntime.run("{\"a\": 1, \"b\": 2, \"c\": 3}");
+		
+		System.out.println(processResult);
+		System.out.println(processResult2);
+	}
+	
 }
