@@ -14,11 +14,6 @@
 			         autoMapping="true">
 			         <id column="EMAIL" property="email" />
 	    </association>
-	    <association property="commonCodeVO"
-		             javaType="com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO"
-		             autoMapping="true">
-		    <id column="CODE_ID" property="codeId" />
-		</association>
 	</resultMap>
 	
 	<select id="getBoardAllCount"
@@ -124,7 +119,7 @@
 	
 	<!-- 질답게시판 -->
 	<select id="getAllQnABoard"
-	resultType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
+	resultMap="GeneralPostDAOMap">
 		SELECT GP.GENERAL_POST_ID
 		     , GP.POST_WRITER
 		     , GP.BOARD_ID

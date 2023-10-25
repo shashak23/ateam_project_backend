@@ -15,29 +15,6 @@
             <link rel="stylesheet" type="text/css" href="/css/swiper.min.css">
         <link rel="stylesheet" type="text/css" href="/css/style.css" />
         <script src="js/lib/jquery-3.7.1.js"></script>
-        <script>
-        	$().ready(funtion() {
-        		alert('힘내용ㅎㅎ')
-        		
-//         		$.get('/code/질답게시판', function(response) {
-//         			for (let i = 0; i < response.length; i++) {
-//         				let template = `
-//         					<tr>
-//         				    	<td>${qnaboard.generalPostId}</td>
-//         				    		<td>
-//         				      			<a href="/qnaboard/view/${qnaboard.generalPostId}">
-//         				        			${qnaboard.postTitle}
-//         				      			</a>
-//         				    		</td>
-//         				    	<td>${qnaboard.postWriter}</td>
-//         				    	<td>${qnaboard.postDate}</td>
-//         				    	<td>${qnaboard.viewCnt}</td>
-//         				  	</tr>
-//         				`
-//         			}
-//         		})
-        	})
-        </script>
       </head>
       <body>
     <div id="wrap" class="wrap">
@@ -193,7 +170,7 @@
 								</div>
 
 								<!-- button -->
-								<<!-- div class="btn_set btn_right">
+								<!-- div class="btn_set btn_right">
 										<div class="btn btn_st_1">
 												<a href="/qnaboard/create">글쓰기</a>
 										</div>

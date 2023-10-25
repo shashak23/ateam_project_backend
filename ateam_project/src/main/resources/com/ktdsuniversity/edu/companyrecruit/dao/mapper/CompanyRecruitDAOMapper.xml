@@ -100,9 +100,9 @@
 		      , #{postWriter}
 		      , #{postTitle}
 		      , #{postContent}
-		      , SYSDATE
-		      , SYSDATE
-		      , SYSDATE
+		      , #{postDate}
+		      , #{recruitStartDate}
+		      , #{recruitEndDate}
 		      , 'Y'
 		      , 'CC-20231017-000014'
 		      , #{minCareerYear}
@@ -120,9 +120,9 @@
 			 , CRP.POST_WRITER
 			 , CRP.POST_TITLE
 			 , CRP.POST_CONTENT
-			 , CRP.POST_DATE
-			 , CRP.RECRUIT_START_DATE
-			 , CRP.RECRUIT_END_DATE
+			 , TO_CHAR(CRP.POST_DATE, 'YYYY-MM-DD') POST_DATE 
+			 , TO_CHAR(CRP.RECRUIT_START_DATE, 'YYYY-MM-DD') RECRUIT_START_DATE
+			 , TO_CHAR(CRP.RECRUIT_END_DATE, 'YYYY-MM-DD') RECRUIT_END_DATE 
 			 , CRP.RECRUIT_PROGRESS_YN
 			 , CRP.RECRUIT_TYPE
 			 , CRP.MIN_CAREER_YEAR
@@ -147,5 +147,11 @@
 	</update>
 	
 	<!-- 삭제 -->
+	<update id="deleteOneRecruitBoard" 
+			parameterType="com.ktdsuniversity.edu.companyrecruit.vo.CompanyRecruitVO">
+		UPDATE COMPANY_RECRUIT_POST
+		   SET DELETE_YN = 'Y'
+		 WHERE COMPANY_RECRUIT_POST_ID = #{companyRecruitPostId}
+	</update>
 
 </mapper>

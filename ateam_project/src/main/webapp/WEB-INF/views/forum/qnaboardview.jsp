@@ -293,7 +293,7 @@ pre.content {
     //     $("#text-content").removeData("target");
     // })
 
-     	// 신고버튼, 좋아요 버튼
+     // 신고버튼, 좋아요 버튼
 		$().ready(function() {
 		    // "신고" 버튼 클릭 시 모달 열기
 		    $(".report-btn").click(function() {
@@ -413,7 +413,7 @@ pre.content {
 
 			<div class="btn-group">
 				<div class="right-align">
-       				<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq generalPostVO.postWriter}">
+       				<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
 					<div class="update_btn">
 						<div class="btn">
 							<a href="/qnaboard/update/${generalPostVO.generalPostId}">수정</a>

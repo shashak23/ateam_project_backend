@@ -21,4 +21,6 @@ public interface CompanyRecruitDAO {
 
 	public int updateOneRecruitBoard(CompanyRecruitVO companyRecruitVO);
 
+	public int deleteOneRecruitBoard(String companyRecruitPostId);
+
 }

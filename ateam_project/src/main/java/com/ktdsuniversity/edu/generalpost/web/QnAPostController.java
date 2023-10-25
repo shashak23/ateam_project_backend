@@ -42,7 +42,6 @@ public class QnAPostController {
 	@GetMapping("/qnaboard/list")
 	public ModelAndView qnaBoardList() {
 		GeneralPostListVO generalPostListVO = generalPostService.getAllQnABoard();
-
 		ModelAndView view = new ModelAndView();
 		view.setViewName("forum/qnaboardlist");
 		view.addObject("generalPostListVO", generalPostListVO);
@@ -80,10 +79,10 @@ public class QnAPostController {
 		log.debug("데이터 =  " + generalPostVO.getBoardId());
 		log.debug("데이터 =  " + generalPostVO.getPostWriter());
 		generalPostVO.setPostWriter(memberVO.getEmail());
-		System.out.println(generalPostVO.getPostWriter());
+//		System.out.println(generalPostVO.getPostWriter());
 		
 		if (bindingResult.hasErrors()) {
-			modelAndView.setViewName("qnaboard/create");
+			modelAndView.setViewName("forum/qnaboardcreate");
 			modelAndView.addObject("generalPostVO", generalPostVO);
 			return modelAndView;
 		}
@@ -95,7 +94,7 @@ public class QnAPostController {
 			return modelAndView;
 		}
 		else {
-			modelAndView.setViewName("qnaboard/create");
+			modelAndView.setViewName("forum/qnaboardcreate");
 			modelAndView.addObject("generalPostVO", generalPostVO);
 			return modelAndView;
 		}
@@ -128,12 +127,14 @@ public class QnAPostController {
 	
 	// 수정 처리
 	@PostMapping("/qnaboard/update")
-	public ModelAndView updateQnABoard(@ModelAttribute GeneralPostVO generalPostVO) {
+	public ModelAndView updateQnABoard(@ModelAttribute GeneralPostVO generalPostVO
+			 							, @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 		System.out.println("일반회원용 게시글ID: " + generalPostVO.getGeneralPostId());
 		System.out.println("게시글 제목: " + generalPostVO.getPostTitle());
 		System.out.println("게시글 내용: " + generalPostVO.getPostContent());
 		
 		ModelAndView view = new ModelAndView();
+		generalPostVO.setPostWriter(memberVO.getEmail());
 		boolean isSuccess = generalPostService.updateOneQnABoard(generalPostVO);
 		if(isSuccess) {
 			// 게시글의 수정이 성공이라면
@@ -170,7 +171,6 @@ public class QnAPostController {
 		GeneralPostVO origingeneralPostVO  = generalPostService.getOneQnABoard(generalPostVO.getGeneralPostId());		
 		log.debug("삭제여부 : " + origingeneralPostVO.getDeleteYn());
 
-		generalPostVO.getGeneralPostId();
 		// 게시글을 등록한다.
 		boolean isSuccess = generalPostService.deleteOneQnABoard(origingeneralPostVO.getGeneralPostId());
 		if (isSuccess) {

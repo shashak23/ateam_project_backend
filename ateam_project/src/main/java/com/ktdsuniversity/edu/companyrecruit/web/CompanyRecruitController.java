@@ -92,9 +92,23 @@ public class CompanyRecruitController {
 		return view;
 	}
 	
+	// 수정페이지 이동
+	@GetMapping("/recruit/update/{companyRecruitPostId}")
+	public ModelAndView viewUpdatePage(@PathVariable String companyRecruitPostId) {
+		   // 요런식으로다가 서비스에서 -> DB에서 게시글 ID로 게시글 가져오는 쿼리 실행
+		CompanyRecruitVO companyRecruitVO  = companyRecruitService.getOneRecruitBoard(companyRecruitPostId); 
+	                              
+	      ModelAndView view = new ModelAndView();
+	      view.setViewName("company/mypost/recruitupdate");
+	      view.addObject("companyRecruitVO", companyRecruitVO);
+	      
+	      return view;
+	   }
+	
 	// 수정
-	@PostMapping("/recruit/update")
-	public ModelAndView updateCompanyMypostRecruit(@ModelAttribute CompanyRecruitVO companyRecruitVO) {
+	@PostMapping("/recruit/update/{companyRecruitPostId}")
+	public ModelAndView updateCompanyMypostRecruit(@ModelAttribute CompanyRecruitVO companyRecruitVO
+													,@PathVariable String companyRecruitPostId) {
 		log.debug("--1--컨트롤러 도착------------------------------");
 		ModelAndView view = new ModelAndView();
 		boolean isSuccess = companyRecruitService.updateOneRecruitBoard(companyRecruitVO);
@@ -109,5 +123,31 @@ public class CompanyRecruitController {
 		
 	}
 	
-	// 삭제
+	// 삭제페에지 이동
+	@GetMapping("/recruit/delete/{companyRecruitPostId}")
+	public ModelAndView viewDeletePage(@ModelAttribute CompanyRecruitVO companyRecruitVO
+										,@PathVariable String companyRecruitPostId) {
+		ModelAndView view = new ModelAndView();
+		view.setViewName("company/mypost/recruitdelete");
+		view.addObject("companyRecruitVO", companyRecruitVO);
+		return view;
+	}
+	
+	// 삭제처리
+	@PostMapping("/recruit/delete/{companyRecruitPostId}")
+	public ModelAndView deleteCompanyMypostRecruit(@ModelAttribute CompanyRecruitVO companyRecruitVO
+													,@PathVariable String companyRecruitPostId
+													, BindingResult bindingResult) {
+		ModelAndView view = new ModelAndView();
+		CompanyRecruitVO origincompanyRecruitVO = companyRecruitService.getOneRecruitBoard(companyRecruitVO.getCompanyRecruitPostId());
+		boolean isSuccess = companyRecruitService.deleteOneRecruitBoard(origincompanyRecruitVO.getCompanyRecruitPostId());
+		if(isSuccess) {
+			view.setViewName("redirect:/recruit/list");
+			return view;
+		} else {
+			view.setViewName("company/mypost/recruitdelete");
+			view.addObject("origincompanyRecruitVO", origincompanyRecruitVO);
+			return view;
+		}
+	}
 }

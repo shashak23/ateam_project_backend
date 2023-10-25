@@ -51,17 +51,18 @@
 </style>
 </head>
 <body>
-<%-- 	<jsp:include page="../member/membermenu.jsp"></jsp:include>
- 왜 안되지? --%>
+
 	<h1> 기업 채용 게시판의 작성 페이지</h1>
 	<form name="companyRecruitVO" method = "post">		
 		<div id="write-page">
 			<label for = "postTitle"> 제목 </label>
-			<input id = "postTitle" type = "text" name="postTitle" 
-					value="${companyRecruitVO.postTitle}"/>
+			<input id = "postTitle" type = "text" name="postTitle" value="${companyRecruitVO.postTitle}"/>
 			
-			<lable for = "recruitEndDate">마감날짜</lable>			
-			<input type="date" value=${companyRecruitVO.recruitEndDate}/>
+			<label for="recruitStartDate" >채용 시작일</label>
+			<input type="date" value="${companyRecruitVO.recruitStartDate}" />
+			
+			<lable for = "recruitEndDate">채용 마감일</lable>			
+			<input type="date" value="${companyRecruitVO.recruitEndDate}"/>
 			
 			<label for = "postContent"> 내용 </label>
 			 <textarea name="postContent" id="editor">${companyRecruitVO.postContent}</textarea>
