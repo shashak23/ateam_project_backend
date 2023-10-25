@@ -15,60 +15,10 @@
 <!--스타일,폰트 지정-->
 <!--스와이퍼 기능 지정-->
 <!--스타일 입히기-->
-<link rel="stylesheet"
-	href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 </head>
-<link rel="stylesheet" type="text/css" href="/css/myProfile.css" />
-<script
-	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script
-	src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<jsp:include page="../layout/header.jsp" />
+<link rel="stylesheet" type="text/css" href="/css/myprofile.css" />
 <body>
-	<!--아이디와 클래스 값을 부여함-->
-	<div id="wrap" class="wrap">
-
-
-		<header id="header" class="header">
-			<jsp:include page="../member/membermenu.jsp"></jsp:include>
-			<!-- 로그인/회원가입 -->
-			<!-- <li><a href="#">로그인</a></li> 링크를 통해 # 사용자가 지정 할수있고 버튼을 누르면 그곳으로 이동해 달라는 태그 -->
-
-			<div class="util">
-				<ul>
-					<li><a href="#">로그인</a></li>
-					<li><a href="#">회원가입</a></li>
-				</ul>
-			</div>
-
-			<div class="inner">
-				<!-- 로고 -->
-
-				<h1>
-					<a href="index.html">SnapChat</a>
-				</h1>
-
-
-				<!-- Navigation -->
-				<!--누르면 링크로 이동하는 버튼 네비게이션을 통하여 그 창으로 이동힌다-->
-				<nav class="gnb">
-					<ul>
-						<li><a href="index.html">자유게시판</a></li>
-						<li><a href="qa.html">Q&A</a></li>
-						<li><a href="#">채용</a></li>
-						<li><a href="#">코딩테스트</a></li>
-					</ul>
-				</nav>
-
-				<!-- 아이콘 -->
-				<div class="setting">
-					<a href="#"> <span class="material-symbols-outlined">account_circle</span>
-					</a> <a href="#"> <span class="material-symbols-outlined">mail</span>
-					</a> <a href="#"> <span class="material-symbols-outlined">notifications</span>
-					</a>
-				</div>
-			</div>
-		</header>
-		<!--           메인 -------------------------------------------------------------------------------- -->
 		<div id="container">
 			<div class="flex_button">
 				<button>마이페이지</button>
@@ -302,19 +252,46 @@
 			</div>
 		</div>
 		</form>
+<jsp:include page="../layout/footer.jsp"/>
 
-
-		<!-- 페이지 푸터 -->
-		<footer id="footer" class="footer">
-			<div class="inner">
-				<address>
-					<span>상호명 : SNAPCHAT </span> <span>개인정보책임관리자 : 홍길동 </span> <span>주소
-						: kt ds </span> <span>ssss</span>
-				</address>
-				<div class="copyright">&copy; 2023 by SNAPCHAT. All rights
-					reserved</div>
-			</div>
-		</footer>
-	</div>
 </body>
+<script>
+	//미완성된 기능을 알려주는 모달창
+	$('.incomplete').click(function() {
+	  $('.modal, .overlay').addClass('modal_active')
+	})
+	$('.overlay').click(function() {
+	  $('.modal, .overlay').removeClass('modal_active')
+	})	
+	
+	// 스크롤 버튼, IDE
+	let calcScrollValue = () => {
+	let scrollProgress = document.getElementById('progress')
+	let progressValue = document.getElementById('progress-value')
+	let pos = document.documentElement.scrollTop
+	let calcHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight
+	let scrollValue = Math.round((pos * 100) / calcHeight)
+	
+	scrollProgress.addEventListener('click', () => {
+	  document.documentElement.scrollTop = 0
+	})
+	}
+	
+	window.onscroll = calcScrollValue
+	
+	// 서브 리스트가 있다면? 아래로 떨군다.
+	$('.visible').hide()
+	$('.list_company').mouseover(function() {
+	  $('.visible').show()
+	  $(this).find('a').css({'background-color': 'var(--blue)',
+	                         'color': 'white',
+	                         'box-shadow': '0 0 5px var(--gray)'})
+	})
+	$('.list_company').mouseleave(function() {
+	  $('.visible').hide()
+	  $(this).find('a').css({'background-color': 'white',
+	                         'color': 'var(--blue)',
+	                         'box-shadow': 'none'})
+	})
+</script>
 </html>
