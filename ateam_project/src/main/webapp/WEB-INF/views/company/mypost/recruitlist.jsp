@@ -103,7 +103,7 @@
                                     <a href="#">조회</a>
                                 </div>
                                 <div class="btn btn_st_2">
-                                    <a href="/company/mypost/recruit/create">등록</a>
+                                    <a href="/recruit/create">등록</a>
                                 </div>
                             </div>
     
@@ -135,9 +135,9 @@
                                                     <tbody>
                                                         <c:forEach items="${companyRecruitListVO.companyRecruitList}" var="companyRecruit">
                                                             <tr>
-                                                                <td>${companyRecruit.generalPostId}</td>
+                                                                <td>${companyRecruit.companyRecruitPostId}</td>
                                                                 <td>
-                                                                    <a href="/company/recruit/recruit/view/${companyRecruit.companyRecruitPostId}">
+                                                                    <a href="/recruit/view/${companyRecruit.companyRecruitPostId}">
                                                                         ${companyRecruit.postTitle}
                                                                     </a>
                                                                 </td>

@@ -54,26 +54,22 @@
 <%-- 	<jsp:include page="../member/membermenu.jsp"></jsp:include>
  왜 안되지? --%>
 	<h1> 기업 채용 게시판의 작성 페이지</h1>
-	<form name="generalPostVO" method = "post">		
+	<form name="companyRecruitVO" method = "post">		
 		<div id="write-page">
 			<label for = "postTitle"> 제목 </label>
 			<input id = "postTitle" type = "text" name="postTitle" 
-					value="${generalPostVO.postTitle}"/>
+					value="${companyRecruitVO.postTitle}"/>
 			
-			<lable for = "#">마감날짜</lable>			
+			<lable for = "recruitEndDate">마감날짜</lable>			
+			<input type="date" value=${companyRecruitVO.recruitEndDate}/>
 			
-			<p><label for = "postContent"> 내용 </label>
-			 <textarea name="postContent" id="editor">${generalPostVO.postContent}</textarea>
+			<label for = "postContent"> 내용 </label>
+			 <textarea name="postContent" id="editor">${companyRecruitVO.postContent}</textarea>
 		        <script>
 		          ClassicEditor.create( document.querySelector( '#editor' ), {
 		                  language: "ko"
 		                } );    
-		        </script></p>
-		        
-		   <div class="hash"> 
-		    <label for="hashTag" >해시태그</label>
-		    <input id="hashTag" type="text" name="hashTag" />
-		   </div>
+		        </script>
 			<div class = "btn-group">
 				<div class="right-align">
 					<input type="submit" value="저장" />

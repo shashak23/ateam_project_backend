@@ -1,5 +1,6 @@
 /**
  * 작성자: 김시하
+ * 수정자: 김시하(2023-10-25)
  * 작성일자: 2023-10-23
  * 내용: 기업 채용을 위한 Service
  */
@@ -15,6 +16,10 @@ public interface CompanyRecruitService {
 	public CompanyRecruitListVO getAllBoard();
 
 	public boolean createNewBoard(CompanyRecruitVO companyRecruitVO);
+
+	public CompanyRecruitVO getOneRecruitBoard(String companyRecruitPostId);
+
+	public boolean updateOneRecruitBoard(CompanyRecruitVO companyRecruitVO);
 
 	
 }

@@ -74,7 +74,7 @@ public class QnAPostController {
 		
 		ModelAndView modelAndView = new ModelAndView();
 		
-		XssIgnoreUtil.ignore(generalPostVO);
+		/* XssIgnoreUtil.ignore(generalPostVO); */
 		
 		log.debug("1--컨트롤러---------------------------");
 		log.debug("데이터 =  " + generalPostVO.getBoardId());
