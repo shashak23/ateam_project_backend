@@ -618,13 +618,13 @@
           "email": `${sessionScope._LOGIN_USER_.email}`,
           "postId": $(this).find(".postId").val(),
           "boardId": $(this).find(".boardId").val(),
-          "bookmarkId": $(this).find('.bookmarkId').val()
+          "bookmarkId": $(e.currentTarget).find('.bookmarkId').val()
           }
           console.log(body.email)
           console.log(body.postId)
           console.log(body.boardId)
           console.log(body.bookmarkId)
-          console.log(this)
+          console.log(e.currentTarget)
           if ($(e.currentTarget).find('svg').hasClass('bookmark_on')) {
             $.post('/unbookmark', body, function(result) {
               alert('북마크가 지워진 것 같아요!')
@@ -640,7 +640,7 @@
                 alert('북마크에 쏙 들어갔어요?')
                 $(e.currentTarget).find('svg').css('fill', 'var(--blue)')
                 $(e.currentTarget).find('svg').addClass('bookmark_on')
-                $('.bookmarkBtn').prepend(`<input type="hidden" class="bookmarkId" value="\${response.bookmarkId}"/>`)
+                $('.bookmarkBtn').prepend(`<input type="hidden" class="bookmarkId" value="\${result.bookmarkId}"/>`)
               }
               else {
                 alert('실패했슴둥! 따콩!')

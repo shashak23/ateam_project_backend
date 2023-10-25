@@ -29,6 +29,11 @@ public class BookmarkDAOImpl extends SqlSessionDaoSupport implements BookmarkDAO
 	}
 	
 	@Override
+	public List<BookmarkVO> getOneBookmark(BookmarkVO bookmarkVO) {
+		return getSqlSession().selectOne("getOneBookmark", bookmarkVO);
+	}
+	
+	@Override
 	public BookmarkVO getBookmarkStatus(BookmarkSearchVO bookmarkSearchVO) {
 		return getSqlSession().selectOne("getBookmarkStatus", bookmarkSearchVO);
 	}
@@ -39,8 +44,8 @@ public class BookmarkDAOImpl extends SqlSessionDaoSupport implements BookmarkDAO
 	}
 
 	@Override
-	public int deleteBookmark(String bookmarkId) {
-		return getSqlSession().update("deleteBookmark", bookmarkId);
+	public int deleteBookmark(BookmarkSearchVO bookmarkSearchVO) {
+		return getSqlSession().update("deleteBookmark", bookmarkSearchVO);
 	}
 	@Override
 	public int toggleBookmark(String bookmarkId) {
