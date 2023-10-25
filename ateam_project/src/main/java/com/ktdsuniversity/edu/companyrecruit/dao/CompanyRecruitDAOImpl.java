@@ -9,14 +9,18 @@ import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ktdsuniversity.edu.companyrecruit.vo.CompanyRecruitVO;
+import com.ktdsuniversity.edu.generalpost.web.FreePostController;
 
 @Repository
 public class CompanyRecruitDAOImpl extends SqlSessionDaoSupport
 									implements CompanyRecruitDAO{
+	private Logger log = LoggerFactory.getLogger(FreePostController.class);
 
 	@Autowired
 	@Override
@@ -25,8 +29,8 @@ public class CompanyRecruitDAOImpl extends SqlSessionDaoSupport
 	}
 	
 	@Override
-	public int getBoardAllCount() {
-		return getSqlSession().selectOne("getBoardAllCount");
+	public int getBoardCount() {
+		return getSqlSession().selectOne("getBoardCount");
 	}
 
 	@Override
@@ -37,6 +41,17 @@ public class CompanyRecruitDAOImpl extends SqlSessionDaoSupport
 	@Override
 	public int createNewBoard(CompanyRecruitVO companyRecruitVO) {
 		return getSqlSession().insert("createNewBoard", companyRecruitVO);
+	}
+
+	@Override
+	public CompanyRecruitVO getOneRecruitBoard(String companyRecruitPostId) {
+		return getSqlSession().selectOne("getOneRecruitBoard", companyRecruitPostId);
+	}
+
+	@Override
+	public int updateOneRecruitBoard(CompanyRecruitVO companyRecruitVO) {
+		log.debug("--3--디에이오 도착------------------------------");
+		return getSqlSession().update("updateOneRecruitBoard", companyRecruitVO);
 	}
 
 }

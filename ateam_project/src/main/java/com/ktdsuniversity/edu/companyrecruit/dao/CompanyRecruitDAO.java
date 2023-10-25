@@ -11,10 +11,14 @@ import com.ktdsuniversity.edu.companyrecruit.vo.CompanyRecruitVO;
 
 public interface CompanyRecruitDAO {
 
-	public int getBoardAllCount();
+	public int getBoardCount();
 
 	public List<CompanyRecruitVO> getAllBoard();
 
 	public int createNewBoard(CompanyRecruitVO companyRecruitVO);
+
+	public CompanyRecruitVO getOneRecruitBoard(String companyRecruitPostId);
+
+	public int updateOneRecruitBoard(CompanyRecruitVO companyRecruitVO);
 
 }
