@@ -54,4 +54,9 @@ public class CompanyRecruitDAOImpl extends SqlSessionDaoSupport
 		return getSqlSession().update("updateOneRecruitBoard", companyRecruitVO);
 	}
 
+	@Override
+	public int deleteOneRecruitBoard(String companyRecruitPostId) {
+		return getSqlSession().update("deleteOneRecruitBoard", companyRecruitPostId);
+	}
+
 }

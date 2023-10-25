@@ -21,5 +21,7 @@ public interface CompanyRecruitService {
 
 	public boolean updateOneRecruitBoard(CompanyRecruitVO companyRecruitVO);
 
+	public boolean deleteOneRecruitBoard(String companyRecruitPostId);
+
 	
 }

@@ -22,6 +22,14 @@
 			<label for="postTitle">등록일</label>
 			<div>${companyRecruitVO.postDate}</div>
 			
+			<!-- 구분필요함 -->
+			
+			<label for="">채용 시작일</label>
+			<div>${companyRecruitVO.recruitStartDate}</div>
+			
+			<label for="">채용 마감일</label>
+			<div>${companyRecruitVO.recruitEndDate}</div>
+			
 			<label for="postTitle">내용</label>
 			<div>${companyRecruitVO.postContent}</div>
 			
