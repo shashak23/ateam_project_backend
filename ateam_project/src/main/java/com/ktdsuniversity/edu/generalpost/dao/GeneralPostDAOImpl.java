@@ -37,12 +37,12 @@ public class GeneralPostDAOImpl extends SqlSessionDaoSupport
 		
 	@Override
 	public int increaseViewCount(String generalPostId) {
-		return getSqlSession().update("increaseViewCount", generalPostId);
+		return getSqlSession().update("com.ktdsuniversity.edu.generalpost.dao.GeneralPostDAO.increaseViewCount", generalPostId);
 	}
 	
 	@Override
 	public int getBoardAllCount() {
-		return getSqlSession().selectOne("getBoardAllCount");
+		return getSqlSession().selectOne("com.ktdsuniversity.edu.generalpost.dao.GeneralPostDAO.getBoardAllCount");
 	}
 	// 자유게시판
 	@Override

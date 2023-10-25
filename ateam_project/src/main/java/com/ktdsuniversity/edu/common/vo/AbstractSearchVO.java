@@ -1,19 +1,12 @@
+/**
+ * 수정자: 장보늬(2023-10-25)
+ */
 package com.ktdsuniversity.edu.common.vo;
 
 public class AbstractSearchVO {
 	
 	private String searchKeyword;
-	
-	private String memberType;
 
-	public String getMemberType() {
-		return memberType;
-	}
-
-	public void setMemberType(String memberType) {
-		this.memberType = memberType;
-	}
-	
 	public String getSearchKeyword() {
 		return searchKeyword;
 	}

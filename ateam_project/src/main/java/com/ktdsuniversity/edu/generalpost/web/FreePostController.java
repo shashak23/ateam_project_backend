@@ -1,6 +1,7 @@
 /**
  * 작성자: 김시하
  * 수정자: 김시하(2023-10-23)
+ * 수정자: 장보늬(2023-10-25)
  * 작성일자: 2023-10-16
  * 내용: 자유게시판을 위한 Controller
  */
@@ -107,13 +108,12 @@ public class FreePostController {
 	
 	// 단건 조회 처리
 	@GetMapping("/freeboard/view/{generalPostId}")
-	public ModelAndView freeBoardSingle(@PathVariable String generalPostId
-										, @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+	public ModelAndView freeBoardSingle(@PathVariable String generalPostId) {
 //		log.debug("되는거 맞지요?--------------------------------------");
 //		log.debug("글번호: " + generalPostId);
 		GeneralPostVO generalPostVO = generalPostService.getOneFreeBoard(generalPostId);
-		generalPostVO.setPostWriter(memberVO.getEmail());
-		System.out.println(generalPostVO.getPostWriter());
+//		generalPostVO.setPostWriter(memberVO.getEmail());
+//		System.out.println(generalPostVO.getPostWriter());
 		ModelAndView view = new ModelAndView();
 		view.setViewName("forum/freeboardview");
 		view.addObject("generalPostVO", generalPostVO);

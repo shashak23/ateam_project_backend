@@ -49,6 +49,7 @@ public class WebConfig implements WebMvcConfigurer {
 		checkSessionExcludePatterns.add("/freeboard/list");
 		checkSessionExcludePatterns.add("/home/main");
 		checkSessionExcludePatterns.add("/home/home");
+		checkSessionExcludePatterns.add("/keyword/**");
 		checkSessionExcludePatterns.add("/home/**");
 		checkSessionExcludePatterns.add("/js/**");
 		checkSessionExcludePatterns.add("/css/**");
