@@ -73,7 +73,6 @@ public class CareerController {
 			 					, Model model
 			 					,@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 		 CareerVO careerVO =careerService.getOneCareer(careerId);
-		 careerVO.setGeneralMemberEmail(memberVO.getEmail());
 		 if (!careerVO.getGeneralMemberEmail().equals(memberVO.getEmail())) {
 				throw new PageNotFoundException("잘못된 접근입니다.");
 			}
@@ -91,7 +90,6 @@ public class CareerController {
 			 model.addAttribute("careerVO", careerVO);
 			 return "career/careermodify";
 		 }
-		 careerVO.setGeneralMemberEmail(memberVO.getEmail());
 		 if (!careerVO.getGeneralMemberEmail().equals(memberVO.getEmail())) {
 				throw new PageNotFoundException("잘못된 접근입니다.");
 			}
@@ -111,7 +109,6 @@ public class CareerController {
 	 public String doDeleteCareer(@PathVariable String careerId
 			 					 ,@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 		 CareerVO careerVO = careerService.getOneCareer(careerId);
-		 careerVO.setGeneralMemberEmail(memberVO.getEmail());
 		 if (!careerVO.getGeneralMemberEmail().equals(memberVO.getEmail())) {
 				throw new PageNotFoundException("잘못된 접근입니다.");
 			}

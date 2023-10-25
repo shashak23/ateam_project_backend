@@ -8,9 +8,16 @@
 <title>알고리즘 문제 수정하기</title>
 <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
 <script type="text/javascript" src="/js/lib/jquery-3.7.1.js"></script>
+<script src="/js/Table.js"></script>
 <script type="text/javascript">
 	$().ready(function() {
 
+		ClassicEditor.create( document.querySelector( '#algorithmSolution' ), {
+		       language: "ko"
+		    } );
+		ClassicEditor.create( document.querySelector( '#algorithmContent' ), {
+		       language: "ko"
+		    } );
 		// 알고리즘카테고리 리스트 보여주기
 		$.get("/code/알고리즘카테고리", function(response) {
 			for (var i = 0; i < response.length; i++) {
@@ -32,6 +39,27 @@
 			
 		});
 		
+		const table = new Table("grid", 5, ["A", "B", "C", "D", "E"])
+        table.view($, "#table-div");
+
+        $("#add-row").click(function(event) {
+        	event.preventDefault()
+            table.addRow($, "#grid")
+        })
+
+        $("#add-col").click(function(event) {
+        	event.preventDefault()
+            table.addColumn($, "#grid", "F")
+        })
+
+        $("#submit-btn").click(function(event) {
+        	event.preventDefault()
+        	let json = table.toJson($, "#grid")
+        	alert(JSON.stringify(json))
+        	$("#answerJson").val(JSON.stringify(json));
+        	$("#algorithmQuestionVO").submit();
+        })
+        
 		// 이전에 선택한 select option 불러오기
         $("select[name=algorithmTierId]").val("${algorithmQuestionVO.algorithmTierId}")
         
@@ -105,24 +133,19 @@
                    value="${algorithmQuestionVO.algorithmTitle}" />
             
             <label class="label" for="algorithmContent">문제내용</label>
-            <textarea name="algorithmContent" id="editor">${algorithmQuestionVO.algorithmContent}</textarea>
-            <script>
-			    ClassicEditor.create( document.querySelector( '#editor' ), {
-			       language: "ko"
-			    } );
-			</script>
+            <textarea name="algorithmContent" id="algorithmContent">${algorithmQuestionVO.algorithmContent}</textarea>
             
             <label class="label" for="algorithmSolution">문제풀이</label>
-            <textarea name="algorithmSolution" id="editor2">${algorithmQuestionVO.algorithmSolution}</textarea>
-            <script>
-			    ClassicEditor.create( document.querySelector( '#editor2' ), {
-			       language: "ko"
-			    } );
-			</script>
+            <textarea name="algorithmSolution" id="algorithmSolution">${algorithmQuestionVO.algorithmSolution}</textarea>
             
+            <label>테스트데이터</label>
+		    <div id="table-div"></div>
+		    <button id="add-row">행 추가</button>
+		    <button id="add-col">열 추가</button>
+            <input type="hidden" name="content" id="answerJson"/>
             <div class="btn-group">
                 <div class="right-align">
-                    <input type="submit" value="수정" />
+                    <button id="submit-btn">저장</button>
                 </div>
             </div>
         </div>

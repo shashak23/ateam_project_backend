@@ -76,7 +76,6 @@ public class EducationController {
 			 					,@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 		 
 		 EducationVO educationVO =educationService.getOneEducation(educationId);
-		 educationVO.setGeneralMemberEmail(memberVO.getEmail());
 		 if (!educationVO.getGeneralMemberEmail().equals(memberVO.getEmail())) {
 				throw new PageNotFoundException("잘못된 접근입니다.");
 			}
@@ -89,13 +88,13 @@ public class EducationController {
 			 					    ,BindingResult bindingResult
 			 					    ,Model model
 			 					    ,@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+		 
 		 if (bindingResult.hasErrors()) {
 				model.addAttribute("educationVO", educationVO);
 				return "education/educationmodify";
 			}
 		 
 		 boolean isSuccess = educationService.updateOneEducation(educationVO);
-		 educationVO.setGeneralMemberEmail(memberVO.getEmail());
 		 if (!educationVO.getGeneralMemberEmail().equals(memberVO.getEmail())) {
 				throw new PageNotFoundException("잘못된 접근입니다.");
 			}
@@ -114,7 +113,6 @@ public class EducationController {
 	 public String doDeleteEducation(@PathVariable String educationId
 			 						 ,@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 		 EducationVO educationVO = educationService.getOneEducation(educationId);
-		 educationVO.setGeneralMemberEmail(memberVO.getEmail());
 		 if (!educationVO.getGeneralMemberEmail().equals(memberVO.getEmail())) {
 				throw new PageNotFoundException("잘못된 접근입니다.");
 			}

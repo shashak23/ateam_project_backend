@@ -10,20 +10,14 @@
 <script type="text/javascript" src="/js/lib/jquery-3.7.1.js"></script>
 <script type="text/javascript">
 	$().ready(function() {
-		$.get("/member/COMPANY", function(response) {
+		$.get("/keyword", function(response) {
 			for (var i = 0; i < response.length; i++) {
-				var member = response[i]
-				var option = $("<option value='"+member.nickname+"'></option>");
-				$("#nicList").append(option);
+				var keyword = response[i]
+				var option = $("<option value='"+keyword+"'></option>");
+				$("#keywordList").append(option);
 			}
 		});
-		$.get("/member/GENERAL", function(response) {
-			for (var i = 0; i < response.length; i++) {
-				var member = response[i]
-				var option = $("<option value='"+member.nickname+"'></option>");
-				$("#nicList").append(option);
-			}
-		});
+		
 		$("#search-btn").click(function() {
 			$("#search-form").attr({
 				"method": "get",
@@ -38,8 +32,8 @@
 		<form id="search-form"
 		      method="get"
 		      action="/home/search">
-		     <input autocomplete="off" type="text" name="searchKeyword" list="nicList" placeholder="검색어를 입력해주세요"/>
-		     <datalist id="nicList"></datalist>
+		     <input autocomplete="off" type="text" name="searchKeyword" list="keywordList" placeholder="검색어를 입력해주세요"/>
+		     <datalist id="keywordList"></datalist>
 		     <button id="search-btn">검색</button>
 		</form>
 	</div>

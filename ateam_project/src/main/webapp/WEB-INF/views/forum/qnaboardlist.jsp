@@ -146,9 +146,7 @@
 							<div class="btn btn_st_2">
                                 <a href="/qnaboard/create">등록</a>
                             </div>
-                            <div class="right-align">
-								총 ${generalPostListVO.boardCnt} 건의 게시글이 검색되었습니다.
-							</div>
+                            
 						</div>
 
 						<!-- 게시판 리스트 -->
@@ -190,7 +188,6 @@
                                                                 <td>${qnaboard.viewCnt}</td>
                                                             </tr>
                                                      </c:forEach>	
-														
 												</tbody>
 										</table>
 								</div>

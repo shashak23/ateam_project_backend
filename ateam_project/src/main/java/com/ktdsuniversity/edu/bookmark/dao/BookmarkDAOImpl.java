@@ -12,6 +12,7 @@ import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ktdsuniversity.edu.bookmark.vo.BookmarkSearchVO;
 import com.ktdsuniversity.edu.bookmark.vo.BookmarkVO;
 
 @Repository
@@ -26,6 +27,11 @@ public class BookmarkDAOImpl extends SqlSessionDaoSupport implements BookmarkDAO
 	public List<BookmarkVO> getAllBookmark(String email) {
 		return getSqlSession().selectList("getAllBookmark", email);
 	}
+	
+	@Override
+	public BookmarkVO getBookmarkStatus(BookmarkSearchVO bookmarkSearchVO) {
+		return getSqlSession().selectOne("getBookmarkStatus", bookmarkSearchVO);
+	}
 
 	@Override
 	public int createBookmark(BookmarkVO bookmarkVO) {
@@ -36,5 +42,8 @@ public class BookmarkDAOImpl extends SqlSessionDaoSupport implements BookmarkDAO
 	public int deleteBookmark(String bookmarkId) {
 		return getSqlSession().update("deleteBookmark", bookmarkId);
 	}
-
+	@Override
+	public int toggleBookmark(String bookmarkId) {
+		return getSqlSession().update("toggleBookmark", bookmarkId);
+	}
 }

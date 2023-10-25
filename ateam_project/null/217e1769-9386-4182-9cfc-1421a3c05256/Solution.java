@@ -1,1 +1,0 @@
-class Solution { ; ;public long solution(int n, int m, int[][] tests) { ; ; ; ;long answer = 111110; ; ; ; ;return answer; ; ;} }
