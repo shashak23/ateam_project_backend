@@ -5,6 +5,8 @@
  */
 package com.ktdsuniversity.edu.companyrecruit.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ktdsuniversity.edu.companyrecruit.dao.CompanyRecruitDAO;
 import com.ktdsuniversity.edu.companyrecruit.vo.CompanyRecruitListVO;
 import com.ktdsuniversity.edu.companyrecruit.vo.CompanyRecruitVO;
+import com.ktdsuniversity.edu.generalpost.web.FreePostController;
 
 @Service
 public class CompanyRecruitServiceImpl implements CompanyRecruitService{
@@ -19,12 +22,15 @@ public class CompanyRecruitServiceImpl implements CompanyRecruitService{
 	@Autowired
 	private CompanyRecruitDAO companyRecruitDAO;
 	
+	private Logger log = LoggerFactory.getLogger(FreePostController.class);
+
+	
 	@Transactional
 	@Override
 	public CompanyRecruitListVO getAllBoard() {
 		CompanyRecruitListVO companyRecruitListVO = new CompanyRecruitListVO();
-		companyRecruitListVO.setBoardCnt(companyRecruitDAO.getBoardAllCount());
-		companyRecruitListVO.setCompanyRecruitVO(companyRecruitDAO.getAllBoard());
+		companyRecruitListVO.setBoardCnt(companyRecruitDAO.getBoardCount());
+		companyRecruitListVO.setCompanyRecruitList(companyRecruitDAO.getAllBoard());
 		
 		return companyRecruitListVO;
 	}
@@ -34,6 +40,20 @@ public class CompanyRecruitServiceImpl implements CompanyRecruitService{
 	public boolean createNewBoard(CompanyRecruitVO companyRecruitVO) {
 		int boardCount = companyRecruitDAO.createNewBoard(companyRecruitVO);
 		return boardCount > 0;
+	}
+	@Transactional
+	@Override
+	public CompanyRecruitVO getOneRecruitBoard(String companyRecruitPostId) {
+		CompanyRecruitVO result = null;
+		result = companyRecruitDAO.getOneRecruitBoard(companyRecruitPostId);
+		return result;
+	}
+	@Transactional
+	@Override
+	public boolean updateOneRecruitBoard(CompanyRecruitVO companyRecruitVO) {
+		log.debug("--2--SERVICE 도착------------------------------");
+		int updateCount = companyRecruitDAO.updateOneRecruitBoard(companyRecruitVO);
+		return updateCount > 0;
 	}
 
 }

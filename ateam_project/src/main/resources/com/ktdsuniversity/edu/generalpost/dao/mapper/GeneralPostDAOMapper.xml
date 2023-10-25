@@ -9,32 +9,16 @@
 	           id="GeneralPostDAOMap"
 	           autoMapping="true">
 	           <id column="GENERAL_POST_ID" property="generalPostId" />
-    
-    <association property="memberVO"
-                 javaType="com.ktdsuniversity.edu.member.vo.MemberVO"
-		         autoMapping="true">
-		         <id column="EMAIL" property="email" />
-    </association>
-    
-    <association property="commonCodeVO"
-	    javaType="com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO"
-	    autoMapping="true">
-	    <id column="CODE_ID" property="codeId" />
-	</association>
-	
-	<association property="generalPostVO"
-					javaType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
-			<id column="GENERAL_POST_ID" property="generalPostId" />
-			<result column="POST_WRITER" property="postWriter" />
-			<result column="BOARD_ID" property="boardId" />
-			<result column="POST_TITLE" property="postTitle" />
-			<result column="POST_CONTENT" property="postContent" />
-			<result column="POST_DATE" property="postDate" />
-			<result column="LIKE_CNT" property="likeCnt" />
-			<result column="VIEW_CNT" property="viewCnt" />
-			<result column="DELETE_YN" property="deleteYn" />
-	</association>
-	
+	    <association property="memberVO"
+	                 javaType="com.ktdsuniversity.edu.member.vo.MemberVO"
+			         autoMapping="true">
+			         <id column="EMAIL" property="email" />
+	    </association>
+	    <association property="commonCodeVO"
+		             javaType="com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO"
+		             autoMapping="true">
+		    <id column="CODE_ID" property="codeId" />
+		</association>
 	</resultMap>
 	
 	<select id="getBoardAllCount"

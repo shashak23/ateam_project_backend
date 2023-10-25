@@ -133,6 +133,10 @@ $().ready(function() {
                           </c:when>
                       </c:choose>
                   </div>
+                  <!-- 로그인 하지 않았을 때 -->
+			      <c:if test="${empty sessionScope._LOGIN_USER_}">
+			          <a href="/member/auth">로그인하기</a>
+			      </c:if>
                   <!-- 기업회원 로그인 시에만 보이는 버튼 -->
                   <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.memberType eq 'COMPANY'}">
                       <div class="right-align" style="text-align: right; font-weight: bold">

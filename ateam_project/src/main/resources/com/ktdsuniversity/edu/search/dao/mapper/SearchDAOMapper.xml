@@ -1,0 +1,42 @@
+<!-- 
+	작성자: 장보늬
+	작성일자: 2023-10-25
+	내용: 통합검색 키워드 조회를 위한 쿼리
+ -->
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper	namespace="com.ktdsuniversity.edu.search.dao.SearchDAO">
+	<select id="getAllSearchKeyword"
+	        resultType="string">
+	SELECT DISTINCT KEYWORD
+	  FROM 
+	(
+	SELECT POST_TITLE AS KEYWORD
+	  FROM GENERAL_POST
+	 WHERE DELETE_YN = 'N'
+	 UNION ALL
+	SELECT POST_TITLE
+	  FROM COMPANY_NEWS_POST
+	 WHERE DELETE_YN = 'N'
+	 UNION ALL
+	SELECT ALGORITHM_TITLE
+	  FROM COMPANY_ALGORITHM_QUESTION
+	 WHERE DELETE_YN = 'N'
+	 UNION ALL
+	SELECT POST_TITLE
+	  FROM COMPANY_ALGORITHM_EXPLANATION
+	 WHERE DELETE_YN = 'N'
+	 UNION ALL
+	SELECT NICKNAME
+	  FROM MEMBER
+	 WHERE WITHDRAW_YN = 'N'
+	 UNION ALL
+	SELECT CODE_CONTENT
+	  FROM COMMON_CODE
+	 WHERE CODE_TYPE LIKE '%해시태그%'
+	    OR CODE_TYPE LIKE '%알고리즘카테고리%'
+	)
+	 ORDER BY KEYWORD ASC
+	</select>
+</mapper>

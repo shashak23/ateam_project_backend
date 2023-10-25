@@ -16,6 +16,40 @@
 		    <id column="CODE_ID" property="codeId" />
 		</association>
 	</resultMap>
+	<select id="getAllGeneralPost"
+			resultType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
+		SELECT GENERAL_POST_ID
+		     , POST_WRITER
+		     , BOARD_ID
+		     , POST_TITLE
+		     , POST_CONTENT
+		     , POST_DATE
+		     , LIKE_CNT
+		     , VIEW_CNT
+		     , DELETE_YN
+		  FROM GENERAL_POST
+		 ORDER BY POST_DATE DESC
+	</select>
+	
+	<select id="getAllGeneralCommentCnt"
+			resultType="com.ktdsuniversity.edu.home.vo.HomecommentCntVO">
+		SELECT COUNT(GC.GENERAL_COMMENT_ID) COMMENT_CNT
+		     , GP.GENERAL_POST_ID 
+		  FROM GENERAL_POST GP
+		  LEFT JOIN GENERAL_COMMENT GC
+		    ON GC.GENERAL_POST_ID = GP.GENERAL_POST_ID 
+		 GROUP BY GP.GENERAL_POST_ID
+	</select>
+	
+	<select id="getNicknameList"
+			resultType="com.ktdsuniversity.edu.home.vo.HomeNickNameVO">
+		SELECT M.NICKNAME 
+			 , M.EMAIL 
+		     , GP.GENERAL_POST_ID 
+		  FROM GENERAL_POST GP
+		 INNER JOIN MEMBER M
+		    ON GP.POST_WRITER = M.EMAIL 
+	</select>
 	
 	<select id="getWeeklyRanking"
 			parameterType="string"

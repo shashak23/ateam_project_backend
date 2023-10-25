@@ -1,16 +1,17 @@
-/**
- * 작성자: 김태현
- * 작성일: 2023-10-23
- * 내용: 북마크 된 게시글 검색을 도와주는 VO입니다.
- */
+package com.ktdsuniversity.edu.home.vo;
 
-package com.ktdsuniversity.edu.bookmark.vo;
-
-public class BookmarkSearchVO {
+public class HomeNickNameVO {
+	private String nickname;
 	private String email;
 	private String generalPostId;
 	
 	
+	public String getNickname() {
+		return nickname;
+	}
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
 	public String getEmail() {
 		return email;
 	}

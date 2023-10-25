@@ -10,7 +10,7 @@ import java.util.List;
 public class CompanyRecruitListVO {
 
 	private int boardCnt;
-	private List<CompanyRecruitVO> companyRecruit;
+	private List<CompanyRecruitVO> companyRecruitList;
 	
 	public int getBoardCnt() {
 		return boardCnt;
@@ -18,11 +18,11 @@ public class CompanyRecruitListVO {
 	public void setBoardCnt(int boardCnt) {
 		this.boardCnt = boardCnt;
 	}
-	public List<CompanyRecruitVO> getCompanyRecruitVO() {
-		return companyRecruit;
+	public List<CompanyRecruitVO> getCompanyRecruitList() {
+		return companyRecruitList;
 	}
-	public void setCompanyRecruitVO(List<CompanyRecruitVO> companyRecruitVO) {
-		this.companyRecruit = companyRecruitVO;
+	public void setCompanyRecruitList(List<CompanyRecruitVO> companyRecruitList) {
+		this.companyRecruitList = companyRecruitList;
 	}
 	
 	

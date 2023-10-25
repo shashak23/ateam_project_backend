@@ -293,7 +293,7 @@ pre.content {
     //     $("#text-content").removeData("target");
     // })
 
-     // 신고버튼, 좋아요 버튼
+     	// 신고버튼, 좋아요 버튼
 		$().ready(function() {
 		    // "신고" 버튼 클릭 시 모달 열기
 		    $(".report-btn").click(function() {
