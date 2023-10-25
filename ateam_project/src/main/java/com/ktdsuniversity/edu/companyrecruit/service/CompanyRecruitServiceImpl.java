@@ -7,6 +7,7 @@ package com.ktdsuniversity.edu.companyrecruit.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ktdsuniversity.edu.companyrecruit.dao.CompanyRecruitDAO;
 import com.ktdsuniversity.edu.companyrecruit.vo.CompanyRecruitListVO;
@@ -18,18 +19,21 @@ public class CompanyRecruitServiceImpl implements CompanyRecruitService{
 	@Autowired
 	private CompanyRecruitDAO companyRecruitDAO;
 	
+	@Transactional
 	@Override
 	public CompanyRecruitListVO getAllBoard() {
 		CompanyRecruitListVO companyRecruitListVO = new CompanyRecruitListVO();
 		companyRecruitListVO.setBoardCnt(companyRecruitDAO.getBoardAllCount());
 		companyRecruitListVO.setCompanyRecruitVO(companyRecruitDAO.getAllBoard());
 		
-		return null;
+		return companyRecruitListVO;
 	}
 
+	@Transactional
 	@Override
 	public boolean createNewBoard(CompanyRecruitVO companyRecruitVO) {
-		return false;
+		int boardCount = companyRecruitDAO.createNewBoard(companyRecruitVO);
+		return boardCount > 0;
 	}
 
 }

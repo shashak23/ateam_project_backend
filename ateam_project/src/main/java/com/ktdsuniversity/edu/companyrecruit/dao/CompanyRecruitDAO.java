@@ -15,4 +15,6 @@ public interface CompanyRecruitDAO {
 
 	public List<CompanyRecruitVO> getAllBoard();
 
+	public int createNewBoard(CompanyRecruitVO companyRecruitVO);
+
 }

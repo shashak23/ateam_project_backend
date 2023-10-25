@@ -34,4 +34,9 @@ public class CompanyRecruitDAOImpl extends SqlSessionDaoSupport
 		return getSqlSession().selectList("getAllBoard");
 	}
 
+	@Override
+	public int createNewBoard(CompanyRecruitVO companyRecruitVO) {
+		return getSqlSession().insert("createNewBoard", companyRecruitVO);
+	}
+
 }

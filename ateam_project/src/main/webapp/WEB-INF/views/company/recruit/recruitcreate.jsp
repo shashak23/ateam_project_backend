@@ -60,7 +60,7 @@
 			<input id = "postTitle" type = "text" name="postTitle" 
 					value="${generalPostVO.postTitle}"/>
 			
-			<lable for = "">마감날짜</lable>			
+			<lable for = "#">마감날짜</lable>			
 			
 			<p><label for = "postContent"> 내용 </label>
 			 <textarea name="postContent" id="editor">${generalPostVO.postContent}</textarea>

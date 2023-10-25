@@ -5,7 +5,41 @@
 
 <mapper namespace="com.ktdsuniversity.edu.companyrecruit.dao.CompanyRecruitDAO">
 	<!-- resultMap -->
-	
+	<resultMap type="com.ktdsuniversity.edu.companyrecruit.vo.CompanyRecruitVO"
+               id="CompanyRecruitDAOMap"
+               autoMapping="true">
+        <id column="COMPANY_RECRUIT_POST_ID" property="companyRecruitPostId"></id>
+    
+    	<association property="CompanyRecruitVO"
+    	             javaType="com.ktdsuniversity.edu.companyrecruit.vo.CompanyRecruitVO">
+    				 <id column="COMPANY_RECRUIT_POST_ID" property="companyRecruitPostId" />
+    				 <result column="POST_WRITER" property="postWriter"/>            
+    				 <result column="POST_TITLE" property="postTitle"/>            
+    				 <result column="POST_CONTENT" property="postContent"/>            
+    				 <result column="POST_DATE" property="postDate"/>            
+    				 <result column="RECRUIT_START_DATE" property="recruitStartDate"/>            
+    				 <result column="RECRUIT_END_DATE" property="recruitEndDate"/>            
+    				 <result column="RECRUIT_PROGRESS_YN" property="recruitProgressYn"/>            
+    				 <result column="RECRUIT_TYPE" property="recruitType"/>            
+    				 <result column="MIN_CAREER_YEAR" property="minCareerYear"/>            
+    				 <result column="MAX_CAREER_YEAR" property="maxCareerYear"/>            
+    				 <result column="VIEW_CNT" property="viewCnt"/>            
+    				 <result column="LIKE_CNT" property="likeCnt"/>            
+    				 <result column="DELETE_YN" property="deleteYn"/>                	             
+    	</association>
+    
+    	<association property="memberVO"
+                 javaType="com.ktdsuniversity.edu.member.vo.MemberVO"
+		         autoMapping="true">
+		         <id column="EMAIL" property="email" />
+	    </association>
+	    
+	    <association property="commonCodeVO"
+		    javaType="com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO"
+		    autoMapping="true">
+		    <id column="CODE_ID" property="codeId" />
+		</association>
+    </resultMap>
 	
 	<!-- 게시글 수 -->
 	<select id="getBoardAllCount"
@@ -44,7 +78,39 @@
 	</select>
 	
 	<!-- 등록 -->
-	
+	<insert id="createNewBoard"
+	        parameterType="com.ktdsuniversity.edu.companyrecruit.vo.CompanyRecruitVO">
+		INSERT INTO COMPANY_RECRUIT
+		     (COMPANY_RECRUIT_POST_ID
+		      , POST_WRITER
+		      , POST_TITLE
+		      , POST_CONTENT
+		      , POST_DATE
+		      , RECRUIT_START_DATE
+		      , RECRUIT_END_DATE
+		      , RECRUIT_PROGRESS_YN
+		      , RECRUIT_TYPE
+		      , MIN_CAREER_YEAR
+		      , MAX_CAREER_YEAR
+		      , VIEW_CNT
+		      , LIKE_CNT
+		      , DELETE_YN)
+		VALUES 
+		   ( 'CR-' || TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_COMPANY_RECRUIT_POST_PK.NEXTVAL, 6, '0')
+		      , #{postWriter}
+		      , #{postTitle}
+		      , #{postContent}
+		      , SYSDATE
+		      , #{recruitStartDate}
+		      , #{recruitEndDate}
+		      , #{recruitProgressYn}
+		      , 'CC-20231017-000014'
+		      , #{minCareerYear}
+		      , #{maxCareerYear}
+		      , 0
+		      , 0
+		      , 'N')
+	</insert>
 	
 	<!-- 단건 조회 -->
 	
