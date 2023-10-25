@@ -144,9 +144,6 @@
             
             <label class="label" for="algorithmContent">문제내용</label>
             <textarea name="algorithmContent" id="algorithmContent"></textarea>
-            <script>
-			    
-			</script>
 
             <label class="label" for="algorithmSolution">문제풀이</label>
             <textarea name="algorithmSolution" id="algorithmSolution"></textarea>
