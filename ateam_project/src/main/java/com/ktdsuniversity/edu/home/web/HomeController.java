@@ -31,6 +31,8 @@ import com.ktdsuniversity.edu.generalpost.vo.GeneralPostListVO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
 import com.ktdsuniversity.edu.home.service.HomeBoardService;
 import com.ktdsuniversity.edu.home.vo.HomeBoardVO;
+import com.ktdsuniversity.edu.home.vo.HomeNickNameVO;
+import com.ktdsuniversity.edu.home.vo.HomecommentCntVO;
 import com.ktdsuniversity.edu.member.service.MemberService;
 import com.ktdsuniversity.edu.member.vo.MemberListVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
@@ -63,13 +65,21 @@ public class HomeController {
 	
 	@ResponseBody
 	@GetMapping("/home/maincontent")
-	public Map<String, Object> getAllMainContents() {
-		Map<String, Object> resultMap = new HashMap<>();
-		List<GeneralPostVO> generalList = new ArrayList<>();
-		generalList.addAll(generalPostService.getAllFreeBoard().getGeneralPostList());
-		generalList.addAll(generalPostService.getAllQnABoard().getGeneralPostList());
-		resultMap.put("contents", generalList);
-		return resultMap;
+	public List<GeneralPostVO> getAllMainContents() {
+		List<GeneralPostVO> generalList = homeBoardService.getAllGeneralPost();
+		
+		return generalList;
+	}
+	
+	@ResponseBody
+	@GetMapping("home/maincontent/commentcnt")
+	public List<HomecommentCntVO> getAllGeneralCommentCnt() {
+		return homeBoardService.getAllGeneralCommentCnt();
+	}
+	@ResponseBody
+	@GetMapping("/home/maincontent/nickname")
+	public List<HomeNickNameVO> getNicknameList() {
+		return homeBoardService.getNicknameList();
 	}
 	
 	@ResponseBody
