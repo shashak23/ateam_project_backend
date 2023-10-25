@@ -1,30 +1,19 @@
-<<<<<<< HEAD
-=======
 /**
  * 작성자: 김시하
  * 작성일자: 2023-10-23
  * 내용: 기업 채용을 위한 VO
  */
->>>>>>> main
 package com.ktdsuniversity.edu.companyrecruit.vo;
 
 public class CompanyRecruitVO {
 
 	private String companyRecruitPostId;
 	private String postWriter;
-<<<<<<< HEAD
 	private String postTitle ;
 	private String postContent;
 	private int postDate;
 	private int recruitStartDate;
 	private int recruitEndDate;
-=======
-	private String postTitle;
-	private String postContent;
-	private String postDate;
-	private String recruitStartDate;
-	private String recruitEndDate;
->>>>>>> main
 	private String recruitProgressYn;
 	private String recruitType;
 	private int minCareerYear;
@@ -32,10 +21,7 @@ public class CompanyRecruitVO {
 	private int viewCnt;
 	private int likeCnt;
 	private String deleteYn;
-<<<<<<< HEAD
-=======
-	
->>>>>>> main
+
 	public String getCompanyRecruitPostId() {
 		return companyRecruitPostId;
 	}
@@ -60,7 +46,7 @@ public class CompanyRecruitVO {
 	public void setPostContent(String postContent) {
 		this.postContent = postContent;
 	}
-<<<<<<< HEAD
+	
 	public int getPostDate() {
 		return postDate;
 	}
@@ -77,24 +63,6 @@ public class CompanyRecruitVO {
 		return recruitEndDate;
 	}
 	public void setRecruitEndDate(int recruitEndDate) {
-=======
-	public String getPostDate() {
-		return postDate;
-	}
-	public void setPostDate(String postDate) {
-		this.postDate = postDate;
-	}
-	public String getRecruitStartDate() {
-		return recruitStartDate;
-	}
-	public void setRecruitStartDate(String recruitStartDate) {
-		this.recruitStartDate = recruitStartDate;
-	}
-	public String getRecruitEndDate() {
-		return recruitEndDate;
-	}
-	public void setRecruitEndDate(String recruitEndDate) {
->>>>>>> main
 		this.recruitEndDate = recruitEndDate;
 	}
 	public String getRecruitProgressYn() {
