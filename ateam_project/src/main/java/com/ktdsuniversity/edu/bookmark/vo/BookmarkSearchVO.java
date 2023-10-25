@@ -6,8 +6,21 @@
 
 package com.ktdsuniversity.edu.bookmark.vo;
 
-import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
-
-public class BookmarkSearchVO extends AbstractSearchVO{
-
+public class BookmarkSearchVO {
+	private String email;
+	private String generalPostId;
+	
+	
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getGeneralPostId() {
+		return generalPostId;
+	}
+	public void setGeneralPostId(String generalPostId) {
+		this.generalPostId = generalPostId;
+	}
 }

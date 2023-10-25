@@ -147,6 +147,7 @@
 		border-radius: 50%;
 		cursor: pointer;
 	}
+  
   .body_left .content_container {
     cursor: default;
   }
@@ -391,6 +392,7 @@
     let all_count
     let loading = false
     let article, articles
+    let boardType
     let hashtags = []
     let hashtag_template
     let template
@@ -418,6 +420,14 @@
         if (skip === 0) {
           for (let i = skip; i < skip + 10; i++) {
             article = articles[i]
+
+            // 게시판의 타입 결정
+            if (article.boardId.slice(-2) === '30') {
+              boardType = 'qnaboard'
+            }
+            else {
+              boardType = 'freeboard'
+            }
 
             for (let j = 0; j < comments.length; j++) {
               if (comments[j].generalPostId === article.generalPostId) {
@@ -455,7 +465,7 @@
                 <div class="q_title">
                   <span class="big_letter">Q</span>
                   <div>  
-                    <a href="/freeboard/view/\${article.generalPostId}" target="_blank">
+                    <a href="/\${boardType}/view/\${article.generalPostId}" target="_blank">
                       <span class="title">\${article.postTitle}</span>
                     </a>
                     <span class="comment_number">[\${comment_cnt}]</span>
@@ -471,6 +481,21 @@
               </article>`
             let templateDom = $(template)
 
+            // 북마크 상태 가져오기
+            user_email = `${sessionScope._LOGIN_USER_.email}`
+
+            $.get(`/bookmark/status/\${user_email}/\${article.generalPostId}`, function(response) {
+              if (response.bookmarkYn === 'Y') {
+                templateDom.find('.bookmarkBtn').find('svg').css('fill', 'var(--blue)').addClass('bookmark_on')
+                templateDom.find('.bookmarkBtn').prepend(`<input type="hidden" class="bookmarkId" value="\${response.bookmarkId}"/>`)
+              }
+            })
+
+
+            // 게시글 유형이 자유 유형이면 대문짝만한 Q 삭제
+            if(article.boardId === 'CC-20231017-000029') {
+              templateDom.find('.big_letter').text('').css('margin-right', '0px')
+            }
             
             // 해시태그 표시할 AJAX 호출
             $.get(`/home/hashtag/\${article.generalPostId}`, function(response_of_hashtag) {
@@ -484,9 +509,6 @@
 
           }
           
-          if(article.boardId === 'CC-20231017-000029') {
-            $('.big_letter').text('').css('margin-right', '0px')
-          }
           skip += 10
         }
 
@@ -498,6 +520,13 @@
               for (let i = skip; i < skip + 10; i++) {
                 if (i < all_count) {
                   article = articles[i]
+
+                  if (article.boardId === 'CC-20231017-000030') {
+                    boardType = 'qnaboard'
+                  }
+                  else {
+                    boardType = 'freeboard'
+                  }
 
                   for (let j = 0; j < comments.length; j++) {
                     if (comments[j].generalPostId === article.generalPostId) {
@@ -535,7 +564,7 @@
                       <div class="q_title">
                         <span class="big_letter">Q</span>
                         <div>
-                          <a href="/freeboard/view/\${article.generalPostId}" target="_blank"">
+                          <a href="/\${boardType}/view/\${article.generalPostId}" target="_blank"">
                             <span class="title">\${article.postTitle}</span>
                           </a>
                           <span class="comment_number">[\${comment_cnt}]</span>
@@ -551,6 +580,22 @@
                     </article>`
 
                     let templateDom = $(template);
+
+                    // 북마크 상태 가져오기
+                    user_email = `${sessionScope._LOGIN_USER_.email}`
+
+                    $.get(`/bookmark/status/\${user_email}/\${article.generalPostId}`, function(response) {
+                      if (response.bookmarkYn === 'Y') {
+                        templateDom.find('.bookmarkBtn').find('svg').css('fill', 'var(--blue)').addClass('bookmark_on')
+                        templateDom.find('.bookmarkBtn').prepend(`<input type="hidden" class="bookmarkId" value="\${response.bookmarkId}"/>`)
+                      }
+                    })
+
+                    // 게시글 유형이 자유 유형이면 대문짝만한 Q 삭제
+                    if(article.boardId === 'CC-20231017-000029') {
+                      templateDom.find('.big_letter').text('').css('margin-right', '0px')
+                    }
+
                     // 해시태그 표시용 AJAX 호출
                     $.get(`/home/hashtag/\${article.generalPostId}`, function(response_of_hashtag) {
                       if (response_of_hashtag.length > 0) {
@@ -560,10 +605,6 @@
                       }
                       $('.body_left').append(templateDom)
                   })
-
-                  if(article.boardId === 'CC-20231017-000029') {
-                    templateDom.find('.big_letter').text('').css('margin-right', '0px')
-                  }
                 }
               }
               skip += 10
@@ -571,23 +612,41 @@
           }
         })
 
-        // 북마크 생성
-
+        // 북마크 토글
         $(document).on('click', '.bookmarkBtn', function(e) {
           let body = {
           "email": `${sessionScope._LOGIN_USER_.email}`,
           "postId": $(this).find(".postId").val(),
-          "boardId": $(this).find(".boardId").val()
+          "boardId": $(this).find(".boardId").val(),
+          "bookmarkId": $(this).find('.bookmarkId').val()
           }
-          $.post('/bookmark/general-post/', body, function(result) {
-            if (result) {
-              alert('북마크 등록에 성공했을까요?')
-              $(this).find('svg').css('fill', 'var(--blue)')
-            }
-            else {
-              alert('실패했슴둥! 따콩!')
-            }
-          })
+          console.log(body.email)
+          console.log(body.postId)
+          console.log(body.boardId)
+          console.log(body.bookmarkId)
+          console.log(this)
+          if ($(e.currentTarget).find('svg').hasClass('bookmark_on')) {
+            $.post('/unbookmark', body, function(result) {
+              alert('북마크가 지워진 것 같아요!')
+              alert('힘드네요ㅠ')
+              $(e.currentTarget).find('svg').removeClass('bookmark_on')
+              $(e.currentTarget).find('svg').css('fill', 'var(--gray)')
+              $('.bookmarkId').remove()
+            })
+          }
+          else {
+            $.post('/bookmark/general-post', body, function(result) {
+              if (result) {
+                alert('북마크에 쏙 들어갔어요?')
+                $(e.currentTarget).find('svg').css('fill', 'var(--blue)')
+                $(e.currentTarget).find('svg').addClass('bookmark_on')
+                $('.bookmarkBtn').prepend(`<input type="hidden" class="bookmarkId" value="\${response.bookmarkId}"/>`)
+              }
+              else {
+                alert('실패했슴둥! 따콩!')
+              }
+            })
+          }
         })
       })
     }
@@ -613,8 +672,7 @@
     $.get('/home/ranking/\${formattedMonday}', function(response) {
       let list = response.rankings
       for (let i = 0; i < 10; i++) {
-        console.log(list[i].boardId)
-        
+
         if (list[i].boardId === 'CC-20231017-000029') {
           let ranking_template = `
             <li class="hot_post">

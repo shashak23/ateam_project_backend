@@ -19,48 +19,64 @@
 					 autoMapping="true">
 			<id column="GENERAL_POST_ID" property="generalPostId" />
 		</association>
-		<association property="commonCodeVO"
-					 javaType="com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO"
-					 autoMapping="true">
-			<id column="CODE_ID" property="codeId" />
-		</association>
+<!-- 		<association property="commonCodeVO" -->
+<!-- 					 javaType="com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO" -->
+<!-- 					 autoMapping="true"> -->
+<!-- 			<id column="CODE_ID" property="codeId" /> -->
+<!-- 		</association> -->
 	</resultMap>
 	
-	<select id="getAllBookmark"
-			parameterType="string"
+<!-- 	<select id="getAllBookmark" -->
+<!-- 			parameterType="string" -->
+<!-- 			resultMap="BookmarkDAOMap"> -->
+<!-- 		SELECT B.BOOKMARK_ID -->
+<!-- 			 , B.GENERAL_MEMBER_EMAIL -->
+<!-- 			 , B.BOARD_ID -->
+<!-- 			 , B.POST_ID -->
+<!-- 			 , B.BOOKMARK_YN -->
+<!-- 			 , M.EMAIL -->
+<!-- 			 , M.NICKNAME -->
+<!-- 			 , M.INFO_AGREEMENT_YN -->
+<!-- 			 , M.PROFILE_PIC -->
+<!-- 			 , M.REGIST_DATE -->
+<!-- 			 , GP.GENERAL_POST_ID -->
+<!-- 			 , GP.POST_WRITER -->
+<!-- 			 , GP.BOARD_ID -->
+<!-- 			 , GP.POST_TITLE -->
+<!-- 			 , GP.POST_CONTENT -->
+<!-- 			 , GP.POST_DATE -->
+<!-- 			 , GP.LIKE_CNT -->
+<!-- 			 , GP.VIEW_CNT -->
+<!-- 			 , CC.CODE_ID -->
+<!-- 			 , CC.CODE_TYPE -->
+<!-- 			 , CC.CODE_CONTENT -->
+<!-- 		  FROM BOOKMARK B -->
+<!-- 		 INNER JOIN MEMBER M -->
+<!-- 		    ON M.EMAIL = B.GENERAL_MEMBER_EMAIL  -->
+<!-- 		 INNER JOIN GENERAL_POST GP -->
+<!-- 		    ON GP.GENERAL_POST_ID = B.POST_ID  -->
+<!-- 		 INNER JOIN GENERAL_POST_HASHTAG GPH -->
+<!-- 		    ON GP.GENERAL_POST_ID = GPH.GENERAL_POST_ID  -->
+<!-- 		 INNER JOIN COMMON_CODE CC -->
+<!-- 		    ON CC.CODE_ID = GPH.HASHTAG_ID  -->
+<!-- 		 WHERE BOOKMARK_YN = 'Y' -->
+<!-- 		   AND M.EMAIL = #{_parameter} -->
+<!-- 	</select> -->
+	
+	<select id="getBookmarkStatus"
+			parameterType="com.ktdsuniversity.edu.bookmark.vo.BookmarkSearchVO"
 			resultMap="BookmarkDAOMap">
-		SELECT B.BOOKMARK_ID
-			 , B.GENERAL_MEMBER_EMAIL
-			 , B.BOARD_ID
-			 , B.POST_ID
-			 , B.BOOKMARK_YN
-			 , M.EMAIL
-			 , M.NICKNAME
-			 , M.INFO_AGREEMENT_YN
-			 , M.PROFILE_PIC
-			 , M.REGIST_DATE
-			 , GP.GENERAL_POST_ID
-			 , GP.POST_WRITER
-			 , GP.BOARD_ID
-			 , GP.POST_TITLE
-			 , GP.POST_CONTENT
-			 , GP.POST_DATE
-			 , GP.LIKE_CNT
-			 , GP.VIEW_CNT
-			 , CC.CODE_ID
-			 , CC.CODE_TYPE
-			 , CC.CODE_CONTENT
-		  FROM BOOKMARK B
+		SELECT GP.GENERAL_POST_ID 
+			 , B.BOOKMARK_YN 
+			 , B.BOOKMARK_ID 
+			 , M.EMAIL 
+		  FROM GENERAL_POST GP
+		 INNER JOIN BOOKMARK B
+		    ON GP.GENERAL_POST_ID  = B.POST_ID 
 		 INNER JOIN MEMBER M
-		    ON M.EMAIL = B.GENERAL_MEMBER_EMAIL 
-		 INNER JOIN GENERAL_POST GP
-		    ON GP.GENERAL_POST_ID = B.POST_ID 
-		 INNER JOIN GENERAL_POST_HASHTAG GPH
-		    ON GP.GENERAL_POST_ID = GPH.GENERAL_POST_ID 
-		 INNER JOIN COMMON_CODE CC
-		    ON CC.CODE_ID = GPH.HASHTAG_ID 
-		 WHERE BOOKMARK_YN = 'Y'
-		   AND M.EMAIL = #{_parameter}
+		    ON M.EMAIL = B.GENERAL_MEMBER_EMAIL
+		 WHERE M.EMAIL = #{email}
+		   AND GP.GENERAL_POST_ID = #{generalPostId}
 	</select>
 	
 	<insert id="createBookmark"
@@ -79,11 +95,17 @@
 			 , 'Y')
 	</insert>
 	
-	<update id="deleteBookmark"
+	<update id="toggleBookmark"
 			parameterType="string">
 	    UPDATE BOOKMARK
 	       SET BOOKMARK_YN = 'N'
-	     WHERE BOOKMARK_ID = #{_parameter}	
-		
+	     WHERE BOOKMARK_ID = #{_parameter}
 	</update>
+	
+	<delete id="deleteBookmark"
+			parameterType="string">
+		DELETE 
+		  FROM BOOKMARK B
+		 WHERE B.BOOKMARK_ID = #{_parameter}
+	</delete>
 </mapper>
