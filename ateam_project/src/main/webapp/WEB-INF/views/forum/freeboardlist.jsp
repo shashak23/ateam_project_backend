@@ -121,7 +121,7 @@
              }
              .text_controller {
                 position: relative;
-                bottom: 100px;
+                bottom: 20px;
              }
         </style>
 </head>
@@ -178,7 +178,7 @@
                                                 <div class="pratice">
                                                 <a class="text_controller" href="/freeboard/view/${freeboard.generalPostId}">
                                                         <!-- ${freeboard.postTitle} -->
-                                                    <span class="comment_count">[댓글갯수]</span>
+                                                    <span class="comment_count"></span>
                                                         ${freeboard.postTitle}
                                                 </a>
                                                 </div>
