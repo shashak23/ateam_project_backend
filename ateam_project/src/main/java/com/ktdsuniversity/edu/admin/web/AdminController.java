@@ -1,4 +1,4 @@
-package com.ktdsuniversity.edu.report.web;
+package com.ktdsuniversity.edu.admin.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -7,16 +7,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ktdsuniversity.edu.report.service.ReportService;
-import com.ktdsuniversity.edu.report.vo.ReportListVO;
+import com.ktdsuniversity.edu.admin.service.ReportService;
+import com.ktdsuniversity.edu.admin.service.MailService;
+import com.ktdsuniversity.edu.admin.vo.ReportListVO;
 
 @Controller
-public class AdminReportController {
+public class AdminController {
 
 	@Autowired
 	private ReportService reportService;
+	
+	@Autowired
+	private MailService mailService;
 
 	@GetMapping("/report/list")
 	public String viewReportHistory(Model model) {
@@ -59,6 +64,31 @@ public class AdminReportController {
 		else {
 			return null;
 		}
+	}
+	
+	@GetMapping("/admin/member")
+	public String memberApproval() {
+		return "temp/mail";
+	}
+	
+	// ajax 통신할거면 반드시! map -> json으로 보낸다
+//	@ResponseBody
+	@PostMapping("/admin/member")
+	public String sendMemberApproval(@RequestParam String val) {
+//		Map<String, Object> resultMap = new HashMap<>();
+////		String test = "ok";
+//		resultMap.put("data", val);
+////		resultMap.put("result", test.equals(val));
+//		System.out.println(val);
+//		return resultMap;
+		if (val.equals("accept")) {
+			mailService.sendMail();
+		}
+		else if (val.equals("refuse")) {
+			mailService.sendMail();
+		}
+
+		return "redirect:/home/main";
 	}
 	
 	@GetMapping("/report/{reportId}")
