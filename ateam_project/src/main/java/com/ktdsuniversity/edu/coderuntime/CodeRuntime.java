@@ -319,21 +319,5 @@ public class CodeRuntime {
 		return runResult;
 	}
 	
-	public static void main(String[] args) {
-		CodeRuntime codeRuntime = new CodeRuntime();
-		codeRuntime.setCode("public class Solution { public String solution() { return \"test\";} }");
-		codeRuntime.makeFile();
-		codeRuntime.doCompileJava();
-		
-		codeRuntime.makeRunFile();
-		codeRuntime.doCompileRun();
-		
-        List<String> processResult = codeRuntime.run("{\"a\": 1, \"b\": 2, \"c\": 3}");
-		String processTime = processResult.get(0);
-		String result = processResult.get(1);
-		
-		System.out.println(processTime);
-		System.out.println(result);
-	}
 	
 }
