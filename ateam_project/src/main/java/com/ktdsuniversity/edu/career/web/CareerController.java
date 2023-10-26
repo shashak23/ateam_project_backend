@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.ktdsuniversity.edu.career.service.CareerService;
@@ -73,8 +72,8 @@ public class CareerController {
 			 					, Model model
 			 					,@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 		 CareerVO careerVO =careerService.getOneCareer(careerId);
-		 if (!careerVO.getGeneralMemberEmail().equals(memberVO.getEmail())) {
-				throw new PageNotFoundException("잘못된 접근입니다.");
+			if (!careerVO.getGeneralMemberEmail().equals(memberVO.getEmail())) {
+				throw new PageNotFoundException("잘못된 접근입니다!");
 			}
 		 model.addAttribute("careerVO", careerVO);
 		 
@@ -90,6 +89,7 @@ public class CareerController {
 			 model.addAttribute("careerVO", careerVO);
 			 return "career/careermodify";
 		 }
+		 careerVO.setGeneralMemberEmail(memberVO.getEmail());
 		 if (!careerVO.getGeneralMemberEmail().equals(memberVO.getEmail())) {
 				throw new PageNotFoundException("잘못된 접근입니다.");
 			}

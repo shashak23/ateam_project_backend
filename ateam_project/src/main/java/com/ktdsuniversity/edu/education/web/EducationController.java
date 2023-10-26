@@ -76,6 +76,7 @@ public class EducationController {
 			 					,@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 		 
 		 EducationVO educationVO =educationService.getOneEducation(educationId);
+		 educationVO.setGeneralMemberEmail(memberVO.getEmail());
 		 if (!educationVO.getGeneralMemberEmail().equals(memberVO.getEmail())) {
 				throw new PageNotFoundException("잘못된 접근입니다.");
 			}
@@ -93,11 +94,12 @@ public class EducationController {
 				model.addAttribute("educationVO", educationVO);
 				return "education/educationmodify";
 			}
+		 educationVO.setGeneralMemberEmail(memberVO.getEmail());
+		 if (!educationVO.getGeneralMemberEmail().equals(memberVO.getEmail())) {
+			 throw new PageNotFoundException("잘못된 접근입니다.");
+		 }
 		 
 		 boolean isSuccess = educationService.updateOneEducation(educationVO);
-		 if (!educationVO.getGeneralMemberEmail().equals(memberVO.getEmail())) {
-				throw new PageNotFoundException("잘못된 접근입니다.");
-			}
 		 if(isSuccess) {
 			 return "redirect:/memberinfo/view/"+educationVO.getGeneralMemberEmail();
 		 }
