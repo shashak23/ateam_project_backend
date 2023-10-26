@@ -42,7 +42,7 @@ public class CompanyRecruitController {
 	public ModelAndView companyMypostRecruitList() {
 		CompanyRecruitListVO companyRecruitListVO = companyRecruitService.getAllBoard();
 		ModelAndView view = new ModelAndView();
-		view.setViewName("company/mypost/recruitlist");
+		view.setViewName("company/recruit/recruitlist");
 		view.addObject("companyRecruitListVO", companyRecruitListVO);
 		return view;
 	}
@@ -50,7 +50,7 @@ public class CompanyRecruitController {
 	// 등록페이지
 	@GetMapping("/recruit/create")
 	public String viewCompanyMypostRecruitPage() {
-		return "company/mypost/recruitcreate";
+		return "company/recruit/recruitcreate";
 	}
 	
 	// 게시글 등록하기
@@ -70,10 +70,10 @@ public class CompanyRecruitController {
 		boolean isSuccess = companyRecruitService.createNewBoard(companyRecruitVO);
 		
 		if(isSuccess) {
-			view.setViewName("redirect:/recruit/list");
+			view.setViewName("redirect:/recruit/recruit/list");
 			return view;
 		} else {
-			view.setViewName("recruit/create");
+			view.setViewName("recruit/recruit/create");
 			view.addObject("companyRecruitVO", companyRecruitVO);
 			return view;
 		}
@@ -87,7 +87,7 @@ public class CompanyRecruitController {
 		ModelAndView view = new ModelAndView();
 		CompanyRecruitVO companyRecruitVO = companyRecruitService.getOneRecruitBoard(companyRecruitPostId);
 		companyRecruitVO.setPostWriter(memberVO.getEmail());
-		view.setViewName("company/mypost/recruitview");
+		view.setViewName("company/recruit/recruitview");
 		view.addObject("companyRecruitVO", companyRecruitVO);
 		return view;
 	}
@@ -99,7 +99,7 @@ public class CompanyRecruitController {
 		CompanyRecruitVO companyRecruitVO  = companyRecruitService.getOneRecruitBoard(companyRecruitPostId); 
 	                              
 	      ModelAndView view = new ModelAndView();
-	      view.setViewName("company/mypost/recruitupdate");
+	      view.setViewName("company/recruit/recruitupdate");
 	      view.addObject("companyRecruitVO", companyRecruitVO);
 	      
 	      return view;
@@ -113,10 +113,10 @@ public class CompanyRecruitController {
 		ModelAndView view = new ModelAndView();
 		boolean isSuccess = companyRecruitService.updateOneRecruitBoard(companyRecruitVO);
 		if(isSuccess) {
-			view.setViewName("redirect:/recruit/list");
+			view.setViewName("redirect:/recruit/recruit/list");
 			return view;
 		} else {
-			view.setViewName("company/mypost/recruitupdate");
+			view.setViewName("company/recruit/recruitupdate");
 			view.addObject("companyRecruitVO", companyRecruitVO);
 			return view;
 		}
@@ -128,7 +128,7 @@ public class CompanyRecruitController {
 	public ModelAndView viewDeletePage(@ModelAttribute CompanyRecruitVO companyRecruitVO
 										,@PathVariable String companyRecruitPostId) {
 		ModelAndView view = new ModelAndView();
-		view.setViewName("company/mypost/recruitdelete");
+		view.setViewName("company/recruit/recruitdelete");
 		view.addObject("companyRecruitVO", companyRecruitVO);
 		return view;
 	}
@@ -142,10 +142,10 @@ public class CompanyRecruitController {
 		CompanyRecruitVO origincompanyRecruitVO = companyRecruitService.getOneRecruitBoard(companyRecruitVO.getCompanyRecruitPostId());
 		boolean isSuccess = companyRecruitService.deleteOneRecruitBoard(origincompanyRecruitVO.getCompanyRecruitPostId());
 		if(isSuccess) {
-			view.setViewName("redirect:/recruit/list");
+			view.setViewName("redirect:/recruit/recruit/list");
 			return view;
 		} else {
-			view.setViewName("company/mypost/recruitdelete");
+			view.setViewName("company/recruit/recruitdelete");
 			view.addObject("origincompanyRecruitVO", origincompanyRecruitVO);
 			return view;
 		}
