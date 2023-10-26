@@ -270,7 +270,7 @@
         })
         $('.overlay').click(function() {
             $('.modal, .overlay').removeClass('modal_active')
-        })	
+        })   
 
         // 스크롤 버튼, IDE
         let calcScrollValue = () => {

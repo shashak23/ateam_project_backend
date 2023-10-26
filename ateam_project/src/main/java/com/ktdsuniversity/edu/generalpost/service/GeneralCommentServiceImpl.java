@@ -78,11 +78,6 @@ public class GeneralCommentServiceImpl implements GeneralCommentService{
 	
 	
 	}
-	@Override
-	public boolean doUpdateComment(String generalPostId, GeneralCommentVO generalCommentVO) {
-		// TODO Auto-generated method stub
-		return false;
-	}
 	
 	
 	
