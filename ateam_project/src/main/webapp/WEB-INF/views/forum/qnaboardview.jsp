@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -400,7 +402,7 @@ pre.content {
 			<div>${generalPostVO.postTitle}</div>
 
 			<label for="postWriter">이메일</label>
-			<div>${generalPostVO.postWriter}</div>
+			<div>${generalPostVO.postWriter} ${sessionScope._LOGIN_USER_.email }</div>
 
 			<label for="viewCnt">조회수</label>
 			<div>${generalPostVO.viewCnt}</div>
@@ -413,7 +415,7 @@ pre.content {
 
 			<div class="btn-group">
 				<div class="right-align">
-       				<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq generalPost.email}">
+       				<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq generalPostVO.postWriter}">
 						<div class="update_btn">
 							<div class="btn">
 								<a href="/qnaboard/update/${generalPostVO.generalPostId}">수정</a>

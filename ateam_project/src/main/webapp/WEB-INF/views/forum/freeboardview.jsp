@@ -362,8 +362,7 @@
          </div>
       </div>
    </div>
-   <!-- <form name="generalPostVO" method="post" action="/freeboard/view/${generalVO.generalPostId}"> -->
-   <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
+     <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq generalPostVO.postWriter}">
        <div class="btn-group">
            <div class="right-align">
                <div class="update_btn">
