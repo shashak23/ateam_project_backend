@@ -58,7 +58,7 @@ public class GeneralCommentDAOImpl extends SqlSessionDaoSupport implements Gener
         return getSqlSession().insert("createNewComment", generalCommentVO);
     }
 	@Override
-	public int updateOneComment(GeneralCommentVO generalCommentVO) {
+	public int doUpdateComment(GeneralCommentVO generalCommentVO) {
 		return getSqlSession().update("updateOneComment", generalCommentVO);
 	}
 }

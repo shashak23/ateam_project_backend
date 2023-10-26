@@ -14,7 +14,7 @@ public interface GeneralCommentDAO {
 	public List<GeneralCommentVO> getAllComments(String generalPostId);
 	public GeneralCommentVO getOneComment(String generalCommentId);
 	public int createNewComment(String gemeralPostId,GeneralCommentVO generalCommentVO);
-	public int updateOneComment(GeneralCommentVO generalCommentVO);
+	public int doUpdateComment(GeneralCommentVO generalCommentVO);
 	public int deleteOneComment(String generalCommentId);
 	public int likeOneComment(String generalCommentId);
 	public int reportOneComment(String generalCommentId);
