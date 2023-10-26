@@ -415,7 +415,7 @@
     const loadContents = function() {
       $.get('/home/maincontent', function(response) {
         articles = response
-        
+        console.log(skip, articles)
         all_count = response.length
         if (skip === 0) {
           for (let i = skip; i < skip + 10; i++) {
@@ -504,8 +504,8 @@
                   templateDom.find('.hashtagList').append(`<li>\${response_of_hashtag[j].commonCodeVO.codeContent}</li>`)
                 }
               }
-              $('.body_left').append(templateDom)
             })
+            $('.body_left').append(templateDom)
 
           }
           
