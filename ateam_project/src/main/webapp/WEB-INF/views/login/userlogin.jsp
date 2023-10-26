@@ -233,8 +233,8 @@
     <form:form modelAttribute="memberVO" method="post" action="/member/auth">
         <div class="input_container">
             <div class="id_container">
-              <label for="member_id">ID</label>
-              <input type="text" name="email" id="member_id" />
+              <label for="email">ID</label>
+              <input type="text" name="email" id="email" />
             </div>
             <div class="pw_container">
               <label for="member_pw">PW</label>
@@ -268,7 +268,7 @@
               <span><a href="#" class="link_to_pw">비밀번호</a>를 잊으셨나요?</span>
             </div>
         </div>
-    </form>
+    </form:form>
   </section>
   <script>
     $('#personal_btn').click(function() {
