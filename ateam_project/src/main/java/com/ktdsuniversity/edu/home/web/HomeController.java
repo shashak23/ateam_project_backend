@@ -17,6 +17,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ktdsuniversity.edu.algorithmexplanation.service.AlgorithmExplanationService;
@@ -101,6 +102,9 @@ public class HomeController {
 		
 		return homeBoardService.getHashtag(postId);
 	}
+	
+	@ResponseBody
+	@PostMapping("/home/qnapost")
 		
 	@GetMapping("/home/search")
 	public String searchAllBoardList(@ModelAttribute AbstractSearchVO abstractSearchVO, Model model) {
