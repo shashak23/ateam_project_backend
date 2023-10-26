@@ -42,14 +42,6 @@ public class MyAlgorithmServiceImpl implements MyAlgorithmService{
 		
 		codeRuntime.setCode(myAlgorithmVO.getMyAnswer());
 		
-		codeRuntime.makeFile();
-		                        // #codeHear#
-		codeRuntime.makeRunFile();
-		codeRuntime.doCompileJava();
-		codeRuntime.doCompileRun();
-		                                    // 파라미터가 있을 때
-//		List<String> processResult = cr.run("2341231", "Hello~~RunJava~~~~");
-											// 파라미터가 없을 때
 		List<String> processResult = codeRuntime.run(null);
 		
 		int createCount = myAlgorithmDAO.createNewMyAlgorithm(myAlgorithmVO);

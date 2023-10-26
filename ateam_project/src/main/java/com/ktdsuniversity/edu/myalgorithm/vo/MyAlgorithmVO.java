@@ -23,7 +23,7 @@ public class MyAlgorithmVO extends AlgorithmQuestionVO {
 	@XssIgnore
 	@NotBlank(message = "답을 입력해주세요.")
 	private String myAnswer;
-	
+	private String submitDate;
 	private String correctAnswerYn;
 	private String deleteYn;
 	
@@ -56,6 +56,12 @@ public class MyAlgorithmVO extends AlgorithmQuestionVO {
 	}
 	public void setMyAnswer(String myAnswer) {
 		this.myAnswer = myAnswer;
+	}
+	public String getSubmitDate() {
+		return submitDate;
+	}
+	public void setSubmitDate(String submitDate) {
+		this.submitDate = submitDate;
 	}
 	public String getCorrectAnswerYn() {
 		return correctAnswerYn;

@@ -8,12 +8,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                id="generalCommentVOMap"
                autoMapping="true">
         <id column="GENERAL_COMMENT_ID" property="generalCommentId" />
-        
-               <!--  <association property="generalPostVO"
-                     javaType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO"
-                     autoMapping="true">
-                <id column="GENERAL_POST_ID" property="generalPostId" />
-                </association> -->
      <association property="generalPostVO"
                      javaType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO"
                      autoMapping="true">
@@ -24,16 +18,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
                      autoMapping="true">
                 <id column="GENERAL_MEMBER_EMAIL" property="generalMemberEmail" />
      </association>
-       <!--  <association property="memberVO"
-                     javaType="com.ktdsuniversity.edu.member.vo.MemberVO"
-                     autoMapping="true">
-                <id column="EMAIL" property="email" />            
-        </association> -->
-          <!--<association property="reportVO"
-                     javaType="com.ktdsuniversity.edu.report.vo.ReportVO"
-                     autoMapping="true">
-                <id column="REPORT_ID" property="reportId" />            
-        </association> -->
     </resultMap>
     <select id="getAllComments"
             parameterType="string"
@@ -72,7 +56,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
          WHERE GC.GENERAL_COMMENT_ID = #{generalCommentId}
     </select>
     
-    <insert id="createNewComment" parameterType="com.ktdsuniversity.edu.generalpost.vo.GeneralCommentVO">
+    <insert id="createNewComment" 
+            parameterType="com.ktdsuniversity.edu.generalpost.vo.GeneralCommentVO">
     INSERT INTO GENERAL_COMMENT (
             GENERAL_COMMENT_ID
            , COMMENT_WRITER
@@ -103,6 +88,12 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         UPDATE GENERAL_COMMENT
            SET LIKE_CNT = LIKE_CNT + 1
          WHERE GENERAL_COMMENT_ID = #{_parameter}
+    </update>
+    <update id="updateOneComment"
+    		parameterType="com.ktdsuniversity.edu.generalpost.vo.GeneralCommentVO">
+    	    UPDATE GENERAL_COMMENT
+		   SET COMMENT_CONTENT = #{commentContent}
+		 WHERE GENERAL_COMMENT_ID = #{generalCommentId}
     </update>
   <!--   <insert id="reportOneComment"
             parameterType="com.ktdsuniversity.edu.generalpost.vo.GeneralCommentVO">

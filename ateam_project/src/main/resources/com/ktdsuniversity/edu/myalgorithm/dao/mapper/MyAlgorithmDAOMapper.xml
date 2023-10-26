@@ -129,6 +129,7 @@
 		 (MY_ALGORITHM_QUESTION_ID
         , GENERAL_MEMBER_EMAIL
         , COMPANY_ALGORITHM_QUESTION_ID
+        , SUBMIT_DATE
         , MY_ANSWER
         , CORRECT_ANSWER_YN
         , DELETE_YN)
@@ -136,6 +137,7 @@
          ('MA-' || TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_MY_ALGORITHM_QUESTION_PK.NEXTVAL, 6, '0')
         , #{generalMemberEmail}
         , #{companyAlgorithmQuestionId}
+        , SYSDATE
         , #{myAnswer}
         , CASE WHEN DBMS_RANDOM.NORMAL >= 0 THEN 'Y' ELSE 'N' END <!-- 랜덤으로 줘야 함 -->
         , 'N')
