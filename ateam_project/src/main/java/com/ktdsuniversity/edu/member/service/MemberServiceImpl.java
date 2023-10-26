@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.ktdsuniversity.edu.beans.FileHandler;
 import com.ktdsuniversity.edu.beans.FileHandler.StoredFile;
 import com.ktdsuniversity.edu.beans.SHA;
+import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
 import com.ktdsuniversity.edu.companymember.dao.CompanyDAO;
 import com.ktdsuniversity.edu.companymember.vo.CompanyVO;
 import com.ktdsuniversity.edu.exceptions.AlreadyUseException;
@@ -25,6 +26,7 @@ import com.ktdsuniversity.edu.exceptions.UserIdentityNotMatchException;
 import com.ktdsuniversity.edu.generalmember.dao.GeneralMemberDAO;
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 import com.ktdsuniversity.edu.member.dao.MemberDAO;
+import com.ktdsuniversity.edu.member.vo.MemberListVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 
 import io.github.seccoding.web.mimetype.ExtFilter;
@@ -190,10 +192,6 @@ public class MemberServiceImpl implements MemberService{
 		return updatewithdrawMemberCount > 0;
 	}
 	
-	@Override
-	public List<MemberVO> searchMember(String memberType) {
-		return memberDAO.searchMember(memberType);
-	}
 	/**
 	 * 일반회원조회
 	 */
@@ -221,6 +219,24 @@ public class MemberServiceImpl implements MemberService{
 	public boolean updateMemberPW(MemberVO memberVO) {
 		int updateCount = memberDAO.updateMemberPW(memberVO);
 		return updateCount>0;
+	}
+
+	// 회원유형 구분해서 회원찾기
+	@Override
+	public List<MemberVO> searchMember(String memberType) {
+		return memberDAO.searchMember(memberType);
+	}
+	
+	// 통합검색
+	@Override
+	public MemberListVO searchAllMemberByKeyword(AbstractSearchVO abstractSearchVO) {
+		
+		if (abstractSearchVO == null || abstractSearchVO.getSearchKeyword() == null || abstractSearchVO.getSearchKeyword().length() == 0) {
+			return new MemberListVO();
+		}
+		MemberListVO memberListVO = new MemberListVO();
+		memberListVO.setMemberList(memberDAO.searchAllMemberByKeyword(abstractSearchVO));
+		return memberListVO;
 	}
 
 

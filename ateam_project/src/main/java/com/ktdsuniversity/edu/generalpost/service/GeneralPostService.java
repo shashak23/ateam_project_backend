@@ -7,9 +7,9 @@
  */
 package com.ktdsuniversity.edu.generalpost.service;
 
+import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostListVO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
-import com.ktdsuniversity.edu.generalpost.vo.SearchForumVO;
 
 
 public interface GeneralPostService {
@@ -24,6 +24,7 @@ public interface GeneralPostService {
 		
 	public boolean deleteOneFreeBoard(String generalPostId);
 	
+	public boolean likeFreeBoard(GeneralPostVO generalPostVO);
 	// 질답게시판
 	public GeneralPostListVO getAllQnABoard();
 
@@ -35,7 +36,11 @@ public interface GeneralPostService {
 		
 	public boolean deleteOneQnABoard(String generalPostId);
 
+	public boolean likeQnABoard(GeneralPostVO generalPostVO);
 	// 내 게시글 조회
-	public GeneralPostListVO getMyPost(String postWriter);
+	public GeneralPostListVO getMyPost(GeneralPostVO generalPostVO);
+	
+	// 통합검색
+	public GeneralPostListVO searchAllBoardByKeyword(AbstractSearchVO abstractSearchVO);
 
 }

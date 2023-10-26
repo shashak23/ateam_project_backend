@@ -8,6 +8,7 @@ package com.ktdsuniversity.edu.algorithmquestion.vo;
 
 import java.util.List;
 
+import com.ktdsuniversity.edu.algorithmanswer.vo.AlgorithmAnswerVO;
 import com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO;
 import com.ktdsuniversity.edu.companymember.vo.CompanyVO;
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
@@ -18,7 +19,7 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
-public class AlgorithmQuestionVO {
+public class AlgorithmQuestionVO extends AlgorithmAnswerVO {
 
 	private String companyAlgorithmQuestionId;
 
@@ -44,6 +45,10 @@ public class AlgorithmQuestionVO {
 	@XssIgnore
 	@NotBlank(message = "문제풀이내용을 입력해주세요.")
 	private String algorithmSolution;
+	
+	@XssIgnore
+	@NotBlank(message = "기본제공 템플릿을 입력해주세요")
+	private String defaultCode;
 	
 	private String postDate;
 	private int viewCnt;
@@ -187,6 +192,14 @@ public class AlgorithmQuestionVO {
 
 	public void setDeleteYn(String deleteYn) {
 		this.deleteYn = deleteYn;
+	}
+
+	public String getDefaultCode() {
+		return defaultCode;
+	}
+
+	public void setDefaultCode(String defaultCode) {
+		this.defaultCode = defaultCode;
 	}
 
 }

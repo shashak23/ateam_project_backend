@@ -13,7 +13,9 @@ import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
 import com.ktdsuniversity.edu.companynews.vo.CompanyNewsVO;
+import com.ktdsuniversity.edu.companynews.vo.SearchCompanyNewsVO;
 
 @Repository
 public class CompanyNewsDAOImpl extends SqlSessionDaoSupport implements CompanyNewsDAO {
@@ -25,8 +27,8 @@ public class CompanyNewsDAOImpl extends SqlSessionDaoSupport implements CompanyN
 	}
 
 	@Override
-	public int getCompanyNewsAllCount() {
-		return getSqlSession().selectOne("getCompanyNewsAllCount");
+	public int getCompanyNewsAllCount(SearchCompanyNewsVO searchCompanyNewsVO) {
+		return getSqlSession().selectOne("getCompanyNewsAllCount", searchCompanyNewsVO);
 	}
 
 	@Override
@@ -34,6 +36,11 @@ public class CompanyNewsDAOImpl extends SqlSessionDaoSupport implements CompanyN
 		return getSqlSession().selectList("getAllCompanyNews");
 	}
 
+	@Override
+	public List<CompanyNewsVO> searchAllCompanyNews(SearchCompanyNewsVO searchCompanyNewsVO) {
+		return getSqlSession().selectList("searchAllCompanyNews", searchCompanyNewsVO);
+	}
+	
 	@Override
 	public int createNewCompanyNews(CompanyNewsVO companyNewsVO) {
 		return getSqlSession().insert("createNewCompanyNews", companyNewsVO);
@@ -59,6 +66,10 @@ public class CompanyNewsDAOImpl extends SqlSessionDaoSupport implements CompanyN
 		return getSqlSession().update("deleteOneCompanyNews", companyNewsPostId);
 	}
 	
-	
+	@Override
+	public List<CompanyNewsVO> searchAllCompanyNewsByKeyword(AbstractSearchVO abstractSearchVO) {
+		return getSqlSession().selectList("searchAllCompanyNewsByKeyword", abstractSearchVO);
+	}
+
 
 }

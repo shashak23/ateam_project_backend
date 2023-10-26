@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.ktdsuniversity.edu.bookmark.service.BookmarkService;
 import com.ktdsuniversity.edu.bookmark.vo.BookmarkListVO;
+import com.ktdsuniversity.edu.bookmark.vo.BookmarkSearchVO;
 import com.ktdsuniversity.edu.bookmark.vo.BookmarkVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 
@@ -29,6 +30,7 @@ public class BookmarkController {
 	
 	@GetMapping("/bookmark/general-post")
 	public Map<String, Object> getAllGeneralPostBookmark(@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+		System.out.println("이메일: " + memberVO.getEmail());
 		BookmarkListVO bookmarkListVO = bookmarkService.getAllBookmark(memberVO.getEmail());
 		List<BookmarkVO> bookmarkList = bookmarkListVO.getBookmarkList();
 		
@@ -40,25 +42,43 @@ public class BookmarkController {
 		return resultMap;
 	}
 	
-	@PostMapping("/bookmark/general-post/")
+	@GetMapping("/bookmark/status/{email}/{postId}")
+	public BookmarkVO getBookmarkStatus(@PathVariable String email,
+										@PathVariable String postId) {
+		BookmarkSearchVO bookmarkSearchVO = new BookmarkSearchVO();
+		bookmarkSearchVO.setEmail(email);
+		bookmarkSearchVO.setGeneralPostId(postId);
+		
+		return bookmarkService.getBookmarkStatus(bookmarkSearchVO);
+	}
+	
+	@PostMapping("/bookmark/general-post")
 	public Map<String, Object> doCreateGeneralPostBookmark(@SessionAttribute("_LOGIN_USER_") MemberVO memberVO,
 														   @ModelAttribute BookmarkVO bookmarkVO) {
 		bookmarkVO.setGeneralMemberEmail(memberVO.getEmail());
-		boolean isSuccess = bookmarkService.createBookmark(bookmarkVO);
+		BookmarkSearchVO bookmarkSearchVO = new BookmarkSearchVO();
+		bookmarkSearchVO.setEmail(bookmarkVO.getGeneralMemberEmail());
+		bookmarkSearchVO.setGeneralPostId(bookmarkVO.getPostId());
 		
+		bookmarkService.deleteBookmark(bookmarkSearchVO);
 		
 		Map<String, Object> resultMap = new HashMap<>();
+		
+		boolean isSuccess = bookmarkService.createBookmark(bookmarkVO);
+		
+		String bookmarkId = bookmarkService.getBookmarkStatus(bookmarkSearchVO).getBookmarkId();
+		
 		resultMap.put("result", isSuccess);
+		resultMap.put("bookmarkId", bookmarkId);
 		return resultMap;
 	}
 	
-	@GetMapping("/unbookmark/{postId}")
-	public Map<String, Object> deleteBookmarkGeneralPostBookmark(@SessionAttribute("_LOGIN_USER_") MemberVO memberVO,
-																 @PathVariable String postId) {
+	@PostMapping("/unbookmark")
+	public Map<String, Object> unBookmarkGeneralPostBookmark(@SessionAttribute("_LOGIN_USER_") MemberVO memberVO,
+															 @ModelAttribute BookmarkVO bookmarkVO) {
 		
-		BookmarkVO bookmarkVO = new BookmarkVO();
-		bookmarkVO.setGeneralMemberEmail(memberVO.getEmail());
-		boolean isSuccess = bookmarkService.deleteBookmark(postId);
+
+		boolean isSuccess = bookmarkService.toggleBookmark(bookmarkVO.getBookmarkId());
 		
 		Map<String, Object> resultMap = new HashMap<>();
 		resultMap.put("result", isSuccess);

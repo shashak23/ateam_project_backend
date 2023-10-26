@@ -13,6 +13,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
 import com.ktdsuniversity.edu.generalpost.vo.SearchForumVO;
 import com.ktdsuniversity.edu.generalpost.web.FreePostController;
@@ -36,12 +37,12 @@ public class GeneralPostDAOImpl extends SqlSessionDaoSupport
 		
 	@Override
 	public int increaseViewCount(String generalPostId) {
-		return getSqlSession().update("increaseViewCount", generalPostId);
+		return getSqlSession().update("com.ktdsuniversity.edu.generalpost.dao.GeneralPostDAO.increaseViewCount", generalPostId);
 	}
 	
 	@Override
 	public int getBoardAllCount() {
-		return getSqlSession().selectOne("getBoardAllCount");
+		return getSqlSession().selectOne("com.ktdsuniversity.edu.generalpost.dao.GeneralPostDAO.getBoardAllCount");
 	}
 	// 자유게시판
 	@Override
@@ -67,6 +68,11 @@ public class GeneralPostDAOImpl extends SqlSessionDaoSupport
 	@Override
 	public int deleteOneFreeBoard (String generalPostId) {
 		return getSqlSession().delete("deleteOneFreeBoard", generalPostId);
+	}
+	
+	@Override
+	public int updateLikeFreePost(GeneralPostVO generalPostVO) {
+		return getSqlSession().update("updateLikeFreePost", generalPostVO);
 	}
 	
 	// 질답게시판
@@ -96,10 +102,22 @@ public class GeneralPostDAOImpl extends SqlSessionDaoSupport
 	public int deleteOneQnABoard(String generalPostId) {
 		return getSqlSession().delete("deleteOneQnABoard", generalPostId);
 	}
+	
+	@Override
+	public int updateLikeQnAPost(GeneralPostVO generalPostVO) {
+		return getSqlSession().update("updateLikeQnAPost", generalPostVO);
+	}
 
 	// 내 게시글 조회
 	@Override
-	public List<GeneralPostVO> getMyPost(String postWriter) {
-		return getSqlSession().selectList("getMyPost", postWriter);
+	public List<GeneralPostVO> getMyPost(GeneralPostVO GeneralPostVO) {
+		return getSqlSession().selectList("getMyPost", GeneralPostVO);
 	}
+	
+	// 통합검색
+	@Override
+	public List<GeneralPostVO> searchAllBoardByKeyword(AbstractSearchVO abstractSearchVO) {
+		return getSqlSession().selectList("searchAllBoardByKeyword", abstractSearchVO);
+	}
+	
 }

@@ -6,10 +6,13 @@
 package com.ktdsuniversity.edu.bookmark.service;
 
 import com.ktdsuniversity.edu.bookmark.vo.BookmarkListVO;
+import com.ktdsuniversity.edu.bookmark.vo.BookmarkSearchVO;
 import com.ktdsuniversity.edu.bookmark.vo.BookmarkVO;
 
 public interface BookmarkService {
 	public BookmarkListVO getAllBookmark(String email);
+	public BookmarkVO getBookmarkStatus(BookmarkSearchVO bookmarkSearchVO);
 	public boolean createBookmark(BookmarkVO bookmarkVO);
-	public boolean deleteBookmark(String bookmarkId);
+	public boolean deleteBookmark(BookmarkSearchVO bookmarkSearchVO);
+	public boolean toggleBookmark(String bookmarkId);
 }

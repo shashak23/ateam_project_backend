@@ -7,7 +7,9 @@
 
 package com.ktdsuniversity.edu.algorithmquestion.vo;
 
-public class SearchAlgorithmQuestionVO {
+import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
+
+public class SearchAlgorithmQuestionVO extends AbstractSearchVO {
 
 	private String[] algorithmCategoryIdList;
 	private String[] algorithmTierList;

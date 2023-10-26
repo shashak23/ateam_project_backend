@@ -118,7 +118,11 @@ public class XssIgnoreUtil {
 							   .replace("&gt;", ">")
 							   .replace("&quot;", "\"")
 							   .replace("&quot;", "\"")
-							   .replace("&nbsp", " ")
+							   .replace("&nbsp;", " ")
+							   .replace("“", "\"")
+							   .replace("”", "\"")
+							   .replace("&ldquo;", "\"")
+							   .replace("&rdquo;", "\"")
 							   .replace("&amp;", "&");
 		}
 		return dirtyStr;

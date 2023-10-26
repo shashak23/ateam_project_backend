@@ -48,10 +48,6 @@
                 border-bottom:none;
                 border-left: none;
                 border-right: none;
-                
-                
-                
-              
             }
 
             .btn_st_2,.btn_st_3 {
@@ -62,16 +58,16 @@
                 height: 30px;
             }
             .btn_write_1,.btn_write_2 {
-            position: relative;
-            left: 830px;
-            margin-top: 30px;
-            background-color: var(--hashtag-blue);
-            color: white;
-            border-radius: 5px;
-            border: none;
-            width: 70px; 
-            height: 30px;
-            margin-bottom: 50px;
+                position: relative;
+                left: 830px;
+                margin-top: 30px;
+                background-color: var(--hashtag-blue);
+                color: white;
+                border-radius: 5px;
+                border: none;
+                width: 70px; 
+                height: 30px;
+                margin-bottom: 50px;
             }
 
             
@@ -92,7 +88,7 @@
 
             #page > a.active_page {
                 border: 1px solid var(--red);
-                color: black;
+                color: var(--red);
                 font-weight: bold;
             }
 
@@ -105,7 +101,7 @@
                 background-color: var(--light-gray);
                
                 border-bottom: 1px solid var(--dark-gray);
-                
+                color: var(--dark-gray);
                 
      
             }
@@ -113,58 +109,20 @@
             .table-header_01 {                        
                 width: 50px;
                 height: 35px;
-                
-                
-                
-               
-                
              }
              .pratice_01,.pratice_02,.pratice_03,.pratice_04 {
                 border-bottom: 1px solid var(--gray);
                 text-align: center;
                 color: var(--dark-gray);
-           
-            
-                
              }
              .pratice {
                 margin-top: 42px;
                 border-bottom: 1px solid var(--gray);
-              
-               
-
              }
              .text_controller {
                 position: relative;
                 bottom: 100px;
-                
-                
-               
-                
              }
-
-             
-             
-             
-             
-             
-            
-             
-             
-             
-           
-            
-          
-            
-            
-           
-            
-            
-
-            
-
-
-            
         </style>
 </head>
 <body>
@@ -221,16 +179,13 @@
                                                 <a class="text_controller" href="/freeboard/view/${freeboard.generalPostId}">
                                                         <!-- ${freeboard.postTitle} -->
                                                     <span class="comment_count">[댓글갯수]</span>
-                                                    
+                                                        ${freeboard.postTitle}
                                                 </a>
                                                 </div>
                                                 </td>
                                                 <td class="pratice_02">${freeboard.postWriter}</td>
                                                 <td class="pratice_03">${freeboard.postDate}</td>
-                                                <td class="pratice_04">${freeboard.viewCnt} 
-                                                
-                                                </td>
-                                                
+                                                <td class="pratice_04">${freeboard.viewCnt}</td>
                                             </tr>
                                             
                                         </c:forEach>
@@ -273,7 +228,6 @@
     <jsp:include page="../layout/footer.jsp" />
 </body>
     <script>
-        
         document.addEventListener('DOMContentLoaded', function() {
     const viewCountElement = document.getElementById('viewCount');
     
@@ -300,7 +254,7 @@
     // 페이지 뷰 시 매번 업데이트하는 대신, 필요한 이벤트(예: 게시물 뷰)에서 호출하세요.
     // updateViewCount();
 });
-        
+
         // 미완성된 기능을 알려주는 모달창
         $('.incomplete').click(function() {
             $('.modal, .overlay').addClass('modal_active')
@@ -338,7 +292,5 @@
                                 'color': 'var(--blue)',
                                 'box-shadow': 'none'})
         })
-        
-             
     </script>
 </html>

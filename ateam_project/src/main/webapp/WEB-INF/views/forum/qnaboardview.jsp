@@ -413,7 +413,7 @@ pre.content {
 
 			<div class="btn-group">
 				<div class="right-align">
-       				<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq generalPostVO.postWriter}">
+       				<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
 					<div class="update_btn">
 						<div class="btn">
 							<a href="/qnaboard/update/${generalPostVO.generalPostId}">수정</a>

@@ -66,11 +66,6 @@
 		                  language: "ko"
 		                } );    
 		        </script></p>
-		        
-		   <div class="hash"> 
-		    <label for="hashTag" >해시태그</label>
-		    <input id="hashTag" type="text" name="hashTag" />
-		   </div>
 			<div class = "btn-group">
 				<div class="right-align">
 					<input type="submit" value="저장" />

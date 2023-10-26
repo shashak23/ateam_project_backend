@@ -9,6 +9,7 @@ package com.ktdsuniversity.edu.algorithmexplanation.service;
 import com.ktdsuniversity.edu.algorithmexplanation.vo.AlgorithmExplanationListVO;
 import com.ktdsuniversity.edu.algorithmexplanation.vo.AlgorithmExplanationVO;
 import com.ktdsuniversity.edu.algorithmexplanation.vo.SearchAlgorithmExplanationVO;
+import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
 
 public interface AlgorithmExplanationService {
 	
@@ -22,5 +23,7 @@ public interface AlgorithmExplanationService {
 	
 	public boolean deleteOneAlgorithmExplanation(String companyAlgorithmExplanationId);
 	
+	// 통합검색
+	public AlgorithmExplanationListVO searchAllAlgorithmExplanationByKeyword(AbstractSearchVO abstractSearchVO);
 
 }

@@ -7,11 +7,15 @@
 
 package com.ktdsuniversity.edu.myalgorithm.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.ktdsuniversity.edu.coderuntime.CodeRuntime;
 import com.ktdsuniversity.edu.myalgorithm.dao.MyAlgorithmDAO;
+import com.ktdsuniversity.edu.myalgorithm.vo.AnswerResultVO;
 import com.ktdsuniversity.edu.myalgorithm.vo.MyAlgorithmListVO;
 import com.ktdsuniversity.edu.myalgorithm.vo.MyAlgorithmVO;
 import com.ktdsuniversity.edu.myalgorithm.vo.SearchMyAlgorithmVO;
@@ -20,6 +24,9 @@ import com.ktdsuniversity.edu.myalgorithm.vo.SearchMyAlgorithmVO;
 public class MyAlgorithmServiceImpl implements MyAlgorithmService{
 	@Autowired
 	private MyAlgorithmDAO myAlgorithmDAO;
+	
+	@Autowired
+	private CodeRuntime codeRuntime;
 	
 	@Override
 	public MyAlgorithmListVO getAllMyAlgorithm(SearchMyAlgorithmVO searchMyAlgorithmVO) {
@@ -31,10 +38,27 @@ public class MyAlgorithmServiceImpl implements MyAlgorithmService{
 
 	@Transactional
 	@Override
-	public boolean createNewMyAlgorithm(MyAlgorithmVO myAlgorithmVO) {
+	public AnswerResultVO createNewMyAlgorithm(MyAlgorithmVO myAlgorithmVO) {
+		
+		codeRuntime.setCode(myAlgorithmVO.getMyAnswer());
+		
+		codeRuntime.makeFile();
+		                        // #codeHear#
+		codeRuntime.makeRunFile();
+		codeRuntime.doCompileJava();
+		codeRuntime.doCompileRun();
+		                                    // 파라미터가 있을 때
+//		List<String> processResult = cr.run("2341231", "Hello~~RunJava~~~~");
+											// 파라미터가 없을 때
+		List<String> processResult = codeRuntime.run(null);
+		
 		int createCount = myAlgorithmDAO.createNewMyAlgorithm(myAlgorithmVO);
 		
-		return createCount > 0;
+		AnswerResultVO arVO = new AnswerResultVO();
+		arVO.setInsertResult(createCount > 0);
+		arVO.setCodeResultList(processResult);
+		
+		return arVO;
 	}
 	
 	@Transactional

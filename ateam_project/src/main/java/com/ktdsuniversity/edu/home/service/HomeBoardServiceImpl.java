@@ -12,13 +12,38 @@ import org.springframework.stereotype.Service;
 
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
 import com.ktdsuniversity.edu.home.dao.HomeBoardDAO;
+import com.ktdsuniversity.edu.home.vo.HomeBoardVO;
+import com.ktdsuniversity.edu.home.vo.HomeNickNameVO;
+import com.ktdsuniversity.edu.home.vo.HomecommentCntVO;
 
 @Service
 public class HomeBoardServiceImpl implements HomeBoardService {
 	@Autowired
 	private HomeBoardDAO homeBoardDAO;
 	
+	
+	@Override
+	public List<GeneralPostVO> getAllGeneralPost() {
+		return homeBoardDAO.getAllGeneralPost();
+	}
+	
+	@Override
+	public List<HomecommentCntVO> getAllGeneralCommentCnt() {
+		return homeBoardDAO.getAllGeneralCommentCnt();
+	}
+	
+	@Override
+	public List<HomeNickNameVO> getNicknameList() {
+		return homeBoardDAO.getNicknameList();
+	}
+	
+	@Override
 	public List<GeneralPostVO> getWeeklyRanking(String date) {
 		return homeBoardDAO.getWeeklyRanking(date);
+	}
+
+	@Override
+	public List<HomeBoardVO> getHashtag(String postId) {
+		return homeBoardDAO.getHashtag(postId);
 	}
 }

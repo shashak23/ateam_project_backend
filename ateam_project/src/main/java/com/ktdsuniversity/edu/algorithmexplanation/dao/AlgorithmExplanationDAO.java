@@ -11,6 +11,7 @@ import java.util.List;
 
 import com.ktdsuniversity.edu.algorithmexplanation.vo.AlgorithmExplanationVO;
 import com.ktdsuniversity.edu.algorithmexplanation.vo.SearchAlgorithmExplanationVO;
+import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
 
 public interface AlgorithmExplanationDAO {
 	
@@ -30,5 +31,6 @@ public interface AlgorithmExplanationDAO {
 	
 	public int deleteOneAlgorithmExplanation(String companyAlgorithmExplanationId);
 	
-	
+	// 통합검색
+	public List<AlgorithmExplanationVO> searchAllAlgorithmExplanationByKeyword(AbstractSearchVO abstractSearchVO);
 }

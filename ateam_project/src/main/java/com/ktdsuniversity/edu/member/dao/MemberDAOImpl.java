@@ -1,6 +1,7 @@
 /**
  * 작성자: 김광원
  * 수정자: 김광원(2023-10-20)
+ * 수정자: 장보늬(2023-10-23)
  * 작성일자: 2023-10-19
  * 내용: 일반회원 비밀번호 수정 및 닉네임 수정
  */
@@ -13,6 +14,7 @@ import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 
 @Repository
@@ -93,10 +95,6 @@ public class MemberDAOImpl extends SqlSessionDaoSupport implements MemberDAO{
 //		return getSqlSession().insert("createNewCompanyMember", memberVO);
 //	}
 	
-	@Override
-	public List<MemberVO> searchMember(String memberType) {
-		return getSqlSession().selectList("searchMember", memberType);
-	}
 	/**
 	 * 회원 조회
 	 */
@@ -131,5 +129,17 @@ public class MemberDAOImpl extends SqlSessionDaoSupport implements MemberDAO{
 	@Override
 	public int deleteProfile(String email) {
 		return getSqlSession().update("deleteProfile",email);
+	}
+	
+	// 회원유형구분해서 회원찾기
+	@Override
+	public List<MemberVO> searchMember(String memberType) {
+		return getSqlSession().selectList("searchMember", memberType);
+	}
+	
+	// 통합검색
+	@Override
+	public List<MemberVO> searchAllMemberByKeyword(AbstractSearchVO abstractSearchVO) {
+		return getSqlSession().selectList("searchAllMemberByKeyword", abstractSearchVO);
 	}
 }

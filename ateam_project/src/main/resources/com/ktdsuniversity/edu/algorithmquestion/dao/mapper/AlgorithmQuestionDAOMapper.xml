@@ -54,6 +54,7 @@
 		     , CAQ.ALGORITHM_TITLE
 		     , CAQ.ALGORITHM_CONTENT
 		     , CAQ.ALGORITHM_SOLUTION
+		     , CAQ.DEFAULT_CODE
 		     , TO_CHAR(CAQ.POST_DATE, 'YYYY-MM-DD HH24:MI:SS') POST_DATE
 		     , CAQ.VIEW_CNT
 		     , CAQ.LIKE_CNT
@@ -79,6 +80,7 @@
 		     , CAQ.ALGORITHM_TITLE
 		     , CAQ.ALGORITHM_CONTENT
 		     , CAQ.ALGORITHM_SOLUTION
+		     , CAQ.DEFAULT_CODE
 		     , TO_CHAR(CAQ.POST_DATE, 'YYYY-MM-DD HH24:MI:SS') POST_DATE
 		     , CAQ.VIEW_CNT
 		     , CAQ.LIKE_CNT
@@ -122,6 +124,7 @@
 		     , CAQ.ALGORITHM_TITLE
 		     , CAQ.ALGORITHM_CONTENT
 		     , CAQ.ALGORITHM_SOLUTION
+		     , CAQ.DEFAULT_CODE
 		     , TO_CHAR(CAQ.POST_DATE, 'YYYY-MM-DD HH24:MI:SS') POST_DATE
 		     , CAQ.VIEW_CNT
 		     , CAQ.LIKE_CNT
@@ -138,9 +141,9 @@
             ON ACL.COMPANY_ALGORITHM_QUESTION_ID = CAQ.COMPANY_ALGORITHM_QUESTION_ID
 	     WHERE CAQ.DELETE_YN = 'N'
 		<if test='searchKeyword != null and searchKeyword != ""'>
-		    OR CAQ.ALGORITHM_TITLE LIKE '%' || #{searchKeyword} || '%'
+		   AND (CAQ.ALGORITHM_TITLE LIKE '%' || #{searchKeyword} || '%'
 		    OR CAQ.ALGORITHM_CONTENT LIKE '%' || #{searchKeyword} || '%'
-		    OR M.NICKNAME LIKE '%' || #{searchKeyword} || '%'
+		    OR M.NICKNAME LIKE '%' || #{searchKeyword} || '%')
 		</if>
 		 ORDER BY POST_DATE DESC <!-- 최신글순 -->
 	</select>
@@ -159,6 +162,7 @@
 		, ALGORITHM_TITLE
 		, ALGORITHM_CONTENT
 		, ALGORITHM_SOLUTION
+		, DEFAULT_CODE
 		, POST_DATE
 		, VIEW_CNT
 		, LIKE_CNT
@@ -171,6 +175,7 @@
 		, #{algorithmTitle}
 		, #{algorithmContent}
 		, #{algorithmSolution}
+		, #{defaultCode}
 		, SYSDATE
 		, 0
 		, 0
@@ -212,6 +217,7 @@
 		     , CAQ.ALGORITHM_TITLE
 		     , CAQ.ALGORITHM_CONTENT
 		     , CAQ.ALGORITHM_SOLUTION
+		     , CAQ.DEFAULT_CODE
 		     , TO_CHAR(CAQ.POST_DATE, 'YYYY-MM-DD HH24:MI:SS') POST_DATE
 		     , CAQ.VIEW_CNT
 		     , CAQ.LIKE_CNT
@@ -234,6 +240,7 @@
 		     , ALGORITHM_TITLE = #{algorithmTitle}
 		     , ALGORITHM_CONTENT = #{algorithmContent}
 		     , ALGORITHM_SOLUTION = #{algorithmSolution}
+		     , DEFAULT_CODE =#{defaultCode}
 		 WHERE COMPANY_ALGORITHM_QUESTION_ID = #{companyAlgorithmQuestionId}
 	</update>
 	

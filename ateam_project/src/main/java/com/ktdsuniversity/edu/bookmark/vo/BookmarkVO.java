@@ -5,9 +5,6 @@
  */
 package com.ktdsuniversity.edu.bookmark.vo;
 
-import java.util.List;
-
-import com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 
@@ -41,10 +38,6 @@ public class BookmarkVO {
 	 * 북마크된 게시글의 정보
 	 */
 	private GeneralPostVO generalPostVO;
-	/**
-	 * 북마크된 해시태그리스트의 정보
-	 */
-	private List<CommonCodeVO> commonCodeListVO;
 	
 	
 	public String getBookmarkId() {
@@ -88,11 +81,5 @@ public class BookmarkVO {
 	}
 	public void setGeneralPostVO(GeneralPostVO generalPostVO) {
 		this.generalPostVO = generalPostVO;
-	}
-	public List<CommonCodeVO> getCommonCodeListVO() {
-		return commonCodeListVO;
-	}
-	public void setCommonCodeListVO(List<CommonCodeVO> commonCodeListVO) {
-		this.commonCodeListVO = commonCodeListVO;
 	}
 }
