@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -220,8 +222,6 @@
     height: 70px;
     display: none;
   }
-
-  
 </style>
 </head>
 <body>
@@ -230,11 +230,11 @@
         <button id="personal_btn" class="personal_tab active">개인</button>
         <button id="company_btn" class="personal_tab ">기업</button>
     </div>
-    <form method="post">
+    <form:form modelAttribute="memberVO" method="post" action="/member/auth">
         <div class="input_container">
             <div class="id_container">
               <label for="member_id">ID</label>
-              <input type="text" name="member_id" id="member_id" />
+              <input type="text" name="email" id="member_id" />
             </div>
             <div class="pw_container">
               <label for="member_pw">PW</label>
