@@ -51,7 +51,6 @@
         $("#submit-btn").click(function(event) {
         	event.preventDefault()
         	let json = table.toJson($, "#grid")
-        	alert(JSON.stringify(json))
         	$("#answerJson").val(JSON.stringify(json));
         	$("#algorithmQuestionVO").submit();
         })

@@ -126,7 +126,7 @@ pre.content {
     color: #888;
 }
 </style>
- <script src="/js/lib/jquery-3.7.1.js"></script>
+<script src="/js/lib/jquery-3.7.1.js"></script>
  <script type="text/javascript">    
         $(document).ready(function() {
             var loadReplies = function() {
@@ -256,30 +256,7 @@ pre.content {
           });
       }
       
-       /*  function updateComment(event) {
-    	    var updateButton = $(this);  
-    	    var commentDom = updateButton.closest(".comment"); 
-    	    var commentId = commentDom.data("comment-id");  
-    	    // 사용자에게 수정된 댓글 내용을 입력하도록 요청
-    	    var updatedContent = prompt("댓글을 수정하세요:", commentDom.find('.content').text());
-    	    
-    	    // 사용자가 입력을 취소하지 않고 내용을 입력한 경우
-    	    if (updatedContent != null && updatedContent.trim() != "") {
-    	        // 댓글을 수정하기 위해 서버에 ajax 요청을 보냄
-    	        $.post('/qnaboard/comment/update/' + commentId, { commentContent: updatedContent }, 
-    	        function(response) {
-    	        	console.log(response);
-    	        	console.log(response.result);
-    	        	if (response.result) {
-    	                // 페이지에서 댓글 내용 수정
-    	                console.log("중간확인");
-    	                commentDom.find('.content').text(updatedContent);
-    	            } else {
-    	                  alert("수정이 불가합니다.");
-    	              }
-    	        });
-    	    }
-      }   */
+      
       $(".update-comment").click(updateComment);
        var updateComment=function(event){
     	   var reply = $(event.currentTarget).closest(".comment")
@@ -296,6 +273,45 @@ pre.content {
     	   $("#txt-comment").data("target",replyId)
     	   $("#txt-comment").data("generalCommentId", replyId)
     	   }
+       
+       // 신고버튼, 좋아요 버튼
+       $().ready(function() {
+           // "신고" 버튼 클릭 시 모달 열기
+           $(".report-btn").click(function() {
+               let reportType = $("#reportQnABoard").val()
+               console.log(reportType);
+               $("#report-modal").css("display", "block");
+           
+               // 모달 내부 "취소" 버튼 클릭 시 모달 닫기
+               $(".close").click(function() {
+                   console.log("!")
+                    $("#report-modal").css("display", "none");
+                  });
+           });
+           console.log($("jsp:param[name='reportType']"))
+   
+           
+           // "좋아요" 버튼 클릭 시 이벤트 발생ㄴ
+           $("#like-btn").click(function () {
+               // 클라이언트에서 AJAX 요청 생성
+               $.ajax({
+                   method: "POST",
+                   url: "/qnaboard/like",
+                   data: { 
+                       "generalPostId": "${generalPostVO.generalPostId}",
+                       "likeCnt": ${generalPostVO.likeCnt}
+                   },
+                   success: function(response) {
+                       /* $("likeModal").hide(); */
+                       alert("좋아요가 눌렸습니다!!!!!!!!!!!!");
+                   },
+                   error: function(error){
+                       /* $("#likeModal").hide(); */
+                       alert("오류가 발생했습니다~~~~~~~~~~~~");
+                   }
+               })
+           });
+   });
   });   
  </script>
 </head>

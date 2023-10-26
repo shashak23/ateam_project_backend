@@ -37,34 +37,31 @@ public class FreePostController {
 
 	@Autowired
 	private GeneralPostService generalPostService;
-	
+
 	private Logger log = LoggerFactory.getLogger(FreePostController.class);
 
-	
 	// 전체조회
 	@GetMapping("/freeboard/list")
 	public ModelAndView freeBoardList() {
 		GeneralPostListVO generalPostListVO = generalPostService.getAllFreeBoard();
 		ModelAndView modelAndView = new ModelAndView();
-		
+
 		modelAndView.setViewName("forum/freeboardlist");
-		modelAndView.addObject("generalPostListVO",generalPostListVO);
-		
+		modelAndView.addObject("generalPostListVO", generalPostListVO);
+
 		return modelAndView;
 	}
-	
-	// 글쓰기 화면 보이기 
+
+	// 글쓰기 화면 보이기
 	@GetMapping("/freeboard/create")
 	public String createFreeBoard() {
 		return "forum/freeboardcreate";
 	}
-	
-	// 등록 
+
+	// 등록
 	@PostMapping("/freeboard/create")
-	public ModelAndView createFreeBoard(@Valid @ModelAttribute GeneralPostVO generalPostVO
-							   , BindingResult bindingResult 
-					           , HttpServletRequest request
-					           , @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+	public ModelAndView createFreeBoard(@Valid @ModelAttribute GeneralPostVO generalPostVO, BindingResult bindingResult,
+			HttpServletRequest request, @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 
 		System.out.println("일반회원용 게시글ID: " + generalPostVO.getGeneralPostId());
 		System.out.println("게시글 작성자ID: " + generalPostVO.getPostWriter());
@@ -75,14 +72,12 @@ public class FreePostController {
 		System.out.println("좋아요 수: " + generalPostVO.getLikeCnt());
 		System.out.println("조회수: " + generalPostVO.getViewCnt());
 		System.out.println("삭제여부: " + generalPostVO.getDeleteYn());
-		
-		
+
 		ModelAndView modelAndView = new ModelAndView();
 		log.debug("1--컨트롤러---자유----------------------");
-		
-		/*
-		 * XssIgnoreUtil.ignore(generalPostVO);
-		 */
+
+		XssIgnoreUtil.ignore(generalPostVO);
+
 		// Validation 체크한 것 중 실패한 것이 있다면.
 		if (bindingResult.hasErrors()) {
 			// 글쓰기 화면을 보여준다.
@@ -91,90 +86,84 @@ public class FreePostController {
 			modelAndView.addObject("generalPostVO", generalPostVO);
 			return modelAndView;
 		}
-		
+
 		generalPostVO.setPostWriter(memberVO.getEmail());
 		// 게시글을 등록한다.
 		boolean isSuccess = generalPostService.createNewFreeBoard(generalPostVO);
 		if (isSuccess) {
 			modelAndView.setViewName("redirect:/freeboard/list");
 			return modelAndView;
-		}
-		else {
+		} else {
 			modelAndView.setViewName("freeboard/create");
 			modelAndView.addObject("generalPostVO", generalPostVO);
 			return modelAndView;
 		}
 	}
-	
+
 	// 단건 조회 처리
 	@GetMapping("/freeboard/view/{generalPostId}")
 	public ModelAndView freeBoardSingle(@PathVariable String generalPostId) {
-//		log.debug("되는거 맞지요?--------------------------------------");
-//		log.debug("글번호: " + generalPostId);
 		GeneralPostVO generalPostVO = generalPostService.getOneFreeBoard(generalPostId);
-//		generalPostVO.setPostWriter(memberVO.getEmail());
-//		System.out.println(generalPostVO.getPostWriter());
+		XssIgnoreUtil.ignore(generalPostVO); 
 		ModelAndView view = new ModelAndView();
 		view.setViewName("forum/freeboardview");
 		view.addObject("generalPostVO", generalPostVO);
 		return view;
 	}
-	
+
 	// 수정 페이지 이동
-	   @GetMapping("/freeboard/update/{generalPostId}")
-	   public ModelAndView viewUpdatePage(@PathVariable String generalPostId) {
-		   // 요런식으로다가 서비스에서 -> DB에서 게시글 ID로 게시글 가져오는 쿼리 실행
-	      GeneralPostVO generalPostVO  = generalPostService.getOneFreeBoard(generalPostId); 
-	                              
-	      ModelAndView view = new ModelAndView();
-	      view.setViewName("forum/freeboardupdate");
-	      view.addObject("generalPostVO", generalPostVO);
-	      
-	      return view;
-	   }
-	
+	@GetMapping("/freeboard/update/{generalPostId}")
+	public ModelAndView viewUpdatePage(@PathVariable String generalPostId) {
+		// 요런식으로다가 서비스에서 -> DB에서 게시글 ID로 게시글 가져오는 쿼리 실행
+		GeneralPostVO generalPostVO = generalPostService.getOneFreeBoard(generalPostId);
+		XssIgnoreUtil.ignore(generalPostVO); 
+		ModelAndView view = new ModelAndView();
+		view.setViewName("forum/freeboardupdate");
+		view.addObject("generalPostVO", generalPostVO);
+
+		return view;
+	}
+
 	// 수정
 	@PostMapping("/freeboard/update")
 	public ModelAndView updateFreeBoard(@ModelAttribute GeneralPostVO generalPostVO) {
 		System.out.println("일반회원용 게시글ID: " + generalPostVO.getGeneralPostId());
 		System.out.println("게시글 제목: " + generalPostVO.getPostTitle());
 		System.out.println("게시글 내용: " + generalPostVO.getPostContent());
-		
+		XssIgnoreUtil.ignore(generalPostVO); 
 		ModelAndView view = new ModelAndView();
 		boolean isSuccess = generalPostService.updateOneFreeBoard(generalPostVO);
-		if(isSuccess) {
+		if (isSuccess) {
 			// 게시글의 수정이 성공이라면
 			view.setViewName("redirect:/freeboard/list");
 			return view;
-		}
-		else {
+		} else {
 			// 게시글의 수정이 실패하면
 			view.setViewName("forum/freeboardupdate");
 			view.addObject("generalPostVO", generalPostVO);
 			return view;
 		}
-		
+
 	}
-	
+
 	// 삭제 페이지 이동
 	@GetMapping("/freeboard/delete/{generalPostId}")
-	public ModelAndView viewDeletePage(@ModelAttribute GeneralPostVO generalPostVO
-										,@PathVariable String generalPostId) {
+	public ModelAndView viewDeletePage(@ModelAttribute GeneralPostVO generalPostVO,
+			@PathVariable String generalPostId) {
 		ModelAndView view = new ModelAndView();
 		view.setViewName("forum/freeboarddelete");
 		view.addObject("generalPostVO", generalPostVO);
 		return view;
 	}
-	
+
 	// 삭제 - 근데 수정
 	@PostMapping("/freeboard/delete/{generalPostId}")
-	public ModelAndView deleteFreeBoard(@ModelAttribute GeneralPostVO generalPostVO
-										, BindingResult bindingResult
-										, @PathVariable String generalPostId) {
+	public ModelAndView deleteFreeBoard(@ModelAttribute GeneralPostVO generalPostVO, BindingResult bindingResult,
+			@PathVariable String generalPostId) {
 
 		ModelAndView view = new ModelAndView();
-		
-		GeneralPostVO origingeneralPostVO  = generalPostService.getOneFreeBoard(generalPostVO.getGeneralPostId());		
+
+		GeneralPostVO origingeneralPostVO = generalPostService.getOneFreeBoard(generalPostVO.getGeneralPostId());
 		log.debug("삭제여부 : " + origingeneralPostVO.getDeleteYn());
 		generalPostVO.getGeneralPostId();
 		// 게시글을 등록한다.
@@ -182,30 +171,27 @@ public class FreePostController {
 		if (isSuccess) {
 			view.setViewName("redirect:/freeboard/list");
 			return view;
-		}    
-		else {
+		} else {
 			view.setViewName("forum/freeboarddelete");
 			view.addObject("generalPostVO", origingeneralPostVO);
 			return view;
 		}
 	}
-	
 
 	// 좋아요 기능
 	@PostMapping("/freeboard/like")
-    public ModelAndView likeFreeBoard(@ModelAttribute GeneralPostVO generalPostVO) {
+	public ModelAndView likeFreeBoard(@ModelAttribute GeneralPostVO generalPostVO) {
 
 		ModelAndView view = new ModelAndView();
 		boolean isSuccess = generalPostService.likeFreeBoard(generalPostVO);
-		if(isSuccess) {
+		if (isSuccess) {
 			view.setViewName("redirect:/freeboard/list");
 			return view;
-		}
-		else {
+		} else {
 			view.setViewName("forum/freeboardview");
 			view.addObject("generalPostVO", generalPostVO);
 			return view;
 		}
 	}
-		
+
 }

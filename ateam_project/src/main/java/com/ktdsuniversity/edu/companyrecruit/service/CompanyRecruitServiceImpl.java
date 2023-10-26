@@ -56,4 +56,10 @@ public class CompanyRecruitServiceImpl implements CompanyRecruitService{
 		return updateCount > 0;
 	}
 
+	@Override
+	public boolean deleteOneRecruitBoard(String companyRecruitPostId) {
+		int deleteCount = companyRecruitDAO.deleteOneRecruitBoard(companyRecruitPostId);
+		return deleteCount > 0;
+	}
+
 }

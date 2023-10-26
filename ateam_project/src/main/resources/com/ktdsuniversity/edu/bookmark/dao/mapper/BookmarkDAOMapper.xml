@@ -103,9 +103,10 @@
 	</update>
 	
 	<delete id="deleteBookmark"
-			parameterType="string">
+			parameterType="com.ktdsuniversity.edu.bookmark.vo.BookmarkSearchVO">
 		DELETE 
 		  FROM BOOKMARK B
-		 WHERE B.BOOKMARK_ID = #{_parameter}
+		 WHERE GENERAL_MEMBER_EMAIL = #{email}
+		   AND POST_ID = #{generalPostId}
 	</delete>
 </mapper>

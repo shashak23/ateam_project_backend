@@ -11,11 +11,13 @@ public class CompanyRecruitVO {
 
 	private String companyRecruitPostId;
 	private String postWriter;
+
 	private String postTitle;
 	private String postContent;
 	private String postDate;
 	private String recruitStartDate;
 	private String recruitEndDate;
+
 	private String recruitProgressYn;
 	private String recruitType;
 	private int minCareerYear;
@@ -108,4 +110,5 @@ public class CompanyRecruitVO {
 		this.deleteYn = deleteYn;
 	}
 
+	
 }

@@ -11,93 +11,104 @@
           name="viewport"
           id="viewport"
           content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, width=device-width"/>
-            <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-            <link rel="stylesheet" type="text/css" href="/css/swiper.min.css">
+    	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+        <link rel="stylesheet" type="text/css" href="/css/swiper.min.css">
         <link rel="stylesheet" type="text/css" href="/css/style.css" />
+		<jsp:include page="../layout/header.jsp"/>
         <script src="js/lib/jquery-3.7.1.js"></script>
-        <script>
-        	$().ready(funtion() {
-        		alert('힘내용ㅎㅎ')
-        		
-//         		$.get('/code/질답게시판', function(response) {
-//         			for (let i = 0; i < response.length; i++) {
-//         				let template = `
-//         					<tr>
-//         				    	<td>${qnaboard.generalPostId}</td>
-//         				    		<td>
-//         				      			<a href="/qnaboard/view/${qnaboard.generalPostId}">
-//         				        			${qnaboard.postTitle}
-//         				      			</a>
-//         				    		</td>
-//         				    	<td>${qnaboard.postWriter}</td>
-//         				    	<td>${qnaboard.postDate}</td>
-//         				    	<td>${qnaboard.viewCnt}</td>
-//         				  	</tr>
-//         				`
-//         			}
-//         		})
-        	})
-        </script>
+		<style>
+			table {
+            border-collapse: collapse;
+            }
+            .bbs_title {
+                font-weight: bold;
+                font-size: 25px;
+                margin: 80px 100px 30px 430px;
+
+            }
+
+            .wrap {
+                display: flex;
+                justify-content: center;        
+            }
+
+			.list_search {
+				margin-bottom: 15px;
+                position: relative;
+                left: 1120px;
+			}
+			.board_list_box {
+				position: relative;
+				left: 500px;
+                border-top: 3px solid var(--hashtag-blue);
+                border-bottom:none;
+                border-left: none;
+                border-right: none;
+				width: 1000px;
+
+				
+                
+                
+                
+              
+            }
+			.btn_write_1,.btn_write_2 {
+            position: relative;
+            left: 830px;
+            margin-top: 30px;
+            background-color: var(--hashtag-blue);
+            color: white;
+            border-radius: 5px;
+            border: none;
+            width: 70px; 
+            height: 30px;
+            margin-bottom: 50px;
+            }
+			
+			.table-header_01 {                        
+                width: 50px;
+                height: 35px;
+                
+               
+                
+             }
+			 #page {
+            text-align: center;
+            }
+
+            #page > a {
+            margin-top: 15px;
+            margin-bottom: 15px;
+            padding: 5px 10px 5px 10px;
+            display: inline-block;
+            border-radius: 4px;
+            background-color: #FFF;
+            color: #666;
+            text-decoration: none;
+            }
+
+            #page > a.active_page {
+                border: 1px solid var(--red);
+                color: var(--red);
+                font-weight: bold;
+            }
+
+
+
+
+			
+		</style>
       </head>
       <body>
     <div id="wrap" class="wrap">
 
-      <!-- 상단영역 -->
-      <header id="header" class="header">
+      
 
-				<!-- 로그인/회원가입 -->
-				<div class="util">
-				    <jsp:include page="../member/membermenu.jsp"></jsp:include>
 				
-					<ul>
-						<li><a href="#">로그인</a></li>
-						<li><a href="#">회원가입</a></li>
-					</ul>					
-				</div>
+	</div>
 
-				<div class="inner">
-					<!-- 로고 -->
-					<hgroup>
-						<h1><a href="index.html">SnapChat</a></h1>
-					</hgroup>
-	
-					<!-- Navigation -->
-					<nav class="gnb">
-						<ul>
-							<li><a href="index.html">자유게시판</a></li>
-							<li><a href="qa.html">Q&A</a></li>
-							<li><a href="#">채용</a></li>
-							<li><a href="#">코딩테스트</a></li>
-						</ul>
-					</nav>
 
-					<!-- 아이콘 -->
-					<div class="setting">
-						<a href="#">
-							<span class="material-symbols-outlined">account_circle</span>
-						</a>
-						<a href="#">
-							<span class="material-symbols-outlined">mail</span>
-						</a>
-						<a href="#">
-							<span class="material-symbols-outlined">notifications</span>
-						</a>
-					</div>
-				</div>
-      </header>
-
-			<!-- 검색박스 -->
-      <div class="searchbox">
-				<div class="inner">
-					<input type="text" placeholder="검색어를 입력해주세요.">
-					<button type="submit" class="btn_search">
-						<span class="material-symbols-outlined">
-						search
-						</span>
-					</button>
-				</div>
-			</div>
-
+   
 			<!-- mainVisual -->
 			<div class="mainVisual">
 				<div class="slider">
@@ -114,18 +125,7 @@
 			</div>
 
 
-      <!-- 본문 -->
-      <section id="container" class="container">
-        <!-- 왼쪽 컨텐츠 -->
-        <aside class="side sideLeft">
-          <div class="baner_01">
-						왼쪽 컨텐츠 1
-					</div>
-
-					<div class="baner_02">
-						왼쪽 컨텐츠 2
-					</div>
-        </aside> 
+      
 
 				<!-- 내용 -->
 				<main class="contents">
@@ -140,24 +140,24 @@
 						            <option value="writer" ${searchForumVO.searchType eq 'email' ? 'selected' : ''}>이메일</option>
 						    </select>
 							<input type="text" class="sc_text" placeholder="검색어 입력" name="searchKeyword" value="${searchForumVO.searchKeyword}" />
-							<div class="btn btn_st_2">
-								<button>조회</button>
-							</div>
-							<div class="btn btn_st_2">
+
+							<button type="submit" class="btn btn_st_2">
+								<a href="#">조회</a>
+							</button>
+							<button type="submit" class="btn btn_st_3">
                                 <a href="/qnaboard/create">등록</a>
-                            </div>
-                            
+							</button>
+                            <div class="right-align">
+								총 ${generalPostListVO.boardCnt} 건의 게시글이 검색되었습니다.
+							</div>
 						</div>
 
 						<!-- 게시판 리스트 -->
-						<form action="">
-							<fieldset>
-								<legend>Legend</legend>
-
+						<form action="" method="">
+							<fieldset class="board_list_box">
 								<!-- 리스트 -->
 								<div class="board_list_ty1">
-										<table summary="">
-												<caption></caption>
+										<table>
 												<colgroup>
 														<col width="10%">
 														<col width="*">
@@ -165,13 +165,13 @@
 														<col width="15%">
 														<col width="10%">
 												</colgroup>
-												<thead>
+												<thead id="button_list_1">
 														<tr>
-																<th scope="col">번호</th>
-																<th scope="col">제목</th>
-																<th scope="col">등록자</th>
-																<th scope="col">등록일</th>
-																<th scope="col">조회수</th>
+																<th scope="col" class="table-header_01">번호</th>
+																<th scope="col" class="table-header_02">제목</th>
+																<th scope="col" class="table-header_03">등록자</th>
+																<th scope="col" class="table-header_04">등록일</th>
+																<th scope="col" class="table-header_05">조회수</th>
 														</tr>
 												</thead>
 												<tbody>
@@ -187,65 +187,39 @@
                                                                 <td>${qnaboard.postDate}</td>
                                                                 <td>${qnaboard.viewCnt}</td>
                                                             </tr>
-                                                     </c:forEach>	
+                                                     </c:forEach>											
 												</tbody>
 										</table>
 								</div>
-
 								<!-- button -->
-								<<!-- div class="btn_set btn_right">
-										<div class="btn btn_st_1">
+								<!-- div class="btn_set btn_right">
+									<div class="btn btn_st_1">
 												<a href="/qnaboard/create">글쓰기</a>
-										</div>
-								</div> -->
+											</div>
+										</div> -->
 
-								<!-- paginate -->
-								<div class="paginate">
-										<a href="#" class="pre page"><img src="./images/common/btn_page_prev.gif" alt="처음페이지"></a>
-										<a href="#" class="pre"><img src="./images/common/btn_prev.gif" alt="이전"></a>
-										<a href="#"><span>1</span></a>
-										<a href="#"><span>2</span></a>
-										<a href="#"><span>3</span></a>
-										<strong><span>4</span></strong>
-										<a href="#"><span>5</span></a>
-										<a href="#"><span>6</span></a>
-										<a href="#"><span>7</span></a>
-										<a href="#" class="next"><img src="./images/common/btn_next.gif" alt="다음"></a>
-										<a href="#" class="next page"><img src="./images/common/btn_page_next.gif" alt="마지막페이지"></a>
-								</div>
+								<!-- paginate -->							
 							</fieldset>
+							<div class="btn_write">
+								<button type="submit" class="btn_write_1">
+									<a href="/freeboard/create">글쓰기</a>
+								</button>
+								<button type="submit" class="btn_write_2">
+									<a href="/freeboard/create">엑셀파일</a>
+								</button>
+							</div>
+							<div id="page">
+								<a class="active_page" href="javascript:void(0)">1</a>
+								<a href="#">2</a>
+								<a href="#">3</a>
+								<a href="#">4</a>
+								<a href="#">5</a>
+								<a href="#">다음</a>
+							</div>
 						</form>
 					</div>
 				</main>
-				
-				<!-- 오른쪽 컨텐츠 -->
-        <aside class="side sideRight">
-					<div class="baner_03">
-						오른쪽 컨텐츠 1
-					</div>
-
-					<div class="baner_04">
-						오른쪽 컨텐츠 2
-					</div>
-        </aside>
-
-      </section>
-
-      <!-- 페이지 푸터 -->
-      <footer id="footer" class="footer">
-        <div class="inner">
-          <address>
-            <span>상호명 : SNAPCHAT </span> &middot;
-            <span>개인정보책임관리자 : 홍길동 </span> &middot;
-            <span>주소 : kt ds </span>
-            &middot;
-            <span>ssss</span>
-          </address>
-          <div class="copyright">
-            &copy; 2023 by SNAPCHAT. All rights reserved
-          </div>
-        </div>
-      </footer>
+	  <jsp:include page="../layout/footer.jsp" />
     </div>
 
 		<script src="./js/jquery-1.11.3.min.js"></script>
@@ -254,4 +228,67 @@
 		<script src="./js/common.js"></script>
 
   </body>
+											<script>
+												$().ready(funtion() {
+													alert('힘내용ㅎㅎ');
+													
+									//         		$.get('/code/질답게시판', function(response) {
+									//         			for (let i = 0; i < response.length; i++) {
+									//         				let template = `
+									//         					<tr>
+									//         				    	<td>${qnaboard.generalPostId}</td>
+									//         				    		<td>
+									//         				      			<a href="/qnaboard/view/${qnaboard.generalPostId}">
+									//         				        			${qnaboard.postTitle}
+									//         				      			</a>
+									//         				    		</td>
+									//         				    	<td>${qnaboard.postWriter}</td>
+									//         				    	<td>${qnaboard.postDate}</td>
+									//         				    	<td>${qnaboard.viewCnt}</td>
+									//         				  	</tr>
+									//         				`
+									//         			}
+									//         		})
+												})
+											</script>
+											<script>
+												// 미완성된 기능을 알려주는 모달창
+												$('.incomplete').click(function() {
+													$('.modal, .overlay').addClass('modal_active')
+												})
+												$('.overlay').click(function() {
+													$('.modal, .overlay').removeClass('modal_active')
+												})	
+										
+												// 스크롤 버튼, IDE
+												let calcScrollValue = () => {
+												let scrollProgress = document.getElementById('progress')
+												let progressValue = document.getElementById('progress-value')
+												let pos = document.documentElement.scrollTop
+												let calcHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight
+												let scrollValue = Math.round((pos * 100) / calcHeight)
+										
+												scrollProgress.addEventListener('click', () => {
+													document.documentElement.scrollTop = 0
+												})
+												}
+												
+												window.onscroll = calcScrollValue
+										
+												// 서브 리스트가 있다면? 아래로 떨군다.
+												$('.visible').hide()
+												$('.list_company').mouseover(function() {
+													$('.visible').show()
+													$(this).find('a').css({'background-color': 'var(--blue)',
+																		'color': 'white',
+																		'box-shadow': '0 0 5px var(--gray)'})
+												})
+												$('.list_company').mouseleave(function() {
+													$('.visible').hide()
+													$(this).find('a').css({'background-color': 'white',
+																		'color': 'var(--blue)',
+																		'box-shadow': 'none'})
+												})
+													 
+											</script>
 </html>

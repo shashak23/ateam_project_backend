@@ -54,13 +54,13 @@
 	<jsp:include page="../member/membermenu.jsp"></jsp:include>
 
 	<h1> 질답게시판의 작성 페이지</h1>
-	<form name="companyRecruitVO" method = "post">		
+	<form name="generalPostVO" method = "post">		
 		<div id="write-page">
 			<label for = "postTitle"> 제목 </label>
 			<input id = "postTitle" type = "text" name="postTitle" 
-					value="${companyRecruitVO.postTitle}"/>
+					value="${generalPostVO.postTitle}"/>
 			<p><label for = "postContent"> 내용 </label>
-			 <textarea name="postContent" id="editor">${companyRecruitVO.postContent}</textarea>
+			 <textarea name="postContent" id="editor">${generalPostVO.postContent}</textarea>
 		        <script>
 		          ClassicEditor.create( document.querySelector( '#editor' ), {
 		                  language: "ko"

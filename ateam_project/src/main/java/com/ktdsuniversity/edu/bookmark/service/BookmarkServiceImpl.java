@@ -39,8 +39,8 @@ public class BookmarkServiceImpl implements BookmarkService {
 	
 	@Transactional
 	@Override
-	public boolean deleteBookmark(String bookmarkId) {
-		return bookmarkDAO.deleteBookmark(bookmarkId) > 0;
+	public boolean deleteBookmark(BookmarkSearchVO bookmarkSearchVO) {
+		return bookmarkDAO.deleteBookmark(bookmarkSearchVO) > 0;
 	}
 	
 	@Transactional

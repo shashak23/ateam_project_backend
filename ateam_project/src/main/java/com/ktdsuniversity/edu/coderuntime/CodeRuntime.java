@@ -192,7 +192,6 @@ public class CodeRuntime {
 	
 	private synchronized void doCompile(File file) {
 		
-		System.out.println("compile: " + "javac -parameters --class-path " + file.getParentFile().getParentFile().getAbsolutePath() + "/gson-2.10.1.jar;" + file.getParentFile().getAbsolutePath() + " " + file.getAbsolutePath());
 		
 		ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "javac -parameters --class-path " + file.getParentFile().getParentFile().getAbsolutePath() + "/gson-2.10.1.jar;" + file.getParentFile().getAbsolutePath() + " " + file.getAbsolutePath());
 		Process process = null;
@@ -232,7 +231,6 @@ public class CodeRuntime {
 			command += " \"" + paramJson + "\"";
 		}
 		
-		System.out.println("Run: " + command);
 		
 		ProcessBuilder pb = new ProcessBuilder("cmd", "/c", command);
 		Process process = null;

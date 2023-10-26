@@ -118,9 +118,18 @@ public class HomeController {
 		if (companyMemberList != null) {
 			companyMemberList = companyMemberList.stream().filter(member -> member.getMemberType().equals("COMPANY")).collect(Collectors.toList());
 		}
+		List<GeneralPostVO> qnaPostList = generalPostListVO.getGeneralPostList();
+		if (qnaPostList != null) {
+			qnaPostList = qnaPostList.stream().filter(boardId -> boardId.getBoardId().equals("CC-20231017-000030")).collect(Collectors.toList());
+		}
+		List<GeneralPostVO> freePostList = generalPostListVO.getGeneralPostList();
+		if (freePostList != null) {
+			freePostList = freePostList.stream().filter(boardId -> boardId.getBoardId().equals("CC-20231017-000029")).collect(Collectors.toList());
+		}
 		model.addAttribute("generalMemberList", generalMemberList);
 		model.addAttribute("companyMemberList", companyMemberList);
-		model.addAttribute("generalPostList", generalPostListVO);
+		model.addAttribute("qnaPostList", qnaPostList);
+		model.addAttribute("freePostList", freePostList);
 		model.addAttribute("algorithmQuestionList", algorithmQuestionListVO);
 		model.addAttribute("algorithmExplanationList", algorithmExplanationListVO);
 		model.addAttribute("companyNewsList", companyNewsListVO);
