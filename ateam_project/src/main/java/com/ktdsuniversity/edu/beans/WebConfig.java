@@ -46,7 +46,8 @@ public class WebConfig implements WebMvcConfigurer {
 		List<String> checkSessionExcludePatterns = new ArrayList<>();
 		checkSessionExcludePatterns.add("/member/signup/**");
 		checkSessionExcludePatterns.add("/member/auth");
-		checkSessionExcludePatterns.add("/freeboard/list");
+		checkSessionExcludePatterns.add("/freeboard/list/**");
+		checkSessionExcludePatterns.add("/qnaboard/list/**");
 		checkSessionExcludePatterns.add("/home/main");
 		checkSessionExcludePatterns.add("/home/home");
 		checkSessionExcludePatterns.add("/keyword/**");
@@ -58,7 +59,6 @@ public class WebConfig implements WebMvcConfigurer {
 		checkSessionExcludePatterns.add("/error");
 		checkSessionExcludePatterns.add("/algorithm/**");
 		checkSessionExcludePatterns.add("/member/**");
-		checkSessionExcludePatterns.add("/qnaboard/list");
 		checkSessionExcludePatterns.add("/code/**");
 		checkSessionExcludePatterns.add("/recruit/list");
 
