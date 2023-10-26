@@ -29,12 +29,13 @@ import com.ktdsuniversity.edu.beans.websocket.WebSocketHandler;
 @EnableWebMvc
 @EnableWebSocket
 public class WebConfig implements WebMvcConfigurer, WebSocketConfigurer  {
-    
-    /**
-     * 채팅 핸들러
-     */
-    @Autowired
-    private WebSocketHandler handler;
+	
+	/**
+	 * 채팅 핸들러
+	 */
+	@Autowired
+	private WebSocketHandler handler;
+
 	
 	@Override
 	public void configureViewResolvers(ViewResolverRegistry registry) {
@@ -55,26 +56,26 @@ public class WebConfig implements WebMvcConfigurer, WebSocketConfigurer  {
 		//세션 체크를 하지 않을URL을 적어주세요.
 		
 
-		List<String> checkSessionExcludePatterns = new ArrayList<>();
-		checkSessionExcludePatterns.add("/member/signup/**");
-		checkSessionExcludePatterns.add("/member/auth");
-		checkSessionExcludePatterns.add("/freeboard/list/**");
-		checkSessionExcludePatterns.add("/freeboard/view/**");
-		checkSessionExcludePatterns.add("/qnaboard/list/**");
-		checkSessionExcludePatterns.add("/qnaboard/view/**");
-		checkSessionExcludePatterns.add("/home/main");
-		checkSessionExcludePatterns.add("/home/home");
-		checkSessionExcludePatterns.add("/keyword/**");
-		checkSessionExcludePatterns.add("/home/**");
-		checkSessionExcludePatterns.add("/js/**");
-		checkSessionExcludePatterns.add("/css/**");
-		checkSessionExcludePatterns.add("/img/**");
-		checkSessionExcludePatterns.add("/news/**");
-		checkSessionExcludePatterns.add("/error");
-		checkSessionExcludePatterns.add("/algorithm/**");
-		checkSessionExcludePatterns.add("/member/**");
-		checkSessionExcludePatterns.add("/code/**");
-		checkSessionExcludePatterns.add("/recruit/list");
+	      List<String> checkSessionExcludePatterns = new ArrayList<>();
+	      checkSessionExcludePatterns.add("/member/signup/**");
+	      checkSessionExcludePatterns.add("/member/auth");
+	      checkSessionExcludePatterns.add("/freeboard/list/**");
+	      checkSessionExcludePatterns.add("/freeboard/view/**");
+	      checkSessionExcludePatterns.add("/qnaboard/list/**");
+	      checkSessionExcludePatterns.add("/qnaboard/view/**");
+	      checkSessionExcludePatterns.add("/home/main");
+	      checkSessionExcludePatterns.add("/home/home");
+	      checkSessionExcludePatterns.add("/keyword/**");
+	      checkSessionExcludePatterns.add("/home/**");
+	      checkSessionExcludePatterns.add("/js/**");
+	      checkSessionExcludePatterns.add("/css/**");
+	      checkSessionExcludePatterns.add("/img/**");
+	      checkSessionExcludePatterns.add("/news/**");
+	      checkSessionExcludePatterns.add("/error");
+	      checkSessionExcludePatterns.add("/algorithm/**");
+	      checkSessionExcludePatterns.add("/member/**");
+	      checkSessionExcludePatterns.add("/code/**");
+	      checkSessionExcludePatterns.add("/recruit/list");
 
 		
 		registry.addInterceptor(new CheckSessionInterceptor())
@@ -94,15 +95,14 @@ public class WebConfig implements WebMvcConfigurer, WebSocketConfigurer  {
 		filterRegistration.addUrlPatterns("/*");
 		return filterRegistration;
 	}
-
-    /**
-     * 웹소켓 엔드포인트 생성.
-     */
-    @Override
-    public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
-        registry.addHandler(handler, "/chat").setAllowedOriginPatterns("*").withSockJS();
-    }
-
+	
+	/**
+	 * 웹소켓 엔드포인트 생성.
+	 */
+	@Override
+	public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
+		registry.addHandler(handler, "/chat").setAllowedOriginPatterns("*").withSockJS();
+	}
 
 	
 }
