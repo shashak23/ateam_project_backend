@@ -9,6 +9,7 @@
          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
         <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet"> 
          <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" /> 
+         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
          <script src="/js/lib/jquery-3.7.1.js"></script> 
          <link rel="stylesheet" href="/css/style.css"> 
         <jsp:include page="../layout/header.jsp"/>
@@ -91,7 +92,7 @@
 
             #page > a.active_page {
                 border: 1px solid var(--red);
-                color: var(--red);
+                color: black;
                 font-weight: bold;
             }
 
@@ -104,7 +105,7 @@
                 background-color: var(--light-gray);
                
                 border-bottom: 1px solid var(--dark-gray);
-                color: var(--dark-gray);
+                
                 
      
             }
@@ -113,13 +114,15 @@
                 width: 50px;
                 height: 35px;
                 
+                
+                
                
                 
              }
              .pratice_01,.pratice_02,.pratice_03,.pratice_04 {
                 border-bottom: 1px solid var(--gray);
                 text-align: center;
-                color: var(--blue);
+                color: var(--dark-gray);
            
             
                 
@@ -133,11 +136,13 @@
              }
              .text_controller {
                 position: relative;
-                bottom: 20px;
+                bottom: 100px;
+                
                 
                
                 
              }
+
              
              
              
@@ -214,13 +219,17 @@
                                                 <td><!--자유게시판의 내용을 가져와 반복하는 태그 -->
                                                 <div class="pratice">
                                                 <a class="text_controller" href="/freeboard/view/${freeboard.generalPostId}">
-                                                        ${freeboard.postTitle}
+                                                        <!-- ${freeboard.postTitle} -->
+                                                    <span class="comment_count">[댓글갯수]</span>
+                                                    
                                                 </a>
                                                 </div>
                                                 </td>
                                                 <td class="pratice_02">${freeboard.postWriter}</td>
                                                 <td class="pratice_03">${freeboard.postDate}</td>
-                                                <td class="pratice_04">${freeboard.viewCnt}</td>
+                                                <td class="pratice_04">${freeboard.viewCnt} 
+                                                
+                                                </td>
                                                 
                                             </tr>
                                             
@@ -264,6 +273,34 @@
     <jsp:include page="../layout/footer.jsp" />
 </body>
     <script>
+        
+        document.addEventListener('DOMContentLoaded', function() {
+    const viewCountElement = document.getElementById('viewCount');
+    
+    const postId = freeboard.generalPostId; // 게시물의 고유 ID (예시로 대입)
+
+    // 서버로부터 조회수 업데이트 정보를 가져옵니다.
+    function updateViewCount() {
+        fetch(`/updateViewCount?postId=${postId}`, {
+            method: 'GET'
+        })
+        .then(response => response.json())
+        .then(data => {
+            // 업데이트된 조회수를 가져와서 화면에 표시합니다.
+            viewCountElement.textContent = data.viewCount;
+        })
+        .catch(error => {
+            console.error('에러 발생:', error);
+        });
+    }
+
+    // 페이지 로딩 시 초기 조회수 업데이트를 수행합니다.
+    updateViewCount();
+
+    // 페이지 뷰 시 매번 업데이트하는 대신, 필요한 이벤트(예: 게시물 뷰)에서 호출하세요.
+    // updateViewCount();
+});
+        
         // 미완성된 기능을 알려주는 모달창
         $('.incomplete').click(function() {
             $('.modal, .overlay').addClass('modal_active')
@@ -301,6 +338,7 @@
                                 'color': 'var(--blue)',
                                 'box-shadow': 'none'})
         })
+        
              
     </script>
 </html>
