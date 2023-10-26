@@ -1,39 +1,41 @@
 /**
  * 
  */
-function Table(id, cols, titles) {
+function Table(id) {
 	this.id = id;
-	this.cols = cols;
-	this.titles = titles;
 }
 
 Table.prototype.view = function(jQuery, appendTo) {
 	let tableHtml = ""
-	tableHtml += `<table id="${this.id}">`
+	tableHtml += `<table id="${this.id}" class="code-grid">`
 	tableHtml += `<thead>`
 	tableHtml += `<tr>`
-	for (let i = 0; i < this.titles.length; i++) {
-		tableHtml += `<th>${this.titles[i]}</th>`
-	}
+	tableHtml += `<th><input type="text" class="title" data-index="0" /></th>`
 	tableHtml += `<th class="result">result</th>`
 	tableHtml += `</tr>`
 	tableHtml += `</thead>`
 	tableHtml += `<tbody>`
 	tableHtml += `<tr>`
-	for (let c = 0; c < this.cols; c++) {
-		tableHtml += `<td><input type="text" name="${this.titles[c]}" /></td>`
-	}
+	tableHtml += `<td><input type="text" class="value" data-index="0" /></td>`
 	tableHtml += `<td class="result"><input type="text" name="result" /></td>`
 	tableHtml += `</tr>`
 	tableHtml += `</tbody>`
 	tableHtml += `</table>`
-	jQuery(appendTo).append(jQuery(tableHtml))
+	var table = jQuery(tableHtml);
+	table.find("input.title").keyup(function() {
+		var index = jQuery(this).data("index")
+		var name = jQuery(this).val()
+		
+		jQuery(`input.value[data-index=${index}]`).attr("name", name)
+	})
+	jQuery(appendTo).append(table)
 }
 
 Table.prototype.addRow = function(jQuery, tableElement) {
+	let cols = jQuery(tableElement).find(".title").length
 	let tableHtml = `<tr>`
-	for (let c = 0; c < this.cols; c++) {
-		tableHtml += `<td><input type="text" name="${this.titles[c]}" /></td>`
+	for (let c = 0; c < cols; c++) {
+		tableHtml += `<td><input type="text" class="value" data-index="${c}" name="${jQuery(tableElement).find("thead").find("input.title").eq(c).val()}" /></td>`
 	}
 	tableHtml += `<td class="result"><input type="text" name="result" /></td>`
 	tableHtml += `</tr>`
@@ -41,12 +43,11 @@ Table.prototype.addRow = function(jQuery, tableElement) {
 	jQuery(tableElement).append(jQuery(tableHtml))
 }
 
-Table.prototype.addColumn = function(jQuery, tableElement, title) {
-	this.titles.push(title)
-	this.cols += 1
-
-	let newTitle = `<th>${title}</th>`
-	let column = `<td><input type="text" name="${title}" /></td>`
+Table.prototype.addColumn = function(jQuery, tableElement) {
+	let nextIndex = jQuery(tableElement).find(".title").length;
+	console.log(nextIndex);
+	let newTitle = `<th><input type="text" class="title" data-index="${nextIndex}" /></th>`
+	let column = `<td><input type="text" class="value" data-index="${nextIndex}"/></td>`
 	
 	jQuery(tableElement).find("thead").find("tr").each(function() {
 		console.log(jQuery(this))
@@ -56,6 +57,11 @@ Table.prototype.addColumn = function(jQuery, tableElement, title) {
 	
 	jQuery(tableElement).find("tbody").find("tr").each(function() {
 		jQuery(this).find(".result").before( jQuery(column) )
+	})
+	
+	jQuery(tableElement).find(`input.title[data-index=${nextIndex}]`).keyup(function() {
+		var name = jQuery(this).val()
+		jQuery(`input.value[data-index=${nextIndex}]`).attr("name", name)
 	})
 	
 }
@@ -115,6 +121,5 @@ Table.prototype.toJson = function(jQuery, tableElement) {
 		}
 		return arr
 	}
-
 	return json;
 }

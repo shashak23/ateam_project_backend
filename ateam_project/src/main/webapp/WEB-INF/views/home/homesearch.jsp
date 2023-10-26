@@ -84,20 +84,18 @@
 			</thead>
 			<tbody>
 			<c:choose>
-				<c:when test="${not empty generalPostList.generalPostList}">
-					<c:forEach items="${generalPostList.generalPostList}" var="qnaboard">
-						<c:if test="${qnaboard.boardId eq 'CC-20231017-000030'}">
-							<tr>
-								<td style="font-weight: bold;">
-									<a href="/qnaboard/view/${qnaboard.generalPostId}">
-										<c:out value="${qnaboard.postTitle}" />
-									</a>
-								</td>
-								<td>${qnaboard.memberVO.nickname}</td>
-								<td>${qnaboard.postDate}</td>
-								<td>${qnaboard.viewCnt}</td>
-							</tr>
-						</c:if>
+				<c:when test="${not empty qnaPostList}">
+					<c:forEach items="${qnaPostList}" var="qnaboard">
+						<tr>
+							<td style="font-weight: bold;">
+								<a href="/qnaboard/view/${qnaboard.generalPostId}">
+									<c:out value="${qnaboard.postTitle}" />
+								</a>
+							</td>
+							<td>${qnaboard.memberVO.nickname}</td>
+							<td>${qnaboard.postDate}</td>
+							<td>${qnaboard.viewCnt}</td>
+						</tr>
 					</c:forEach>
 				</c:when>
 				<c:otherwise>
@@ -128,20 +126,18 @@
 			</thead>
 			<tbody>
 			<c:choose>
-				<c:when test="${not empty generalPostList.generalPostList}">
-					<c:forEach items="${generalPostList.generalPostList}" var="freeboard">
-						<c:if test="${freeboard.boardId eq 'CC-20231017-000030'}">
-							<tr>
-								<td style="font-weight: bold;">
-									<a href="/freeboard/view/${freeboard.generalPostId}">
-										<c:out value="${freeboard.postTitle}" />
-									</a>
-								</td>
-								<td>${freeboard.memberVO.nickname}</td>
-								<td>${freeboard.postDate}</td>
-								<td>${freeboard.viewCnt}</td>
-							</tr>
-						</c:if>
+				<c:when test="${not empty freePostList}">
+					<c:forEach items="${freePostList}" var="freeboard">
+						<tr>
+							<td style="font-weight: bold;">
+								<a href="/freeboard/view/${freeboard.generalPostId}">
+									<c:out value="${freeboard.postTitle}" />
+								</a>
+							</td>
+							<td>${freeboard.memberVO.nickname}</td>
+							<td>${freeboard.postDate}</td>
+							<td>${freeboard.viewCnt}</td>
+						</tr>
 					</c:forEach>
 				</c:when>
 				<c:otherwise>
