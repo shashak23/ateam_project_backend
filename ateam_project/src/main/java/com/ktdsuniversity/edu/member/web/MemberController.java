@@ -76,7 +76,7 @@ public class MemberController {
 
 	@PostMapping("/member/auth")
 	public String doSignIn(@Validated(MemberAuthGroup.class) @ModelAttribute MemberVO memberVO,
-			BindingResult bindingResult, @RequestParam(required = false, defaultValue = "/home/main") String next,
+			BindingResult bindingResult, @RequestParam(required = false, defaultValue = "/home/home") String next,
 			HttpSession session, Model model) {
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("memberVO", memberVO);
@@ -94,7 +94,7 @@ public class MemberController {
 	@GetMapping("/member/logout")
 	public String doLogout(HttpSession session) {
 		session.invalidate();
-		return "redirect:/home/main";
+		return "redirect:/home/home";
 	}
 
 	/**
@@ -104,7 +104,7 @@ public class MemberController {
 	public String doWithdraw(HttpSession session, @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 		session.invalidate();
 		memberService.withdrawMember(memberVO);
-		return "redirect:/home/main";
+		return "redirect:/home/home";
 	}
 
 	/**

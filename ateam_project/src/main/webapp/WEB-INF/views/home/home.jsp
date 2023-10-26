@@ -196,16 +196,17 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
+    display: -webkit-box;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+		-webkit-line-clamp: 3;
 	}
 
 	.body_left .content_container .q_content p {
 		margin-bottom: 20px;
 		font-size: var(--font-small);
 		color: var(--dark);
-		display: -webkit-box;
-		-webkit-box-orient: vertical;
-		overflow: hidden;
-		-webkit-line-clamp: 3;
+
 	}
 
 	.body_left .content_container .q_content ul {

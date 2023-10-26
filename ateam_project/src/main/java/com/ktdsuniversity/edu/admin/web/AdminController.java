@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ktdsuniversity.edu.admin.service.ReportService;
 import com.ktdsuniversity.edu.admin.service.MailService;
+import com.ktdsuniversity.edu.admin.service.ReportService;
 import com.ktdsuniversity.edu.admin.vo.ReportListVO;
 
 @Controller

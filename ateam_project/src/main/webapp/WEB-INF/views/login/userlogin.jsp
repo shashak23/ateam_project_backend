@@ -1,3 +1,7 @@
+<!-- 작성자: 김태현
+	 작성일: 2023-10-26
+	 내용: 로그인 화면을 표시하는 파일입니다. -->
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -90,12 +94,13 @@
     align-items: center;
   }
 
-  .input_container label:first-child {
+  .input_container .label {
     display: inline-block;
-    width: 50px;
+    width: 75px;
   }
 
-  .input_container input[type="text"] {
+  .input_container input[type="text"],
+  .input_container input[type="password"] {
     outline: none;
     border: 0;
     height: 30px;
@@ -104,11 +109,11 @@
   }
 
   .input_container > .remember_id {
-    margin: 0 0 5px 165px;
+    margin: 0 0 5px 190px;
   }
 
   .input_container > .login_btn {
-    margin-left: 210px;
+    margin-left: 240px;
     margin-bottom: 5px;
   }
 
@@ -230,44 +235,55 @@
         <button id="personal_btn" class="personal_tab active">개인</button>
         <button id="company_btn" class="personal_tab ">기업</button>
     </div>
-    <form:form modelAttribute="memberVO" method="post" action="/member/auth">
-        <div class="input_container">
-            <div class="id_container">
-              <label for="email">ID</label>
-              <input type="text" name="email" id="email" />
-            </div>
-            <div class="pw_container">
-              <label for="member_pw">PW</label>
-              <input type="text" name="member_pw" id="member_pw" />
-            </div>
-            <div class="remember_id">
-              <input type="checkbox"id="id_save"/><label for="id_save">아이디 저장</label> 
-            </div>
-            <div class="login_btn">
-              <input type="submit" value="로그인" />
-            </div>
-            <div class="line_container">
-              <div class="line"></div>
-              <div class="textinline">또는</div>
-              <div class="line"></div>
-            </div>
-            <div class="button_container tab_content" id="tab1">
-              <button>카카오톡</button>
-              <button>네이버</button>
-              <button>구글</button>
-            </div>
-            <div class="message tab_content" id="tab2">
-              기업회원으로 가입하시면 다양한 혜택을 이용하실 수 있습니다.
-            </div>
-            <div class="signup_container">
-              <div>아직 회원이 아니신가요?</div>
-              <a href="#">가입하기</a>
-            </div>
-            <div class="notice_container">
-              <a href="#" class="link_to_voc">고객센터</a>
-              <span><a href="#" class="link_to_pw">비밀번호</a>를 잊으셨나요?</span>
-            </div>
+    <form:form class="login_form" modelAttribute="memberVO" method="post" action="/member/auth">
+      <div>
+        <form:errors path="email" element="div" cssClass="errors"/>
+        <form:errors path="pw" element="div" cssClass="errors"/>
+        <c:if test="${not empty message}">
+          <div class="errors">
+            ${message}
+          </div>
+        </c:if> 
+      </div>
+
+      <div class="input_container">
+        <div class="id_container">
+          <input type="hidden" name ="next" value="${next}" />
+          <label for="email" class="label">이메일</label>
+          <input type="text" name="email" id="email" />
         </div>
+        <div class="pw_container">
+          <label for="password" class="label">비밀번호</label>
+          <input type="password" name="pw" id="pw" />
+        </div>
+        <div class="remember_id">
+          <input type="checkbox"id="id_save"/><label for="id_save">아이디 저장</label> 
+        </div>
+        <div class="login_btn">
+          <input type="submit" value="로그인" />
+        </div>
+        <div class="line_container">
+          <div class="line"></div>
+          <div class="textinline">또는</div>
+          <div class="line"></div>
+        </div>
+        <div class="button_container tab_content" id="tab1">
+          <button>카카오톡</button>
+          <button>네이버</button>
+          <button>구글</button>
+        </div>
+        <div class="message tab_content" id="tab2">
+          기업회원으로 가입하시면 다양한 혜택을 이용하실 수 있습니다.
+        </div>
+        <div class="signup_container">
+          <div>아직 회원이 아니신가요?</div>
+          <a href="/devground/signup">가입하기</a>
+        </div>
+        <div class="notice_container">
+          <a href="#" class="link_to_voc">고객센터</a>
+          <span><a href="#" class="link_to_pw">비밀번호</a>를 잊으셨나요?</span>
+        </div>
+      </div>
     </form:form>
   </section>
   <script>
@@ -286,22 +302,6 @@
       $('#tab2').css('display', 'block')
       $('#tab1').css('display', 'none')
     })
-
-    // function openTab(tabName) {
-    //   let i
-    //   let tabContent = document.getElementsByClassName('tab_content')
-    //   let personalBtn = document.getElementById('personal_btn')
-    //   let companyBtn = document.getElementById('company_btn')
-      
-    //   for (i = 0; i < tabContent.length; i++) {
-    //     tabContent[i].style.display = 'none'
-    //     tabContent[i].style.backgroundColor = 'var(--hashtag-blue)'
-    //     console.log(tabName)
-    //   }
-    //   document.getElementById(tabName).style.display = 'block'
-    //   document.getElementById(tabName).style.backgroundColor = 'var(--hashtag-blue)'
-    // }
-    // openTab('tab1')
   </script>
 </body>
 </html>
