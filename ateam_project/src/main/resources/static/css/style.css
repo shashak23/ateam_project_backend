@@ -295,5 +295,18 @@
 	 opacity: 0.3;
 	 pointer-events: all;
  }
-
+.modals{
+	width: 498px;
+    position: fixed;
+    top: 50%;
+    left: 67%;
+    transform: translate(-50%, -50%);
+    background-color: whitesmoke;
+    font-weight: bold;
+    box-shadow: 0 0 5px;
+    transition: 0.5s;
+    visibility: hidden;
+    cursor: default;
+	height: 600px;
+}
  

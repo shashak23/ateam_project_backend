@@ -12,34 +12,32 @@
 <!--뷰포트는 화면에 표시되는 웹영역 표시, 모바일 등에서 상호작용 할 수있는지 제어-->
 <meta name="viewport" id="viewport"
 	content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, width=device-width" />
-<link rel="stylesheet" type="text/css" href="/css/myProfile.css" />
-
 <!--스타일,폰트 지정-->
 <!--스와이퍼 기능 지정-->
 <!--스타일 입히기-->
-
+<link rel="stylesheet" type="text/css" href="/css/myProfile.css" />
 <!-- 자바스크립트 시작 -->
 <jsp:include page="../layout/header.jsp" />
 <script type="text/javascript">
-	//신고버튼
+//신고버튼
 	$().ready(function() {
 	    // "신고" 버튼 클릭 시 모달 열기
 	    $(".report-btn").click(function() {
-	    	let reportType = $("#reportUser").val()
-		    console.log(reportType);
+	       let reportType = $("#reportUser").val()
+	       console.log(reportType);
 	        $("#report-modal").css({
-	        	"visibility": "visible",
-	        	"opacity": "1"
+	           "visibility": "visible",
+	           "opacity": "1"
 	        });
 	    
-	    	// 모달 내부 "취소" 버튼 클릭 시 모달 닫기
-	    	$(".close").click(function() {
-	    		/* console.log("!") */
-	    	 	$("#report-modal").css({
-		        	"visibility": "hidden",
-		        	"opacity": "0"
-		        });
-	   		});
+	       // 모달 내부 "취소" 버튼 클릭 시 모달 닫기
+	       $(".close").click(function() {
+	          /* console.log("!") */
+	           $("#report-modal").css({
+	              "visibility": "hidden",
+	              "opacity": "0"
+	           });
+	         });
 	    });
 	    function redirectToURL(url) {
 	        window.location.href = url;
@@ -96,26 +94,34 @@
 					<!-- <button class="follow_icon">
 						<img src="https://cdn-icons-png.flaticon.com/512/907/907873.png">
 						팔로우
-					</button> 일단 보류 -->
-					<button id="reportUser" value="5" class="report-btn">신고</button>
-						<!-- 모달 창 -->
-							<div id="report-modal" class="report-modal">
-							    <div class="report-modal-content">
-							        <span class="close" id="cancel-modal">취소</span>
-							        	<!-- 모달 내용 추가 -->
-										<h2>신고 내용</h2>
-										<form name="reportVO" method="post" action="/report/view/5">
-											<div>
-												<label for="reportReason" >신고사유${reportVO.reportReason}
-													<select name="reportReason">
-														<option value="6">영리 및 홍보 목적</option>
-														<option value="7">개인정보노출</option>
-														<option value="8">음란성/선정성</option>
-														<option value="9">같은 내용 반복(도배)</option>
-														<option value="10">이용규칙위반</option>
-														<option value="11">기타</option>
-													</select>
-												</label>
+					 </button> 일단 보류 -->
+               <c:choose>
+                   <c:when test="${not empty emptysessionScope._LOGIN_USER_.email eq memberVO.email}">
+                       <!-- a유저가 로그인한 경우에만 신고 버튼을 표시합니다. -->
+                       <form action="/reportUser" method="post">
+                           <input type="hidden" id="reportUser" value="${empty sessionScope._LOGIN_USER}">
+                           <button type="submit" class="report-btn" value="5">신고</button>
+                       </form>
+                   </c:when>
+                   <c:otherwise>
+                       <!-- a유저가 로그인하지 않은 경우에는 신고 버튼을 표시하지 않습니다. -->
+                   </c:otherwise>
+               </c:choose>
+               <button id="reportUser" value="5" class="report-btn">신고</button>
+                  <!-- 모달 창 -->
+                              <h2>신고 내용</h2>
+                              <form name="reportVO" method="post" action="/report/view/5">
+                                 <div>
+                                    <label for="reportReason" >신고사유${reportVO.reportReason}
+                                       <select name="reportReason">
+                                          <option value="6">영리 및 홍보 목적</option>
+                                          <option value="7">개인정보노출</option>
+                                          <option value="8">음란성/선정성</option>
+                                          <option value="9">같은 내용 반복(도배)</option>
+                                          <option value="10">이용규칙위반</option>
+                                          <option value="11">기타</option>
+                                       </select>
+                                    </label>
 									
 												<label for = "reportReasonContent">신고 상세내용
 												<textarea name="reportReasonContent" id="reportReasonContent">${reportVO.reportReasonContent}</textarea></label>

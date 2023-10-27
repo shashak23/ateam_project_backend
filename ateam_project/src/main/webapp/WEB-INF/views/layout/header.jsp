@@ -49,8 +49,9 @@
                     message = message.replaceAll("↵", "<br/>").replaceAll("\n", "<br/>");
                     var isMe = receiveMessage.sendToMe == true;
                     if (!isMe) {
-                        message = '<div style="width:50px; margin-right: 3px;">' + receiveMessage.userName + '</div>' + message;
-                    }
+                    	   message = '<div style="width:50px; margin-right: 3px;">' + receiveMessage.userName + '</div>'+message ;
+                    }else{
+                        message = '<div style="text-align:right; margin-right: 3px;">' + receiveMessage.userName + message+'</div>' ;
                     chatBox.append('<div class=' + isMe + '>' + message + '</div>');
                     chatBox.scrollTop(99999999999999999999999);
                 }
