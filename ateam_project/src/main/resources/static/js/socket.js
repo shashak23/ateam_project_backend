@@ -2,25 +2,64 @@
  * 채팅 관련 JS 라이브러리
  */
 var sock = undefined
+var chatModal = undefined;
+
 function inviteUser(send, userName, userEmail, otherUserName) {
+	var roomName = Math.random() + "";
 	send({
-            roomName: Math.random() + "",
+            roomName: roomName,
             sendType: "invite",
             userName: userName,
             userEmail: userEmail,
             to: otherUserName,
             message: userName + "님이 대화에 초대했습니다. 대화에 응하시겠습니까?"
     })
+    
+    var modal = new Modal("모달 제목", '<input type="text" id="chatMessage"/><button id="sendBtn">보내기</button></div><div class="chat-box">', false);
+    if (chatModal) {
+		modal.close($);
+		chatModal = undefined;
+	}
+    
+    chatModal = modal.show($, "body");
+    chatModal.find("#sendBtn").click(function() {
+    	send({
+    		"roomName": roomName,
+    		"sendType": "all",
+    		"userName": userName,
+    		"userEmail": email,
+    		"message": chatModal.find("#chatMessage").val()
+    	})
+    })
 };
 
 function enterRoom(send, userName, userEmail, roomName) {
+	var modal = new Modal("모달 제목", '<input type="text" id="chatMessage"/><button id="sendBtn">보내기</button></div><div class="chat-box">', false);
+    
+    if (chatModal) {
+		modal.close($);
+		chatModal = undefined;
+	}
+    
+    chatModal = modal.show($, "body");
+    chatModal.find("#sendBtn").click(function() {
+    	send({
+    		"roomName": roomName,
+    		"sendType": "all",
+    		"userName": userName,
+    		"userEmail": email,
+    		"message": chatModal.find("#chatMessage").val()
+    	})
+    })
+    
+    
 	send({
-                roomName: roomName,
-                sendType: "enter",
-                userName: userName,
-                userEmail: userEmail,
-                message: userName + "님이 대화에 참여했습니다."
-        })
+            roomName: roomName,
+            sendType: "enter",
+            userName: userName,
+            userEmail: userEmail,
+            message: userName + "님이 대화에 참여했습니다."
+    })
 }
 
 function connectSocket(userName, userEmail, receiveCallback) {

@@ -319,8 +319,8 @@ pre.content {
 		        	method: "POST",
 		        	url: "/qnaboard/like",
 		        	data: { 
-		        		"generalPostId": "${generalPostVO.generalPostId}",
-		        		"likeCnt": ${generalPostVO.likeCnt}
+		        		generalPostId: "${generalPostVO.generalPostId}",
+		        		likeCnt: ${generalPostVO.likeCnt}
 		        	},
 		        	success: function(response) {
 		        		/* $("likeModal").hide(); */
@@ -402,7 +402,7 @@ pre.content {
 			<div>${generalPostVO.postTitle}</div>
 
 			<label for="postWriter">이메일</label>
-			<div>${generalPostVO.postWriter} ${sessionScope._LOGIN_USER_.email }</div>
+			<div>${generalPostVO.postWriter}</div>
 
 			<label for="viewCnt">조회수</label>
 			<div>${generalPostVO.viewCnt}</div>

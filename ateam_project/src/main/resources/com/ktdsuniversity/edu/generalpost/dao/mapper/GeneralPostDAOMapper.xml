@@ -13,6 +13,7 @@
 	                 javaType="com.ktdsuniversity.edu.member.vo.MemberVO"
 			         autoMapping="true">
 			         <id column="EMAIL" property="email" />
+			         <id column="NICKNAME" property="nickname" />
 	    </association>
 	</resultMap>
 	
@@ -25,7 +26,7 @@
 	</select>
 	
 	<update id="increaseViewCount"
-			parameterType="_int">
+			parameterType="string">
 		UPDATE GENERAL_POST
 		   SET VIEW_CNT = VIEW_CNT + 1
 		 WHERE GENERAL_POST_ID = #{_parameter}
@@ -58,7 +59,7 @@
 	
 	<select id="getOneFreeBoard"
 		parameterType="string"
-		resultType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
+		resultMap="GeneralPostDAOMap">
 		SELECT GP.GENERAL_POST_ID
 		     , GP.POST_WRITER
 		     , GP.BOARD_ID
@@ -76,7 +77,7 @@
 	</select>
 	
 	<select id="getAllFreeBoard"
-	resultType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
+	resultMap="GeneralPostDAOMap">
 		SELECT GP.GENERAL_POST_ID
 		     , GP.POST_WRITER
 		     , GP.BOARD_ID
@@ -111,7 +112,8 @@
 		 WHERE GENERAL_POST_ID = #{generalPostId}
 	</update>
 	
-	<update id="updateLikeFreePost">
+	<update id="updateLikeFreePost"
+	parameterType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
 		UPDATE GENERAL_POST
 		   SET LIKE_CNT = #{likeCnt} + 1
 		 WHERE GENERAL_POST_ID = #{generalPostId}
@@ -164,7 +166,7 @@
 	
 	<select id="getOneQnABoard"
 		parameterType="string"
-		resultType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
+		resultMap="GeneralPostDAOMap">
 		SELECT GP.GENERAL_POST_ID
 		     , GP.POST_WRITER
 		     , GP.BOARD_ID
@@ -197,7 +199,8 @@
 		 WHERE GENERAL_POST_ID = #{generalPostId}
 	</update>
 	
-	<update id="updateLikeQnAPost">
+	<update id="updateLikeQnAPost"
+	parameterType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
 		UPDATE GENERAL_POST
 		   SET LIKE_CNT = #{likeCnt} + 1
 		 WHERE GENERAL_POST_ID = #{generalPostId}

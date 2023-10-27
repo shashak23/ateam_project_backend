@@ -7,34 +7,49 @@
     <title>Buffer Overflow</title>
          <link rel="preconnect" href="https://fonts.googleapis.com"> 
          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
-         <link rel="stylesheet" href="/css/style.css"> 
-         <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet"> 
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet"> 
          <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" /> 
          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
          <script src="/js/lib/jquery-3.7.1.js"></script> 
-         <jsp:include page="../layout/header.jsp"/>
-         <style> 
-            /*전체적 레이아웃,제목 제어*/    
+         <link rel="stylesheet" href="/css/style.css"> 
+        <jsp:include page="../layout/header.jsp"/>
+        <style>
+            
+            table {
+            border-collapse: collapse;
+            }
             .bbs_title {
                 font-weight: bold;
                 font-size: 25px;
                 margin: 80px 100px 30px 430px;
+
             }
+
             .wrap {
                 display: flex;
                 justify-content: center;        
             }
+
             .container {
                 display: inline-block;
                 width: 980px;
-                margin: 0 auto;    
+                margin: 0 auto;
+            
+                
             }
-            /*버튼속성제어*/
             .button_list {
                 margin-bottom: 15px;
                 position: relative;
-                left: 1120px;    
+                left: 1120px;
+                
             }
+            .board_list_box {
+                border-top: 3px solid var(--hashtag-blue);
+                border-bottom:none;
+                border-left: none;
+                border-right: none;
+            }
+
             .btn_st_2,.btn_st_3 {
                 background-color: var(--hashtag-blue);
                 border-radius: 5px;
@@ -54,32 +69,21 @@
                 height: 30px;
                 margin-bottom: 50px;
             }
-            #button_list_1 tr th {
-                background-color: var(--light-gray);
-                
-                border-bottom: 1px solid var(--dark-gray);
-                color: var(--dark-gray);
-            }
-            .board_list_box {
-                border-top: 3px solid var(--hashtag-blue);
-                border-bottom:none;
-                border-left: none;
-                border-right: none;
-            }
-            /*pagenation 제어*/
-            #page {
-                text-align: center;
-            }
+
             
+            #page {
+            text-align: center;
+            }
+
             #page > a {
-                margin-top: 15px;
-                margin-bottom: 15px;
-                padding: 5px 10px 5px 10px;
-                display: inline-block;
-                border-radius: 4px;
-                background-color: #FFF;
-                color: #666;
-                text-decoration: none;
+            margin-top: 15px;
+            margin-bottom: 15px;
+            padding: 5px 10px 5px 10px;
+            display: inline-block;
+            border-radius: 4px;
+            background-color: #FFF;
+            color: #666;
+            text-decoration: none;
             }
 
             #page > a.active_page {
@@ -87,18 +91,26 @@
                 color: var(--red);
                 font-weight: bold;
             }
-            
-            /*게시판 제목및 테이블제어*/
-            table {
-                border-collapse: collapse;
+
+
+            .footer {
+                margin-top: 100px;
             }
+
+            #button_list_1 tr th {
+                background-color: var(--light-gray);
+               
+                border-bottom: 1px solid var(--dark-gray);
+                color: var(--dark-gray);
+                
+     
+            }
+            
             .table-header_01 {                        
                 width: 50px;
                 height: 35px;
-            }
-            /*게시판 내용 위치등 제어*/
-            
-            .pratice_01,.pratice_02,.pratice_03,.pratice_04 {
+             }
+             .pratice_01,.pratice_02,.pratice_03,.pratice_04 {
                 border-bottom: 1px solid var(--gray);
                 text-align: center;
                 color: var(--dark-gray);
@@ -128,56 +140,58 @@
                 <!-- <button type="submit" class="btn_st_3">
                     <a href="/freeboard/create">등록</a>
                 </button> -->
-        </div>
-        <div id="wrap" class="wrap">
-            <!-- 본문 -->
-            <section id="container" class="container">
-                <main class="contents">
+    </div>
+    <div id="wrap" class="wrap">
+        <!-- 본문 -->
+        <section id="container" class="container">
+            
+            <main class="contents">         
                     <!-- 게시판 리스트 -->
                     <form action="#" method="">
-                        <fieldset class="board_list_box">
+                        <fieldset class="board_list_box">   
                             <div class="board_list_ty1">
-                                <table>
+                                <table>                                  
                                     <colgroup>
-                                        <!-- 하나 이상의 열을 그룹화 하며 col을 사용하여 표의 열에 대해서 정의합니다. -->
+                                        <!-- 하나이상의 열을 그룹화 하며 col을 사용하여 표의 열에 대해서 정의합니다. -->
                                         <col width="10%"> <!-- 열의 넓이를 정의한다 -->
-                                        <col width="*"> <!-- 나머지 공간을 모두 차지함 -->
+                                        <col width="*"><!-- 나머지공간을 모두 차지함 -->      
                                         <col width="10%">
                                         <col width="15%">
                                         <col width="10%">
                                     </colgroup>
                                     <div class="button_color">
-                                        <thead id="button_list_1">
-                                            <tr>
-                                                <th scope="col" class="table-header_01">번호</th>
-                                                <th scope="col" class="table-header_02">제목</th>
-                                                <th scope="col" class="table-header_03">등록자</th>
-                                                <th scope="col" class="table-header_04">등록일</th>
-                                                <th scope="col" class="table-header_05">조회수</th>
-                                            </tr>
-                                        </thead>
+                                    <thead id="button_list_1">
+                                        <tr><!-- 하나의 셀이 col의 속성에대한 열의 속성의 헤더라는 뜻이다 -->                                 
+                                            <th scope="col" class="table-header_01">번호</th>
+                                            <th scope="col" class="table-header_02">제목</th>
+                                            <th scope="col" class="table-header_03">등록자</th>
+                                            <th scope="col" class="table-header_04">등록일</th>
+                                            <th scope="col" class="table-header_05">조회수</th>
+                                        </tr>
+                                    </thead>
                                     </div>
                                     <tbody>
-                                        <c:forEach items="${generalPostListVO.generalPostList}" var="freeboard">
-                                            <tr>
-                                                <td class="pratice_01">${freeboard.generalPostId}</td>
+                                        <c:forEach items="${generalPostListVO.generalPostList}" var="freeboard" varStatus="index">
+                                            <tr>                                                
+                                                <td class="pratice_01">${(index.index + 1) * (searchForumVO.pageNo + 1)}</td>
                                                 <td><!--자유게시판의 내용을 가져와 반복하는 태그 -->
-                                                    <div class="pratice">
-                                                        <a class="text_controller" href="/freeboard/view/${freeboard.generalPostId}">
-                                                            <!-- ${freeboard.postTitle} -->
-                                                            <span class="comment_count"></span>
-                                                            ${freeboard.postTitle}
-                                                        </a>
-                                                    </div>
+                                                <div class="pratice">
+                                                <a class="text_controller" href="/freeboard/view/${freeboard.generalPostId}">
+                                                        <!-- ${freeboard.postTitle} -->
+                                                    <span class="comment_count"></span>
+                                                        ${freeboard.postTitle}
+                                                </a>
+                                                </div>
                                                 </td>
-                                                <td class="pratice_02">${freeboard.postWriter}</td>
+                                                <td class="pratice_02">${freeboard.memberVO.nickname}</td>
                                                 <td class="pratice_03">${freeboard.postDate}</td>
                                                 <td class="pratice_04">${freeboard.viewCnt}</td>
                                             </tr>
+                                            
                                         </c:forEach>
                                     </tbody>
                                 </table>
-                            </div>
+                            </div>                       
                         </fieldset>
                         <div class="btn_write">
                             <button type="submit" class="btn_write_1">
@@ -196,79 +210,87 @@
                             <a href="#">다음</a>
                         </div>
                     </form>
-                </main>
-            </section>
-        </div>
-        <jsp:include page="../layout/footer.jsp" />
-    </body>
+    </div>        
+            </main>
+            <!-- <footer id="footer" class="footer">
+                <div class="inner">
+                    <address>
+                        <span>상호명 : SNAPCHAT</span>
+                        <span>개인정보책임관리자 : 홍길동</span>
+                        <span>주소 : kt ds</span>
+                        <span>사업자등록번호 : 313-34432</span>
+                    </address>
+                    <div class="copyright">
+                        &copy; 2023 by SNAPCHAT. All rights reserved
+                    </div>
+                </div>
+            </footer> -->
+    <jsp:include page="../layout/footer.jsp" />
+</body>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const viewCountElement = document.getElementById('viewCount');
+    const viewCountElement = document.getElementById('viewCount');
     
-            const postId = freeboard.generalPostId; // 게시물의 고유 ID (예시로 대입)
-    
-            // 서버로부터 조회수 업데이트 정보를 가져옵니다.
-            function updateViewCount() {
-                fetch(`/updateViewCount?postId=${postId}`, {
-                    method: 'GET'
-                })
-                    .then(response => response.json())
-                    .then(data => {
-                        // 업데이트된 조회수를 가져와서 화면에 표시합니다.
-                        viewCountElement.textContent = data.viewCount;
-                    })
-                    .catch(error => {
-                        console.error('에러 발생:', error);
-                    });
-            }
-    
-            // 페이지 로딩 시 초기 조회수 업데이트를 수행합니다.
-            updateViewCount();
-    
-            // 페이지 뷰 시 매번 업데이트하는 대신, 필요한 이벤트(예: 게시물 뷰)에서 호출하세요.
-            // updateViewCount();
+    const postId = freeboard.generalPostId; // 게시물의 고유 ID (예시로 대입)
+
+    // 서버로부터 조회수 업데이트 정보를 가져옵니다.
+    function updateViewCount() {
+        fetch(`/updateViewCount?postId=${postId}`, {
+            method: 'GET'
+        })
+        .then(response => response.json())
+        .then(data => {
+            // 업데이트된 조회수를 가져와서 화면에 표시합니다.
+            viewCountElement.textContent = data.viewCount;
+        })
+        .catch(error => {
+            console.error('에러 발생:', error);
         });
-    
+    }
+
+    // 페이지 로딩 시 초기 조회수 업데이트를 수행합니다.
+    updateViewCount();
+
+    // 페이지 뷰 시 매번 업데이트하는 대신, 필요한 이벤트(예: 게시물 뷰)에서 호출하세요.
+    // updateViewCount();
+});
+
         // 미완성된 기능을 알려주는 모달창
         $('.incomplete').click(function() {
             $('.modal, .overlay').addClass('modal_active')
         })
         $('.overlay').click(function() {
             $('.modal, .overlay').removeClass('modal_active')
-        })
-    
+        })   
+
         // 스크롤 버튼, IDE
         let calcScrollValue = () => {
-            let scrollProgress = document.getElementById('progress')
-            let progressValue = document.getElementById('progress-value')
-            let pos = document.documentElement.scrollTop
-            let calcHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight
-            let scrollValue = Math.round((pos * 100) / calcHeight)
-    
-            scrollProgress.addEventListener('click', () => {
-                document.documentElement.scrollTop = 0
-            })
+        let scrollProgress = document.getElementById('progress')
+        let progressValue = document.getElementById('progress-value')
+        let pos = document.documentElement.scrollTop
+        let calcHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight
+        let scrollValue = Math.round((pos * 100) / calcHeight)
+
+        scrollProgress.addEventListener('click', () => {
+            document.documentElement.scrollTop = 0
+        })
         }
-    
+        
         window.onscroll = calcScrollValue
-    
+
         // 서브 리스트가 있다면? 아래로 떨군다.
         $('.visible').hide()
         $('.list_company').mouseover(function() {
             $('.visible').show()
-            $(this).find('a').css({
-                'background-color': 'var(--blue)',
-                'color': 'white',
-                'box-shadow': '0 0 5px var(--gray)'
-            })
+            $(this).find('a').css({'background-color': 'var(--blue)',
+                                'color': 'white',
+                                'box-shadow': '0 0 5px var(--gray)'})
         })
         $('.list_company').mouseleave(function() {
             $('.visible').hide()
-            $(this).find('a').css({
-                'background-color': 'white',
-                'color': 'var(--blue)',
-                'box-shadow': 'none'
-            })
+            $(this).find('a').css({'background-color': 'white',
+                                'color': 'var(--blue)',
+                                'box-shadow': 'none'})
         })
     </script>
 </html>

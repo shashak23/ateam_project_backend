@@ -12,6 +12,8 @@
 <!--뷰포트는 화면에 표시되는 웹영역 표시, 모바일 등에서 상호작용 할 수있는지 제어-->
 <meta name="viewport" id="viewport"
 	content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, width=device-width" />
+<link rel="stylesheet" type="text/css" href="/css/myProfile.css" />
+
 <!--스타일,폰트 지정-->
 <!--스와이퍼 기능 지정-->
 <!--스타일 입히기-->
@@ -80,8 +82,6 @@
 	});
 </script>
 </head>
-
-<link rel="stylesheet" type="text/css" href="/css/myprofile.css" />
 <body>
 		<div id="container">
 			<div class="flex_button">
@@ -99,8 +99,8 @@
 					</button> 일단 보류 -->
 					<button id="reportUser" value="5" class="report-btn">신고</button>
 						<!-- 모달 창 -->
-							<div id="report-modal" class="modal">
-							    <div class="modal-content">
+							<div id="report-modal" class="report-modal">
+							    <div class="report-modal-content">
 							        <span class="close" id="cancel-modal">취소</span>
 							        	<!-- 모달 내용 추가 -->
 										<h2>신고 내용</h2>
