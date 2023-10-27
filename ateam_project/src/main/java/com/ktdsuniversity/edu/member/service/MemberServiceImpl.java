@@ -1,6 +1,7 @@
 /**
  * 작성자: 김광원
  * 수정자: 신진영(2023-10-20)
+ * 수정자: 김태현(2023-10-27)
  * 작성일자: 2023-10-19
  * 내용: 일반회원 비밀번호 수정 및 닉네임 수정
  */
@@ -225,6 +226,11 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public List<MemberVO> searchMember(String memberType) {
 		return memberDAO.searchMember(memberType);
+	}
+	
+	// 관리를 위한 일반 회원 목록 조회
+	public List<MemberVO> searchGemeralTypeMemberList() {
+		return memberDAO.searchGemeralTypeMemberList();
 	}
 	
 	// 통합검색

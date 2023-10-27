@@ -2,6 +2,7 @@
  * 작성자: 김광원
  * 수정자: 김광원(2023-10-20)
  * 수정자: 장보늬(2023-10-23)
+ * 수정자: 김태현(2023-10-27)
  * 작성일자: 2023-10-19
  * 내용: 일반회원 비밀번호 수정 및 닉네임 수정
  */
@@ -87,6 +88,8 @@ public interface MemberService {
 	
 	// 회원유형구분해서 회원찾기
 	public List<MemberVO> searchMember(String memberType);
+	
+	public List<MemberVO> searchGemeralTypeMemberList();
 	
 	// 통합검색
 	public MemberListVO searchAllMemberByKeyword(AbstractSearchVO abstractSearchVO);
