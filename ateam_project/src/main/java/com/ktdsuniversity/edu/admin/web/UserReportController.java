@@ -1,5 +1,7 @@
 package com.ktdsuniversity.edu.admin.web;
 
+import java.security.Principal;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -27,13 +30,6 @@ public class UserReportController {
 	
 	private Logger log = LoggerFactory.getLogger(FreePostController.class);
 
-	
-	// 게시글 신고 화면 보이기
-//	@GetMapping("/report/reportview")
-//	public String createReport() {
-//		return "report/reportview";
-//	}
-	
 	// 게시글 신고하기 (등록)
 	@PostMapping("/report/view/{reportTypeId}")
 	public ModelAndView createReport(@Valid @ModelAttribute ReportVO reportVO
@@ -81,4 +77,13 @@ public class UserReportController {
 		
 		return view;
 	}
+	
+	@PostMapping("/report")
+    public String reportUser(@RequestParam("reportedUserId") String reportedUserId, Principal principal) {
+        if (principal != null) {
+            String reporterUserId = principal.getName(); // a유저의 아이디
+            reportService.reportUser(reporterUserId, reportedUserId);
+        }
+        return "redirect:/profile?userId=" + reportedUserId;
+    }
 }

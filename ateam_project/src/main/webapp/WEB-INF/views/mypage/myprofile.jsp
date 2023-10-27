@@ -97,6 +97,18 @@
 						<img src="https://cdn-icons-png.flaticon.com/512/907/907873.png">
 						팔로우
 					</button> 일단 보류 -->
+					<c:choose>
+					    <c:when test="${not empty emptysessionScope._LOGIN_USER_.email eq memberVO.email}">
+					        <!-- a유저가 로그인한 경우에만 신고 버튼을 표시합니다. -->
+					        <form action="/reportUser" method="post">
+					            <input type="hidden" id="reportUser" value="${empty sessionScope._LOGIN_USER}">
+					            <button type="submit" class="report-btn" value="5">신고</button>
+					        </form>
+					    </c:when>
+					    <c:otherwise>
+					        <!-- a유저가 로그인하지 않은 경우에는 신고 버튼을 표시하지 않습니다. -->
+					    </c:otherwise>
+					</c:choose>
 					<button id="reportUser" value="5" class="report-btn">신고</button>
 						<!-- 모달 창 -->
 							<div id="report-modal" class="report-modal">

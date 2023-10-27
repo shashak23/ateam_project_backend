@@ -145,19 +145,31 @@
                                         '<button class="recommend-comment">추천하기</button>' +
                                         
                                         '<button class="delete-comment">삭제</button>' +
+                                        '<button class="report-comment" >신고</button>'
                                     '</div>'}
                             </div>`;
                         var commentDom = $(commentTemplate);
 						commentDom.find('.delete-comment').click(deleteComment);
 						// 추천 버튼 클릭 이벤트 핸들러를 등록합니다.
 						commentDom.find('.recommend-comment').click(recommendComment);
+						commentDom.find('.report-comment').click(reportComment);
                         //commentDom.find('.recommend-comment').click(recommendcomment);
                         $(".comment-items").append(commentDom);
                     }
                 })// $.get
         } // loadReplies
 		loadReplies()
-        
+		// 신고버튼 클릭
+        $(".report-comment").click(reportComment);
+        	var reportComment = function(event) {
+	        // 모달을 표시합니다.
+	        $("#report-modal").css("display", "block");
+	        console.log($(this).val())
+        	}
+		    // 모달 내부 "취소" 버튼 클릭 시 모달 닫기
+		    $("#cancel-modal").click(function() {
+		        $("#report-modal").css("display", "none");
+		    });
         // 등록버튼 클릭
         $("#btn-save-comment").click(function(event) {
             event.preventDefault();
