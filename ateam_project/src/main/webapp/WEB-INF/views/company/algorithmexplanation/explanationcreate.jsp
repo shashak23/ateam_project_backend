@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>알고리즘 해설 작성하기</title>
+<title>알고리즘 해설 작성하기 | DevGround</title>
 <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
 <script type="text/javascript" src="/js/lib/jquery-3.7.1.js"></script>
 <script type="text/javascript">
@@ -31,8 +31,13 @@
 </script>
 </head>
 <style>
+	body{
+		width:1080px;
+		height:1200px;
+		margin: 0 auto;
+	}
     .ck-editor__editable { 
-        height: 400px; 
+        height: 600px; 
     }
     .ck-content { 
         font-size: 12px; 
@@ -41,8 +46,21 @@
     div.grid {
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: 40px 40px 40px 40px 1fr 40px;
+        grid-template-rows: 40px 70px 40px 70px 40px 1fr 40px;
     }
+
+	.grid > .label{
+		font-weight: 600;
+	}
+
+	#algorithm_category{
+		height: 40px;	
+		transition: box-shadow 0.3s ease;
+	}
+
+	#algorithm_category:hover {
+   	 	border: 2px solid #1E90FF; 
+	}
 
     div.grid > div.btn-group {
 		display: grid;
@@ -54,14 +72,25 @@
 		text-align: right;
 	}
 
+	.grid > .title{
+		font-weight: bold;
+	}
+
     #postTitle {
         width: 1fr;
         font-size: 12px;
         margin-bottom: 12px;
+		height: 40px;
+		transition: box-shadow 0.3s ease;
     }
+
+	#postTitle:hover{
+		border: 2px solid #1E90FF; 
+	}
+
     input {
         padding: 0px;
-        margin-bottom: 12px;
+        margin-bottom: 12px;		
     }
     select {
         margin-bottom: 10px;
@@ -72,18 +101,27 @@
         margin-top: 10px;
         font-weight: bold;
     }
-        div.errors {
+
+	.grid > .btn-group > .right-align > #submitButton{
+		width:80px;
+		height:40px;		
+		border:none;
+		border-radius: 10px;
+	}
+
+    div.errors {
 	    background-color: #ff00004a;
 	    opacity: 0.8;
 	    padding: 10px;
 	    color: #333;
 	}
+
 	div.errors:last-child {
 	    margin-bottom: 15px;
 	}
 </style>
 <body>
-	<h3>알고리즘 해설 작성</h3>
+	<h3>DevGround</h3>
 	<form:form modelAttribute="algorithmExplanationVO" method="post">
 		<div>
 			<form:errors path="algorithmCategoryId" element="div" cssClass="errors"/>
@@ -91,12 +129,13 @@
 			<form:errors path="postContent" element="div" cssClass="errors"/>
 		</div>
 		<div class="grid">
+			
 			<label class="label" for="algorithmCategoryId">알고리즘 카테고리</label>
 			<select name="algorithmCategoryId" id="algorithm_category">
 				<option value="">알고리즘 카테고리를 선택하세요</option>
 			</select>
-			
-			<input id="postTitle" type="text" name="postTitle" placeholder="제목을 입력해 주세요."
+			<span class="title">제목</span>
+			<input id="postTitle" type="text" name="postTitle" placeholder="  제목을 입력해 주세요."
                    value="${algorithmExplanationVO.postTitle}" />
             
             <label class="label" for="postContent">내용</label>
@@ -104,7 +143,7 @@
 			
 			<div class="btn-group">
                 <div class="right-align">
-                    <input type="submit" value="저장" />
+                    <input id="submitButton" type="submit" value="등록" />
                 </div>
             </div>
 		</div>
