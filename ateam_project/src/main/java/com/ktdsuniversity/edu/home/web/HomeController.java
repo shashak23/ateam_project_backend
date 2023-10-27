@@ -19,14 +19,12 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.ktdsuniversity.edu.algorithmanswer.service.AlgorithmAnswerService;
 import com.ktdsuniversity.edu.algorithmexplanation.service.AlgorithmExplanationService;
 import com.ktdsuniversity.edu.algorithmexplanation.vo.AlgorithmExplanationListVO;
 import com.ktdsuniversity.edu.algorithmquestion.service.AlgorithmQuestionService;
 import com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionListVO;
-import com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionVO;
 import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
 import com.ktdsuniversity.edu.companynews.service.CompanyNewsService;
 import com.ktdsuniversity.edu.companynews.vo.CompanyNewsListVO;
@@ -97,12 +95,18 @@ public class HomeController {
 	@ResponseBody
 	@GetMapping("/home/ranking/{date}")
 	public Map<String, Object> getWeeklyRanking(@PathVariable String date) {
-		System.out.println("랭킹을 가져옵니다. 날짜:" + date);
 		Map<String, Object> resultMap = new HashMap<>();
 		List<GeneralPostVO> RankingList = new ArrayList<>();
 		RankingList.addAll(homeBoardService.getWeeklyRanking(date));
 		resultMap.put("rankings", RankingList);
 		return resultMap;
+	}
+	
+	// 일반 회원 목록들을 가져오는 API
+	@ResponseBody
+	@GetMapping("/home/admin/person")
+	public List<MemberVO> getAllGeneralTypeMember() {
+		return memberService.searchGemeralTypeMemberList();
 	}
 	
 	@ResponseBody
