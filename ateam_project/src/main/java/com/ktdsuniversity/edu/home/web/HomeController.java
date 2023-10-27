@@ -17,12 +17,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.ktdsuniversity.edu.algorithmanswer.service.AlgorithmAnswerService;
 import com.ktdsuniversity.edu.algorithmexplanation.service.AlgorithmExplanationService;
 import com.ktdsuniversity.edu.algorithmexplanation.vo.AlgorithmExplanationListVO;
 import com.ktdsuniversity.edu.algorithmquestion.service.AlgorithmQuestionService;
 import com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionListVO;
+import com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionVO;
 import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
 import com.ktdsuniversity.edu.companynews.service.CompanyNewsService;
 import com.ktdsuniversity.edu.companynews.vo.CompanyNewsListVO;
@@ -56,11 +60,19 @@ public class HomeController {
 	private AlgorithmExplanationService algorithmExplanationService;
 	
 	@Autowired
+	private AlgorithmAnswerService algorithmAnswerService;
+	
+	@Autowired
 	private CompanyNewsService companyNewsService;
 	
 	@GetMapping("/home/home")
 	public String homeLink() {
 		return "home/home";
+	}
+	
+	@GetMapping("/home/admin")
+	public String viewAdmin() {
+		return "home/admin_ui";
 	}
 	
 	@ResponseBody
@@ -101,6 +113,9 @@ public class HomeController {
 		
 		return homeBoardService.getHashtag(postId);
 	}
+	
+	@ResponseBody
+	@PostMapping("/home/qnapost")
 		
 	@GetMapping("/home/search")
 	public String searchAllBoardList(@ModelAttribute AbstractSearchVO abstractSearchVO, Model model) {
@@ -136,4 +151,11 @@ public class HomeController {
 		model.addAttribute("abstractSearchVO", abstractSearchVO);
 		return "home/homesearch";
 	}
+	
+	
+	@GetMapping("/algorithmmain/main")
+	public String algorithmmain() {
+		return "/algorithmmain/main";
+	}
+	
 }
