@@ -83,4 +83,9 @@ public class ReportServiceImpl implements ReportService{
 		return boardCount > 0;
 	}
 
+	@Override
+	public void reportUser(String reporterUserId, String reportedUserId) {
+		
+	}
+
 }
