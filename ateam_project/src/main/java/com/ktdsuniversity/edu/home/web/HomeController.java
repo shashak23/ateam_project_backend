@@ -64,6 +64,11 @@ public class HomeController {
 		return "home/home";
 	}
 	
+	@GetMapping("/home/admin")
+	public String viewAdmin() {
+		return "home/admin_ui";
+	}
+	
 	@ResponseBody
 	@GetMapping("/home/maincontent")
 	public List<GeneralPostVO> getAllMainContents() {

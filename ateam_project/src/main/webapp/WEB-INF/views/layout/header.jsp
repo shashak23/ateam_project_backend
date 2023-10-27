@@ -61,7 +61,7 @@
     <section class="header">
       <div class="logo_wrap">
         <span class="logo_img"><a href="./home">🎃</a></span>
-        <div class="logo_name"><a href="./home">Name</a></div>
+        <div class="logo_name"><a href="./home">devGround</a></div>
       </div>
       <nav class="gnb">
         <ul>
