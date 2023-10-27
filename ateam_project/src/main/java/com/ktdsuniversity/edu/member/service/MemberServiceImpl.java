@@ -233,6 +233,11 @@ public class MemberServiceImpl implements MemberService{
 		return memberDAO.searchGemeralTypeMemberList();
 	}
 	
+	@Override
+	public List<MemberVO> searchCompanyTypeMemberList() {
+		return memberDAO.searchCompanyTypeMemberList();
+	}
+	
 	// 통합검색
 	@Override
 	public MemberListVO searchAllMemberByKeyword(AbstractSearchVO abstractSearchVO) {

@@ -109,6 +109,13 @@ public class HomeController {
 		return memberService.searchGemeralTypeMemberList();
 	}
 	
+	// 기업 회원 목록을 가져오는 API
+	@ResponseBody
+	@GetMapping("/home/admin/company")
+	public List<MemberVO> getAllCompanyTypeMember() {
+		return memberService.searchCompanyTypeMemberList();
+	}
+	
 	@ResponseBody
 	@GetMapping("/home/hashtag/{postId}")
 	public List<HomeBoardVO> getPostHashtag(@PathVariable String postId) {

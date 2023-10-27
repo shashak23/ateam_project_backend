@@ -140,6 +140,11 @@ public class MemberDAOImpl extends SqlSessionDaoSupport implements MemberDAO{
 		return getSqlSession().selectList("searchGemeralTypeMemberList");
 	}
 	
+	@Override
+	public List<MemberVO> searchCompanyTypeMemberList() {
+		return getSqlSession().selectList("searchCompanyTypeMemberList");
+	}
+	
 	// 회원유형구분해서 회원찾기
 	@Override
 	public List<MemberVO> searchMember(String memberType) {

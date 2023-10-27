@@ -89,7 +89,17 @@ public interface MemberService {
 	// 회원유형구분해서 회원찾기
 	public List<MemberVO> searchMember(String memberType);
 	
+	/**
+	 * 일반 타입 회원 목록 조회
+	 * @return 일반 타입 회원 리스트
+	 */
 	public List<MemberVO> searchGemeralTypeMemberList();
+	
+	/**
+	 * 기업 타입 회원 목록 조회
+	 * @return 기업 타입 회원 리스트
+	 */
+	public List<MemberVO> searchCompanyTypeMemberList();
 	
 	// 통합검색
 	public MemberListVO searchAllMemberByKeyword(AbstractSearchVO abstractSearchVO);

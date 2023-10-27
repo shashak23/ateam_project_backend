@@ -47,7 +47,8 @@
     height: 30px;
   }
 
-  .personal_modal {
+  .personal_modal,
+  .company_modal {
     position: fixed;
     top: 50%;
     left: 50%;
@@ -56,12 +57,15 @@
     opacity: 0;
     transition: all 0.5s;
   }
-  .personal_modal.active {
+
+  .personal_modal.active,
+  .company_modal.active {
     opacity: 1;
     transform: translate(-50%, -50%) scale(1);
   }
 
-  .personal_modal_content {
+  .personal_modal_content,
+  .company_modal_content  {
     display: flex;
     border-radius: 5px;
     overflow: hidden;
@@ -69,7 +73,8 @@
     box-shadow: 0 0 10px rgba(12, 12, 12, 0.178);
   }
 
-  .personal_modal_content > div {
+  .personal_modal_content > div,
+  .company_modal_content > div {
     padding: 20px;
   }
 
@@ -78,7 +83,8 @@
     margin: 15px 0;
   }
 
-  .member_container {
+  .member_container,
+  .company_container {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -148,7 +154,7 @@
       <li><button class="mainmenu_btn">회원</button>
         <ul class="admin_submenu">
           <li><button class="admin_person_btn">개인</button></li>
-          <li><button>기업</button></li>
+          <li><button class="admin_company_btn">기업</button></li>
         </ul>
       </li>
       <li><button class="mainmenu_btn">게시글</button>
@@ -182,15 +188,6 @@
           <button class="btn-close">&times;</button>
         </div>
           <div class="desc-content">
-            <div class="member_container">
-                <div class="profile_group">
-                  <img src="#" alt="." /><div>이름</div>
-                </div>
-                <div class="btn_group">
-                  <button>경고</button>
-                  <button>탈퇴</button>
-                </div>
-            </div>
           </div>
       </div>
     </div>
@@ -204,15 +201,6 @@
           <button class="btn-close">&times;</button>
         </div>
           <div class="desc-content">
-            <div class="company_container">
-                <div class="profile_group">
-                  <img src="#" alt="." /><div>이름</div>
-                </div>
-                <div class="btn_group">
-                  <button>경고</button>
-                  <button>탈퇴</button>
-                </div>
-            </div>
           </div>
       </div>
     </div>
@@ -228,16 +216,22 @@
 
   $('.btn-close, .overlay').click(function() {
     $('.personal_modal, .overlay').removeClass('active')
+    $('.company_modal, .overlay').removeClass('active')
   })
 
   $('body').keyup(function(e) {
     if (e.key === 'Escape') {
       $('.personal_modal, .overlay').removeClass('active')
+      $('.company_modal, .overlay').removeClass('active')
     }
   })
   
   $('.admin_person_btn').click(function() {
     $('.personal_modal, .overlay').addClass('active')
+  })
+
+  $('.admin_company_btn').click(function() {
+    $('.company_modal, .overlay').addClass('active')
   })
 
   $.get('/home/admin/person', function(response) {
@@ -255,9 +249,27 @@
             </div>`
         generalMemberTemplateDom = $(generalMemberTemplate)
         
-        $('.desc-content').append(generalMemberTemplateDom)
+        $('.personal_modal').find('.desc-content').append(generalMemberTemplateDom)
     }
-    })
+  })
+
+  $.get('/home/admin/company', function(response) {
+    for (let i = 0; i < response.length; i++) {
+        let company = response[i]
+        companyTemplate = 
+            `<div class="company_container">
+                <div class="profile_group">
+                <img src="\${company.profilePic}" alt="."><div>\${company.nickname}(\${company.email})</div>
+                </div>
+                <div class="btn_group">
+                    <button>탈퇴</button>
+                </div>
+            </div>`
+        companyTemplateDom = $(companyTemplate)
+        
+        $('.company_modal').find('.desc-content').append(companyTemplateDom)
+    }
+  })
 
 </script>
 </html>
