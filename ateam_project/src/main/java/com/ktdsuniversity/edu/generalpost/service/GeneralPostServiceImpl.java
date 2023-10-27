@@ -26,6 +26,7 @@ private Logger log = LoggerFactory.getLogger(FreePostController.class);
 	@Autowired
 	private GeneralPostDAO generalPostDAO;
 	
+	
 	// 자유게시판
 	@Transactional
 	@Override

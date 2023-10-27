@@ -1,5 +1,7 @@
 package com.ktdsuniversity.edu.algorithmanswer.dao;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,4 +23,15 @@ public class AlgorithmAnswerDAOImpl extends SqlSessionDaoSupport implements Algo
 		return getSqlSession().insert("createAlgorithmAnswer", algorithmAnswerVO);
 	}
 
+	@Override
+	public List<AlgorithmAnswerVO> getAlgorithmAnswer(String companyAlgorithmQuestionId) {
+		return getSqlSession().selectList("getAlgorithmAnswer", companyAlgorithmQuestionId);
+	}
+
+	@Override
+	public List<Integer> getResult(String companyAlgorithmQuestionId) {
+		return getSqlSession().selectList("getResult", companyAlgorithmQuestionId);
+	}
+
+	
 }
