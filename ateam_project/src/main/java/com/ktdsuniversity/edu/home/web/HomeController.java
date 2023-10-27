@@ -19,11 +19,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.ktdsuniversity.edu.algorithmanswer.service.AlgorithmAnswerService;
 import com.ktdsuniversity.edu.algorithmexplanation.service.AlgorithmExplanationService;
 import com.ktdsuniversity.edu.algorithmexplanation.vo.AlgorithmExplanationListVO;
 import com.ktdsuniversity.edu.algorithmquestion.service.AlgorithmQuestionService;
 import com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionListVO;
+import com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionVO;
 import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
 import com.ktdsuniversity.edu.companynews.service.CompanyNewsService;
 import com.ktdsuniversity.edu.companynews.vo.CompanyNewsListVO;
@@ -55,6 +58,9 @@ public class HomeController {
 	
 	@Autowired
 	private AlgorithmExplanationService algorithmExplanationService;
+	
+	@Autowired
+	private AlgorithmAnswerService algorithmAnswerService;
 	
 	@Autowired
 	private CompanyNewsService companyNewsService;
@@ -145,4 +151,11 @@ public class HomeController {
 		model.addAttribute("abstractSearchVO", abstractSearchVO);
 		return "home/homesearch";
 	}
+	
+	
+	@GetMapping("/algorithmmain/main")
+	public String algorithmmain() {
+		return "/algorithmmain/main";
+	}
+	
 }

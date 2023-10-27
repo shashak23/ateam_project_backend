@@ -59,19 +59,6 @@ public class QnAPostCommentController {
 	    return ResponseEntity.ok(resultMap);
 	}
 
-	// 댓글 수정
-//	@PostMapping("/qnaboard/comment/update/{generalPostId}")
-//	public ResponseEntity<Map<String, Object>> doUpdateComment(@PathVariable String generalPostId,
-//	        @ModelAttribute GeneralCommentVO generalCommentVO, @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
-//	    generalCommentVO.setGeneralPostId(generalPostId);
-//	    generalCommentVO.setCommentWriter(memberVO.getEmail());
-//    boolean isSuccess = generalCommentService.doUpdateComment(generalPostId, generalCommentVO);
-//    System.out.println(".---------------------------------" + generalPostId + "fasdasdasdsadasd" +  memberVO.getEmail());
-//	    Map<String, Object> resultMap = new HashMap<>();
-//	    resultMap.put("result", isSuccess);
-//	    return ResponseEntity.ok(resultMap);
-//	}
-//	
 	//댓글 수정 교재
 	@PostMapping("/qnaboard/comment/update/{generalCommentId}")
 	public Map<String, Object> UpdateComment(@PathVariable String generalCommentId,
@@ -83,8 +70,7 @@ public class QnAPostCommentController {
 		Map<String, Object> resultMap= new HashMap<>();
 		resultMap.put("result", isSuccess);
 		return resultMap;
-	}
-	
+	}	
 	
 	// 댓글 삭제
 	@GetMapping("/qnaboard/comment/delete/{generalPostId}")
