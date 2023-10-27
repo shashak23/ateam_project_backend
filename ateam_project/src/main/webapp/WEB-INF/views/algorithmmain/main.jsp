@@ -106,6 +106,7 @@
     cursor: pointer;
     box-sizing: border-box;
     transition: box-shadow 0.3s ease;
+    padding:140;
    }
 
    #contents_bottom > .algorithm_explanation{
