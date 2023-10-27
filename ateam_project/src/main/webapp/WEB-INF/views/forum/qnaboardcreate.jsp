@@ -8,6 +8,8 @@
 <title>Insert title here</title>
 <script src="/js/lib/jquery-3.7.1.js"></script>
 <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@ckeditor/ckeditor5-upload@34.0.0/src/index.min.js"></script>
+	
 <!-- 소스 다운 -->
 <script src="https://unpkg.com/@yaireo/tagify"></script>
 <link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
@@ -61,25 +63,13 @@
 	}
 </style>
 <script type="text/javascript">
-const input = document.querySelector('input[name=basic]');
-let tagify = new Tagify(input); // initialize Tagify
-
-// 태그가 추가되면 이벤트 발생
-tagify.on('add', function() {
-  console.log(tagify.value); // 입력된 태그 정보 객체
-})
-/* //해시태그 
-var inputElement = document.getElementById("tagsInput");
-var tagify = new Tagify(inputElement);
-
-	// Optional: Add event listeners for Tagify
-	tagify.on("add", function(e) {
-	  console.log("Tag added:", e.detail.data);
-	});
+$().ready(function(){
+	var input = document.querySelector('input[name=hashtag]')
+    new Tagify(input)
 	
-	tagify.on("remove", function(e) {
-	  console.log("Tag removed:", e.detail.data);
-	}); */
+    let whitelist = ["Python","Java","Oracle","React","Vue.js","C","JavaScript", "CSS", "HTML", "Spring", "HTML", "Rudy", "MYSQL", "jQuery", "Angular", "C++"];
+
+});
 </script>
 </head>
 <body>
@@ -107,20 +97,14 @@ var tagify = new Tagify(inputElement);
 	</form>
 	
 	<!-- 해시 태그 정보를 저장할 input 태그. (textarea도 지원) -->
-	<h1>Tagify 데모</h1>
-	<input placeholder="type tags">
+	<h3>해시태그</h3>
+	<input placeholder="해시태그를 입력하세요!" name="hashtag">
 	
-	<%-- <form method="post" action="/hashtags/insert">
-        <input type="text" name="postTag" placeholder="해시태그를 입력하세요!">
-        <input type="submit" value="입력">
-    </form>
-    <ul>
-        <c:forEach items="${hashtags}" var="hashtag">
-            <li>
-                ${hashtag.tag}
-                <a href="/hashtags/delete/${hashtag.id}">Delete</a>
-            </li>
-        </c:forEach>
-    </ul> --%>
+	<form action="/hashtag/post" method="post">
+	    <!-- input 태그에 type hidden을 부여 -->
+	    <input name='postTag' placeholder="해시태그를 입력하세요!" type="hidden">
+	</form>
+
+    </ul>
 </body>
 </html>

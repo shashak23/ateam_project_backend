@@ -133,15 +133,16 @@
                                                             </tr>
                                                     </thead>
                                                     <tbody>
-                                                        <c:forEach items="${companyRecruitListVO.companyRecruitList}" var="companyRecruit">
+                                                        <c:forEach items="${companyRecruitListVO.companyRecruitList}" var="companyRecruit" varStatus="index">
                                                             <tr>
-                                                                <td>${companyRecruit.companyRecruitPostId}</td>
-                                                                <td>
+                                                                <td class="pratice_01">${(index.index + 1) * (searchForumVO.pageNo + 1 )+1}</td>
+<%--                                                                 <td>${companyRecruit.companyRecruitPostId}</td> --%> 
+                                                               <td>
                                                                     <a href="/recruit/view/${companyRecruit.companyRecruitPostId}">
                                                                         ${companyRecruit.postTitle}
                                                                     </a>
                                                                 </td>
-                                                                <td>${companyRecruit.postWriter}</td>
+                                                                <td>${companyRecruit.companyVO.companyName}</td>
                                                                 <td>${companyRecruit.postDate}</td>
                                                                 <td>${companyRecruit.viewCnt}</td>
                                                             </tr>

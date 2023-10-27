@@ -171,9 +171,9 @@
                                     </thead>
                                     </div>
                                     <tbody>
-                                        <c:forEach items="${generalPostListVO.generalPostList}" var="freeboard">
+                                        <c:forEach items="${generalPostListVO.generalPostList}" var="freeboard" varStatus="index">
                                             <tr>                                                
-                                                <td class="pratice_01">${freeboard.generalPostId}</td>                                          
+                                                <td class="pratice_01">${(index.index + 1) * (searchForumVO.pageNo + 1)}</td>
                                                 <td><!--자유게시판의 내용을 가져와 반복하는 태그 -->
                                                 <div class="pratice">
                                                 <a class="text_controller" href="/freeboard/view/${freeboard.generalPostId}">
@@ -183,7 +183,7 @@
                                                 </a>
                                                 </div>
                                                 </td>
-                                                <td class="pratice_02">${freeboard.postWriter}</td>
+                                                <td class="pratice_02">${freeboard.memberVO.nickname}</td>
                                                 <td class="pratice_03">${freeboard.postDate}</td>
                                                 <td class="pratice_04">${freeboard.viewCnt}</td>
                                             </tr>

@@ -221,9 +221,9 @@
                                           </tr>
                                     </thead>
                                     <tbody>
-                                       <c:forEach items="${generalPostListVO.generalPostList}" var="qnaboard">
+                                       <c:forEach items="${generalPostListVO.generalPostList}" var="qnaboard" varStatus="index">
                                                             <tr>
-                                                                <td class="pratice_01">${qnaboard.generalPostId}</td>
+                                                                <td class="pratice_01">${(index.index + 1) * (searchForumVO.pageNo + 1)}</td>
                                                                 <td>
                                                 <div class="pratice">   
                                                                     <a class="text_controller" href="/qnaboard/view/${qnaboard.generalPostId}">
@@ -231,7 +231,7 @@
                                                                     </a>
                                                 </div>   
                                                                 </td>
-                                                                <td class="pratice_02"> ${qnaboard.postWriter}</td>
+                                                                <td class="pratice_02"> ${qnaboard.memberVO.nickname}</td>
                                                                 <td class="pratice_03">${qnaboard.postDate}</td>
                                                                 <td class="pratice_04">${qnaboard.viewCnt}</td>
                                                             </tr>

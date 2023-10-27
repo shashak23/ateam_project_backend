@@ -1,3 +1,8 @@
+/**
+ * 작성장: 김시하
+ * 작성일자: 2023-10-23
+ * 내용: 기업 채용을 위한 DAO
+ */
 package com.ktdsuniversity.edu.companymember.dao;
 
 import com.ktdsuniversity.edu.companymember.vo.CompanyVO;

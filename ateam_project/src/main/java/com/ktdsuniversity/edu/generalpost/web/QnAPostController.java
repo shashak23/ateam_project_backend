@@ -104,6 +104,8 @@ public class QnAPostController {
 	public ModelAndView qnaBoardSingle(@PathVariable String generalPostId) {
 		ModelAndView view = new ModelAndView();
 		GeneralPostVO generalPostVO = generalPostService.getOneQnABoard(generalPostId);
+		//TODO TRUE: FALSE 분기 나누기
+		//generalPostService.increaseViewCount(generalPostId);
 		XssIgnoreUtil.ignore(generalPostVO); 
 
 		log.debug("--1------컨트롤러---------------------------");
