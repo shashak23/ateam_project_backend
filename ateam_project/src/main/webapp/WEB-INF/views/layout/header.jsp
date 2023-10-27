@@ -15,45 +15,52 @@
 	<!-- <link rel="stylesheet" href="/css/style.css"> -->
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 	<script src="/js/lib/jquery-3.7.1.js"></script>
+  <script src="/js/Modal.js"></script>
 	<c:if test="${not empty sessionScope._LOGIN_USER_}">
-		<script type="text/javascript" src="/js/lib/sockjs.min.js"></script>
-		<script type="text/javascript" src="/js/socket.js"></script>
+      <script type="text/javascript" src="/js/lib/sockjs.min.js"></script>
+      <script type="text/javascript" src="/js/socket.js"></script>
 	</c:if>
 	<script type="text/javascript">
-		<c:if test="${not empty sessionScope._LOGIN_USER_}">
-		var userName = "${sessionScope._LOGIN_USER_.nickname}";
-		var email = "${sessionScope._LOGIN_USER_.email}";
-		</c:if>
-		var send = undefined;
-		$().ready(function() {
-			<c:if test="${not empty sessionScope._LOGIN_USER_}">
-				send = connectSocket(userName, email, function(send, receiveMessage) {
-					
-					if (receiveMessage.sendType == "invite") {
-						if (confirm(receiveMessage.message)) {
-							// 대화에 참여하는 코드 생성
-							// 다른 URL로 이동하면 안됨.
-							// 대화목록, 창 모달
-							enterRoom(send, userName, email, receiveMessage.roomName);
-						}
-					}
-					// 상대방이 입장했을 때
-					else if (receiveMessage.sendType == "enter") {
-						console.log(receiveMessage.message);
-					}
-					// 상대방이 대화를 보냈을 때
-					else if (receiveMessage.sendType == "all") {
-						console.log(receiveMessage.message);
-					}
-					// 상대방이 방을 나갔을 때
-					// URL이 바뀌면 상대방이 방을 나간 뒤 다시 연결된다.
-					else if (receiveMessage.sendType == "leave") {
-						console.log(receiveMessage.message);
-					}
-				});
-			</c:if>
-		});
-	</script>
+    <c:if test="${not empty sessionScope._LOGIN_USER_}">
+        var userName = "${sessionScope._LOGIN_USER_.nickname}";
+        var email = "${sessionScope._LOGIN_USER_.email}";
+    </c:if>
+    var send = undefined;
+	
+    $().ready(function() {
+        <c:if test="${not empty sessionScope._LOGIN_USER_}">
+            send = connectSocket(userName, email, function(send, receiveMessage) {
+                if (receiveMessage.sendType == "invite") {
+                    if (confirm(receiveMessage.message)) {
+                        // 대화에 참여하는 코드 생성
+                        // 다른 URL로 이동하면 안됨.
+                        // 대화목록, 창 모달
+                        enterRoom(send, userName, email, receiveMessage.roomName);
+                    }
+                }
+                // 상대방이 입장했을 때
+                else if (receiveMessage.sendType == "enter" || receiveMessage.sendType == "all") {
+                    console.log(receiveMessage.message);
+                    
+                    var chatBox = chatModal.find(".chat-box");
+                    var message = "<div>" + receiveMessage.message + "</div>";
+                    message = message.replaceAll("↵", "<br/>").replaceAll("\n", "<br/>");
+                    var isMe = receiveMessage.sendToMe == true;
+                    if (!isMe) {
+                        message = '<div style="width:50px; margin-right: 3px;">' + receiveMessage.userName + '</div>' + message;
+                    }
+                    chatBox.append('<div class=' + isMe + '>' + message + '</div>');
+                    chatBox.scrollTop(99999999999999999999999);
+                }
+                // 상대방이 방을 나갔을 때
+                // URL이 바뀌면 상대방이 방을 나간 뒤 다시 연결된다.
+                else if (receiveMessage.sendType == "leave") {
+                    console.log(receiveMessage.message);
+                }
+            });
+        </c:if>
+    });
+</script>
 	<link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
