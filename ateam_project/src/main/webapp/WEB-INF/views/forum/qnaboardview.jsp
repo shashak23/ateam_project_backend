@@ -319,8 +319,8 @@ pre.content {
 		        	method: "POST",
 		        	url: "/qnaboard/like",
 		        	data: { 
-		        		"generalPostId": "${generalPostVO.generalPostId}",
-		        		"likeCnt": ${generalPostVO.likeCnt}
+		        		generalPostId: "${generalPostVO.generalPostId}",
+		        		likeCnt: ${generalPostVO.likeCnt}
 		        	},
 		        	success: function(response) {
 		        		/* $("likeModal").hide(); */
