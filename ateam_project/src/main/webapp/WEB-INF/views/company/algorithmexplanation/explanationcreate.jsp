@@ -35,9 +35,10 @@
 	
 	#container{
 		width: 800px;
-		height:1200px;
+		height:1000px;
 		margin: 0 auto;
 		margin-top: 40px;
+		
 	}
 
     div.grid {
@@ -91,6 +92,7 @@
         margin-bottom: 12px;
 		height: 40px;
 		transition: box-shadow 0.3s ease;
+		padding:6px;
     }
 
 	#postTitle:hover{
@@ -151,7 +153,7 @@
 				</select>
 				<span class="title">제목</span>
 				
-				<input id="postTitle" type="text" name="postTitle" placeholder="  제목을 입력해 주세요."
+				<input id="postTitle" type="text" name="postTitle" placeholder="제목을 입력해 주세요."
 					value="${algorithmExplanationVO.postTitle}" />
 				
 				<label class="label" for="postContent">내용</label>
