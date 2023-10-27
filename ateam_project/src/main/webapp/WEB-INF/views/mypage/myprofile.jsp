@@ -15,41 +15,77 @@
 <!--스타일,폰트 지정-->
 <!--스와이퍼 기능 지정-->
 <!--스타일 입히기-->
-
+<link rel="stylesheet" type="text/css" href="/css/myProfile.css" />
 <!-- 자바스크립트 시작 -->
-<script type="text/javascript" src="/js/lib/jquery-3.7.1.js"></script>
+<jsp:include page="../layout/header.jsp" />
 <script type="text/javascript">
-	//신고버튼
+//신고버튼
 	$().ready(function() {
 	    // "신고" 버튼 클릭 시 모달 열기
 	    $(".report-btn").click(function() {
-	    	let reportType = $("#reportUser").val()
-		    console.log(reportType);
+	       let reportType = $("#reportUser").val()
+	       console.log(reportType);
 	        $("#report-modal").css({
-	        	"visibility": "visible",
-	        	"opacity": "1"
+	           "visibility": "visible",
+	           "opacity": "1"
 	        });
 	    
-	    	// 모달 내부 "취소" 버튼 클릭 시 모달 닫기
-	    	$(".close").click(function() {
-	    		/* console.log("!") */
-	    	 	$("#report-modal").css({
-		        	"visibility": "hidden",
-		        	"opacity": "0"
-		        });
-	   		});
+	       // 모달 내부 "취소" 버튼 클릭 시 모달 닫기
+	       $(".close").click(function() {
+	          /* console.log("!") */
+	           $("#report-modal").css({
+	              "visibility": "hidden",
+	              "opacity": "0"
+	           });
+	         });
+	    });
+	    function redirectToURL(url) {
+	        window.location.href = url;
+	    }
+	    /* 비밀번호, 닉네임 수정 버튼 */
+	    $("#modify_info").click(function() {
+	        redirectToURL(`/member/selectmember/${memberVO.email}`);
+	    });
+
+	    /* 프로필 수정 버튼 */
+	    $("#modify_profile_pic").click(function() {
+	        redirectToURL(`/memberInfo/modify/modify-profile-pic/${memberVO.email}`);
+	    });
+
+	    /* 자기소개 수정 버튼 */
+	    $("#modify_selfintro").click(function() {
+	        redirectToURL(`/memberInfo/modify/update-introduction/\${memberVO.email}`);
+	    });
+
+	    /* 자기소개 추가 */
+	    $("#insert_selfintro").click(function() {
+	        redirectToURL(`/memberInfo/modify/update-introduction/\${memberVO.email}`);
+	    });
+	    /* git,email,blog 수정버튼 */
+	    $("#edit_button1").click(function() {
+	        redirectToURL(`/memberInfo/modify/update-sns-link/\${memberVO.email}`);
+	    });
+	    /* 기술스택 수정버튼 */
+	    $("#edit_button2").click(function() {
+	        redirectToURL(`/memberInfo/modify/update-tech/\${memberVO.email }`);
+	    });
+	    /* 기술스택 추가버튼 */
+	    $("#insert_techstack").click(function() {
+	        redirectToURL(`/memberInfo/modify/create-tech-stack`);
+	    });
+	    /* 채팅 */
+	    $(".message_icon").click(function() {
+	    	inviteUser(send, userName, email, "${memberVO.email}");
 	    });
 	});
 </script>
 </head>
-<jsp:include page="../layout/header.jsp" />
-<link rel="stylesheet" type="text/css" href="/css/myprofile.css" />
 <body>
 		<div id="container">
 			<div class="flex_button">
 				<button>마이페이지</button>
 				<button>스크랩</button>
-				<button>정보 수정</button>
+				<button id="modify_info">정보 수정</button>
 				<button>내가 푼 문제</button>
 				<button>마이 팀</button>
 			</div>
@@ -58,26 +94,34 @@
 					<!-- <button class="follow_icon">
 						<img src="https://cdn-icons-png.flaticon.com/512/907/907873.png">
 						팔로우
-					</button> 일단 보류 -->
-					<button id="reportUser" value="5" class="report-btn">신고</button>
-						<!-- 모달 창 -->
-							<div id="report-modal" class="modal">
-							    <div class="modal-content">
-							        <span class="close" id="cancel-modal">취소</span>
-							        	<!-- 모달 내용 추가 -->
-										<h2>신고 내용</h2>
-										<form name="reportVO" method="post" action="/report/view/5">
-											<div>
-												<label for="reportReason" >신고사유${reportVO.reportReason}
-													<select name="reportReason">
-														<option value="6">영리 및 홍보 목적</option>
-														<option value="7">개인정보노출</option>
-														<option value="8">음란성/선정성</option>
-														<option value="9">같은 내용 반복(도배)</option>
-														<option value="10">이용규칙위반</option>
-														<option value="11">기타</option>
-													</select>
-												</label>
+					 </button> 일단 보류 -->
+               <c:choose>
+                   <c:when test="${not empty emptysessionScope._LOGIN_USER_.email eq memberVO.email}">
+                       <!-- a유저가 로그인한 경우에만 신고 버튼을 표시합니다. -->
+                       <form action="/reportUser" method="post">
+                           <input type="hidden" id="reportUser" value="${empty sessionScope._LOGIN_USER}">
+                           <button type="submit" class="report-btn" value="5">신고</button>
+                       </form>
+                   </c:when>
+                   <c:otherwise>
+                       <!-- a유저가 로그인하지 않은 경우에는 신고 버튼을 표시하지 않습니다. -->
+                   </c:otherwise>
+               </c:choose>
+               <button id="reportUser" value="5" class="report-btn">신고</button>
+                  <!-- 모달 창 -->
+                              <h2>신고 내용</h2>
+                              <form name="reportVO" method="post" action="/report/view/5">
+                                 <div>
+                                    <label for="reportReason" >신고사유${reportVO.reportReason}
+                                       <select name="reportReason">
+                                          <option value="6">영리 및 홍보 목적</option>
+                                          <option value="7">개인정보노출</option>
+                                          <option value="8">음란성/선정성</option>
+                                          <option value="9">같은 내용 반복(도배)</option>
+                                          <option value="10">이용규칙위반</option>
+                                          <option value="11">기타</option>
+                                       </select>
+                                    </label>
 									
 												<label for = "reportReasonContent">신고 상세내용
 												<textarea name="reportReasonContent" id="reportReasonContent">${reportVO.reportReasonContent}</textarea></label>
@@ -120,10 +164,7 @@
 					</c:choose>
 					<div>
 					<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
-						<button>
-							<a
-								href="/memberInfo/modify/modify-profile-pic/${memberVO.email }">프사수정버튼</a>
-						</button>
+						<button id="modify_profile_pic">프사수정버튼</button>
 						</c:if>
 						<div>
 							<ul class="introduction_list">
@@ -134,21 +175,14 @@
 									<c:when test="${not empty generalMemberVO.selfIntro}">
 										<li class="list_intro">${generalMemberVO.selfIntro}
 											<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
-											<button>
-												<a href="/memberInfo/modify/update-introduction/${memberVO.email}">
-													수정 </a>
-											</button>
+											<button id="modify_selfintro">수정 </button>
 											</c:if>
 										</li>
 									</c:when>
 									<c:otherwise>
 										<li class="list_intro">
 										<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
-											<button>
-												<a
-													href="/memberInfo/modify/update-introduction/${memberVO.email}">
-													자기소개 추가하기</a>
-											</button>
+											<button id="insert_selfintro">자기소개 추가하기</button>
 											</c:if>
 										</li>
 									</c:otherwise>
@@ -172,10 +206,7 @@
 						alt="Icon 3"></a>
 					<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
 					<button id="edit_button1">
-						<a href="/memberInfo/modify/update-sns-link/${memberVO.email}">
-							<img
-							src="https://cdn.icon-icons.com/icons2/1462/PNG/512/101edit_99874.png" />
-						</a>
+							<img src="https://cdn.icon-icons.com/icons2/1462/PNG/512/101edit_99874.png" />
 					</button>
 					</c:if>
 				</div>
@@ -201,19 +232,13 @@
 									<li>#${commonCode.codeContent}</li>
 								</c:forEach>
 								<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
-								<button id="edit_button2">
-									<a href="/memberInfo/modify/update-tech/${memberVO.email }">
-										수정 </a>
-								</button>
+								<button id="edit_button2">수정</button>
 								</c:if>
 							</c:when>
 							<c:otherwise>
 								<li>
 								<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
-								<button>
-										<a href="/memberInfo/modify/create-tech-stack">
-											추가하기 </a>
-									</button>
+								<button id="insert_techstack">추가하기</button>
 								</c:if>
 								</li>
 							</c:otherwise>

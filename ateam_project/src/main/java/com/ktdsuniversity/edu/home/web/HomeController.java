@@ -17,8 +17,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.ktdsuniversity.edu.algorithmanswer.service.AlgorithmAnswerService;
 import com.ktdsuniversity.edu.algorithmexplanation.service.AlgorithmExplanationService;
 import com.ktdsuniversity.edu.algorithmexplanation.vo.AlgorithmExplanationListVO;
 import com.ktdsuniversity.edu.algorithmquestion.service.AlgorithmQuestionService;
@@ -56,11 +58,19 @@ public class HomeController {
 	private AlgorithmExplanationService algorithmExplanationService;
 	
 	@Autowired
+	private AlgorithmAnswerService algorithmAnswerService;
+	
+	@Autowired
 	private CompanyNewsService companyNewsService;
 	
 	@GetMapping("/home/home")
 	public String homeLink() {
 		return "home/home";
+	}
+	
+	@GetMapping("/home/admin")
+	public String viewAdmin() {
+		return "home/admin_ui";
 	}
 	
 	@ResponseBody
@@ -85,12 +95,25 @@ public class HomeController {
 	@ResponseBody
 	@GetMapping("/home/ranking/{date}")
 	public Map<String, Object> getWeeklyRanking(@PathVariable String date) {
-		System.out.println("랭킹을 가져옵니다. 날짜:" + date);
 		Map<String, Object> resultMap = new HashMap<>();
 		List<GeneralPostVO> RankingList = new ArrayList<>();
 		RankingList.addAll(homeBoardService.getWeeklyRanking(date));
 		resultMap.put("rankings", RankingList);
 		return resultMap;
+	}
+	
+	// 일반 회원 목록들을 가져오는 API
+	@ResponseBody
+	@GetMapping("/home/admin/person")
+	public List<MemberVO> getAllGeneralTypeMember() {
+		return memberService.searchGemeralTypeMemberList();
+	}
+	
+	// 기업 회원 목록을 가져오는 API
+	@ResponseBody
+	@GetMapping("/home/admin/company")
+	public List<MemberVO> getAllCompanyTypeMember() {
+		return memberService.searchCompanyTypeMemberList();
 	}
 	
 	@ResponseBody
@@ -101,6 +124,9 @@ public class HomeController {
 		
 		return homeBoardService.getHashtag(postId);
 	}
+	
+	@ResponseBody
+	@PostMapping("/home/qnapost")
 		
 	@GetMapping("/home/search")
 	public String searchAllBoardList(@ModelAttribute AbstractSearchVO abstractSearchVO, Model model) {
@@ -136,4 +162,11 @@ public class HomeController {
 		model.addAttribute("abstractSearchVO", abstractSearchVO);
 		return "home/homesearch";
 	}
+	
+	
+	@GetMapping("/algorithmmain/main")
+	public String algorithmmain() {
+		return "/algorithmmain/main";
+	}
+	
 }

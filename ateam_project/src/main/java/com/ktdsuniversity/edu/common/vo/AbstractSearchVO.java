@@ -6,7 +6,15 @@ package com.ktdsuniversity.edu.common.vo;
 public class AbstractSearchVO {
 	
 	private String searchKeyword;
+	
+	private int pageNo;
 
+	public int getPageNo() {
+		return pageNo;
+	}
+	public void setPageNo(int pageNo) {
+		this.pageNo = pageNo;
+	}
 	public String getSearchKeyword() {
 		return searchKeyword;
 	}

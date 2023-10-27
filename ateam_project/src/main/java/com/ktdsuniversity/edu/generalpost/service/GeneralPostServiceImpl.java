@@ -48,15 +48,17 @@ private Logger log = LoggerFactory.getLogger(FreePostController.class);
 		return boardCount > 0;
 	}
 
-	@Transactional
+	//@Transactional
 	@Override
 	public GeneralPostVO getOneFreeBoard(String generalPostId) {
-		GeneralPostVO result = null;
-		result = generalPostDAO.getOneFreeBoard(generalPostId);
-		
-		return result;
+		int updateCount = generalPostDAO.increaseViewCount(generalPostId);
+		if (updateCount == 0) {
+			throw new IllegalArgumentException();
+		}else {
+			return generalPostDAO.getOneFreeBoard(generalPostId);
+		}
 	}
-
+	
 	@Transactional
 	@Override
 	public boolean updateOneFreeBoard(GeneralPostVO generalPostVO) {
@@ -103,12 +105,15 @@ private Logger log = LoggerFactory.getLogger(FreePostController.class);
 	@Transactional
 	@Override
 	public GeneralPostVO getOneQnABoard(String generalPostId) {
-		GeneralPostVO result = null;
-		
-		result = generalPostDAO.getOneQnABoard(generalPostId);
-		
-		return result;
+		int updateCount = generalPostDAO.increaseViewCount(generalPostId);
+		if (updateCount == 0) {
+			throw new IllegalArgumentException();
+		}else {
+			return generalPostDAO.getOneFreeBoard(generalPostId);
+		}
 	}
+	
+	
 
 	@Transactional
 	@Override

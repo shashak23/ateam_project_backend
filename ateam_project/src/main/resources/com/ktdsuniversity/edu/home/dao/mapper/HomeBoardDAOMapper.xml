@@ -28,7 +28,7 @@
 		     , VIEW_CNT
 		     , DELETE_YN
 		  FROM GENERAL_POST
-		 ORDER BY POST_DATE DESC
+		 ORDER BY GENERAL_POST_ID DESC
 	</select>
 	
 	<select id="getAllGeneralCommentCnt"

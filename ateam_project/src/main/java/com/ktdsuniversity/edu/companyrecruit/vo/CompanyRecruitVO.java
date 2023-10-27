@@ -7,6 +7,8 @@
 
 package com.ktdsuniversity.edu.companyrecruit.vo;
 
+import com.ktdsuniversity.edu.companymember.vo.CompanyVO;
+
 public class CompanyRecruitVO {
 
 	private String companyRecruitPostId;
@@ -25,6 +27,16 @@ public class CompanyRecruitVO {
 	private int viewCnt;
 	private int likeCnt;
 	private String deleteYn;
+	
+	// 기업 정보 
+	private CompanyVO companyVO;
+	
+	public CompanyVO getCompanyVO() {
+		return companyVO;
+	}
+	public void setCompanyVO(CompanyVO companyVO) {
+		this.companyVO = companyVO;
+	}
 	public String getCompanyRecruitPostId() {
 		return companyRecruitPostId;
 	}
