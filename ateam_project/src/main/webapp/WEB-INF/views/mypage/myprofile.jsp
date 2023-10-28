@@ -25,11 +25,11 @@
 	    $(".report-btn").click(function() {
 	       let reportType = $("#reportUser").val()
 	       console.log(reportType);
-	        $("#report-modal").css({
+	       
+	        $(".report-modal").css({
 	           "visibility": "visible",
 	           "opacity": "1"
 	        });
-	    
 	       // 모달 내부 "취소" 버튼 클릭 시 모달 닫기
 	       $(".close").click(function() {
 	          /* console.log("!") */
@@ -136,33 +136,29 @@
 						<img src="https://cdn-icons-png.flaticon.com/512/907/907873.png">
 						팔로우
 					 </button> 일단 보류 -->
-				<c:choose>
-					<c:when
-						test="${not empty emptysessionScope._LOGIN_USER_.email eq memberVO.email}">
-						<!-- a유저가 로그인한 경우에만 신고 버튼을 표시합니다. -->
-						<form action="/reportUser" method="post">
-							<input type="hidden" id="reportUser"
-								value="${empty sessionScope._LOGIN_USER}">
-							<button type="submit" class="report-btn" value="5">신고</button>
-						</form>
-					</c:when>
-					<c:otherwise>
-						<!-- a유저가 로그인하지 않은 경우에는 신고 버튼을 표시하지 않습니다. -->
-					</c:otherwise>
-				</c:choose>
-				<button id="reportUser" value="5" class="report-btn">신고</button>
+				<div>
+					<c:choose>
+						<c:when test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
+       						<button id="reportUser" value="5" class="report-btn" style="display: none;">신고</button>
+						</c:when>
+						<c:otherwise>
+							<button id="reportUser" value="5" class="report-btn">신고</button>	
+						</c:otherwise>
+					</c:choose>
+				</div>
 				<!-- 모달 창 -->
+				<div class="report-modal" id="report-modal">
 				<h2>신고 내용</h2>
 				<form name="reportVO" method="post" action="/report/view/5">
 					<div>
 						<label for="reportReason">신고사유${reportVO.reportReason} <select
 							name="reportReason">
-								<option value="6">영리 및 홍보 목적</option>
-								<option value="7">개인정보노출</option>
-								<option value="8">음란성/선정성</option>
-								<option value="9">같은 내용 반복(도배)</option>
-								<option value="10">이용규칙위반</option>
-								<option value="11">기타</option>
+								<option value="CC-20231018-000200">영리 및 홍보 목적</option>
+                                <option value="CC-20231018-000201">개인정보노출</option>
+                                <option value="CC-20231018-000202">음란성/선정성</option>
+                                <option value="CC-20231018-000203">같은 내용 반복(도배)</option>
+                                <option value="CC-20231018-000204">이용규칙위반</option>
+                                <option value="CC-20231018-000205">기타</option>
 						</select>
 						</label> <label for="reportReasonContent">신고 상세내용 <textarea
 								name="reportReasonContent" id="reportReasonContent">${reportVO.reportReasonContent}</textarea></label>
@@ -177,11 +173,11 @@
 							value="${reportVO.reportMember}" /> <label
 							for="receivedReportMemberEmail">${reportVO.receivedReportMemberEmail}</label>
 						<input id="receivedReportMemberEmail" type="hidden"
-							name="receivedReportMember" value="${generalPostVO.postWriter}" />
+							name="receivedReportMember" value="${memberVO.email}" />
 
 						<label for="reportContentId">${reportVO.reportContentId}</label> <input
 							id="reportContentId" type="hidden" name="reportContentId"
-							value="${generalPostVO.generalPostId}" />
+							value="${careerVO.generalMemberEmail}" />
 					</div>
 					<div class="btn-group">
 						<div class="right-align">
@@ -190,6 +186,7 @@
 						</div>
 					</div>
 				</form>
+				</div>
 			</div>
 		</div>
 		<button class="message_icon">✉ 메시지</button>

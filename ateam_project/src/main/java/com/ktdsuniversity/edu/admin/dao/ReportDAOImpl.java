@@ -1,3 +1,9 @@
+/**
+ * 작성자: 신진영
+ * 작성일자: 2023-10-23
+ * 수정자: 김시하(2023-10-28)
+ * 내용: 신고를 위한 DAO
+ */
 package com.ktdsuniversity.edu.admin.dao;
 
 import java.util.List;
@@ -68,12 +74,6 @@ public class ReportDAOImpl extends SqlSessionDaoSupport implements ReportDAO {
 		return getSqlSession().update("completeReportYn");
 	}
 	
-	// 게시글 신고
-	@Override
-	public int createReport(ReportVO reportVO) {
-		log.debug("--3--디에이오--------------------------------------");
-		return getSqlSession().insert("createReport", reportVO);
-	}
 
 	@Override
 	public int memberReportAllCount() {
@@ -90,4 +90,10 @@ public class ReportDAOImpl extends SqlSessionDaoSupport implements ReportDAO {
 		return getSqlSession().selectOne("qnaBoardReportAllCount");
 	}
 
+	// 게시글, 댓글, 유저 신고
+	@Override
+	public int createReport(ReportVO reportVO) {
+		log.debug("--3--디에이오--------------------------------------");
+		return getSqlSession().insert("createReport", reportVO);
+	}
 }

@@ -1,5 +1,9 @@
 package com.ktdsuniversity.edu.generalposthashtag.dao;
 
-public class HashtagDAO {
+import com.ktdsuniversity.edu.generalposthashtag.vo.HashtagVO;
+
+public interface HashtagDAO {
+
+	int createHashtag(HashtagVO hashtagVO);
 
 }

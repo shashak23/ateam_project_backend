@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -113,6 +112,7 @@ pre.content {
     z-index: 1;
 }
 
+
 /* 모달 내용 스타일 */
 .report-modal-content {
     position: relative;
@@ -122,7 +122,25 @@ pre.content {
     background-color: #fff;
     border-radius: 5px;
 }
-
+/* 댓글 모달 내용 스타일 */
+.report-window-content {
+    position: relative;
+    margin: 15% auto;
+    padding: 20px;
+    width: 60%;
+    background-color: #fff;
+    border-radius: 5px;
+}
+.report-window {
+    display: none; 
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); 
+    z-index: 1;
+}
 /* 모달 닫기 버튼 스타일 */
 .close {
     position: absolute;
@@ -251,6 +269,8 @@ textarea {
                                         <button class="recommend-comment">좋아요</button>
                                         <button class="update-comment">수정</button>
                                         <button class="delete-comment">삭제</button>
+                                        <button class="report-comment" value="2">신고</button>
+
                                     </div>`}
                             </div>`;
                         var commentDom = $(commentTemplate);
@@ -258,12 +278,23 @@ textarea {
                   // 추천 버튼 클릭 이벤트 핸들러를 등록합니다.
                   commentDom.find(".recommend-comment").click(recommendComment);
                   commentDom.find(".update-comment").click(updateComment);
+                  commentDom.find(".report-comment").click(reportComment);
                         $(".comment-items").append(commentDom);
                     }
                 })// $.get
         } // loadReplies
       loadReplies()
-        
+   	  // 신고버튼 클릭
+      $(".report-comment").click(reportComment);
+      	var reportComment = function(event) {
+	        // 모달을 표시합니다.
+	        $("#report-window").css("display", "block");
+	        console.log($(this).val())
+      	}
+		    // 모달 내부 "취소" 버튼 클릭 시 모달 닫기
+		    $("#cancel-window").click(function() {
+		        $("#report-window").css("display", "none");
+		    });
         // 등록버튼 클릭
         $("#btn-save-comment").click(function(event) {
 
@@ -408,44 +439,51 @@ textarea {
 </script>
 </head>
 <body>
-
-   <div class="update_btn">
-      <div class="btn">
-         <a href="/qnaboard/update/${generalPostVO.generalPostId}">수정</a>
-         <a href="/qnaboard/delete/${generalPostVO.generalPostId}">삭제</a>
-      </div>
+<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq generalPostVO.postWriter}">					
+   <div class="btn-group">
+       <div class="right-align">
+           <div class="update_btn">
+               <div class="btn">
+                   <a href="/freeboard/update/${generalPostVO.generalPostId}">수정</a>
+                   <a href="/freeboard/delete/${generalPostVO.generalPostId}">삭제</a>
+               </div>
+           </div>
+       </div>
    </div>
-
+</c:if>
 
    
 <div class="main_Container">
-   <p class="qna_Title">QnA 게시판 > </p>
+   <p class="free_Title">자유게시판 > </p>
    <label for="postTitle"></label>
          <div class="title_Name">${generalPostVO.postTitle}</div>
 
    <!-- <h1>[스프링부트] 스프링 부트 3 자바 백엔드 개발 입문이요</h1> -->
    
+   <!-- 목록보기 -->
+   <a href="/freeboard/list">목록</a>
+   
    <!-- 좋아요 기능 -->
 	<button id="like-btn">좋아요</button>
 	
 	<!-- 신고 기능 -->
-	<button id="reportQnABoard" value="3" class="report-btn">신고</button>
+	<button id="reportQnABoard" value="1" class="report-btn">신고</button>
       <!-- 모달 창 -->
          <div id="report-modal" class="report-modal">
              <div class="report-modal-content">
                  <span class="close" id="cancel-modal">취소</span>
                     <!-- 모달 내용 추가 -->
                   <h2>신고 내용</h2>
-                  <form name="reportVO" method="post" action="/report/view/3">
+                  <form name="reportVO" method="post" action="/report/view/1">
                      <div>
                         <label for="reportReason" >신고사유${reportVO.reportReason}
                            <select name="reportReason">
-                              <option value="6">영리 및 홍보 목적</option>
-                              <option value="7">개인정보노출</option>
-                              <option value="8">음란성/선정성</option>
-                              <option value="9">같은 내용 반복(도배)</option>
-                              <option value="10">이용규칙위반</option>
-                              <option value="11">기타</option>
+                              <option value="CC-20231018-000200">영리 및 홍보 목적</option>
+                              <option value="CC-20231018-000201">개인정보노출</option>
+                              <option value="CC-20231018-000202">음란성/선정성</option>
+                              <option value="CC-20231018-000203">같은 내용 반복(도배)</option>
+                              <option value="CC-20231018-000204">이용규칙위반</option>
+                              <option value="CC-20231018-000205">기타</option>
                            </select>
                         </label>
                
@@ -456,7 +494,7 @@ textarea {
                         <input id="attachedImg" type="file" name="attachedImg"/>
                         
                         <label for="reportTypeId">${reportVO.reportTypeId}</label>
-                        <input id="reportTypeId" type="hidden" name="reportTypeId" value="3"/>
+                        <input id="reportTypeId" type="hidden" name="reportTypeId" value="1"/>
                         
                         <label for="reportMemberEmail">${reportVO.reportMemberEmail}</label>
                         <input id="reportMemberEmail" type="hidden" name="reportMember" value="${reportVO.reportMember}"/>
@@ -479,10 +517,9 @@ textarea {
 
    <form name="generalPostVO" method="post">
       <div class="grid">
-       
-         
-         <label for="postWriter">이메일</label>
-         <div>${generalPostVO.postWriter}</div>
+               
+         <label for="postWriter">닉네임</label>
+         <a href="/memberinfo/view/${generalPostVO.postWriter}">${generalPostVO.memberVO.nickname}</a>
 
          <label for="viewCnt">조회수</label>
          <div>${generalPostVO.viewCnt}</div>
@@ -496,14 +533,14 @@ textarea {
          <div class="postContent_controller_1">${generalPostVO.postContent}</div>
          
          
-         <!-- </div> -->
+         <%-- <!-- </div> -->
          <div class="btn-group">
             <div class="right-align">
                    <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq generalPostVO.postWriter}">
                   
                </c:if>
             </div>
-         </div>
+         </div> --%>
       
    </form>
 </div>   
@@ -517,21 +554,55 @@ textarea {
             <button id="btn-save-comment" type="submit">등록</button>
             <!-- 신고 버튼은 조회할때 사용<button id="btn-report-comment">신고</button> -->
          </div>
-         <!-- <div class="comment-option">
-            <button id="btn-save-comment">등록</button>
-         </div> -->
    </div>  
-
-   <%-- <c:if test="${not empty sessionScope._LOGIN_USER_ 
-                      && sessionScope._LOGIN_USER_.generalMemberEmail 
-                      eq generalPostVO.generalMemberVO.generalMemberEmail}">
-            <div class="btn-group">
-                <div class="right-align">
-                    <a href="/qnapost/replies/update/${generalPostVO.generalPostId}">수정</a>
-                   
-                </div>
+   
+    <!-- 댓글 신고 모달 창 -->
+         <div id="report-window" class="report-window">
+             <div class="report-window-content">
+                 <span class="close" id="cancel-window">취소</span>
+                    <!-- 모달 내용 추가 -->
+                  <h2>신고 내용</h2>
+                  <form name="reportVO" method="post" action="/report/view/2">
+                     <div>
+                        <label for="reportReason" >신고사유${reportVO.reportReason}
+                           <select name="reportReason">
+                              <option value="CC-20231018-000200">영리 및 홍보 목적</option>
+                              <option value="CC-20231018-000201">개인정보노출</option>
+                              <option value="CC-20231018-000202">음란성/선정성</option>
+                              <option value="CC-20231018-000203">같은 내용 반복(도배)</option>
+                              <option value="CC-20231018-000204">이용규칙위반</option>
+                              <option value="CC-20231018-000205">기타</option>
+                           </select>
+                        </label>
+               
+                        <label for = "reportReasonContent">신고 상세내용
+                        <textarea name="reportReasonContent" id="reportReasonContent">${reportVO.reportReasonContent}</textarea></label>
+                     
+                        <label for="attachedImg">첨부파일${reportVO.attachedImg}</label>
+                        <input id="attachedImg" type="file" name="attachedImg"/>
+                        
+                        <label for="reportTypeId">${reportVO.reportTypeId}</label>
+                        <input id="reportTypeId" type="hidden" name="reportTypeId" value="2"/>
+                        
+                        <label for="reportMemberEmail">${reportVO.reportMemberEmail}</label>
+                        <input id="reportMemberEmail" type="hidden" name="reportMember" value="${reportVO.reportMember}"/>
+                     
+                        <label for="receivedReportMemberEmail">${reportVO.receivedReportMemberEmail}</label>
+                        <input id="receivedReportMemberEmail" type="hidden" name="receivedReportMember" value="${generalPostVO.postWriter}"/>
+                     
+                        <label for="reportContentId">${reportVO.reportContentId}</label>
+                        <input id="reportContentId" type="hidden" name="reportContentId" value="${generalPostVO.generalPostId}"/>
+                     </div>
+                     <div class="btn-group">
+                        <div class="right-align">
+                           <input type="submit" value="완료" />
+            
+                        </div>
+                     </div>      
+                  </form>
+               </div>
             </div>
-        </c:if> --%>
+
         <jsp:include page="../layout/footer.jsp" />
         <script>
          // 미완성된 기능을 알려주는 모달창
