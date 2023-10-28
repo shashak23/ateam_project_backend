@@ -199,7 +199,18 @@
  }
  .footer .inner address span {
 	 color: var(--dark);
+	 margin: 123px;
  }
+
+ .footer .inner address span::after {
+	content: '|';
+	margin-left: 10px;
+ }
+
+ .footer .inner address span:last-child::after {
+	content: '';
+ }
+
  .footer .inner .copyright {
 	 text-align: center;
 	 color: var(--dark);
@@ -309,4 +320,3 @@
     cursor: default;
 	height: 600px;
 }
- 

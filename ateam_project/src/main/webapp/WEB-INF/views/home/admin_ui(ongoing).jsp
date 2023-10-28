@@ -1,14 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
-
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>작업용 관리자 ui</title>
+<script src="/js/lib/jquery-3.7.1.js"></script>
+</head>
 <style>
-  .admin_container {
-    position: fixed;
-    top: 180px;
-    left: 220px;
-  }
-
   .admin_container ul {
     list-style: none;
     padding: 0;
@@ -110,6 +110,7 @@
   .btn_group button {
     margin-left: 10px;
   }
+
   .overlay {
     background-color: #00000034;
     position: fixed;
@@ -126,6 +127,18 @@
     opacity: 1;
     pointer-events: all;
   }
+
+  .btn-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: transparent;
+    border: none;
+    font-size: 18px;
+    color: #888;
+    cursor: pointer;
+  }
+
   .desc-content button {
     display: block;
     width: 100%;
@@ -208,6 +221,7 @@
       </div>
     </div>
   </div>
+  <div class="overlay"></div>
 </body>
 <script>
   $('.mainmenu_btn').next('.admin_submenu').slideToggle(200)

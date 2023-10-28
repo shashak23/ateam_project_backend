@@ -70,7 +70,7 @@ public class HomeController {
 	
 	@GetMapping("/home/admin")
 	public String viewAdmin() {
-		return "home/admin_ui";
+		return "home/admin_ui(ongoing)";
 	}
 	
 	@ResponseBody
