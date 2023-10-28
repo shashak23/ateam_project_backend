@@ -11,8 +11,10 @@ $().ready(function() {
 			var code = response[i]
 			var checkbox = $("<input type='checkbox' id='"+code.codeId+"' name='algorithmCategoryIdList' value='"+code.codeId+"' />");
 			var label = $("<label for='"+code.codeId+"'>"+code.codeContent+"</label>");
+			var space = $("<span class='checkbox-space'> </span>");
 			$("#algorithm_category").append(checkbox);
 			$("#algorithm_category").append(label);
+			$("#algorithm_category").append(space);
 		}
 	});
 	
@@ -36,13 +38,20 @@ $().ready(function() {
 	
 })
 </script>
-
+</head>
 <style>
+	.checkbox-space {
+    margin-right: 5px;
+}
 	#container{
 		width: 800px;
 		height:1000px;
 		margin-top: 40px;
 		margin:0 auto;
+	}
+
+	h3{
+		margin-top: 30px;
 	}
 
 	#algorithm_category{
@@ -76,8 +85,23 @@ $().ready(function() {
 		border: 2px solid #1E90FF; 
 	}
 
-	h3{
-		margin-top: 20px;
+	.search_area > #search_form > #search_btn{
+		width:50px;
+		height:40px;
+		border:0.5px;
+		border-radius: 6px;
+		transition: box-shadow 0.3s ease;
+	}
+
+	.search_area > #search_form > #search_btn:hover{
+		border: 2px solid #1E90FF; 
+	}
+
+	.search_area > #search_form > .gohome > .reset{
+		width:40px;
+		height:40px;
+		margin-top: 10px;
+		
 	}
 
 	table.table {
@@ -110,7 +134,6 @@ $().ready(function() {
 		padding: 10px;
 		color: #333;
 	}
-
 </style>
 <body>
 	<div id="container">
@@ -119,74 +142,82 @@ $().ready(function() {
 				method="get"
 				action="/algorithm/explanation/list">
 				<label for="algorithmCategoryId" id="algorithmCategoryId">
-					<h3>알고리즘 카테고리</h3>
+					<h3>상세검색</h3>
 				</label>
-				<div id="algorithm_category"></div>
-				
+
+				<div id="algorithm_category"></div>	
+
 				<select class="type" name="searchType">
 					<option value="postTitle" ${searchAlgorithmExplanationVO.searchType eq 'postTitle' ? 'selected' : ''}>제목</option>
 					<option value="postContent" ${searchAlgorithmExplanationVO.searchType eq 'postContent' ? 'selected' : ''}>내용</option>
 					<option value="postWriter" ${searchAlgorithmExplanationVO.searchType eq 'postWriter' ? 'selected' : ''}>작성자</option>
 				</select>
-				<input id="search_bar" type="text" name="searchKeyword" value="${searchAlgorithmExplanationVO.searchKeyword}" placeholder="궁금한 알고리즘 검색" />
-				<a href="/algorithm/explanation/list">검색 초기화</a>
+
+				<input id="search_bar" type="text" name="searchKeyword" value="${searchAlgorithmExplanationVO.searchKeyword}" />
+
+				<button id="search_btn">검색</button>
+
+				<a href="/algorithm/explanation/list" class="gohome">
+					<img src="/images/reset.png" alt="검색초기화" class="reset">
+				</a>
 			</form>
 			
 		</div>	
-		<div class="btn_group">
-			<div class="right_align">
-				<!-- 로그인 하지 않았을 때 -->
-				<c:if test="${empty sessionScope._LOGIN_USER_}">
-					<a href="/member/auth">로그인하기</a>
-				</c:if>
-				<!-- 기업회원에게만 보임 -->
-				<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.memberType eq 'COMPANY'}">
-					<a href="/algorithm/explanation/create">게시글 등록</a>
-				</c:if>
-			</div>
+	<div class="btn-group">
+		<div class="right-align">
+			<!-- 로그인 하지 않았을 때
+		    <c:if test="${empty sessionScope._LOGIN_USER_}">
+		        <a href="/member/auth">로그인하기</a>
+		    </c:if> -->
+			<!-- 기업회원에게만 보임 -->
+			<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.memberType eq 'COMPANY'}">
+				<a href="/algorithm/explanation/create">게시글 등록</a>
+			</c:if>
 		</div>
-		<table class="table">
-			<thead>
-				<colgroup>
-					<col width="190px" />
-					<col width="100px" />
-					<col width="100px" />
-					<col width="100px" />
-					<col width="70px" />
-				</colgroup>
-				<tr>
-					<th>제목</th>
-					<th>카테고리</th>
-					<th>작성자</th>
-					<th>작성일</th>
-					<th>조회수</th>
-				</tr>
-			</thead>			
-			<tbody>
-			<c:choose>
-				<c:when test="${not empty algorithmExplanationList.algorithmExplanationList}">
-					<c:forEach items="${algorithmExplanationList.algorithmExplanationList}" var="algorithmexplanation">
-						<tr>
-							<td style="font-weight: bold;">
-								<a href="/algorithm/explanation/view/${algorithmexplanation.companyAlgorithmExplanationId}">
-									<c:out value="${algorithmexplanation.postTitle}" />
-								</a>
-							</td>
-							<td>${algorithmexplanation.commonCodeVO.codeContent}</td>
-							<td>${algorithmexplanation.memberVO.nickname}</td>
-							<td>${algorithmexplanation.postDate}</td>
-							<td>${algorithmexplanation.viewCnt}</td>
-						</tr>
-					</c:forEach>
-				</c:when>
-				<c:otherwise>
+	</div>
+	<table class="table">
+		<thead>
+			<colgroup>
+				<col width="190px" />
+				<col width="100px" />
+				<col width="100px" />
+				<col width="100px" />
+				<col width="70px" />
+			</colgroup>
+			<tr>
+				<th>제목</th>
+				<th>카테고리</th>
+				<th>작성자</th>
+				<th>작성일</th>
+				<th>조회수</th>
+			</tr>
+		</thead>
+		
+		<tbody>
+		<c:choose>
+			<c:when test="${not empty algorithmExplanationList.algorithmExplanationList}">
+				<c:forEach items="${algorithmExplanationList.algorithmExplanationList}" var="algorithmexplanation">
 					<tr>
-						<td colspan="6">등록된 게시글이 없습니다.</td>
+						<td style="font-weight: bold;">
+							<a href="/algorithm/explanation/view/${algorithmexplanation.companyAlgorithmExplanationId}">
+								<c:out value="${algorithmexplanation.postTitle}" />
+							</a>
+						</td>
+						<td>${algorithmexplanation.commonCodeVO.codeContent}</td>
+						<td>${algorithmexplanation.memberVO.nickname}</td>
+						<td>${algorithmexplanation.postDate}</td>
+						<td>${algorithmexplanation.viewCnt}</td>
 					</tr>
-				</c:otherwise>
-			</c:choose>
-			</tbody>
-		</table>
+				</c:forEach>
+			</c:when>
+			<c:otherwise>
+				<tr>
+					<td colspan="6">등록된 게시글이 없습니다.</td>
+				</tr>
+			</c:otherwise>
+		</c:choose>
+		</tbody>
+	</table>
 	</div>
 	<jsp:include page="../../layout/footer.jsp"></jsp:include>
 </body>
