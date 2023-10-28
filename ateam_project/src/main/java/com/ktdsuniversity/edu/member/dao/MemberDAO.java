@@ -79,10 +79,15 @@ public interface MemberDAO {
 	
 	/**
 	 * 관리를 위한 일반 회원 목록 조회
-	 * @param 일반 회원 타입
 	 * @return 일반 회원들의 리스트
 	 */
 	public List<MemberVO> searchGemeralTypeMemberList();
+	
+	/**
+	 * 관리를 위한 기업 목록 조회
+	 * @return 일반 기업들의 리스트
+	 */
+	public List<MemberVO> searchCompanyTypeMemberList();
 	
 	// 통합검색
 	public List<MemberVO> searchAllMemberByKeyword(AbstractSearchVO abstractSearchVO);

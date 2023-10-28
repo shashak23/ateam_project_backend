@@ -3,21 +3,21 @@
  */
  var activeModal = [];
  
- function Modal(title, content, isShowFooter) {
+ function Modal(title, content, isShowFooter, footer) {
 	 this.html = `
-	 	<div class="modal" style="visibility: visible; opacity: 1;">
-	 		<div class="modal-header">
-	 			<div>
-	 				${title}
-	 			</div>
-	 		</div>
-	 		<div class="modal-content">
-	 			${content}
-	 		</div>
-	 		${isShowFooter ? `<div class="modal-footer">
-	 			
-	 		</div>`: ""}
-	 	</div>
+	   <div class="modals" style="visibility: visible; opacity: 1;">
+         <div class="modal-header">
+            <div>
+               ${title}
+            </div>
+         </div>
+         <div class="modal-content">
+            ${content}
+         </div>
+         ${isShowFooter ? `<div class="modal-footer">
+            ${footer}
+         </div>` : ""}
+      </div>
 	 `;
  }
  
