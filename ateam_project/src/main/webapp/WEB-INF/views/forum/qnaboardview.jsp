@@ -48,10 +48,8 @@ button, input, textarea {
 }
 
 .replies {
-   position: relative;
-   left: -68px;
-   height: 400px;
-   width: 800px;
+  width: 800px;
+  margin: 0px 0px 0px 500px;
 }
 h3 {
    position: relative;
@@ -158,13 +156,26 @@ pre.content {
     color: #888;
 }
 #like-btn, #reportQnABoard {
-   margin-left: 10px;
+   margin-left: 5px;
    background-color: var(--hashtag-blue);
    border: none;
    width: 70px;
    height: 30px;
    border-radius: 5px;
    cursor: pointer;
+}
+#button-id-list {
+   bottom: 50px;
+   position: relative;
+   left: 500px;
+   margin-left: 10px;
+   background-color: var(--light-blue);
+   border: none;
+   width: 70px;
+   height: 30px;
+   border-radius: 5px;
+   cursor: pointer;
+
 }
 .main_Container {
    position: relative;
@@ -221,12 +232,7 @@ h1 {
    right: 0;
 }
 
-.replies {
-   margin: 0 auto;
-    position: relative;
-    height: 1000px;
-   
-}
+
 textarea {
    width: 1000px;
   
@@ -248,13 +254,20 @@ textarea {
 }
 .recommend-comment,
 .update-comment,
-.delete-comment {
+.delete-comment,
+.report-comment {
    border: none;
    color: var(--white);
    border-radius: 10px;
    background-color:var(--light-blue);
    margin-left: 5px;
    cursor: pointer;
+}
+.separate-line {
+   border: 1px solid #ccc;
+   width: 1000px;
+   height: 1px;
+   margin: 10px 0px 7px 0px;
 }
 
 </style>
@@ -294,6 +307,7 @@ textarea {
                                         <button class="update-comment">수정</button>
                                         <button class="delete-comment">삭제</button>
                                         <button class="report-comment" value="4">신고</button>
+                                        <div class="separate-line"></div>
                                     </div>`}
                             </div>`;
                         var commentDom = $(commentTemplate);
@@ -483,7 +497,8 @@ textarea {
    
 
    <!-- 목록보기 -->
-   <a href="/qnaboard/list">목록</a>
+   <button id="button-id-list" onclick="window.location.href='/qnaboard/list'">목록</button>
+   
    
    <!-- 좋아요 기능 -->
    <button id="like-btn">좋아요</button>
