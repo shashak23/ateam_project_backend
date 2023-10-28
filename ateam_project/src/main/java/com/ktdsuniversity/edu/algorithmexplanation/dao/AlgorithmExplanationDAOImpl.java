@@ -1,6 +1,7 @@
 /*
  * 작성자: 장보늬
  * 작성일자: 2023-10-15
+ * 수정자: 장보늬(2023-10-28)
  * 내용: 알고리즘해설 게시판의 CRUD 쿼리를 수행합니다.
  */
 
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Repository;
 
 import com.ktdsuniversity.edu.algorithmexplanation.vo.AlgorithmExplanationVO;
 import com.ktdsuniversity.edu.algorithmexplanation.vo.SearchAlgorithmExplanationVO;
+import com.ktdsuniversity.edu.common.vo.AbstractCompanyPostVO;
 import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
 
 @Repository
@@ -66,10 +68,18 @@ public class AlgorithmExplanationDAOImpl extends SqlSessionDaoSupport implements
 	public int deleteOneAlgorithmExplanation(String companyAlgorithmExplanationId) {
 		return getSqlSession().update("deleteOneAlgorithmExplanation", companyAlgorithmExplanationId);
 	}
+	
+	// 기원회원 내 게시글 조회
+	@Override
+	public List<AlgorithmExplanationVO> getCompanyMyPost(AbstractCompanyPostVO abstractCompanyPostVO) {
+		return getSqlSession().selectList("com.ktdsuniversity.edu.algorithmexplanation.dao.AlgorithmExplanationDAO.getCompanyMyPost", abstractCompanyPostVO);
+	}
 
 	// 통합검색
 	@Override
 	public List<AlgorithmExplanationVO> searchAllAlgorithmExplanationByKeyword(AbstractSearchVO abstractSearchVO) {
 		return getSqlSession().selectList("searchAllAlgorithmExplanationByKeyword", abstractSearchVO);
 	}
+
+	
 }

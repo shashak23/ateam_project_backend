@@ -18,6 +18,9 @@
 		ClassicEditor.create( document.querySelector( '#algorithmContent' ), {
 		       language: "ko"
 		    } );
+		ClassicEditor.create( document.querySelector( '#defaultCode' ), {
+		      language: "ko"
+		   } );
 		// 알고리즘카테고리 리스트 보여주기
 		$.get("/code/알고리즘카테고리", function(response) {
 			for (var i = 0; i < response.length; i++) {
@@ -55,7 +58,6 @@
         $("#submit-btn").click(function(event) {
         	event.preventDefault()
         	let json = table.toJson($, "#grid")
-        	alert(JSON.stringify(json))
         	$("#answerJson").val(JSON.stringify(json));
         	$("#algorithmQuestionVO").submit();
         })
@@ -137,6 +139,9 @@
             
             <label class="label" for="algorithmSolution">문제풀이</label>
             <textarea name="algorithmSolution" id="algorithmSolution">${algorithmQuestionVO.algorithmSolution}</textarea>
+            
+            <label for="defaultCode">기본제공코드</label>
+            <textarea id="defaultCode" name="defaultCode" >${algorithmQuestionVO.defaultCode}</textarea>
             
             <label>테스트데이터</label>
 		    <div id="table-div"></div>

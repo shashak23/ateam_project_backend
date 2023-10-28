@@ -87,6 +87,7 @@ public class MyAlgorithmController {
 			model.addAttribute("codeResultList", arVO.getCodeResultList());
 			model.addAttribute("result", arVO.getMessage());
 			model.addAttribute("companyAlgorithmQuestionId", companyAlgorithmQuestionId);
+			model.addAttribute("popupMessage", arVO.getPopupMessage());
 			
 			return "company/algorithmquestion/questionview";
 //		}

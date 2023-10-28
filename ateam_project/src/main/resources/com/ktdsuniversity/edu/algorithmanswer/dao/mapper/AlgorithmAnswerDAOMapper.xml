@@ -21,6 +21,13 @@
 	  , #{result})
 	</insert>
 	
+	<delete id="deleteAlgorithmAnswer"
+	        parameterType="string">
+	  DELETE ALGORITHM_ANSWER
+	   WHERE COMPANY_ALGORITHM_QUESTION_ID = #{companyAlgorithmQuestionId}
+	     
+	</delete>
+	
 	<select id="getAlgorithmAnswer"
 	        resultType="com.ktdsuniversity.edu.algorithmanswer.vo.AlgorithmAnswerVO"
 	        parameterType="string">

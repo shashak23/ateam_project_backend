@@ -27,6 +27,11 @@ public class AlgorithmAnswerDAOImpl extends SqlSessionDaoSupport implements Algo
 	public int createAlgorithmAnswer(AlgorithmAnswerVO algorithmAnswerVO) {
 		return getSqlSession().insert("createAlgorithmAnswer", algorithmAnswerVO);
 	}
+	
+	@Override
+	public int deleteAlgorithmAnswer(AlgorithmAnswerVO algorithmAnswerVO) {
+		return getSqlSession().delete("deleteAlgorithmAnswer", algorithmAnswerVO);
+	}
 
 	@Override
 	public List<AlgorithmAnswerVO> getAlgorithmAnswer(String companyAlgorithmQuestionId) {

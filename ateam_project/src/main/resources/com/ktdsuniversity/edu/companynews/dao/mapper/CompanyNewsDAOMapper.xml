@@ -183,4 +183,27 @@
 		   SET DELETE_YN = 'Y'
 		 WHERE COMPANY_NEWS_POST_ID = #{_parameter}
 	</update>
+	
+	<!-- 기업회원 내 게시글 조회 쿼리 -->
+	<select id="getCompanyMyPost"
+	        resultMap="companyNewsVOMap"
+	        parameterType="com.ktdsuniversity.edu.companynews.vo.CompanyNewsVO">
+	  SELECT CNP.COMPANY_NEWS_POST_ID
+	       , CNP.POST_WRITER
+	       , CNP.POST_TITLE
+	       , CNP.POST_CONTENT
+	       , TO_CHAR(CNP.POST_DATE, 'YYYY-MM-DD HH24:MI:SS') POST_DATE
+              , CNP.FILE_NAME
+              , CNP.ORIGIN_FILE_NAME
+	       , CNP.VIEW_CNT
+	       , CNP.LIKE_CNT
+	       , CNP.DELETE_YN
+	       , M.NICKNAME
+	    FROM COMPANY_NEWS_POST CNP
+	   INNER JOIN MEMBER M
+	      ON M.EMAIL = CNP.POST_WRITER
+	   WHERE CNP.DELETE_YN = 'N'
+	     AND CNP.POST_WRITER = #{postWriter}
+	   ORDER BY CNP.POST_DATE DESC
+	</select>
 </mapper>

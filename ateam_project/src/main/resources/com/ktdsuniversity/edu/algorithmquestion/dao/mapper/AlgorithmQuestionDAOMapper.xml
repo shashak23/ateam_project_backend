@@ -269,11 +269,37 @@
 	</insert>
 	
 	<update id="deleteOneAlgorithmQuestion"
-	        parameterType="string">
+	        parameterType="com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionVO">
 	    UPDATE COMPANY_ALGORITHM_QUESTION
 	       SET DELETE_YN = 'Y'
-		 WHERE COMPANY_ALGORITHM_QUESTION_ID = #{_parameter}
+		 WHERE COMPANY_ALGORITHM_QUESTION_ID = #{companyAlgorithmQuestionId}
 	</update>
 	
-	
+	<!-- 기업회원 내 게시글 조회 쿼리 -->
+	<select id="getCompanyMyPost"
+	        resultMap="AlgorithmQuestionDAOMap"
+	        parameterType="com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionVO">
+	  SELECT CAQ.COMPANY_ALGORITHM_QUESTION_ID
+	       , CAQ.MAIN_ALGORITHM_CATEGORY_ID
+	       , CAQ.ALGORITHM_TIER_ID
+	       , CAQ.ALGORITHM_WRITER
+	       , CAQ.ALGORITHM_TITLE
+	       , CAQ.ALGORITHM_CONTENT
+	       , CAQ.ALGORITHM_SOLUTION
+	       , CAQ.DEFAULT_CODE
+	       , TO_CHAR(CAQ.POST_DATE, 'YYYY-MM-DD HH24:MI:SS') POST_DATE
+	       , CAQ.VIEW_CNT
+	       , CAQ.LIKE_CNT
+	       , CAQ.DELETE_YN
+	       , M.NICKNAME
+	       , C.CODE_CONTENT
+	    FROM COMPANY_ALGORITHM_QUESTION CAQ
+	   INNER JOIN MEMBER M
+	      ON CAQ.ALGORITHM_WRITER = M.EMAIL
+	   INNER JOIN COMMON_CODE C
+	      ON CAQ.MAIN_ALGORITHM_CATEGORY_ID = C.CODE_ID
+	   WHERE CAQ.DELETE_YN = 'N'
+	     AND CAQ.ALGORITHM_WRITER = #{algorithmWriter}
+	   ORDER BY POST_DATE DESC
+	</select>
 </mapper>

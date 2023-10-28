@@ -146,9 +146,6 @@
 
             <label class="label" for="algorithmSolution">문제풀이</label>
             <textarea name="algorithmSolution" id="algorithmSolution"></textarea>
-            <script>
-			   
-			</script>
             
             <label for="defaultCode">기본제공코드</label>
             <textarea id="defaultCode" name="defaultCode" ></textarea>
