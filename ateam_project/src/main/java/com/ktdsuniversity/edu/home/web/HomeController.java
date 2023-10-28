@@ -63,7 +63,7 @@ public class HomeController {
 	@Autowired
 	private CompanyNewsService companyNewsService;
 	
-	@GetMapping("/home/home")
+	@GetMapping("/devground/home")
 	public String homeLink() {
 		return "home/home";
 	}
