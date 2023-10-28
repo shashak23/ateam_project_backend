@@ -13,12 +13,16 @@ import com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO;
 import com.ktdsuniversity.edu.education.vo.EducationVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 import com.ktdsuniversity.edu.techstack.vo.TechstackVO;
+import com.ktdsuniversity.edu.util.XssIgnore;
 
 import jakarta.validation.constraints.NotBlank;
 
 public class GeneralMemberVO extends MemberVO {
 	private String generalMemberEmail;
+	
+	@XssIgnore
 	private String selfIntro;
+	
 	private String jobId;
 	@NotBlank(message = "주소를 입력해주세요.")
 	private String region;

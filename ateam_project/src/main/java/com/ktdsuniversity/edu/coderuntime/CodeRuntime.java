@@ -158,8 +158,8 @@ public class CodeRuntime {
 			this.code.append(line.replace("\r", "") + "\n");
 		}
 		
-		fileName = code.substring(code.indexOf("class") + 5, code.indexOf("{"));
-		fileName = fileName.trim() + ".java";
+		this.fileName = code.substring(code.indexOf("class") + 5, code.indexOf("{"));
+		this.fileName = this.fileName.trim() + ".java";
 		this.setFileName(fileName);
 		
 		this.makeFile();
@@ -169,15 +169,15 @@ public class CodeRuntime {
 	}
 	
 	public void setFileName(String fileName) {
-		this.baseDir += "\\" + UUID.randomUUID().toString();
+		String codeDir = this.baseDir + "\\" + UUID.randomUUID().toString();
 		this.fileName = fileName;
 
-		javaFile = new File(baseDir, this.fileName);
+		this.javaFile = new File(codeDir, this.fileName);
 		if (!javaFile.getParentFile().exists()) {
 			javaFile.getParentFile().mkdirs();
 		}
 		
-		runFile = new File(baseDir, "Run.java");
+		this.runFile = new File(codeDir, "Run.java");
 		if (!runFile.getParentFile().exists()) {
 			runFile.getParentFile().mkdirs();
 		}
@@ -187,6 +187,16 @@ public class CodeRuntime {
 		String code = this.code.toString();
 		code = XssIgnoreUtil.ignoreText(code);
 		code = Jsoup.parse(code).text();
+		
+		code = code.replace("\t", " ");
+		while ( code.contains("  ") ) {
+			code = code.replace("  ", " ");
+		}
+		
+		if ( !code.contains("public class Solution") && code.contains("class Solution") ) {
+			code = code.replace("class Solution", "public class Solution");
+		}
+		
 		makeFile(code);
 //		makeFile(CodeRuntime.runFileCode.toString());
 	}
@@ -242,7 +252,7 @@ public class CodeRuntime {
 	
 	private synchronized void doCompile(File file) {
 		
-//		System.out.println("compile: " + "javac -parameters --class-path " + file.getParentFile().getParentFile().getAbsolutePath() + "/gson-2.10.1.jar;" + file.getParentFile().getAbsolutePath() + " " + file.getAbsolutePath());
+		System.out.println("compile: " + "javac -parameters --class-path " + file.getParentFile().getParentFile().getAbsolutePath() + "/gson-2.10.1.jar;" + file.getParentFile().getAbsolutePath() + " " + file.getAbsolutePath());
 		
 		ProcessBuilder pb = new ProcessBuilder("cmd", "/c", "javac -parameters --class-path " + file.getParentFile().getParentFile().getAbsolutePath() + "/gson-2.10.1.jar;" + file.getParentFile().getAbsolutePath() + " " + file.getAbsolutePath());
 		Process process = null;
@@ -276,7 +286,7 @@ public class CodeRuntime {
 	
 	public List<String> run(String paramJson) {
 		String classFile = this.runFile.getAbsolutePath();
-		String command = "java --class-path " + this.runFile.getParentFile().getParentFile().getAbsolutePath() + "/gson-2.10.1.jar;" + this.runFile.getParentFile().getAbsolutePath() + " " + classFile;
+		String command = "java -Dfile.encoding=UTF8 --class-path " + this.runFile.getParentFile().getParentFile().getAbsolutePath() + "/gson-2.10.1.jar;" + this.runFile.getParentFile().getAbsolutePath() + " " + classFile;
 		
 		if (paramJson != null && paramJson.trim().length() == 0) {
 			paramJson = null;
@@ -286,7 +296,7 @@ public class CodeRuntime {
 			command += " \"" + paramJson + "\"";
 		}
 		
-//		System.out.println("Run: " + command);
+		System.out.println("Run: " + command);
 		
 		ProcessBuilder pb = new ProcessBuilder("cmd", "/c", command);
 		Process process = null;
@@ -319,5 +329,11 @@ public class CodeRuntime {
 		return runResult;
 	}
 	
+	public void teardown() {
+		this.code = null;
+		this.fileName = null;
+		this.javaFile = null;
+		this.runFile = null;
+	}
 	
 }

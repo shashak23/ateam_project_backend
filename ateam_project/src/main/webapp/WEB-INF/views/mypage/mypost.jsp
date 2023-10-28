@@ -9,7 +9,7 @@
 <title>내 게시글 조회</title>
 </head>
 <body>
- 	<label for="qnaboard">QnA 게시판</label>
+	<label for="qnaboard">QnA 게시판</label>
 	<table class="table">
 		<thead>
 			<colgroup>
@@ -29,9 +29,8 @@
 		</thead>
 		<tbody>
 		<c:choose>
-			<c:when test="${not empty generalPostList.generalPostList}">
-				<c:forEach items="${generalPostList.generalPostList}" var="myqnapost">
-					<c:if test="${myqnapost.boardId eq 'CC-20231017-000029'}">
+			<c:when test="${not empty qnaPostList}">
+				<c:forEach items="${qnaPostList}" var="myqnapost">
 					<tr>
 						<td style="font-weight: bold;">
 							<a href="/qnaboard/view/${myqnapost.generalPostId}">
@@ -43,7 +42,6 @@
 						<td>${myqnapost.viewCnt}</td>
 						<td>${myqnapost.likeCnt}</td>
 					</tr>
-					</c:if>
 				</c:forEach>
 			</c:when>
 			<c:otherwise>
@@ -77,9 +75,8 @@
 		</thead>
 		<tbody>
 		<c:choose>
-			<c:when test="${not empty generalPostList.generalPostList}">
-				<c:forEach items="${generalPostList.generalPostList}" var="myfreepost">
-					<c:if test="${myfreepost.boardId eq 'CC-20231017-000030'}">
+			<c:when test="${not empty freePostList}">
+				<c:forEach items="${freePostList}" var="myfreepost">
 					<tr>
 						<td style="font-weight: bold;">
 							<a href="/freeboard/view/${myfreepost.generalPostId}">
@@ -92,7 +89,6 @@
 						<td>${myfreepost.viewCnt}</td>
 						<td>${myfreepost.likeCnt}</td>
 					</tr>
-					</c:if>
 				</c:forEach>
 			</c:when>
 			<c:otherwise>
