@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 <script src="/js/lib/jquery-3.7.1.js"></script>
 <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/super-build/ckeditor.js"></script>
-
+	
 	<style type= "text/css">
 		div.grid {
 			display: grid;
