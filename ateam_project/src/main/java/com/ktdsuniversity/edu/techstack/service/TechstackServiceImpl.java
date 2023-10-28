@@ -70,8 +70,8 @@ public class TechstackServiceImpl implements TechstackService{
 	}
 	@Transactional
 	@Override
-	public boolean deleteTechstack(String techstackId) {
-		int deleteCount= techstackDAO.deleteTechstack(techstackId);
+	public boolean deleteTechstack(String email) {
+		int deleteCount= techstackDAO.deleteTechstack(email);
 		return deleteCount>0 ;
 	}
 

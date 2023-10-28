@@ -19,7 +19,13 @@
 				$("#techstack_category").append(label);
 			}
 		});
-		
+		$("form").submit(function(event) {
+            var checkedCount = $("input[name='hashtagList']:checked").length;
+            if (checkedCount < 1) {
+                alert("적어도 하나 이상의 항목을 선택하세요.");
+                event.preventDefault();
+            }
+        });
 		
       
 	})
