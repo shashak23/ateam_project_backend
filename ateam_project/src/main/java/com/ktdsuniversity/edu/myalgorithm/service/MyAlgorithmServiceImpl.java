@@ -1,6 +1,6 @@
 /**
  * 작성자: 김태현
- * 수정자: 장보늬(2023-10-19)
+ * 수정자: 장보늬(2023-10-28)
  * 작성일자: 2023-10-12
  * 내용: 내가 푼 알고리즘 문제들의 쿼리 수행 결과를 저장하는 클래스입니다.
  */
@@ -73,7 +73,6 @@ public class MyAlgorithmServiceImpl implements MyAlgorithmService{
 				// 회원이 입력한 결과 값
 				int memberAnswer = Integer.parseInt(runResult.get(1));
 				
-				
 				if (memberAnswer == result) {
 					arVO.setCorrect(true);
 					message.add("정답");
@@ -83,9 +82,30 @@ public class MyAlgorithmServiceImpl implements MyAlgorithmService{
 					message.add("오답");
 				}
 				processResult.addAll(runResult);
+				logger.debug("정답여부: " + message);
 				
 			}
 			codeRuntime.teardown();
+
+			// "오답"이 포함되어 있는지 확인
+			boolean containsWrongAnswer = false;
+			if (message != null) {
+				for (String msg : message) {
+					if (msg != null && msg.contains("오답")) {
+						containsWrongAnswer = true;
+						break;
+					}
+				}
+			}
+			
+			// "CORRECT_ANSWER_YN" 값을 설정
+			myAlgorithmVO.setCorrectAnswerYn(containsWrongAnswer ? "N" : "Y");
+			
+			// 팝업 메시지 설정
+			String popupMessage = containsWrongAnswer ? "오답입니다." : "정답입니다.";
+			
+			logger.debug("팝업메세지: " + popupMessage);
+			arVO.setPopupMessage(popupMessage);
 		}
 		int createCount = myAlgorithmDAO.createNewMyAlgorithm(myAlgorithmVO);
 		
