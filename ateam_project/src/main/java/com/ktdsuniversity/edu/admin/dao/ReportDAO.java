@@ -2,6 +2,9 @@ package com.ktdsuniversity.edu.admin.dao;
 
 import java.util.List;
 
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.ktdsuniversity.edu.admin.vo.ReportVO;
 
 public interface ReportDAO {

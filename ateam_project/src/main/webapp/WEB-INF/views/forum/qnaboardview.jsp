@@ -230,8 +230,9 @@ h1 {
    position: absolute;
    top: -30px;
    right: 0;
+   margin-top: 500px;
+   margin-right: 250px;
 }
-
 
 textarea {
    width: 1000px;
@@ -489,7 +490,7 @@ textarea {
    </div>
 </c:if>
 <div class="main_Container">
-   <p class="qna_Title">QnA 게시판 > </p>
+   <p class="qna_Title">질답게시판 > </p>
    <label for="postTitle"></label>
          <div class="title_Name">${generalPostVO.postTitle}</div>
 
@@ -511,7 +512,7 @@ textarea {
                  <span class="close" id="cancel-modal">취소</span>
                     <!-- 모달 내용 추가 -->
                   <h2>신고 내용</h2>
-                  <form name="reportVO" method="post" action="/report/view/3">
+                  <form name="reportVO" method="post" action="/report/view/3" enctype="multipart/form-data">
                      <div>
                         <label for="reportReason" >신고사유${reportVO.reportReason}
                            <select name="reportReason">

@@ -29,6 +29,16 @@ public class BookmarkDAOImpl extends SqlSessionDaoSupport implements BookmarkDAO
 	}
 	
 	@Override
+	public List<BookmarkVO> getFreeboardBookmark(String email) {
+		return getSqlSession().selectList("getFreeboardBookmark", email);
+	}
+	
+	@Override
+	public List<BookmarkVO> getQnaboardBookmark(String email) {
+		return getSqlSession().selectList("getQnaBookmark", email);
+	}
+	
+	@Override
 	public List<BookmarkVO> getOneBookmark(BookmarkVO bookmarkVO) {
 		return getSqlSession().selectOne("getOneBookmark", bookmarkVO);
 	}

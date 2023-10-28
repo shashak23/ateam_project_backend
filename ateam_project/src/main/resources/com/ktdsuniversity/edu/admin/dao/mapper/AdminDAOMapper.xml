@@ -280,7 +280,6 @@
 	<!-- 게시글, 댓글, 유저 신고 -->
 	<insert id="createReport"
 		parameterType="com.ktdsuniversity.edu.admin.vo.ReportVO">
-	
 	INSERT INTO REPORT
 	       (REPORT_ID
 		 , REPORT_MEMBER

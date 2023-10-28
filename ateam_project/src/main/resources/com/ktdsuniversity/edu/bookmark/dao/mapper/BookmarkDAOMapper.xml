@@ -63,6 +63,7 @@
 <!-- 		   AND M.EMAIL = #{_parameter} -->
 <!-- 	</select> -->
 	
+	<!-- 메인화면 북마크 조회용 -->
 	<select id="getBookmarkStatus"
 			parameterType="com.ktdsuniversity.edu.bookmark.vo.BookmarkSearchVO"
 			resultMap="BookmarkDAOMap">
@@ -77,6 +78,42 @@
 		    ON M.EMAIL = B.GENERAL_MEMBER_EMAIL
 		 WHERE M.EMAIL = #{email}
 		   AND GP.GENERAL_POST_ID = #{generalPostId}
+	</select>
+	
+	<!-- 자유게시판 북마크 조회용 -->
+	<select id="getFreeboardBookmark"
+			parameterType="com.ktdsuniversity.edu.bookmark.vo.BookmarkSearchVO"
+			resultMap="BookmarkDAOMap">
+		SELECT GP.GENERAL_POST_ID 
+			 , B.BOOKMARK_YN 
+			 , B.BOOKMARK_ID 
+			 , M.EMAIL 
+		  FROM GENERAL_POST GP
+		 INNER JOIN BOOKMARK B
+		    ON GP.GENERAL_POST_ID  = B.POST_ID 
+		 INNER JOIN MEMBER M
+		    ON M.EMAIL = B.GENERAL_MEMBER_EMAIL
+		 WHERE M.EMAIL = #{email}
+		   AND GP.BOARD_ID = 'CC-20231017-000029'
+		   AND B.BOOKMARK_YN = 'Y'
+	</select>
+	
+	<!-- 질답게시판 북마크 조회용 -->
+	<select id="getQnaboardBookmark"
+			parameterType="com.ktdsuniversity.edu.bookmark.vo.BookmarkSearchVO"
+			resultMap="BookmarkDAOMap">
+		SELECT GP.GENERAL_POST_ID 
+			 , B.BOOKMARK_YN 
+			 , B.BOOKMARK_ID 
+			 , M.EMAIL 
+		  FROM GENERAL_POST GP
+		 INNER JOIN BOOKMARK B
+		    ON GP.GENERAL_POST_ID  = B.POST_ID 
+		 INNER JOIN MEMBER M
+		    ON M.EMAIL = B.GENERAL_MEMBER_EMAIL
+		 WHERE M.EMAIL = #{email}
+		   AND GP.BOARD_ID = 'CC-20231017-000030'
+		   AND B.BOOKMARK_YN = 'Y'
 	</select>
 	
 	<insert id="createBookmark"

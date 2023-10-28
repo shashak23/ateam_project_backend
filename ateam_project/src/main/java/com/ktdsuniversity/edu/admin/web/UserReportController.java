@@ -1,16 +1,14 @@
 package com.ktdsuniversity.edu.admin.web;
 
-import java.security.Principal;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -35,6 +33,7 @@ public class UserReportController {
 	public ModelAndView createReport(@Valid @ModelAttribute ReportVO reportVO
 									   , BindingResult bindingResult 
 							           , HttpServletRequest request
+							           , Model model
 							           , @SessionAttribute("_LOGIN_USER_") MemberVO memberVO
 							           , @PathVariable String reportTypeId) {
 		log.debug("--1--컨트롤러----------------------------------------");
@@ -42,6 +41,12 @@ public class UserReportController {
 		ModelAndView view = new ModelAndView();
 		reportVO.setReportMember(memberVO.getEmail());
 
+		if (bindingResult.hasErrors()) {
+			view.addObject("reportVO", reportVO);
+			view.setViewName("home/home");
+			return view;
+		}
+		
 		 /**
 		  * reportTypeId = 신고 유형 받아오기
 		  * 1유형: CC-20231018-000097 (자유게시판 게시글)
@@ -73,30 +78,11 @@ public class UserReportController {
 			view.setViewName("redirect:/qnaboard/list");
 		} else {
 			view.addObject("reportVO", reportVO);
-			view.setViewName("report/reportview");
+			view.setViewName("report/reporthistoryview");
 		}
 		
 		return view;
 	}
 	
-	@PostMapping("/report/user")
-    public ModelAndView reportUser(@Valid @ModelAttribute ReportVO reportVO
-    						, Principal principal
-    						, @PathVariable String reportTypeId
-					        , @SessionAttribute("_LOGIN_USER_") MemberVO memberVO ) {
-		reportVO.setReportMember(memberVO.getEmail());
-		ModelAndView view = new ModelAndView();
-		log.debug("--1.컨트롤러 도착---------------------------------------------");
-		log.debug("--1.컨트롤러 확인-- : " + reportVO.getReceivedReportMember());
-		
-		boolean isSuccess = reportService.createReport(reportVO);
-		if(isSuccess) {
-			view.setViewName("redirect:/qnaboard/list");
-		} else {
-			view.addObject("reportVO", reportVO);
-			view.setViewName("report/reportview");
-		}
-		
-		return view;
-    }
+	
 }
