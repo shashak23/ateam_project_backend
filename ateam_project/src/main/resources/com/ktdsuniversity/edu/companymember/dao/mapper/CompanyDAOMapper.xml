@@ -43,4 +43,36 @@
 			  , ''
 			  , #{confirmYn})
 	</insert>
+	
+	<select id="companyMemberAllCount"
+			resultType="_int">
+		SELECT COUNT(1)
+		  FROM COMPANY
+	</select>
+	
+	<select id="CompanyMemberAllList"
+			resultType="com.ktdsuniversity.edu.companymember.vo.CompanyVO">
+		SELECT COMPANY_EMAIL
+			  , CONTACT_NUMBER
+			  , CONTACT_NAME
+			  , COMPANY_NAME
+			  , INDUSTRY_TYPE
+			  , COMPANY_REGIST_NUMBER
+			  , COMPANY_REGIST_CERTIFICATE_URL
+			  , ADDRESS
+			  , SALES
+			  , STAFF_CNT
+			  , INVESTMENT
+			  , COMPANY_INTRO
+			  , HOME_URL
+			  , CONFIRM_YN
+		  FROM COMPANY
+	</select>
+	
+	<update id="CompleteCompanyMemberRegistrationYn"
+			parameterType="string">
+		UPDATE COMPANY
+		   SET CONFIRM_YN = 'Y'
+		 WHERE COMPANY_EMAIL = #{_parameter}
+	</update>
 </mapper>

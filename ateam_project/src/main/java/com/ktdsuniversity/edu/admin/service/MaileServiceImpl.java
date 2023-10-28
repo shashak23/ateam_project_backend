@@ -6,10 +6,17 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import com.ktdsuniversity.edu.companymember.dao.CompanyDAO;
+import com.ktdsuniversity.edu.companymember.vo.CompanyListVO;
+import com.ktdsuniversity.edu.companymember.vo.CompanyVO;
+
 import jakarta.mail.internet.MimeMessage;
 
 @Service
 public class MaileServiceImpl implements MailService {
+	
+	@Autowired
+	private CompanyDAO companyDAO;
 	
 	@Autowired
 	private JavaMailSender javaMailSender;
@@ -18,38 +25,18 @@ public class MaileServiceImpl implements MailService {
 	String sendFrom;
 	
 	
+	
 	@Override
-	public void sendMail() {
-		
-//		MimeMessagePreparator preparator = new MimeMessagePreparator() {
-//			
-//			String sendTo = "murasaki1207@gmail.com";
-//			String mailTitle = "메일 테스트입니당";
-//			String mailContent = "보내져라,,,,";
-//			
-//			@Override
-//			public void prepare(MimeMessage mimeMessage) throws Exception {
-//				final MimeMessageHelper message = new MimeMessageHelper(mimeMessage,true,"UTF-8");
-//
-//				message.setTo(sendTo);
-//				message.setFrom(sendFrom);	//env.getProperty("spring.mail.username")
-//				message.setSubject(mailTitle);
-//				message.setText(mailContent, true); //ture : html 형식 사용
-//					
-//				//Mail에 img 삽입
-//				ClassPathResource resource = new ClassPathResource("img 주소/img 이름.png");
-//				message.addInline("img", resource.getFile());
-//			
-//			}
-//		};
-//
-//		try{
-//			javaMailSender.send(preparator);
-//		} catch (MailException e){
-//			return false;
-//		}
-//		return true;		
-//		}
+	public CompanyListVO getAllCompanyMember() {
+		CompanyListVO companyListVO = new CompanyListVO();
+		companyListVO.setCompanyCnt(companyDAO.companyMemberAllCount());
+		companyListVO.setCompanyList(companyDAO.CompanyMemberAllList());
+		return companyListVO;
+	}
+	
+	
+	@Override
+	public void sendApprovalMail(CompanyVO companyVO) {
 		
 		    MimeMessage message = javaMailSender.createMimeMessage();
 
@@ -57,22 +44,58 @@ public class MaileServiceImpl implements MailService {
 		        MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
 		        
 		        // 1. 메일 수신자 설정
-		        String receiver = "murasaki1207@gmail.com";
+		        String receiver = companyVO.getCompanyEmail();
 		        messageHelper.setTo(receiver);
 
 		        // 2. 메일 제목 설정
-		        messageHelper.setSubject("test_subject");
+		        messageHelper.setSubject("기업회원가입이 승인되었습니다");
 
 		        // 3. 메일 내용 설정
 		        // HTML 적용됨
-		        String content = "????????????";
+		        String content = "축하합니다! 기업회원가입이 완료되었습니다.</br> 기본비밀번호는 \"abc123\"이며, 마이페이지에서 변경가능합니다.";
 		        messageHelper.setText(content,true);
 
 		        // 4. 메일 전송
 		        javaMailSender.send(message);
-		    } catch(Exception e){
+		        } catch(Exception e){
 //		        logger.info(e.toString());
-		    }
+		        	}
 		    }
 
-}
+
+	@Override
+	public void sendRefuseMail(CompanyVO companyVO) {
+		
+	    MimeMessage message = javaMailSender.createMimeMessage();
+
+	    try{
+	        MimeMessageHelper messageHelper = new MimeMessageHelper(message, true, "UTF-8");
+	        
+	        // 1. 메일 수신자 설정
+	        String receiver = companyVO.getCompanyEmail();
+	        messageHelper.setTo(receiver);
+
+	        // 2. 메일 제목 설정
+	        messageHelper.setSubject("기업회원가입이 거부되었습니다");
+
+	        // 3. 메일 내용 설정
+	        // HTML 적용됨
+	        String content = "죄송합니다. 사업자등록증을 다시 한번 확인하시거나 고객센터로 연락주시길 바랍니다.";
+	        messageHelper.setText(content,true);
+
+	        // 4. 메일 전송
+	        javaMailSender.send(message);
+	        } catch(Exception e){
+//	        logger.info(e.toString());
+	        	}
+	    }
+
+
+	@Override
+	public boolean doCompleteCompanyMemberRegistrationYn(String companyEmail) {
+		int CompleteCompanyMemberRegistrationYnCount = companyDAO.CompleteCompanyMemberRegistrationYn(companyEmail);
+		return CompleteCompanyMemberRegistrationYnCount > 0;
+	}
+
+		
+	}

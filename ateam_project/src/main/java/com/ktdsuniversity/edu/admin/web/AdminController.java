@@ -18,6 +18,8 @@ import com.ktdsuniversity.edu.admin.service.MailService;
 import com.ktdsuniversity.edu.admin.service.ReportService;
 import com.ktdsuniversity.edu.admin.vo.ReportListVO;
 import com.ktdsuniversity.edu.admin.vo.ReportVO;
+import com.ktdsuniversity.edu.companymember.vo.CompanyListVO;
+import com.ktdsuniversity.edu.companymember.vo.CompanyVO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
 
 @Controller
@@ -89,37 +91,44 @@ public class AdminController {
 		}
 	}
 	
-	@GetMapping("/admin/member")
-	public String memberApproval() {
-		return "temp/mail";
+	@GetMapping("/admin/companymember")
+	public String memberManagement(Model model) {
+		CompanyListVO companyListVO = mailService.getAllCompanyMember();
+		model.addAttribute("companyListVO", companyListVO);
+		return "membermanagement/mail";
 	}
 
 // 	ajax 통신할거면 반드시! map -> json으로 보낸다
 	@Transactional
 	@ResponseBody
-	@PostMapping("/admin/member")
-	public String sendMemberApproval(@RequestParam String val) {
+	@PostMapping("/admin/companymember")
+	public String CompleteCompanyMemberRegistrationYn (@RequestParam String val
+									, @RequestParam String companyEmail
+									, CompanyVO companyVO) {
 //		Map<String, Object> resultMap = new HashMap<>();
 //		String test = "ok";
 //		resultMap.put("data", val);
 //		resultMap.put("result", test.equals(val));
 //		return resultMap;
 	
-		if (val.equals("accept")) {
-			mailService.sendMail();
+		if (val.equals("approval")) {
+			companyVO.setCompanyEmail(companyEmail);
+			mailService.doCompleteCompanyMemberRegistrationYn(companyEmail);
+			mailService.sendApprovalMail(companyVO);
+			
 		}
-		else if (val.equals("refuse")) {
-			mailService.sendMail();
+		if (val.equals("refuse")) {
+			companyVO.setCompanyEmail(companyEmail);
+			mailService.sendRefuseMail(companyVO);
 		}
-		
-		return "redirect:/home/main";
+		return "redirect:/admin/companymember";
 	}
 	
 	@GetMapping("/admin/report/view/{reportId}")
 	public String viewOneReport(@PathVariable String reportId,
 								Model model,
 								ReportVO reportVO) {
-		System.out.println(reportVO.getReportDate());
+//		System.out.println(reportVO.getReportDate());
 		reportVO = reportService.getSingleReport(reportId);
 		model.addAttribute("reportVO", reportVO);
 		return "report/reporthistoryview";
@@ -137,16 +146,6 @@ public class AdminController {
 		}
 		
 		return "redirect:/admin/report/view/" + reportId;
-	}
-	
-	
-//	@GetMapping("/report/reportview")
-//	public String reportViewTest() {
-//		return "report/reporthistoryview";
-//	}
-	
-//	@GetMapping("/editor")
-//	public String editor() {
-//		return "temp/editor";
-//	}
+	}	
+
 }

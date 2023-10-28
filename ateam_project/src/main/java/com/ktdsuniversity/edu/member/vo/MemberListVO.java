@@ -9,6 +9,7 @@ public class MemberListVO {
 	
 	private int memberCnt;
 	private List<MemberVO> memberList;
+	
 	public int getMemberCnt() {
 		return memberCnt;
 	}
