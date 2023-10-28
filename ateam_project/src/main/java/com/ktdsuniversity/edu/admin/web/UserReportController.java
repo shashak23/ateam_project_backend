@@ -48,6 +48,7 @@ public class UserReportController {
 		  * 2유형: CC-20231018-000102 (자유게시판 댓글)
 		  * 3유형: CC-20231018-000101 (질답게시판 게시글)
 		  * 4유형: CC-20231018-000103 (질답게시판 댓글)
+		  * 5유형: CC-20231018-000104 (유저 != 유저)
 		  */
 		if (reportTypeId != null) {
 		    if (reportTypeId.equals("1")) {
@@ -78,12 +79,24 @@ public class UserReportController {
 		return view;
 	}
 	
-	@PostMapping("/report")
-    public String reportUser(@RequestParam("reportedUserId") String reportedUserId, Principal principal) {
-        if (principal != null) {
-            String reporterUserId = principal.getName(); // a유저의 아이디
-            reportService.reportUser(reporterUserId, reportedUserId);
-        }
-        return "redirect:/profile?userId=" + reportedUserId;
+	@PostMapping("/report/user")
+    public ModelAndView reportUser(@Valid @ModelAttribute ReportVO reportVO
+    						, Principal principal
+    						, @PathVariable String reportTypeId
+					        , @SessionAttribute("_LOGIN_USER_") MemberVO memberVO ) {
+		reportVO.setReportMember(memberVO.getEmail());
+		ModelAndView view = new ModelAndView();
+		log.debug("--1.컨트롤러 도착---------------------------------------------");
+		log.debug("--1.컨트롤러 확인-- : " + reportVO.getReceivedReportMember());
+		
+		boolean isSuccess = reportService.createReport(reportVO);
+		if(isSuccess) {
+			view.setViewName("redirect:/qnaboard/list");
+		} else {
+			view.addObject("reportVO", reportVO);
+			view.setViewName("report/reportview");
+		}
+		
+		return view;
     }
 }

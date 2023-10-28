@@ -221,7 +221,6 @@
 /*신고 모달*/
 .report-modal {
 	visibility: hidden;
-	display: hidden;
     position: fixed;
     width: 100%;
     height: 100%;

@@ -193,9 +193,7 @@
                      <button type="submit" class="btn btn_st_3">
                                 <a href="/qnaboard/create">글쓰기</a>
                      </button>
-                            <div class="right-align">
-                        총 ${generalPostListVO.boardCnt} 건의 게시글이 검색되었습니다.
-                     </div>
+                   
                   </div>
 
                   <!-- 게시판 리스트 -->

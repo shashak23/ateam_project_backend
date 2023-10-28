@@ -1,21 +1,11 @@
 package com.ktdsuniversity.edu.generalposthashtag.service;
 
-import java.util.List;
-
 import com.ktdsuniversity.edu.generalposthashtag.vo.HashtagVO;
 
-public class HashtagService {
+import jakarta.validation.Valid;
 
-	public List<HashtagVO> getAllHashtags() {
-		return null;
-	}
+public interface HashtagService {
 
-	public void saveHashtag(String hashtagId) {
-		
-	}
-
-	public void deleteHashtag(String generalPostHashtagId) {
-		
-	}
+	boolean createHashtag(HashtagVO hashtagVO);
 
 }
