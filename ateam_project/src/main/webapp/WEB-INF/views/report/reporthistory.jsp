@@ -12,31 +12,48 @@
 <script type="text/javascript">
     $().ready(function() {
         $("#reportTypeSelect").on("change", function() {
-            var selectedValue = $(this).val();
+            let selectedValue = $(this).val();
+			// let categoryName = $(this).children("option:selected").text()
 			// let data = {};
 			// data.reportTypeId = "id"
 			// data.reportReasonContent = "value"
 			// data = JSON.stringify(data)
             $.ajax({
                 method: "POST",
-				url: "/report/list",
+				url: "/admin/report/list",
 				contentType: "application/json",
 				// contentType: "application/json; charset=UTF-8",
                 // data: JSON.stringify(selectedValue),
 				data: selectedValue,
                 success: function(response) {
 					console.log(response)
-					for (var i = 0; i < response.length; i++) {
-						console.log(i)
-
-					}
+					// console.log(response.category != "all")
+						for (var i in response.reportList) {
+							
+							var reportListDOM = $("<tr class='allReportList'></tr>")
+	
+							reportListDOM.append($("<td><a href=/admin/report/view/"+response.reportList[i].reportId+">"+response.reportList[i].reportId+"</td>"))
+							if (response.reportList[i].reportReasonContent == null) {
+								reportListDOM.append($("<td></td>"))
+							}
+							else {
+								reportListDOM.append($("<td>"+response.reportList[i].reportReasonContent+"</td>"))
+							}
+							reportListDOM.append($("<td>"+response.reportList[i].commonCodeVO.codeContent+"</td>"))
+							// reporListDOM.append($("<td>"+"test"+"</td>"))
+							reportListDOM.append($("<td>"+response.reportList[i].reportDate+"</td>"))
+							reportListDOM.append($("<td>"+response.reportList[i].progressYn+"</td>"))
+	
+							$("#reportListArea").append(reportListDOM)
+						}
                 }
             });
-			if (selectedValue == "all") {
-				$(".allReportList").css("display", "")
-			} else {
-				$(".allReportList").css("display", "none")
-			}
+			$("#reportListArea").empty()
+
+			// if (categoryName == null) {
+			// 	categoryName = "?"
+			// }
+			
 		// $.post("/report/list", selectedValue, function(response) {
 		// 	console.log(response)
 		// })
@@ -74,7 +91,7 @@
 		<tbody id="reportListArea">
 			<c:forEach items="${reportListVO.reportList}" var="report">
 				<tr class="allReportList">
-					<td>${report.reportId}</td>
+					<td><a href="/admin/report/view/${report.reportId}">${report.reportId}</a></td>
 					<td>${report.reportReasonContent}</td>
 					<td>${report.commonCodeVO.codeContent}</td>
 					<td>${report.reportDate}</td>

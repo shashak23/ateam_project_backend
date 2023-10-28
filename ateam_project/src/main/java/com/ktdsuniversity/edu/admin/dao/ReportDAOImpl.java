@@ -71,9 +71,8 @@ public class ReportDAOImpl extends SqlSessionDaoSupport implements ReportDAO {
 
 	@Override
 	public int completeProgressYn(String reportId) {
-		return getSqlSession().update("completeReportYn");
+		return getSqlSession().update("completeProgressYn", reportId);
 	}
-	
 
 	@Override
 	public int memberReportAllCount() {
