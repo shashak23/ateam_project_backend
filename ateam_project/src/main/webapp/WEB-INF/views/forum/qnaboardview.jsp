@@ -230,8 +230,9 @@ h1 {
    position: absolute;
    top: -30px;
    right: 0;
+   margin-top: 500px;
+   margin-right: 250px;
 }
-
 
 textarea {
    width: 1000px;
@@ -489,7 +490,7 @@ textarea {
    </div>
 </c:if>
 <div class="main_Container">
-   <p class="qna_Title">QnA 게시판 > </p>
+   <p class="qna_Title">질답게시판 > </p>
    <label for="postTitle"></label>
          <div class="title_Name">${generalPostVO.postTitle}</div>
 

@@ -171,9 +171,6 @@
               <button type="submit" class="btn btn_st_3">
                   <a href="/qnaboard/create">글쓰기</a>
               </button>
-              <div class="right-align">
-                  총 ${generalPostListVO.boardCnt} 건의 게시글이 검색되었습니다.
-              </div>
           </div>
   
           <!-- 게시판 리스트 -->
@@ -199,21 +196,21 @@
                               </tr>
                           </thead>
                           <tbody>
-                              <c:forEach items="${generalPostListVO.generalPostList}" var="qnaboard">
-                                  <tr>
-                                      <td class="pratice_01">${qnaboard.generalPostId}</td>
-                                      <td>
-                                          <div class="pratice">
-                                              <a class="text_controller" href="/qnaboard/view/${qnaboard.generalPostId}">
-                                                  ${qnaboard.postTitle}
-                                              </a>
-                                          </div>
-                                      </td>
-                                      <td class="pratice_02">${qnaboard.postWriter}</td>
-                                      <td class="pratice_03">${qnaboard.postDate}</td>
-                                      <td class="pratice_04">${qnaboard.viewCnt}</td>
-                                  </tr>
-                              </c:forEach>
+                              <c:forEach items="${generalPostListVO.generalPostList}" var="qnaboard" varStatus="index">
+                                    <tr>
+                                        <td class="pratice_01">${(index.index + 1) * (searchForumVO.pageNo + 1)}</td>
+                                        <td>
+                        				<div class="pratice">   
+                                            <a class="text_controller" href="/qnaboard/view/${qnaboard.generalPostId}">
+                                                ${qnaboard.postTitle}
+                                            </a>
+                        				</div>   
+                                        </td>
+                                        <td class="pratice_02"> ${qnaboard.memberVO.nickname}</td>
+                                        <td class="pratice_03">${qnaboard.postDate}</td>
+                                        <td class="pratice_04">${qnaboard.viewCnt}</td>
+                                    </tr>
+                             </c:forEach>
                           </tbody>
                       </table>
                   </div>

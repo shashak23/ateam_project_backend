@@ -23,6 +23,7 @@
 
 		div.grid div.right-align {
 			text-align: right;
+			margin-top: 800px;
 		}
 
 		label {
@@ -43,7 +44,7 @@
 <body>
 	<jsp:include page="../member/membermenu.jsp"></jsp:include>
 
-	<h1>게시글 수정_${generalPostVO.generalPostId}번글</h1>
+	<h1>질답 게시글 수정</h1>
 
 	<form method="post" action="/qnaboard/update" modelAttribute="generalPostVO" >
 		<input type="hidden" name="generalPostId" value="${generalPostVO.generalPostId}"/>
@@ -51,17 +52,8 @@
 			<label for="postTitle">제목</label>
 			<input id="postTitle" type="text" name="postTitle" value="${generalPostVO.postTitle}"/>
 			
- 			<label for="postWriter">이메일</label>
-			<input id="postWriter" type="email" name="postWriter" value="${generalPostVO.postWriter}"/>
-			
-			<label for="viewCnt">조회수</label>
-			<input id="viewCnt" type="number" name="viewCnt" value="${generalPostVO.viewCnt}"/>	
-			
-			<label for="postDate">등록일</label>
-			<input id="postDate" type="text" name="postDate" value="${generalPostVO.postDate}"/>
-	
 			<label for="postContent">내용</label>
-			<textarea id="editor" name="postContent" style="height: 300px;">${generalPostVO.postContent}
+			<textarea id="editor" name="postContent"">${generalPostVO.postContent}</textarea>
 				<script>
 		    	CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
 	                // https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html#extended-toolbar-configuration-format
@@ -203,9 +195,7 @@
 	                    'MathType'
 	                ]
 	            });  
-		        </script>
-			</textarea>
-			
+		        </script>			
 			<div class="btn-group">
 				<div class="right-align">
 					<input type="submit" value="저장" />
