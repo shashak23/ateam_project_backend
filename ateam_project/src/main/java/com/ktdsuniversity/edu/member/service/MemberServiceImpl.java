@@ -121,6 +121,7 @@ public class MemberServiceImpl implements MemberService{
 	/**
 	 * 프로필사진 수정
 	 */
+	@Transactional
 	@Override
 	public boolean updateOneFile(MemberVO memberVO, MultipartFile file) {	
 		StoredFile storedFile = fileHandler.storeFile(file);
@@ -142,6 +143,7 @@ public class MemberServiceImpl implements MemberService{
 	/**
 	 * 프로필사진 삭제
 	 */
+	@Transactional
 	@Override
 	public boolean deleteProfile(String email) {
 		int deleteCount = memberDAO.deleteProfile(email);
@@ -204,6 +206,7 @@ public class MemberServiceImpl implements MemberService{
 	/**
 	 * 일반회원 닉네임 비밀번호 수정
 	 */
+	@Transactional
 	@Override
 	public boolean updateMemberNickname(MemberVO memberVO) {
 		int nickNameCount = memberDAO.getNicknameCount(memberVO.getEmail());
@@ -216,6 +219,7 @@ public class MemberServiceImpl implements MemberService{
 	/**
 	 * 일반회원 비밀번호 수정
 	 */
+	@Transactional
 	@Override
 	public boolean updateMemberPW(MemberVO memberVO) {
 		int updateCount = memberDAO.updateMemberPW(memberVO);

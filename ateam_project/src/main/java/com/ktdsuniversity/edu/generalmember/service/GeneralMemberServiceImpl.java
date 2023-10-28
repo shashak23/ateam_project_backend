@@ -10,6 +10,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ktdsuniversity.edu.beans.FileHandler;
 import com.ktdsuniversity.edu.career.vo.CareerVO;
@@ -76,6 +77,7 @@ public class GeneralMemberServiceImpl implements GeneralMemberService {
 	/**
 	 * 주소 수정
 	 */
+	@Transactional
 	@Override
 	public boolean updateOneAddress(GeneralMemberVO generalMemberVO) {
 		int updateCount = generalMemberDAO.updateOneAddress(generalMemberVO);
@@ -85,6 +87,7 @@ public class GeneralMemberServiceImpl implements GeneralMemberService {
 	/**
 	 * 주소 삭제
 	 */
+	@Transactional
 	@Override
 	public boolean deleteOneAddress(String generalMemberEmail) {
 		int deleteCount = generalMemberDAO.deleteOneAddress(generalMemberEmail);
@@ -94,6 +97,7 @@ public class GeneralMemberServiceImpl implements GeneralMemberService {
 	/**
 	 * SNS수정
 	 */
+	@Transactional
 	@Override
 	public boolean updateSns(GeneralMemberVO generalMemberVO) {
 		int updateCount = generalMemberDAO.updateSns(generalMemberVO);
@@ -103,6 +107,7 @@ public class GeneralMemberServiceImpl implements GeneralMemberService {
 	/**
 	 * git삭제
 	 */
+	@Transactional
 	@Override
 	public boolean deleteGithub(String generalMemberEmail) {
 		int deleteCount = generalMemberDAO.deleteGithub(generalMemberEmail);
@@ -112,6 +117,7 @@ public class GeneralMemberServiceImpl implements GeneralMemberService {
 	/**
 	 * email삭제
 	 */
+	@Transactional
 	@Override
 	public boolean deleteEmail(String generalMemberEmail) {
 		int deleteCount = generalMemberDAO.deleteEmail(generalMemberEmail);
@@ -121,6 +127,7 @@ public class GeneralMemberServiceImpl implements GeneralMemberService {
 	/**
 	 * blog삭제
 	 */
+	@Transactional
 	@Override
 	public boolean deleteBlog(String generalMemberEmail) {
 		int deleteCount = generalMemberDAO.deleteBlog(generalMemberEmail);
@@ -130,6 +137,7 @@ public class GeneralMemberServiceImpl implements GeneralMemberService {
 	/**
 	 * 자기소개 수정
 	 */
+	@Transactional
 	@Override
 	public boolean updateselfIntro(GeneralMemberVO generalMemberVO) {
 		int updateCount = generalMemberDAO.updateselfIntro(generalMemberVO);
@@ -139,6 +147,7 @@ public class GeneralMemberServiceImpl implements GeneralMemberService {
 	/**
 	 * 자기소개 삭제
 	 */
+	@Transactional
 	@Override
 	public boolean deleteSelfIntro(String generalMemberEmail) {
 		int deleteCount = generalMemberDAO.deleteSelfIntro(generalMemberEmail);

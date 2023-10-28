@@ -25,11 +25,11 @@
 	    $(".report-btn").click(function() {
 	       let reportType = $("#reportUser").val()
 	       console.log(reportType);
-	       
-	        $(".report-modal").css({
+	        $("#report-modal").css({
 	           "visibility": "visible",
 	           "opacity": "1"
 	        });
+	    
 	       // 모달 내부 "취소" 버튼 클릭 시 모달 닫기
 	       $(".close").click(function() {
 	          /* console.log("!") */
@@ -65,6 +65,26 @@
 		     var url = '/memberInfo/modify/update-introduction/' + email;
 	       	 window.location.href = url;
 	    });
+	    /* git, email, blog 새창으로 열기 */
+	    $("#githubIcon").click(function() {
+        	 var githubUrl = "${generalMemberVO.githubUrl}";
+        	 if (githubUrl) {
+        		 window.open(githubUrl, "_blank");
+        		 }
+    	});
+    	$("#emailIcon").click(function() {
+        	 var emailUrl = "${generalMemberVO.additionalEmail}";
+        	 if (emailUrl) {
+            	window.open(emailUrl, "_blank");
+        		}
+    	});
+    	$("#blogIcon").click(function() {
+        	 var blogUrl = "${generalMemberVO.blogUrl}";
+        	 if (blogUrl) {
+                window.open(blogUrl, "_blank");
+        		}
+   		});
+		
 	     /* git,email,blog 수정버튼 */
 	 	 $("#edit_button1").click(function() {
 	    	 var email = $(this).data('sns');
@@ -75,6 +95,12 @@
 	     $("#edit_button2").click(function() {
 	    	 var email = $(this).data('teach');
 		     var url = '/memberInfo/modify/update-tech/' + email;
+	       	 window.location.href = url;
+	    });
+	    /* 기술스택 삭제버튼 */
+	     $("#delete_tech").click(function() {
+	    	 var email = $(this).data('deleteteach');
+		     var url = '/memberInfo/modify/delete-tech/' + email;
 	       	 window.location.href = url;
 	    });
 	    
@@ -124,41 +150,48 @@
 <body>
 	<div id="container">
 		<div class="flex_button">
-			<button>마이페이지</button>
-			<button>스크랩</button>
-			<button id="modify_info">정보 수정</button>
-			<button>내가 푼 문제</button>
-			<button>마이 팀</button>
+			<c:if
+				test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
+				<button>마이페이지</button>
+				<button>스크랩</button>
+				<button id="modify_info">정보 수정</button>
+				<button>내가 푼 문제</button>
+				<button>마이 팀</button>
+			</c:if>
 		</div>
 		<div class="flex_main">
 			<div class="follow_chat">
-				<!-- <button class="follow_icon">
+				<button class="follow_icon">
 						<img src="https://cdn-icons-png.flaticon.com/512/907/907873.png">
 						팔로우
-					 </button> 일단 보류 -->
-				<div>
-					<c:choose>
-						<c:when test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
-       						<button id="reportUser" value="5" class="report-btn" style="display: none;">신고</button>
-						</c:when>
-						<c:otherwise>
-							<button id="reportUser" value="5" class="report-btn">신고</button>	
-						</c:otherwise>
-					</c:choose>
-				</div>
+					 </button> 
+				<c:choose>
+					<c:when
+						test="${not empty emptysessionScope._LOGIN_USER_.email eq memberVO.email}">
+						<!-- a유저가 로그인한 경우에만 신고 버튼을 표시합니다. -->
+						<form action="/reportUser" method="post">
+							<input type="hidden" id="reportUser"
+								value="${empty sessionScope._LOGIN_USER}">
+							<button type="submit" class="report-btn" value="5">신고</button>
+						</form>
+					</c:when>
+					<c:otherwise>
+						<!-- a유저가 로그인하지 않은 경우에는 신고 버튼을 표시하지 않습니다. -->
+					</c:otherwise>
+				</c:choose>
+				<button id="reportUser" value="5" class="report-btn">신고</button>
 				<!-- 모달 창 -->
-				<div class="report-modal" id="report-modal">
 				<h2>신고 내용</h2>
 				<form name="reportVO" method="post" action="/report/view/5">
 					<div>
 						<label for="reportReason">신고사유${reportVO.reportReason} <select
 							name="reportReason">
-								<option value="CC-20231018-000200">영리 및 홍보 목적</option>
-                                <option value="CC-20231018-000201">개인정보노출</option>
-                                <option value="CC-20231018-000202">음란성/선정성</option>
-                                <option value="CC-20231018-000203">같은 내용 반복(도배)</option>
-                                <option value="CC-20231018-000204">이용규칙위반</option>
-                                <option value="CC-20231018-000205">기타</option>
+								<option value="6">영리 및 홍보 목적</option>
+								<option value="7">개인정보노출</option>
+								<option value="8">음란성/선정성</option>
+								<option value="9">같은 내용 반복(도배)</option>
+								<option value="10">이용규칙위반</option>
+								<option value="11">기타</option>
 						</select>
 						</label> <label for="reportReasonContent">신고 상세내용 <textarea
 								name="reportReasonContent" id="reportReasonContent">${reportVO.reportReasonContent}</textarea></label>
@@ -173,11 +206,11 @@
 							value="${reportVO.reportMember}" /> <label
 							for="receivedReportMemberEmail">${reportVO.receivedReportMemberEmail}</label>
 						<input id="receivedReportMemberEmail" type="hidden"
-							name="receivedReportMember" value="${memberVO.email}" />
+							name="receivedReportMember" value="${generalPostVO.postWriter}" />
 
 						<label for="reportContentId">${reportVO.reportContentId}</label> <input
 							id="reportContentId" type="hidden" name="reportContentId"
-							value="${careerVO.generalMemberEmail}" />
+							value="${generalPostVO.generalPostId}" />
 					</div>
 					<div class="btn-group">
 						<div class="right-align">
@@ -185,12 +218,10 @@
 
 						</div>
 					</div>
-				</form>
-				</div>
+				</form> 
+				<button class="message_icon">✉ 메시지</button>
 			</div>
-		</div>
-		<button class="message_icon">✉ 메시지</button>
-	</div>
+	
 	<div class="profile">
 		<c:choose>
 			<c:when
@@ -238,13 +269,9 @@
 		<p></p>
 	</div>
 	<div class="related_link">
-		<a href="${generalMemberVO.githubUrl}"><img
-			src="https://cdn-icons-png.flaticon.com/512/25/25231.png"
-			alt="Icon 1"></a> <a href="${generalMemberVO.additionalEmail}"><img
-			src="https://w7.pngwing.com/pngs/863/247/png-transparent-email-computer-icons-email-miscellaneous-angle-text.png"
-			alt="Icon 2"> </a> <a href="${generalMemberVO.blogUrl}"><img
-			src="https://i.pinimg.com/originals/f8/0b/dd/f80bdd79a51358da6ee41a0fda520394.png"
-			alt="Icon 3"></a>
+		<img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="Icon 1" id="githubIcon">
+        <img src="https://w7.pngwing.com/pngs/863/247/png-transparent-email-computer-icons-email-miscellaneous-angle-text.png" alt="Icon 2" id="emailIcon">
+        <img src="https://i.pinimg.com/originals/f8/0b/dd/f80bdd79a51358da6ee41a0fda520394.png" alt="Icon 3" id="blogIcon">
 		<c:if
 			test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
 			<button data-sns="${sessionScope._LOGIN_USER_.email }" id="edit_button1"> 
@@ -278,6 +305,9 @@
 						test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
 						<button data-teach="${sessionScope._LOGIN_USER_.email }" id="edit_button2"> 
 						수정
+						</button>
+						<button data-deleteteach="${sessionScope._LOGIN_USER_.email }" id="delete_tech"> 
+						삭제
 						</button>
 					</c:if>
 				</c:when>
@@ -380,6 +410,8 @@
 				</c:otherwise>
 			</c:choose>
 		</ul>
+	</div>
+	</div>
 	</div>
 	<jsp:include page="../layout/footer.jsp" />
 

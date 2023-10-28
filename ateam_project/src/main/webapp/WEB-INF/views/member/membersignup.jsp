@@ -102,15 +102,14 @@ div.errors:last-child {
           <input type="email" name="email" id="email" value="${memberVO.email}">
         </div>
         <div class="line">
-          <label for="pw" class="label">비밀번호</label>
-          <input id="pw" type="password" name="pw"
-                   value="${memberVO.pw}"/>
-          <br><span class="err_password">* 8~10글자까지만 입력 가능합니다.</span>
-        </div>
+		  <label for="pw" class="label">비밀번호</label>
+		  <input id="pw" type="password" name="pw" value="${memberVO.pw}"/>
+		  <br><span class="err_password"></span>
+		</div>
 		<div class="line">
-          <label for="confirmPw" class="label">비밀번호 확인</label>
-          <input id="confirmPw" type="password" name="confirmPw"
-                 value="${memberVO.confirmPw}"/>
+		  <label for="confirmPw" class="label">비밀번호 확인</label>
+		  <input id="confirmPw" type="password" name="confirmPw" value="${memberVO.confirmPw}"/>
+		  <br><span class="err_confirm_password"></span>
 		</div>
         <div class="line">
           <label for="nickname" class="label">닉네임</label>
@@ -176,6 +175,26 @@ $().ready(function() {
   $('#agree').click(function() {
     checkAvailability("#agree", "agree");
   })
+  // 비밀번호 확인 입력란의 입력 이벤트를 모니터링
+  $("#confirmPw").on("input", function() {
+      var pw = $("#pw").val();
+      var confirmPw = $(this).val();
+      var errConfirmPassword = $(".err_confirm_password");
+      
+      // 비밀번호 일치 여부 확인
+      if (pw === confirmPw) {
+          errConfirmPassword.text(""); // 일치하면 오류 메시지를 지움
+      } else {
+          errConfirmPassword.text("* 비밀번호가 일치하지 않습니다.");
+      }
+
+      // 비밀번호 길이 확인
+      if (pw.length >= 8 && pw.length <= 10) {
+          $(".err_password").text(""); // 길이가 8에서 10글자 사이면 오류 메시지를 지움
+      } else {
+          $(".err_password").text("* 8~10글자까지만 입력 가능합니다.");
+      }
+  });
 });
 
   

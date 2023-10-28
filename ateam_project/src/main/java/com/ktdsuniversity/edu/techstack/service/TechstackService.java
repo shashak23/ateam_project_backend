@@ -27,7 +27,7 @@ public interface TechstackService {
 	 * 기술스택 삭제생성
 	 */
 	public boolean deleteUpTechstack(TechstackVO techstackVO);
-	public boolean deleteTechstack(String techstackId);
+	public boolean deleteTechstack(String email);
 	
 	public List<TechstackVO> techSearch(String id);
 }
