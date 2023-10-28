@@ -25,7 +25,7 @@
 </head>
 <body>
     <div>로그인 정보: ${sessionScope._LOGIN_USER_.email}</div>
-    <form action="/home/myalgorithm/list" class="search_form" method="get">
+    <form action="/codingtest/mylist" class="search_form" method="get">
         <div>
             <select name="searchType">
 				<option value="subject" ${searchMyAlgorithmVO.searchType eq 'subject' ? 'selected' : ''}>제목</option>
@@ -36,7 +36,7 @@
                 <option value="correctYN" ${searchMyAlgorithmVO.searchType eq 'correctYN' ? 'selected' : ''}>정답여부별</option>
             </select>
             <input type="text" name="searchKeyword" value="${searchMyAlgorithmVO.searchKeyword}"/>
-            <input type="hidden" name="pageNo" class="pageNo" />
+            <input type="hidden" name="pageNo" class="pageNo" value="0"/>
             <button class="search_btn">검색</button>
         </div>
     </form>
@@ -76,7 +76,7 @@
 	                               end="${searchMyAlgorithmVO.groupEndPageNo}"
 	                               step="1"
 	                               var="p">
-							<li class="${searchMyAlgorithmVO.pageNo eq p ? "active": ""}">
+							<li class="${searchMyAlgorithmVO.pageNo eq p ? 'active': ''}">
 								<a href="javascript:void(0)" onclick="movePage(${p})">${p + 1}</a>
 							</li>
 	                    </c:forEach>
@@ -103,12 +103,11 @@
             })
         })
 
-        function movePage(pageNo=0) {
-            let pageNo=1
+        function movePage(pageNo) {
             $('.pageNo').val(pageNo)
             $('.search_form').attr({
                 'method': 'get',
-                'action': '/home/myalgorithm/list'
+                'action': '/codingtest/mylist'
             }).submit()
         }
     </script>

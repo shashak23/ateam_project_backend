@@ -43,7 +43,7 @@ public class MyAlgorithmController {
 	@Autowired
 	private AlgorithmQuestionService algorithmQuestionService;
 	
-	@GetMapping("/home/myalgorithm/list")
+	@GetMapping("/codingtest/mylist")
 	public ModelAndView viewAllMyAlgorithm(@SessionAttribute("_LOGIN_USER_") MemberVO memberVO,
 										   @ModelAttribute SearchMyAlgorithmVO searchMyAlgorithmVO) {
 		System.out.println("search my keyword: " + searchMyAlgorithmVO.getSearchKeyword());
@@ -97,7 +97,7 @@ public class MyAlgorithmController {
 		
 		myAlgorithmService.deleteMyAlgorithm(myAlgorithmQuestionId);
 		
-		return "redirect:/home/myalgorithm/list";
+		return "redirect:/codingtest/mylist";
 	}
 	
 	

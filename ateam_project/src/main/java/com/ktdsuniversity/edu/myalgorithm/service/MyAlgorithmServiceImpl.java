@@ -32,7 +32,13 @@ public class MyAlgorithmServiceImpl implements MyAlgorithmService{
 	public MyAlgorithmListVO getAllMyAlgorithm(SearchMyAlgorithmVO searchMyAlgorithmVO) {
 		MyAlgorithmListVO myList = new MyAlgorithmListVO();
 		myList.setMyAlgotirhmListCnt(myAlgorithmDAO.getAllNumber(searchMyAlgorithmVO));
-		myList.setMyAlgorithmList(myAlgorithmDAO.getAllMyAlgorithmList(searchMyAlgorithmVO));
+		
+		if (searchMyAlgorithmVO == null) {
+			myList.setMyAlgorithmList(myAlgorithmDAO.getAllMyAlgorithmList(searchMyAlgorithmVO));			
+		}
+		else {
+			myList.setMyAlgorithmList(myAlgorithmDAO.searchAllMyAlgorithm(searchMyAlgorithmVO));			
+		}
 		return myList;
 	}
 
