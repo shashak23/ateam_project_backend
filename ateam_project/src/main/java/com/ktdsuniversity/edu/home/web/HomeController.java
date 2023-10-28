@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.ktdsuniversity.edu.algorithmanswer.service.AlgorithmAnswerService;
 import com.ktdsuniversity.edu.algorithmexplanation.service.AlgorithmExplanationService;
 import com.ktdsuniversity.edu.algorithmexplanation.vo.AlgorithmExplanationListVO;
 import com.ktdsuniversity.edu.algorithmquestion.service.AlgorithmQuestionService;
@@ -58,19 +57,16 @@ public class HomeController {
 	private AlgorithmExplanationService algorithmExplanationService;
 	
 	@Autowired
-	private AlgorithmAnswerService algorithmAnswerService;
-	
-	@Autowired
 	private CompanyNewsService companyNewsService;
 	
-	@GetMapping("/home/home")
+	@GetMapping("/devground/home")
 	public String homeLink() {
 		return "home/home";
 	}
 	
 	@GetMapping("/home/admin")
 	public String viewAdmin() {
-		return "home/admin_ui";
+		return "home/admin_ui(ongoing)";
 	}
 	
 	@ResponseBody

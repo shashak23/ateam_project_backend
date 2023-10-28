@@ -27,7 +27,8 @@
     width:800px;
     height: 300px; 
     border: 1px solid var(--gray);
-		border-radius: 5px;
+	border-radius: 5px;
+    cursor: pointer;
    }
 
    /* #contents_top > .coding_test_explanation{
@@ -84,11 +85,16 @@
     .company_three_name,
     .company_four_name {
         width: 250px;
-        height: 40px;
+        height: 60px;
         cursor: pointer;
-        border: 1px solid var(--gray);
 	    border-radius: 5px;
-        margin:5px;
+        margin:10px;
+        font-size: large;
+        font-weight: bold;
+    }
+
+    .test_name{
+        font-weight: bold;
     }
 
    #contents_bottom{
@@ -115,16 +121,16 @@
     margin-left: 30px;
     cursor: pointer;
     border: 1px solid var(--gray);
-    background-color: 	#E0FFFF;
 	border-radius: 5px;
     box-sizing: border-box;
     transition: box-shadow 0.3s ease;
    }
 
    #contents_bottom > .algorithm_explanation > .explanation_link{
-    width:500px;
-    height:300px;
-    padding: 150px;
+    width: 500px;
+    height: 300px;
+    margin:100px;
+    padding: 100px 100px 0px 100px;
     box-sizing: border-box;
    }
 
@@ -151,30 +157,30 @@
             </p>
             <div class="coding_test">
                 <div class="test1 incomplete">
-                    <div class="company_one_name">회사명
+                    <span class="company_one_name">회사명
                         <a href=""></a>
-                    </div>
+                    </span>
                     <div class="test_name">문제명</div>
                     <div class="test_hashtag">문제 해시태그</div>
                 </div>
                 <div class="test2 incomplete">
-                    <div class="company_two_name">회사명
+                    <span class="company_two_name">회사명
                         <a href=""></a>
-                    </div>
+                    </span>
                     <div class="test_name">문제명</div>
                     <div class="test_hashtag">문제 해시태그</div>
                 </div>
                 <div class="test3 incomplete">
-                    <div class="company_three_name">회사명
+                    <span class="company_three_name">회사명
                         <a href=""></a>
-                    </div>
+                    </span>
                     <div class="test_name">문제명</div>
                     <div class="test_hashtag">문제 해시태그</div>
                 </div>
                 <div class="test4 incomplete">
-                    <div class="company_four_name">회사명
+                    <span class="company_four_name">회사명
                         <a href=""></a>
-                    </div>
+                    </span>
                     <div class="test_name">문제명</div>
                     <div class="test_hashtag">문제 해시태그</div>
                 </div>
@@ -188,8 +194,7 @@
                     <img src="/images/알고리즘" alt="알고리즘 해설.png" class="알고리즘 해설">
                     <a href="/algorithm/explanation/list" class="explanation_link">
                     </a>
-                </div>
-            
+                </div>            
         </div>
     </div>
 <jsp:include page="../layout/footer.jsp"></jsp:include>

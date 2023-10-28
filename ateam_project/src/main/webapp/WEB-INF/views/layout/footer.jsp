@@ -7,13 +7,12 @@
   <footer class="footer">
     <div class="inner">
       <address>
-        <span>상호명: ?</span>
-        <span>개인정보책임관리자 : 홍길동</span>
-        <span>주소 : kt ds</span>
-        <span>ssss</span>
+        <span>상호명: devGround</span><br>
+        <span> 개인정보책임관리자 : kt ds university</span><br>
+        <span> 주소 : 서울특별시 서초구 효령로 176</span>
       </address>
       <div class="copyright">
-        &copy; 2023 by ???. All rights reserved
+        &copy; 2023 by devGround. All rights reserved
       </div>
     </div>
   </footer>

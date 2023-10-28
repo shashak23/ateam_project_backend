@@ -21,6 +21,7 @@ import com.ktdsuniversity.edu.algorithmquestion.dao.AlgorithmQuestionDAO;
 import com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionListVO;
 import com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionVO;
 import com.ktdsuniversity.edu.algorithmquestion.vo.SearchAlgorithmQuestionVO;
+import com.ktdsuniversity.edu.common.vo.AbstractCompanyPostVO;
 import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
 import com.ktdsuniversity.edu.exceptions.PageNotFoundException;
 @Service
@@ -81,6 +82,39 @@ public class AlgorithmQuestionServiceImpl implements AlgorithmQuestionService {
 		return createCount > 0;
 	}
 	
+	@Transactional
+	@Override
+	public boolean updateOneAlgorithmQuestion(AlgorithmQuestionVO algorithmQuestionVO) {
+		Gson gson = new Gson();
+		algorithmQuestionVO.setMainAlgorithmCategoryId(algorithmQuestionVO.getAlgorithmCategoryIdList().get(0));
+		int updateCount = algorithmQuestionDAO.updateOneAlgorithmQuestion(algorithmQuestionVO);
+		
+		if(updateCount > 0) {
+			int deleteCategoryCount = algorithmQuestionDAO.deleteAlgorithmQuestionCategory(algorithmQuestionVO);
+			logger.debug("{}: Delete Category Count: {}", algorithmQuestionVO.getCompanyAlgorithmQuestionId(), deleteCategoryCount);
+			int insertCategoryCount = algorithmQuestionDAO.insertAlgorithmQuestionCategory(algorithmQuestionVO);
+			logger.debug("{}: Insert Category Count: {}", algorithmQuestionVO.getCompanyAlgorithmQuestionId(), insertCategoryCount);
+			
+			int deleteAnswerCount = algorithmAnswerDAO.deleteAlgorithmAnswer(algorithmQuestionVO);
+			logger.debug("{}: Delete Answer Count: {}", algorithmQuestionVO.getCompanyAlgorithmQuestionId(), deleteAnswerCount);
+			
+			int insertCount = 0;
+			List<Map<String, Object>> contentMap = gson.fromJson(algorithmQuestionVO.getContent(), List.class);
+			for (Map<String, Object> map : contentMap) {
+				int result = (int) Double.parseDouble(map.get("result").toString());
+				map.remove("result");
+				String json = gson.toJson(map);
+				
+				algorithmQuestionVO.setContent(json);
+				algorithmQuestionVO.setResult(result);
+				
+				insertCount += algorithmAnswerDAO.createAlgorithmAnswer(algorithmQuestionVO);
+			}
+			logger.debug("{}: Insert Answer Count: {}", algorithmQuestionVO.getCompanyAlgorithmQuestionId(), insertCount);
+		}
+		return updateCount > 0;
+	}
+	
 	@Override
 	public AlgorithmQuestionVO getOneAlgorithmQuestion(String companyAlgorithmQuestionId, boolean isIncrease) {
 		if(isIncrease) {
@@ -94,30 +128,32 @@ public class AlgorithmQuestionServiceImpl implements AlgorithmQuestionService {
 			throw new PageNotFoundException("잘못된 접근입니다.");
 		}
 		return algorithmQuestionVO;
-	}
-
-	@Transactional
-	@Override
-	public boolean updateOneAlgorithmQuestion(AlgorithmQuestionVO algorithmQuestionVO) {
-		algorithmQuestionVO.setMainAlgorithmCategoryId(algorithmQuestionVO.getAlgorithmCategoryIdList().get(0));
-		int updateCount = algorithmQuestionDAO.updateOneAlgorithmQuestion(algorithmQuestionVO);
-		
-		if(updateCount > 0) {
-			int deleteCategoryCount = algorithmQuestionDAO.deleteAlgorithmQuestionCategory(algorithmQuestionVO);
-			logger.debug("{}: Delete Category Count: {}", algorithmQuestionVO.getCompanyAlgorithmQuestionId(), deleteCategoryCount);
-			int insertCategoryCount = algorithmQuestionDAO.insertAlgorithmQuestionCategory(algorithmQuestionVO);
-			logger.debug("{}: Insert Category Count: {}", algorithmQuestionVO.getCompanyAlgorithmQuestionId(), insertCategoryCount);
-		}
-		return updateCount > 0;
-	}
+	}	
 	
 	@Transactional
 	@Override
-	public boolean deleteOneAlgorithmQuestion(String companyAlgorithmQuestionId) {
-		int deleteCount = algorithmQuestionDAO.deleteOneAlgorithmQuestion(companyAlgorithmQuestionId);
+	public boolean deleteOneAlgorithmQuestion(AlgorithmQuestionVO algorithmQuestionVO) {
+		int deleteCount = algorithmQuestionDAO.deleteOneAlgorithmQuestion(algorithmQuestionVO);
+		
+		if (deleteCount > 0) {
+			int deleteCategoryCount = algorithmQuestionDAO.deleteAlgorithmQuestionCategory(algorithmQuestionVO);
+			logger.debug("{}: Delete Category Count: {}", algorithmQuestionVO.getCompanyAlgorithmQuestionId(), deleteCategoryCount);
+			
+			int deleteAnswerCount = algorithmAnswerDAO.deleteAlgorithmAnswer(algorithmQuestionVO);
+			logger.debug("{}: Delete Answer Count: {}", algorithmQuestionVO.getCompanyAlgorithmQuestionId(), deleteAnswerCount);
+		}
 		return deleteCount > 0;
 	}
 
+	// 기업회원 내 게시글 조회
+	@Override
+	public AlgorithmQuestionListVO getCompanyMyPost(AbstractCompanyPostVO abstractCompanyPostVO) {
+		AlgorithmQuestionListVO algorithmQuestionListVO = new AlgorithmQuestionListVO();
+		algorithmQuestionListVO.setAlgorithmQuestionList(algorithmQuestionDAO.getCompanyMyPost(abstractCompanyPostVO));
+		return algorithmQuestionListVO;
+	}
+	
+	// 통합검색
 	@Override
 	public AlgorithmQuestionListVO searchAllAlgorithmQuestionByKeyword(AbstractSearchVO abstractSearchVO) {
 		

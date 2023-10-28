@@ -259,7 +259,7 @@
 			        </c:forEach>
 			    </ul>
 			</c:forEach>
-
+			<div id="checkAnswer">${popupMessage}</div>
 		</div>
 	</div>
 	<div class="grid">

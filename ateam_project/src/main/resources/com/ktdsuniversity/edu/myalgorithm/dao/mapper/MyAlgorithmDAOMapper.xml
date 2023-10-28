@@ -194,7 +194,7 @@
         , #{companyAlgorithmQuestionId}
         , SYSDATE
         , #{myAnswer}
-        , CASE WHEN DBMS_RANDOM.NORMAL >= 0 THEN 'Y' ELSE 'N' END <!-- 랜덤으로 줘야 함 -->
+        , #{correctAnswerYn}
         , 'N')
 	</insert>
 	

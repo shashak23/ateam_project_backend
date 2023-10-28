@@ -228,10 +228,13 @@
       
    }
    .update_btn {
-      position: absolute;
-      top: -30px;
-      right: 0;
-   }
+   position: absolute;
+   top: -30px;
+   right: 0;
+   margin-top: 300px;
+   margin-right: 250px;
+}
+
    
    textarea {
       width: 1000px;
@@ -480,24 +483,22 @@
 </script>
 </head>
 <body>
-<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq generalPostVO.postWriter}">               
+<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq generalPostVO.postWriter}">					
    <div class="btn-group">
        <div class="right-align">
            <div class="update_btn">
+               <div class="btn">
+                   <a href="/freeboard/update/${generalPostVO.generalPostId}">수정</a>
+                   <a href="/freeboard/delete/${generalPostVO.generalPostId}">삭제</a>
+               </div>
            </div>
        </div>
    </div>
-            </c:if>
-            <div id="btn">
-                <a href="/freeboard/update/${generalPostVO.generalPostId}">수정</a>
-                <a href="/freeboard/delete/${generalPostVO.generalPostId}">삭제</a>
-            </div>
-            
-            
-            <div class="main_Container">
-               <p class="free_Title">자유게시판 ></p>
-               <label for="postTitle"></label>
-               <div class="title_Name">${generalPostVO.postTitle}</div>
+</c:if>
+<div class="main_Container">
+   <p class="free_Title">자유게시판 ></p>
+   <label for="postTitle"></label>
+   <div class="title_Name">${generalPostVO.postTitle}</div>
    <!-- 목록보기 -->
    <button id="button-id-list" onclick="window.location.href='/freeboard/list'">목록</button>
    

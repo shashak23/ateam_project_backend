@@ -44,23 +44,28 @@ $().ready(function() {
     margin-right: 5px;
 }
 	#container{
-		width: 800px;
+		width: 980px;
 		height:1000px;
 		margin-top: 40px;
 		margin:0 auto;
 	}
 
 	h3{
-		margin-top: 30px;
+		margin-top: 100px;
 	}
 
 	#algorithm_category{
+		width: 500px;
 		margin-top: 10px;
 		margin-bottom: 20px;
 	}
 	a:link, a:hover, a:active, a:visited {
 		color: #333;
 		text-decoration: none;
+	}
+
+	.search_area{
+		margin-bottom: 20px;
 	}
 
 	.search_area > #search_form > .type{
@@ -81,59 +86,67 @@ $().ready(function() {
 		padding:6px;	
 	}
 
+	.search_area > #search_form > #search_bar::after{
+		content:"돋보기";
+	}
+
 	.search_area > #search_form > #search_bar:hover{
 		border: 2px solid #1E90FF; 
 	}
 
-	.search_area > #search_form > #search_btn{
-		width:50px;
-		height:40px;
+	#category_area{
+		display:flex;
+		width: 700px;
+	}
+
+	.search_area > #search_form > #category_area > #search_btn{
+		width:80px;
+		height:50px;
 		border:0.5px;
 		border-radius: 6px;
+		margin: 10px 0px 0px 30px;
 		transition: box-shadow 0.3s ease;
 	}
 
-	.search_area > #search_form > #search_btn:hover{
+	.search_area > #search_form > #category_area > #search_btn:hover{
 		border: 2px solid #1E90FF; 
 	}
 
-	.search_area > #search_form > .gohome > .reset{
-		width:40px;
-		height:40px;
-		margin-top: 10px;
-		
+	.search_area > #search_form > .gohome > .reset{	
+		height:40px;	
 	}
 
 	table.table {
 		border-collapse: collapse;
-		border: 1px solid #DDD;
-		font-size: 14px;
-		margin-top: 20px;
-		width:800px;
+		margin-top: 30px;
+		width:980px;
+		margin: 0 auto;
 	}
-	table.table > thead > tr {
-		background-color: #FFF;
+
+	table th{
+		background-color: var(--light-gray);
+		border-bottom: 1px solid var(--dark-gray);
+		height:35px;
 	}
-	table.table > thead th {
-		padding: 10px;
-		color:#333;
-	}
-	table.table th, table.table td {
-		border-right: 1px solid #F0F0F0;
+
+	table td{
+		border-bottom: 1px solid #D3D3D3;
 	}
 	table.table th:last-child, table.table td:last-child {
 		border-right: none;
 	}
 	table.table > tbody tr:nth-child(odd) {
-		background-color: #f5f5f5;
+		/* background-color: #f5f5f5; */
 	}
 	table.table > tbody tr:hover {
-		background-color: #FAFAFA;
+		/* background-color: #FAFAFA; */
 	}
 	table.table > tbody td {
 		padding: 10px;
 		color: #333;
+		text-align: center;
 	}
+
 </style>
 <body>
 	<div id="container">
@@ -144,9 +157,10 @@ $().ready(function() {
 				<label for="algorithmCategoryId" id="algorithmCategoryId">
 					<h3>상세검색</h3>
 				</label>
-
-				<div id="algorithm_category"></div>	
-
+				<div id="category_area">
+					<div id="algorithm_category"></div>	
+					<button id="search_btn">적용</button>
+				</div>
 				<select class="type" name="searchType">
 					<option value="postTitle" ${searchAlgorithmExplanationVO.searchType eq 'postTitle' ? 'selected' : ''}>제목</option>
 					<option value="postContent" ${searchAlgorithmExplanationVO.searchType eq 'postContent' ? 'selected' : ''}>내용</option>
@@ -154,9 +168,6 @@ $().ready(function() {
 				</select>
 
 				<input id="search_bar" type="text" name="searchKeyword" value="${searchAlgorithmExplanationVO.searchKeyword}" />
-
-				<button id="search_btn">검색</button>
-
 				<a href="/algorithm/explanation/list" class="gohome">
 					<img src="/images/reset.png" alt="검색초기화" class="reset">
 				</a>
@@ -178,44 +189,47 @@ $().ready(function() {
 	<table class="table">
 		<thead>
 			<colgroup>
-				<col width="190px" />
-				<col width="100px" />
-				<col width="100px" />
-				<col width="100px" />
-				<col width="70px" />
+				<col width="10%" />
+				<col width="*" />
+				<col width="10%" />
+				<col width="10%" />
+				<col width="15%" />
+				<col width="10%" />
 			</colgroup>
 			<tr>
-				<th>제목</th>
-				<th>카테고리</th>
-				<th>작성자</th>
-				<th>작성일</th>
-				<th>조회수</th>
+				<th scope="col">번호</th>
+				<th scope="col">제목</th>
+				<th scope="col">카테고리</th>
+				<th scope="col">작성자</th>
+				<th scope="col">작성일</th>
+				<th scope="col">조회수</th>
 			</tr>
 		</thead>
 		
 		<tbody>
-		<c:choose>
-			<c:when test="${not empty algorithmExplanationList.algorithmExplanationList}">
-				<c:forEach items="${algorithmExplanationList.algorithmExplanationList}" var="algorithmexplanation">
+			<c:choose>
+				<c:when test="${not empty algorithmExplanationList.algorithmExplanationList}">
+					<c:forEach items="${algorithmExplanationList.algorithmExplanationList}" var="algorithmexplanation" varStatus="index">
+						<tr>
+							<td>${(index.index + 1) * (searchForumVO.pageNo + 1)}</td>
+							<td>
+								<a href="/algorithm/explanation/view/${algorithmexplanation.companyAlgorithmExplanationId}">
+									<c:out value="${algorithmexplanation.postTitle}" />
+								</a>
+							</td>
+							<td>${algorithmexplanation.commonCodeVO.codeContent}</td>
+							<td>${algorithmexplanation.memberVO.nickname}</td>
+							<td>${algorithmexplanation.postDate}</td>
+							<td>${algorithmexplanation.viewCnt}</td>
+						</tr>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
 					<tr>
-						<td style="font-weight: bold;">
-							<a href="/algorithm/explanation/view/${algorithmexplanation.companyAlgorithmExplanationId}">
-								<c:out value="${algorithmexplanation.postTitle}" />
-							</a>
-						</td>
-						<td>${algorithmexplanation.commonCodeVO.codeContent}</td>
-						<td>${algorithmexplanation.memberVO.nickname}</td>
-						<td>${algorithmexplanation.postDate}</td>
-						<td>${algorithmexplanation.viewCnt}</td>
+						<td colspan="6">등록된 게시글이 없습니다.</td>
 					</tr>
-				</c:forEach>
-			</c:when>
-			<c:otherwise>
-				<tr>
-					<td colspan="6">등록된 게시글이 없습니다.</td>
-				</tr>
-			</c:otherwise>
-		</c:choose>
+				</c:otherwise>
+			</c:choose>
 		</tbody>
 	</table>
 	</div>

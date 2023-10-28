@@ -302,7 +302,7 @@ public class MemberController {
 			boolean isSuccess = memberService.updateMemberPW(memberVO);
 			if (isSuccess) {
 				session.invalidate();
-				return ("redirect:/home/main");
+				return ("redirect:/home/home");
 			}
 		}
 		return "member/editmemberinfo/modifymemberpw";

@@ -8,6 +8,7 @@ public class AnswerResultVO {
 	private List<String> codeResultList;
 	private boolean correct;
 	private List<String> message;
+	private String popupMessage;
 	
 	public boolean isInsertResult() {
 		return insertResult;
@@ -41,7 +42,12 @@ public class AnswerResultVO {
 		this.message = message;
 	}
 
-	
+	public String getPopupMessage() {
+		return popupMessage;
+	}
+	public void setPopupMessage(String popupMessage) {
+		this.popupMessage = popupMessage;
+	}
 
 	
 	

@@ -30,7 +30,6 @@ public class BookmarkController {
 	
 	@GetMapping("/bookmark/general-post")
 	public Map<String, Object> getAllGeneralPostBookmark(@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
-		System.out.println("이메일: " + memberVO.getEmail());
 		BookmarkListVO bookmarkListVO = bookmarkService.getAllBookmark(memberVO.getEmail());
 		List<BookmarkVO> bookmarkList = bookmarkListVO.getBookmarkList();
 		
@@ -42,6 +41,7 @@ public class BookmarkController {
 		return resultMap;
 	}
 	
+	// 메인화면 북마크 조회용
 	@GetMapping("/bookmark/status/{email}/{postId}")
 	public BookmarkVO getBookmarkStatus(@PathVariable String email,
 										@PathVariable String postId) {
@@ -51,6 +51,19 @@ public class BookmarkController {
 		
 		return bookmarkService.getBookmarkStatus(bookmarkSearchVO);
 	}
+	
+	// 자유게시판 북마크 조회용
+	@GetMapping("/bookmark/freeboard-list/{email}")
+	public List<BookmarkVO> getFreeBoardBookmarkList(@PathVariable String email) {
+		return bookmarkService.getFreeboardBookmark(email);
+	}
+	
+	// 질답게시판 북마크 조회용
+	@GetMapping("/bookmark/qnaboard-list/{email}")
+	public List<BookmarkVO> getQnaBoardBookmarkStatus(@PathVariable String email) {
+		return bookmarkService.getQnaboardBookmark(email);
+	}
+	
 	
 	@PostMapping("/bookmark/general-post")
 	public Map<String, Object> doCreateGeneralPostBookmark(@SessionAttribute("_LOGIN_USER_") MemberVO memberVO,

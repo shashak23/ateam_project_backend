@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
@@ -70,11 +71,13 @@ public class TechstackController {
 	 @PostMapping("/memberInfo/modify/update-tech")
 	 public String doUpdateTechstack(@ModelAttribute TechstackVO techstackVO
 			 					   ,Model model
+			 					   ,@RequestParam String hashtagList
 			 					   ,@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 		 techstackVO.setEmail(memberVO.getEmail());
 		 if (!techstackVO.getEmail().equals(memberVO.getEmail())) {
 				throw new PageNotFoundException("잘못된 접근입니다.");
 			}
+		 
 		 boolean isSuccess = techstackService.deleteUpTechstack(techstackVO);
 		 if(isSuccess) {
 			 return "redirect:/memberinfo/view/"+techstackVO.getEmail();
@@ -87,18 +90,14 @@ public class TechstackController {
 	 /**
 	  * 기술스택 삭제
 	  */
-	 @GetMapping("/memberInfo/modify/delete-tech/{techstackId}")
-		public String deletEmailURL(@PathVariable String techstackId
+	 @GetMapping("/memberInfo/modify/delete-tech/{email}")
+		public String deletTeachstack(@PathVariable String email
 									,@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
-			TechstackVO techstackVO = techstackService.getOneTechstack(techstackId);
-			if (!techstackVO.getEmail().equals(memberVO.getEmail())) {
-				throw new PageNotFoundException("잘못된 접근입니다.");
-			}
-			boolean isSuccess = techstackService.deleteTechstack(techstackId);
+			boolean isSuccess = techstackService.deleteTechstack(email);
 			if (isSuccess) {
-				return "redirect:/memberinfo/view/"+techstackVO.getEmail();
+				return "redirect:/memberinfo/view/"+memberVO.getEmail();
 			} else {
-				return "redirect:/memberinfo/view/"+techstackVO.getEmail();
+				return "redirect:/memberinfo/view/"+memberVO.getEmail();
 			}
 		}
 }

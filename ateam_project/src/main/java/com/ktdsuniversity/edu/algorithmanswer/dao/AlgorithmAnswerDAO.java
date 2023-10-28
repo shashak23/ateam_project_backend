@@ -13,7 +13,10 @@ public interface AlgorithmAnswerDAO {
 
 	public int createAlgorithmAnswer(AlgorithmAnswerVO algorithmAnswerVO);
 	
+	public int deleteAlgorithmAnswer(AlgorithmAnswerVO algorithmAnswerVO);
+	
 	public List<AlgorithmAnswerVO> getAlgorithmAnswer(String companyAlgorithmQuestionId);
 	
 	public List<Integer> getResult(String companyAlgorithmQuestionId);
+	
 }

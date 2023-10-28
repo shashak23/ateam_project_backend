@@ -5,6 +5,8 @@
  */
 package com.ktdsuniversity.edu.bookmark.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,6 +27,16 @@ public class BookmarkServiceImpl implements BookmarkService {
 		
 		return bookmarkListVO;
 	}
+
+	@Override
+	public List<BookmarkVO> getFreeboardBookmark(String email) {
+		return bookmarkDAO.getFreeboardBookmark(email);
+	}
+	
+	@Override
+	public List<BookmarkVO> getQnaboardBookmark(String email) {
+		return bookmarkDAO.getQnaboardBookmark(email);
+	}
 	
 	@Override
 	public BookmarkVO getBookmarkStatus(BookmarkSearchVO bookmarkSearchVO) {
@@ -36,7 +48,7 @@ public class BookmarkServiceImpl implements BookmarkService {
 	public boolean createBookmark(BookmarkVO bookmarkVO) {
 		return bookmarkDAO.createBookmark(bookmarkVO) > 0;
 	}
-	
+		
 	@Transactional
 	@Override
 	public boolean deleteBookmark(BookmarkSearchVO bookmarkSearchVO) {
