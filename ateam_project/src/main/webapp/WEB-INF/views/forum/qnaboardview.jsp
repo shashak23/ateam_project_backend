@@ -167,7 +167,7 @@ pre.content {
 #button-id-list {
    bottom: 50px;
    position: relative;
-   left: 500px;
+   left: 680px;
    margin-left: 10px;
    background-color: var(--light-blue);
    border: none;
