@@ -13,6 +13,7 @@ import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.ktdsuniversity.edu.common.vo.AbstractCompanyPostVO;
 import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
 import com.ktdsuniversity.edu.companynews.vo.CompanyNewsVO;
 import com.ktdsuniversity.edu.companynews.vo.SearchCompanyNewsVO;
@@ -66,10 +67,19 @@ public class CompanyNewsDAOImpl extends SqlSessionDaoSupport implements CompanyN
 		return getSqlSession().update("deleteOneCompanyNews", companyNewsPostId);
 	}
 	
+	// 기업회원 내 게시글 조회
+	@Override
+	public List<CompanyNewsVO> getCompanyMyPost(AbstractCompanyPostVO abstractCompanyPostVO) {
+		return getSqlSession().selectList("com.ktdsuniversity.edu.companynews.dao.CompanyNewsDAO.getCompanyMyPost", abstractCompanyPostVO);
+	}
+	
+	//통합검색
 	@Override
 	public List<CompanyNewsVO> searchAllCompanyNewsByKeyword(AbstractSearchVO abstractSearchVO) {
 		return getSqlSession().selectList("searchAllCompanyNewsByKeyword", abstractSearchVO);
 	}
+
+	
 
 
 }

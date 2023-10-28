@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.ktdsuniversity.edu.beans.FileHandler;
 import com.ktdsuniversity.edu.beans.FileHandler.StoredFile;
+import com.ktdsuniversity.edu.common.vo.AbstractCompanyPostVO;
 import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
 import com.ktdsuniversity.edu.companynews.dao.CompanyNewsDAO;
 import com.ktdsuniversity.edu.companynews.vo.CompanyNewsListVO;
@@ -117,6 +118,15 @@ public class CompanyNewsServiceImpl implements CompanyNewsService {
 		return deleteCount > 0;
 	}
 	
+	// 기업회원 내 게시글 조회
+	@Override
+	public CompanyNewsListVO getCompanyMyPost(AbstractCompanyPostVO abstractCompanyPostVO) {
+		CompanyNewsListVO companyNewsListVO = new CompanyNewsListVO();
+		companyNewsListVO.setCompanyNewsList(companyNewsDAO.getCompanyMyPost(abstractCompanyPostVO));
+		return companyNewsListVO;
+	}
+	
+	// 통합검색
 	@Override
 	public CompanyNewsListVO searchAllCompanyNewsByKeyword(AbstractSearchVO abstractSearchVO) {
 		
@@ -127,9 +137,4 @@ public class CompanyNewsServiceImpl implements CompanyNewsService {
 		companyNewsListVO.setCompanyNewsList(companyNewsDAO.searchAllCompanyNewsByKeyword(abstractSearchVO));
 		return companyNewsListVO;
 	}
-
-	
-	
-	
-
 }

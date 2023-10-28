@@ -1,6 +1,7 @@
 /*
  * 작성자: 장보늬
  * 작성일자: 2023-10-15
+ * 수정자: 장보늬(2023-10-28)
  * 내용: 알고리즘해설 게시판의 CRUD 실행결과를 저장합니다.
  */
 
@@ -16,6 +17,7 @@ import com.ktdsuniversity.edu.algorithmexplanation.dao.AlgorithmExplanationDAO;
 import com.ktdsuniversity.edu.algorithmexplanation.vo.AlgorithmExplanationListVO;
 import com.ktdsuniversity.edu.algorithmexplanation.vo.AlgorithmExplanationVO;
 import com.ktdsuniversity.edu.algorithmexplanation.vo.SearchAlgorithmExplanationVO;
+import com.ktdsuniversity.edu.common.vo.AbstractCompanyPostVO;
 import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
 import com.ktdsuniversity.edu.exceptions.PageNotFoundException;
 
@@ -77,6 +79,15 @@ public class AlgorithmExplanationServiceImpl implements AlgorithmExplanationServ
 		return deleteCount > 0;
 	}
 
+	// 기업회원 내 게시글 조회
+	@Override
+	public AlgorithmExplanationListVO getCompanyMyPost(AbstractCompanyPostVO abstractCompanyPostVO) {
+		AlgorithmExplanationListVO algorithmExplanationListVO = new AlgorithmExplanationListVO();
+		algorithmExplanationListVO.setAlgorithmExplanationList(algorithmExplanationDAO.getCompanyMyPost(abstractCompanyPostVO));
+		return algorithmExplanationListVO;
+	}
+	
+	// 통합검색
 	@Override
 	public AlgorithmExplanationListVO searchAllAlgorithmExplanationByKeyword(AbstractSearchVO abstractSearchVO) {
 		

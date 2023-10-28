@@ -8,6 +8,7 @@ package com.ktdsuniversity.edu.companynews.dao;
 
 import java.util.List;
 
+import com.ktdsuniversity.edu.common.vo.AbstractCompanyPostVO;
 import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
 import com.ktdsuniversity.edu.companynews.vo.CompanyNewsVO;
 import com.ktdsuniversity.edu.companynews.vo.SearchCompanyNewsVO;
@@ -35,6 +36,9 @@ public interface CompanyNewsDAO {
 	
 	public int deleteOneCompanyNews(String companyNewsPostId);
 
+	// 기업회원 내 게시글 조회
+	public List<CompanyNewsVO> getCompanyMyPost(AbstractCompanyPostVO abstractCompanyPostVO);
+	
 	// 통합검색
 	public List<CompanyNewsVO> searchAllCompanyNewsByKeyword(AbstractSearchVO abstractSearchVO);
 	

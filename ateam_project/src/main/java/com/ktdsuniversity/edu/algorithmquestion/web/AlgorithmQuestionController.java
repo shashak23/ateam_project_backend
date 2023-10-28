@@ -145,12 +145,13 @@ public class AlgorithmQuestionController {
 
 	@GetMapping("/algorithm/question/delete/{companyAlgorithmQuestionId}")
 	public String doDeleteAlgorithmQuestion(@PathVariable String companyAlgorithmQuestionId
-			                              , @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+			                              , @SessionAttribute("_LOGIN_USER_") MemberVO memberVO
+			                              , @ModelAttribute AlgorithmQuestionVO algorithmQuestionVO) {
 		logger.debug("PathVariable: " + companyAlgorithmQuestionId);
 		
-        algorithmQuestionService.deleteOneAlgorithmQuestion(companyAlgorithmQuestionId);
+        algorithmQuestionService.deleteOneAlgorithmQuestion(algorithmQuestionVO);
 		
-        AlgorithmQuestionVO algorithmQuestionVO = algorithmQuestionService.getOneAlgorithmQuestion(companyAlgorithmQuestionId, false);
+        algorithmQuestionVO = algorithmQuestionService.getOneAlgorithmQuestion(companyAlgorithmQuestionId, false);
 		
 		if(!algorithmQuestionVO.getAlgorithmWriter().equals(memberVO.getEmail())) {
 			throw new PageNotFoundException("잘못된 접근입니다.");

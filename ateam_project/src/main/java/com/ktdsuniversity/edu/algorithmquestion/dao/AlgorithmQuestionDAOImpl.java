@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 
 import com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionVO;
 import com.ktdsuniversity.edu.algorithmquestion.vo.SearchAlgorithmQuestionVO;
+import com.ktdsuniversity.edu.common.vo.AbstractCompanyPostVO;
 import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
 
 @Repository
@@ -76,8 +77,15 @@ public class AlgorithmQuestionDAOImpl extends SqlSessionDaoSupport implements Al
 	}
 
 	@Override
-	public int deleteOneAlgorithmQuestion(String companyAlgorithmQuestionId) {
-		return getSqlSession().update("deleteOneAlgorithmQuestion", companyAlgorithmQuestionId);
+	public int deleteOneAlgorithmQuestion(AlgorithmQuestionVO algorithmQuestionVO) {
+		return getSqlSession().update("deleteOneAlgorithmQuestion", algorithmQuestionVO);
+	}
+
+	
+	// 기업회원 내 게시글 조회
+	@Override
+	public List<AlgorithmQuestionVO> getCompanyMyPost(AbstractCompanyPostVO abstractCompanyPostVO) {
+		return getSqlSession().selectList("com.ktdsuniversity.edu.algorithmquestion.dao.AlgorithmQuestionDAO.getCompanyMyPost", abstractCompanyPostVO);
 	}
 
 	//통합검색

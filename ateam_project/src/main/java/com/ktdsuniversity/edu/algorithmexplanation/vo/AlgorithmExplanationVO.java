@@ -6,14 +6,14 @@
 
 package com.ktdsuniversity.edu.algorithmexplanation.vo;
 
-import com.ktdsuniversity.edu.member.vo.MemberVO;
+import com.ktdsuniversity.edu.common.vo.AbstractCompanyPostVO;
 import com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 import com.ktdsuniversity.edu.util.XssIgnore;
 
 import jakarta.validation.constraints.NotBlank;
 
-public class AlgorithmExplanationVO {
+public class AlgorithmExplanationVO extends AbstractCompanyPostVO{
 	
 	private String companyAlgorithmExplanationId;
 	
