@@ -120,6 +120,7 @@ public class AdminController {
 		}
 		if (val.equals("refuse")) {
 			companyVO.setCompanyEmail(companyEmail);
+			mailService.doCompleteCompanyMemberRegistrationYn(companyEmail);
 			mailService.sendRefuseMail(companyVO);
 		}
 		return "redirect:/admin/companymember";

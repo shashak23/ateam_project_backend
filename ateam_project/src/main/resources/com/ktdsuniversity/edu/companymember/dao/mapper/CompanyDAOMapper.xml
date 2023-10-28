@@ -67,6 +67,7 @@
 			  , HOME_URL
 			  , CONFIRM_YN
 		  FROM COMPANY
+		 ORDER BY CONFIRM_YN ASC
 	</select>
 	
 	<update id="CompleteCompanyMemberRegistrationYn"
