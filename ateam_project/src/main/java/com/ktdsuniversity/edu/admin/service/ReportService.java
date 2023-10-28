@@ -57,6 +57,4 @@ public interface ReportService {
 	public boolean doCompleteProgressYn(String reportId);
 	
 	public boolean createReport(ReportVO reportVO);
-
-	public void reportUser(String reporterUserId, String reportedUserId);
 }
