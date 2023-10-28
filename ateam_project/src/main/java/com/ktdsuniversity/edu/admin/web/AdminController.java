@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -41,14 +42,14 @@ public class AdminController {
 //		return resultMap;
 //	}
 	
-	@GetMapping("/report/list")
+	@GetMapping("/admin/report/list")
 	public String viewReportHistory(Model model) {
 		ReportListVO reportListVO = reportService.getAllReport();
 		model.addAttribute("reportListVO", reportListVO);
 		return "report/reporthistory";
 	}
 	
-	@PostMapping("/report/list")
+	@PostMapping("/admin/report/list")
 	@ResponseBody
 	public ReportListVO viewSelectReportType(@RequestBody String selectedValue) {
 //		System.out.println(selectedValue + "======================================================================================");
@@ -95,6 +96,7 @@ public class AdminController {
 	}
 
 // 	ajax 통신할거면 반드시! map -> json으로 보낸다
+	@Transactional
 	@ResponseBody
 	@PostMapping("/admin/member")
 	public String sendMemberApproval(@RequestParam String val) {
@@ -114,12 +116,28 @@ public class AdminController {
 		return "redirect:/home/main";
 	}
 	
-	@GetMapping("/report/view/{reportId}")
+	@GetMapping("/admin/report/view/{reportId}")
 	public String viewOneReport(@PathVariable String reportId,
-								Model model) {
-		ReportVO reportVO = reportService.getSingleReport(reportId);
+								Model model,
+								ReportVO reportVO) {
+		System.out.println(reportVO.getReportDate());
+		reportVO = reportService.getSingleReport(reportId);
 		model.addAttribute("reportVO", reportVO);
 		return "report/reporthistoryview";
+	}
+	
+	@Transactional
+	@PostMapping("/admin/report/view/{reportId}")
+	public String doCompleteProgressYn(@PathVariable String reportId,
+										@RequestParam String value) {
+		if (value.equals("reportHandlingStatus")) {
+			boolean doCompleteProgressYn = reportService.doCompleteProgressYn(reportId);
+			if (doCompleteProgressYn) {
+				return "redirect:/admin/report/view/" + reportId;		
+			}
+		}
+		
+		return "redirect:/admin/report/view/" + reportId;
 	}
 	
 	

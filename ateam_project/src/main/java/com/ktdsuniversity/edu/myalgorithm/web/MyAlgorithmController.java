@@ -43,7 +43,7 @@ public class MyAlgorithmController {
 	@Autowired
 	private AlgorithmQuestionService algorithmQuestionService;
 	
-	@GetMapping("/home/myalgorithm/list")
+	@GetMapping("/codingtest/mylist")
 	public ModelAndView viewAllMyAlgorithm(@SessionAttribute("_LOGIN_USER_") MemberVO memberVO,
 										   @ModelAttribute SearchMyAlgorithmVO searchMyAlgorithmVO) {
 		System.out.println("search my keyword: " + searchMyAlgorithmVO.getSearchKeyword());
@@ -64,6 +64,7 @@ public class MyAlgorithmController {
 		return mav;
 	}
 	
+	
 	@PostMapping("/algorithm/question/view/{companyAlgorithmQuestionId}")
 	public String createMyAlgorithm(@Valid @PathVariable String companyAlgorithmQuestionId 
 			                      , @ModelAttribute MyAlgorithmVO myAlgorithmVO 
@@ -77,14 +78,15 @@ public class MyAlgorithmController {
 		
 		AnswerResultVO arVO = myAlgorithmService.createNewMyAlgorithm(myAlgorithmVO);
 //		if(arVO.isInsertResult()) {
-//			// 정답여부 팝업창으로 보여주기
 //			return "redirect:/algorithm/question/list";
 //		}
 //		else {
 			AlgorithmQuestionVO algorithmQuestionVO = algorithmQuestionService.getOneAlgorithmQuestion(companyAlgorithmQuestionId, false);
-			model.addAttribute("AlgorithmQuestionVO", algorithmQuestionVO);
-			model.addAttribute("MyAlgorithmVO", myAlgorithmVO);
+			model.addAttribute("algorithmQuestionVO", algorithmQuestionVO);
+			model.addAttribute("myAlgorithmVO", myAlgorithmVO);
 			model.addAttribute("codeResultList", arVO.getCodeResultList());
+			model.addAttribute("result", arVO.getMessage());
+			model.addAttribute("companyAlgorithmQuestionId", companyAlgorithmQuestionId);
 			
 			return "company/algorithmquestion/questionview";
 //		}
@@ -97,7 +99,7 @@ public class MyAlgorithmController {
 		
 		myAlgorithmService.deleteMyAlgorithm(myAlgorithmQuestionId);
 		
-		return "redirect:/home/myalgorithm/list";
+		return "redirect:/codingtest/mylist";
 	}
 	
 	

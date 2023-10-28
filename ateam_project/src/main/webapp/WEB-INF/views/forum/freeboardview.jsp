@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,223 +18,262 @@
 
 <style>
 
-a:link, a:hover, a:visited, a:active {
-   color: #333;
-   text-decoration: none;
-}
-
-.grid {
-   display: grid;
-   grid-template-columns: 80px 1fr;
-   grid-template-rows: 28px 28px 28px 28px 28px 320px 1fr;
-   margin-left: 20px;
-   border-top: 1px solid var(--light-gray);
-}
-
-.grid>.btn-group {
-   display: grid;
-   grid-column: 1/3;
-}
-
-.grid .right-align {
-   text-align: right;
-}
-
-label {
-   padding-left: 10px;
-}
-
-button, input, textarea {
-   padding: 10px;
-}
-
-.replies {
-   height: 400px;
-   width: 800px;
-}
-
-.replies>.comment-header {
-   display: grid;
-   grid-template-columns: 95px 100px 1fr;
-   height: 50px;
-}
-
-.replies>.comment-header>.replies-count {
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   font-size: medium;
-   font-weight: 800;
-   margin-right: 45px;
-}
-
-.replies>.comment-header>.str-count {
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   font-size: small;
-   font-weight: 300;
+   a:link, a:hover, a:visited, a:active {
+      color: #333;
+      text-decoration: none;
+   }
    
-   padding-left: 530px;
-}
-
-.replies>.write-comment {
-   display: grid;
-   grid-template-rows: 1fr;
-   column-gap: 10px;
-   align-items: center;
-    
-}
-
-.replies>.write-comment>textarea {
-   height: 150px;
-   resize: none;
-    border-color: lightgray;
-}
-
-.replies> .comment-option{
-border-color: #333;
-border:1px solid lightgrey;
-}
-
-
-pre.content {
-   margin: 0px;
-}
-
-.report-modal {
-    display: none; /* 초기에 모달 숨김 */
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7); /* 반투명 배경 */
-    z-index: 1;
-}
-
-
-/* 모달 내용 스타일 */
-.report-modal-content {
-    position: relative;
-    margin: 15% auto;
-    padding: 20px;
-    width: 60%;
-    background-color: #fff;
-    border-radius: 5px;
-}
-/* 댓글 모달 내용 스타일 */
-.report-window-content {
-    position: relative;
-    margin: 15% auto;
-    padding: 20px;
-    width: 60%;
-    background-color: #fff;
-    border-radius: 5px;
-}
-.report-window {
-    display: none; 
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7); 
-    z-index: 1;
-}
-/* 모달 닫기 버튼 스타일 */
-.close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 20px;
-    cursor: pointer;
-    color: #888;
-}
-#like-btn, #reportQnABoard {
-   background-color: var(--hashtag-blue);
+   .grid {
+      display: grid;
+      grid-template-columns: 80px 1fr;
+      grid-template-rows: 28px 28px 28px 28px 28px 320px 1fr;
+      margin-left: 20px;
+      border-top: 1px solid var(--light-gray);
+   }
+   
+   .grid>.btn-group {
+      display: grid;
+      grid-column: 1/3;
+   }
+   
+   .grid .right-align {
+      text-align: right;
+   }
+   
+   label {
+      padding-left: 10px;
+   }
+   
+   button, input, textarea {
+      padding: 10px;
+   }
+   
+   .replies {
+      width: 800px;
+    margin: 0px 0px 0px 500px;
+   }
+   h3 {
+      position: relative;
+      top: 10px;
+   }
+   
+   
+   
+   .replies>.comment-header {
+      display: grid;
+      grid-template-columns: 95px 100px 1fr;
+      height: 50px;
+   }
+   
+   .replies>.comment-header>.replies-count {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: medium;
+      font-weight: 800;
+      margin-right: 45px;
+   }
+   
+   .replies>.comment-header>.str-count {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: small;
+      font-weight: 300;
+      
+      padding-left: 530px;
+   }
+   
+   .replies>.write-comment {
+      display: grid;
+      grid-template-rows: 1fr;
+      column-gap: 10px;
+      align-items: center;
+       
+   }
+   
+   .replies>.write-comment>textarea {
+      height: 150px;
+      resize: none;
+       border-color: lightgray;
+   }
+   
+   .replies> .comment-option{
+   border-color: #333;
+   border:1px solid lightgrey;
+   }
+   
+   
+   pre.content {
+      margin: 0px;
+   }
+   
+   .report-modal {
+       display: none; /* 초기에 모달 숨김 */
+       position: fixed;
+       top: 0;
+       left: 0;
+       width: 100%;
+       height: 100%;
+       background-color: rgba(0, 0, 0, 0.7); /* 반투명 배경 */
+       z-index: 1;
+   }
+   
+   /* 모달 내용 스타일 */
+   .report-modal-content {
+       position: relative;
+       margin: 15% auto;
+       padding: 20px;
+       width: 60%;
+       background-color: #fff;
+       border-radius: 5px;
+   }
+   /* 댓글 모달 내용 스타일 */
+   .report-window-content {
+       position: relative;
+       margin: 15% auto;
+       padding: 20px;
+       width: 60%;
+       background-color: #fff;
+       border-radius: 5px;
+   }
+   .report-window {
+       display: none; 
+       position: fixed;
+       top: 0;
+       left: 0;
+       width: 100%;
+       height: 100%;
+       background-color: rgba(0, 0, 0, 0.7); 
+       z-index: 1;
+   }
+   /* 모달 닫기 버튼 스타일 */
+   .close {
+       position: absolute;
+       top: 10px;
+       right: 10px;
+       font-size: 20px;
+       cursor: pointer;
+       color: #888;
+   }
+   #like-btn, #reportQnABoard  {
+      margin-left: 10px;
+      background-color: var(--hashtag-blue);
+      border: none;
+      width: 70px;
+      height: 30px;
+      border-radius: 5px;
+      cursor: pointer;
+   }
+   #button-id-list {
+   bottom: 50px;
+   position: relative;
+   left: 500px;
+   margin-left: 10px;
+   background-color: var(--light-blue);
    border: none;
    width: 70px;
    height: 30px;
    border-radius: 5px;
    cursor: pointer;
+
 }
-.main_Container {
-   position: relative;
-   left: 500px;
-   border-radius: 10px;
-   border: 1px solid var(--light-gray);
-   margin-top: 130px;
-   width: 1000px;
-   height:1000px;
+   .main_Container {
+      position: relative;
+      left: 500px;
+      border-radius: 10px;
+      border: 1px solid var(--light-gray);
+      margin-top: 130px;
+      width: 1000px;
+      height:1000px;
+      
+   }
+   .button_controller {
+      position: relative;
+      left: 1350px;
+      top: 120px;
+   }
+   h1 {
+      position: relative;
+      bottom: 30px;
+      margin-left: 30px;
+      margin-top: 60px;
+   }
+   .free_Title {
+      position: relative;
+      top: 25px;
+      left:30px;
+      color: var(--blue);
+   }
+   .content_Controller {
+      border-bottom: 1px solid var(--light-gray);
+   }
+   .title_Name {
+      display: inline-block;
+       font-size: 2em; /* 2em은 <h1> 크기와 유사한 크기입니다. */
+       font-weight: bold;
+       margin: 25px 12px;
+   }
+   .postContent_Controller {
+      letter-spacing: 1px;
+      position: relative;
+      bottom: 300px;
+      text-align: justify; 
+   }
+   .postContent_controller_1 {
+      position:relative;
+      bottom: 330px;
+      margin-left: 50px;
+      margin-right: 50px;
+      
+   }
+   .update_btn {
+      position: absolute;
+      top: -30px;
+      right: 0;
+   }
    
-}
-.button_controller {
-   position: relative;
-   left: 1350px;
-   top: 120px;
-}
-h1 {
-   position: relative;
-   bottom: 30px;
-   margin-left: 30px;
-   margin-top: 60px;
-}
-.qna_Title {
-   position: relative;
-   top: 25px;
-   left:30px;
-   color: var(--blue);
-}
-.content_Controller {
-   border-bottom: 1px solid var(--light-gray);
-}
-.title_Name {
-    font-size: 2em; /* 2em은 <h1> 크기와 유사한 크기입니다. */
-    font-weight: bold;
-    margin-left: 30px;
-    margin-bottom: 20px;
-}
-.postContent_Controller {
-   letter-spacing: 1px;
-   position: relative;
-   bottom: 300px;
-   text-align: justify; 
-}
-.postContent_controller_1 {
-   position:relative;
-   bottom: 330px;
-   margin-left: 50px;
-   margin-right: 50px;
+   textarea {
+      width: 1000px;
+     
+   }
+   #btn-save-comment {
+      position: relative;
+      bottom: -10px;
+      border: none;
+      background-color:var(--hashtag-blue) ;
+      cursor: pointer;
+      width: 70px;
+      height: 30px;
+      left: 930px;
+      border-radius: 5px;
+   }
+   .comment{
+      display: flex;
+      flex-direction: column;
+   }
+   .recommend-comment,
+   .update-comment,
+   .delete-comment,
+   .report-comment {
+      border: none;
+      color: var(--white);
+      border-radius: 10px;
+      background-color:var(--light-blue);
+      margin-left: 5px;
+      cursor: pointer;
+   }
+   .seperate-line {
+      border: 1px solid #ccc;
+      width: 1000px;
+      height: 1px;
+      margin: 10px 0px 7px 0px;
+   }
+   #btn {
+      margin-right: 150px;
+   }
    
-}
-.update_btn {
-   position: relative;
-   left: 1430px;
-   top: 120px;
-}
-.replies {
-   position: relative;
-   left: 500px;
-   top: 50px
-   
-}
-textarea {
-   width: 1000px;
-  
-}
-#btn-save-comment {
-   position: relative;
-   bottom: -10px;
-   border: none;
-   background-color:var(--hashtag-blue) ;
-   cursor: pointer;
-   width: 70px;
-   height: 30px;
-   left: 930px;
-   border-radius: 5px;
-}
-</style>
+   </style>
 <script type="text/javascript" src="/js/lib/jquery-3.7.1.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
@@ -249,7 +289,7 @@ textarea {
                         var comment = replies[i];
                         var commentTemplate =
                             `<div class="comment"
-                            	data-comment-id="\${comment.generalCommentId}"
+                               data-comment-id="\${comment.generalCommentId}"
                                 style="padding-left: \${(comment.level - 1) * 40}px">
                                 <div class="author">\${comment.commentWriter}</div>
                                 <div class="recommend-count">추천수: \${comment.likeCnt}</div>
@@ -270,6 +310,7 @@ textarea {
                                         <button class="update-comment">수정</button>
                                         <button class="delete-comment">삭제</button>
                                         <button class="report-comment" value="2">신고</button>
+                                        <div class="seperate-line"></div>
 
                                     </div>`}
                             </div>`;
@@ -284,17 +325,17 @@ textarea {
                 })// $.get
         } // loadReplies
       loadReplies()
-   	  // 신고버튼 클릭
+        // 신고버튼 클릭
       $(".report-comment").click(reportComment);
-      	var reportComment = function(event) {
-	        // 모달을 표시합니다.
-	        $("#report-window").css("display", "block");
-	        console.log($(this).val())
-      	}
-		    // 모달 내부 "취소" 버튼 클릭 시 모달 닫기
-		    $("#cancel-window").click(function() {
-		        $("#report-window").css("display", "none");
-		    });
+         var reportComment = function(event) {
+           // 모달을 표시합니다.
+           $("#report-window").css("display", "block");
+           console.log($(this).val())
+         }
+          // 모달 내부 "취소" 버튼 클릭 시 모달 닫기
+          $("#cancel-window").click(function() {
+              $("#report-window").css("display", "none");
+          });
         // 등록버튼 클릭
         $("#btn-save-comment").click(function(event) {
 
@@ -380,20 +421,20 @@ textarea {
       
       $(".update-comment").click(updateComment);
        var updateComment=function(event){
-    	   var reply = $(event.currentTarget).closest(".comment")
-    	   //클릭한 대상
-    	   var replyId = reply.data ("comment-id")
-    	   var content = reply.find (".content").text()
-    	   
-    	   //작성되어있던 원래 댓글 내용
-    	   $("#txt-comment").val (content)
-    	   $("#txt-comment").focus()
-    	   
-    	   //수정모드로 변경
-    	   $("#txt-comment").data("mode","update")
-    	   $("#txt-comment").data("target",replyId)
-    	   $("#txt-comment").data("generalCommentId", replyId)
-    	   }
+          var reply = $(event.currentTarget).closest(".comment")
+          //클릭한 대상
+          var replyId = reply.data ("comment-id")
+          var content = reply.find (".content").text()
+          
+          //작성되어있던 원래 댓글 내용
+          $("#txt-comment").val (content)
+          $("#txt-comment").focus()
+          
+          //수정모드로 변경
+          $("#txt-comment").data("mode","update")
+          $("#txt-comment").data("target",replyId)
+          $("#txt-comment").data("generalCommentId", replyId)
+          }
 
 
           $().ready(function() {
@@ -439,35 +480,32 @@ textarea {
 </script>
 </head>
 <body>
-<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq generalPostVO.postWriter}">					
+<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq generalPostVO.postWriter}">               
    <div class="btn-group">
        <div class="right-align">
            <div class="update_btn">
-               <div class="btn">
-                   <a href="/freeboard/update/${generalPostVO.generalPostId}">수정</a>
-                   <a href="/freeboard/delete/${generalPostVO.generalPostId}">삭제</a>
-               </div>
            </div>
        </div>
    </div>
-</c:if>
-
-   
-<div class="main_Container">
-   <p class="free_Title">자유게시판 > </p>
-   <label for="postTitle"></label>
-         <div class="title_Name">${generalPostVO.postTitle}</div>
-
-   <!-- <h1>[스프링부트] 스프링 부트 3 자바 백엔드 개발 입문이요</h1> -->
-   
+            </c:if>
+            <div id="btn">
+                <a href="/freeboard/update/${generalPostVO.generalPostId}">수정</a>
+                <a href="/freeboard/delete/${generalPostVO.generalPostId}">삭제</a>
+            </div>
+            
+            
+            <div class="main_Container">
+               <p class="free_Title">자유게시판 ></p>
+               <label for="postTitle"></label>
+               <div class="title_Name">${generalPostVO.postTitle}</div>
    <!-- 목록보기 -->
-   <a href="/freeboard/list">목록</a>
+   <button id="button-id-list" onclick="window.location.href='/freeboard/list'">목록</button>
    
    <!-- 좋아요 기능 -->
-	<button id="like-btn">좋아요</button>
-	
-	<!-- 신고 기능 -->
-	<button id="reportQnABoard" value="1" class="report-btn">신고</button>
+   <button id="like-btn">좋아요</button>
+   
+   <!-- 신고 기능 -->
+   <button id="reportQnABoard" value="1" class="report-btn">신고</button>
       <!-- 모달 창 -->
          <div id="report-modal" class="report-modal">
              <div class="report-modal-content">
@@ -544,25 +582,25 @@ textarea {
       
    </form>
 </div>   
+  
    <div class="replies">
       <div class="comment-header">
          <h3>댓글</h3>
       </div>
-        <div class="comment-items"></div>
-         <div class="write-comment">
+      <div class="write-comment">
             <textarea id="txt-comment" placeholder="의견을 입력하세요" maxlength="500"></textarea>
             <button id="btn-save-comment" type="submit">등록</button>
             <!-- 신고 버튼은 조회할때 사용<button id="btn-report-comment">신고</button> -->
          </div>
-   </div>  
-   
-    <!-- 댓글 신고 모달 창 -->
+        <div class="comment-items"></div>
+         
+       <!-- 댓글 신고 모달 창 -->
          <div id="report-window" class="report-window">
              <div class="report-window-content">
                  <span class="close" id="cancel-window">취소</span>
                     <!-- 모달 내용 추가 -->
                   <h2>신고 내용</h2>
-                  <form name="reportVO" method="post" action="/report/view/2">
+                  <form name="reportVO" method="post" action="/report/view/4">
                      <div>
                         <label for="reportReason" >신고사유${reportVO.reportReason}
                            <select name="reportReason">
@@ -582,7 +620,7 @@ textarea {
                         <input id="attachedImg" type="file" name="attachedImg"/>
                         
                         <label for="reportTypeId">${reportVO.reportTypeId}</label>
-                        <input id="reportTypeId" type="hidden" name="reportTypeId" value="2"/>
+                        <input id="reportTypeId" type="hidden" name="reportTypeId" value="4"/>
                         
                         <label for="reportMemberEmail">${reportVO.reportMemberEmail}</label>
                         <input id="reportMemberEmail" type="hidden" name="reportMember" value="${reportVO.reportMember}"/>
@@ -601,10 +639,10 @@ textarea {
                      </div>      
                   </form>
                </div>
-            </div>
-
-        <jsp:include page="../layout/footer.jsp" />
-        <script>
+            </div> 
+   </div>  
+   <jsp:include page="../layout/footer.jsp" />
+   <script>
          // 미완성된 기능을 알려주는 모달창
          $('.incomplete').click(function() {
              $('.modal, .overlay').addClass('modal_active');
@@ -647,8 +685,5 @@ textarea {
              }
          });
      </script>
-   
-
-
 </body>
 </html>

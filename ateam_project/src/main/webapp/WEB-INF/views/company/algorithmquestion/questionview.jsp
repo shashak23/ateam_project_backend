@@ -15,8 +15,8 @@
 	    ClassicEditor.create( document.querySelector( '#myAnswer' ), {
 	       language: "ko"
 	    } );
-	    
-    	// 모달 실행을 위한 문장
+
+        // 모달 실행을 위한 문장
         $('.btn-primary').click(function() {
             $('.create_container, .overlay').addClass('active')
         })
@@ -26,7 +26,9 @@
         
         $("#submit-btn").click(function() {
         	$("#myAlgorithmVO").submit();
+        	
         })
+        
     })
 </script>
 </head>
@@ -238,25 +240,29 @@
 				<div>
 					<form:errors path="myAnswer" element="div" cssClass="errors" />
 				</div>
-				    <label for="myAnswer">답변</label> <!-- 웹IDE 테이블에 신규생성? -->
-				    <textarea name="myAnswer" id="myAnswer">${algorithmQuestionVO.defaultCode}</textarea>
-				    <!-- 일반회원이 로그인 했을 시 -->
-				    <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.memberType eq 'GENERAL'}">
-				        <button id="submit-btn">제출 후 채점하기</button>
-					</c:if>
+			    <label for="myAnswer">답변</label> <!-- 웹IDE 테이블에 신규생성? -->
+			    <textarea name="myAnswer" id="myAnswer">${algorithmQuestionVO.defaultCode}</textarea>
+			    <!-- 일반회원이 로그인 했을 시 -->
+			    <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.memberType eq 'GENERAL'}">
+			        <button id="submit-btn">제출 후 채점하기</button>
+				</c:if>
 			</form:form>
+			<label for="showResult">실행 결과</label>
+			<div id="show_result"></div>
+			<c:forEach var="resultItem" items="${result}" varStatus="resultStatus">
+			    <ul>
+			        <li>테스트 ${resultStatus.index + 1} > ${resultItem}</li>
+			        <c:forEach var="codeResultItem" items="${codeResultList}" varStatus="codeResultStatus">
+			            <c:if test="${codeResultStatus.index eq resultStatus.index * 2}">
+			                <c:out value="(${codeResultItem})" />
+			            </c:if>
+			        </c:forEach>
+			    </ul>
+			</c:forEach>
+
 		</div>
 	</div>
 	<div class="grid">
-		<!-- 추후 작업 -->
-		<label for="result" id="result" >실행결과</label>
-		<div id="result">
-			<c:if test="${not empty codeResultList}">
-				<c:forEach items="${codeResultList}" var="code">
-					<p>${code}<p>
-				</c:forEach>
-			</c:if>
-		</div>
 		
 		<div class="btn-group">
 				<div class="right-align">

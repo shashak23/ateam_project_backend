@@ -6,6 +6,9 @@
  */
 package com.ktdsuniversity.edu.generalpost.web;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -193,11 +196,21 @@ public class QnAPostController {
 	// 내 게시글 조회
 	@GetMapping("/mypost")
 	public String viewMyPost(@ModelAttribute GeneralPostVO generalPostVO
-			, Model model
+			               , Model model
 			               , @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 		generalPostVO.setPostWriter(memberVO.getEmail());
 		GeneralPostListVO generalPostListVO = generalPostService.getMyPost(generalPostVO);
-		model.addAttribute("generalPostList", generalPostListVO);
+		List<GeneralPostVO> qnaPostList = generalPostListVO.getGeneralPostList();
+		if (qnaPostList != null) {
+			qnaPostList = qnaPostList.stream().filter(boardId -> boardId.getBoardId().equals("CC-20231017-000030")).collect(Collectors.toList());
+		}
+		List<GeneralPostVO> freePostList = generalPostListVO.getGeneralPostList();
+		if (freePostList != null) {
+			freePostList = freePostList.stream().filter(boardId -> boardId.getBoardId().equals("CC-20231017-000029")).collect(Collectors.toList());
+		}
+		
+		model.addAttribute("qnaPostList", qnaPostList);
+		model.addAttribute("freePostList", freePostList);
 		return "mypage/mypost";
 	}
 	

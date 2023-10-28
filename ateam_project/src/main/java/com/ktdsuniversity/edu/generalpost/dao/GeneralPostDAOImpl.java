@@ -110,8 +110,8 @@ public class GeneralPostDAOImpl extends SqlSessionDaoSupport
 
 	// 내 게시글 조회
 	@Override
-	public List<GeneralPostVO> getMyPost(GeneralPostVO GeneralPostVO) {
-		return getSqlSession().selectList("getMyPost", GeneralPostVO);
+	public List<GeneralPostVO> getMyPost(GeneralPostVO generalPostVO) {
+		return getSqlSession().selectList("getMyPost", generalPostVO);
 	}
 	
 	// 통합검색

@@ -27,13 +27,13 @@ public class CompanyInfoController {
 	@Autowired
 	public CompanyInfoService companyInfoService;
 	
-	@GetMapping("companyinfo/modify")
+	@GetMapping("/companyinfo/modify")
 	public String companyInfoModify() {
 		return "companyinfo/companyinfomodify";
 	}
 	
 	@Transactional
-	@PostMapping("companyinfo/modify")
+	@PostMapping("/companyinfo/modify")
 	public String docompanyInfoModify(@ModelAttribute CompanyVO companyVO
 					, @ModelAttribute MemberVO memberVO
 					, @SessionAttribute("_LOGIN_USER_") MemberVO loginMemberVO
