@@ -163,7 +163,7 @@
 	 width: 900px;
  }
  .searchbox .inner input {
-	 width: 100%;
+	 width: 900px;
 	 height: 46px;
 	 border: none;
 	 border-radius: 50px;
@@ -202,14 +202,14 @@
 	 margin: 123px;
  }
 
- .footer .inner address span::after {
-	content: '|';
-	margin-left: 10px;
- }
+/* .footer .inner address span::after {*/
+/*	content: '|';*/
+/*	margin-left: 10px;*/
+/* }*/
 
- .footer .inner address span:last-child::after {
-	content: '';
- }
+/* .footer .inner address span:last-child::after {*/
+/*	content: '';*/
+/* }*/
 
  .footer .inner .copyright {
 	 text-align: center;

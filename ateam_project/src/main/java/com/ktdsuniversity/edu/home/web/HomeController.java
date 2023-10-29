@@ -105,6 +105,26 @@ public class HomeController {
 		return memberService.searchGemeralTypeMemberList();
 	}
 	
+	// 일반, 기업 회원 탈퇴 처리 API
+	@ResponseBody
+	@GetMapping("/home/admin/person/delete/{email}")
+	public  Map<String, Object> deleteGeneralTypeMember(@PathVariable String email) {
+		Map<String, Object> resultSet = new HashMap<>();
+		MemberVO memberVO = new MemberVO();
+		memberVO.setEmail(email);
+		
+		boolean isSuccess = memberService.withdrawMember(memberVO);
+		
+		if (isSuccess) {
+			resultSet.put("result", "success");
+			return resultSet;
+		}
+		else {
+			resultSet.put("result", "fail");
+			return resultSet;
+		}
+	}
+	
 	// 기업 회원 목록을 가져오는 API
 	@ResponseBody
 	@GetMapping("/home/admin/company")
@@ -121,9 +141,6 @@ public class HomeController {
 		return homeBoardService.getHashtag(postId);
 	}
 	
-	@ResponseBody
-	@PostMapping("/home/qnapost")
-		
 	@GetMapping("/home/search")
 	public String searchAllBoardList(@ModelAttribute AbstractSearchVO abstractSearchVO, Model model) {
 		MemberListVO memberListVO = memberService.searchAllMemberByKeyword(abstractSearchVO);
@@ -156,7 +173,7 @@ public class HomeController {
 		model.addAttribute("algorithmExplanationList", algorithmExplanationListVO);
 		model.addAttribute("companyNewsList", companyNewsListVO);
 		model.addAttribute("abstractSearchVO", abstractSearchVO);
-		return "home/homesearch";
+		return "home/homesearchresult";
 	}
 	
 	

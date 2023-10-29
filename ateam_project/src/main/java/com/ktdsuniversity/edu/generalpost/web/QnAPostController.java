@@ -6,6 +6,7 @@
  */
 package com.ktdsuniversity.edu.generalpost.web;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
@@ -27,6 +29,7 @@ import com.ktdsuniversity.edu.generalpost.service.GeneralPostService;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostListVO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
 import com.ktdsuniversity.edu.generalpost.vo.SearchForumVO;
+import com.ktdsuniversity.edu.generalposthashtag.service.HashtagService;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 import com.ktdsuniversity.edu.util.XssIgnoreUtil;
 
@@ -56,6 +59,7 @@ public class QnAPostController {
 	public String createQnABoard() {
 		return "forum/qnaboardcreate";
 	}
+
 	
 	// 글 등록
 	@PostMapping("/qnaboard/create")
@@ -84,6 +88,7 @@ public class QnAPostController {
 //		System.out.println(generalPostVO.getPostWriter());
 		
 		if (bindingResult.hasErrors()) {
+			log.debug("qkdlseldflwjfxm");
 			modelAndView.setViewName("forum/qnaboardcreate");
 			modelAndView.addObject("generalPostVO", generalPostVO);
 			return modelAndView;
@@ -91,6 +96,7 @@ public class QnAPostController {
 		
 		// 게시글을 등록한다.
 		boolean isSuccess = generalPostService.createNewQnABoard(generalPostVO);
+		log.debug("서비스 실행");
 		if (isSuccess) {
 			modelAndView.setViewName("redirect:/qnaboard/list");
 			return modelAndView;
@@ -194,7 +200,7 @@ public class QnAPostController {
 	}
 	
 	// 내 게시글 조회
-	@GetMapping("/mypost")
+	@GetMapping("/member/mypost")
 	public String viewMyPost(@ModelAttribute GeneralPostVO generalPostVO
 			               , Model model
 			               , @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
@@ -211,7 +217,7 @@ public class QnAPostController {
 		
 		model.addAttribute("qnaPostList", qnaPostList);
 		model.addAttribute("freePostList", freePostList);
-		return "mypage/mypost";
+		return "mypage/mypostinmypage";
 	}
 	
 	// 좋아요 기능
@@ -230,4 +236,30 @@ public class QnAPostController {
 			return view;
 		}
 	}
+	
+	// 해시태그 구현
+	@Autowired
+	private HashtagService hashtagService;
+	
+	@PostMapping("/hashtag/post")
+    public ModelAndView createHashtags(@RequestBody List<String> hashtags) {
+        ModelAndView view = new ModelAndView();
+        log.debug("컨트롤러 도착");
+
+        if (hashtags == null || hashtags.isEmpty()) {
+            // 해시태그가 비어있는 경우 적절한 기본값 설정 가능
+            hashtags = Collections.singletonList("기본값");
+        }
+
+        // 해시태그 리스트를 서비스로 전달하고 작업을 수행
+        boolean isSuccess = hashtagService.createHashtags(hashtags);
+
+        if (isSuccess) {
+            view.setViewName("redirect:/qnaboard/list");
+        } else {
+            view.setViewName("forum/qnaboardcreate");
+            view.addObject("generalPostVO", new GeneralPostVO());
+        }
+        return view;
+    }
 }

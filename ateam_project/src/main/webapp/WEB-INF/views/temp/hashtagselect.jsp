@@ -103,13 +103,11 @@
 </head>
 <body>
   <div>
-    해시태그 생성
+    해시태그 목록
   </div>
-  
   <div class="hashtag_wrap"></div>
     <label for="codeContent">입력: </label>
     <input type="text" name="codeContent" id="codeContent" />
     <button id="create_btn">생성</button>
-  <h1>선택된 해시태그</h1>
 </body>
 </html>

@@ -26,9 +26,9 @@
    .grid {
       display: grid;
       grid-template-columns: 80px 1fr;
-      grid-template-rows: 28px 28px 28px 28px 28px 320px 1fr;
       margin-left: 20px;
       border-top: 1px solid var(--light-gray);
+      margin-top: 30px;
    }
    
    .grid>.btn-group {
@@ -73,6 +73,11 @@
       font-weight: 800;
       margin-right: 45px;
    }
+   .write-comment {
+   position: relative;
+   bottom: 12px;
+   }
+
    
    .replies>.comment-header>.str-count {
       display: flex;
@@ -103,11 +108,7 @@
    border:1px solid lightgrey;
    }
    
-   
-   pre.content {
-      margin: 0px;
-   }
-   
+
    .report-modal {
        display: none; /* 초기에 모달 숨김 */
        position: fixed;
@@ -167,8 +168,8 @@
    }
    #button-id-list {
    bottom: 50px;
-   position: relative;
-   left: 500px;
+   position: absolute;
+   left: 900px;
    margin-left: 10px;
    background-color: var(--light-blue);
    border: none;
@@ -185,7 +186,8 @@
       border: 1px solid var(--light-gray);
       margin-top: 130px;
       width: 1000px;
-      height:1000px;
+      height:auto;
+      overflow: hidden;
       
    }
    .button_controller {
@@ -208,33 +210,29 @@
    .content_Controller {
       border-bottom: 1px solid var(--light-gray);
    }
-   .title_Name {
-      display: inline-block;
-       font-size: 2em; /* 2em은 <h1> 크기와 유사한 크기입니다. */
-       font-weight: bold;
-       margin: 25px 12px;
-   }
-   .postContent_Controller {
-      letter-spacing: 1px;
-      position: relative;
-      bottom: 300px;
-      text-align: justify; 
-   }
-   .postContent_controller_1 {
-      position:relative;
-      bottom: 330px;
-      margin-left: 50px;
-      margin-right: 50px;
-      
-   }
-   .update_btn {
-   position: absolute;
-   top: -30px;
-   right: 0;
-   margin-top: 300px;
-   margin-right: 250px;
+   #title_Name {
+   position: relative;
+   left: 30px;
+   
 }
+   #move_button {
+      position: relative;
+      left: 20px;
+   }
 
+   .postContent_controller_1 {
+    text-align: left; /* 텍스트 가운데 정렬 */
+    margin-left: 60px;
+    margin-right: 60px;
+    margin-bottom: 300px;
+   
+
+}
+   .update_btn {
+      position: absolute;
+      top: -30px;
+      right: 0;
+   }
    
    textarea {
       width: 1000px;
@@ -272,9 +270,12 @@
       height: 1px;
       margin: 10px 0px 7px 0px;
    }
-   #btn {
-      margin-right: 150px;
+   #update-link , #delete-link {
+     position: relative;
+     left: 1400px;
+     top: 120px;
    }
+  
    
    </style>
 <script type="text/javascript" src="/js/lib/jquery-3.7.1.js"></script>
@@ -294,7 +295,7 @@
                             `<div class="comment"
                                data-comment-id="\${comment.generalCommentId}"
                                 style="padding-left: \${(comment.level - 1) * 40}px">
-                                <div class="author">\${comment.commentWriter}</div>
+                                <div class="author">\${comment.nickname}</div>
                                 <div class="recommend-count">추천수: \${comment.likeCnt}</div>
                                 <div class="datetime">
                                     <span class="crtdt">등록일: \${comment.postDate}</span>
@@ -303,11 +304,13 @@
                                         : ""}
                                 </div>
                                 <pre class="content">\${comment.commentContent}</pre>
-                                \${comment.email == "${sessionScope._LOGIN_USER_.email}" ?
+                                \${comment.commentWriter == "${sessionScope._LOGIN_USER_.email}" ?
                                     '<div>' +
-                                    '<button class="recommend-comment">좋아요</button>' +
+                                    '<button class="recommend-comment">좋아요</button>'+
+                                    '<button class="update-comment">수정</button>'+
+                                    '<button class="delete-comment">삭제</button>'+
                                     '</div>'
-                                    :
+                                    :                                    
                                     `<div>
                                         <button class="recommend-comment">좋아요</button>
                                         <button class="update-comment">수정</button>
@@ -483,30 +486,32 @@
 </script>
 </head>
 <body>
-<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq generalPostVO.postWriter}">					
+<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq generalPostVO.postWriter}">               
    <div class="btn-group">
        <div class="right-align">
            <div class="update_btn">
-               <div class="btn">
-                   <a href="/freeboard/update/${generalPostVO.generalPostId}">수정</a>
-                   <a href="/freeboard/delete/${generalPostVO.generalPostId}">삭제</a>
-               </div>
+            <div id="btn">
+               <a href="/freeboard/update/${generalPostVO.generalPostId}" id="update-link">수정</a>
+               <a href="/freeboard/delete/${generalPostVO.generalPostId}" id="delete-link">삭제</a>
+            </div>
            </div>
        </div>
    </div>
-</c:if>
-<div class="main_Container">
-   <p class="free_Title">자유게시판 ></p>
-   <label for="postTitle"></label>
-   <div class="title_Name">${generalPostVO.postTitle}</div>
+            </c:if>
+            
+            
+            <div class="main_Container">
+               <p class="free_Title">자유게시판 ></p>
+               <label for="postTitle"></label>
+               <div id="title_Name">${generalPostVO.postTitle}</div>
    <!-- 목록보기 -->
    <button id="button-id-list" onclick="window.location.href='/freeboard/list'">목록</button>
-   
+   <div id="move_button">
    <!-- 좋아요 기능 -->
    <button id="like-btn">좋아요</button>
-   
    <!-- 신고 기능 -->
    <button id="reportQnABoard" value="1" class="report-btn">신고</button>
+   </div>
       <!-- 모달 창 -->
          <div id="report-modal" class="report-modal">
              <div class="report-modal-content">
@@ -592,7 +597,7 @@
             <textarea id="txt-comment" placeholder="의견을 입력하세요" maxlength="500"></textarea>
             <button id="btn-save-comment" type="submit">등록</button>
             <!-- 신고 버튼은 조회할때 사용<button id="btn-report-comment">신고</button> -->
-         </div>
+      </div>
         <div class="comment-items"></div>
          
        <!-- 댓글 신고 모달 창 -->

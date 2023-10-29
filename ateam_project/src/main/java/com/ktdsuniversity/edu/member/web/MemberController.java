@@ -76,7 +76,7 @@ public class MemberController {
 
 	@PostMapping("/member/auth")
 	public String doSignIn(@Validated(MemberAuthGroup.class) @ModelAttribute MemberVO memberVO,
-			BindingResult bindingResult, @RequestParam(required = false, defaultValue = "/home/home") String next,
+			BindingResult bindingResult, @RequestParam(required = false, defaultValue = "/devground/home") String next,
 			HttpSession session, Model model) {
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("memberVO", memberVO);
@@ -84,18 +84,22 @@ public class MemberController {
 		}
 
 		MemberVO member = memberService.getMember(memberVO);
-		System.out.println(member.getEmail());
+//		System.out.println(member.getEmail());
 		session.setAttribute("_LOGIN_USER_", member);
-		return "home/home";
-	}
+		
+		if(next.equals("http://localhost:8080/member/signup")) {
+			next = "/devground/home";
+		}
 
+		return "redirect:" + next;
+	}
 	/**
 	 * 로그아웃
 	 */
 	@GetMapping("/member/logout")
 	public String doLogout(HttpSession session) {
 		session.invalidate();
-		return "redirect:/home/home";
+		return "redirect:/devground/home";
 	}
 
 	/**
@@ -105,7 +109,7 @@ public class MemberController {
 	public String doWithdraw(HttpSession session, @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 		session.invalidate();
 		memberService.withdrawMember(memberVO);
-		return "redirect:/home/home";
+		return "redirect:/devground/home";
 	}
 
 	/**
@@ -302,7 +306,7 @@ public class MemberController {
 			boolean isSuccess = memberService.updateMemberPW(memberVO);
 			if (isSuccess) {
 				session.invalidate();
-				return ("redirect:/home/home");
+				return ("redirect:/devground/home");
 			}
 		}
 		return "member/editmemberinfo/modifymemberpw";

@@ -25,6 +25,8 @@ import com.ktdsuniversity.edu.career.vo.CareerVO;
 import com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO;
 import com.ktdsuniversity.edu.education.vo.EducationVO;
 import com.ktdsuniversity.edu.exceptions.PageNotFoundException;
+import com.ktdsuniversity.edu.follow.service.FollowService;
+import com.ktdsuniversity.edu.follow.vo.FollowListVO;
 import com.ktdsuniversity.edu.generalmember.service.GeneralMemberService;
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
@@ -40,11 +42,15 @@ public class GeneralMemberController {
 	@Autowired
 	private GeneralMemberService generalMemberService;
 
+	@Autowired
+	private FollowService followService;
+	
 	/**
 	 * 마이페이지 조회
 	 */
 	@GetMapping("/memberinfo/view/{generalMemberEmail}")
-	public ModelAndView viewMemberInfo(@PathVariable String generalMemberEmail) {
+	public ModelAndView viewMemberInfo(@PathVariable String generalMemberEmail
+			                         , @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 		ModelAndView modelAndView = new ModelAndView();
 		List<CareerVO> careerListVO = generalMemberService.getAllCareerListByMemberEmail(generalMemberEmail);
 		List<GeneralMemberVO> generalMemberListVO = generalMemberService.getAllGeeralMemberList(generalMemberEmail);
@@ -52,6 +58,8 @@ public class GeneralMemberController {
 		MemberVO member = generalMemberService.getSelectNickname(generalMemberEmail);
 		List<CommonCodeVO> commonCodeVO = generalMemberService.getSelectCommonCode(generalMemberEmail);
 		GeneralMemberVO generalMemberVO = generalMemberService.getSelectGeneralMember(generalMemberEmail);
+		FollowListVO followerList = followService.getAllFollower(memberVO.getEmail());
+		FollowListVO followeeList = followService.getAllFollowee(memberVO.getEmail());
 		modelAndView.setViewName("/mypage/myprofile");
 		modelAndView.addObject("careerList", careerListVO);
 		modelAndView.addObject("generalMemberList", generalMemberListVO);
@@ -59,6 +67,8 @@ public class GeneralMemberController {
 		modelAndView.addObject("memberVO", member);
 		modelAndView.addObject("commonCodeList", commonCodeVO);
 		modelAndView.addObject("educationList", educationListVO);
+		modelAndView.addObject("followerList", followerList);
+		modelAndView.addObject("followeeList", followeeList);
 		return modelAndView;
 	}
 	

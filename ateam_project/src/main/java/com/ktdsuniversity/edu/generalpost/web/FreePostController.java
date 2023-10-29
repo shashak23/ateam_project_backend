@@ -45,7 +45,7 @@ public class FreePostController {
 	public ModelAndView freeBoardList() {
 		GeneralPostListVO generalPostListVO = generalPostService.getAllFreeBoard();
 		ModelAndView modelAndView = new ModelAndView();
-
+		
 		modelAndView.setViewName("forum/freeboardlist");
 		modelAndView.addObject("generalPostListVO", generalPostListVO);
 

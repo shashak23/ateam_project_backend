@@ -1,10 +1,12 @@
 /**
  * 수정자: 장보늬(2023-10-23)
+ * 수정자: 김태현(2023-10-29)
  * **/
 package com.ktdsuniversity.edu.member.vo;
 
 import java.util.List;
 
+import com.ktdsuniversity.edu.companyinfo.vo.CompanyInfoVO;
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 import com.ktdsuniversity.edu.member.vo.validategroup.MemberAuthGroup;
 import com.ktdsuniversity.edu.member.vo.validategroup.MemberEditNickGroup;
@@ -44,6 +46,8 @@ public class MemberVO {
 	private String memberType;
 	private String withdrawYn;
 	private List<MyAlgorithmVO> myAlgorithmVO;
+	private GeneralMemberVO generalMemberVO;
+	private CompanyInfoVO companyInfoVO;
 
 	public String getEmail() {
 		return email;
@@ -111,9 +115,16 @@ public class MemberVO {
 	public void setMyAlgorithmVO(List<MyAlgorithmVO> myAlgorithmVO) {
 		this.myAlgorithmVO = myAlgorithmVO;
 	}
-	
-	
-	
-	
-	
+	public GeneralMemberVO getGeneralMemberVO() {
+		return generalMemberVO;
+	}
+	public void setGeneralMemberVO(GeneralMemberVO generalMemberVO) {
+		this.generalMemberVO = generalMemberVO;
+	}
+	public CompanyInfoVO getCompanyInfoVO() {
+		return companyInfoVO;
+	}
+	public void setCompanyInfoVO(CompanyInfoVO companyInfoVO) {
+		this.companyInfoVO = companyInfoVO;
+	}
 }

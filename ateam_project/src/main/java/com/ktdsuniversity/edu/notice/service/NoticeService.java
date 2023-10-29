@@ -12,6 +12,7 @@ import com.ktdsuniversity.edu.notice.vo.NoticeVO;
 public interface NoticeService {
 	public NoticeListVO getNoticeListVO();
 	public NoticeListVO getValidateList();
+	public NoticeListVO getInvalidateList();
 	public NoticeVO getOneNotice(String id);
 	public boolean createNotice(NoticeVO noticeVO);
 	public boolean updateNotice(NoticeVO noticeVO);

@@ -60,6 +60,19 @@
                 }
             });
         </c:if>
+        $.get("/keyword", function(response) {
+			for (var i = 0; i < response.length; i++) {
+				var keyword = response[i]
+				var option = $("<option value='"+keyword+"'></option>");
+				$("#keywordList").append(option);
+			}
+		});
+        $(".btn_search").click(function() {
+			$("#search-form").attr({
+				"method": "get",
+				"action": "/home/search"
+			}).submit()
+		});
     });
 </script>
 	<link rel="stylesheet" href="/css/style.css">
@@ -73,12 +86,13 @@
       </div>
       <nav class="gnb">
         <ul>
+          <li><a href="/qnaboard/list" target="_blank">질답게시판</a></li>
           <li><a href="/freeboard/list" target="_blank">자유게시판</a></li>
-          <li><a href="/qnaboard/list" target="_blank">질문게시판</a></li>
           <li class="list_company"><a href="#" class="incomplete">기업게시판</a>
             <ul class="company_sublist visible">
               <li><a href="#" class="incomplete">채용게시판</a></li>
-              <li><a href="#" class="incomplete">알고리즘</a></li>
+              <li><a href="/algorithm/question/list">문제게시판</a></li>
+              <li><a href="/algorithm/explanation/list">해설게시판</a></li>
             </ul>
           </li>
           <li><a href="#" class="incomplete">팀게시판</a></li>
@@ -117,10 +131,15 @@
     <div class="for_search_align">
       <div class="searchbox">
         <div class="inner">
-          <input type="text" placeholder="검색어를 입력해주세요.">
-          <button type="submit" class="btn_search">
-            <img src="/images/search.svg" alt="search">
-          </button>
+          <form id="search-form"
+		      method="get"
+		      action="/home/search">
+	         <input autocomplete="off" type="text" name="searchKeyword" list="keywordList" placeholder="검색어를 입력해주세요.">
+	         <datalist id="keywordList"></datalist>
+	         <button type="submit" class="btn_search">
+	           <img src="/images/search.svg" alt="search">
+	         </button>
+          </form>
         </div>
       </div>
     </div>

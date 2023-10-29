@@ -17,6 +17,7 @@
         width: 500px;
         height: 800px;
     }
+    
     .create_container > div {
         margin: 10px;
     }
@@ -25,26 +26,33 @@
         width: 400px;
         height: 500px;
     }
+
+    #start-date,
+    #end-date {
+        width: 100px;
+    }
 </style>
 </head>
 <body>
     <form method="post">
-        <h1>공지 생성</h1>
-        <div class="create_container">
-            <div>
-                <label for="postTitle">제목</label>
-                <input type="text" name="postTitle" id="postTitle" />
+        <div class="notice_create_form">
+            <h1>공지 생성</h1>
+            <div class="create_container">
+                <div>
+                    <label for="postTitle">제목</label>
+                    <input type="text" name="postTitle" id="postTitle" />
+                </div>
+                <label for="noticeContent">내용</label>
+                <div>
+                    <textarea name="noticeContent" id="noticeContent" style="resize: none;"></textarea>
+                </div>
+                <label for="start-date">시작일</label>
+                <input type="date" name="releaseStartDate" id="start-date" />
+                <label for="end-date">종료일</label>
+                <input type="date" name="releaseEndDate" id="end-date" />
             </div>
-            <label for="noticeContent">내용</label>
-            <div>
-                <textarea name="noticeContent" id="noticeContent" style="resize: none;"></textarea>
-            </div>
-            <label for="start-date">시작일</label>
-            <input type="date" name="releaseStartDate" id="start-date" />
-            <label for="end-date">종료일</label>
-            <input type="date" name="releaseEndDate" id="end-date" />
+            <input type="submit" value="생성" />
         </div>
-        <input type="submit" value="생성" />
     </form>
     <script>
         let startDate = document.getElementById('start-date')

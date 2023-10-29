@@ -5,6 +5,8 @@
  */
 package com.ktdsuniversity.edu.companymember.dao;
 
+import java.util.List;
+
 import com.ktdsuniversity.edu.companymember.vo.CompanyVO;
 
 public interface CompanyDAO {
@@ -23,5 +25,23 @@ public interface CompanyDAO {
 	 */
 	public int createNewCompanyMember(CompanyVO companyVO);
 	
+	/**
+	 * 모든 기업회원 명수 조회
+	 * @return 모든 기업회원 명수
+	 */
+	public int companyMemberAllCount();
+	
+	/**
+	 * 모든 기업회원 목록 조회
+	 * @return 모든 기업회원 목록 
+	 */
+	public List<CompanyVO> CompanyMemberAllList();
+
+	/**
+	 * 기업회원가입 처리여부 변경
+	 * @param companyVO
+	 * @return
+	 */
+	public int CompleteCompanyMemberRegistrationYn(String companyEmail);
 
 }

@@ -72,5 +72,4 @@
 		 WHERE GP.GENERAL_POST_ID = #{_parameter}
 	</select>
 	
-	
 </mapper>

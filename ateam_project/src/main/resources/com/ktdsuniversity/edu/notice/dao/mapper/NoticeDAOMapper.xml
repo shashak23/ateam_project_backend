@@ -21,6 +21,7 @@
 			 , DELETE_YN
 		  FROM NOTICE
 		 WHERE DELETE_YN = 'N'
+		 ORDER BY RELEASE_END_DATE DESC
 	</select>
 	<select id="getValidateList"
 			resultType="com.ktdsuniversity.edu.notice.vo.NoticeVO">
@@ -36,6 +37,23 @@
 		 WHERE DELETE_YN = 'N'
 		   AND RELEASE_START_DATE <![CDATA[<=]]> TO_CHAR(SYSDATE, 'YYYY-MM-DD')
 		   AND RELEASE_END_DATE <![CDATA[>=]]> TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+		 ORDER BY RELEASE_END_DATE ASC
+	</select>
+	<select id="getInvalidateList"
+			resultType="com.ktdsuniversity.edu.notice.vo.NoticeVO">
+		SELECT NOTICE_ID
+			 , POST_WRITER
+			 , POST_TITLE
+			 , NOTICE_CONTENT
+			 , POST_DATE
+			 , RELEASE_START_DATE
+			 , RELEASE_END_DATE
+			 , DELETE_YN
+		  FROM NOTICE
+		 WHERE DELETE_YN = 'N'
+		    OR RELEASE_START_DATE <![CDATA[>=]]> TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+		    OR RELEASE_END_DATE <![CDATA[<=]]> TO_CHAR(SYSDATE, 'YYYY-MM-DD')
+		 ORDER BY RELEASE_END_DATE DESC
 	</select>
 	<select id="getOneNotice"
 			parameterType="string"
