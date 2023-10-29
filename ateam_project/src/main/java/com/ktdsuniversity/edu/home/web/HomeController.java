@@ -105,7 +105,7 @@ public class HomeController {
 		return memberService.searchGemeralTypeMemberList();
 	}
 	
-	// 일반 회원 탈퇴 처리 API
+	// 일반, 기업 회원 탈퇴 처리 API
 	@ResponseBody
 	@GetMapping("/home/admin/person/delete/{email}")
 	public  Map<String, Object> deleteGeneralTypeMember(@PathVariable String email) {
