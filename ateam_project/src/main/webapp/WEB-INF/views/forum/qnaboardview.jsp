@@ -82,6 +82,10 @@ h3 {
    
    padding-left: 530px;
 }
+.write-comment {
+   position: relative;
+   bottom: 12px;
+}
 
 .replies>.write-comment {
    display: grid;
@@ -155,14 +159,22 @@ pre.content {
     cursor: pointer;
     color: #888;
 }
-#like-btn, #reportQnABoard {
-   margin-left: 5px;
+#reportQnABoard {
    background-color: var(--hashtag-blue);
    border: none;
    width: 70px;
    height: 30px;
    border-radius: 5px;
    cursor: pointer;
+}
+#like-btn {
+   background-color: var(--hashtag-blue);
+   border: none;
+   width: 70px;
+   height: 30px;
+   border-radius: 5px;
+   cursor: pointer;
+
 }
 #button-id-list {
    bottom: 50px;
@@ -178,20 +190,23 @@ pre.content {
 
 }
 .main_Container {
-   position: relative;
-   left: 500px;
-   border-radius: 10px;
-   border: 1px solid var(--light-gray);
-   margin-top: 130px;
-   width: 1000px;
-   height:1000px;
-   
-}
-.button_controller {
-   position: relative;
-   left: 1350px;
-   top: 120px;
-}
+      position: relative;
+      left: 500px;
+      border-radius: 10px;
+      border: 1px solid var(--light-gray);
+      margin-top: 130px;
+      width: 1000px;
+      height:auto;
+     
+      
+   }
+   #move_button {
+      margin-bottom: 10px;
+      position: relative;
+      left: 30px;
+   }
+
+
 h1 {
    position: relative;
    bottom: 30px;
@@ -207,11 +222,9 @@ h1 {
 .content_Controller {
    border-bottom: 1px solid var(--light-gray);
 }
-.title_Name {
-   display: inline-block;
-    font-size: 2em; /* 2em은 <h1> 크기와 유사한 크기입니다. */
-    font-weight: bold;
-    margin: 25px 12px;
+#title_Name {
+ position: relative;
+ left: 29px;
 }
 .postContent_Controller {
    letter-spacing: 1px;
@@ -490,7 +503,7 @@ textarea {
 <div class="main_Container">
    <p class="qna_Title">질답게시판 > </p>
    <label for="postTitle"></label>
-         <div class="title_Name">${generalPostVO.postTitle}</div>
+         <div id="title_Name">${generalPostVO.postTitle}</div>
 
    <!-- <h1>[스프링부트] 스프링 부트 3 자바 백엔드 개발 입문이요</h1> -->
    
@@ -498,12 +511,12 @@ textarea {
    <!-- 목록보기 -->
    <button id="button-id-list" onclick="window.location.href='/qnaboard/list'">목록</button>
    
-   
+   <div id="move_button">
    <!-- 좋아요 기능 -->
    <button id="like-btn">좋아요</button>
-   
    <!-- 신고 기능 -->
    <button id="reportQnABoard" value="3" class="report-btn">신고</button>
+   </div>
       <!-- 모달 창 -->
          <div id="report-modal" class="report-modal">
              <div class="report-modal-content">
@@ -588,8 +601,9 @@ textarea {
       <div class="write-comment">
             <textarea id="txt-comment" placeholder="의견을 입력하세요" maxlength="500"></textarea>
             <button id="btn-save-comment" type="submit">등록</button>
+      </div>
             <!-- 신고 버튼은 조회할때 사용<button id="btn-report-comment">신고</button> -->
-         </div>
+         
         <div class="comment-items"></div>
          
        <!-- 댓글 신고 모달 창 -->

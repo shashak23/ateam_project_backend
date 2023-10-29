@@ -88,10 +88,10 @@ $(document).on('click', '.incomplete', function() {
     margin-right: 5px;
 }
 	#container{
-		width: 980px;
-		height:1000px;
+		width: 1000px;
 		margin-top: 40px;
 		margin:0 auto;
+		margin-bottom: 100px;
 	}
 
 	h3{
@@ -144,17 +144,19 @@ $(document).on('click', '.incomplete', function() {
 	}
 
 	.search_area > #search_form > #category_area > #search_btn{
-		width:80px;
-		height:50px;
-		border:0.5px;
-		border-radius: 6px;
+		background-color: var(--light-blue);
+		border: none;
+		width: 70px;
+		height: 30px;
+		border-radius: 5px;
+		cursor: pointer;
 		margin: 10px 0px 0px 30px;
-		transition: box-shadow 0.3s ease;
+		/* transition: box-shadow 0.3s ease; */
 	}
 
-	.search_area > #search_form > #category_area > #search_btn:hover{
+	/* .search_area > #search_form > #category_area > #search_btn:hover{
 		border: 2px solid #1E90FF; 
-	}
+	} */
 
 	.search_area > #search_form > .gohome > .reset{	
 		height:40px;	
@@ -165,7 +167,7 @@ $(document).on('click', '.incomplete', function() {
 	table.table {
 		border-collapse: collapse;
 		margin-top: 30px;
-		width:980px;
+		width:1000px;
 		margin: 0 auto;
 	}
 
@@ -193,6 +195,16 @@ $(document).on('click', '.incomplete', function() {
 
 	.button_list{
 		margin-left: 700px;
+		height:50px;
+	}
+
+	#click_search{
+		background-color: var(--light-blue);
+		border: none;
+		width: 70px;
+		height: 30px;
+		border-radius: 5px;
+		cursor: pointer;
 	}
 
 
@@ -221,7 +233,7 @@ $(document).on('click', '.incomplete', function() {
 					</select>
 				<input type="text" class="sc_text" placeholder="검색어 입력">
 					<button type="submit" class="btn_st_2">
-						<a href="#">조회</a>
+						<a href="#" id="click_search">조회</a>
 					</button>
 					<!-- 주석 처리 된 것 풀고 button_list안에 있는 select태그 가져오기 -->
 					<!-- <button type="submit" class="btn_st_3">

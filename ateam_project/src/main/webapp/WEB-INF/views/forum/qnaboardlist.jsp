@@ -31,8 +31,8 @@
 
          .list_search {
             margin-bottom: 15px;
-            position: relative;
-            left: 1120px;
+            margin-left: 500px;
+           
          }
          
         .board_list_box {
@@ -118,13 +118,17 @@
         }
 
         /*swiper제어*/
+       
         .swiper-slide img {
-            max-width: 100%;
-            height: auto;
+            position: relative;
+        max-width: 100%;
+        height: auto;
+        overflow: hidden; /* 이미지가 부모 컨테이너를 벗어나지 않도록 함 */
         }
 
-        .swiper-button-prev ,.swiper-button-next {
-         margin-top: -100px;
+        .swiper-button-prev,
+        .swiper-button-next {
+            margin-top: -100px;
         }
     </style>
 </head>
@@ -144,12 +148,6 @@
           <div class="swiper-slide">
               <img src="https://asset.programmers.co.kr/image/origin/production/competition/168189/e31a3bf1-8c84-4169-81af-c74a9aa1880e.jpg" alt="데브 게시판 표시">
           </div>
-          <div class="swiper-slide">
-              <img src="https://asset.programmers.co.kr/image/origin/production/competition/168189/e31a3bf1-8c84-4169-81af-c74a9aa1880e.jpg" alt="데브 게시판 표시">
-         </div>
-            <div class="swiper-slide">
-                <img src="https://asset.programmers.co.kr/image/origin/production/competition/168189/e31a3bf1-8c84-4169-81af-c74a9aa1880e.jpg" alt="데브 게시판 표시">
-            </div>
         </div>
         <div class="swiper-button-prev"></div>
         <div class="swiper-button-next"></div>
