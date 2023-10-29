@@ -305,6 +305,7 @@ textarea {
                                 \${comment.email == "${sessionScope._LOGIN_USER_.email}" ?
                                     '<div>' +
                                     '<button class="recommend-comment">좋아요</button>' +
+                                    
                                     '</div>'
                                     :
                                     `<div>
@@ -483,7 +484,7 @@ textarea {
 <body>
 <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq generalPostVO.postWriter}">					
   
-<button id="update-link" onclick="location.href='/qnaboard/update/123'">수정asdaasdasdsa</button>
+<button id="update-link" onclick="location.href='/qnaboard/update/123'">수정</button>
 <button id="delete-link" onclick="location.href='/qnaboard/delete/456'">삭제</button>
 </c:if>
 <div class="main_Container">

@@ -294,7 +294,7 @@
                             `<div class="comment"
                                data-comment-id="\${comment.generalCommentId}"
                                 style="padding-left: \${(comment.level - 1) * 40}px">
-                                <div class="author">\${comment.commentWriter}</div>
+                                <div class="author">\${comment.nickname}</div>
                                 <div class="recommend-count">추천수: \${comment.likeCnt}</div>
                                 <div class="datetime">
                                     <span class="crtdt">등록일: \${comment.postDate}</span>
@@ -303,11 +303,13 @@
                                         : ""}
                                 </div>
                                 <pre class="content">\${comment.commentContent}</pre>
-                                \${comment.email == "${sessionScope._LOGIN_USER_.email}" ?
+                                \${comment.commentWriter == "${sessionScope._LOGIN_USER_.email}" ?
                                     '<div>' +
-                                    '<button class="recommend-comment">좋아요</button>' +
+                                    '<button class="recommend-comment">좋아요</button>'+
+                                    '<button class="update-comment">수정</button>'+
+                                    '<button class="delete-comment">삭제</button>'+
                                     '</div>'
-                                    :
+                                    :                                    
                                     `<div>
                                         <button class="recommend-comment">좋아요</button>
                                         <button class="update-comment">수정</button>
@@ -487,14 +489,14 @@
    <div class="btn-group">
        <div class="right-align">
            <div class="update_btn">
-           </div>
-       </div>
-   </div>
-            </c:if>
             <div id="btn">
                <a href="/freeboard/update/${generalPostVO.generalPostId}" id="update-link">수정</a>
                <a href="/freeboard/delete/${generalPostVO.generalPostId}" id="delete-link">삭제</a>
             </div>
+           </div>
+       </div>
+   </div>
+            </c:if>
             
             
             <div class="main_Container">

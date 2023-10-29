@@ -21,7 +21,8 @@
             .bbs_title {
                 font-weight: bold;
                 font-size: 25px;
-                margin: 80px 100px 30px 430px;
+                margin-top: 155px;
+                margin-left: 350px;
 
             }
 

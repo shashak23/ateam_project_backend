@@ -20,7 +20,8 @@
          .bbs_title {
             font-weight: bold;
             font-size: 25px;
-            margin: 80px 100px 30px 500px;
+            margin-top: 160px;
+            margin-left: 530px;
          }
          
          .wrap {

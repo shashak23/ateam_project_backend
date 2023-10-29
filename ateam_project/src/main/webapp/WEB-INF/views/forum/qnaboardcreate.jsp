@@ -62,17 +62,118 @@
 	}
 </style>
 <script type="text/javascript">
+//해시태그를 저장할 배열
+const hashtagsArray = [];
+
+// 해시태그 추가 버튼 클릭 이벤트 핸들러
+function addHashtag() {
+    const hashtagInput = document.getElementById("hashtagInput");
+    const hashtag = hashtagInput.value;
+
+    if (hashtag.trim() !== "") {
+        // 중복 해시태그 체크 (중복일 경우 추가하지 않음)
+        if (!hashtagsArray.includes(hashtag)) {
+            hashtagsArray.push(hashtag);
+            displayHashtags();
+        }
+    }
+
+    // 입력 필드 초기화
+    hashtagInput.value = "";
+}
+
+// 해시태그 배열을 화면에 표시
+function displayHashtags() {
+    const displayHashtagsDiv = document.getElementById("displayHashtags");
+    displayHashtagsDiv.innerHTML = "";
+
+    for (const hashtag of hashtagsArray) {
+        const hashtagSpan = document.createElement("span");
+        hashtagSpan.className = "hashtag-display";
+        hashtagSpan.textContent = hashtag;
+
+        const removeButton = document.createElement("button");
+        removeButton.textContent = "X";
+        removeButton.addEventListener("click", function () {
+            removeHashtag(hashtag);
+        });
+
+        hashtagSpan.appendChild(removeButton);
+        displayHashtagsDiv.appendChild(hashtagSpan);
+    }
+}
+
+// 해시태그 삭제 버튼 클릭 이벤트 핸들러
+function removeHashtag(hashtag) {
+    const index = hashtagsArray.indexOf(hashtag);
+    if (index > -1) {
+        hashtagsArray.splice(index, 1);
+        displayHashtags();
+    }
+}
+
+// 저장 버튼 클릭 이벤트 핸들러
+function saveHashtags() {
+// hashtagsArray를 JSON 문자열로 변환
+const hashtagsJSON = JSON.stringify(hashtagsArray);
+
+ // 추가해야 하는 정보를 객체로 구성
+const postData = {
+    hashtagid: "hashtagId",
+    generalpostid: "generalPostVO.generalPostId",
+    postwriter: "generalPostVO.postWriter",
+    boardid: "generalPostVO.boardId",
+    posttitle: "generalPostVO.postTitle",
+    postcontent: "generalPostVO.postContent",
+    postdate: "generalPostVO.postDate",
+    likecnt: 0,
+    viewcnt: 0,
+    deleteyn: "N",
+    hashtags: hashtagsJSON
+}; 
+
+// 변수에 저장
+var postTitle = $("#postTitle").val();
+var postContent = $(".postContent").val();
+var hashtagId= document.getElementById('input[name=hashtagInput]');
+
+console.log(postTitle);
+console.log(hashtagId);
+
+// postData 객체를 JSON 문자열로 변환
+const dataJSON = JSON.stringify(postData);
+// post 전송, 서버 확인 
+$.ajax({
+    type: "POST",
+    url: "/qnaboard/create",
+    data: dataJSON,
+    contentType: "application/json; charset=utf-8",
+    success: function (data, response) {
+        console.log("서버 응답:", response);
+    },
+    error: function (error) {
+        console.error("에러 발생:", error);
+    }
+});
+}
+
+
 $().ready(function(){
 	var input = document.querySelector('input[name=hashtag]')
-    new Tagify(input)
+    var tagify = new Tagify(input, {
+        
+    	whitelist : ["Python","Java","Oracle","React","Vue.js","C","JavaScript", "CSS", "HTML", "Spring", "Rudy", "MYSQL", "jQuery", "Angular", "C++"],
+    	maxTags: 15,
+    	enforceWhitelist: true,
+    	
+    })
 	
-    let whitelist = ["Python","Java","Oracle","React","Vue.js","C","JavaScript", "CSS", "HTML", "Spring", "HTML", "Rudy", "MYSQL", "jQuery", "Angular", "C++"];
-
 	// 폼 제출 이벤트 처리
-	$('#hashtagForm').submit(function(e) {
+	$(".hashtag").submit(function(e) {
         e.preventDefault(); // 폼 기본 동작 막기
 
     });
+	
 });
 </script>
 </head>
@@ -229,24 +330,23 @@ $().ready(function(){
 	                ]
 	            });  
 		        </script>
+		</div>
+	<div class="hashtag">
+	    <input type="text" id="hashtagInput" name="hashtag" placeholder="#해시태그" value="">
+	</div>
+	<div class="btn-group">
+	    <div class="right-align">
+	        <input type="button" value="추가" onclick="addHashtag()">
+	    </div>
+	</div>
+	<div id="displayHashtags">
+	    <!-- 여기에 해시태그가 표시될 부분 : 어떻게 구현한담? -->
+	</div>
 			<div class = "btn-group">
 				<div class="right-align">
 					<input type="submit" value="저장" />
 				</div>
 			</div>
-		</div>
 	</form>
-	<div class="hashtag">
-		<p><label for="hashtag">해시태그</label></p>
-   		<input type="hidden" id="hashtag_id" name='hashtag' placeholder="#해시태그" value="${generalPostHashtagVO.hashtagId}">
-   	
-   		<label for="general_post_hashtag_id"></label>
-   		<input type="hidden" id="general_post_hashtag_id" value="${generalPostHashtagVO.generalPostHashtagId}"/>
-   	
-   		<label for="general_post_id"></label>
-   		<input type="hidden" id="general_post_id" value="${generalPostHashtagVO.generalPostId}"/>
-    
-    	<button type="submit">입력</button>	
-	</div>
 </body>
 </html>
