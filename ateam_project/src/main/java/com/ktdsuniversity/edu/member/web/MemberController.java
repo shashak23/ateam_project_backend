@@ -86,9 +86,13 @@ public class MemberController {
 		MemberVO member = memberService.getMember(memberVO);
 //		System.out.println(member.getEmail());
 		session.setAttribute("_LOGIN_USER_", member);
+		
+		if(next.equals("http://localhost:8080/member/signup")) {
+			next = "/devground/home";
+		}
+
 		return "redirect:" + next;
 	}
-
 	/**
 	 * 로그아웃
 	 */

@@ -141,9 +141,6 @@ public class HomeController {
 		return homeBoardService.getHashtag(postId);
 	}
 	
-//	@ResponseBody
-//	@PostMapping("/home/qnapost")
-		
 	@GetMapping("/home/search")
 	public String searchAllBoardList(@ModelAttribute AbstractSearchVO abstractSearchVO, Model model) {
 		MemberListVO memberListVO = memberService.searchAllMemberByKeyword(abstractSearchVO);

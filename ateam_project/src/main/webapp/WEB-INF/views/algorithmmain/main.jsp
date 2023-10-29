@@ -9,6 +9,7 @@
 <head>
 <meta charset="UTF-8">
 <title>알고리즘 홈 | DevGround</title>
+
 <style type="text/css">
     #body_container{
     width: 1100px;
@@ -44,6 +45,10 @@
     margin-top: 40px;
     width:1080px;
     height:500px;
+   }
+
+   h3{
+    margin-left: 22px;
    }
 
    #contents_middle > .showalltests{
@@ -127,18 +132,73 @@
    }
 
    #contents_bottom > .algorithm_explanation > .explanation_link{
-    width: 500px;
-    height: 300px;
-    margin:100px;
-    padding: 100px 100px 0px 100px;
-    box-sizing: border-box;
+    padding:150px;
    }
 
    #contents_bottom > .coding_test_explanation:hover,
     #contents_bottom > .algorithm_explanation:hover {
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.3); 
     }
+
+    #contents_bottom > .algorithm_explanation >.explanation_separate_line{
+        display: flex;
+        justify-content: center;
+        margin-top: 15px;
+        font-size:xx-large;
+        font-weight: bold;
+    }
    
+    #ranking1,
+    #ranking2,
+    #ranking3,
+    #ranking4,
+    #ranking5   
+    {
+        display: flex;
+        flex-direction: column;
+        margin-left: 50px;
+        width:700px;
+        height:60px;
+        border-bottom: 1px solid lightgrey;
+        
+    }
+   
+    #question_name{
+        display: flex;
+        justify-content: center;
+        font-weight: bold;
+        margin-top: 20px;
+        
+    }
+
+    .test_name{
+        margin-left: 25px;
+        margin-top: 20px;
+    }
+
+    .line{
+        border: 1px solid lightgrey;
+        width: 450px;
+        margin-left: 25px;
+        margin-top: 20px;
+    }
+
+    .test_hashtag{
+        margin-left: 25px;
+        margin-top: 40px;
+    }
+
+    .coding_test_explanation_link{
+        padding:150px;
+    }
+
+    .explanation_img{
+        margin: 30px 0px 0px 160px;
+    }
+
+    .explanation_separate_line{
+        border: 1 solid lightgrey;
+    }
 
 </style>
 
@@ -147,7 +207,29 @@
 <jsp:include page="../layout/header.jsp"></jsp:include>
     <div id="body_container">
         <div id="contents_top"> 
-            <div class="coding_test_ranking incomplete">랭킹(삭제여부)</div>
+            <div class="coding_test_ranking">
+                <div id="ranking1"> 
+                    <span id="question_name">초고난도 문제 모음 레벨1부터 레벨5까지 완벽 커버</span>
+                    <a href="/algorithm/question/view/AQ-20231028-000195"></a>     
+                </div>
+                <div id="ranking2">
+                    <span id="question_name">기업 코딩 테스트 대비 기출 문제</span>
+                    <a href="/algorithm/question/view/AQ-20231028-000195"></a>  
+                </div>
+                <div id="ranking3">
+                    <span id="question_name">C++, C언어를 활용한 코딩 테스트</span>
+                    <a href="/algorithm/question/view/AQ-20231028-000195"></a>  
+                </div>
+                <div id="ranking4">
+                    <span id="question_name">인공지능과 기계학습 총합본</span>
+                    <a href="/algorithm/question/view/AQ-20231028-000195"></a>  
+                </div>
+                <div id="ranking5">
+                    <span id="question_name">2022년 상반기 기업 기출 문제 모음 레벨1부터 레벨5까지 완벽 커버</span>
+                    <a href="/algorithm/question/view/AQ-20231028-000195"></a>  
+                </div>
+                
+            </div>
         </div>
         <div id="contents_middle">
             <p> 
@@ -157,86 +239,88 @@
             </p>
             <div class="coding_test">
                 <div class="test1 incomplete">
-                    <span class="company_one_name">${algorithmquestion.memberVO.nickname}
-                        <a href=""></a>
-                    </span>
-                    <div class="test_name">문제명</div>
-                    <div class="test_hashtag">문제 해시태그</div>
+                    <div class="test_name">C++, C언어를 활용한 코딩 테스트</div>
+                    <div class="line"></div>
+                    <div class="test_hashtag">#C++ #자료구조 #알고리즘 #하반기 취업 #bag #그리디</div>
                 </div>
                 <div class="test2 incomplete">
-                    <span class="company_two_name">회사명
-                        <a href=""></a>
-                    </span>
-                    <div class="test_name">문제명</div>
-                    <div class="test_hashtag">문제 해시태그</div>
+                    <div class="test_name">인공지능과 기계학습 총합본</div>
+                    <div class="line"></div>
+                    <div class="test_hashtag">#C++ #강화학습 #지도학습 #outlier처리</div>
                 </div>
                 <div class="test3 incomplete">
-                    <span class="company_three_name">회사명
-                        <a href=""></a>
-                    </span>
-                    <div class="test_name">문제명</div>
-                    <div class="test_hashtag">문제 해시태그</div>
+                 
+                    <div class="test_name">2022년 상반기 기업 기출 문제 모음 레벨1부터 레벨5까지 완벽 커버</div>
+                    <div class="line"></div>
+                    <div class="test_hashtag">#LV.1 #LV.2 #LV.5 #기출 모음</div>
                 </div>
                 <div class="test4 incomplete">
-                    <span class="company_four_name">회사명
-                        <a href=""></a>
-                    </span>
-                    <div class="test_name">문제명</div>
-                    <div class="test_hashtag">문제 해시태그</div>
+                  
+                    <div class="test_name">기업 코딩 테스트 대비 기출 문제</div>
+                    <div class="line"></div>
+                    <div class="test_hashtag">#C++ #Java #알고리즘 #하반기 취업</div>
                 </div>
             </div>
         </div>
         <div id="contents_bottom">
-                <button class="coding_test_explanation incomplete">
-                    <a href="/algorithm/explanation/list" class="coding_test_explanation_link">코테 문제풀이</a>
+                <button class="coding_test_explanation">
+                    <a href="/algorithm/explanation/list" class="coding_test_explanation_link">
+                        <h2>코딩 테스트 문제 풀이</h2>
+                    </a>
                 </button>
                 <div class="algorithm_explanation">
-                    <img src="/images/알고리즘" alt="알고리즘 해설.png" class="알고리즘 해설">
-                    <a href="/algorithm/explanation/list" class="explanation_link">
-                    </a>
+                    <img src="/images/알고리즘 해설.png" class="explanation_img">
+                    <a href="/algorithm/explanation/list" class="explanation_link"></a>
+                    <div class="explanation_separate_line">알고리즘 해설</div>
                 </div>            
         </div>
     </div>
 <jsp:include page="../layout/footer.jsp"></jsp:include>
 </body>
 <script>
-    // 미완성된 기능을 알려주는 모달창
-    $('.incomplete').click(function() {
-        $('.modal, .overlay').addClass('modal_active')
-    })
-    $('.overlay').click(function() {
-        $('.modal, .overlay').removeClass('modal_active')
-    })
+    // 모달창 열고 닫기
+  $(document).on('click', '.incomplete', function() {
+    $('.modal, .overlay').addClass('modal_active')
+  })
+  $(document).on('click', '.overlay', function() {
+    $('.modal, .overlay').removeClass('modal_active')
+  })
 
-    // 스크롤 버튼, IDE
-    let calcScrollValue = () => {
-    let scrollProgress = document.getElementById('progress')
-    let progressValue = document.getElementById('progress-value')
-    let pos = document.documentElement.scrollTop
-    let calcHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight
-    let scrollValue = Math.round((pos * 100) / calcHeight)
-
-    scrollProgress.addEventListener('click', () => {
-        document.documentElement.scrollTop = 0
-    })
+  $(document).on('keyup', function(e) {
+    if (e.key === 'Escape') {
+      $('.modal, .overlay').removeClass('modal_active')
     }
-    
-    window.onscroll = calcScrollValue
+  })
 
-    // 서브 리스트가 있다면? 아래로 떨군다.
+  // 스크롤 버튼, IDE
+  let calcScrollValue = () => {
+  let scrollProgress = document.getElementById('progress')
+  let progressValue = document.getElementById('progress-value')
+  let pos = document.documentElement.scrollTop
+  let calcHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight
+  let scrollValue = Math.round((pos * 100) / calcHeight)
+
+  scrollProgress.addEventListener('click', () => {
+    document.documentElement.scrollTop = 0
+  })
+  }
+  
+  window.onscroll = calcScrollValue
+
+  // 서브 리스트가 있다면? 아래로 떨군다.
+  $('.visible').hide()
+  $('.list_company').mouseover(function() {
+    $('.visible').show()
+    $(this).find('a').css({'background-color': 'var(--blue)',
+                           'color': 'white',
+                           'box-shadow': '0 0 5px var(--gray)'})
+  })
+  $('.list_company').mouseleave(function() {
     $('.visible').hide()
-    $('.list_company').mouseover(function() {
-        $('.visible').show()
-        $(this).find('a').css({'background-color': 'var(--blue)',
-                            'color': 'white',
-                            'box-shadow': '0 0 5px var(--gray)'})
-    })
-    $('.list_company').mouseleave(function() {
-        $('.visible').hide()
-        $(this).find('a').css({'background-color': 'white',
-                            'color': 'var(--blue)',
-                            'box-shadow': 'none'})
-    })
+    $(this).find('a').css({'background-color': 'white',
+                           'color': 'var(--blue)',
+                           'box-shadow': 'none'})
+  })
 
        // 랭킹 컨텐츠
 
@@ -279,5 +363,7 @@
         }
       }
     })
+
+   
 </script>
 </html>
