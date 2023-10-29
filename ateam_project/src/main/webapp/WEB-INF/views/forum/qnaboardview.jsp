@@ -167,7 +167,6 @@ pre.content {
 #button-id-list {
    bottom: 50px;
    position: absolute;
-   bottom: 90px;
    left: 900px;
    margin-left: 10px;
    background-color: var(--light-blue);
@@ -271,9 +270,9 @@ textarea {
    height: 1px;
    margin: 10px 0px 7px 0px;
 }
-#update-link , #delete-link {
-     
-   }
+#update-link #delete-link {
+   margin-left: 5000px;
+}
 
 
 </style>
@@ -483,17 +482,9 @@ textarea {
 </head>
 <body>
 <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq generalPostVO.postWriter}">					
-   <div class="btn-group">
-       <div class="right-align">
-           <div class="update_btn">
-           </div>
-       </div>
-   </div>
-            </c:if>
-            <div id="btn">
-               <a href="/qnaboard/update/${generalPostVO.generalPostId}" id="update-link">수정</a>
-               <a href="/qnaboard/delete/${generalPostVO.generalPostId}" id="delete-link">삭제</a>
-            </div>
+  
+<button id="update-link" onclick="location.href='/qnaboard/update/123'">수정asdaasdasdsa</button>
+<button id="delete-link" onclick="location.href='/qnaboard/delete/456'">삭제</button>
 </c:if>
 <div class="main_Container">
    <p class="qna_Title">질답게시판 > </p>
