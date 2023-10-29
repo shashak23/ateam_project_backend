@@ -346,12 +346,19 @@
   // $('.overlay').click(function() {
   //   $('.modal, .overlay').removeClass('modal_active')
   // })
-
+  
+  // 모달창 열고 닫기
   $(document).on('click', '.incomplete', function() {
     $('.modal, .overlay').addClass('modal_active')
   })
   $(document).on('click', '.overlay', function() {
     $('.modal, .overlay').removeClass('modal_active')
+  })
+
+  $(document).on('keyup', function(e) {
+    if (e.key === 'Escape') {
+      $('.modal, .overlay').removeClass('modal_active')
+    }
   })
 
   // 스크롤 버튼, IDE
