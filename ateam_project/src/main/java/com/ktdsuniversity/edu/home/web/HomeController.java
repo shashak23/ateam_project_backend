@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.ktdsuniversity.edu.algorithmexplanation.service.AlgorithmExplanationService;
 import com.ktdsuniversity.edu.algorithmexplanation.vo.AlgorithmExplanationListVO;
@@ -37,6 +39,9 @@ import com.ktdsuniversity.edu.home.vo.HomecommentCntVO;
 import com.ktdsuniversity.edu.member.service.MemberService;
 import com.ktdsuniversity.edu.member.vo.MemberListVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
+import com.ktdsuniversity.edu.notice.service.NoticeService;
+import com.ktdsuniversity.edu.notice.vo.NoticeVO;
+import com.ktdsuniversity.edu.util.XssIgnoreUtil;
 
 @Controller
 public class HomeController {
@@ -59,15 +64,60 @@ public class HomeController {
 	@Autowired
 	private CompanyNewsService companyNewsService;
 	
+	@Autowired
+	private NoticeService noticeService;
+	
 	@GetMapping("/devground/home")
 	public String homeLink() {
 		return "home/home";
 	}
 	
+
 	@GetMapping("/home/admin")
 	public String viewAdmin() {
 		return "home/admin_ui(ongoing)";
 	}
+	
+	@PostMapping("/devground/home")
+	public ModelAndView doCreateNoticeAdmin(@ModelAttribute NoticeVO noticeVO,
+								  @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+		XssIgnoreUtil.ignore(noticeVO);
+		
+		ModelAndView mav = new ModelAndView();
+		noticeVO.setPostWriter(memberVO.getEmail());
+		boolean isSuccess = noticeService.createNotice(noticeVO);
+		
+		if (isSuccess) {
+			mav.setViewName("redirect:/devground/home");
+			return mav;
+		}
+		else {
+			mav.addObject("noticeVO", noticeVO);
+			mav.setViewName("home/admin_ui(ongoing)");
+			return mav;
+		}
+	}
+	
+	
+//	@PostMapping("/home/admin")
+//	public ModelAndView doCreateNoticeAdmin(@ModelAttribute NoticeVO noticeVO,
+//								  @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+//		XssIgnoreUtil.ignore(noticeVO);
+//		
+//		ModelAndView mav = new ModelAndView();
+//		noticeVO.setPostWriter(memberVO.getEmail());
+//		boolean isSuccess = noticeService.createNotice(noticeVO);
+//		
+//		if (isSuccess) {
+//			mav.setViewName("redirect:/home/admin");
+//			return mav;
+//		}
+//		else {
+//			mav.addObject("noticeVO", noticeVO);
+//			mav.setViewName("home/admin_ui");
+//			return mav;
+//		}
+//	}
 	
 	@ResponseBody
 	@GetMapping("/home/maincontent")

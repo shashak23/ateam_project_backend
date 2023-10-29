@@ -41,7 +41,7 @@ public class NoticeController {
 	}
 	
 	@PostMapping("/notice/list")
-	public ModelAndView viewAllNotice( @ModelAttribute NoticeVO noticeVO,
+	public ModelAndView viewAllNotice(@ModelAttribute NoticeVO noticeVO,
 									  @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 		ModelAndView mav = new ModelAndView();
 		noticeVO.setPostWriter(memberVO.getEmail());
