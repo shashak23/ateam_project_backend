@@ -8,6 +8,6 @@
 </head>
 <body>
     <h3>찾으시는 페이지는 존재하지 않습니다.</h3>
-    <a href="/home/main">홈메인으로 가기</a>
+    <a href="/devground/home">홈메인으로 가기</a>
 </body>
 </html>

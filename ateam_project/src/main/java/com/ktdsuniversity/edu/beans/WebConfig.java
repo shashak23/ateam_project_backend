@@ -64,7 +64,7 @@ public class WebConfig implements WebMvcConfigurer, WebSocketConfigurer  {
 	      checkSessionExcludePatterns.add("/qnaboard/list/**");
 	      checkSessionExcludePatterns.add("/qnaboard/view/**");
 	      checkSessionExcludePatterns.add("/home/main");
-	      checkSessionExcludePatterns.add("/home/home");
+	      checkSessionExcludePatterns.add("/devground/home");
 	      checkSessionExcludePatterns.add("/keyword/**");
 	      checkSessionExcludePatterns.add("/home/**");
 	      checkSessionExcludePatterns.add("/js/**");

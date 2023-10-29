@@ -105,7 +105,6 @@
   <div>
     해시태그 목록
   </div>
-  
   <div class="hashtag_wrap"></div>
     <label for="codeContent">입력: </label>
     <input type="text" name="codeContent" id="codeContent" />
