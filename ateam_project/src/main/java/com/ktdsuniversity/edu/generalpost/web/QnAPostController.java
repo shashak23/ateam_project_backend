@@ -200,7 +200,7 @@ public class QnAPostController {
 	}
 	
 	// 내 게시글 조회
-	@GetMapping("/mypost")
+	@GetMapping("/member/mypost")
 	public String viewMyPost(@ModelAttribute GeneralPostVO generalPostVO
 			               , Model model
 			               , @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
@@ -217,7 +217,7 @@ public class QnAPostController {
 		
 		model.addAttribute("qnaPostList", qnaPostList);
 		model.addAttribute("freePostList", freePostList);
-		return "mypage/mypost";
+		return "mypage/mypostinmypage";
 	}
 	
 	// 좋아요 기능
