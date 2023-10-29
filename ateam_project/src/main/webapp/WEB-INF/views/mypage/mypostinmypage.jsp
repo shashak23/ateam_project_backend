@@ -140,7 +140,7 @@ table.table {
 		</div>
 		<div class="flex_main">
 			<table class="table">
-				<caption class="qnaboard">QnA 게시판</caption>
+				<caption class="qnaboard">질답게시판</caption>
 				<thead>
 					<colgroup>
 						<col width="10%" />
@@ -181,7 +181,7 @@ table.table {
 				</tbody>
 			</table>
 			<table class="table">
-				<caption class="freepost">자유 게시판</caption>
+				<caption class="freepost">자유게시판</caption>
 				<thead>
 					<colgroup>
 						<col width="10%" />
