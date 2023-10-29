@@ -47,26 +47,31 @@
   }
 
   .personal_modal,
-  .company_modal {
+  .company_modal,
+  .hashtag_modal {
     position: fixed;
+    max-height: 650px;
     top: 50%;
     left: 50%;
-    transform: translate(-80%, -50%) scale(0.7) ;
+    transform: translate(-120%, -50%) scale(0.7) ;
     z-index: 10;
     opacity: 0;
     visibility: hidden;
     transition: all 0.5s;
+    overflow: auto;
   }
 
   .personal_modal.active,
-  .company_modal.active {
+  .company_modal.active,
+  .hashtag_modal.active {
     opacity: 1;
     visibility: visible;
     transform: translate(-50%, -50%) scale(1);
   }
 
   .personal_modal_content,
-  .company_modal_content  {
+  .company_modal_content,
+  .hashtag_modal_content  {
     display: flex;
     border-radius: 5px;
     overflow: hidden;
@@ -75,7 +80,8 @@
   }
 
   .personal_modal_content > div,
-  .company_modal_content > div {
+  .company_modal_content > div,
+  .hashtag_modal > div {
     padding: 20px;
   }
 
@@ -173,7 +179,7 @@
         <ul class="admin_submenu">
           <li><button class="admin_notice_btn">공지</button></li>
           <li><button class="admin_report_btn">신고</button></li>
-          <li><button>해시태그</button></li>
+          <li><button class="admin_hashtag_btn">해시태그</button></li>
         </ul>
       </li>
       <li><button class="mainmenu_btn">환경설정</button>
@@ -192,37 +198,38 @@
           <button class="admin_general_member_search">검색</button>
           <button class="btn-close">&times;</button>
         </div>
-          <div class="desc-content">
-          </div>
+        <div class="desc-content">
+        </div>
       </div>
     </div>
   </div>
 <!-- 기업 계정 관리 모달 -->
-  <div class="company_modal">
-    <div class="company_modal_content">
-      <div class="desc">
-        <div class="desc-header">
-          <input type="text" placeholder="홍길동"/>
-          <button class="admin_company_member_search">검색</button>
-          <button class="btn-close">&times;</button>
-        </div>
-          <div class="desc-content">
-          </div>
+<div class="company_modal">
+  <div class="company_modal_content">
+    <div class="desc">
+      <div class="desc-header">
+        <input type="text" placeholder="홍길동"/>
+        <button class="admin_company_member_search">검색</button>
+        <button class="btn-close">&times;</button>
       </div>
+        <div class="desc-content">
+        </div>
     </div>
   </div>
+</div>
 
   <!-- 해시태그 관리 모달 -->
   <div class="hashtag_modal">
-    <div class="company_modal_content">
+    <div class="hashtag_modal_content">
+      <button class="btn-close">&times;</button>
       <div class="desc">
-        <div class="desc-header">
-          <input type="text" placeholder="홍길동"/>
-          <button class="admin_company_member_search">검색</button>
-          <button class="btn-close">&times;</button>
+        <div>
+          해시태그 목록
         </div>
-          <div class="desc-content">
-          </div>
+        <div class="hashtag_wrap"></div>
+          <label for="codeContent">입력: </label>
+          <input type="text" name="codeContent" id="codeContent" />
+          <button id="create_btn">생성</button>
       </div>
     </div>
   </div>
@@ -239,21 +246,30 @@
   $('.btn-close, .admin_overlay').click(function() {
     $('.personal_modal, .admin_overlay').removeClass('active')
     $('.company_modal, .admin_overlay').removeClass('active')
+    $('.hashtag_modal, .admin_overlay').removeClass('active')
   })
 
   $('body').keyup(function(e) {
     if (e.key === 'Escape') {
       $('.personal_modal, .admin_overlay').removeClass('active')
       $('.company_modal, .admin_overlay').removeClass('active')
+      $('.hashtag_modal, .admin_overlay').removeClass('active')
     }
   })
   
+  // 일반 회원 계정 목록 열기
   $('.admin_person_btn').click(function() {
     $('.personal_modal, .admin_overlay').addClass('active')
   })
 
+  // 기업 회원 계정 목록 열기
   $('.admin_company_btn').click(function() {
     $('.company_modal, .admin_overlay').addClass('active')
+  })
+
+  // 해시태그 목록 목록 열기
+  $('.admin_hashtag_btn').click(function() {
+    $('.hashtag_modal, .admin_overlay').addClass('active')
   })
 
   // 일반 회원 조회
@@ -295,10 +311,69 @@
     }
   })
 
+  // 해시태그 조회
+  let tag = {}
+  let counter = 0
+
+  function addTag(value) {
+    tag[counter] = value
+    counter++
+  }
+
+  function marginTag() {
+    return Object.values(tag).filter(function(word) {
+      return world !== ''
+    })
+  }
+
+  // 해시태그 생성
+  $('#create_btn').click(function() {
+    let body = {'codeContent': $('#codeContent').val()}
+    if ($('#codeContent').val().trim() != '') {
+      $.post(
+        "/code/create/해시태그",
+        body,
+        function(response) {
+        let result = response.result
+        if (result) {
+          load_hashtag()
+          alert('성공')
+          $('#codeContent').val('')
+        }
+        else {
+          alert('실패!')
+          console.log($('#codeContent').val())
+          console.log(body)
+        }
+      })
+    }
+  })
+
+  // 해시태그 목록 출력
+  load_hashtag = function() {
+    $('.hashtag_wrap').html('')
+    console.log('해시태그?')
+    $.get('/code/해시태그', function(response) {
+      console.log('하하하하!')
+      console.log(response)
+      for (let i = 0; i < response.length; i++) {
+        let template = `<div class="Content">
+                          \${response[i].codeContent}
+                        </div>`
+        let templateDom = $(template)
+        $('.hashtag_wrap').append(templateDom)
+      }
+    })
+  }
+
+  load_hashtag()
+
+  // 공지사항 관리창으로 이동
   $('.admin_notice_btn').click(function() {
     window.open('/notice/list', '_blank')
   })
 
+  // 신고 관리창으로 이동
   $('.admin_report_btn').click(function() {
     window.open('/admin/report/list', '_blank')
   })

@@ -49,13 +49,13 @@ public class CompanyRecruitController {
 	
 	// 등록페이지
 	@GetMapping("/recruit/create")
-	public String viewCompanyMypostRecruitPage() {
+	public String viewCompanyRecruitPage() {
 		return "company/recruit/recruitcreate";
 	}
 	
 	// 게시글 등록하기
 	@PostMapping("/recruit/create")
-	public ModelAndView createCompanyMypostRecruit(@Valid @ModelAttribute CompanyRecruitVO companyRecruitVO
+	public ModelAndView createCompanyRecruit(@Valid @ModelAttribute CompanyRecruitVO companyRecruitVO
 											   , BindingResult bindingResult 
 									           , HttpServletRequest request
 									           , @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
@@ -82,7 +82,7 @@ public class CompanyRecruitController {
 	
 	// 단건 조회
 	@GetMapping("/recruit/view/{companyRecruitPostId}")
-	public ModelAndView companyMypostRecruitSingle(@PathVariable String companyRecruitPostId
+	public ModelAndView companyRecruitSingle(@PathVariable String companyRecruitPostId
 													, @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 		ModelAndView view = new ModelAndView();
 		CompanyRecruitVO companyRecruitVO = companyRecruitService.getOneRecruitBoard(companyRecruitPostId);
@@ -107,7 +107,7 @@ public class CompanyRecruitController {
 	
 	// 수정
 	@PostMapping("/recruit/update/{companyRecruitPostId}")
-	public ModelAndView updateCompanyMypostRecruit(@ModelAttribute CompanyRecruitVO companyRecruitVO
+	public ModelAndView updateCompanyRecruit(@ModelAttribute CompanyRecruitVO companyRecruitVO
 													,@PathVariable String companyRecruitPostId) {
 		log.debug("--1--컨트롤러 도착------------------------------");
 		ModelAndView view = new ModelAndView();
@@ -135,7 +135,7 @@ public class CompanyRecruitController {
 	
 	// 삭제처리
 	@PostMapping("/recruit/delete/{companyRecruitPostId}")
-	public ModelAndView deleteCompanyMypostRecruit(@ModelAttribute CompanyRecruitVO companyRecruitVO
+	public ModelAndView deleteCompanyRecruit(@ModelAttribute CompanyRecruitVO companyRecruitVO
 													,@PathVariable String companyRecruitPostId
 													, BindingResult bindingResult) {
 		ModelAndView view = new ModelAndView();

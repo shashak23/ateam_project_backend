@@ -53,7 +53,7 @@
 			<input id="postTitle" type="text" name="postTitle" value="${generalPostVO.postTitle}"/>
 			
 			<label for="postContent">내용</label>
-			<textarea id="editor" name="postContent"">${generalPostVO.postContent}</textarea>
+			<textarea id="editor" name="postContent">${generalPostVO.postContent}</textarea>
 				<script>
 		    	CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
 	                // https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html#extended-toolbar-configuration-format

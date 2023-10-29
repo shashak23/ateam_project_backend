@@ -10,6 +10,6 @@
 	<h3>일시적인 오류가 발생했습니다.</h3>
 	<h4>오류가 계속되면 시스템 관리자에게 문의하세요.</h4>
 	<h6>시스템 관리자 이메일: admin@system.com</h6>
-	<a href="/home/main">홈메인으로 가기</a>
+	<a href="/devground/home">홈메인으로 가기</a>
 </body>
 </html>

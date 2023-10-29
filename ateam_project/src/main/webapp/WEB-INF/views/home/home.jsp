@@ -506,7 +506,7 @@
                 templateDom.find('.bookmarkBtn').prepend(`<input type="hidden" class="bookmarkId" value="\${response.bookmarkId}"/>`)
               }
             })
-
+            
 
             // 게시글 유형이 자유 유형이면 대문짝만한 Q 삭제
             if(article.boardId === 'CC-20231017-000029') {
