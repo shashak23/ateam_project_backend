@@ -166,8 +166,9 @@ pre.content {
 }
 #button-id-list {
    bottom: 50px;
-   position: relative;
-   left: 680px;
+   position: absolute;
+   bottom: 90px;
+   left: 900px;
    margin-left: 10px;
    background-color: var(--light-blue);
    border: none;
@@ -269,6 +270,10 @@ textarea {
    height: 1px;
    margin: 10px 0px 7px 0px;
 }
+#update-link , #delete-link {
+     
+   }
+
 
 </style>
 <script type="text/javascript" src="/js/lib/jquery-3.7.1.js"></script>
@@ -480,13 +485,14 @@ textarea {
    <div class="btn-group">
        <div class="right-align">
            <div class="update_btn">
-               <div class="btn">
-                   <a href="/qnaboard/update/${generalPostVO.generalPostId}">수정</a>
-                   <a href="/qnaboard/delete/${generalPostVO.generalPostId}">삭제</a>
-               </div>
            </div>
        </div>
    </div>
+            </c:if>
+            <div id="btn">
+               <a href="/qnaboard/update/${generalPostVO.generalPostId}" id="update-link">수정</a>
+               <a href="/qnaboard/delete/${generalPostVO.generalPostId}" id="delete-link">삭제</a>
+            </div>
 </c:if>
 <div class="main_Container">
    <p class="qna_Title">QnA 게시판 > </p>

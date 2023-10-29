@@ -167,8 +167,8 @@
    }
    #button-id-list {
    bottom: 50px;
-   position: relative;
-   left: 680px;
+   position: absolute;
+   left: 900px;
    margin-left: 10px;
    background-color: var(--light-blue);
    border: none;
@@ -269,9 +269,12 @@
       height: 1px;
       margin: 10px 0px 7px 0px;
    }
-   #btn {
-      margin-right: 150px;
+   #update-link , #delete-link {
+     position: relative;
+     left: 1400px;
+     top: 120px;
    }
+  
    
    </style>
 <script type="text/javascript" src="/js/lib/jquery-3.7.1.js"></script>
@@ -489,8 +492,8 @@
    </div>
             </c:if>
             <div id="btn">
-                <a href="/freeboard/update/${generalPostVO.generalPostId}">수정</a>
-                <a href="/freeboard/delete/${generalPostVO.generalPostId}">삭제</a>
+               <a href="/freeboard/update/${generalPostVO.generalPostId}" id="update-link">수정</a>
+               <a href="/freeboard/delete/${generalPostVO.generalPostId}" id="delete-link">삭제</a>
             </div>
             
             
