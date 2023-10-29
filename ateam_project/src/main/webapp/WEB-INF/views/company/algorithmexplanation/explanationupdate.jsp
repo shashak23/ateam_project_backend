@@ -140,18 +140,19 @@
     }
 
     .btn-group > .right-align > #submitButton{
-        width:80px;
-		height:40px;		
-		border:none;
-		border-radius: 10px;
-		cursor: pointer;
+        background-color: var(--light-blue);
+        border: none;
+        width: 70px;
+        height: 30px;
+        border-radius: 5px;
+        cursor: pointer;
         margin-bottom:15px;
-		transition: box-shadow 0.1s ease;
+		/* transition: box-shadow 0.1s ease; */
     }
 
-    .btn-group > .right-align > #submitButton:hover{
+    /* .btn-group > .right-align > #submitButton:hover{
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); 
-    }
+    } */
 </style>
 <body>
 	<div id="container">

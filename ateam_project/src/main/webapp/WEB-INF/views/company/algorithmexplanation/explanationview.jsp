@@ -119,13 +119,13 @@ $(document).on('click', '.incomplete', function() {
 
 	#contents{
 		margin-top: 150px;
-		height:1000px;
 		border-radius: 5px;
 		border: 1px solid;
+		margin-bottom: 100px;
 	}
 
 	#contents > #contents_text{
-		margin:6px;
+		margin:20px;
 	}
 </style>
 </head>
