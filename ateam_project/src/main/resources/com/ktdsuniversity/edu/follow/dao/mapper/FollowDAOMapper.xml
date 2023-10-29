@@ -6,19 +6,73 @@
 	<resultMap type="com.ktdsuniversity.edu.follow.vo.FollowVO"
 	           id="followVOMap"
 	           autoMapping="true">
-	    
+	    <id column="FOLLOW_ID" property="followId" />
+	    <association property="memberVO"
+					 javaType="com.ktdsuniversity.edu.member.vo.MemberVO"
+					 autoMapping="true">
+			<id column="EMAIL" property="email" />
+		</association>
 	</resultMap>
 	
-	<insert id="follow"
+	<!-- 나를 팔로우 하는 사람들 목록 조회 -->
+	<select id="getAllFollower"
+	        parameterType="string"
+	        resultMap="followVOMap">
+	  SELECT F.FOLLOW_ID
+	       , F.FOLLOWER
+	       , F.FOLLOWEE
+	       , F.FOLLOW_YN
+	       , M.NICKNAME
+	       , M.PROFILE_PIC
+	    FROM FOLLOW F
+	   INNER JOIN MEMBER M
+	      ON M.EMAIL = F.FOLLOWER
+	   WHERE F.FOLLOW_YN = 'Y'
+	     AND F.FOLLOWEE = #{_parameter} 
+	</select>
+	
+	<!-- 내가 팔로우 하는 사람들 목록 조회 -->
+	<select id="getAllFollowee"
+	        parameterType="string"
+	        resultMap="followVOMap">
+	  SELECT F.FOLLOW_ID
+	       , F.FOLLOWER
+	       , F.FOLLOWEE
+	       , F.FOLLOW_YN
+	       , M.NICKNAME
+	       , M.PROFILE_PIC
+	    FROM FOLLOW F
+	   INNER JOIN MEMBER M
+	      ON M.EMAIL = F.FOLLOWER
+	   WHERE F.FOLLOW_YN = 'Y'
+	     AND F.FOLLOWER = #{_parameter}
+	</select>
+	
+	<insert id="doFollow"
 	        parameterType="com.ktdsuniversity.edu.follow.vo.FollowVO">
-	  INSERT INOT FOLLOW
+	  INSERT INTO FOLLOW
 	   (FOLLOW_ID
 	  , FOLLOWER
-	  , FOLLOWEE)
+	  , FOLLOWEE
+	  , FOLLOW_YN)
 	  VALUES
 	   ('FL-' || TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_FOLLOW_PK.NEXTVAL, 6, '0')
 	  , #{follower}
-	  , #{followee})
+	  , #{followee}
+	  , 'Y')
 	</insert>
 	
+	<update id="toggleFollower"
+	        parameterType="string">
+	  UPDATE FOLLOW
+	     SET FOLLOW_YN = 'N'
+	   WHERE FOLLOW_ID = #{_parameter}
+	</update>
+	
+	<delete id="unFollow"
+	        parameterType="com.ktdsuniversity.edu.follow.vo.SearchFollowVO">
+	  DELETE
+	    FROM FOLLOW
+	   WHERE FOLLOWEE = #{email}
+	</delete>
 </mapper>

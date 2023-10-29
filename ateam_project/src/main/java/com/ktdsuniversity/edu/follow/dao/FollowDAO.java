@@ -3,6 +3,7 @@ package com.ktdsuniversity.edu.follow.dao;
 import java.util.List;
 
 import com.ktdsuniversity.edu.follow.vo.FollowVO;
+import com.ktdsuniversity.edu.follow.vo.SearchFollowVO;
 
 public interface FollowDAO {
 	
@@ -12,10 +13,11 @@ public interface FollowDAO {
 	// 팔로잉 전체 조회
 	public List<FollowVO> getAllFollowee(String email);
 	
-	
-	
-	public int follow(FollowVO followVO);
-	
-	public int unFollow(FollowVO followVO);
+	public FollowVO getFollowStatus(SearchFollowVO searchFollowVO);
 
+	public int doFollow(FollowVO followVO);
+	
+	public int unFollow(SearchFollowVO searchFollowVO);
+	
+	public int toggleFollower(String followId);
 }

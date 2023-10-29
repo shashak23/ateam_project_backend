@@ -5,7 +5,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.ktdsuniversity.edu.follow.dao.FollowDAO;
+import com.ktdsuniversity.edu.follow.vo.FollowListVO;
 import com.ktdsuniversity.edu.follow.vo.FollowVO;
+import com.ktdsuniversity.edu.follow.vo.SearchFollowVO;
 
 @Service
 public class FollowServiceImpl implements FollowService {
@@ -15,9 +17,39 @@ public class FollowServiceImpl implements FollowService {
 	
 	@Transactional
 	@Override
-	public boolean follow(FollowVO followVO) {
-		int followCount = followDAO.follow(followVO);
-		return followCount > 0;
+	public boolean doFollow(FollowVO followVO) {
+		return followDAO.doFollow(followVO) > 0;
+	}
+
+	@Transactional
+	@Override
+	public boolean unFollow(SearchFollowVO searchFollowVO) {
+		return followDAO.unFollow(searchFollowVO) > 0;
+	}
+
+	@Transactional
+	@Override
+	public boolean toggleFollower(String followId) {
+		return followDAO.toggleFollower(followId) > 0;
+	}
+	
+	@Override
+	public FollowListVO getAllFollower(String email) {
+		FollowListVO followListVO = new FollowListVO();
+		followListVO.setFollowList(followDAO.getAllFollower(email));
+		return followListVO;
+	}
+
+	@Override
+	public FollowListVO getAllFollowee(String eamil) {
+		FollowListVO followListVO = new FollowListVO();
+		followListVO.setFollowList(followDAO.getAllFollowee(eamil));
+		return followListVO;
+	}
+	
+	@Override
+	public FollowVO getFollowStatus(SearchFollowVO searchFollowVO) {
+		return followDAO.getFollowStatus(searchFollowVO);
 	}
 
 }

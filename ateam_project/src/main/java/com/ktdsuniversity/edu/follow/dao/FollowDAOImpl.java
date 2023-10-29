@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ktdsuniversity.edu.follow.vo.FollowVO;
+import com.ktdsuniversity.edu.follow.vo.SearchFollowVO;
 
 @Repository
 public class FollowDAOImpl extends SqlSessionDaoSupport implements FollowDAO {
@@ -19,28 +20,33 @@ public class FollowDAOImpl extends SqlSessionDaoSupport implements FollowDAO {
 	}
 
 	@Override
-	public int follow(FollowVO followVO) {
-		return getSqlSession().insert("follow", followVO);
-	}
-
-	@Override
-	public int unFollow(FollowVO followVO) {
-		return getSqlSession().delete("unFollow", followVO);
-	}
-
-	
-	
-	@Override
 	public List<FollowVO> getAllFollower(String email) {
-		// TODO Auto-generated method stub
-		return null;
+		return getSqlSession().selectList("getAllFollower", email);
 	}
-
+	
 	@Override
 	public List<FollowVO> getAllFollowee(String email) {
-		// TODO Auto-generated method stub
-		return null;
+		return getSqlSession().selectList("getAllFollowee", email);
 	}
 	
+	@Override
+	public FollowVO getFollowStatus(SearchFollowVO searchFollowVO) {
+		return getSqlSession().selectOne("getFollowStatus", searchFollowVO);
+	}
+	
+	@Override
+	public int doFollow(FollowVO followVO) {
+		return getSqlSession().insert("doFollow", followVO);
+	}
+
+	@Override
+	public int unFollow(SearchFollowVO searchFollowVO) {
+		return getSqlSession().update("unFollow", searchFollowVO);
+	}
+
+	@Override
+	public int toggleFollower(String followId) {
+		return getSqlSession().update("toggleFollower", followId);
+	}
 	
 }
