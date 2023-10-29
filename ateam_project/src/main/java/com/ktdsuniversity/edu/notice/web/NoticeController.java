@@ -6,13 +6,16 @@
 
 package com.ktdsuniversity.edu.notice.web;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -125,6 +128,19 @@ public class NoticeController {
 		else {
 			return "/notice/noticedeletefail";
 		}
+	}
+	
+	@ResponseBody
+	@GetMapping("/admin/noticelist")
+	public List<NoticeVO> getAdminNoticeList() {
+		List<NoticeVO> resultList = new ArrayList<>();
+		NoticeListVO noticeListVO = new NoticeListVO(); 
 		
+		noticeListVO = noticeService.getValidateList();
+		resultList.addAll(noticeListVO.getNoticeList());
+		noticeListVO = noticeService.getInvalidateList();
+		resultList.addAll(noticeListVO.getNoticeList());
+		
+		return resultList;
 	}
 }

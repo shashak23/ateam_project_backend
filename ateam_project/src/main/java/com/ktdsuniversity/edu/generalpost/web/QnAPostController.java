@@ -59,6 +59,7 @@ public class QnAPostController {
 	public String createQnABoard() {
 		return "forum/qnaboardcreate";
 	}
+
 	
 	// 글 등록
 	@PostMapping("/qnaboard/create")
@@ -87,6 +88,7 @@ public class QnAPostController {
 //		System.out.println(generalPostVO.getPostWriter());
 		
 		if (bindingResult.hasErrors()) {
+			log.debug("qkdlseldflwjfxm");
 			modelAndView.setViewName("forum/qnaboardcreate");
 			modelAndView.addObject("generalPostVO", generalPostVO);
 			return modelAndView;
@@ -94,6 +96,7 @@ public class QnAPostController {
 		
 		// 게시글을 등록한다.
 		boolean isSuccess = generalPostService.createNewQnABoard(generalPostVO);
+		log.debug("서비스 실행");
 		if (isSuccess) {
 			modelAndView.setViewName("redirect:/qnaboard/list");
 			return modelAndView;

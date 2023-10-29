@@ -135,7 +135,7 @@ $(document).on('click', '.incomplete', function() {
 			<label for="algorithmCategoryId"></label>
 			<div>${algorithmExplanationVO.commonCodeVO.codeContent}</div>
 		</div>
-		<div id="postTitle">해설: ${algorithmExplanationVO.postTitle}</div>
+		<div id="postTitle">${algorithmExplanationVO.postTitle}</div>
 		<div id="info">
 			<label for="algorithmWriter"></label>
 			<div>${algorithmExplanationVO.memberVO.nickname}</div>

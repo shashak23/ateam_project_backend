@@ -15,6 +15,81 @@
 <!--스타일,폰트 지정-->
 <!--스와이퍼 기능 지정-->
 <!--스타일 입히기-->
+<style>
+/* 수정버튼  */
+.introduce-modify,#edit_button1,#edit_button2,#delete_tech,
+.education-modify,.career-modify,.region_modify
+,.profile-modify{
+	background-color: var(--gray);
+	border: none;
+    color: var(--white);
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: center;
+    width: 36px;
+    height: 26px;
+}
+.introduce-modify:hover
+,#edit_button1:hover
+,#edit_button2:hover
+,#delete_tech:hover
+,.education-modify:hover
+,.career-modify:hover
+,.region_modify:hover
+, .introduce-create:hover 
+, #insert_techstack:hover
+,#addEducationButton:hover
+,.addCareer:hover
+,.region_create:hover
+,.profile-modify:hover{
+  background-color: var(--light-blue);
+  color: white;
+}
+.introduce-create{
+background-color: var(--gray);
+	border: none;
+    color: var(--white);
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: center;
+    width: 118px;
+    height: 27px;
+}
+/* 추가하기 */
+#insert_techstack, #addEducationButton,.addCareer,.region_create{
+	background-color: var(--gray);
+    border: none;
+    color: var(--white);
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: center;
+    width: 67px;
+    height: 24px;
+}
+.flex_button button { 
+   background-color:var(--gray); 
+   width: 150px; 
+   height: 40px; 
+  margin-bottom: 15px; 
+   cursor: pointer; 
+   color: white; 
+ } 
+.techstack-font, .education-font, .career-font, .region-font{
+    font-family: 'Noto Sans KR', sans-serif;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+.profile-fix{
+    position: relative;
+}
+.profile-modify{
+position: absolute;
+    top: 6%;
+    left: 83%;
+    transform: translate(-50%, -50%);
+}
+
+</style>
 <link rel="stylesheet" type="text/css" href="/css/myProfile.css" />
 <!-- 자바스크립트 시작 -->
 <jsp:include page="../layout/header.jsp" />
@@ -153,10 +228,11 @@
 			<c:if
 				test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
 				<button>마이페이지</button>
-				<button>스크랩</button>
+				<button>북마크</button>
 				<button id="modify_info">정보 수정</button>
+				<button>내가 쓴 게시글</button>
 				<button>내가 푼 문제</button>
-				<button>마이 팀</button>
+				<button>탈퇴</button>
 			</c:if>
 		</div>
 		<div class="flex_main">
@@ -165,7 +241,7 @@
 						<img src="https://cdn-icons-png.flaticon.com/512/907/907873.png">
 						팔로우
 					 </button> 
-				<c:choose>
+				<%-- <c:choose>
 					<c:when
 						test="${not empty emptysessionScope._LOGIN_USER_.email eq memberVO.email}">
 						<!-- a유저가 로그인한 경우에만 신고 버튼을 표시합니다. -->
@@ -179,9 +255,9 @@
 						<!-- a유저가 로그인하지 않은 경우에는 신고 버튼을 표시하지 않습니다. -->
 					</c:otherwise>
 				</c:choose>
-				<button id="reportUser" value="5" class="report-btn">신고</button>
+				<button id="reportUser" value="5" class="report-btn">신고</button> --%>
 				<!-- 모달 창 -->
-				<h2>신고 내용</h2>
+				<%-- <h2>신고 내용</h2>
 				<form name="reportVO" method="post" action="/report/view/5">
 					<div>
 						<label for="reportReason">신고사유${reportVO.reportReason} <select
@@ -218,11 +294,12 @@
 
 						</div>
 					</div>
-				</form> 
+				</form>  --%>
 				<button class="message_icon">✉ 메시지</button>
 			</div>
 	
 	<div class="profile">
+	<div class="profile-fix">
 		<c:choose>
 			<c:when
 				test="${memberVO.profilePic eq 'https://w7.pngwing.com/pngs/384/868/png-transparent-person-profile-avatar-user-basic-ui-icon.png'}">
@@ -232,11 +309,14 @@
 				<img src="/member/file/download/${memberVO.email}" />
 			</c:otherwise>
 		</c:choose>
-		<div>
-			<c:if
+		<c:if
 				test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
-				<button data-pic-id="${sessionScope._LOGIN_USER_.email }" class="profile-modify">프사수정</button>
-			</c:if>
+				<button data-pic-id="${sessionScope._LOGIN_USER_.email }" class="profile-modify">
+				수정
+				</button>
+		 </c:if>
+	</div>
+		<div>
 			<div>
 				<ul class="introduction_list">
 					<li class="list_name">
@@ -253,7 +333,7 @@
 						<c:otherwise>
 							<li class="list_intro"><c:if
 									test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
-									<button data-introduce-id="${sessionScope._LOGIN_USER_.email }" class="introduce-create">
+									<button data-introduce-id="${sessionScope._LOGIN_USER_.email }" class="introduce-create" ">
 									자기소개 추가하기
 									</button>
 								</c:if></li>
@@ -275,8 +355,7 @@
 		<c:if
 			test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
 			<button data-sns="${sessionScope._LOGIN_USER_.email }" id="edit_button1"> 
-				<img
-					src="https://cdn.icon-icons.com/icons2/1462/PNG/512/101edit_99874.png" />
+				수정
 			</button>
 		</c:if>
 	</div>
@@ -294,7 +373,7 @@
 		<p></p>
 	</div>
 	<div id="technology_stack">
-		<p>기술스택</p>
+		<h3 class="techstack-font">기술스택</h3>
 		<ul>
 			<c:choose>
 				<c:when test="${not empty commonCodeList}">
@@ -322,7 +401,7 @@
 		</ul>
 	</div>
 	<div class="education">
-		<p>학력</p>
+		<h3 class="education-font">학력</h3>
 		<ul>
 			<c:choose>
 				<c:when test="${not empty educationList}">
@@ -351,7 +430,7 @@
 		</ul>
 	</div>
 	<div class="career">
-		<p>경력</p>
+		<h3 class="career-font">경력</h3>
 		<ul>
 			<c:choose>
 				<c:when test="${not empty careerList}">
@@ -380,14 +459,8 @@
 			</c:choose>
 		</ul>
 	</div>
-	<div class="education">
-		<p>
-			주소
-			<button id="edit_button5">
-				<img
-					src="https://cdn.icon-icons.com/icons2/1462/PNG/512/101edit_99874.png">
-			</button>
-		</p>
+	<div class="region">
+		<h3 class="region-font">주소</h3>
 
 		<ul>
 			<c:choose>

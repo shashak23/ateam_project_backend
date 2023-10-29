@@ -582,11 +582,11 @@
         color:red;
         font-size: 80%;
     }
-        div.errors {
-        background-color: #ff00004a;
-        opacity: 0.8;
-        padding: 10px;
-        color: #333;
+    div.errors {
+    background-color: #ff00004a;
+    opacity: 0.8;
+    padding: 10px;
+    color: #333;
     }
     div.errors:last-child {
         margin-bottom: 15px;
