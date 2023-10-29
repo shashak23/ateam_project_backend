@@ -1,0 +1,209 @@
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>companyMypage</title>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" id="viewport"
+	content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, width=device-width" />
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+	<link rel="stylesheet" type="text/css" href="./companyMyPage.css" />
+	<script
+		src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script
+		src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+</head>
+<body>
+	<!-- 헤더를 넣어야함 -->
+	
+		<!--           메인 -------------------------------------------------------------------------------- -->
+		<div id="container">
+			<div class="flex_button">
+				<button>마이페이지</button>
+				<button>스크랩</button>
+				<button>정보 수정</button>
+				<button>내가 푼 문제</button>
+				<button>마이 팀</button>
+			</div>
+			<div class="flex_main">
+				<div class="leave">
+					<button class="leave_button" type="submit">탈퇴</button>
+				</div>
+				<div class="profile">
+					<c:choose>
+						<c:when
+							test="${memberVO.profilePic eq 'https://w7.pngwing.com/pngs/384/868/png-transparent-person-profile-avatar-user-basic-ui-icon.png'}">
+							<img src="https://cdn.thelec.kr/news/photo/202307/22027_19495_4334.jpg" />
+						</c:when>
+					</c:choose>
+					<div>
+					<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
+						</c:if>
+						<div>
+							<ul class="introduction_list">
+								<li class="list_name">
+									<h2>${기업이름주소}</h2>
+								</li>
+								<c:choose>
+									<c:when test="${not empty generalMemberVO.selfIntro}">
+										<li class="list_intro"><p>KT는 국내 최대 통신사이자 디지털 플랫폼 기업으로 ICT, 금융사업, 위성방송서비스사업, 기타사업 등을 영위하고 있다.<br> 무선통신, 초고속인터넷, IPTV 등 핵심사업에서의 지속적인 성장뿐만 아니라<br> IDC, 클라우드, AI/DX 등 B2B 성장사업에서도 성과를 창출하였다.</p>
+											<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
+											<button class="submit_btn">수정</button>								
+											
+											</c:if>
+										</li>
+									</c:when>
+									
+
+								</c:choose>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<!-- <div class="related_link">
+					<a href="${generalMemberVO.githubUrl}"><img
+						src="https://cdn-icons-png.flaticon.com/512/25/25231.png"
+						alt="Icon 1"></a> <a href="${generalMemberVO.additionalEmail}"><img
+						src="https://w7.pngwing.com/pngs/863/247/png-transparent-email-computer-icons-email-miscellaneous-angle-text.png"
+						alt="Icon 2"> </a> <a href="${generalMemberVO.blogUrl}"><img
+						src="https://i.pinimg.com/originals/f8/0b/dd/f80bdd79a51358da6ee41a0fda520394.png"
+						alt="Icon 3"></a>
+					<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
+					<button id="edit_button1">
+						<a href="/memberInfo/modify/update-sns-link/${memberVO.email}">
+							<img
+							src="https://cdn.icon-icons.com/icons2/1462/PNG/512/101edit_99874.png" />
+						</a>
+					</button>
+					</c:if>
+				</div> -->
+				<div class="show_pwf">
+					<p></p>
+					<button>
+						<h2>프로필</h2>
+					</button>
+					<button>
+						<h2>글</h2>
+					</button>
+					<button>
+						<h2>팔로잉</h2>
+					</button>
+					<p></p>
+				</div>
+				
+				<div id="technology_stack">
+					<p>기술스택</p>
+					
+						<c:choose>
+							<c:when test="${not empty commonCodeList}">
+								<ul class="technology_button">
+									<li>java</li>
+									<li>css</li>
+									<li>html</li>
+									<li>javascript</li>
+									<li>springboot</li>
+								</ul>
+								<span></span>
+								<!-- <c:forEach items="${commonCodeList}" var="commonCode">
+									<li>#${commonCode.codeContent}</li>
+								</c:forEach> -->
+								<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
+								<button id="fix_button">
+									<a href="/memberInfo/modify/create-career">수정 </a>
+								</button>
+								</c:if>
+							</c:when>
+							<!-- <c:otherwise>
+								<li>
+								<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
+								<button>
+										<a href="/memberInfo/modify/create-tech-stack">
+											추가하기 </a>
+									</button>
+								</c:if>
+								</li>
+							</c:otherwise> -->
+
+						</c:choose>
+					
+				</div>
+				<div class="career">
+					<p>경력</p>
+					<ul>
+						<c:choose>
+							<c:when test="${not empty careerList}">
+								<p>KT는 국내 최대 통신사이자 디지털 플랫폼 기업으로 ICT, 금융사업, 위성방송서비스사업, 기타사업 등을 영위하고 있다. 무선통신, 초고속인터넷, IPTV 등 핵심사업에서의 지속적인 성장뿐만 아니라<br> IDC, 클라우드, AI/DX 등 B2B 성장사업에서도 성과를 창출하였다.</p>
+								<!-- <c:forEach items="${careerList}" var="career">
+									<li>${career.previousCompanyName}-${career.jobTitle }
+									<li class="career_list_year">${career.hireDate}~
+										${career.resignDate}
+									<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">	
+											<button>
+												<a href="/memberInfo/modify/create-career">수정 </a>
+											</button>
+											</c:if>
+									</c:if>
+										</li>
+									</li>
+								</c:forEach> -->
+								<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
+								<button id="fix_button_1">
+									<a href="/memberInfo/modify/create-career">수정 </a>
+								</button>
+								</c:if>
+							</c:when>
+							<!-- <c:otherwise>
+								<li>
+								<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
+								<button>
+										<a href="/memberInfo/modify/create-career"> 추가하기 </a>
+									</button>
+								</c:if>	
+									</li>
+							</c:otherwise> -->
+
+						</c:choose>
+					</ul>
+				</div>
+				<div class="education">
+					<p>위치</p>
+						
+					<ul>
+						<c:choose>
+							<c:when test="${not empty generalMemberVO.region}">
+								<p>서울특별시 서초구 방배동 1001-1</p>
+								<div class="address_pic">
+									<img src="./케이티디에스.jpg">
+								</div>
+								<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
+									<button id="fix_button_2">
+									<a  href="/memberInfo/modify/create-career">수정 </a>
+								</button>
+								
+								</c:if>
+							</c:when>
+							<!-- <c:otherwise>
+								<li>
+								<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
+								<button>
+								<a href="/memberInfo/modify/create-location/${generalMemberVO.generalMemberEmail}"> 추가하기 </a>
+								</button>
+								</c:if>
+								</li>
+							</c:otherwise> -->
+
+						</c:choose>
+					</ul>
+				</div>
+			</div>
+		</div>
+		</form>
+
+	<!-- 페이지 푸터 -->
+	<!-- 푸터를 넣어야함 -->
+	
+</body>
+</html>
