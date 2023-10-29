@@ -97,8 +97,7 @@
 	}
 
 	#container{
-		width: 980px;
-		height:1000px;
+		width: 1000px;
 		margin-top: 40px;
 		margin:0 auto;
 	}
@@ -119,7 +118,8 @@
 		border-collapse: collapse;
 		border: 1px solid #DDD;
 		font-size: 14px;
-		width:980px;
+		width:1000px;
+		margin-bottom: 100px;
 	}
 	table.table > thead > tr {
 		background-color: #FFF;
@@ -132,7 +132,7 @@
     color: var(--dark-gray);
     font-weight: bold; 
 }
-	table.table th, table.table td {
+	/* table.table th, table.table td {
 		border-right: 1px solid #F0F0F0;
 	}
 	table.table th:last-child, table.table td:last-child {
@@ -143,26 +143,28 @@
 	}
 	table.table > tbody tr:hover {
 		background-color: #FAFAFA;
-	}
+	} */
 	table.table > tbody td {
 		padding: 10px;
 		color: #333;
 		text-align: center;
 		color: var(--dark-gray);
+		border-bottom: 1 solid var(--dark-gray);
 	}
 
 	#upload{
-		width:80px;
-		height:40px;		
+		width: 70px;
+   		height: 30px;		
 		border:none;
-		border-radius: 10px;
-		cursor: pointer;
-		transition: box-shadow 0.1s ease;
+		border-radius: 5px;
+		background-color: var(--light-blue);
+   		cursor: pointer;
+		/* transition: box-shadow 0.1s ease; */
 	}
 
-	#upload:hover{
+	/* #upload:hover{
 		box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); 
-	}
+	} */
 
 	.search_area > #search-form > #companyName{
 		font-weight: bold;
@@ -178,7 +180,17 @@
 	}
 
 	.button_list{
-		margin-left: 760px;
+		margin-left: 740px;
+	}
+
+	.btn_st_2{
+		background-color: var(--light-blue);
+		border: none;
+		width: 70px;
+		height: 30px;
+		border-radius: 5px;
+		cursor: pointer;
+		margin-left: 5px;
 	}
 	
 </style>
@@ -252,13 +264,13 @@
 	<table class="table">
 		<thead>
 			<colgroup>
-				<col width="10%" />
+				<col width=55px; />
 				<col width="10%" />
 				<col width="10%" />
 				<col width="10%" />
 				<col width="15%" />
 				<col width="*%" />
-				<col width="10%" />
+				<col width=100px; />
 			</colgroup>
 			<tr>				
 				<th>번호</th>

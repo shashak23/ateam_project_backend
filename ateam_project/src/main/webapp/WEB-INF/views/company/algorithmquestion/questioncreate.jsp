@@ -602,34 +602,36 @@
 
     #add-row,
     #add-col{
-        width:80px;
-        height:40px;		
-        border:none;
-        border-radius: 10px;
+        background-color: var(--light-blue);
+        border: none;
+        width: 70px;
+        height: 30px;
+        border-radius: 5px;
         cursor: pointer;
         margin-right:20px;
-        transition: box-shadow 0.3s ease;
+        /* transition: box-shadow 0.3s ease; */
     }
     
-    #add-row:hover,
+    /* #add-row:hover,
     #add-col:hover{
         
         border: 2px solid #1E90FF; 
-    }
+    } */
 
     #submit-btn{
-        width:80px;
-        height:40px;		
-        border:none;
-        border-radius: 10px;
+        background-color: var(--light-blue);
+        border: none;
+        width: 70px;
+        height: 30px;
+        border-radius: 5px;
         cursor: pointer;
         margin-bottom: 30px;
-        transition: box-shadow 0.1s ease;
+        /* transition: box-shadow 0.1s ease; */
     }
 
-    #submit-btn:hover{
+    /* #submit-btn:hover{
         border: 2px solid #1E90FF;  
-    }
+    } */
 </style>
 <body>
 	<div id="container">
