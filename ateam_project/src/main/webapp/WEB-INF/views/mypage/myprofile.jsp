@@ -153,10 +153,11 @@
 			<c:if
 				test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
 				<button>마이페이지</button>
-				<button>스크랩</button>
+				<button>북마크</button>
 				<button id="modify_info">정보 수정</button>
+				<button>내가 쓴 게시글</button>
 				<button>내가 푼 문제</button>
-				<button>마이 팀</button>
+				<button>탈퇴</button>
 			</c:if>
 		</div>
 		<div class="flex_main">
@@ -165,7 +166,7 @@
 						<img src="https://cdn-icons-png.flaticon.com/512/907/907873.png">
 						팔로우
 					 </button> 
-				<c:choose>
+				<%-- <c:choose>
 					<c:when
 						test="${not empty emptysessionScope._LOGIN_USER_.email eq memberVO.email}">
 						<!-- a유저가 로그인한 경우에만 신고 버튼을 표시합니다. -->
@@ -179,9 +180,9 @@
 						<!-- a유저가 로그인하지 않은 경우에는 신고 버튼을 표시하지 않습니다. -->
 					</c:otherwise>
 				</c:choose>
-				<button id="reportUser" value="5" class="report-btn">신고</button>
+				<button id="reportUser" value="5" class="report-btn">신고</button> --%>
 				<!-- 모달 창 -->
-				<h2>신고 내용</h2>
+				<%-- <h2>신고 내용</h2>
 				<form name="reportVO" method="post" action="/report/view/5">
 					<div>
 						<label for="reportReason">신고사유${reportVO.reportReason} <select
@@ -218,7 +219,7 @@
 
 						</div>
 					</div>
-				</form> 
+				</form>  --%>
 				<button class="message_icon">✉ 메시지</button>
 			</div>
 	
