@@ -36,7 +36,7 @@ public class UserReportController {
 							           , Model model
 							           , @SessionAttribute("_LOGIN_USER_") MemberVO memberVO
 							           , @PathVariable String reportTypeId) {
-		log.debug("--1--컨트롤러----------------------------------------");
+		log.debug("--1--컨트롤러-도착-------------------------------------");
 		//System.out.println("신고고유번호: " + reportVO.getReportId());
 		ModelAndView view = new ModelAndView();
 		reportVO.setReportMember(memberVO.getEmail());
