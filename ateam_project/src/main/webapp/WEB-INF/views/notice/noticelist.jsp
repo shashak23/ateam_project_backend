@@ -255,7 +255,7 @@
             </div>
         </div>
     </form:form>
-    <div class="overlay"></div>
+    <div class="notice_create_overlay"></div>
 
     <script>
         $().ready(function() { 

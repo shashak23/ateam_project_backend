@@ -7,6 +7,12 @@
 
 
 <jsp:include page="../layout/header.jsp" />
+<c:choose>
+  <c:when test="${sessionScope._LOGIN_USER_.memberType eq 'ADMIN'}">
+    <jsp:include page="./admin_ui.jsp" />
+  </c:when>
+</c:choose>
+
 <style>
   /* 메인 컨텐츠 영역 */
 	.body_container {

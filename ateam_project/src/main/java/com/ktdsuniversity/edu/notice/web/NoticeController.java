@@ -58,7 +58,6 @@ public class NoticeController {
 			mav.setViewName("notice/noticelist");
 			return mav;
 		}
-		
 	}
 	
 	@GetMapping("/notice/create")

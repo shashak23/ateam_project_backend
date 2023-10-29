@@ -202,14 +202,14 @@
 	 margin: 123px;
  }
 
- .footer .inner address span::after {
-	content: '|';
-	margin-left: 10px;
- }
+/* .footer .inner address span::after {*/
+/*	content: '|';*/
+/*	margin-left: 10px;*/
+/* }*/
 
- .footer .inner address span:last-child::after {
-	content: '';
- }
+/* .footer .inner address span:last-child::after {*/
+/*	content: '';*/
+/* }*/
 
  .footer .inner .copyright {
 	 text-align: center;
