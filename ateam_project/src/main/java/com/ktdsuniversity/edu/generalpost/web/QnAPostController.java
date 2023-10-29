@@ -6,6 +6,7 @@
  */
 package com.ktdsuniversity.edu.generalpost.web;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
@@ -27,6 +29,7 @@ import com.ktdsuniversity.edu.generalpost.service.GeneralPostService;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostListVO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
 import com.ktdsuniversity.edu.generalpost.vo.SearchForumVO;
+import com.ktdsuniversity.edu.generalposthashtag.service.HashtagService;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 import com.ktdsuniversity.edu.util.XssIgnoreUtil;
 
@@ -230,4 +233,30 @@ public class QnAPostController {
 			return view;
 		}
 	}
+	
+	// 해시태그 구현
+	@Autowired
+	private HashtagService hashtagService;
+	
+	@PostMapping("/hashtag/post")
+    public ModelAndView createHashtags(@RequestBody List<String> hashtags) {
+        ModelAndView view = new ModelAndView();
+        log.debug("컨트롤러 도착");
+
+        if (hashtags == null || hashtags.isEmpty()) {
+            // 해시태그가 비어있는 경우 적절한 기본값 설정 가능
+            hashtags = Collections.singletonList("기본값");
+        }
+
+        // 해시태그 리스트를 서비스로 전달하고 작업을 수행
+        boolean isSuccess = hashtagService.createHashtags(hashtags);
+
+        if (isSuccess) {
+            view.setViewName("redirect:/qnaboard/list");
+        } else {
+            view.setViewName("forum/qnaboardcreate");
+            view.addObject("generalPostVO", new GeneralPostVO());
+        }
+        return view;
+    }
 }
