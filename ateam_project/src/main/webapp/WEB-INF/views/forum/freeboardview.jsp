@@ -26,9 +26,9 @@
    .grid {
       display: grid;
       grid-template-columns: 80px 1fr;
-      grid-template-rows: 28px 28px 28px 28px 28px 320px 1fr;
       margin-left: 20px;
       border-top: 1px solid var(--light-gray);
+      margin-top: 30px;
    }
    
    .grid>.btn-group {
@@ -73,6 +73,11 @@
       font-weight: 800;
       margin-right: 45px;
    }
+   .write-comment {
+   position: relative;
+   bottom: 12px;
+   }
+
    
    .replies>.comment-header>.str-count {
       display: flex;
@@ -103,11 +108,7 @@
    border:1px solid lightgrey;
    }
    
-   
-   pre.content {
-      margin: 0px;
-   }
-   
+
    .report-modal {
        display: none; /* 초기에 모달 숨김 */
        position: fixed;
@@ -185,7 +186,8 @@
       border: 1px solid var(--light-gray);
       margin-top: 130px;
       width: 1000px;
-      height:1000px;
+      height:auto;
+      overflow: hidden;
       
    }
    .button_controller {
@@ -208,25 +210,24 @@
    .content_Controller {
       border-bottom: 1px solid var(--light-gray);
    }
-   .title_Name {
-      display: inline-block;
-       font-size: 2em; /* 2em은 <h1> 크기와 유사한 크기입니다. */
-       font-weight: bold;
-       margin: 25px 12px;
-   }
-   .postContent_Controller {
-      letter-spacing: 1px;
+   #title_Name {
+   position: relative;
+   left: 30px;
+   
+}
+   #move_button {
       position: relative;
-      bottom: 300px;
-      text-align: justify; 
+      left: 20px;
    }
+
    .postContent_controller_1 {
-      position:relative;
-      bottom: 330px;
-      margin-left: 50px;
-      margin-right: 50px;
-      
-   }
+    text-align: left; /* 텍스트 가운데 정렬 */
+    margin-left: 60px;
+    margin-right: 60px;
+    margin-bottom: 300px;
+   
+
+}
    .update_btn {
       position: absolute;
       top: -30px;
@@ -500,15 +501,15 @@
             <div class="main_Container">
                <p class="free_Title">자유게시판 ></p>
                <label for="postTitle"></label>
-               <div class="title_Name">${generalPostVO.postTitle}</div>
+               <div id="title_Name">${generalPostVO.postTitle}</div>
    <!-- 목록보기 -->
    <button id="button-id-list" onclick="window.location.href='/freeboard/list'">목록</button>
-   
+   <div id="move_button">
    <!-- 좋아요 기능 -->
    <button id="like-btn">좋아요</button>
-   
    <!-- 신고 기능 -->
    <button id="reportQnABoard" value="1" class="report-btn">신고</button>
+   </div>
       <!-- 모달 창 -->
          <div id="report-modal" class="report-modal">
              <div class="report-modal-content">
@@ -594,7 +595,7 @@
             <textarea id="txt-comment" placeholder="의견을 입력하세요" maxlength="500"></textarea>
             <button id="btn-save-comment" type="submit">등록</button>
             <!-- 신고 버튼은 조회할때 사용<button id="btn-report-comment">신고</button> -->
-         </div>
+      </div>
         <div class="comment-items"></div>
          
        <!-- 댓글 신고 모달 창 -->

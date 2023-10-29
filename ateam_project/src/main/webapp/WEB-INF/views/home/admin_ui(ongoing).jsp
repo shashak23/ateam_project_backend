@@ -54,7 +54,8 @@
 
   .personal_modal,
   .company_modal,
-  .hashtag_modal {
+  .hashtag_modal,
+  .notice_modal {
     position: fixed;
     max-height: 650px;
     top: 50%;
@@ -69,7 +70,8 @@
 
   .personal_modal.active,
   .company_modal.active,
-  .hashtag_modal.active {
+  .hashtag_modal.active,
+  .notice_modal.active {
     opacity: 1;
     visibility: visible;
     transform: translate(-50%, -50%) scale(1);
@@ -77,7 +79,8 @@
 
   .personal_modal_content,
   .company_modal_content,
-  .hashtag_modal_content  {
+  .hashtag_modal_content,
+  .notice_modal_content  {
     display: flex;
     border-radius: 5px;
     overflow: hidden;
@@ -87,7 +90,8 @@
 
   .personal_modal_content > div,
   .company_modal_content > div,
-  .hashtag_modal > div {
+  .hashtag_modal > div
+  .notice_modal_content > div {
     padding: 20px;
   }
 
@@ -96,8 +100,14 @@
     margin: 15px 0;
   }
 
+  .notice_modal .desc-header {
+    float: right;
+    margin: 40px 20px 15px 0;
+  }
+
   .member_container,
-  .company_container {
+  .company_container,
+  .notice_container {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -132,17 +142,33 @@
     color: #888;
   }
 
+  .company_modal .profile_group {
+    display: grid;
+    grid-template-columns: 40px 100px 275px 100px 100px;
+    align-items: center;
+  }
+
+  .notice_modal .notice_group_title {
+    display: grid;
+    grid-template-columns: 40px 100px 275px 100px 100px;
+    align-items: center;
+    color: #888;
+    margin: 10px 0;
+  }
+
+  .notice_modal .notice_group_title .notice_content {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
   .profile_group > img {
     margin-right: 15px;
     width: 30px;
     height: 30px;
   }
 
-  .profile_group .tier {
-    margin-left: 20px;
-    text-align: center;
-  }
-
+  .profile_group .tier,
   .profile_group_title .tier {
     margin-left: 20px;
     text-align: center;
@@ -346,7 +372,25 @@
 </div>
 
 <!-- 공지 관리 모달 -->
-<div class="notice_modal"></div>
+<div class="notice_modal">
+  <div class="notice_modal_content">
+    <div class="desc">
+      <div class="desc-header">
+        <input type="text" placeholder="홍길동"/>
+        <button class="admin_notice_search">검색</button>
+        <button class="btn-close">&times;</button>
+      </div>
+      <div class="desc-title">
+        <div class="notice_container">
+          <div class="notice_group_title">
+            <div></div><div>제목</div><div>내용</div><div>시작날짜</div><div>끝날짜</div>
+          </div>
+        </div>
+      </div>
+      <div class="desc-content"></div>
+    </div>
+  </div>
+</div>
 
   <!-- 해시태그 관리 모달 -->
   <div class="hashtag_modal">
@@ -378,6 +422,7 @@
     $('.personal_modal, .admin_overlay').removeClass('active')
     $('.company_modal, .admin_overlay').removeClass('active')
     $('.hashtag_modal, .admin_overlay').removeClass('active')
+    $('.notice_modal, .admin_overlay').removeClass('active')
   })
 
   $('body').keyup(function(e) {
@@ -385,6 +430,7 @@
       $('.personal_modal, .admin_overlay').removeClass('active')
       $('.company_modal, .admin_overlay').removeClass('active')
       $('.hashtag_modal, .admin_overlay').removeClass('active')
+      $('.notice_modal, .admin_overlay').removeClass('active')
     }
   })
   
@@ -397,8 +443,13 @@
   $('.admin_company_btn').click(function() {
     $('.company_modal, .admin_overlay').addClass('active')
   })
+  
+  // 공지사항 관리 목록 열기
+  $('.admin_notice_btn').click(function() {
+    $('.notice_modal, .admin_overlay').addClass('active')
+  })
 
-  // 해시태그 목록 목록 열기
+  // 해시태그 목록 열기
   $('.admin_hashtag_btn').click(function() {
     $('.hashtag_modal, .admin_overlay').addClass('active')
   })
@@ -507,6 +558,55 @@
     }
   })
 
+  // 공지 사항 목록 조회
+  function loadAdminNoticeList() {
+    $.get('/admin/noticelist', function(response) {
+      for (let i = 0; i < response.length; i++) {
+        let notice = response[i]
+        let startDate = new Date(notice.releaseStartDate)
+        let startYear = startDate.getFullYear()
+        let startMonth = (startDate.getMonth() + 1).toString().padStart(2, '0')
+        let startDay = startDate.getDay().toString().padStart(2, '0')
+        let formattedStartDate = startYear + '-' + startMonth + '-' + startDay
+
+        let endDate = new Date(notice.releaseEndDate)
+        let endYear = endDate.getFullYear()
+        let endMonth = (endDate.getMonth() + 1).toString().padStart(2, '0')
+        let endDay = endDate.getDay().toString().padStart(2, '0')
+        let formattedEndDate = endYear + '-' + endMonth + '-' + endDay
+
+        let today = new Date()
+        let noticeTemplate
+
+        if (today < endDate) {
+          noticeTemplate = `
+          <div class="notice_group_title">
+            <div>On</div>
+            <div>\${notice.postTitle}</div>
+            <div class="notice_content">\${notice.noticeContent}</div>
+            <div>\${formattedStartDate}</div>
+            <div>\${formattedEndDate}</div>
+          </div>`
+        }
+        else {
+          noticeTemplate = `
+          <div class="notice_group_title">
+            <div>Off</div>
+            <div>\${notice.postTitle}</div>
+            <div class="notice_content">\${notice.noticeContent}</div>
+            <div>\${formattedStartDate}</div>
+            <div>\${formattedEndDate}</div>
+          </div>`
+        }
+
+        let noticeTemplateDom = $(noticeTemplate)
+        $('.notice_modal').find('.desc-content').append(noticeTemplateDom)
+      }
+    })
+  }
+
+  loadAdminNoticeList()
+
   // 해시태그 조회
   let tag = {}
   let counter = 0
@@ -566,10 +666,6 @@
 
   load_hashtag()
 
-  // 공지사항 관리창으로 이동
-  $('.admin_notice_btn').click(function() {
-    window.open('/notice/list', '_blank')
-  })
 
   // 신고 관리창으로 이동
   $('.admin_report_btn').click(function() {
