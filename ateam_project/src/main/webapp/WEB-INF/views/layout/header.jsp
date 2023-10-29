@@ -1,7 +1,6 @@
 <!-- 작성자: 김태현
-    작성일: 23-10-23
-    수정자: 김시하(2023-10-27)
-    내용: 공통 헤더에 들어갈 요소를 모아놓은 파일 -->
+	 작성일: 23-10-23
+	 내용: 공통 헤더에 들어갈 요소를 모아놓은 파일 -->
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
@@ -9,26 +8,25 @@
 <html lang="ko-KR">
 <head>
 <meta charset="UTF-8">
-<title>Dev Ground</title>
-   <link rel="preconnect" href="https://fonts.googleapis.com">
-   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
-   <!-- <link rel="stylesheet" href="/css/style.css"> -->
-   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
-   
-   <script src="/js/lib/jquery-3.7.1.js"></script>
+<title>devGround</title>
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
+	<!-- <link rel="stylesheet" href="/css/style.css"> -->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+	<script src="/js/lib/jquery-3.7.1.js"></script>
   <script src="/js/Modal.js"></script>
-   <c:if test="${not empty sessionScope._LOGIN_USER_}">
+	<c:if test="${not empty sessionScope._LOGIN_USER_}">
       <script type="text/javascript" src="/js/lib/sockjs.min.js"></script>
       <script type="text/javascript" src="/js/socket.js"></script>
-   </c:if>
-   <script type="text/javascript">
+	</c:if>
+	<script type="text/javascript">
     <c:if test="${not empty sessionScope._LOGIN_USER_}">
         var userName = "${sessionScope._LOGIN_USER_.nickname}";
         var email = "${sessionScope._LOGIN_USER_.email}";
     </c:if>
     var send = undefined;
-   
+	
     $().ready(function() {
         <c:if test="${not empty sessionScope._LOGIN_USER_}">
             send = connectSocket(userName, email, function(send, receiveMessage) {
@@ -43,15 +41,15 @@
                 // 상대방이 입장했을 때
                 else if (receiveMessage.sendType == "enter" || receiveMessage.sendType == "all") {
                     console.log(receiveMessage.message);
-                    
                     var chatBox = chatModal.find(".chat-box");
                     var message = "<div>" + receiveMessage.message + "</div>";
                     message = message.replaceAll("↵", "<br/>").replaceAll("\n", "<br/>");
                     var isMe = receiveMessage.sendToMe == true;
                     if (!isMe) {
-                    	   message = '<div style="width:50px; margin-right: 3px;">' + receiveMessage.userName + '</div>'+message ;
+                        message = '<div style="width:50px; margin-right: 3px;">' + receiveMessage.userName + '</div>'+message ;
                     }else{
-                        message = '<div style="text-align:right; margin-right: 3px;">' + receiveMessage.userName + message+'</div>' ;
+                    	message = '<div style="text-align:right; margin-right: 3px;">' + receiveMessage.userName + message+'</div>' ;
+                    }
                     chatBox.append('<div class=' + isMe + '>' + message + '</div>');
                     chatBox.scrollTop(99999999999999999999999);
                 }
@@ -64,14 +62,14 @@
         </c:if>
     });
 </script>
-   <link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
   <div class="header_container">
     <section class="header">
       <div class="logo_wrap">
-        <span class="logo_img"><a href="/home/home">🎃</a></span>
-        <div class="logo_name"><a href="/home/home">devGround</a></div>
+        <span class="logo_img"><a href="/devground/home">🎃</a></span>
+        <div class="logo_name"><a href="/devground/home">devGround</a></div>
       </div>
       <nav class="gnb">
         <ul>
@@ -80,7 +78,7 @@
           <li class="list_company"><a href="#" class="incomplete">기업게시판</a>
             <ul class="company_sublist visible">
               <li><a href="#" class="incomplete">채용게시판</a></li>
-              <li><a href="/algorithmmain/main" target="_blank">알고리즘</a></li>
+              <li><a href="#" class="incomplete">알고리즘</a></li>
             </ul>
           </li>
           <li><a href="#" class="incomplete">팀게시판</a></li>

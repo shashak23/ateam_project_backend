@@ -59,8 +59,8 @@ public class TechstackDAOImpl extends SqlSessionDaoSupport implements TechstackD
 	}
 
 	@Override
-	public int deleteTech(String id) {
-		return getSqlSession().delete("deleteTech",id);
+	public int deleteTech(String email) {
+		return getSqlSession().delete("deleteTech",email);
 	}
 
 }

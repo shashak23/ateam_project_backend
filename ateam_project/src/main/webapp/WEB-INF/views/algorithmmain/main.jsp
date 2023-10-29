@@ -184,11 +184,11 @@
                 <button class="coding_test_explanation incomplete">
                     <a href="/algorithm/explanation/list" class="coding_test_explanation_link">코테 문제풀이</a>
                 </button>
-                <button class="algorithm_explanation">
+                <div class="algorithm_explanation">
+                    <img src="/images/알고리즘" alt="알고리즘 해설.png" class="알고리즘 해설">
                     <a href="/algorithm/explanation/list" class="explanation_link">
-                        <h1>알고리즘 해설</h1>
                     </a>
-                </button>
+                </div>
             
         </div>
     </div>

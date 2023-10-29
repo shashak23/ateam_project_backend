@@ -12,6 +12,8 @@ import com.ktdsuniversity.edu.bookmark.vo.BookmarkVO;
 
 public interface BookmarkDAO {
 	public List<BookmarkVO> getAllBookmark(String email);
+	public List<BookmarkVO> getFreeboardBookmark(String email);
+	public List<BookmarkVO> getQnaboardBookmark(String email);
 	public List<BookmarkVO> getOneBookmark(BookmarkVO bookmarkVO);
 	public BookmarkVO getBookmarkStatus(BookmarkSearchVO bookmarkSearchVO);
 	public int createBookmark(BookmarkVO bookmarkVO);

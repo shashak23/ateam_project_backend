@@ -20,4 +20,31 @@
 	  , #{content}
 	  , #{result})
 	</insert>
+	
+	<delete id="deleteAlgorithmAnswer"
+	        parameterType="string">
+	  DELETE ALGORITHM_ANSWER
+	   WHERE COMPANY_ALGORITHM_QUESTION_ID = #{companyAlgorithmQuestionId}
+	     
+	</delete>
+	
+	<select id="getAlgorithmAnswer"
+	        resultType="com.ktdsuniversity.edu.algorithmanswer.vo.AlgorithmAnswerVO"
+	        parameterType="string">
+	  SELECT ALGORITHM_ANSWER_ID
+           , COMPANY_ALGORITHM_QUESTION_ID
+           , CONTENT
+           , RESULT
+	    FROM ALGORITHM_ANSWER
+	   WHERE COMPANY_ALGORITHM_QUESTION_ID = #{_parameter}
+	</select>
+	
+	<select id="getResult"
+	        resultType="_int"
+	        parameterType="string">
+	  SELECT COMPANY_ALGORITHM_QUESTION_ID
+	       , RESULT
+	    FROM ALGORITHM_ANSWER
+	   WHERE COMPANY_ALGORITHM_QUESTION_ID = #{_parameter}
+	</select>
 </mapper>

@@ -335,6 +335,7 @@
       </div>
     </div>
   </section>
+
   <jsp:include page="../layout/footer.jsp" />
 </body>
 
@@ -642,8 +643,7 @@
           console.log(e.currentTarget)
           if ($(e.currentTarget).find('svg').hasClass('bookmark_on')) {
             $.post('/unbookmark', body, function(result) {
-              alert('북마크가 지워진 것 같아요!')
-              alert('힘드네요ㅠ')
+              alert('북마크가 취소되었습니다.!')
               $(e.currentTarget).find('svg').removeClass('bookmark_on')
               $(e.currentTarget).find('svg').css('fill', 'var(--gray)')
               $('.bookmarkId').remove()
@@ -652,13 +652,13 @@
           else {
             $.post('/bookmark/general-post', body, function(result) {
               if (result) {
-                alert('북마크에 쏙 들어갔어요?')
+                alert('북마크에 추가되었습니다.')
                 $(e.currentTarget).find('svg').css('fill', 'var(--blue)')
                 $(e.currentTarget).find('svg').addClass('bookmark_on')
                 $('.bookmarkBtn').prepend(`<input type="hidden" class="bookmarkId" value="\${result.bookmarkId}"/>`)
               }
               else {
-                alert('실패했슴둥! 따콩!')
+                alert('처리하지 못했습니다.')
               }
             })
           }

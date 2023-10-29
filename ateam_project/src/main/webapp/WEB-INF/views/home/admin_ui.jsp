@@ -1,15 +1,15 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<script src="/js/lib/jquery-3.7.1.js"></script>
-</head>
+
 <style>
-  nav ul {
+  .admin_container {
+    position: fixed;
+    top: 180px;
+    left: 220px;
+  }
+
+  .admin_container ul {
     list-style: none;
     padding: 0;
     margin: 0;
@@ -17,7 +17,7 @@
     overflow: hidden;
   }
 
-  nav .admin_mainmenu > li > button {
+  .admin_container .admin_mainmenu > li > button {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -29,8 +29,7 @@
   }
 
 
-  nav ul li button {
-    background: none;
+  .admin_container ul li button {
     border: none;
     padding: 0;
     cursor: pointer;
@@ -88,8 +87,9 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 400px;
+    width: 600px;
     font-size: 9pt;
+    margin-bottom: 5px;
   }
 
   .profile_group {
@@ -98,7 +98,7 @@
   }
 
   .profile_group > img {
-    margin-right: 10px;
+    margin-right: 15px;
     width: 30px;
     height: 30px;
   }
@@ -110,7 +110,6 @@
   .btn_group button {
     margin-left: 10px;
   }
-
   .overlay {
     background-color: #00000034;
     position: fixed;
@@ -127,18 +126,6 @@
     opacity: 1;
     pointer-events: all;
   }
-
-  .btn-close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background-color: transparent;
-    border: none;
-    font-size: 18px;
-    color: #888;
-    cursor: pointer;
-  }
-
   .desc-content button {
     display: block;
     width: 100%;
@@ -149,7 +136,7 @@
   }
 </style>
 <body>
-  <nav>
+  <nav class="admin_container">
     <ul class="admin_mainmenu">
       <li><button class="mainmenu_btn">회원</button>
         <ul class="admin_submenu">
@@ -159,10 +146,10 @@
       </li>
       <li><button class="mainmenu_btn">게시글</button>
         <ul class="admin_submenu">
-          <li><button>자유 게시판</button></li>
-          <li><button>질답 게시판</button></li>
-          <li><button>기업소식 게시판</button></li>
-          <li><button>알고리즘 게시판</button></li>
+          <li><button class="admin_freeboard_btn">자유 게시판</button></li>
+          <li><button class="admin_qnaboard_btn">질답 게시판</button></li>
+          <li><button class="admin_companynews_btn">기업소식 게시판</button></li>
+          <li><button class="admin_algorithm_btn">알고리즘 게시판</button></li>
         </ul>
       </li>
       <li><button class="mainmenu_btn">통합</button>
@@ -179,6 +166,7 @@
       </li>
     </ul>
   </nav>
+  <!-- 일반 계정 관리 모달 -->
   <div class="personal_modal">
     <div class="personal_modal_content">
       <div class="desc">
@@ -192,6 +180,7 @@
       </div>
     </div>
   </div>
+<!-- 기업 계정 관리 모달 -->
   <div class="company_modal">
     <div class="company_modal_content">
       <div class="desc">
@@ -205,7 +194,20 @@
       </div>
     </div>
   </div>
-  <div class="overlay"></div>
+  <!-- 공지 관리 모달 -->
+  <div class="company_modal">
+    <div class="company_modal_content">
+      <div class="desc">
+        <div class="desc-header">
+          <input type="text" placeholder="홍길동"/>
+          <button class="admin_company_member_search">검색</button>
+          <button class="btn-close">&times;</button>
+        </div>
+          <div class="desc-content">
+          </div>
+      </div>
+    </div>
+  </div>
 </body>
 <script>
   $('.mainmenu_btn').next('.admin_submenu').slideToggle(200)

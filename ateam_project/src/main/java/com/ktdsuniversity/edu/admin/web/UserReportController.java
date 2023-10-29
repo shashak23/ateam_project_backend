@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,18 +28,12 @@ public class UserReportController {
 	
 	private Logger log = LoggerFactory.getLogger(FreePostController.class);
 
-	
-	// 게시글 신고 화면 보이기
-//	@GetMapping("/report/reportview")
-//	public String createReport() {
-//		return "report/reportview";
-//	}
-	
 	// 게시글 신고하기 (등록)
 	@PostMapping("/report/view/{reportTypeId}")
 	public ModelAndView createReport(@Valid @ModelAttribute ReportVO reportVO
 									   , BindingResult bindingResult 
 							           , HttpServletRequest request
+							           , Model model
 							           , @SessionAttribute("_LOGIN_USER_") MemberVO memberVO
 							           , @PathVariable String reportTypeId) {
 		log.debug("--1--컨트롤러----------------------------------------");
@@ -46,12 +41,19 @@ public class UserReportController {
 		ModelAndView view = new ModelAndView();
 		reportVO.setReportMember(memberVO.getEmail());
 
+		if (bindingResult.hasErrors()) {
+			view.addObject("reportVO", reportVO);
+			view.setViewName("home/home");
+			return view;
+		}
+		
 		 /**
 		  * reportTypeId = 신고 유형 받아오기
 		  * 1유형: CC-20231018-000097 (자유게시판 게시글)
 		  * 2유형: CC-20231018-000102 (자유게시판 댓글)
 		  * 3유형: CC-20231018-000101 (질답게시판 게시글)
 		  * 4유형: CC-20231018-000103 (질답게시판 댓글)
+		  * 5유형: CC-20231018-000104 (유저 != 유저)
 		  */
 		if (reportTypeId != null) {
 		    if (reportTypeId.equals("1")) {
@@ -76,9 +78,11 @@ public class UserReportController {
 			view.setViewName("redirect:/qnaboard/list");
 		} else {
 			view.addObject("reportVO", reportVO);
-			view.setViewName("report/reportview");
+			view.setViewName("report/reporthistoryview");
 		}
 		
 		return view;
 	}
+	
+	
 }

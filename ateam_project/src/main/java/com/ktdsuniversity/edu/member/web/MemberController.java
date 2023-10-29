@@ -57,7 +57,7 @@ public class MemberController {
 	private SHA sha;
 	@Autowired
 	private FileHandler fileHandler;
-	private Logger log = LoggerFactory.getLogger(FreePostController.class);
+	private Logger log = LoggerFactory.getLogger(MemberController.class);
 
 	@GetMapping("/member/{memberType}")
 	@ResponseBody
@@ -84,8 +84,9 @@ public class MemberController {
 		}
 
 		MemberVO member = memberService.getMember(memberVO);
+		System.out.println(member.getEmail());
 		session.setAttribute("_LOGIN_USER_", member);
-		return "redirect:" + next;
+		return "home/home";
 	}
 
 	/**
@@ -124,7 +125,7 @@ public class MemberController {
 		}
 		boolean isSuccess = memberService.createNewMember(generalMemberVO);
 		if (isSuccess) {
-			return ("redirect:/member/auth");
+			return "redirect:/member/auth";
 		}
 		model.addAttribute("memberVO", generalMemberVO);
 		return "member/membersignup";
@@ -301,7 +302,7 @@ public class MemberController {
 			boolean isSuccess = memberService.updateMemberPW(memberVO);
 			if (isSuccess) {
 				session.invalidate();
-				return ("redirect:/home/main");
+				return ("redirect:/home/home");
 			}
 		}
 		return "member/editmemberinfo/modifymemberpw";

@@ -56,7 +56,7 @@
 			resultType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
 		SELECT *
 		  FROM GENERAL_POST GP
-		 WHERE TO_CHAR(POST_DATE, 'YYYY-MM-DD') > #{_parameter}
+		 WHERE TO_CHAR(POST_DATE, 'YYYY-MM-DD') <![CDATA[>=]]> #{_parameter}
 		 ORDER BY VIEW_CNT DESC
 	</select>
 	<select id="getHashtag"

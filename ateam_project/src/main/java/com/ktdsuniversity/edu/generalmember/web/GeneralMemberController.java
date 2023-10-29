@@ -28,6 +28,7 @@ import com.ktdsuniversity.edu.exceptions.PageNotFoundException;
 import com.ktdsuniversity.edu.generalmember.service.GeneralMemberService;
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
+import com.ktdsuniversity.edu.util.XssIgnoreUtil;
 
 import jakarta.validation.Valid;
 
@@ -277,6 +278,9 @@ public class GeneralMemberController {
 	@PostMapping("/memberInfo/modify/update-introduction")
 	public String doUpdateIntroduction(@ModelAttribute GeneralMemberVO generalMemberVO, Model model,
 									   @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+		
+		XssIgnoreUtil.ignore(generalMemberVO);
+		
 		if (!generalMemberVO.getGeneralMemberEmail().equals(memberVO.getEmail())) {
 			throw new PageNotFoundException("잘못된 접근입니다.");
 		}

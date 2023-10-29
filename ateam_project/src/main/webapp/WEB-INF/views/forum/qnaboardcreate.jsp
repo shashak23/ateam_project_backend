@@ -69,23 +69,9 @@ $().ready(function(){
     let whitelist = ["Python","Java","Oracle","React","Vue.js","C","JavaScript", "CSS", "HTML", "Spring", "HTML", "Rudy", "MYSQL", "jQuery", "Angular", "C++"];
 
 	// 폼 제출 이벤트 처리
-    $('#tagForm').on('submit', function (e) {
-        e.preventDefault();
-        var postTag = $('#hashtag').val();
-        
-        // 서버로 데이터를 전송하는 AJAX 요청
-        $.ajax({
-            type: 'POST',
-            url: '/post',
-            data: { postTag: postTag },
-            success: function (data) {
-                alert('해시태그가 서버로 전송되었습니다.');
-                // 여기에서 필요한 처리를 수행
-            },
-            error: function (error) {
-                console.error('전송 중 오류 발생: ' + error);
-            }
-        });
+	$('#hashtagForm').submit(function(e) {
+        e.preventDefault(); // 폼 기본 동작 막기
+
     });
 });
 </script>
@@ -250,16 +236,19 @@ $().ready(function(){
 			</div>
 		</div>
 	</form>
-	
-	<!-- 해시 태그 정보를 저장할 input 태그. (textarea도 지원) -->
-	<h3>해시태그</h3>
-	<input placeholder="해시태그를 입력하세요!" name="hashtag">
-	
+<div class="hashtag">
 	<form action="/hashtag/post" method="post">
-	    <!-- input 태그에 type hidden을 부여 -->
-	    <input name='hashtag' placeholder="해시태그를 입력하세요!" submit="입력">
+		<p><label for="hashtag">해시태그</label></p>
+    	<input type="hidden" id="hashtag_id" name='hashtag' placeholder="#해시태그" value="${generalPostHashtagVO.hashtagId}">
+    	
+    	<label for="general_post_hashtag_id"></label>
+    	<input type="hidden" id="general_post_hashtag_id" value="${generalPostHashtagVO.generalPostHashtagId}"/>
+    	
+    	<label for="general_post_id"></label>
+    	<input type="hidden" id="general_post_id" value="${generalPostHashtagVO.generalPostId}"/>
+	    
+	    <button type="submit">입력</button>
 	</form>
-
-    </ul>
+</div>
 </body>
 </html>

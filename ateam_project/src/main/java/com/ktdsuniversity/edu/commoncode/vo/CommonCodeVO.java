@@ -16,7 +16,11 @@ public class CommonCodeVO {
 	private String codeId;
 	private String codeType;
 	private String codeContent;
+	private String codeIdTemp;
+	private String codeTypeTemp;
+	private String codeContentTemp;
 	private List<TechstackVO> techstackVO;
+	
 	
 	public String getCodeId() {
 		return codeId;
@@ -42,4 +46,23 @@ public class CommonCodeVO {
 	public void setTechstackVO(List<TechstackVO> techstackVO) {
 		this.techstackVO = techstackVO;
 	}
+	public String getCodeIdTemp() {
+		return codeIdTemp;
+	}
+	public void setCodeIdTemp(String codeIdTemp) {
+		this.codeIdTemp = codeIdTemp;
+	}
+	public String getCodeTypeTemp() {
+		return codeTypeTemp;
+	}
+	public void setCodeTypeTemp(String codeTypeTemp) {
+		this.codeTypeTemp = codeTypeTemp;
+	}
+	public String getCodeContentTemp() {
+		return codeContentTemp;
+	}
+	public void setCodeContentTemp(String codeContentTemp) {
+		this.codeContentTemp = codeContentTemp;
+	}
+	
 }

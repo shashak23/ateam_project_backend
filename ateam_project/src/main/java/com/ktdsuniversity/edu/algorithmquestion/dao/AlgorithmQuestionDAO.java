@@ -10,6 +10,7 @@ import java.util.List;
 
 import com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionVO;
 import com.ktdsuniversity.edu.algorithmquestion.vo.SearchAlgorithmQuestionVO;
+import com.ktdsuniversity.edu.common.vo.AbstractCompanyPostVO;
 import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
 
 public interface AlgorithmQuestionDAO {
@@ -34,7 +35,10 @@ public interface AlgorithmQuestionDAO {
 	
 	public int insertAlgorithmQuestionCategory(AlgorithmQuestionVO algorithmQuestionVO);
 	
-	public int deleteOneAlgorithmQuestion(String companyAlgorithmQuestionId);
+	public int deleteOneAlgorithmQuestion(AlgorithmQuestionVO algorithmQuestionVO);
+	
+	// 기업회원 내 게시글 조회
+	public List<AlgorithmQuestionVO> getCompanyMyPost(AbstractCompanyPostVO abstractCompanyPostVO);
 	
 	// 통합검색
 	public List<AlgorithmQuestionVO> searchAllAlgorithmQuestionByKeyword(AbstractSearchVO abstractSearchVO);

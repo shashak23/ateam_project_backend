@@ -5,7 +5,7 @@
  
  function Modal(title, content, isShowFooter, footer) {
 	 this.html = `
-	   <div class="modal" style="visibility: visible; opacity: 1;">
+	   <div class="modals" style="visibility: visible; opacity: 1;">
          <div class="modal-header">
             <div>
                ${title}

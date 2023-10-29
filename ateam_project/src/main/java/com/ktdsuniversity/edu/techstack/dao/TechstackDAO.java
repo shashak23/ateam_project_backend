@@ -28,7 +28,7 @@ public interface TechstackDAO {
 	public int deleteTechstack(String email);
 	public int insertTechstack(TechstackVO techstackVO);	
 	public List<TechstackVO> techSearch(String id);
-	public int deleteTech(String id);
+	public int deleteTech(String email);
 
 }
 

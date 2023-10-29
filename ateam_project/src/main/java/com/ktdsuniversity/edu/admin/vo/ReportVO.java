@@ -5,6 +5,8 @@ import com.ktdsuniversity.edu.generalpost.vo.GeneralCommentVO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 
+import jakarta.validation.constraints.NotEmpty;
+
 public class ReportVO {
 	
 	private String reportTypeId;
@@ -16,6 +18,7 @@ public class ReportVO {
 	private String reportContentId;
 	private String receivedReportMember;
 	private String progressYn;
+	@NotEmpty(message = "attachedImg는 필수 필드입니다.")
 	private String attachedImg;
 	
 	private MemberVO memberVO;

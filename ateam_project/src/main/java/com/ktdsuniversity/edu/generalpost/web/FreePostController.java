@@ -60,8 +60,10 @@ public class FreePostController {
 
 	// 등록
 	@PostMapping("/freeboard/create")
-	public ModelAndView createFreeBoard(@Valid @ModelAttribute GeneralPostVO generalPostVO, BindingResult bindingResult,
-			HttpServletRequest request, @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+	public ModelAndView createFreeBoard(@Valid @ModelAttribute GeneralPostVO generalPostVO
+										, BindingResult bindingResult
+										, HttpServletRequest request
+										, @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 
 		System.out.println("일반회원용 게시글ID: " + generalPostVO.getGeneralPostId());
 		System.out.println("게시글 작성자ID: " + generalPostVO.getPostWriter());

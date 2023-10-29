@@ -72,9 +72,10 @@
 		  FROM TECHSTACK
 		 WHERE EMAIL=#{_parameter}
 	</select>
+	
 	<delete id="deleteTech"
 			parameterType="string">
 		 DELETE FROM TECHSTACK
-		 WHERE  TECHSTACK_ID = #{techstackId}
+		 WHERE  EMAIL = #{email}
 	</delete>
 </mapper>
