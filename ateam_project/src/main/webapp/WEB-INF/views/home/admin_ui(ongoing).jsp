@@ -54,12 +54,14 @@
     transform: translate(-80%, -50%) scale(0.7) ;
     z-index: 10;
     opacity: 0;
+    visibility: hidden;
     transition: all 0.5s;
   }
 
   .personal_modal.active,
   .company_modal.active {
     opacity: 1;
+    visibility: visible;
     transform: translate(-50%, -50%) scale(1);
   }
 
@@ -111,7 +113,7 @@
     margin-left: 10px;
   }
 
-  .overlay {
+  .admin_overlay {
     background-color: #00000034;
     position: fixed;
     width: 100%;
@@ -120,11 +122,13 @@
     left: 0;
     transition: 0.5s;
     opacity: 0;
+    visibility: hidden;
     pointer-events: none;
   }
 
-  .overlay.active {
+  .admin_overlay.active {
     opacity: 1;
+    visibility: visible;
     pointer-events: all;
   }
 
@@ -167,8 +171,8 @@
       </li>
       <li><button class="mainmenu_btn">통합</button>
         <ul class="admin_submenu">
-          <li><button>공지</button></li>
-          <li><button>신고</button></li>
+          <li><button class="admin_notice_btn">공지</button></li>
+          <li><button class="admin_report_btn">신고</button></li>
           <li><button>해시태그</button></li>
         </ul>
       </li>
@@ -207,8 +211,9 @@
       </div>
     </div>
   </div>
-  <!-- 공지 관리 모달 -->
-  <div class="company_modal">
+
+  <!-- 해시태그 관리 모달 -->
+  <div class="hashtag_modal">
     <div class="company_modal_content">
       <div class="desc">
         <div class="desc-header">
@@ -221,7 +226,8 @@
       </div>
     </div>
   </div>
-  <div class="overlay"></div>
+
+  <div class="admin_overlay"></div>
 </body>
 <script>
   $('.mainmenu_btn').next('.admin_submenu').slideToggle(200)
@@ -230,26 +236,27 @@
     submenu.slideToggle(200)
   })
 
-  $('.btn-close, .overlay').click(function() {
-    $('.personal_modal, .overlay').removeClass('active')
-    $('.company_modal, .overlay').removeClass('active')
+  $('.btn-close, .admin_overlay').click(function() {
+    $('.personal_modal, .admin_overlay').removeClass('active')
+    $('.company_modal, .admin_overlay').removeClass('active')
   })
 
   $('body').keyup(function(e) {
     if (e.key === 'Escape') {
-      $('.personal_modal, .overlay').removeClass('active')
-      $('.company_modal, .overlay').removeClass('active')
+      $('.personal_modal, .admin_overlay').removeClass('active')
+      $('.company_modal, .admin_overlay').removeClass('active')
     }
   })
   
   $('.admin_person_btn').click(function() {
-    $('.personal_modal, .overlay').addClass('active')
+    $('.personal_modal, .admin_overlay').addClass('active')
   })
 
   $('.admin_company_btn').click(function() {
-    $('.company_modal, .overlay').addClass('active')
+    $('.company_modal, .admin_overlay').addClass('active')
   })
 
+  // 일반 회원 조회
   $.get('/home/admin/person', function(response) {
     for (let i = 0; i < response.length; i++) {
         let member = response[i]
@@ -269,6 +276,7 @@
     }
   })
 
+  // 기업 회원 조회
   $.get('/home/admin/company', function(response) {
     for (let i = 0; i < response.length; i++) {
         let company = response[i]
@@ -285,6 +293,14 @@
         
         $('.company_modal').find('.desc-content').append(companyTemplateDom)
     }
+  })
+
+  $('.admin_notice_btn').click(function() {
+    window.open('/notice/list', '_blank')
+  })
+
+  $('.admin_report_btn').click(function() {
+    window.open('/admin/report/list', '_blank')
   })
 
 </script>
