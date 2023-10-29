@@ -84,9 +84,9 @@ public class MemberController {
 		}
 
 		MemberVO member = memberService.getMember(memberVO);
-		System.out.println(member.getEmail());
+//		System.out.println(member.getEmail());
 		session.setAttribute("_LOGIN_USER_", member);
-		return "home/home";
+		return "redirect:" + next;
 	}
 
 	/**

@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import com.ktdsuniversity.edu.beans.SHA;
 import com.ktdsuniversity.edu.companyinfo.service.CompanyInfoService;
 import com.ktdsuniversity.edu.companymember.vo.CompanyVO;
-import com.ktdsuniversity.edu.generalmember.web.GeneralMemberController;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 
 @Controller

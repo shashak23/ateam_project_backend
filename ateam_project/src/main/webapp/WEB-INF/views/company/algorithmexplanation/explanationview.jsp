@@ -1,15 +1,21 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="jakarta.tags.core" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>알고리즘 해설 내용 조회</title>
+<jsp:include page="../../layout/header.jsp"></jsp:include>
+
 <style type="text/css">
 	* {
 		color: #333;
-		font-size: 17px;
+		
+	}
+
+	#container{
+		display:flex;
+		flex-direction: column;
+	}
+
+	#postTitle{
+		font-size:50px;
 	}
 
 	div.grid {
@@ -34,11 +40,14 @@
 </style>
 </head>
 <body>
-	<h1>알고리즘 해설 내용 조회하기</h1>
+	<div id="container">
+	<div id="postTitle">${algorithmExplanationVO.postTitle} 해설</div>
 	<div class="grid">
 		
-		<label for="postTitle">제목</label>
-		<div>${algorithmExplanationVO.postTitle}</div>
+		<label for="grid1">
+			
+		</label>
+		
 		
 		<label for="algorithmWriter">작성자</label>
 		<div>${algorithmExplanationVO.memberVO.nickname}</div>
@@ -67,5 +76,7 @@
 		    </c:if>
 		</div>
 	</div>
+</div>
+	<jsp:include page="../../layout/footer.jsp"></jsp:include>
 </body>
 </html>
