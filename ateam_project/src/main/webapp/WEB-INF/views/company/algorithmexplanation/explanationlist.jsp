@@ -194,20 +194,37 @@ $(document).on('click', '.incomplete', function() {
 	}
 
 	.button_list{
-		margin-left: 700px;
-		height:50px;
+		display: flex;
+		margin-left: 600px;
+		height:30px;
 	}
 
-	#click_search{
+	.reset{
 		background-color: var(--light-blue);
 		border: none;
 		width: 70px;
 		height: 30px;
 		border-radius: 5px;
 		cursor: pointer;
+		margin-left: 6px;
 	}
 
+	.btn_st_2{
+		background-color: var(--light-blue);
+		border: none;
+		width: 70px;
+		height: 30px;
+		border-radius: 5px;
+		cursor: pointer;
+		margin-left: 6px;
+	}
 
+	.sc_text{
+		margin-left: 10px;
+		padding-left: 6px;
+	}
+
+	
 
 </style>
 <body>
@@ -231,9 +248,13 @@ $(document).on('click', '.incomplete', function() {
 						<option value="postContent" ${searchAlgorithmExplanationVO.searchType eq 'postContent' ? 'selected' : ''}>내용</option>
 						<option value="postWriter" ${searchAlgorithmExplanationVO.searchType eq 'postWriter' ? 'selected' : ''}>작성자</option>
 					</select>
-				<input type="text" class="sc_text" placeholder="검색어 입력">
+					<input class="sc_text" type="text" placeholder="검색어 입력" name="searchKeyword" value="${SearchAlgorithmExplanationVO.searchKeyword}" />
+				<!-- <input type="text" class="sc_text" placeholder="검색어 입력"> -->
 					<button type="submit" class="btn_st_2">
 						<a href="#" id="click_search">조회</a>
+					</button>
+					<button class="reset">
+						<a href="/algorithm/explanation/list">초기화</a>
 					</button>
 					<!-- 주석 처리 된 것 풀고 button_list안에 있는 select태그 가져오기 -->
 					<!-- <button type="submit" class="btn_st_3">
@@ -241,8 +262,8 @@ $(document).on('click', '.incomplete', function() {
 					</button> -->
 		</div>
 
-				<!-- <input id="search_bar" type="text" name="searchKeyword" value="${searchAlgorithmExplanationVO.searchKeyword}" />
-				<a href="/algorithm/explanation/list" class="gohome">
+				
+				<!-- <a href="/algorithm/explanation/list" class="gohome">
 					<img src="/images/reset.png" alt="검색초기화" class="reset">
 				</a> -->
 			</form>

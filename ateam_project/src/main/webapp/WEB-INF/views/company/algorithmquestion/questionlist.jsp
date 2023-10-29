@@ -114,9 +114,9 @@
 		text-decoration: none;
 	}
 
-	table.table {
+	.table {
 		border-collapse: collapse;
-		border: 1px solid #DDD;
+		
 		font-size: 14px;
 		width:1000px;
 		margin-bottom: 100px;
@@ -132,9 +132,11 @@
     color: var(--dark-gray);
     font-weight: bold; 
 }
-	/* table.table th, table.table td {
-		border-right: 1px solid #F0F0F0;
+	 tbody td {
+		border-bottom: 1px solid var(--dark-gray);
+		color: var(--dark-gray);
 	}
+	/*
 	table.table th:last-child, table.table td:last-child {
 		border-right: none;
 	}
@@ -149,7 +151,7 @@
 		color: #333;
 		text-align: center;
 		color: var(--dark-gray);
-		border-bottom: 1 solid var(--dark-gray);
+		border-bottom: 1px solid var(--dark-gray);
 	}
 
 	#upload{
@@ -180,10 +182,26 @@
 	}
 
 	.button_list{
-		margin-left: 740px;
+		display: flex;
+		margin-left: 650px;
 	}
 
 	.btn_st_2{
+		background-color: var(--light-blue);
+		border: none;
+		width: 70px;
+		height: 30px;
+		border-radius: 5px;
+		cursor: pointer;
+		margin-left: 5px;
+	}
+
+	.sc_text{
+		margin-left: 6px;
+		padding:6px;
+	}
+
+	.reset{
 		background-color: var(--light-blue);
 		border: none;
 		width: 70px;
@@ -220,12 +238,14 @@
 		    	<label  for="company"></label>
 			</div>
 
-			<div class="button_list">
-                
-            <input type="text" class="sc_text" placeholder="검색어 입력">
+			<div class="button_list">   
+            <input class="sc_text" type="text" placeholder="검색어 입력" name="searchKeyword" value="${SearchAlgorithmQuestionVO.searchKeyword}" />
                 <button type="submit" class="btn_st_2">
-                    <a href="#">조회</a>
+                    <a href="#" id="click_search">조회</a>
                 </button>
+				<button class="reset">
+					<a href="/algorithm/question/list">초기화</a>
+				</button>
                 <!-- <button type="submit" class="btn_st_3">
                     <a href="/freeboard/create">등록</a>
                 </button> -->
