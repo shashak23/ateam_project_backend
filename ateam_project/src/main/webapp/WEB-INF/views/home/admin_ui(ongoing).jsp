@@ -90,7 +90,7 @@
 
   .personal_modal_content > div,
   .company_modal_content > div,
-  .hashtag_modal > div
+  .hashtag_modal > div,
   .notice_modal_content > div {
     padding: 20px;
   }
@@ -98,11 +98,6 @@
   .desc-header {
     float: right;
     margin: 15px 0;
-  }
-
-  .notice_modal .desc-header {
-    float: right;
-    margin: 40px 20px 15px 0;
   }
 
   .member_container,
@@ -142,24 +137,69 @@
     color: #888;
   }
 
-  .company_modal .profile_group {
-    display: grid;
-    grid-template-columns: 40px 100px 275px 100px 100px;
-    align-items: center;
+  .notice_modal .desc-header {
+    float: none;
+    display: flex;
+    justify-content: space-between;
   }
+
+  .notice_modal .desc-header .create_notice {
+    border: 0;
+    padding: 5px;
+    color: white;
+    background-color: #e07272;
+    border-radius: 5px;
+  }
+
+  .notice_modal .desc-header .notice_search_wrap {
+    display: flex;
+  }
+
+  .notice_modal .desc-header .notice_search_wrap input {
+    margin-right: 10px;
+    outline: none;
+    border: 0;
+    padding: 4px;
+  }
+
 
   .notice_modal .notice_group_title {
     display: grid;
     grid-template-columns: 40px 100px 275px 100px 100px;
+    column-gap: 10px;
     align-items: center;
     color: #888;
     margin: 10px 0;
   }
 
-  .notice_modal .notice_group_title .notice_content {
+  .notice_modal .notice_group_title .notice_content,
+  .notice_modal .notice_group_title .notice_title {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+  }
+
+  .notice_modal .notice_group_content {
+    display: grid;
+    grid-template-columns: 40px 100px 275px 100px 100px;
+    column-gap: 10px;
+    align-items: center;
+    color: #191919;
+    margin: 10px 0;
+  }
+
+  .notice_modal .notice_group_content.notice_expired {
+    color: #888;
+  }
+
+  .notice_modal .notice_group_content div {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .notice_modal .notice_group_title div {
+    text-align: center;
   }
 
   .profile_group > img {
@@ -376,9 +416,12 @@
   <div class="notice_modal_content">
     <div class="desc">
       <div class="desc-header">
-        <input type="text" placeholder="홍길동"/>
-        <button class="admin_notice_search">검색</button>
-        <button class="btn-close">&times;</button>
+        <button class="create_notice">공지생성</button>
+        <div class="notice_search_wrap">
+          <input type="text" placeholder="홍길동"/>
+          <button class="admin_notice_search">검색</button>
+          <button class="btn-close">&times;</button>
+        </div>
       </div>
       <div class="desc-title">
         <div class="notice_container">
@@ -508,8 +551,8 @@
                   <a href='\${company.companyInfoVO.companyRegistCertificateUrl}' download='\${company.nickname}'" class="business_license">[사업자등록증]</a>
                   </div>
                   <div class="btn_group">
-                    <button>승인</button>
-                    <button>반려</button>
+                    <button class="company_approval" id="\${company.email}">승인</button>
+                    <button class="company_refuse" id="\${company.email}">반려</button>
                   </div>
                   <div class="btn_group">
                     <button class="company_member_withdraw_btn" id="\${company.email}">탈퇴</button>  
@@ -527,7 +570,7 @@
                   <a href='\${company.companyInfoVO.companyRegistCertificateUrl}' download='\${company.nickname}'" class="business_license">[사업자등록증]</a>
                   </div>
                   <div class="btn_group">
-                    <button class="confirm_complete">승인완료</button>
+                    <button class="confirm_complete_btn">승인완료</button>
                   </div>
                   <div class="btn_group">
                     <button class="company_member_withdraw_btn" id="\${company.email}">탈퇴</button>
@@ -543,6 +586,34 @@
   }
   loadCompanytypeMember()
 
+  // 기업 승인 처리
+  $(document).on('click', '.company_approval', function() {
+    let body = {
+      companyEmail: $(this).attr('id'),
+      val: 'approval'
+    }
+    let url = '/admin/companymember'
+    $.post(url, body, function(response) {
+      alert('승인')
+      console.log(response)
+      loadCompanytypeMember()
+    })
+  })
+  
+  // 기업 반려 처리
+  $(document).on('click', '.company_refuse', function() {
+    let body = {
+      companyEmail: $(this).attr('id'),
+      val: 'refuse'
+    }
+    let url = '/admin/companymember'
+    $.post(url, body, function(response) {
+      alert('반려')
+      console.log(response)
+      loadCompanytypeMember()
+    })
+  })
+
   // 기업 회원 탈퇴 조치
   $(document).on('click', '.company_member_withdraw_btn', function(e) {
     let email = $(this).attr('id')
@@ -557,6 +628,7 @@
       })
     }
   })
+
 
   // 공지 사항 목록 조회
   function loadAdminNoticeList() {
@@ -576,13 +648,13 @@
         let formattedEndDate = endYear + '-' + endMonth + '-' + endDay
 
         let today = new Date()
-        let noticeTemplate
+          let noticeTemplate
 
         if (today < endDate) {
           noticeTemplate = `
-          <div class="notice_group_title">
+          <div class="notice_group_content">
             <div>On</div>
-            <div>\${notice.postTitle}</div>
+            <div class="notice_title">\${notice.postTitle}</div>
             <div class="notice_content">\${notice.noticeContent}</div>
             <div>\${formattedStartDate}</div>
             <div>\${formattedEndDate}</div>
@@ -590,9 +662,9 @@
         }
         else {
           noticeTemplate = `
-          <div class="notice_group_title">
+          <div class="notice_group_content notice_expired">
             <div>Off</div>
-            <div>\${notice.postTitle}</div>
+            <div class="notice_title">\${notice.postTitle}</div>
             <div class="notice_content">\${notice.noticeContent}</div>
             <div>\${formattedStartDate}</div>
             <div>\${formattedEndDate}</div>
