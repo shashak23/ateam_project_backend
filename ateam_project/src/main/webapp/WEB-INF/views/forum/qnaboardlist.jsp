@@ -82,9 +82,9 @@
             width: 60px;
             height: 30px;
          }
-         .btn_write_1,.btn_write_2 {
+         .btn_write_1 {
              position: relative;
-             left: 1350px;
+             left: 1420px;
              margin-top: 30px;
              background-color: var(--hashtag-blue);
              border-radius: 5px;
@@ -217,9 +217,6 @@
               <div class="btn_write">
                   <button type="submit" class="btn_write_1">
                       <a href="/qnaboard/create">글쓰기</a>
-                  </button>
-                  <button type="submit" class="btn_write_2">
-                      <a href="/freeboard/create">엑셀파일</a>
                   </button>
               </div>
                <div id="page">
