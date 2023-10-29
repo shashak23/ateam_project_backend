@@ -157,7 +157,7 @@
             </p>
             <div class="coding_test">
                 <div class="test1 incomplete">
-                    <span class="company_one_name">회사명
+                    <span class="company_one_name">${algorithmquestion.memberVO.nickname}
                         <a href=""></a>
                     </span>
                     <div class="test_name">문제명</div>

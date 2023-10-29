@@ -26,6 +26,50 @@
 	    	$.get("/")
 	    })
 	})
+
+    // 모달창 열고 닫기
+  $(document).on('click', '.incomplete', function() {
+    $('.modal, .overlay').addClass('modal_active')
+  })
+  $(document).on('click', '.overlay', function() {
+    $('.modal, .overlay').removeClass('modal_active')
+  })
+
+  $(document).on('keyup', function(e) {
+    if (e.key === 'Escape') {
+      $('.modal, .overlay').removeClass('modal_active')
+    }
+  })
+
+  // 스크롤 버튼, IDE
+  let calcScrollValue = () => {
+  let scrollProgress = document.getElementById('progress')
+  let progressValue = document.getElementById('progress-value')
+  let pos = document.documentElement.scrollTop
+  let calcHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight
+  let scrollValue = Math.round((pos * 100) / calcHeight)
+
+  scrollProgress.addEventListener('click', () => {
+    document.documentElement.scrollTop = 0
+  })
+  }
+  
+  window.onscroll = calcScrollValue
+
+  // 서브 리스트가 있다면? 아래로 떨군다.
+  $('.visible').hide()
+  $('.list_company').mouseover(function() {
+    $('.visible').show()
+    $(this).find('a').css({'background-color': 'var(--blue)',
+                           'color': 'white',
+                           'box-shadow': '0 0 5px var(--gray)'})
+  })
+  $('.list_company').mouseleave(function() {
+    $('.visible').hide()
+    $(this).find('a').css({'background-color': 'white',
+                           'color': 'var(--blue)',
+                           'box-shadow': 'none'})
+  })
 </script>
 </head>
 <style>
@@ -141,6 +185,6 @@
     
 	</form:form>
 </div>
-    <jsp:include page="../../layout/footer.jsp"></jsp:include>
+<jsp:include page="../../layout/footer.jsp"></jsp:include>
 </body>
 </html>

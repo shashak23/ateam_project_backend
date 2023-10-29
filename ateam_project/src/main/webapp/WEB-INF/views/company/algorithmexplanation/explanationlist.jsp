@@ -37,6 +37,50 @@ $().ready(function() {
 	});
 	
 })
+
+// 모달창 열고 닫기
+$(document).on('click', '.incomplete', function() {
+    $('.modal, .overlay').addClass('modal_active')
+  })
+  $(document).on('click', '.overlay', function() {
+    $('.modal, .overlay').removeClass('modal_active')
+  })
+
+  $(document).on('keyup', function(e) {
+    if (e.key === 'Escape') {
+      $('.modal, .overlay').removeClass('modal_active')
+    }
+  })
+
+  // 스크롤 버튼, IDE
+  let calcScrollValue = () => {
+  let scrollProgress = document.getElementById('progress')
+  let progressValue = document.getElementById('progress-value')
+  let pos = document.documentElement.scrollTop
+  let calcHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight
+  let scrollValue = Math.round((pos * 100) / calcHeight)
+
+  scrollProgress.addEventListener('click', () => {
+    document.documentElement.scrollTop = 0
+  })
+  }
+  
+  window.onscroll = calcScrollValue
+
+  // 서브 리스트가 있다면? 아래로 떨군다.
+  $('.visible').hide()
+  $('.list_company').mouseover(function() {
+    $('.visible').show()
+    $(this).find('a').css({'background-color': 'var(--blue)',
+                           'color': 'white',
+                           'box-shadow': '0 0 5px var(--gray)'})
+  })
+  $('.list_company').mouseleave(function() {
+    $('.visible').hide()
+    $(this).find('a').css({'background-color': 'white',
+                           'color': 'var(--blue)',
+                           'box-shadow': 'none'})
+  })
 </script>
 </head>
 <style>
@@ -114,6 +158,8 @@ $().ready(function() {
 
 	.search_area > #search_form > .gohome > .reset{	
 		height:40px;	
+		vertical-align: middle; 
+  		margin-top: 0; 
 	}
 
 	table.table {
@@ -127,25 +173,25 @@ $().ready(function() {
 		background-color: var(--light-gray);
 		border-bottom: 1px solid var(--dark-gray);
 		height:35px;
+		color: var(--dark-gray);
 	}
 
 	table td{
 		border-bottom: 1px solid #D3D3D3;
+		color: var(--dark-gray);
 	}
 	table.table th:last-child, table.table td:last-child {
 		border-right: none;
 	}
-	table.table > tbody tr:nth-child(odd) {
-		/* background-color: #f5f5f5; */
-	}
-	table.table > tbody tr:hover {
-		/* background-color: #FAFAFA; */
-	}
+	
 	table.table > tbody td {
 		padding: 10px;
 		color: #333;
 		text-align: center;
+		color: var(--dark-gray);
 	}
+
+
 
 </style>
 <body>
@@ -155,7 +201,7 @@ $().ready(function() {
 				method="get"
 				action="/algorithm/explanation/list">
 				<label for="algorithmCategoryId" id="algorithmCategoryId">
-					<h3>상세검색</h3>
+					<h3>상세 검색</h3>
 				</label>
 				<div id="category_area">
 					<div id="algorithm_category"></div>	
@@ -196,7 +242,7 @@ $().ready(function() {
 				<col width="15%" />
 				<col width="10%" />
 			</colgroup>
-			<tr>
+			<tr id="table-tr">
 				<th scope="col">번호</th>
 				<th scope="col">제목</th>
 				<th scope="col">카테고리</th>

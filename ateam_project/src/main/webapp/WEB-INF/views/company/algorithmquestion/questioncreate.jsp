@@ -2,11 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="c" uri="jakarta.tags.core"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>알고리즘 문제 작성하기</title>
+<jsp:include page="../../layout/header.jsp"></jsp:include>
 <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
 <script type="text/javascript" src="/js/lib/jquery-3.7.1.js"></script>
 <script src="/js/Table.js"></script>
@@ -30,8 +26,10 @@
 				var code = response[i]
 				var checkbox = $("<input type='checkbox' id='"+code.codeId+"' name='algorithmCategoryIdList' value='"+code.codeId+"' />");
 				var label = $("<label for='"+code.codeId+"'>"+code.codeContent+"</label>");
+                var space = $("<span class='checkbox-space'> </span>");
 				$("#algorithm_category").append(checkbox);
 				$("#algorithm_category").append(label);
+                $("#algorithm_category").append(space);
 			}
 		});
 		
@@ -59,9 +57,56 @@
         	$.get("/")
         })
 	})
+
+    // 모달창 열고 닫기
+  $(document).on('click', '.incomplete', function() {
+    $('.modal, .overlay').addClass('modal_active')
+  })
+  $(document).on('click', '.overlay', function() {
+    $('.modal, .overlay').removeClass('modal_active')
+  })
+
+  $(document).on('keyup', function(e) {
+    if (e.key === 'Escape') {
+      $('.modal, .overlay').removeClass('modal_active')
+    }
+  })
+
+  // 스크롤 버튼, IDE
+  let calcScrollValue = () => {
+  let scrollProgress = document.getElementById('progress')
+  let progressValue = document.getElementById('progress-value')
+  let pos = document.documentElement.scrollTop
+  let calcHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight
+  let scrollValue = Math.round((pos * 100) / calcHeight)
+
+  scrollProgress.addEventListener('click', () => {
+    document.documentElement.scrollTop = 0
+  })
+  }
+  
+  window.onscroll = calcScrollValue
+
+  // 서브 리스트가 있다면? 아래로 떨군다.
+  $('.visible').hide()
+  $('.list_company').mouseover(function() {
+    $('.visible').show()
+    $(this).find('a').css({'background-color': 'var(--blue)',
+                           'color': 'white',
+                           'box-shadow': '0 0 5px var(--gray)'})
+  })
+  $('.list_company').mouseleave(function() {
+    $('.visible').hide()
+    $(this).find('a').css({'background-color': 'white',
+                           'color': 'var(--blue)',
+                           'box-shadow': 'none'})
+  })
 </script>
 </head>
 <style>
+    .checkbox-space {
+    margin-right: 5px;
+}
     .ck-editor__editable { 
         height: 300px; 
     }
@@ -69,10 +114,16 @@
         font-size: 12px; 
     }
 
+    #container{
+        width: 800px;	
+		margin: 0 auto;
+		margin-top: 40px;
+    }
+
     div.grid {
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: 40px 40px 40px 40px 40px 40px 1fr 40px 1fr 40px;
+        grid-template-rows: 60px 40px 60px 40px 60px 60px 1fr 60px 1fr;
     }
 
     div.grid > div.btn-group {
@@ -85,11 +136,24 @@
 		text-align: right;
 	}
 
-    #postTitle {
-        width: 1fr;
-        font-size: 12px;
-        margin-bottom: 12px;
+     #algorithmTitle{
+        height: 40px;
+        transition: box-shadow 0.3s ease;
+		padding:6px;
     }
+
+    #algorithmTitle:hover{
+		border: 2px solid #1E90FF; 
+	}
+
+    #algorithmTier{
+        transition: box-shadow 0.3s ease;
+    }
+
+    #algorithmTier:hover{
+        border: 2px solid #1E90FF;
+    }
+
     input {
         padding: 0px;
         margin-bottom: 12px;
@@ -100,21 +164,66 @@
         width: 280px;
     }
     .label {
-        margin-top: 10px;
+        margin: 10px 0px 10px 0px;
         font-weight: bold;
     }
+
+    .label::after{
+        content:" *";
+        color:red;
+        font-size: 80%;
+    }
         div.errors {
-	    background-color: #ff00004a;
-	    opacity: 0.8;
-	    padding: 10px;
-	    color: #333;
-	}
-	div.errors:last-child {
-	    margin-bottom: 15px;
-	}
+        background-color: #ff00004a;
+        opacity: 0.8;
+        padding: 10px;
+        color: #333;
+    }
+    div.errors:last-child {
+        margin-bottom: 15px;
+    }
+
+    #testData{
+        font-weight: bold;
+    }
+
+    #add-button{
+        display: flex;   
+    }
+
+    #add-row,
+    #add-col{
+        width:80px;
+        height:40px;		
+        border:none;
+        border-radius: 10px;
+        cursor: pointer;
+        margin-right:20px;
+        transition: box-shadow 0.3s ease;
+    }
+    
+    #add-row:hover,
+    #add-col:hover{
+        
+        border: 2px solid #1E90FF; 
+    }
+
+    #submit-btn{
+        width:80px;
+        height:40px;		
+        border:none;
+        border-radius: 10px;
+        cursor: pointer;
+        margin-bottom: 30px;
+        transition: box-shadow 0.1s ease;
+    }
+
+    #submit-btn:hover{
+        border: 2px solid #1E90FF;  
+    }
 </style>
 <body>
-	<h3>알고리즘 문제 작성</h3>
+	<div id="container">
 	<form:form modelAttribute="algorithmQuestionVO" method="post">
 		<div>
 			<form:errors path="algorithmCategoryIdList" element="div" cssClass="errors"/>
@@ -129,8 +238,8 @@
 		    <div id="algorithm_category"></div>
 			
             <label class="label" for="algorithmTierId">난이도</label>
-		    <select name="algorithmTierId" >
-                <option value="">선택하세요 (난이도최하:1 / 난이도최상:5)</option>
+		    <select id="algorithmTier" name="algorithmTierId" >
+                <option value="">선택하세요 ( 난이도최하: 1 / 난이도최상: 5 )</option>
                 <option value="Lv.1">Lv.1</option>
                 <option value="Lv.2">Lv.2</option>
                 <option value="Lv.3">Lv.3</option>
@@ -147,21 +256,24 @@
             <label class="label" for="algorithmSolution">문제풀이</label>
             <textarea name="algorithmSolution" id="algorithmSolution"></textarea>
             
-            <label for="defaultCode">기본제공코드</label>
+            <label class="label" for="defaultCode">기본 제공 코드</label>
             <textarea id="defaultCode" name="defaultCode" ></textarea>
             
-			<label>테스트데이터</label>
+			<label id="testData">테스트 데이터</label>
 		    <div id="table-div"></div>
-		    <button id="add-row">행 추가</button>
-		    <button id="add-col">열 추가</button>
+            <div id="add-button">
+                <button id="add-row">행 추가</button>
+                <button id="add-col">열 추가</button>
+            </div>
             <input type="hidden" name="content" id="answerJson"/>
             <div class="btn-group">
                 <div class="right-align">
-                    <button id="submit-btn">저장</button>
+                    <button id="submit-btn">등록</button>
                 </div>
             </div>
         </div>
 	</form:form>
-
+</div>
+    <jsp:include page="../../layout/footer.jsp"></jsp:include>
 </body>
 </html>

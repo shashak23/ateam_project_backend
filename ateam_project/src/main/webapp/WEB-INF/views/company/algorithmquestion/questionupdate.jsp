@@ -1,11 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>알고리즘 문제 수정하기</title>
+<jsp:include page="../../layout/header.jsp"></jsp:include>
 <script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
 <script type="text/javascript" src="/js/lib/jquery-3.7.1.js"></script>
 <script src="/js/Table.js"></script>
@@ -66,20 +62,71 @@
         $("select[name=algorithmTierId]").val("${algorithmQuestionVO.algorithmTierId}")
         
 	})
+
+    // 모달창 열고 닫기
+  $(document).on('click', '.incomplete', function() {
+    $('.modal, .overlay').addClass('modal_active')
+  })
+  $(document).on('click', '.overlay', function() {
+    $('.modal, .overlay').removeClass('modal_active')
+  })
+
+  $(document).on('keyup', function(e) {
+    if (e.key === 'Escape') {
+      $('.modal, .overlay').removeClass('modal_active')
+    }
+  })
+
+  // 스크롤 버튼, IDE
+  let calcScrollValue = () => {
+  let scrollProgress = document.getElementById('progress')
+  let progressValue = document.getElementById('progress-value')
+  let pos = document.documentElement.scrollTop
+  let calcHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight
+  let scrollValue = Math.round((pos * 100) / calcHeight)
+
+  scrollProgress.addEventListener('click', () => {
+    document.documentElement.scrollTop = 0
+  })
+  }
+  
+  window.onscroll = calcScrollValue
+
+  // 서브 리스트가 있다면? 아래로 떨군다.
+  $('.visible').hide()
+  $('.list_company').mouseover(function() {
+    $('.visible').show()
+    $(this).find('a').css({'background-color': 'var(--blue)',
+                           'color': 'white',
+                           'box-shadow': '0 0 5px var(--gray)'})
+  })
+  $('.list_company').mouseleave(function() {
+    $('.visible').hide()
+    $(this).find('a').css({'background-color': 'white',
+                           'color': 'var(--blue)',
+                           'box-shadow': 'none'})
+  })
 </script>
 </head>
 <style>
     .ck-editor__editable { 
-        height: 400px; 
+        height: 600px; 
     }
     .ck-content { 
         font-size: 12px; 
     }
 
+    #container{
+        width:800px;
+        /* height: 1000px;  */
+        margin: 0 auto;
+        margin-top: 40px;
+    }
+
     div.grid {
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: 40px 60px 40px 40px 40px 40px 1fr 40px 1fr 40px;
+        grid-template-rows: 60px 40px 60px 40px 60px 60px 1fr 60px 1fr;
     }
 
     div.grid > div.btn-group {
@@ -105,14 +152,63 @@
         margin-top: 10px;
         font-weight: bold;
     }
+
+    .label::after{
+		content:" *";
+		color:red;
+		font-size: 80%;
+	}
     select {
         margin-bottom: 10px;
         margin-right: 10px;
         width: 280px;
     }
+
+    #add-row,
+    #add-col{
+        width:80px;
+		height:40px;		
+		border:none;
+		border-radius: 10px;
+		cursor: pointer;
+        margin-right:20px;
+        transition: box-shadow 0.3s ease;
+    }
+
+    #add-row {
+        margin-right: 10px; 
+    }
+    
+    #add-row:hover,
+    #add-col:hover{  
+        border: 2px solid #1E90FF; 
+    }
+
+    #testData{
+        font-weight: bold;
+    }
+
+    #submit-btn{
+        width:80px;
+		height:40px;		
+		border:none;
+		border-radius: 10px;
+		cursor: pointer;
+        margin-bottom: 30px;
+		transition: box-shadow 0.1s ease;
+    }
+
+    #submit-btn:hover{
+        border: 2px solid #1E90FF; 
+    }
+
+    #add-btn{
+        display: flex;   
+    }
+
 </style>
 <body>
-	<h3>알고리즘 문제 수정</h3>
+	<div id="container">
 	<form:form modelAttribute="algorithmQuestionVO" method="post"
 	           action="/algorithm/question/update">
 	    <input type="hidden" name="companyAlgorithmQuestionId" value="${algorithmQuestionVO.companyAlgorithmQuestionId}" />
@@ -140,13 +236,15 @@
             <label class="label" for="algorithmSolution">문제풀이</label>
             <textarea name="algorithmSolution" id="algorithmSolution">${algorithmQuestionVO.algorithmSolution}</textarea>
             
-            <label for="defaultCode">기본제공코드</label>
+            <label class="label" for="defaultCode">기본 제공 코드</label>
             <textarea id="defaultCode" name="defaultCode" >${algorithmQuestionVO.defaultCode}</textarea>
             
-            <label>테스트데이터</label>
+            <label id="testData">테스트 데이터</label>
 		    <div id="table-div"></div>
-		    <button id="add-row">행 추가</button>
-		    <button id="add-col">열 추가</button>
+            <div id="add-btn">
+                <button id="add-row">행 추가</button>
+                <button id="add-col">열 추가</button>
+            </div>
             <input type="hidden" name="content" id="answerJson"/>
             <div class="btn-group">
                 <div class="right-align">
@@ -155,6 +253,7 @@
             </div>
         </div>
 	</form:form>
-
+</div>
+<jsp:include page="../../layout/footer.jsp"></jsp:include>
 </body>
 </html>
