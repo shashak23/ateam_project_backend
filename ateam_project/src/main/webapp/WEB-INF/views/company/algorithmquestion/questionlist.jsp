@@ -29,13 +29,13 @@
 			}
 		})
 		
-		// $.get("/member/COMPANY", function(response) {
-		// 	for (var i = 0; i < response.length; i++) {
-		// 		var member = response[i]
-		// 		var option = $("<option value='"+member.nickname+"'></option>");
-		// 		$("#nicList").append(option);
-		// 	}
-		// });
+		$.get("/member/COMPANY", function(response) {
+			for (var i = 0; i < response.length; i++) {
+				var member = response[i]
+				var option = $("<option value='"+member.nickname+"'></option>");
+				$("#nicList").append(option);
+			}
+		});
 		
 		$("#search-btn").click(function() {
 			$("#search-form").attr({
@@ -176,6 +176,10 @@
 		vertical-align: middle; 
   		margin-right: 5px; 
 	}
+
+	.button_list{
+		margin-left: 760px;
+	}
 	
 </style>
 <body>
@@ -201,19 +205,32 @@
 		        <input type="checkbox" name="algorithmTierList" value="Lv.5"/><label for="Lv.5">Lv.5</label>
 		    </div>
 			<div id="companyName">
-		    	<label  for="company">기업명</label>
+		    	<label  for="company"></label>
 			</div>
-			<div id="search_items">
+
+			<div class="button_list">
+                
+            <input type="text" class="sc_text" placeholder="검색어 입력">
+                <button type="submit" class="btn_st_2">
+                    <a href="#">조회</a>
+                </button>
+                <!-- <button type="submit" class="btn_st_3">
+                    <a href="/freeboard/create">등록</a>
+                </button> -->
+    		</div>
+
+			<!-- 주석 처리 풀고 추후 수정 -->
+			<!-- <div id="search_items">
 				<input autocomplete="off" type="text" name="searchKeyword" list="nicList" />
 				<datalist id="nicList"></datalist>
 				<button id="search-btn">검색</button>
 				<a href="/algorithm/question/list" class="gohome">
 					<img src="/images/reset.png" alt="검색초기화" class="reset">
 				</a>
-			</div>
-			<div>
+			</div> -->
+			<!-- <div>
 				<button id="search-btn">적용</button>	
-			</div>
+			</div> -->
 		</form>
     </div>
 	

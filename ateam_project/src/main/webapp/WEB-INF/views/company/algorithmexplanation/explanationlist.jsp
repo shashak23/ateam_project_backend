@@ -191,6 +191,10 @@ $(document).on('click', '.incomplete', function() {
 		color: var(--dark-gray);
 	}
 
+	.button_list{
+		margin-left: 700px;
+	}
+
 
 
 </style>
@@ -207,16 +211,28 @@ $(document).on('click', '.incomplete', function() {
 					<div id="algorithm_category"></div>	
 					<button id="search_btn">적용</button>
 				</div>
-				<select class="type" name="searchType">
-					<option value="postTitle" ${searchAlgorithmExplanationVO.searchType eq 'postTitle' ? 'selected' : ''}>제목</option>
-					<option value="postContent" ${searchAlgorithmExplanationVO.searchType eq 'postContent' ? 'selected' : ''}>내용</option>
-					<option value="postWriter" ${searchAlgorithmExplanationVO.searchType eq 'postWriter' ? 'selected' : ''}>작성자</option>
-				</select>
+				
 
-				<input id="search_bar" type="text" name="searchKeyword" value="${searchAlgorithmExplanationVO.searchKeyword}" />
+				<div class="button_list">
+					<select class="type" name="searchType">
+						<option value="postTitle" ${searchAlgorithmExplanationVO.searchType eq 'postTitle' ? 'selected' : ''}>제목</option>
+						<option value="postContent" ${searchAlgorithmExplanationVO.searchType eq 'postContent' ? 'selected' : ''}>내용</option>
+						<option value="postWriter" ${searchAlgorithmExplanationVO.searchType eq 'postWriter' ? 'selected' : ''}>작성자</option>
+					</select>
+				<input type="text" class="sc_text" placeholder="검색어 입력">
+					<button type="submit" class="btn_st_2">
+						<a href="#">조회</a>
+					</button>
+					<!-- 주석 처리 된 것 풀고 button_list안에 있는 select태그 가져오기 -->
+					<!-- <button type="submit" class="btn_st_3">
+						<a href="/freeboard/create">등록</a>
+					</button> -->
+		</div>
+
+				<!-- <input id="search_bar" type="text" name="searchKeyword" value="${searchAlgorithmExplanationVO.searchKeyword}" />
 				<a href="/algorithm/explanation/list" class="gohome">
 					<img src="/images/reset.png" alt="검색초기화" class="reset">
-				</a>
+				</a> -->
 			</form>
 			
 		</div>	
