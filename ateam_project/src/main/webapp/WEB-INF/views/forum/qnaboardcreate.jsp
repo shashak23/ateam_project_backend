@@ -175,7 +175,7 @@ $().ready(function(){
 <body>
 	<jsp:include page="../member/membermenu.jsp"></jsp:include>
 
-	<h1> 자유게시판의 게시글 작성 </h1>
+	<h1> 질답게시판의 게시글 작성 </h1>
 	<form method = "post" >		
 		<div class = "grid">
 			<label for = "postTitle"> 제목 </label>
