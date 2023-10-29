@@ -101,14 +101,36 @@
   }
 
   .profile_group {
-    display: flex;
+    display: grid;
+    grid-template-columns: 45px 350px 80px 140px;
     align-items: center;
+  }
+
+  .profile_group_title {
+    display: grid;
+    grid-template-columns: 45px 350px 80px 140px;
+    align-items: center;
+    color: #888;
   }
 
   .profile_group > img {
     margin-right: 15px;
     width: 30px;
     height: 30px;
+  }
+
+  .profile_group .tier {
+    margin-left: 20px;
+    text-align: center;
+  }
+
+  .profile_group_title .tier {
+    margin-left: 20px;
+    text-align: center;
+  }
+
+  .profile_group .member_info {
+    font-weight: bold;
   }
 
   .btn_group {
@@ -149,6 +171,7 @@
     cursor: pointer;
   }
 
+  .desc-title button,
   .desc-content button {
     display: block;
     width: 100%;
@@ -157,6 +180,65 @@
     color: #e5e5e5;
     padding: 8px;
   }
+
+  .hashtag_content {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin: 5px;
+    padding: 5px;
+    cursor: default;
+  }
+
+  .hashtag_wrap {
+    display: flex;
+    flex-wrap: wrap;
+    width: 300px;
+    border: 1px solid #e5e5e5;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+  }
+
+  .hashtag_wrap > .hashtag_content {
+    padding: 3px 10px;
+    margin: 5px 6px;
+    border-radius: 12px;
+    border: 0;
+    background-color: #b3d8f1;
+    color: #fff;
+    font-size: 9pt;
+  }
+
+  .hashtag_create_title {
+    margin-bottom: 10px;
+  }
+
+  #codeContent {
+    outline: none;
+    border: 0;
+    height: 20px;
+  }
+
+  #create_btn {
+    outline: none;
+    width: 70px;
+    border: 0;
+    border-radius: 5px;
+    background-color: #75C2F6;
+    color: #fff;
+    padding: 5px;
+    cursor: pointer;
+    margin-left: 10px;
+  }
+
+  #create_btn:hover {
+    background-color: #2251ec;
+  }
+
+  #create_btn:active {
+    background-color: #07227a;
+  }
+
 </style>
 <body>
   <nav class="admin_container">
@@ -198,8 +280,16 @@
           <button class="admin_general_member_search">검색</button>
           <button class="btn-close">&times;</button>
         </div>
-        <div class="desc-content">
+        <div class="desc-title">
+          <div class="member_container">
+            <div class="profile_group_title">
+              <span>이미지</span> <div class="member_info" style="text-align: center;">회원 정보</div><div class=tier>티어</div>
+              <div class="btn_group">
+              </div>
+            </div>
+          </div>
         </div>
+        <div class="desc-content"></div>
       </div>
     </div>
   </div>
@@ -224,12 +314,13 @@
       <button class="btn-close">&times;</button>
       <div class="desc">
         <div>
-          해시태그 목록
+          <strong>해시태그 목록</strong>
         </div>
         <div class="hashtag_wrap"></div>
-          <label for="codeContent">입력: </label>
-          <input type="text" name="codeContent" id="codeContent" />
-          <button id="create_btn">생성</button>
+        <div class="hashtag_create_title"><strong>해시태그 생성</strong></div>
+        <label for="codeContent">입력: </label>
+        <input type="text" name="codeContent" id="codeContent" />
+        <button id="create_btn">생성</button>
       </div>
     </div>
   </div>
@@ -273,27 +364,45 @@
   })
 
   // 일반 회원 조회
-  $.get('/home/admin/person', function(response) {
-    for (let i = 0; i < response.length; i++) {
-        let member = response[i]
-        generalMemberTemplate = 
-            `<div class="member_container">
-                <div class="profile_group">
-                <img src="\${member.profilePic}" alt="."><div>\${member.nickname}(\${member.email})</div>
-                </div>
-                <div class="btn_group">
-                    <button>경고</button>
-                    <button>탈퇴</button>
-                </div>
-            </div>`
-        generalMemberTemplateDom = $(generalMemberTemplate)
-        
-        $('.personal_modal').find('.desc-content').append(generalMemberTemplateDom)
+  function loadGeneralTypeMember()  {
+    $.get('/home/admin/person', function(response) {
+      for (let i = 0; i < response.length; i++) {
+          let member = response[i]
+          generalMemberTemplate = 
+              `<div class="member_container">
+                  <div class="profile_group">
+                  <img src="\${member.profilePic}" alt="."><div class="member_info">\${member.nickname}(\${member.email})</div><div class=tier>\${member.generalMemberVO.tierId}</div>
+                  <div class="btn_group">
+                      <button>경고</button>
+                      <button class="general_member_withdraw_btn" id="\${member.email}">탈퇴</button>
+                  </div>
+                  </div>
+              </div>`
+          generalMemberTemplateDom = $(generalMemberTemplate)
+          
+          $('.personal_modal').find('.desc-content').append(generalMemberTemplateDom)
+      }
+    })
+  }
+  loadGeneralTypeMember()
+
+  $(document).on('click', '.general_member_withdraw_btn', function(e) {
+    let email = $(this).attr('id')
+    let url = '/home/admin/person/delete/' + email
+    if (confirm('정말 탈퇴 시키겠습니까?')) {
+      $.get(url, function(response) {
+        if (response.result === 'success') {
+          alert('탈퇴가 완료되었습니다.')
+          $('.desc-content').empty()
+          loadGeneralTypeMember()
+        }
+      })
     }
   })
 
   // 기업 회원 조회
   $.get('/home/admin/company', function(response) {
+    console.log(response)
     for (let i = 0; i < response.length; i++) {
         let company = response[i]
         companyTemplate = 
@@ -329,7 +438,12 @@
   // 해시태그 생성
   $('#create_btn').click(function() {
     let body = {'codeContent': $('#codeContent').val()}
-    if ($('#codeContent').val().trim() != '') {
+
+    if(body === null || body === '' || $('#codeContent').val().trim() === '') {
+      alert('해시태그를 입력해주세요')
+    }
+
+    else {
       $.post(
         "/code/create/해시태그",
         body,
@@ -352,12 +466,9 @@
   // 해시태그 목록 출력
   load_hashtag = function() {
     $('.hashtag_wrap').html('')
-    console.log('해시태그?')
     $.get('/code/해시태그', function(response) {
-      console.log('하하하하!')
-      console.log(response)
       for (let i = 0; i < response.length; i++) {
-        let template = `<div class="Content">
+        let template = `<div class="hashtag_content">
                           \${response[i].codeContent}
                         </div>`
         let templateDom = $(template)
