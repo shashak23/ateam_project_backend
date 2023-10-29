@@ -90,7 +90,7 @@
 
   .personal_modal_content > div,
   .company_modal_content > div,
-  .hashtag_modal > div
+  .hashtag_modal > div,
   .notice_modal_content > div {
     padding: 20px;
   }
@@ -98,11 +98,6 @@
   .desc-header {
     float: right;
     margin: 15px 0;
-  }
-
-  .notice_modal .desc-header {
-    float: right;
-    margin: 40px 20px 15px 0;
   }
 
   .member_container,
@@ -142,24 +137,69 @@
     color: #888;
   }
 
-  .company_modal .profile_group {
-    display: grid;
-    grid-template-columns: 40px 100px 275px 100px 100px;
-    align-items: center;
+  .notice_modal .desc-header {
+    float: none;
+    display: flex;
+    justify-content: space-between;
   }
+
+  .notice_modal .desc-header .create_notice {
+    border: 0;
+    padding: 5px;
+    color: white;
+    background-color: #e07272;
+    border-radius: 5px;
+  }
+
+  .notice_modal .desc-header .notice_search_wrap {
+    display: flex;
+  }
+
+  .notice_modal .desc-header .notice_search_wrap input {
+    margin-right: 10px;
+    outline: none;
+    border: 0;
+    padding: 4px;
+  }
+
 
   .notice_modal .notice_group_title {
     display: grid;
     grid-template-columns: 40px 100px 275px 100px 100px;
+    column-gap: 10px;
     align-items: center;
     color: #888;
     margin: 10px 0;
   }
 
-  .notice_modal .notice_group_title .notice_content {
+  .notice_modal .notice_group_title .notice_content,
+  .notice_modal .notice_group_title .notice_title {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+  }
+
+  .notice_modal .notice_group_content {
+    display: grid;
+    grid-template-columns: 40px 100px 275px 100px 100px;
+    column-gap: 10px;
+    align-items: center;
+    color: #191919;
+    margin: 10px 0;
+  }
+
+  .notice_modal .notice_group_content.notice_expired {
+    color: #888;
+  }
+
+  .notice_modal .notice_group_content div {
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .notice_modal .notice_group_title div {
+    text-align: center;
   }
 
   .profile_group > img {
@@ -294,6 +334,196 @@
     background-color: #07227a;
   }
 
+  * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    .mb10 {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .ck-editor__editable { 
+        height: 400px; 
+    }
+
+    .ck-content { 
+        font-size: 12px; 
+    }
+
+    .create_btn {
+        margin: 30px 15px;
+    }
+
+    .create_wrapper {
+        display: flex;
+        flex-direction: column;
+        padding-bottom: 15px;
+        border: 1px solid #888;
+        margin: 0 15px;
+    }
+    .anchor {
+        display: flex;
+    }
+
+    .create_btn, a {
+        padding: 5px 8px;
+        text-decoration: none;
+        color: #4052f7;
+        background-color: #d0eaff;
+        margin-right: 15px;
+        border-radius: 10px;
+        border: 0px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .create_container {
+        visibility: hidden;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -80%);
+        z-index: 10;
+        box-shadow: 0 0 10px #19191948;
+        border: 1px solid;
+        width: 500px;
+        padding: 30px;
+        opacity: 0;
+        border: none;
+        border-radius: 5px;
+        background-color: #ffffff;
+        transition: 0.5s;
+    }
+
+    .create_container.active {
+        visibility: visible;
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+
+    .create_container > * {
+        margin-bottom: 10px;
+    }
+
+    .btn-close {
+        position: absolute;
+        top: 6px;
+        right: 10px;
+        background-color: transparent;
+        font-size: 18px;
+        color: #888;
+        cursor: pointer;
+    }
+
+    .btn-close:hover {
+        color: #191919;
+    }
+
+    .create_title {
+        text-align: center;
+    }
+
+    #postTitle {
+        border: 0px;
+        background-color: #e9f3ff;
+        width: 100%;
+        height: 35px;
+        padding: 0 15px;
+        outline: none;
+        color: #333;
+    }
+
+    #noticeContent {
+        border: 0px;
+        background-color: #e9f3ff;
+        width: 100%;
+        height: 200px;
+        padding: 15px 15px;
+        outline: none;
+        color: #333;
+        resize: none;
+    }
+
+    #postTitle::placeholder,
+    #noticeContent::placeholder {
+        color: #bbb;
+    }
+
+    #postTitle:focus::placeholder,
+    #noticeContent:focus::placeholder {
+        visibility: hidden;
+    }
+
+    .date_wrap {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+    }
+
+    .dateSelector1,
+    .dateSelector2 {
+        width: 150px;
+        height: 30px;
+        outline: none;
+        border: 1px solid #e5e5e5;
+        padding: 0 10px;
+        color: #191919;
+    }
+
+    #start-date, #end-date {
+        outline: none;
+    }
+
+    .submit_btn_wrap {
+        display: flex;
+        justify-content: flex-end;
+        margin-top: 30px;
+    }
+
+    .submit_btn {
+        background-color: #e9f3ff;
+        border: 0px;
+        padding: 5px 10px;
+        border-radius: 5px;
+        color: #4052f7;
+        font-weight: bold;
+        text-align: center;
+    }
+
+    .overlay {
+        background-color: #47474754;
+        position: fixed;
+        width: 100%;
+        height: 100vh;
+        top: 0;
+        left: 0;
+        transition: 0.5s;
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .overlay.active {
+        opacity: 1;
+        pointer-events: all;
+    }
+
+    .errors {
+        background-color: rgb(255, 244, 244);
+        padding: 5px 10px;
+        color: #ffafaf;
+        margin-bottom: 10px;
+        font-size: 9pt;
+        cursor: pointer;
+    }
+
+    .inactive {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+
 </style>
 <body>
   <nav class="admin_container">
@@ -376,9 +606,12 @@
   <div class="notice_modal_content">
     <div class="desc">
       <div class="desc-header">
-        <input type="text" placeholder="홍길동"/>
-        <button class="admin_notice_search">검색</button>
-        <button class="btn-close">&times;</button>
+        <button class="create_notice">공지생성</button>
+        <div class="notice_search_wrap">
+          <input type="text" placeholder="홍길동"/>
+          <button class="admin_notice_search">검색</button>
+          <button class="btn-close">&times;</button>
+        </div>
       </div>
       <div class="desc-title">
         <div class="notice_container">
@@ -391,6 +624,38 @@
     </div>
   </div>
 </div>
+  <!-- 공지 입력 폼 -->
+  <form:form modelAttribute="noticeVO" method="post">
+      <div class="create_container">
+          <div class="btn-close">&times;</div>
+          <h1 class="create_title">공지 생성</h1>
+          <div>
+              <label for="postTitle" class="mb10">제목</label>
+              <input type="text" name="postTitle" id="postTitle" placeholder="제목을 입력해주세요"
+                      value="${noticeVO.postTitle}"/>
+              <!-- <form:errors path="postTitle" element="div" cssClass="errors" /> -->
+          </div>
+          <label for="noticeContent" class="mb10">내용</label>
+          <div>
+              <textarea name="noticeContent" id="editor" placeholder="내용을 입력해주세요."
+                        value="${noticeVO.noticeContent}"></textarea>
+              <!-- <form:errors path="postTitle" element="div" cssClass="errors" /> -->
+          </div>
+          <div class="date_wrap">
+              <label for="start-date">시작일</label>
+              <input class="dateSelector1" placeholder="시작 날짜" id="start-date"
+                      name="releaseStartDate" value="${noticeVO.releaseStartDate}"/>
+              <span>~</span>
+              <label for="end-date">종료일</label>
+              <input class="dateSelector2" placeholder="종료 날짜" id="end-date"
+                      name="releaseEndDate" value="${noticeVO.releaseEndDate}"/>
+          </div>
+          <div class="submit_btn_wrap">
+              <input type="submit" value="생성" class="submit_btn"/>
+          </div>
+      </div>
+  </form:form>
+  <div class="notice_create_overlay"></div>
 
   <!-- 해시태그 관리 모달 -->
   <div class="hashtag_modal">
@@ -485,7 +750,7 @@
       $.get(url, function(response) {
         if (response.result === 'success') {
           alert('탈퇴가 완료되었습니다.')
-          $('.desc-content').empty()
+          $('.personal_modal').find('.desc-content').empty()
           loadGeneralTypeMember()
         }
       })
@@ -508,8 +773,8 @@
                   <a href='\${company.companyInfoVO.companyRegistCertificateUrl}' download='\${company.nickname}'" class="business_license">[사업자등록증]</a>
                   </div>
                   <div class="btn_group">
-                    <button>승인</button>
-                    <button>반려</button>
+                    <button class="company_approval" id="\${company.email}">승인</button>
+                    <button class="company_refuse" id="\${company.email}">반려</button>
                   </div>
                   <div class="btn_group">
                     <button class="company_member_withdraw_btn" id="\${company.email}">탈퇴</button>  
@@ -527,7 +792,7 @@
                   <a href='\${company.companyInfoVO.companyRegistCertificateUrl}' download='\${company.nickname}'" class="business_license">[사업자등록증]</a>
                   </div>
                   <div class="btn_group">
-                    <button class="confirm_complete">승인완료</button>
+                    <button class="confirm_complete_btn">승인완료</button>
                   </div>
                   <div class="btn_group">
                     <button class="company_member_withdraw_btn" id="\${company.email}">탈퇴</button>
@@ -543,6 +808,34 @@
   }
   loadCompanytypeMember()
 
+  // 기업 승인 처리
+  $(document).on('click', '.company_approval', function() {
+    let body = {
+      companyEmail: $(this).attr('id'),
+      val: 'approval'
+    }
+    let url = '/admin/companymember'
+    $.post(url, body, function(response) {
+      alert('승인 처리되었습니다.')
+      $('.company_modal').find('.desc-content').empty()
+      loadCompanytypeMember()
+    })
+  })
+  
+  // 기업 반려 처리
+  $(document).on('click', '.company_refuse', function() {
+    let body = {
+      companyEmail: $(this).attr('id'),
+      val: 'refuse'
+    }
+    let url = '/admin/companymember'
+    $.post(url, body, function(response) {
+      alert('반려 처리되었습니다.')
+      $('.company_modal').find('.desc-content').empty()
+      loadCompanytypeMember()
+    })
+  })
+
   // 기업 회원 탈퇴 조치
   $(document).on('click', '.company_member_withdraw_btn', function(e) {
     let email = $(this).attr('id')
@@ -551,12 +844,13 @@
       $.get(url, function(response) {
         if (response.result === 'success') {
           alert('탈퇴가 완료되었습니다.')
-          $('.desc-content').empty()
+          $('.company_modal').find('.desc-content').empty()
           loadCompanytypeMember()
         }
       })
     }
   })
+
 
   // 공지 사항 목록 조회
   function loadAdminNoticeList() {
@@ -576,13 +870,13 @@
         let formattedEndDate = endYear + '-' + endMonth + '-' + endDay
 
         let today = new Date()
-        let noticeTemplate
+          let noticeTemplate
 
         if (today < endDate) {
           noticeTemplate = `
-          <div class="notice_group_title">
+          <div class="notice_group_content">
             <div>On</div>
-            <div>\${notice.postTitle}</div>
+            <div class="notice_title">\${notice.postTitle}</div>
             <div class="notice_content">\${notice.noticeContent}</div>
             <div>\${formattedStartDate}</div>
             <div>\${formattedEndDate}</div>
@@ -590,9 +884,9 @@
         }
         else {
           noticeTemplate = `
-          <div class="notice_group_title">
+          <div class="notice_group_content notice_expired">
             <div>Off</div>
-            <div>\${notice.postTitle}</div>
+            <div class="notice_title">\${notice.postTitle}</div>
             <div class="notice_content">\${notice.noticeContent}</div>
             <div>\${formattedStartDate}</div>
             <div>\${formattedEndDate}</div>
@@ -606,6 +900,10 @@
   }
 
   loadAdminNoticeList()
+
+  // $(document).on('click', '.create_notice', function() {
+  //   window.open('/notice/create', '공지 생성', 'width=500, height=800px')
+  // })
 
   // 해시태그 조회
   let tag = {}
@@ -671,6 +969,363 @@
   $('.admin_report_btn').click(function() {
     window.open('/admin/report/list', '_blank')
   })
+
+  // 달력 포맷
+  flatpickr.localize(flatpickr.l10ns.ko);
+
+  $('.dateSelector1').flatpickr({
+      minDate: 'today',
+      local: 'ko'
+  })
+
+  $('.dateSelector2').flatpickr({
+      minDate: 'today',
+      local: 'ko'
+  })
+  // 달력 포맷 끝
+
+  // 공지 생성 모달 실행을 위한 문장
+  $('.create_notice').click(function() {
+      $('.create_notice, .notice_create_overlay').addClass('active')
+  })
+
+  $('.btn-close, .overlay').click(function() {
+      $('.create_notice, .notice_create_overlay').removeClass('active')
+  })
+
+  $('.dateSelector1').click(function() {
+      console.log($('.dateSelector1').val())
+  })
+
+// ck 에디터
+ClassicEditor.create( document.querySelector( '#editor' ), {
+language: "ko"
+})
+
+// 유효성 체크
+$('.submit_btn').addClass('inactive')
+$('.submit_btn').prop('disabled', true)
+let today = new Date()
+let year = today.getFullYear()
+let month = today.getMonth() + 1
+let day = today.getDate()
+if (month < 10) {
+        month = '0' + month
+    }
+if (day < 10) {
+    day = '0' + day
+}
+let formattedToday = year + '' + month + '' + day
+let start_date
+let end_date
+$('#end-date').change(function() { 
+    art_date = parseInt($('#start-date').val().split('-').join(''))
+    end_date = parseInt($('#end-date').val().split('-').join(''))
+    console.log('ㅎㅇ')
+    console.log(formattedToday, start_date, end_date)
+    if (end_date < formattedToday || 
+        end_date < start_date) {
+        const dateError = $('<div class="errors date_message">날짜 형식이 잘못되었습니다.</div>')
+        $('.date_message').remove()
+        $('.date_wrap').after(dateError)
+        $('.submit_btn').addClass('inactive')
+        $('.submit_btn').prop('disabled', true)
+    }
+    else if ($('#postTitle').val().trim() === '') {
+        $('.date_message').remove()
+        $('.submit_btn').addClass('inactive')
+        $('.submit_btn').prop('disabled', true)
+    }
+    else {
+        $('.date_message').remove()
+    }
+})
+
+$('#postTitle').change(function() {
+    if ($('#postTitle').val().trim() === '') {
+        const titleError = $('<div class="errors title_message">제목을 입력해주세요.</div>')
+        $('.title_message').remove()
+        $('#postTitle').after(titleError)
+        $('.submit_btn').addClass('inactive')
+        $('.submit_btn').prop('disabled', true)
+    }
+    else if (end_date < formattedToday || 
+             end_date < start_date) {
+        $('.title_message').remove()
+        $('.submit_btn').addClass('inactive')
+        $('.submit_btn').prop('disabled', true)
+    }
+    else {
+        $('.title_message').remove()
+        $('.submit_btn').prop('disabled', false)
+        $('.submit_btn').removeClass('inactive')
+    } 
+})
+$('#end-date').change(function() { 
+    const start_date = parseInt($('#start-date').val().split('-').join(''))
+    const end_date = parseInt($('#end-date').val().split('-').join(''))
+    console.log('ㅎㅇ')
+    console.log(formattedToday, start_date, end_date)
+    if (end_date < formattedToday || 
+        end_date < start_date) {
+        const dateError = $('<div class="errors date_message">날짜 형식이 잘못되었습니다.</div>')
+        $('.date_message').remove()
+        $('.date_wrap').after(dateError)
+        $('.submit_btn').addClass('inactive')
+        $('.submit_btn').prop('disabled', true)
+    }
+    else if ($('#postTitle').val().trim() === '') {
+        $('.date_message').remove()
+        $('.submit_btn').addClass('inactive')
+        $('.submit_btn').prop('disabled', true)
+    }
+    else {
+        $('.date_message').remove()
+    }
+})
+$('#end-date').change(function() { 
+    const start_date = parseInt($('#start-date').val().split('-').join(''))
+    const end_date = parseInt($('#end-date').val().split('-').join(''))
+    console.log('ㅎㅇ')
+    console.log(formattedToday, start_date, end_date)
+    if (end_date < formattedToday || 
+        end_date < start_date) {
+        const dateError = $('<div class="errors date_message">날짜 형식이 잘못되었습니다.</div>')
+        $('.date_message').remove()
+        $('.date_wrap').after(dateError)
+        $('.submit_btn').addClass('inactive')
+        $('.submit_btn').prop('disabled', true)
+    }
+    else if ($('#postTitle').val().trim() === '') {
+        $('.date_message').remove()
+        $('.submit_btn').addClass('inactive')
+        $('.submit_btn').prop('disabled', true)
+    }
+    else {
+        $('.date_message').remove()
+    }
+})
+$('#end-date').change(function() { 
+    const start_date = parseInt($('#start-date').val().split('-').join(''))
+    const end_date = parseInt($('#end-date').val().split('-').join(''))
+    console.log('ㅎㅇ')
+    console.log(formattedToday, start_date, end_date)
+    if (end_date < formattedToday || 
+        end_date < start_date) {
+        const dateError = $('<div class="errors date_message">날짜 형식이 잘못되었습니다.</div>')
+        $('.date_message').remove()
+        $('.date_wrap').after(dateError)
+        $('.submit_btn').addClass('inactive')
+        $('.submit_btn').prop('disabled', true)
+    }
+    else if ($('#postTitle').val().trim() === '') {
+        $('.date_message').remove()
+        $('.submit_btn').addClass('inactive')
+        $('.submit_btn').prop('disabled', true)
+    }
+    else {
+        $('.date_message').remove()
+    }
+})
+$('#end-date').change(function() { 
+    const start_date = parseInt($('#start-date').val().split('-').join(''))
+    const end_date = parseInt($('#end-date').val().split('-').join(''))
+    console.log('ㅎㅇ')
+    console.log(formattedToday, start_date, end_date)
+    if (end_date < formattedToday || 
+        end_date < start_date) {
+        const dateError = $('<div class="errors date_message">날짜 형식이 잘못되었습니다.</div>')
+        $('.date_message').remove()
+        $('.date_wrap').after(dateError)
+        $('.submit_btn').addClass('inactive')
+        $('.submit_btn').prop('disabled', true)
+    }
+    else if ($('#postTitle').val().trim() === '') {
+        $('.date_message').remove()
+        $('.submit_btn').addClass('inactive')
+        $('.submit_btn').prop('disabled', true)
+    }
+    else {
+        $('.date_message').remove()
+    }
+})
+$('#end-date').change(function() { 
+    const start_date = parseInt($('#start-date').val().split('-').join(''))
+    const end_date = parseInt($('#end-date').val().split('-').join(''))
+    console.log('ㅎㅇ')
+    console.log(formattedToday, start_date, end_date)
+    if (end_date < formattedToday || 
+        end_date < start_date) {
+        const dateError = $('<div class="errors date_message">날짜 형식이 잘못되었습니다.</div>')
+        $('.date_message').remove()
+        $('.date_wrap').after(dateError)
+        $('.submit_btn').addClass('inactive')
+        $('.submit_btn').prop('disabled', true)
+    }
+    else if ($('#postTitle').val().trim() === '') {
+        $('.date_message').remove()
+        $('.submit_btn').addClass('inactive')
+        $('.submit_btn').prop('disabled', true)
+    }
+    else {
+        $('.date_message').remove()
+    }
+})
+$('#end-date').change(function() { 
+    const start_date = parseInt($('#start-date').val().split('-').join(''))
+    const end_date = parseInt($('#end-date').val().split('-').join(''))
+    console.log('ㅎㅇ')
+    console.log(formattedToday, start_date, end_date)
+    if (end_date < formattedToday || 
+        end_date < start_date) {
+        const dateError = $('<div class="errors date_message">날짜 형식이 잘못되었습니다.</div>')
+        $('.date_message').remove()
+        $('.date_wrap').after(dateError)
+        $('.submit_btn').addClass('inactive')
+        $('.submit_btn').prop('disabled', true)
+    }
+    else if ($('#postTitle').val().trim() === '') {
+        $('.date_message').remove()
+        $('.submit_btn').addClass('inactive')
+        $('.submit_btn').prop('disabled', true)
+    }
+    else {
+        $('.date_message').remove()
+    }
+})
+$('#end-date').change(function() { 
+    const start_date = parseInt($('#start-date').val().split('-').join(''))
+    const end_date = parseInt($('#end-date').val().split('-').join(''))
+    console.log('ㅎㅇ')
+    console.log(formattedToday, start_date, end_date)
+    if (end_date < formattedToday || 
+        end_date < start_date) {
+        const dateError = $('<div class="errors date_message">날짜 형식이 잘못되었습니다.</div>')
+        $('.date_message').remove()
+        $('.date_wrap').after(dateError)
+        $('.submit_btn').addClass('inactive')
+        $('.submit_btn').prop('disabled', true)
+    }
+    else if ($('#postTitle').val().trim() === '') {
+        $('.date_message').remove()
+        $('.submit_btn').addClass('inactive')
+        $('.submit_btn').prop('disabled', true)
+    }
+    else {
+        $('.date_message').remove()
+    }
+})
+$('#end-date').change(function() { 
+    const start_date = parseInt($('#start-date').val().split('-').join(''))
+    const end_date = parseInt($('#end-date').val().split('-').join(''))
+    console.log('ㅎㅇ')
+    console.log(formattedToday, start_date, end_date)
+    if (end_date < formattedToday || 
+        end_date < start_date) {
+        const dateError = $('<div class="errors date_message">날짜 형식이 잘못되었습니다.</div>')
+        $('.date_message').remove()
+        $('.date_wrap').after(dateError)
+        $('.submit_btn').addClass('inactive')
+        $('.submit_btn').prop('disabled', true)
+    }
+    else if ($('#postTitle').val().trim() === '') {
+        $('.date_message').remove()
+        $('.submit_btn').addClass('inactive')
+        $('.submit_btn').prop('disabled', true)
+    }
+    else {
+        $('.date_message').remove()
+    }
+})
+$('#end-date').change(function() { 
+    const start_date = parseInt($('#start-date').val().split('-').join(''))
+    const end_date = parseInt($('#end-date').val().split('-').join(''))
+    console.log('ㅎㅇ')
+    console.log(formattedToday, start_date, end_date)
+    if (end_date < formattedToday || 
+        end_date < start_date) {
+        const dateError = $('<div class="errors date_message">날짜 형식이 잘못되었습니다.</div>')
+        $('.date_message').remove()
+        $('.date_wrap').after(dateError)
+        $('.submit_btn').addClass('inactive')
+        $('.submit_btn').prop('disabled', true)
+    }
+    else if ($('#postTitle').val().trim() === '') {
+        $('.date_message').remove()
+        $('.submit_btn').addClass('inactive')
+        $('.submit_btn').prop('disabled', true)
+    }
+    else {
+        $('.date_message').remove()
+    }
+})
+$('#end-date').change(function() { 
+    const start_date = parseInt($('#start-date').val().split('-').join(''))
+    const end_date = parseInt($('#end-date').val().split('-').join(''))
+    console.log('ㅎㅇ')
+    console.log(formattedToday, start_date, end_date)
+    if (end_date < formattedToday || 
+        end_date < start_date) {
+        const dateError = $('<div class="errors date_message">날짜 형식이 잘못되었습니다.</div>')
+        $('.date_message').remove()
+        $('.date_wrap').after(dateError)
+        $('.submit_btn').addClass('inactive')
+        $('.submit_btn').prop('disabled', true)
+    }
+    else if ($('#postTitle').val().trim() === '') {
+        $('.date_message').remove()
+        $('.submit_btn').addClass('inactive')
+        $('.submit_btn').prop('disabled', true)
+    }
+    else {
+        $('.date_message').remove()
+    }
+})
+$('#end-date').change(function() { 
+    const start_date = parseInt($('#start-date').val().split('-').join(''))
+    const end_date = parseInt($('#end-date').val().split('-').join(''))
+    console.log('ㅎㅇ')
+    console.log(formattedToday, start_date, end_date)
+    if (end_date < formattedToday || 
+        end_date < start_date) {
+        const dateError = $('<div class="errors date_message">날짜 형식이 잘못되었습니다.</div>')
+        $('.date_message').remove()
+        $('.date_wrap').after(dateError)
+        $('.submit_btn').addClass('inactive')
+        $('.submit_btn').prop('disabled', true)
+    }
+    else if ($('#postTitle').val().trim() === '') {
+        $('.date_message').remove()
+        $('.submit_btn').addClass('inactive')
+        $('.submit_btn').prop('disabled', true)
+    }
+    else {
+        $('.date_message').remove()
+    }
+})
+$('#end-date').change(function() { 
+    const start_date = parseInt($('#start-date').val().split('-').join(''))
+    const end_date = parseInt($('#end-date').val().split('-').join(''))
+    console.log('ㅎㅇ')
+    console.log(formattedToday, start_date, end_date)
+    if (end_date < formattedToday || 
+        end_date < start_date) {
+        const dateError = $('<div class="errors date_message">날짜 형식이 잘못되었습니다.</div>')
+        $('.date_message').remove()
+        $('.date_wrap').after(dateError)
+        $('.submit_btn').addClass('inactive')
+        $('.submit_btn').prop('disabled', true)
+    }
+    else if ($('#postTitle').val().trim() === '') {
+        $('.date_message').remove()
+        $('.submit_btn').addClass('inactive')
+        $('.submit_btn').prop('disabled', true)
+    }
+    else {
+        $('.date_message').remove()
+    }
+})
+
 
 </script>
 </html>

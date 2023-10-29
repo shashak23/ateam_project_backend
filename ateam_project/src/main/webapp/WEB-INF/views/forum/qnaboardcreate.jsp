@@ -89,7 +89,9 @@ updateViewCount();
 
 <style type= "text/css">
 	#title_controller {
-		margin-left: 5px;
+		position: relative;
+		left: 20px;
+		
 	}
 	.seperate-line {
 		border: 1px solid #ccc;
@@ -110,26 +112,27 @@ updateViewCount();
 	
 	
 	.ck-editor__editable { 
+		position: relative;
+		left: -1px;
 		height: 400px; 
-	    width: 1000px;
+	    width: 1030px;
 	}
     .ck-content { font-size: 12px; }
 
-	.btn-group {
-    position: relative;
-    right: 880px;
-    top: 120px;
-    
-}
 .add_button ,.save_button {
 	position: relative;
-	left: 5px;
+	left: 1350px;
+	bottom: 30px;
 	background-color:#75c2f6;
 	border: none;
 	width: 70px;
 	height: 30px;
 	border-radius: 5px;
 
+}
+.postTitle_controller {
+	position: relative;
+	right: 8px;
 }
 
 
@@ -139,13 +142,17 @@ updateViewCount();
 	  margin:10px;
 	}
 	#write-page {
+		position: relative;
+		left: 500px;
 		margin-top: 20px;
 		width: 1030px;
 		height: 500px;
 	}
 	.hashtag {
 		position: relative;
-		top: 100px;
+		top: 10px;
+		padding-top: 30px;
+		padding-left: 500px;
 	}
 
 	
@@ -246,7 +253,7 @@ $().ready(function(){
 </script>
 </head>
 <body>
-	<jsp:include page="../member/membermenu.jsp"></jsp:include>
+	
 
 	<h1 id="title_controller"> QnA 작성 페이지</h1>
 	<div class="seperate-line"></div>
@@ -257,7 +264,7 @@ $().ready(function(){
 			<input type = "text" name="postTitle" 
 					value="${generalPostVO.postTitle}"/>
 			</div>		
-			<label id="post_position" for = "postContent"> 내용 </label>
+			
 			<textarea  name="postContent" id="editor">${generalPostVO.postContent}</textarea>
 		    	<script>
 		    	CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {

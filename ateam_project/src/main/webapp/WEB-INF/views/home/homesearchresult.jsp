@@ -1,18 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
-<!-- 작성자: 김태현
-     작성일자: 2023-10-20
-     내용: 메인 페이지 -->
-
-
 <jsp:include page="../layout/header.jsp" />
-<c:choose>
-  <c:when test="${sessionScope._LOGIN_USER_.memberType eq 'ADMIN'}">
-    <jsp:include page="./admin_ui.jsp" />
-  </c:when>
-</c:choose>
-
 <style>
   /* 메인 컨텐츠 영역 */
 	.body_container {
@@ -21,339 +10,329 @@
 		margin: 0 auto;
 	}
 
-	.body_container .body {
+	/* .body_container .body {
 		display: flex;
 		justify-content: space-between;
+	} */
+	
+	table.table {
+		border-collapse: collapse;
+		margin-top: 30px;
+		width: 900px;
+		margin: 0 auto;
 	}
 
-	/* 왼쪽 */
-	.body_container .body .body_left {
-		width: 800px;
-		margin-right: 30px;
-	}
-
-	.body_left .home_edit_container {
-		display: flex;
-		padding: 20px;
-		cursor: pointer;
-		margin-bottom: 20px;
-	}
-
-	/* 글쓰기 영역 */
-	.body_left .home_edit_container .text_area {
-		position: sticky;
-		top: 100px;
-		z-index: 10;
-		width: 670px;
-		height: 80px;
-		border: 1px solid var(--gray);
-		border-radius: 5px;
-		margin-right: 10px;
-	}
-
-	.body_left .home_edit_container .edit_btn {
-		width: 80px;
-		height: 80px;
-		border: 1px solid;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		border: 1px solid var(--gray);
-		border-radius: 5px;
-		font-size: var(--font-x-big);
-	}
-
-	.body_left .home_edit_container .edit_btn svg {
-		fill: var(--dark-gray);
-	}
-
-	/* 게시글 영역 */
-	.body_left .content_container {
-		width: 100%;
-		border: 1px solid var(--light-gray);
-		margin: 45px 0;
-		border-radius: 10px;
-		padding: 24px 36px;
-	}
-
-  .body_left .content_container:hover {
-    box-shadow: 0 0 8px var(--gray);
-  }
-
-	.body_left .content_container .writer_info_area {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		padding-bottom: 10px;
-		border-bottom: 1px solid var(--gray);
-	}
-
-	.body_left .content_container .writer_info_area .flex_left {
-		display: flex;
-		align-items: center;
-	}
-
-	.body_left .content_container .writer_info_area .flex_left img {
-		width: 36px;
-		height: 36px;
+	table th{
 		background-color: var(--light-gray);
-		margin-right: 10px;
-		border-radius: 50%;
+		border-bottom: 1px solid var(--dark-gray);
+		height:35px;
+		color: var(--dark-gray);
 	}
 
-	.body_left .content_container .writer_info_area .flex_left .writer_name {
-		font-size: var(--font-medium);
+	table td{
+		border-bottom: 1px solid #D3D3D3;
+		color: var(--dark-gray);
 	}
-
-	.body_left .content_container .writer_info_area .flex_left .writer_name .follow_btn {
-		border: 1px solid var(--light-gray);
-		border-radius: 10px;
-		margin-left: 20px;
-		padding: 0 3px;
-		font-size: var(--font-x-small);
-		color: var(--blue);
-		cursor: pointer;
+	table.table th:last-child, table.table td:last-child {
+		border-right: none;
 	}
-
-	.body_left .content_container .writer_info_area .flex_left .posting_date {
-		font-size: var(--font-small);
-		color: #ccc;
+	
+	table.table > tbody td {
+		padding: 10px;
+		color: #333;
+		text-align: center;
+		color: var(--dark-gray);
 	}
-
-	.body_left .content_container .writer_info_area .flex_right .utility {
-		display: flex;
-		align-items: center;
-	}
-
-	.body_left .content_container .writer_info_area .flex_right .utility > button {
-		width: 24px;
-		height: 24px;
-		background-color: transparent;
-		border: none;
-		margin-right: 10px;
-	}
-
-	.body_left .content_container .writer_info_area .flex_right .utility > button > svg {
-		width: 20px;
-		height: 20px;
-		cursor: pointer;
-		fill: var(--gray);
-	}
-
-  .body_left .content_container .writer_info_area .flex_right .utility > button > svg:hover {
-    fill: var(--hashtag-blue);
-  }
-
-	.body_left .content_container .writer_info_area .flex_right .utility > svg {
-		width: 24px;
-		height: 24px;
-		padding: 2px;
-		fill: var(--dark);
-		border: 1px solid var(--gray);
-		border-radius: 50%;
-		cursor: pointer;
-	}
-  
-  .body_left .content_container {
-    cursor: default;
-  }
-
-	.body_left .content_container .q_title {
-		display: flex;
-		align-items: flex-end;
-		margin: 7px 0;
-	}
-
-	.body_left .content_container .q_title > .big_letter {
-		font-size: var(--font-x-big);
+	caption {
 		font-weight: bold;
-		margin-right: 8px;
-		color: var(--deep-blue);
+		font-size: 20px;
+		margin-bottom: 10px;
+		margin-top: 10px;
+		text-align: left;
 	}
-
-	.body_left .content_container .q_title > div {
-		display: flex;
-		align-items: center;
-	}
-
-	.body_left .content_container .q_title > div .title {
-		font-size: var(--big);
-		margin-right: 10px;
-		color: var(--deep-dark);
-	}
-
-	.body_left .content_container .q_title > div .comment_number {
-		font-size: var(--font-medium);
-		margin-right: 10px;
-		color: var(--red);
-	}
-
-	.body_left .content_container .q_title > div svg {
-		font-size: var(--font-medium);
-		fill: var(--blue);
-	}
-
-	.body_left .content_container .q_title  .thumbs_up_number {
-		font-size: var(--font-medium);
-		margin-left: 7px;
-	}
-
-	.body_left .content_container .q_content {
+	div.member {
 		display: flex;
 		flex-direction: column;
-		justify-content: space-between;
-    display: -webkit-box;
-		-webkit-box-orient: vertical;
-		overflow: hidden;
-		-webkit-line-clamp: 3;
+		padding-left: 90px;
+		justify-content: space-around;
 	}
-
-	.body_left .content_container .q_content p {
-		margin-bottom: 20px;
-		font-size: var(--font-small);
-		color: var(--dark);
-
+	div.member div.flex {
+		margin-top: 10px;
 	}
-
-	.body_left .content_container .q_content ul {
-		display: flex;
-    flex-wrap: wrap;
+	div.member_type {
+		font-weight: bold;
+		font-size: 20px;
+		margin-bottom: 5px;
 	}
-
-	.body_left .content_container .q_content li {
-		padding: 3px 10px;
-		margin-right: 20px;
-    margin-bottom: 10px;
-		border-radius: 50px;
-		background-color: var(--hashtag-blue);
-		color: var(--blue);
-		font-size: var(--font-x-small);
-    cursor: default;
-	}
-
-
-	/* 오른쪽 */
-	.body_container .body .body_right {
-		width: 250px;
-	}
-
-  .body_right .ranking_wrap {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    border: 1px solid var(--gray);
-    border-radius: 10px;
-    margin-top: 20px;
-  }
-
-  .body_right .ranking_wrap h2 {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: 20px 0;
-    border-bottom: 2px solid var(--gray);
-    width: 100%;
-  }
-
-  .body_right .ranking_wrap ul {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 700px;
-    margin-bottom: 20px;
-  }
-
-  .body_right .ranking_wrap ul .hot_post {
-    flex: 1;
-    font-size: var(--font-medium);
-    width: 100%;
-    border-bottom: 1px solid var(--light-gray);
-    transition: all 0.1s;
-    color: var(--dark);
-    cursor: pointer;
-  }
-
-  .body_right .ranking_wrap ul .hot_post:hover {
-    background-color: var(--hashtag-blue);
-  }
-
-  .body_right .ranking_wrap ul .hot_post a {
-    width: 250px;
-    height: 100%;
-    font-size: var(--font-small);
-    color: var(--dark);
-    display: block;
-    padding: 0 20px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    line-height: 70px;
-  }
-
-  .body_right .hashtag_wrap {
-    display: flex;
-    width: 250px;
-    flex-wrap: wrap;
-    margin-top: 30px;
-    border: 1px solid var(--gray);
-    border-radius: 10px;
-    padding: 10px;
-  }
-
-  .body_right .hashtag_wrap .hashtag {
-    background-color: var(--gray);
-    color: var(--dark-gray);
-    margin: 5px;
-    padding: 3px 8px;
-    border-radius: 20px;
-    border: none;
-    font-size: var(--font-x-small);
-    text-align: center;
-  }
-
-  .body_right .hashtag_wrap .hashtag:hover {
-    box-shadow: 0 0 2px var(--dark-gray);
-    cursor: pointer;
-  }
 </style>
-
   <!-- 메인 컨텐츠 영역 -->
   <section class="body_container">
     <div class="body">
-      <div class="body_left">
-        <div class="home_edit_container incomplete">
-          <div class="text_area"></div>
-          <div class="edit_btn">
-            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path d="M471.6 21.7c-21.9-21.9-57.3-21.9-79.2 0L362.3 51.7l97.9 97.9 30.1-30.1c21.9-21.9 21.9-57.3 0-79.2L471.6 21.7zm-299.2 220c-6.1 6.1-10.8 13.6-13.5 21.9l-29.6 88.8c-2.9 8.6-.6 18.1 5.8 24.6s15.9 8.7 24.6 5.8l88.8-29.6c8.2-2.7 15.7-7.4 21.9-13.5L437.7 172.3 339.7 74.3 172.4 241.7zM96 64C43 64 0 107 0 160V416c0 53 43 96 96 96H352c53 0 96-43 96-96V320c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H96z"/></svg>
-          </div>
-        </div>
-      </div>
-      <div class="body_right">
-        <div class="ranking_wrap">
-          <h2>주간랭킹</h2>
-          <ul class="ranking_list">
-          </ul>
-        </div>
-        <div class="hashtag_wrap">
-        </div>
-      </div>
+    	<div class="member">
+    		<div class="flex">
+		      <div class="member_type">People</div>
+				<c:choose>
+					<c:when test="${not empty generalMemberList}">
+						<c:forEach items="${generalMemberList}" var="generalmember">
+							<img style="width: 50px; height: 50px;" src="${generalmember.profilePic}" />
+							<a href="/memberinfo/view/${generalmember.email}">
+								<c:out value="${generalmember.nickname}" />
+							</a>
+						</c:forEach>
+					</c:when>
+					<c:otherwise>
+						No Result
+					</c:otherwise>
+				</c:choose>
+    		</div>
+			<div class="flex">
+				<div class="member_type">Company</div>
+				<c:choose>
+					<c:when test="${not empty companyMemberList}">
+						<c:forEach items="${companyMemberList}" var="company">
+							<img style="width: 50px; height: 50px;" src="${company.profilePic}" />
+							${company.nickname}
+						</c:forEach>
+					</c:when>
+					<c:otherwise>
+						No Result
+					</c:otherwise>
+				</c:choose>
+			</div>
+    	</div>
+		<p></p>
+		<table class="table">
+			<caption>질답게시판</caption>
+			<thead>
+				<colgroup>
+					<col width="10%" />
+					<col width="45%" />
+					<col width="15%" />
+					<col width="20%" />
+					<col width="10%" />
+				</colgroup>
+				<tr id="table-tr">
+					<th scope="col">번호</th>
+					<th scope="col">제목</th>
+					<th scope="col">작성자</th>
+					<th scope="col">작성일</th>
+					<th scope="col">조회수</th>
+				</tr>
+			</thead>
+			<tbody>
+			<c:choose>
+				<c:when test="${not empty qnaPostList}">
+					<c:forEach items="${qnaPostList}" var="qnaboard" varStatus="index">
+						<tr>
+							<td>${index.index + 1}</td>
+							<td style="font-weight: bold;">
+								<a href="/qnaboard/view/${qnaboard.generalPostId}">
+									<c:out value="${qnaboard.postTitle}" />
+								</a>
+							</td>
+							<td>${qnaboard.memberVO.nickname}</td>
+							<td>${qnaboard.postDate}</td>
+							<td>${qnaboard.viewCnt}</td>
+						</tr>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<tr>
+						<td colspan="5">조회된 게시글이 없습니다.</td>
+					</tr>
+					
+				</c:otherwise>
+			</c:choose>
+			</tbody>
+		</table>
+		<p></p>
+		<table class="table">
+			<thead>
+				<caption>자유게시판</caption>
+				<colgroup>
+					<col width="10%" />
+					<col width="45%" />
+					<col width="15%" />
+					<col width="20%" />
+					<col width="10%" />
+				</colgroup>
+				<tr id="table-tr">
+					<th scope="col">번호</th>
+					<th scope="col">제목</th>
+					<th scope="col">작성자</th>
+					<th scope="col">작성일</th>
+					<th scope="col">조회수</th>
+				</tr>
+			</thead>
+			<tbody>
+			<c:choose>
+				<c:when test="${not empty freePostList}">
+					<c:forEach items="${freePostList}" var="freeboard" varStatus="index">
+						<tr>
+							<td>${index.index + 1}</td>
+							<td style="font-weight: bold;">
+								<a href="/freeboard/view/${freeboard.generalPostId}">
+									<c:out value="${freeboard.postTitle}" />
+								</a>
+							</td>
+							<td>${freeboard.memberVO.nickname}</td>
+							<td>${freeboard.postDate}</td>
+							<td>${freeboard.viewCnt}</td>
+						</tr>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<tr>
+						<td colspan="5">조회된 게시글이 없습니다.</td>
+					</tr>
+				</c:otherwise>
+			</c:choose>
+			</tbody>
+		</table>
+		<p></p>
+		<table class="table">
+			<caption>알고리즘 문제 게시판</caption>
+			<thead>
+				<colgroup>
+					<col width="10%" />
+					<col width="20%" />
+					<col width="10%" />
+					<col width="40%" />
+					<col width="20%" />
+				</colgroup>
+				<tr id="table-tr">
+					<th scope="col">번호</th>
+					<th scope="col">카테고리</th>
+					<th scope="col">난이도</th>
+					<th scope="col">문제 제목</th>
+					<th scope="col">작성자</th>
+				</tr>
+			</thead>
+			<tbody>
+			<c:choose>
+				<c:when test="${not empty algorithmQuestionList.algorithmQuestionList}">
+					<c:forEach items="${algorithmQuestionList.algorithmQuestionList}" var="algorithmquestion" varStatus="index">
+						<tr>
+							<td>${index.index + 1}</td>
+							<td>${algorithmquestion.commonCodeVO.codeContent}</td>
+							<td>${algorithmquestion.algorithmTierId}</td>
+							<td style="font-weight: bold;">
+								<a href="/algorithm/question/view/${algorithmquestion.companyAlgorithmQuestionId}">
+									<c:out value="${algorithmquestion.algorithmTitle}" />
+								</a>
+							</td>
+							<td>${algorithmquestion.memberVO.nickname}</td>
+						</tr>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<tr>
+						<td colspan="5">조회된 게시글이 없습니다.</td>
+					</tr>
+					
+				</c:otherwise>
+			</c:choose>
+			</tbody>
+		</table>
+		<p></p>
+		<table class="table">
+			<caption>알고리즘 해설 게시판</caption>
+			<thead>
+				<colgroup>
+					<col width="10%" />
+					<col width="25%" />
+					<col width="20%" />
+					<col width="20%" />
+					<col width="15%" />
+					<col width="10%" />
+				</colgroup>
+				<tr>
+					<th>번호</th>
+					<th>제목</th>
+					<th>카테고리</th>
+					<th>작성자</th>
+					<th>작성일</th>
+					<th>조회수</th>
+				</tr>
+			</thead>
+			<tbody>
+			<c:choose>
+				<c:when test="${not empty algorithmExplanationList.algorithmExplanationList}">
+					<c:forEach items="${algorithmExplanationList.algorithmExplanationList}" var="algorithmexplanation" varStatus="index">
+						<tr>
+							<td>${index.index + 1}</td>
+							<td style="font-weight: bold;">
+								<a href="/algorithm/explanation/view/${algorithmexplanation.companyAlgorithmExplanationId}">
+									<c:out value="${algorithmexplanation.postTitle}" />
+								</a>
+							</td>
+							<td>${algorithmexplanation.commonCodeVO.codeContent}</td>
+							<td>${algorithmexplanation.memberVO.nickname}</td>
+							<td>${algorithmexplanation.postDate}</td>
+							<td>${algorithmexplanation.viewCnt}</td>
+						</tr>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<tr>
+						<td colspan="6">조회된 게시글이 없습니다.</td>
+					</tr>
+					
+				</c:otherwise>
+			</c:choose>
+			</tbody>
+		</table>
+		<p></p>
+		<table class="table">
+			<caption>기업 소식 게시판</caption>
+			<thead>
+				<colgroup>
+					<col width="10%" />
+					<col width="45%" />
+					<col width="15%" />
+					<col width="20%" />
+					<col width="10%" />
+				</colgroup>
+				<tr id="table-tr">
+					<th scope="col">번호</th>
+					<th scope="col">제목</th>
+					<th scope="col">작성자</th>
+					<th scope="col">작성일</th>
+					<th scope="col">조회수</th>
+				</tr>
+			</thead>
+			<tbody>
+			<c:choose>
+				<c:when test="${not empty companyNewsList.companyNewsList}">
+					<c:forEach items="${companyNewsList.companyNewsList}" var="companynews" varStatus="index">
+						<tr>
+							<td>${index.index + 1}</td>
+							<td style="font-weight: bold;">
+								<a href="/news/view/${companynews.companyNewsPostId}">
+									<c:out value="${companynews.postTitle}" />
+								</a>
+							</td>
+							<td>${companynews.memberVO.nickname}</td>
+							<td>${companynews.postDate}</td>
+							<td>${companynews.viewCnt}</td>
+						</tr>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<tr>
+						<td colspan="5">조회된 게시글이 없습니다.</td>
+					</tr>
+					
+				</c:otherwise>
+			</c:choose>
+			</tbody>
+		</table>
     </div>
   </section>
-
   <jsp:include page="../layout/footer.jsp" />
 </body>
 
-<script>
-  // 미완성된 기능을 알려주는 모달창
-  // $('.incomplete').click(function() {
-  //   $('.modal, .overlay').addClass('modal_active')
-  // })
-  // $('.overlay').click(function() {
-  //   $('.modal, .overlay').removeClass('modal_active')
-  // })
-  
+<script>  
   // 모달창 열고 닫기
   $(document).on('click', '.incomplete', function() {
     $('.modal, .overlay').addClass('modal_active')
@@ -424,15 +403,7 @@
     let nickname
     let email
 
-    // 댓글 개수 가져오기
-    $.get('/home/maincontent/commentcnt', function(response_of_comment) {
-      comments = response_of_comment
-    })
-
-    // 닉네임 리스트 가져오기
-    $.get('/home/maincontent/nickname', function(response_of_nicknames) {
-      nicknameList = response_of_nicknames
-    })
+    
     
     const loadContents = function() {
       $.get('/home/maincontent', function(response) {

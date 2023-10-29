@@ -173,7 +173,7 @@ public class HomeController {
 		model.addAttribute("algorithmExplanationList", algorithmExplanationListVO);
 		model.addAttribute("companyNewsList", companyNewsListVO);
 		model.addAttribute("abstractSearchVO", abstractSearchVO);
-		return "home/homesearch";
+		return "home/homesearchresult";
 	}
 	
 	
