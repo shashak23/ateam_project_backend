@@ -30,9 +30,13 @@
       margin-top: 30px;
    }
    
-   .grid>.btn-group {
+   .btn-group {
+      position: absolute;
+      top: -30px;
+      right: 0;
       display: grid;
       grid-column: 1/3;
+      z-index: 999;
    }
    
    .grid .right-align {
@@ -185,8 +189,6 @@
       border: 1px solid var(--light-gray);
       margin-top: 130px;
       width: 1000px;
-      height:auto;
-      overflow: hidden;
       
    }
    .button_controller {
@@ -227,11 +229,10 @@
    
 
 }
-   .update_btn {
-      position: absolute;
-      top: -30px;
-      right: 0;
-   }
+/*    .update_btn { */
+/*       top: -30px; */
+/*       right: 0; */
+/*    } */
    
    textarea {
       width: 1000px;
@@ -269,11 +270,11 @@
       height: 1px;
       margin: 10px 0px 7px 0px;
    }
-   #update-link , #delete-link {
-     position: relative;
-     left: 1400px;
-     top: 120px;
-   }
+/*    #update-link , #delete-link { */
+/*      position: relative; */
+/*      left: 1400px; */
+/*      top: 120px; */
+/*    } */
   
    
    </style>
@@ -488,24 +489,22 @@
 </script>
 </head>
 <body>
+<div class="main_Container">
 <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq generalPostVO.postWriter}">               
-   <div class="btn-group">
-       <div class="right-align">
-           <div class="update_btn">
-            <div id="btn">
-               <a href="/freeboard/update/${generalPostVO.generalPostId}" id="update-link">수정</a>
-               <a href="/freeboard/delete/${generalPostVO.generalPostId}" id="delete-link">삭제</a>
-            </div>
-           </div>
-       </div>
-   </div>
-            </c:if>
-            
-            
-            <div class="main_Container">
-               <p class="free_Title">자유게시판 ></p>
-               <label for="postTitle"></label>
-               <div id="title_Name">${generalPostVO.postTitle}</div>
+	<div class="btn-group">
+	    <div class="right-align">
+	        <div class="update_btn">
+	         <div id="btn">
+	            <a href="/freeboard/update/${generalPostVO.generalPostId}" id="update-link">수정</a>
+	      		<a href="/freeboard/delete/${generalPostVO.generalPostId}" id="delete-link">삭제</a>
+	         </div>
+	        </div>
+	    </div>
+	</div>
+</c:if>
+   <p class="free_Title">자유게시판 ></p>
+   <label for="postTitle"></label>
+   <div id="title_Name">${generalPostVO.postTitle}</div>
    <!-- 목록보기 -->
    <button id="button-id-list" onclick="window.location.href='/freeboard/list'">목록</button>
    <div id="move_button">
