@@ -21,7 +21,7 @@
             .bbs_title {
                 font-weight: bold;
                 font-size: 25px;
-                margin: 80px 100px 30px 430px;
+                margin: 80px 100px 30px 460px;
 
             }
 
@@ -37,12 +37,8 @@
             
                 
             }
-            .button_list {
-                margin-bottom: 15px;
-                position: relative;
-                left: 1120px;
-                
-            }
+           
+ 
             .board_list_box {
                 border-top: 3px solid var(--hashtag-blue);
                 border-bottom:none;
@@ -96,6 +92,17 @@
             .footer {
                 margin-top: 100px;
             }
+            #button_list {
+            display: flex; /* 내부 요소들을 수평으로 배치하기 위해 Flexbox를 사용 */
+            align-items: center; /* 요소들을 수직 가운데 정렬 */
+            
+            }
+            #button_controller {
+                position: relative;
+                top: -10px;
+                margin-left: 300px; /* 요소 사이의 간격을 조절 */
+            }
+
 
             #button_list_1 tr th {
                 background-color: var(--light-gray);
@@ -105,6 +112,10 @@
                 
      
             }
+            #button_list {
+                margin-right: 30px;
+            }
+           
             
             .table-header_01 {                        
                 width: 50px;
@@ -123,24 +134,36 @@
                 position: relative;
                 bottom: 20px;
              }
+             #button_controller {
+                position: relative;
+                left: 165px;
+                bottom: 27px;
+             }
+             .select {
+                position: relative;
+                bottom: 8px;
+                left: 460px;
+             }
         </style>
 </head>
 <body>
     <p class="bbs_title">게시글 목록</p>
     <!-- 게시물 검색 -->
-        <div class="button_list">
+        <div id="button_list">
                 <select class="select">
                     <option value="제목">제목</option>
                     <option value="작성자">작성자</option>
                 </select>
+                <div id="button_controller">
             <input type="text" class="sc_text" placeholder="검색어 입력">
                 <button type="submit" class="btn_st_2">
                     <a href="#">조회</a>
                 </button>
+                </div>
                 <!-- <button type="submit" class="btn_st_3">
                     <a href="/freeboard/create">등록</a>
                 </button> -->
-    </div>
+        </div>
     <div id="wrap" class="wrap">
         <!-- 본문 -->
         <section id="container" class="container">
