@@ -6,6 +6,7 @@
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.ktdsuniversity.edu.member.dao.MemberDAO">
+	<!-- 일반 타입 회원 조회용 조인 -->
 	<resultMap type="com.ktdsuniversity.edu.member.vo.MemberVO" 
 			   id="GeneralMemberTierMap"
 			   autoMapping="true">
@@ -13,6 +14,16 @@
 					 javaType="com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO"
 					 autoMapping="true">
 			<id column="GENERAL_MEMBER_EMAIL" property="generalMemberEmail"/>
+		</association>		   
+	</resultMap>
+	<!-- 기업 타입 멤버 조회용 조인 -->
+	<resultMap type="com.ktdsuniversity.edu.member.vo.MemberVO" 
+			   id="CompanyTypeMemberMap"
+			   autoMapping="true">
+		<association property="companyInfoVO"
+					 javaType="com.ktdsuniversity.edu.companyinfo.vo.CompanyInfoVO"
+					 autoMapping="true">
+			<id column="COMPANY_EMAIL" property="companyEmail"/>
 		</association>		   
 	</resultMap>
 
@@ -128,12 +139,18 @@
 	</select>
 	
 	<select id="searchCompanyTypeMemberList"
-			resultType="com.ktdsuniversity.edu.member.vo.MemberVO">
-		SELECT EMAIL
-		     , NICKNAME 
-		     , PROFILE_PIC 
-		  FROM MEMBER
-		 WHERE MEMBER_TYPE = 'COMPANY'
+			resultMap="CompanyTypeMemberMap">
+		SELECT M.EMAIL
+		     , M.NICKNAME 
+		     , M.PROFILE_PIC 
+		     , M.WITHDRAW_YN 
+		     , C.CONTACT_NAME 
+		     , C.COMPANY_REGIST_CERTIFICATE_URL 
+		     , C.CONFIRM_YN 
+		  FROM MEMBER M
+		 INNER JOIN COMPANY C
+		    ON C.COMPANY_EMAIL = M.EMAIL 
+		   AND WITHDRAW_YN = 'N'
 	</select>
 	
 	<update id="updateWithdrawMember"

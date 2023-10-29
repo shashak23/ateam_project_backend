@@ -6,6 +6,7 @@ package com.ktdsuniversity.edu.member.vo;
 
 import java.util.List;
 
+import com.ktdsuniversity.edu.companyinfo.vo.CompanyInfoVO;
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 import com.ktdsuniversity.edu.member.vo.validategroup.MemberAuthGroup;
 import com.ktdsuniversity.edu.member.vo.validategroup.MemberEditNickGroup;
@@ -46,6 +47,7 @@ public class MemberVO {
 	private String withdrawYn;
 	private List<MyAlgorithmVO> myAlgorithmVO;
 	private GeneralMemberVO generalMemberVO;
+	private CompanyInfoVO companyInfoVO;
 
 	public String getEmail() {
 		return email;
@@ -118,5 +120,11 @@ public class MemberVO {
 	}
 	public void setGeneralMemberVO(GeneralMemberVO generalMemberVO) {
 		this.generalMemberVO = generalMemberVO;
+	}
+	public CompanyInfoVO getCompanyInfoVO() {
+		return companyInfoVO;
+	}
+	public void setCompanyInfoVO(CompanyInfoVO companyInfoVO) {
+		this.companyInfoVO = companyInfoVO;
 	}
 }

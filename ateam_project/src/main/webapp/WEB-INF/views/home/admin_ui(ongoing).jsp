@@ -9,6 +9,12 @@
 <script src="/js/lib/jquery-3.7.1.js"></script>
 </head>
 <style>
+  .business_license {
+    text-decoration: none;
+    color: #67869b;
+    font-size: 8pt;
+    padding: 2px;
+  }
   .admin_container ul {
     list-style: none;
     padding: 0;
@@ -95,20 +101,33 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 600px;
+    width: 615px;
     font-size: 9pt;
     margin-bottom: 5px;
   }
 
-  .profile_group {
+  .personal_modal .profile_group {
     display: grid;
     grid-template-columns: 45px 350px 80px 140px;
     align-items: center;
   }
 
-  .profile_group_title {
+  .personal_modal .profile_group_title {
     display: grid;
     grid-template-columns: 45px 350px 80px 140px;
+    align-items: center;
+    color: #888;
+  }
+
+  .company_modal .profile_group {
+    display: grid;
+    grid-template-columns: 45px 350px 160px 60px;
+    align-items: center;
+  }
+
+  .company_modal .profile_group_title {
+    display: grid;
+    grid-template-columns: 45px 350px 160px 60px;
     align-items: center;
     color: #888;
   }
@@ -129,16 +148,26 @@
     text-align: center;
   }
 
-  .profile_group .member_info {
+  .profile_group .member_info,
+  .profile_group .company_info {
     font-weight: bold;
   }
 
   .btn_group {
     display: flex;
+    justify-content: center;
   }
 
   .btn_group button {
     margin-left: 10px;
+  }
+
+  .company_modal .btn_group button {
+    width: 80px;
+  }
+  
+  .company_modal .btn_group .confirm_complete {
+    background-color: #888;
   }
 
   .admin_overlay {
@@ -302,8 +331,16 @@
         <button class="admin_company_member_search">검색</button>
         <button class="btn-close">&times;</button>
       </div>
-        <div class="desc-content">
+      <div class="desc-title">
+        <div class="company_container">
+          <div class="profile_group_title">
+            <span>이미지</span> <div class="member_info" style="text-align: center;">회원 정보</div><div class=tier>승인여부</div>
+            <div class="btn_group">
+            </div>
+          </div>
         </div>
+      </div>
+      <div class="desc-content"></div>
     </div>
   </div>
 </div>
@@ -385,7 +422,7 @@
     })
   }
   loadGeneralTypeMember()
-
+  // 일반 회원 탈퇴 조치
   $(document).on('click', '.general_member_withdraw_btn', function(e) {
     let email = $(this).attr('id')
     let url = '/home/admin/person/delete/' + email
@@ -405,16 +442,44 @@
     console.log(response)
     for (let i = 0; i < response.length; i++) {
         let company = response[i]
-        companyTemplate = 
+        let companyTemplateDom
+        if (company.companyInfoVO.confirmYn === 'N') {
+          let companyTemplate = 
             `<div class="company_container">
-                <div class="profile_group">
-                <img src="\${company.profilePic}" alt="."><div>\${company.nickname}(\${company.email})</div>
+              <div class="profile_group">
+              <img src="\${company.profilePic}" alt="."><div class="company_info">
+                \${company.nickname}(\${company.email})
+                <a href='\${company.companyInfoVO.companyRegistCertificateUrl}' download='\${company.nickname}'" class="business_license">[사업자등록증]</a>
                 </div>
                 <div class="btn_group">
-                    <button>탈퇴</button>
+                  <button>승인</button>
+                  <button>반려</button>
                 </div>
+                <div class="btn_group">
+                  <button>탈퇴</button>  
+                </div>
+              </div>
             </div>`
-        companyTemplateDom = $(companyTemplate)
+          companyTemplateDom = $(companyTemplate)
+        }
+        else {
+          let companyTemplate = 
+            `<div class="company_container">
+              <div class="profile_group">
+              <img src="\${company.profilePic}" alt="."><div class="company_info">
+                \${company.nickname}(\${company.email})
+                <a href='\${company.companyInfoVO.companyRegistCertificateUrl}' download='\${company.nickname}'" class="business_license">[사업자등록증]</a>
+                </div>
+                <div class="btn_group">
+                  <button class="confirm_complete">승인완료</button>
+                </div>
+                <div class="btn_group">
+                  <button>탈퇴</button>
+                </div>
+              </div>
+            </div>`
+          companyTemplateDom = $(companyTemplate)
+        }
         
         $('.company_modal').find('.desc-content').append(companyTemplateDom)
     }
