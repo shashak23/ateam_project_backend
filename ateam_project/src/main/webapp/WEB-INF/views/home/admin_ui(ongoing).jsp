@@ -345,6 +345,9 @@
   </div>
 </div>
 
+<!-- 공지 관리 모달 -->
+<div class="notice_modal"></div>
+
   <!-- 해시태그 관리 모달 -->
   <div class="hashtag_modal">
     <div class="hashtag_modal_content">
@@ -401,7 +404,7 @@
   })
 
   // 일반 회원 조회
-  function loadGeneralTypeMember()  {
+  function loadGeneralTypeMember() {
     $.get('/home/admin/person', function(response) {
       for (let i = 0; i < response.length; i++) {
           let member = response[i]
@@ -422,6 +425,7 @@
     })
   }
   loadGeneralTypeMember()
+
   // 일반 회원 탈퇴 조치
   $(document).on('click', '.general_member_withdraw_btn', function(e) {
     let email = $(this).attr('id')
@@ -438,50 +442,68 @@
   })
 
   // 기업 회원 조회
-  $.get('/home/admin/company', function(response) {
-    console.log(response)
-    for (let i = 0; i < response.length; i++) {
-        let company = response[i]
-        let companyTemplateDom
-        if (company.companyInfoVO.confirmYn === 'N') {
-          let companyTemplate = 
-            `<div class="company_container">
-              <div class="profile_group">
-              <img src="\${company.profilePic}" alt="."><div class="company_info">
-                \${company.nickname}(\${company.email})
-                <a href='\${company.companyInfoVO.companyRegistCertificateUrl}' download='\${company.nickname}'" class="business_license">[사업자등록증]</a>
+  function loadCompanytypeMember() {
+    $.get('/home/admin/company', function(response) {
+      console.log(response)
+      for (let i = 0; i < response.length; i++) {
+          let company = response[i]
+          let companyTemplateDom
+          if (company.companyInfoVO.confirmYn === 'N') {
+            let companyTemplate = 
+              `<div class="company_container">
+                <div class="profile_group">
+                <img src="\${company.profilePic}" alt="."><div class="company_info">
+                  \${company.nickname}(\${company.email})
+                  <a href='\${company.companyInfoVO.companyRegistCertificateUrl}' download='\${company.nickname}'" class="business_license">[사업자등록증]</a>
+                  </div>
+                  <div class="btn_group">
+                    <button>승인</button>
+                    <button>반려</button>
+                  </div>
+                  <div class="btn_group">
+                    <button class="company_member_withdraw_btn" id="\${company.email}">탈퇴</button>  
+                  </div>
                 </div>
-                <div class="btn_group">
-                  <button>승인</button>
-                  <button>반려</button>
+              </div>`
+            companyTemplateDom = $(companyTemplate)
+          }
+          else {
+            let companyTemplate = 
+              `<div class="company_container">
+                <div class="profile_group">
+                <img src="\${company.profilePic}" alt="."><div class="company_info">
+                  \${company.nickname}(\${company.email})
+                  <a href='\${company.companyInfoVO.companyRegistCertificateUrl}' download='\${company.nickname}'" class="business_license">[사업자등록증]</a>
+                  </div>
+                  <div class="btn_group">
+                    <button class="confirm_complete">승인완료</button>
+                  </div>
+                  <div class="btn_group">
+                    <button class="company_member_withdraw_btn" id="\${company.email}">탈퇴</button>
+                  </div>
                 </div>
-                <div class="btn_group">
-                  <button>탈퇴</button>  
-                </div>
-              </div>
-            </div>`
-          companyTemplateDom = $(companyTemplate)
+              </div>`
+            companyTemplateDom = $(companyTemplate)
+          }
+          
+          $('.company_modal').find('.desc-content').append(companyTemplateDom)
+      }
+    })
+  }
+  loadCompanytypeMember()
+
+  // 기업 회원 탈퇴 조치
+  $(document).on('click', '.company_member_withdraw_btn', function(e) {
+    let email = $(this).attr('id')
+    let url = '/home/admin/person/delete/' + email
+    if (confirm('정말 탈퇴 시키겠습니까?')) {
+      $.get(url, function(response) {
+        if (response.result === 'success') {
+          alert('탈퇴가 완료되었습니다.')
+          $('.desc-content').empty()
+          loadCompanytypeMember()
         }
-        else {
-          let companyTemplate = 
-            `<div class="company_container">
-              <div class="profile_group">
-              <img src="\${company.profilePic}" alt="."><div class="company_info">
-                \${company.nickname}(\${company.email})
-                <a href='\${company.companyInfoVO.companyRegistCertificateUrl}' download='\${company.nickname}'" class="business_license">[사업자등록증]</a>
-                </div>
-                <div class="btn_group">
-                  <button class="confirm_complete">승인완료</button>
-                </div>
-                <div class="btn_group">
-                  <button>탈퇴</button>
-                </div>
-              </div>
-            </div>`
-          companyTemplateDom = $(companyTemplate)
-        }
-        
-        $('.company_modal').find('.desc-content').append(companyTemplateDom)
+      })
     }
   })
 
