@@ -343,7 +343,7 @@
             <div class="flex">
             
                 <div class="btn-text-right">
-                    <button class="btn btn-primary">문제풀이</button>
+                    <button class="btn btn-primary">제한사항</button>
                     <a href="/algorithm/explanation/list">알고리즘 해설 보러가기</a>
                 </div>
                 
@@ -351,7 +351,7 @@
                     <div>
                         <form:errors path="myAnswer" element="div" cssClass="errors" />
                     </div>
-                    <div id="solution">풀이</div>
+                    <div id="solution">답변</div>
                     <label id="myAnswer" for="myAnswer"></label> <!-- 웹IDE 테이블에 신규생성? -->
                     <textarea name="myAnswer" id="myAnswer">${algorithmQuestionVO.defaultCode}</textarea>
                   
