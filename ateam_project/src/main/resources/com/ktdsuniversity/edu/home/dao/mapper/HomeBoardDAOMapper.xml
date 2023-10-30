@@ -28,6 +28,7 @@
 		     , VIEW_CNT
 		     , DELETE_YN
 		  FROM GENERAL_POST
+		 WHERE DELETE_YN = 'N'
 		 ORDER BY GENERAL_POST_ID DESC
 	</select>
 	
