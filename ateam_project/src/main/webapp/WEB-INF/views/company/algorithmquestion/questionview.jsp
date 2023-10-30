@@ -452,6 +452,10 @@
         
        
     }
+    .btn-group {
+    	margin-top: 10px;
+    	margin-bottom: 10px;
+    }
 </style>
 <body>
     
@@ -493,6 +497,7 @@
                     <label for="myAnswer"></label> <!-- 웹IDE 테이블에 신규생성? -->
                     <textarea name="myAnswer" id="myAnswer">${algorithmQuestionVO.defaultCode}</textarea>
                 </form:form>
+                <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.memberType eq 'GENERAL'}">
                 <div id="result">
                     <label for="showResult">실행 결과</label>
                 </div>
@@ -507,11 +512,11 @@
                         </c:forEach>
                     </ul>
                 </c:forEach>
-
+				</c:if>
                   <!-- 일반회원이 로그인 했을 시 -->
                   <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.memberType eq 'GENERAL'}">
                     <button id="submit-btn">제출 후 채점하기</button>
-                </c:if>
+                  </c:if>
                 <div id="checkAnswer">${popupMessage}</div>
             </div>
         
