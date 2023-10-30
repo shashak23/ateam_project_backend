@@ -86,16 +86,18 @@
      margin: 0 20px 20px 20px;
    }
  
-   .input_container > .id_container + .pw_container {
+   .input_container > .id_container,
+   .input_container > .pw_container {
      display: flex;
      margin: 3px;
      padding: 1px;
      align-items: center;
+     width: 300px;
    }
  
    .input_container .label {
      display: inline-block;
-     width: 75px;
+     width: 80px;
    }
  
    .input_container input[type="text"],
@@ -276,7 +278,7 @@
          </div>
          <div class="signup_container">
            <div>아직 회원이 아니신가요?</div>
-           <a href="/devground/signup">가입하기</a>
+           <a href="/member/signup">가입하기</a>
          </div>
          <div class="notice_container">
            <a href="#" class="link_to_voc">고객센터</a>
