@@ -645,7 +645,7 @@
             <label class="label" for="algorithmContent">문제내용</label>
             <textarea name="algorithmContent" id="algorithmContent">${algorithmQuestionVO.algorithmContent}</textarea>
             
-            <label class="label" for="algorithmSolution">문제풀이</label>
+            <label class="label" for="algorithmSolution">제한사항</label>
             <textarea name="algorithmSolution" id="algorithmSolution">${algorithmQuestionVO.algorithmSolution}</textarea>
             
             <label class="label" for="defaultCode">기본 제공 코드</label>

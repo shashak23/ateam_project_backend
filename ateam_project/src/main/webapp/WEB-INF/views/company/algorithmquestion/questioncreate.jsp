@@ -666,7 +666,7 @@
             
             <label class="label" for="defaultCode">기본 제공 코드</label>
             <textarea id="defaultCode" name="defaultCode" ></textarea>
-            <label class="label" for="algorithmSolution">문제풀이</label>
+            <label class="label" for="algorithmSolution">제한사항</label>
             <textarea name="algorithmSolution" id="algorithmSolution"></textarea>
             
 			<label id="testData">테스트 데이터</label>
