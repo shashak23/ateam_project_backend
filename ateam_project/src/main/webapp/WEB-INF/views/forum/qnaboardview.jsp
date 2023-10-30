@@ -495,12 +495,11 @@ textarea {
 </script>
 </head>
 <body>
-<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq generalPostVO.postWriter}">					
-  
-<button id="update-link" onclick="location.href='/qnaboard/update/123'">수정</button>
-<button id="delete-link" onclick="location.href='/qnaboard/delete/456'">삭제</button>
-</c:if>
 <div class="main_Container">
+	<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq generalPostVO.postWriter}">					
+		<button id="update-link" onclick="location.href='/qnaboard/update/${generalPostId}'">수정</button>
+		<button id="delete-link" onclick="location.href='/qnaboard/delete/${generalPostId}'">삭제</button>
+	</c:if>
    <p class="qna_Title">질답게시판 > </p>
    <label for="postTitle"></label>
          <div id="title_Name">${generalPostVO.postTitle}</div>

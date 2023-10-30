@@ -160,113 +160,30 @@ updateViewCount();
 <script type="text/javascript">
 $().ready(function(){
 	var input = document.querySelector('input[name=hashtag]')
-    var tagify = new Tagify(input, {
-        
-    	whitelist : ["Python","Java","Oracle","React","Vue.js","C","JavaScript", "CSS", "HTML", "Spring", "Rudy", "MYSQL", "jQuery", "Angular", "C++"],
-    	maxTags: 15,
-    	enforceWhitelist: true,
-    	
-    })
+    new Tagify(input)
 	
+    let whitelist = ["Python","Java","Oracle","React","Vue.js","C","JavaScript", "CSS", "HTML", "Spring", "HTML", "Rudy", "MYSQL", "jQuery", "Angular", "C++"];
+
 	// 폼 제출 이벤트 처리
-	$(".hashtag").submit(function(e) {
+	$('#hashtagForm').submit(function(e) {
         e.preventDefault(); // 폼 기본 동작 막기
 
     });
-	// 해시태그를 저장할 배열
-    const hashtagsArray = [];
-
-    // 해시태그 추가 버튼 클릭 이벤트 핸들러
-    function addHashtag() {
-        const hashtagInput = document.getElementById("hashtagInput");
-        const hashtag = hashtagInput.value;
-
-        if (hashtag.trim() !== "") {
-            // 중복 해시태그 체크 (중복일 경우 추가하지 않음)
-            if (!hashtagsArray.includes(hashtag)) {
-                hashtagsArray.push(hashtag);
-                displayHashtags();
-            }
-        }
-
-        // 입력 필드 초기화
-        hashtagInput.value = "";
-    }
-
-    // 해시태그 배열을 화면에 표시
-    function displayHashtags() {
-        const displayHashtagsDiv = document.getElementById("displayHashtags");
-        displayHashtagsDiv.innerHTML = "";
-
-        for (const hashtag of hashtagsArray) {
-            const hashtagSpan = document.createElement("span");
-            hashtagSpan.className = "hashtag-display";
-            hashtagSpan.textContent = hashtag;
-
-            const removeButton = document.createElement("button");
-            removeButton.textContent = "X";
-            removeButton.addEventListener("click", function () {
-                removeHashtag(hashtag);
-            });
-
-            hashtagSpan.appendChild(removeButton);
-            displayHashtagsDiv.appendChild(hashtagSpan);
-        }
-    }
-
-    // 해시태그 삭제 버튼 클릭 이벤트 핸들러
-    function removeHashtag(hashtag) {
-        const index = hashtagsArray.indexOf(hashtag);
-        if (index > -1) {
-            hashtagsArray.splice(index, 1);
-            displayHashtags();
-        }
-    }
-
-    // 저장 버튼 클릭 이벤트 핸들러
-    function saveHashtags() {
-        // hashtagsArray를 JSON 문자열로 변환
-        const hashtagsJSON = JSON.stringify(hashtagsArray);
-
-        // hashtagsJSON을 서버로 전송 (AJAX 등을 사용)
-        // 이때, 서버 컨트롤러에서 JSON 문자열을 파싱하여 처리
-
-        // 예시: AJAX로 서버로 데이터 전송 (jQuery 사용)
-        $.ajax({
-            type: "POST",
-            url: "/hashtag/post", // 서버의 엔드포인트 URL로 변경
-            data: hashtagsJSON,
-            contentType: "application/json; charset=utf-8",
-            success: function (response) {
-                // 서버 응답에 따른 동작
-                console.log("서버 응답:", response);
-            },
-            error: function (error) {
-                // 오류 처리
-                console.error("에러 발생:", error);
-            }
-        });
-    }
 });
-
-
 </script>
 </head>
 <body>
-	
+	<jsp:include page="../member/membermenu.jsp"></jsp:include>
 
-	<h1 id="title_controller"> QnA 작성 페이지</h1>
-	<div class="seperate-line"></div>
-	<form name="generalPostVO" method = "post">		
-		<div id="write-page">
-			<div class="postTitle_controller">
+	<h1> 질답게시판의 게시글 작성 </h1>
+	<form method = "post" >		
+		<div class = "grid">
 			<label for = "postTitle"> 제목 </label>
-			<input type = "text" name="postTitle" 
-					value="${generalPostVO.postTitle}"/>
-			</div>		
+			<input id = "postTitle" type = "text" name="postTitle" />
 			
-			<textarea  name="postContent" id="editor">${generalPostVO.postContent}</textarea>
-		    	<script>
+			<label for = "postContent"> 내용 </label>
+			<textarea name="postContent" id="editor"></textarea>
+		        <script>
 		    	CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
 	                // https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html#extended-toolbar-configuration-format
 	                toolbar: {
@@ -408,19 +325,13 @@ $().ready(function(){
 	                ]
 	            });  
 		        </script>
+			<div class = "btn-group">
+				<div class="right-align">
+					<input type="submit" value="저장" />
+				</div>
+			</div>
 		</div>
 	</form>
-	<div class="hashtag">
-	    <input type="text" id="hashtagInput" name="hashtag" placeholder="#해시태그">
-	</div>
-	<div class="btn-group">
-	    <div class="right-align">
-	        <input class="add_button" type="button" value="추가" onclick="addHashtag()">
-	        <input class="save_button"type="button" value="저장" onclick="saveHashtags()">
-	    </div>
-	</div>
-	<div id="displayHashtags">
-	    <!-- 여기에 해시태그가 표시될 부분 : 어떻게 구현한담? -->
-	</div>
+	
 </body>
 </html>

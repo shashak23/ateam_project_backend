@@ -12,7 +12,6 @@
    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" type="text/css" href="/css/style.css" />
-    <script src="js/lib/jquery-3.7.1.js"></script>
     <jsp:include page="../layout/header.jsp"/>
 <title>Insert title here</title>
 
@@ -31,9 +30,13 @@
       margin-top: 30px;
    }
    
-   .grid>.btn-group {
+   .btn-group {
+      position: absolute;
+      top: -30px;
+      right: 0;
       display: grid;
       grid-column: 1/3;
+      z-index: 999;
    }
    
    .grid .right-align {
@@ -157,7 +160,7 @@
        cursor: pointer;
        color: #888;
    }
-   #like-btn, #reportQnABoard  {
+   #like-btn, #reportFreeBoard  {
       margin-left: 10px;
       background-color: var(--hashtag-blue);
       border: none;
@@ -186,8 +189,6 @@
       border: 1px solid var(--light-gray);
       margin-top: 130px;
       width: 1000px;
-      height:auto;
-      overflow: hidden;
       
    }
    .button_controller {
@@ -228,11 +229,10 @@
    
 
 }
-   .update_btn {
-      position: absolute;
-      top: -30px;
-      right: 0;
-   }
+/*    .update_btn { */
+/*       top: -30px; */
+/*       right: 0; */
+/*    } */
    
    textarea {
       width: 1000px;
@@ -270,11 +270,11 @@
       height: 1px;
       margin: 10px 0px 7px 0px;
    }
-   #update-link , #delete-link {
-     position: relative;
-     left: 1400px;
-     top: 120px;
-   }
+/*    #update-link , #delete-link { */
+/*      position: relative; */
+/*      left: 1400px; */
+/*      top: 120px; */
+/*    } */
   
    
    </style>
@@ -291,11 +291,13 @@
                     var replies = response.comments;
                     for (var i = 0; i < replies.length; i++) {
                         var comment = replies[i];
+                        var member = replies[i].memberVO;
+                        
                         var commentTemplate =
                             `<div class="comment"
                                data-comment-id="\${comment.generalCommentId}"
                                 style="padding-left: \${(comment.level - 1) * 40}px">
-                                <div class="author">\${comment.nickname}</div>
+                                <div class="author">\${comment.commentWriter}</div>
                                 <div class="recommend-count">추천수: \${comment.likeCnt}</div>
                                 <div class="datetime">
                                     <span class="crtdt">등록일: \${comment.postDate}</span>
@@ -443,74 +445,73 @@
           }
 
 
-          $().ready(function() {
-          // "신고" 버튼 클릭 시 모달 열기
-          $(".report-btn").click(function() {
-             let reportType = $("#reportQnABoard").val()
-             console.log(reportType);
-              $("#report-modal").css("display", "block");
-          
-             // 모달 내부 "취소" 버튼 클릭 시 모달 닫기
-             $(".close").click(function() {
-                console.log(1)
-                 $("#report-modal").css("display", "none");
-               });
-          });
-          console.log($("jsp:param[name='reportType']"))
+       $().ready(function() {
+       // "신고" 버튼 클릭 시 모달 열기
+       $(".report-btn").click(function() {
+          let reportType = $("#reportFreeBoard").val()
+          console.log(reportType);
+           $("#report-modal").css("display", "block");
+       
+          // 모달 내부 "취소" 버튼 클릭 시 모달 닫기
+          $(".close").click(function() {
+             console.log(1)
+              $("#report-modal").css("display", "none");
+            });
+       });
+       console.log($("jsp:param[name='reportType']"))
 
-         
-           // "좋아요" 버튼 클릭 시 이벤트 발생
-           $("#like-btn").click(function () {
-               // 클라이언트에서 AJAX 요청 생성
-               $.ajax({
-                   method: "POST",
-                   url: "/qnaboard/like",
-                   data: { 
-                       "generalPostId": "${generalPostVO.generalPostId}",
-                       "likeCnt": ${generalPostVO.likeCnt}
-                     },
-                   success: function(response) {
-                       /* $("likeModal").hide(); */
-                       alert("좋아요가 눌렸습니다!!!!!!!!!!!!");
-                     },
-                   error: function(error){
-                       /* $("#likeModal").hide(); */
-                       alert("오류가 발생했습니다~~~~~~~~~~~~");
-                     }
-               })
-           });
       
-      });
+        // "좋아요" 버튼 클릭 시 이벤트 발생
+        $("#like-btn").click(function () {
+            // 클라이언트에서 AJAX 요청 생성
+            $.ajax({
+                method: "POST",
+                url: "/qnaboard/like",
+                data: { 
+                    "generalPostId": "${generalPostVO.generalPostId}",
+                    "likeCnt": ${generalPostVO.likeCnt}
+                  },
+                success: function(response) {
+                    /* $("likeModal").hide(); */
+                    alert("좋아요가 눌렸습니다!!!!!!!!!!!!");
+                  },
+                error: function(error){
+                    /* $("#likeModal").hide(); */
+                    alert("오류가 발생했습니다~~~~~~~~~~~~");
+                  }
+            })
+        });
    
    });
+
+});
+        
 </script>
 </head>
 <body>
+<div class="main_Container">
 <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq generalPostVO.postWriter}">               
-   <div class="btn-group">
-       <div class="right-align">
-           <div class="update_btn">
-            <div id="btn">
-               <a href="/freeboard/update/${generalPostVO.generalPostId}" id="update-link">수정</a>
-               <a href="/freeboard/delete/${generalPostVO.generalPostId}" id="delete-link">삭제</a>
-            </div>
-           </div>
-       </div>
-   </div>
-            </c:if>
-            
-            
-            <div class="main_Container">
-               <p class="free_Title">자유게시판 ></p>
-               <label for="postTitle"></label>
-               <div id="title_Name">${generalPostVO.postTitle}</div>
+	<div class="btn-group">
+	    <div class="right-align">
+	        <div class="update_btn">
+	         <div id="btn">
+	            <a href="/freeboard/update/${generalPostVO.generalPostId}" id="update-link">수정</a>
+	      		<a href="/freeboard/delete/${generalPostVO.generalPostId}" id="delete-link">삭제</a>
+	         </div>
+	        </div>
+	    </div>
+	</div>
+</c:if>
+   <p class="free_Title">자유게시판 ></p>
+   <label for="postTitle"></label>
+   <div id="title_Name">${generalPostVO.postTitle}</div>
    <!-- 목록보기 -->
    <button id="button-id-list" onclick="window.location.href='/freeboard/list'">목록</button>
    <div id="move_button">
    <!-- 좋아요 기능 -->
    <button id="like-btn">좋아요</button>
    <!-- 신고 기능 -->
-   <button id="reportQnABoard" value="1" class="report-btn">신고</button>
+   <button id="reportFreeBoard" value="1" class="report-btn">신고</button>
    </div>
       <!-- 모달 창 -->
          <div id="report-modal" class="report-modal">
@@ -606,7 +607,7 @@
                  <span class="close" id="cancel-window">취소</span>
                     <!-- 모달 내용 추가 -->
                   <h2>신고 내용</h2>
-                  <form name="reportVO" method="post" action="/report/view/4">
+                  <form name="reportVO" method="post" action="/report/view/2">
                      <div>
                         <label for="reportReason" >신고사유${reportVO.reportReason}
                            <select name="reportReason">

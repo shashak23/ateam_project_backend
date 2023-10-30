@@ -8,11 +8,14 @@
 package com.ktdsuniversity.edu.notice.vo;
 
 import com.ktdsuniversity.edu.member.vo.MemberVO;
+import com.ktdsuniversity.edu.util.XssIgnore;
 
 public class NoticeVO {
 	private String noticeId;
 	private String postWriter;
+	@XssIgnore
 	private String postTitle;
+	@XssIgnore
 	private String noticeContent;
 	private String postDate;
 //	@PastOrPresent(message = "게시할 날짜를 입력해주세요.")
