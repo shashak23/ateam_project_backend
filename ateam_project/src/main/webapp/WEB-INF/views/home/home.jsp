@@ -523,7 +523,6 @@
             // 팔로우 상태 가져오기
             $.get(`/follow/status/\${user_email}/\${article.postWriter}`, function(state) {
             	if(state.followYn === 'Y') {
- 		           console.log('asdfasdfsdf')
             	templateDom.find('.follow_btn').css({'background-color':'var(--blue)', 'color':'var(--white)'}).addClass('follow_on')
             	templateDom.find('.follow_btn').prepend($(`<input type="hidden" class="followId" value="\${state.followId}"/>`))
             	}
@@ -639,7 +638,7 @@
                    $.get(`/follow/status/\${user_email}/\${email}`, function(state) {
                 	   console.log(state)
                      if(state.followYn === 'Y') {
-                       templateDom.find('.follow_btn').find('button').css({'background-color':'var(--blue)', 'color':'var(--white)'}).addClass('follow_on')
+                       templateDom.find('.follow_btn').css({'background-color':'var(--blue)', 'color':'var(--white)'}).addClass('follow_on')
                        templateDom.find('.follow_btn').prepend($(`<input type="hidden" class="followId" value="\${state.followId}"/>`))
                      }
                    })
@@ -730,18 +729,15 @@
 	       	  console.log(e.currentTarget)
 	       	  if ($(e.currentTarget).hasClass('follow_on')) {
 	            $.post('/unfollow/member', content, function(result) {
-	              alert('언팔로우!')
 	              $(e.currentTarget).removeClass('follow_on')
 	              $(e.currentTarget).css({'background-color':'var(--gray)', 'color':'var(--blue)'})
 	              $('.followId').remove()
 	            })
 	       	  }
 	       	  else {
-	       		  console.log('ㅎㅎ')
 	            $.post('/follow/member', content, function(result) {
 	              console.log(result)
 	              if(result) {
-	                alert('팔로우!')
 	                $(e.currentTarget).css({'background-color':'var(--blue)', 'color':'var(--white)'})
 	                $(e.currentTarget).addClass('follow_on')
 	                $('.follow_btn').prepend(`<input type="hidden" class="followId" value="\${result.followId}"/>`)

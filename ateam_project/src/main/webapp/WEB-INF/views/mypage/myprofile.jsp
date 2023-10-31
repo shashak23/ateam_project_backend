@@ -243,13 +243,9 @@ position: absolute;
 		</div>
 		<div class="flex_main">
 			<div class="follow_chat">
-				<button class="follow_icon">
-						<img src="https://cdn-icons-png.flaticon.com/512/907/907873.png">
-						팔로우
-					 </button> 
 				<%-- <c:choose>
 					<c:when
-						test="${not empty emptysessionScope._LOGIN_USER_.email eq memberVO.email}">
+						test="${not empty sessionScope._LOGIN_USER_.email eq memberVO.email}">
 						<!-- a유저가 로그인한 경우에만 신고 버튼을 표시합니다. -->
 						<form action="/reportUser" method="post">
 							<input type="hidden" id="reportUser"
@@ -339,7 +335,7 @@ position: absolute;
 						<c:otherwise>
 							<li class="list_intro"><c:if
 									test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
-									<button data-introduce-id="${sessionScope._LOGIN_USER_.email }" class="introduce-create" ">
+									<button data-introduce-id="${sessionScope._LOGIN_USER_.email }" class="introduce-create">
 									자기소개 추가하기
 									</button>
 								</c:if></li>
@@ -533,5 +529,78 @@ position: absolute;
 	                         'color': 'var(--blue)',
 	                         'box-shadow': 'none'})
 	})
+
+	$().ready(function() {
+		
+	    let email
+	    
+	 
+	  //마이페이지 회원 이메일
+      $.get('/memberinfo/view/{generalMemberEmail}', function(response) {
+		console.log(response)
+        email = response.generalMemberEmail
+      })
+            
+            template = `
+            <c:if test="${sessionScope._LOGIN_USER_.email != memberVO.email}" >
+  				<button class="follow_icon">
+  				  <img src="https://cdn-icons-png.flaticon.com/512/907/907873.png" />
+  				  팔로우
+  				  <input type="hidden" class="followerEmail" value="${sessionScope._LOGIN_USER_.email}" />
+  	              <input type="hidden" class="followeeEmail" value="\${email}" />
+  				</button>
+  			</c:if>`
+  				
+            let templateDom = $(template)
+            
+            // 팔로우 상태 가져오기
+            user_email = `${sessionScope._LOGIN_USER_.email}`
+            email = `${memberVO.email}`
+
+		    $.get(`/follow/status/\${user_email}/\${email}`, function(state) {
+		      if(state.followYn === 'Y') {
+		        templateDom.find('.follow_icon').css({'background-color':'var(--blue)', 'color':'var(--white)'}).addClass('follow_on')
+		        templateDom.find('.follow_icon').prepend($(`<input type="hidden" class="followId" value="\${state.followId}"/>`))
+		      }
+		    })
+		    $('.follow_chat').prepend(templateDom)
+
+	    
+	  // 팔로우 토글
+	  $(document).on('click', '.follow_icon', function(e) {
+	    let userEmail = `${sessionScope._LOGIN_USER_}`
+	    let content = {
+	      "follower": `${sessionScope._LOGIN_USER_.email}`,
+	      "followee": $(this).find(".followeeEmail").val(),
+	      "followId": $(e.currentTarget).find('.followId').val()
+	    }
+	    console.log(content.follower)
+	    console.log(content.followee)
+	    console.log(content.followId)
+	    console.log(e.currentTarget)
+	    if ($(e.currentTarget).hasClass('follow_on')) {
+	      $.post('/unfollow/member', content, function(result) {
+	        alert('언팔로우!')
+	        $(e.currentTarget).removeClass('follow_on')
+	        $(e.currentTarget).css({'background-color':'var(--white)', 'color':'var(--black)'})
+	        $('.followId').remove()
+	      })
+	    }
+	    else {
+	      $.post('/follow/member', content, function(result) {
+	         console.log(result)
+	         if(result) {
+	           alert('팔로우!')
+	           $(e.currentTarget).css({'background-color':'var(--blue)', 'color':'var(--white)'})
+	           $(e.currentTarget).addClass('follow_on')
+	           $('.follow_icon').prepend(`<input type="hidden" class="followId" value="\${result.followId}"/>`)
+	         }
+	         else {
+	           alert('처리하지 못했습니다.')
+	        }
+	      })
+	    }
+	})
+})	
 </script>
 </html>

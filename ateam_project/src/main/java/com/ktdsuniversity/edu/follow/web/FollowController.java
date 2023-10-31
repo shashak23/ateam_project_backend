@@ -25,17 +25,13 @@ public class FollowController {
 	@PostMapping("/follow/member")
 	public Map<String, Object> doFollowMember(@ModelAttribute FollowVO followVO 
 			                   , @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
-		System.out.println("asdasdasdasd" + followVO.getFollower());
-		System.out.println("asdasdasdasd" + followVO.getFollowee());
-		System.out.println("asdasdasdasd" + followVO.getFollowId());
 		
 		followVO.setFollower(followVO.getFollower());
 		followVO.setFollowee(followVO.getFollowee());
 		
-		 SearchFollowVO searchFollowVO = new SearchFollowVO();
-		 searchFollowVO.setFollowerEmail(followVO.getFollower());
-		 searchFollowVO.setFolloweeEmail(followVO.getFollowee());
-		 
+		SearchFollowVO searchFollowVO = new SearchFollowVO();
+		searchFollowVO.setFollowerEmail(followVO.getFollower());
+		searchFollowVO.setFolloweeEmail(followVO.getFollowee());
 		
 		followService.unFollow(searchFollowVO);
 		
