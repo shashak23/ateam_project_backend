@@ -115,6 +115,12 @@
         .text_controller {
             position: relative;
             bottom: 20px;
+        }.loading {
+            display: none;
+        }
+        .scrollable-table {
+            max-height: 400px;
+            overflow-y: scroll;
         }
 
         
@@ -167,7 +173,8 @@
                                   <th scope="col" class="table-header_05">조회수</th>
                               </tr>
                           </thead>
-                          <tbody>
+                          <tbody id="user-list"></tbody>
+                          <div class="loading text-center" id="loading">로딩 중...</div>
                               <c:forEach items="${generalPostListVO.generalPostList}" var="qnaboard" varStatus="index">
                                       <tr>
                                           <td class="pratice_01">${(index.index + 1) * (searchForumVO.pageNo + 1)}</td>
@@ -176,7 +183,8 @@
                                               <a class="text_controller" href="/qnaboard/view/${qnaboard.generalPostId}">
                                                   ${qnaboard.postTitle}
                                               </a>
-                          </div>   
+                          </div> 
+                          <script src="https://unpkg.com/axios/dist/axios.min.js"></script>  
                                           </td>
                                           <td class="pratice_02"> ${qnaboard.memberVO.nickname}</td>
                                           <td class="pratice_03">${qnaboard.postDate}</td>
@@ -202,28 +210,73 @@
    <script src="./js/jquery.easing.1.3.js"></script>
    <script src="./js/common.js"></script>
    <script>
-      //  $(document).ready(function() {
-      //      alert('힘내용ㅎㅎ');
-           // $.get('/code/질답게시판', function(response) {
-           //     for (let i = 0; i < response.length; i++) {
-           //         let template = `
-           //             <tr>
-           //                 <td>${qnaboard.generalPostId}</td>
-           //                 <td>
-           //                     <a href="/qnaboard/view/${qnaboard.generalPostId}">
-           //                         ${qnaboard.postTitle}
-           //                     </a>
-           //                 </td>
-           //                 <td>${qnaboard.postWriter}</td>
-           //                 <td>${qnaboard.postDate}</td>
-           //                 <td>${qnaboard.viewCnt}</td>
-           //             </tr>
-           //         `;
-           //     }
-           // });
-      //  });
    </script>
    <script>
+      const userList = document.getElementById('user-list');
+      const tableContainer = document.querySelector('.board_list_ty1');
+      const loading = document.getElementById('loading');
+      let page = 1;
+      let isFetching = false;
+
+        
+        async function getYourData(page) {
+            try {
+  const response = await axios.get(`/qnaboard/list?page=${page}`, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+  });
+return response.data;
+} catch (error) {
+  console.error('Error fetching data: ', error);
+ return [];
+}
+        }
+        async function displayData() {
+            if (isFetching) return;
+            isFetching = true;
+            loading.style.display = 'block';
+            const data = await getYourData(page);
+            loading.style. display = 'none';
+
+            // 데이터를 사용해 행을 생성하는 로직을 여러분의 데이터에 맞게 수정하세요.
+            data.forEach(qnaboard => {
+                const row = document.createElement('tr');
+                row.innerHTML =`
+         
+            <td class="pratice_01">${qnaboard.generalPostId}</td>
+        <td>
+          <div class="pratice">
+            <a class="text_controller" href="/qnaboard/view/${qnaboard.generalPostId}">
+              ${qnaboard.postTitle}
+            </a>
+          </div>
+        </td>
+        <td class="pratice_02">${qnaboard.memberVO.nickname}</td>
+        <td class="pratice_03">${qnaboard.postDate}</td>
+        <td class="pratice_04">${qnaboard.viewCnt}</td>
+      `;
+      userList.appendChild(row) ;
+    });
+            page++;
+}
+            isFetching = false;
+        
+
+        tableContainer.addEventListener('scroll', () => {
+            const { scrollTop, scrollHeight, clientHeight } = tableContainer;
+            if (scrollTop + clientHeight >= scrollHeight - 5) {
+                displayData();
+            }
+            if (scrollTop === 0) {
+                userList.innerHTML = '';
+                page = 1;
+                displayData();
+            }
+        });
+
+        displayData();
+    
        // 미완성된 기능을 알려주는 모달창
        $('.incomplete').click(function() {
            $('.modal, .overlay').addClass('modal_active');
@@ -258,6 +311,7 @@
            $(this).find('a').css({'background-color': 'white', 'color': 'var(--blue)', 'box-shadow': 'none'});
        });
       
+       
    </script>
 </body>
 </html>
