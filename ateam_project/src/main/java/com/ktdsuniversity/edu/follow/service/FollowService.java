@@ -1,5 +1,7 @@
 package com.ktdsuniversity.edu.follow.service;
 
+import java.util.List;
+
 import com.ktdsuniversity.edu.follow.vo.FollowListVO;
 import com.ktdsuniversity.edu.follow.vo.FollowVO;
 import com.ktdsuniversity.edu.follow.vo.SearchFollowVO;

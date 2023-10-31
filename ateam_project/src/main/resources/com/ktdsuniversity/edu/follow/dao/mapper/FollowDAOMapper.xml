@@ -48,6 +48,22 @@
 	     AND F.FOLLOWER = #{_parameter}
 	</select>
 	
+	<select id="getFollowStatus"
+	        parameterType="com.ktdsuniversity.edu.follow.vo.SearchFollowVO"
+	        resultMap="followVOMap">
+	  SELECT F.FOLLOW_ID
+	       , F.FOLLOWER
+	       , F.FOLLOWEE
+	       , F.FOLLOW_YN
+	       , M.NICKNAME
+	       , M.PROFILE_PIC
+	    FROM FOLLOW F
+	   INNER JOIN MEMBER M
+	      ON M.EMAIL = F.FOLLOWER
+	   WHERE F.FOLLOWER = #{followerEmail}
+	     AND F.FOLLOWEE = #{followeeEmail}
+	</select>
+	
 	<insert id="doFollow"
 	        parameterType="com.ktdsuniversity.edu.follow.vo.FollowVO">
 	  INSERT INTO FOLLOW
@@ -73,6 +89,6 @@
 	        parameterType="com.ktdsuniversity.edu.follow.vo.SearchFollowVO">
 	  DELETE
 	    FROM FOLLOW
-	   WHERE FOLLOWEE = #{email}
+	   WHERE FOLLOWEE = #{followeeEmail}
 	</delete>
 </mapper>

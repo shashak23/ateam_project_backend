@@ -1,5 +1,6 @@
 package com.ktdsuniversity.edu.follow.vo;
 
+import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 
 public class FollowVO {
@@ -7,8 +8,11 @@ public class FollowVO {
 	private String followId;
 	private String follower;
 	private String followee;
+	private String followYn;
 	
 	private MemberVO memberVO;
+	
+	private GeneralPostVO generalPostVO;
 	
 	public String getFollowId() {
 		return followId;
@@ -34,6 +38,19 @@ public class FollowVO {
 	public void setMemberVO(MemberVO memberVO) {
 		this.memberVO = memberVO;
 	}
+	public String getFollowYn() {
+		return followYn;
+	}
+	public void setFollowYn(String followYn) {
+		this.followYn = followYn;
+	}
+	public GeneralPostVO getGeneralPostVO() {
+		return generalPostVO;
+	}
+	public void setGeneralPostVO(GeneralPostVO generalPostVO) {
+		this.generalPostVO = generalPostVO;
+	}
+	
 	
 	
 

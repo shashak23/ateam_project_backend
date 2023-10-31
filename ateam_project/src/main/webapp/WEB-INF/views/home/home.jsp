@@ -470,7 +470,13 @@
                   <div class="flex_left">
                     <img src="/images/꼬부기.png" alt="꼬부기" />
                     <div>
-                      <div class="writer_name"><a href="/memberinfo/view/\${email}">\${nickname}</a><span class="follow_btn incomplete">follow</span></div>
+                      <div class="writer_name">
+                        <a href="/memberinfo/view/\${email}">\${nickname}</a>
+                        <button class="follow_btn">follow
+                          <input type="hidden" class="followerEmail" value="${sessionScope._LOGIN_USER_.email}" />
+                          <input type="hidden" class="followeeEmail" value="\${email}" />
+                        </button>
+                      </div>
                       <div class="posting_date">\${article.postDate}</div>
                     </div>
                   </div>
@@ -511,6 +517,16 @@
                 templateDom.find('.bookmarkBtn').find('svg').css('fill', 'var(--blue)').addClass('bookmark_on')
                 templateDom.find('.bookmarkBtn').prepend(`<input type="hidden" class="bookmarkId" value="\${response.bookmarkId}"/>`)
               }
+            })
+            
+//             let followee_email = $('.follow_btn').val()
+            // 팔로우 상태 가져오기
+            $.get(`/follow/status/\${user_email}/\${article.postWriter}`, function(state) {
+            	if(state.followYn === 'Y') {
+ 		           console.log('asdfasdfsdf')
+            	templateDom.find('.follow_btn').css({'background-color':'var(--blue)', 'color':'var(--white)'}).addClass('follow_on')
+            	templateDom.find('.follow_btn').prepend($(`<input type="hidden" class="followId" value="\${state.followId}"/>`))
+            	}
             })
             
 
@@ -569,7 +585,13 @@
                         <div class="flex_left">
                           <img class="incomplete" src="/images/꼬부기.png" alt="꼬부기" />
                           <div>
-                            <div class="writer_name incomplete"><a href="/memberinfo/view/\${email}">\${nickname}</a><span class="follow_btn">follow</span></div>
+                            <div class="writer_name incomplete">
+                            	<a href="/memberinfo/view/\${email}">\${nickname}</a>
+                            	<button class="follow_btn">follow
+                            	  <input type="hidden" class="followerEmail" value="${sessionScope._LOGIN_USER_.email}" />
+                            	  <input type="hidden" class="followeeEmail" value="\${email}" />
+                            	</button>
+                            </div>
                             <div class="posting_date">\${article.postDate}</div>
                           </div>
                         </div>
@@ -613,6 +635,15 @@
                       }
                     })
 
+                   // 팔로우 상태 가져오기
+                   $.get(`/follow/status/\${user_email}/\${email}`, function(state) {
+                	   console.log(state)
+                     if(state.followYn === 'Y') {
+                       templateDom.find('.follow_btn').find('button').css({'background-color':'var(--blue)', 'color':'var(--white)'}).addClass('follow_on')
+                       templateDom.find('.follow_btn').prepend($(`<input type="hidden" class="followId" value="\${state.followId}"/>`))
+                     }
+                   })
+                    
                     // 게시글 유형이 자유 유형이면 대문짝만한 Q 삭제
                     if(article.boardId === 'CC-20231017-000029') {
                       templateDom.find('.big_letter').text('').css('margin-right', '0px')
@@ -636,6 +667,14 @@
 
         // 북마크 토글
         $(document).on('click', '.bookmarkBtn', function(e) {
+       	  let userEmail = `${sessionScope._LOGIN_USER_}`
+            if (userEmail === '') {
+              if(confirm('로그인이 필요한 서비스입니다. 로그인하시겠습니까?') ) {
+                window.location.href="/member/auth"
+              }
+            }
+            else {
+            	
           let body = {
           "email": `${sessionScope._LOGIN_USER_.email}`,
           "postId": $(this).find(".postId").val(),
@@ -667,7 +706,52 @@
                 alert('처리하지 못했습니다.')
               }
             })
+            }
+        	
           }
+        })
+        // 팔로우 토글
+        $(document).on('click', '.follow_btn', function(e) {
+        	let userEmail = `${sessionScope._LOGIN_USER_}`
+        	if (userEmail === '') {
+        		if(confirm('로그인이 필요한 서비스입니다. 로그인하시겠습니까?') ) {
+        			window.location.href="/member/auth"
+        		}
+        	}
+        	else {
+	       	  let content = {
+	            "follower": `${sessionScope._LOGIN_USER_.email}`,
+	            "followee": $(this).find(".followeeEmail").val(),
+	            "followId": $(e.currentTarget).find('.followId').val()
+	       	  }
+	       	  console.log(content.follower)
+	       	  console.log(content.followee)
+	       	  console.log(content.followId)
+	       	  console.log(e.currentTarget)
+	       	  if ($(e.currentTarget).hasClass('follow_on')) {
+	            $.post('/unfollow/member', content, function(result) {
+	              alert('언팔로우!')
+	              $(e.currentTarget).removeClass('follow_on')
+	              $(e.currentTarget).css({'background-color':'var(--gray)', 'color':'var(--blue)'})
+	              $('.followId').remove()
+	            })
+	       	  }
+	       	  else {
+	       		  console.log('ㅎㅎ')
+	            $.post('/follow/member', content, function(result) {
+	              console.log(result)
+	              if(result) {
+	                alert('팔로우!')
+	                $(e.currentTarget).css({'background-color':'var(--blue)', 'color':'var(--white)'})
+	                $(e.currentTarget).addClass('follow_on')
+	                $('.follow_btn').prepend(`<input type="hidden" class="followId" value="\${result.followId}"/>`)
+	              }
+	              else {
+	                alert('처리하지 못했습니다.')
+	              }
+	            })
+	       	  }
+        	}
         })
       })
     }
