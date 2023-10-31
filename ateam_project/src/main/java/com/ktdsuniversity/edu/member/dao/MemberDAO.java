@@ -2,6 +2,7 @@
  * 작성자: 김광원
  * 수정자: 장보늬(2023-10-23)
  * 수정자: 김태현(2023-10-27)
+ * 수정자: 김태현(2023-10-31)
  * 작성일자: 2023-10-19
  * 내용: 일반회원 비밀번호 수정 및 닉네임 수정
  */
@@ -28,7 +29,20 @@ public interface MemberDAO {
 	 * 로그인
 	 */
 	public String getSalt(String email);
-	public MemberVO getMember(MemberVO memberVO);
+	
+	/**
+	 * 일반 회원 조회
+	 * @param memberVO 일반 회원의 이메일을 받는다. 
+	 * @return 일반 회원의 정보를 반환한다.
+	 */
+	public MemberVO getGeneralMember(MemberVO memberVO);
+	
+	/**
+	 * 기업 회원 조회
+	 * @param memberVO 기업 회원의 이메일을 받는다.
+	 * @return 기업 회원의 정보를 반환한다.
+	 */
+	public MemberVO getCompanyMember(MemberVO memberVO);
 	
 	
 	/**

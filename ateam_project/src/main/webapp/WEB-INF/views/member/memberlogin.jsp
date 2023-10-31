@@ -82,7 +82,7 @@
      flex-direction: column;
      align-items: center;
      text-align: center;
-     padding-top: 50px;
+     padding-top: 20px;
      margin: 0 20px 20px 20px;
    }
  
@@ -110,11 +110,11 @@
    }
  
    .input_container > .remember_id {
-     margin: 0 0 5px 190px;
+     margin: 0 0 5px 181px;
    }
  
    .input_container > .login_btn {
-     margin-left: 240px;
+     margin-left: 225px;
      margin-bottom: 5px;
    }
  
@@ -228,6 +228,12 @@
      height: 70px;
      display: none;
    }
+
+   .errors {
+    text-align: center;
+    color: var(--red);
+
+   }
  </style>
  </head>
  <body>
@@ -237,17 +243,16 @@
          <button id="company_btn" class="personal_tab ">기업</button>
      </div>
      <form:form class="login_form" modelAttribute="memberVO" method="post" action="/member/auth">
-       <div>
-         <form:errors path="email" element="div" cssClass="errors"/>
-         <form:errors path="pw" element="div" cssClass="errors"/>
-         <c:if test="${not empty message}">
-           <div class="errors">
-             ${message}
-           </div>
-         </c:if> 
-       </div>
- 
        <div class="input_container">
+        <div>
+          <form:errors path="email" element="div" cssClass="errors"/>
+          <form:errors path="pw" element="div" cssClass="errors"/>
+          <c:if test="${not empty message}">
+            <div class="errors">
+              ${message}
+            </div>
+          </c:if> 
+        </div>
          <div class="id_container">
            <input type="hidden" name ="next" value="${next}" />
            <label for="email" class="label">이메일</label>
@@ -274,7 +279,7 @@
            <button>구글</button>
          </div>
          <div class="message tab_content" id="tab2">
-           기업회원으로 가입하시면 다양한 혜택을 이용하실 수 있습니다.
+           기업회원으로 가입하시면 다양한<br> 혜택을 이용하실 수 있습니다.
          </div>
          <div class="signup_container">
            <div>아직 회원이 아니신가요?</div>
@@ -289,19 +294,21 @@
    </section>
    <script>
      $('#personal_btn').click(function() {
-       console.log('개인버튼')
-       $(this).addClass('active')
-       $('#company_btn').removeClass('active')
-       $('#tab1').css('display', 'flex')
-       $('#tab2').css('display', 'none')
+      //  console.log('개인버튼')
+      //  $(this).addClass('active')
+      //  $('#company_btn').removeClass('active')
+      //  $('#tab1').css('display', 'flex')
+      //  $('#tab2').css('display', 'none')
+      window.location.href='/member/auth'
      })
  
      $('#company_btn').click(function() {
-       console.log('회사버튼')
-       $(this).addClass('active')
-       $('#personal_btn').removeClass('active')
-       $('#tab2').css('display', 'block')
-       $('#tab1').css('display', 'none')
+      //  console.log('회사버튼')
+      //  $(this).addClass('active')
+      //  $('#personal_btn').removeClass('active')
+      //  $('#tab2').css('display', 'block')
+      //  $('#tab1').css('display', 'none')
+      window.location.href='/company/auth'
      })
    </script>
  </body>

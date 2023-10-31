@@ -3,6 +3,7 @@
  * 수정자: 김광원(2023-10-20)
  * 수정자: 장보늬(2023-10-23)
  * 수정자: 김태현(2023-10-27)
+ * 수정자: 김태현(2023-10-31)
  * 작성일자: 2023-10-19
  * 내용: 일반회원 비밀번호 수정 및 닉네임 수정
  */
@@ -53,10 +54,22 @@ public class MemberDAOImpl extends SqlSessionDaoSupport implements MemberDAO{
 	public String getSalt(String email) {
 		return getSqlSession().selectOne("getSalt",email);
 	}
+	/**
+	 *  일반 회원 조회
+	 */
 	@Override
-	public MemberVO getMember(MemberVO memberVO) {
-		return getSqlSession().selectOne("getMember",memberVO);
+	public MemberVO getGeneralMember(MemberVO memberVO) {
+		return getSqlSession().selectOne("getGeneralMember",memberVO);
 	}
+	
+	/**
+	 *  기업 회원 조회
+	 */
+	@Override
+	public MemberVO getCompanyMember(MemberVO memberVO) {
+		return getSqlSession().selectOne("getCompanyMember",memberVO);
+	}
+	
 	/**
 	 * 프로필사진 조회
 	 */

@@ -3,6 +3,7 @@
  * 수정자: 김광원(2023-10-20)
  * 수정자: 장보늬(2023-10-23)
  * 수정자: 김태현(2023-10-27)
+ * 수정자: 김태현(2023-10-31)
  * 작성일자: 2023-10-19
  * 내용: 일반회원 비밀번호 수정 및 닉네임 수정
  */
@@ -34,7 +35,12 @@ public interface MemberService {
 	/**
 	 * 로그인
 	 */
-	public MemberVO getMember(MemberVO memberVO);
+	public MemberVO getGeneralMember(MemberVO memberVO);
+	
+	/**
+	 * 로그인
+	 */
+	public MemberVO getCompanyMember(MemberVO memberVO);
 	/**
 	 * 프로필사진 조회 
 	 */
