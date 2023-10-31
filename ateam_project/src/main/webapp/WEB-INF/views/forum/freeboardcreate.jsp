@@ -161,7 +161,8 @@ updateViewCount();
 			height: 30px;
 			background-color: var(--light-blue);
 			border-radius: 5px;
-		}		
+		}	
+		
 	</style>
 </head>
 <body>
@@ -324,7 +325,7 @@ updateViewCount();
 					</div>
 				</div>
 		</div>
-	  </div>	
+	</div>	
 		</form>
 		
 	</body>
