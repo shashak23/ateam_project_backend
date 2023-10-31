@@ -27,19 +27,51 @@ button, input {
   background-color: #f003;
 }
 
-fieldset {
+.personal_signup.select {
+    background-color: var(--blue);
+}
+
+.signup_container {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    padding: 30px;
-    border-radius: 10px;
-    border: 1px solid var(--light-blue);
+    display: flex;
+    flex-direction: column;
 }
 
-form legend {
-  font-size: 20px;
+fieldset {
+  width: 400px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-left: 1px solid var(--light-blue);
+  border-right: 1px solid var(--light-blue);
+  border-bottom: 1px solid var(--light-blue);
+  border-top: none;
+  padding-top: 20px;
+}
+
+.signup_btn_wrap {
+    display: flex;
+    width: 412px;
+    background-color: var(--light-blue);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    overflow: hidden;
+}
+
+.signup_btn_wrap button {
+  font-size: 15px;
+  color: var(--white);
   text-align: center;
+  width: 50%;
+  background-color: var(--light-blue);
+  border: none;
+  cursor: pointer;
+}
+
+.signup_btn_wrap button:active {
+    background-color: var(--deep-blue);
 }
 
 label {
@@ -48,7 +80,8 @@ label {
 }
 
 .line {
-    margin-bottom: 10px;
+  display: block;
+  margin: 10px 30px;
 }
 
 .line input {
@@ -72,9 +105,11 @@ label {
   overflow-y: auto;
   margin-bottom: 10px;
 }
+
 form .final_btn {
   text-align: center;
 }
+
 div.errors {
   background-color: #ff00004a;
   opacity: 0.8;
@@ -92,54 +127,73 @@ div.errors:last-child {
 </style>
 </head>
 <body>
-  <form:form modelAttribute="memberVO" method="post">
-	<div>
+  <form:form method="post">
+	  <div>
       <form:errors path="email" element="div" cssClass="errors" />
       <form:errors path="nickname" element="div" cssClass="errors" />
       <form:errors path="pw" element="div" cssClass="errors" />
       <form:errors path="confirmPw" element="div" cssClass="errors" />
     </div>	
-    <fieldset>
-      <legend>개인 회원가입</legend>
+    <div class="signup_container">
+      <div class="signup_btn_wrap">
+        <button class="personal_signup select">개인 회원가입</button>
+        <button class="company_signup">기업 회원가입</button>
+      </div>
+      <fieldset>
         <div class="line">
           <label for="email" class="label">이메일</label>
-          <input type="email" name="email" id="email" value="${memberVO.email}">
+          <input type="email" name="email" id="email" value="${memberVO.email}" />
         </div>
         <div class="line">
-		  <label for="pw" class="label">비밀번호</label>
-		  <input id="pw" type="password" name="pw" value="${memberVO.pw}"/>
-		  <br><span class="err_password"></span>
-		</div>
-		<div class="line">
-		  <label for="confirmPw" class="label">비밀번호 확인</label>
-		  <input id="confirmPw" type="password" name="confirmPw" value="${memberVO.confirmPw}"/>
-		  <br><span class="err_confirm_password"></span>
-		</div>
+          <label for="pw" class="label">비밀번호</label>
+          <input id="pw" type="password" name="pw" value="${memberVO.pw}"/>
+          <br><span class="err_password"></span>
+        </div>
+        <div class="line">
+          <label for="confirmPw" class="label">비밀번호 확인</label>
+          <input id="confirmPw" type="password" name="confirmPw" value="${memberVO.confirmPw}"/>
+          <br><span class="err_confirm_password"></span>
+        </div>
         <div class="line">
           <label for="nickname" class="label">닉네임</label>
           <input type="text" name="nickname" id="nickname" value="${memberVO.nickname}">
         </div>
-        <div>
+        <div class="line">
           <input type="checkbox" name="agree" id="agree">
           <label for="agree">모두 동의</label>
           <br>
         </div>
-        <p>
+        <div class="line">
           <div>
             <span class="personal_info_agree_title">[ 개인정보 수집 및 이용 동의 ]</span>
           </div>
           <div id="id_test_div">
           </div>
-		<div>
-        <p class="final_btn">
-   		  <input id="btn-regist" disabled="disabled" type="submit" value="작성완료" />
-        </p>
-        </div>     
+          <div>
+            <p class="final_btn">
+            <input id="btn-regist" disabled="disabled" type="submit" value="작성완료" />
+            </p>
+          </div>     
+        </div>
       </fieldset>
-    </form:form> 
+    </div>
+  </form:form> 
 </body>
 <script type="text/javascript">
 $().ready(function() {
+    // 회원가입 창 이동
+    $('.personal_signup').click(function(event) {
+        event.preventDefault()
+        // window.open('/member/signup')
+        window.location.href = '/member/signup'
+    })
+
+    $('.company_signup').click(function(event) {
+        event.preventDefault()
+        // window.open('/member/companysignup2')
+        window.location.href = '/member/companysignup'
+
+    })
 
   function checkAvailability(inputId, paramName) {
     var inputValue = $(inputId).val();

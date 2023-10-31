@@ -113,7 +113,8 @@
 		  FROM "MEMBER"
 		 WHERE EMAIL = #{email}
 		   AND PW = #{pw}
-		   AND MEMBER_TYPE = "COMPANY"
+		   AND MEMBER_TYPE = 'COMPANY'
+		   AND CONFIRM_YN = 'Y'
 	</select>
 	
 	<select id="getOneFile"

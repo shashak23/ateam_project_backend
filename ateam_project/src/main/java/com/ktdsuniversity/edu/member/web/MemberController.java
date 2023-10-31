@@ -203,11 +203,6 @@ public class MemberController {
 		return "member/companyregist";
 	}
 
-	@GetMapping("/member/companysignup2")
-	public String companyMemberSignUpTemp() {
-		return "member/companyregist2";
-	}
-
 	@PostMapping("/member/companysignup")
 	public String doCompanyMemberSignUp(@Valid @ModelAttribute CompanyVO companyVO, Model model,
 			BindingResult bindingResult, @RequestParam MultipartFile file) {
