@@ -14,16 +14,21 @@
 		, TIER_ID
 		, GITHUB_URL
 		, ADDITIONAL_EMAIL
-		, BLOG_URL)
+		, BLOG_URL
+		, TIER_SCORE
+		, TIER_DATE
+		)
 		VALUES
 		( #{email}
 		, NULL
 		, NULL
 		, NULL
-		, 'tier'
+		, 'TI-20231030-000001'
 		, NULL
 		, NULL
-		, NULL)
+		, NULL
+		, 0
+		, SYSDATE)
 	</insert>
 
 
