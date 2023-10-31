@@ -100,7 +100,7 @@
 	
 	<select id="getCompanyMember"
 			parameterType="com.ktdsuniversity.edu.member.vo.MemberVO"
-			resultType="com.ktdsuniversity.edu.member.vo.MemberVO">
+			resultMap="CompanyTypeMemberMap">
 		SELECT EMAIL
 			 , PW
 			 , SALT
@@ -110,7 +110,9 @@
 			 , SYSDATE
 			 , MEMBER_TYPE
 			 , WITHDRAW_YN
-		  FROM "MEMBER"
+		  FROM MEMBER M
+		 INNER JOIN COMPANY C
+		    ON C.COMPANY_EMAIL = M.EMAIL 
 		 WHERE EMAIL = #{email}
 		   AND PW = #{pw}
 		   AND MEMBER_TYPE = 'COMPANY'

@@ -10,7 +10,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>로그인</title>
+<title>기업 로그인</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
@@ -229,10 +229,13 @@
     display: none;
   }
 
+  .tab_content {
+    margin: 31px 0;
+  }
+
   .errors {
   text-align: center;
   color: var(--red);
-
   }
 </style>
 </head>
@@ -242,7 +245,7 @@
         <button id="personal_btn" class="personal_tab">개인</button>
         <button id="company_btn" class="personal_tab active">기업</button>
     </div>
-    <form:form class="login_form" modelAttribute="memberVO" method="post" action="/company/auth">
+    <form:form class="login_form" method="post" action="/company/auth">
       <div class="input_container">
       <div>
         <form:errors path="email" element="div" cssClass="errors"/>
@@ -259,7 +262,7 @@
           <input type="text" name="email" id="email" />
         </div>
         <div class="pw_container">
-          <label for="password" class="label">비밀번호</label>
+          <label for="pw" class="label">비밀번호</label>
           <input type="password" name="pw" id="pw" />
         </div>
         <div class="remember_id">
@@ -273,17 +276,17 @@
           <div class="textinline">또는</div>
           <div class="line"></div>
         </div>
-        <div class="button_container tab_content" id="tab1">
-          <button>카카오톡</button>
-          <button>네이버</button>
-          <button>구글</button>
+        <div class="message button_container tab_content" id="tab1">
+          <button class="not_btn">카카오톡</button>
+          <button class="not_btn">네이버</button>
+          <button class="not_btn">구글</button>
         </div>
-        <div class="message tab_content" id="tab2">
+        <div class="tab_content" id="tab2">
           기업회원으로 가입하시면 다양한<br> 혜택을 이용하실 수 있습니다.
         </div>
         <div class="signup_container">
           <div>아직 회원이 아니신가요?</div>
-          <a href="/member/signup">가입하기</a>
+          <a href="/member/signup" target="_blank">가입하기</a>
         </div>
         <div class="notice_container">
           <a href="#" class="link_to_voc">고객센터</a>
@@ -299,7 +302,7 @@
     //  $('#company_btn').removeClass('active')
     //  $('#tab1').css('display', 'flex')
     //  $('#tab2').css('display', 'none')
-    location.href('/member/auth')
+      window.location.href='/member/auth'
     })
 
     $('#company_btn').click(function() {
@@ -308,7 +311,11 @@
     //  $('#personal_btn').removeClass('active')
     //  $('#tab2').css('display', 'block')
     //  $('#tab1').css('display', 'none')
-    location.href('/company/auth')
+      window.location.href='/company/auth'
+    })
+
+    $('.not_btn').click(function(e) {
+      e.preventDefault()
     })
   </script>
 </body>

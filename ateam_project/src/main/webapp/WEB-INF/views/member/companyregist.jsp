@@ -185,13 +185,13 @@ div.errors:last-child {
 </body>
 <script type="text/javascript">
 $().ready(function() {
-    // 회원가입 창 이동
+    // 일반회원가입 창 이동
     $('.personal_signup').click(function(e) {
       e.preventDefault()
       // window.open('/member/signup')
       window.location.href = '/member/signup'
     })
-
+    //기업회원가입 창 이동
     $('.company_signup').click(function(e) {
       e.preventDefault()
       // window.open('/member/companysignup')
@@ -209,7 +209,7 @@ $().ready(function() {
         $('#file_text').val(selectedFile)
     })
 
-    // 회원가입 시 대기 문구를 띄움
+    // 회원가입 시 승인 대기 문구를 띄움
     $('#btn-regist').click(function() {
         alert('가입 완료!')
         alert('관리자가 확인 후 연락드릴 예정입니다.')

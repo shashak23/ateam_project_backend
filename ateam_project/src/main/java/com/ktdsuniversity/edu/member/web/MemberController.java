@@ -72,6 +72,7 @@ public class MemberController {
 	 */
 	@GetMapping("/member/auth")
 	public String memberSignIn() {
+		System.out.println("Member");
 		return "member/memberlogin";
 	}
 	
@@ -80,7 +81,8 @@ public class MemberController {
 	 * @return 기업 로그인 화면으로 이동
 	 */
 	@GetMapping("/company/auth")
-	public String sompanySignIn() {
+	public String companySignIn() {
+		System.out.println("Company");
 		return "member/companylogin";
 	}
 
