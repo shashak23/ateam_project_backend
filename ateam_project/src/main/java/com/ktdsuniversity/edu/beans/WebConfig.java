@@ -58,6 +58,7 @@ public class WebConfig implements WebMvcConfigurer, WebSocketConfigurer  {
 
 	      List<String> checkSessionExcludePatterns = new ArrayList<>();
 	      checkSessionExcludePatterns.add("/member/signup/**");
+	      checkSessionExcludePatterns.add("/member/companysignup/**");
 	      checkSessionExcludePatterns.add("/member/auth");
 	      checkSessionExcludePatterns.add("/company/auth");
 	      checkSessionExcludePatterns.add("/freeboard/list/**");
