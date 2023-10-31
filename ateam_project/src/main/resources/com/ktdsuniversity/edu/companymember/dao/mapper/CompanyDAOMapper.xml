@@ -30,7 +30,7 @@
 			 , CONFIRM_YN)
 		VALUES (#{companyEmail}
 			  , #{contactNumber}
-			  , #{contactName}
+			  , '담당자'
 			  , ''
 			  , ''
 			  , ''
