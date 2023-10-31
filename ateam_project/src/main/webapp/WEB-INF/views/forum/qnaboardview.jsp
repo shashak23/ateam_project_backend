@@ -306,7 +306,7 @@ textarea {
                             `<div class="comment"
                                data-comment-id="\${comment.generalCommentId}"
                                 style="padding-left: \${(comment.level - 1) * 40}px">
-                                <div class="author">\${comment.commentWriter}</div>
+                                <div class="author">\${comment.generalMemberVO.nickname}</div>
                                 <div class="recommend-count">추천수: \${comment.likeCnt}</div>
                                 <div class="datetime">
                                     <span class="crtdt">등록일: \${comment.postDate}</span>

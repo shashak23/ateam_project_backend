@@ -175,15 +175,15 @@ $().ready(function(){
 <body>
 	<jsp:include page="../member/membermenu.jsp"></jsp:include>
 
-	<h1> 질답게시판의 게시글 작성 </h1>
-	<form method = "post" >		
-		<div class = "grid">
+	<h1> 질답게시판의 작성 페이지</h1>
+	<form name="generalPostVO" method = "post">		
+		<div id="write-page">
 			<label for = "postTitle"> 제목 </label>
-			<input id = "postTitle" type = "text" name="postTitle" />
-			
+			<input id = "postTitle" type = "text" name="postTitle" 
+					value="${generalPostVO.postTitle}"/>
 			<label for = "postContent"> 내용 </label>
-			<textarea name="postContent" id="editor"></textarea>
-		        <script>
+			<textarea name="postContent" id="editor">${generalPostVO.postContent}</textarea>
+		    	<script>
 		    	CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
 	                // https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html#extended-toolbar-configuration-format
 	                toolbar: {
@@ -325,6 +325,18 @@ $().ready(function(){
 	                ]
 	            });  
 		        </script>
+			<div class="hashtag">
+				<p><label for="hashtag">해시태그</label></p>
+		   		<input type="hidden" id="hashtag_id" name='hashtag' placeholder="#해시태그" value="${generalPostHashtagVO.hashtagId}">
+		   	
+		   		<label for="general_post_hashtag_id"></label>
+		   		<input type="hidden" id="general_post_hashtag_id" value="${generalPostHashtagVO.generalPostHashtagId}"/>
+		   	
+		   		<label for="general_post_id"></label>
+		   		<input type="hidden" id="general_post_id" value="${generalPostHashtagVO.generalPostId}"/>
+		    
+		    	<button type="submit">입력</button>	
+			</div>
 			<div class = "btn-group">
 				<div class="right-align">
 					<input type="submit" value="저장" />
@@ -332,6 +344,5 @@ $().ready(function(){
 			</div>
 		</div>
 	</form>
-	
 </body>
 </html>
