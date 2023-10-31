@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="form" uri ="http://www.springframework.org/tags/form"%>
-
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -59,6 +58,14 @@ label {
     color: var(--gray);
 }
 
+#file_text {
+    cursor: default;
+}
+
+.hidden {
+    display: none;
+}
+
 .personal_info_agree_title {
   display: block;
   font-weight: bold;
@@ -92,33 +99,29 @@ div.errors:last-child {
 </style>
 </head>
 <body>
-  <form:form modelAttribute="memberVO" method="post">
+  <form:form modelAttribute="companyVO" enctype="multipart/form-data"
+             action="/member/companysignup" method="post">
 	<div>
       <form:errors path="email" element="div" cssClass="errors" />
-      <form:errors path="nickname" element="div" cssClass="errors" />
-      <form:errors path="pw" element="div" cssClass="errors" />
-      <form:errors path="confirmPw" element="div" cssClass="errors" />
+      <form:errors path="contactNumber" element="div" cssClass="errors" />
+      <form:errors path="file" element="div" cssClass="errors" />
     </div>	
     <fieldset>
-      <legend>개인 회원가입</legend>
+      <legend>개인회원 회원가입</legend>
         <div class="line">
-          <label for="email" class="label">이메일</label>
-          <input type="email" name="email" id="email" value="${memberVO.email}">
+          <label for="companyEmail" class="label">담당자 이메일</label>
+          <input type="email" name="companyEmail" id="companyEmail" value="${comapnyVO.companyEmail}">
         </div>
         <div class="line">
-		  <label for="pw" class="label">비밀번호</label>
-		  <input id="pw" type="password" name="pw" value="${memberVO.pw}"/>
+		  <label for="contactNumber" class="label">담당자 연락처</label>
+		  <input id="contactNumber" type="text" name="contactNumber" value="${companyVO.contactNumber}"/>
 		  <br><span class="err_password"></span>
 		</div>
-		<div class="line">
-		  <label for="confirmPw" class="label">비밀번호 확인</label>
-		  <input id="confirmPw" type="password" name="confirmPw" value="${memberVO.confirmPw}"/>
-		  <br><span class="err_confirm_password"></span>
-		</div>
         <div class="line">
-          <label for="nickname" class="label">닉네임</label>
-          <input type="text" name="nickname" id="nickname" value="${memberVO.nickname}">
-        </div>
+          <label for="file">사업자등록증</label>
+          <input type="text" name="file" id="file_text" readonly/>
+          <input id="file" type="file" name="file" class="hidden"/>
+		</div>
         <div>
           <input type="checkbox" name="agree" id="agree">
           <label for="agree">모두 동의</label>
@@ -140,6 +143,22 @@ div.errors:last-child {
 </body>
 <script type="text/javascript">
 $().ready(function() {
+    // 텍스트 칸을 눌러도 파일을 입력받을 수 있음
+    $('#file_text').click(function() {
+        $('#file').trigger('click')
+    })
+
+    // 파일을 등록하면 파일의 이름을 텍스트에 써줌
+    $('#file').change(function() {
+        let selectedFile = $(this).val()
+        $('#file_text').val(selectedFile)
+    })
+
+    // 회원가입 시 대기 문구를 띄움
+    $('#btn-regist').click(function() {
+        alert('가입 완료!')
+        alert('관리자가 확인 후 연락드릴 예정입니다.')
+    })
 
   function checkAvailability(inputId, paramName) {
     var inputValue = $(inputId).val();
@@ -173,9 +192,6 @@ $().ready(function() {
     checkAvailability("#email", "email");
   });
 
-  $("#nickname").keyup(function() {
-    checkAvailability("#nickname", "nickname");
-  });
   $('#agree').click(function() {
     checkAvailability("#agree", "agree");
   })
@@ -204,64 +220,64 @@ $().ready(function() {
   
 // 개인정보 동의 텍스트
 let personal_info_text = `<pre class=id_test_text>
-DevGround가 취급하는 모든 개인정보는 개인정보보호법 등
-관련법령상의 개인정보보호 규정을 준수하여 수집·보유·처리하고
+DevGround가 취급하는 모든 기업정보는 기업정보보호법 등
+관련법령상의 기업정보보호 규정을 준수하여 수집·보유·처리하고
 있습니다.
 
-DevGround는 개인정보보호법 제30조에 따라 이용자의 개인정보
+DevGround는 기업정보보호법 제30조에 따라 이용자의 기업정보
 보호 및 권익을 보호하고 이와 관련한 고충을 신속하고 원활하게
-처리할 수 있도록 다음과 같이 개인정보 처리방침을 두고 있습니다.
+처리할 수 있도록 다음과 같이 기업정보 처리방침을 두고 있습니다.
 
-<strong>제1조 (개인정보의 처리 목적)</strong>
+<strong>제1조 (기업정보의 처리 목적)</strong>
 DevGround는 회원제 서비스 이용에 따른 본인확인 및 상담처리
 관리, 진단/자문 서비스 관리, 홈페이지 이용 통계 등을 목적으로
-개인정보를 처리합니다.
+기업정보를 처리합니다.
 
-<strong>제2조 (개인정보의 처리 및 보유 기간)</strong>
-DevGround에서 처리하는 개인정보는 원칙적으로 개인정보의
+<strong>제2조 (기업정보의 처리 및 보유 기간)</strong>
+DevGround에서 처리하는 기업정보는 원칙적으로 기업정보의
 처리목적이 달성되거나 정보주체의 요청이 있을 시 지체
 없이(5일이내) 파기합니다.
-단, 다음의 개인정보는 수집․이용 목적으로 명시한 범위 내에서
+단, 다음의 기업정보는 수집․이용 목적으로 명시한 범위 내에서
 처리합니다.
 
-가. 개인정보 파일명 : 공동주택관리 홈페이지 회원정보
- ○ 개인정보항목 : 이름, 주소, 이메일, 일반전화번호,
+가. 기업정보 파일명 : 공동주택관리 홈페이지 회원정보
+ ○ 기업정보항목 : 이름, 주소, 이메일, 일반전화번호,
  휴대전화번호, 생년월일, 본인인증정보
  ○ 보유근거 : 정보주체의 동의
  ○ 보유기간 : 2년(회원 탈퇴 시 지체없이 파기)
 
-나. 개인정보 파일명 : 공동주택관리 인터넷/전화상담 신청정보
- ○ 개인정보항목 : 아이디(회원의 경우),
+나. 기업정보 파일명 : 공동주택관리 인터넷/전화상담 신청정보
+ ○ 기업정보항목 : 아이디(회원의 경우),
  본인인증정보(비회원의 경우), 이름, 주소, 이메일,
  일반전화번호, 휴대전화번호
   (※ 전화 상담만 하는 경우 : 일반전화번호, 휴대전화번호)
  ○ 보유근거 : 정보주체의 동의
  ○ 보유기간 : 3년
 
-다. 개인정보 파일명 : 공동주택관리 관리진단/기술자문 서비스
+다. 기업정보 파일명 : 공동주택관리 관리진단/기술자문 서비스
 신청정보
- ○ 개인정보항목 : 아이디(회원의 경우),
+ ○ 기업정보항목 : 아이디(회원의 경우),
  본인인증정보(비회원의 경우),
  이름, 일반전화번호, 휴대전화번호
  ○ 보유근거 : 정보주체의 동의
  ○ 보유기간 : 3년
 
-라. 개인정보 파일명 : 공동주택관리 열린강좌 신청정보
- ○ 개인정보항목 : 아이디(회원의 경우),
+라. 기업정보 파일명 : 공동주택관리 열린강좌 신청정보
+ ○ 기업정보항목 : 아이디(회원의 경우),
  본인인증정보(비회원의 경우),
  이름, 일반전화번호, 휴대전화번호
  ○ 보유근거 : 정보주체의 동의
  ○ 보유기간 : 1년
 
-마. 개인정보 파일명 : 공동주택 주민활동가 양성교육 신청정보
- ○ 개인정보항목 : 아이디(회원의 경우),
+마. 기업정보 파일명 : 공동주택 주민활동가 양성교육 신청정보
+ ○ 기업정보항목 : 아이디(회원의 경우),
  본인인증정보(비회원의 경우),
  이름,  휴대전화번호, 주소, 출생년도
  ○ 보유근거 : 정보주체의 동의
  ○ 보유기간 : 2년
  
-<strong>제3조 (개인정보의 목적 외 이용 및 제3자 제공)</strong>
-DevGround는 원칙적으로 정보주체의 개인정보를 수집·이용
+<strong>제3조 (기업정보의 목적 외 이용 및 제3자 제공)</strong>
+DevGround는 원칙적으로 정보주체의 기업정보를 수집·이용
 목적으로 명시한 범위 내에서 처리하며, 아래의 경우를 제외하고는
 정보주체의 사전 동의 없이는 본래의 목적 범위를 초과하여
 처리하거나 제3자에게 제공하지 않습니다.
@@ -273,8 +289,8 @@ DevGround는 원칙적으로 정보주체의 개인정보를 수집·이용
 정보주체 또는 제3자의 급박한 생명, 신체, 재산의 이익을 위하여
 필요하다고 인정되는 경우 라. 통계작성 및 학술연구 등의 목적을
 위하여 필요한 경우로서 특정 개인을 알아 볼 수 없는 형태로
-개인정보를 제공하는 경우
-마. 개인정보를 목적 외의 용도로 이용하거나 이를 제3자에게
+기업정보를 제공하는 경우
+마. 기업정보를 목적 외의 용도로 이용하거나 이를 제3자에게
 제공하지 아니하면 다른 법률에서 정하는 소관 업무를 수행할 수
 없는 경우로서 보호위원회의 심의·의결을 거친 경우
 바. 조약, 그 밖의 국제협정의 이행을 위하여 외국정보 또는
