@@ -67,14 +67,18 @@ public class MemberController {
 	}
 
 	/**
-	 * 로그인 관련
+	 * 일반 회원 로그인 관련
+	 * @return 일반 회원 로그인 화면으로 이동
 	 */
-
 	@GetMapping("/member/auth")
 	public String memberSignIn() {
 		return "member/memberlogin";
 	}
 	
+	/**
+	 * 기업 회원 로그인 관련
+	 * @return 기업 로그인 화면으로 이동
+	 */
 	@GetMapping("/company/auth")
 	public String sompanySignIn() {
 		return "member/companylogin";
