@@ -687,7 +687,7 @@
           console.log(e.currentTarget)
           if ($(e.currentTarget).find('svg').hasClass('bookmark_on')) {
             $.post('/unbookmark', body, function(result) {
-              alert('북마크가 취소되었습니다.!')
+              alert('북마크가 취소되었습니다.')
               $(e.currentTarget).find('svg').removeClass('bookmark_on')
               $(e.currentTarget).find('svg').css('fill', 'var(--gray)')
               $('.bookmarkId').remove()

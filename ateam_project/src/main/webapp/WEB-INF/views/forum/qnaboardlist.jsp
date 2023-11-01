@@ -123,7 +123,24 @@
             overflow-y: scroll;
         }
 
-        
+        .hashtag_wrap {
+		    display: flex;
+		    width: 250px;
+		    flex-wrap: wrap;
+		    margin-top: 30px;
+		    border: 1px solid var(--gray);
+		    border-radius: 10px;
+		    padding: 10px;
+		}
+		.ranking_wrap {
+		    display: flex;
+		    width: 250px;
+		    flex-wrap: wrap;
+		    margin-top: 30px;
+		    border: 1px solid var(--gray);
+		    border-radius: 10px;
+		    padding: 10px;
+		}
     </style>
 </head>
 <body>
@@ -150,7 +167,15 @@
                   <a href="/qnaboard/create">글쓰기</a>
               </button>
           </div>
-  
+        <!-- 해시태그 -->
+  		<div id="hashtagList">
+		  <h3>해시태그</h3>
+		    <div class="hashtag_wrap"></div>
+		<div>
+			<!-- 조회수순 랭킹 -->
+			<h3>주간 조회수순 랭킹</h3>
+				<div class="ranking_wrap"></div>
+		</div>
           <!-- 게시판 리스트 -->
           <form action="" method="">
               <fieldset class="board_list_box">
@@ -212,6 +237,45 @@
    <script>
    </script>
    <script>
+   // 월요일마다 갱신함
+   const today = new Date()
+   const currentDay = today.getDay() // (0: 일요일, 1:월요일)
+   const targetDay = 0
+   const daysAfterTargetDay = currentDay - targetDay
+
+   const prevMonday = new Date(today)
+   prevMonday.setDate(today.getDate() - daysAfterTargetDay + 1)
+   
+   const year = prevMonday.getFullYear()
+   const month = String(prevMonday.getMonth() + 1).padStart(2, '0')
+   const day = String(prevMonday.getDate()).padStart(2, '0')
+
+   const formattedMonday = year + '-' + month + '-' + day
+
+   $.get('/home/ranking/\${formattedMonday}', function(response) {
+	   console.log(response);
+     let list = response.rankings
+     for (let i = 0; i < 10; i++) {
+
+       if (list[i].boardId === 'CC-20231017-000030') {
+         let ranking_template = `
+           <li class="hot_post">
+           <a href="/freeboard/view/\${list[i].generalPostId}" target="_blank"">\${list[i].postTitle}</a>
+           </li>`
+         let ranking_templateDom = $(ranking_template)
+ 
+         $('.ranking_wrap').append(ranking_templateDom)
+       }
+     }
+   })
+	// 사이드바에 해시태그 리스트 조회해주는 코드 
+	   $.get('/code/해시태그', function(response) {
+	     for (let i = 0; i < response.length; i++) {
+	       let hash_template = `<button class="hashtag incomplete">#\${response[i].codeContent}</button>`
+	       $('.hashtag_wrap').append(hash_template)
+	     }
+	   })	
+	   
       const userList = document.getElementById('user-list');
       const tableContainer = document.querySelector('.board_list_ty1');
       const loading = document.getElementById('loading');
@@ -220,19 +284,19 @@
 
         
         async function getYourData(page) {
-            try {
-  const response = await axios.get(`/qnaboard/list?page=${page}`, {
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  });
-return response.data;
-} catch (error) {
-  console.error('Error fetching data: ', error);
- return [];
-}
+			try {
+			  const response = await axios.get(`/qnaboard/list?page=${page}`, {
+			    headers: {
+			      'Content-Type': 'application/json'
+			    }
+			  });
+			return response.data;
+			} catch (error) {
+			  console.error('Error fetching data: ', error);
+			 return [];
+			}
         }
-        async function displayData() {
+        /*async function displa yData() {
             if (isFetching) return;
             isFetching = true;
             loading.style.display = 'block';
@@ -260,10 +324,10 @@ return response.data;
     });
             page++;
 }
-            isFetching = false;
+            isFetching = false; */
         
 
-        tableContainer.addEventListener('scroll', () => {
+        /* tableContainer.addEventListener('scroll', () => {
             const { scrollTop, scrollHeight, clientHeight } = tableContainer;
             if (scrollTop + clientHeight >= scrollHeight - 5) {
                 displayData();
@@ -275,7 +339,7 @@ return response.data;
             }
         });
 
-        displayData();
+        displayData(); */
     
        // 미완성된 기능을 알려주는 모달창
        $('.incomplete').click(function() {

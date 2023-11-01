@@ -4,7 +4,10 @@
  * **/
 package com.ktdsuniversity.edu.generalpost.vo;
 
+import java.util.List;
+
 import com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO;
+import com.ktdsuniversity.edu.generalposthashtag.vo.HashtagVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 import com.ktdsuniversity.edu.util.XssIgnore;
 
@@ -25,12 +28,24 @@ public class GeneralPostVO {
 	private int viewCnt;
 	private String deleteYn;
 	
+	// 해시태그list 받아오기
+	private List<HashtagVO> hashtagVO;
+
 	// 게시글을 작성하는 회원의 정보
 	private MemberVO memberVO;
 
 	// 공통코드 받아오기
 	private CommonCodeVO commonCodeVO;
 	
+	
+	public List<HashtagVO> getHashtagVO() {
+		return hashtagVO;
+	}
+
+	public void setHashtagVO(List<HashtagVO> hashtagVO) {
+		this.hashtagVO = hashtagVO;
+	}
+
 	public String getGeneralPostId() {
 		return generalPostId;
 	}

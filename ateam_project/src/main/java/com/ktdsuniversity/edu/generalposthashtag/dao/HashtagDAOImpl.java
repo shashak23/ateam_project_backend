@@ -1,5 +1,7 @@
 package com.ktdsuniversity.edu.generalposthashtag.dao;
 
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.slf4j.Logger;
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ktdsuniversity.edu.generalpost.web.FreePostController;
+import com.ktdsuniversity.edu.generalposthashtag.vo.HashtagListVO;
 import com.ktdsuniversity.edu.generalposthashtag.vo.HashtagVO;
 
 @Repository
@@ -22,9 +25,14 @@ public class HashtagDAOImpl extends SqlSessionDaoSupport
 	}
 
 	@Override
-	public int createHashtag(HashtagVO hashtagVO) {
-		log.debug("--3----DAO 도착---------------------------------------");
-		return getSqlSession().insert("createHashtag", hashtagVO);
+	public List<HashtagVO> getAllHashtag() {
+		return getSqlSession().selectList("getAllHashtag");
 	}
+
+	@Override
+	public List<HashtagVO> getHashtagList(String postId) {
+		return getSqlSession().selectList("getHastagList");
+	}
+
 
 }

@@ -18,10 +18,6 @@ public class ReportVO {
 	private String reportContentId;
 	private String receivedReportMember;
 	private String progressYn;
-	/* 
-	 * 이미지가 안들어가면 신고 오류가 남 반드시 내용과 함께 입력해야 함
-	 */
-	@NotEmpty(message = "attachedImg는 필수 필드입니다.")
 	private String attachedImg;
 	
 	private MemberVO memberVO;

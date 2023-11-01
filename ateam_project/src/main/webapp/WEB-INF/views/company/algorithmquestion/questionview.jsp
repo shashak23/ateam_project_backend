@@ -465,12 +465,12 @@
                 
                 <label for="algorithmWriter"></label>
                 <div>${algorithmQuestionVO.memberVO.nickname}</div>
+
+                <label for="algorithmTierId"></label>
+                <div>${algorithmQuestionVO.algorithmTierId}</div>
                 
                 <label for="algorithmCategoryId"></label>
                 <div>${algorithmQuestionVO.commonCodeVO.codeContent}</div>
-                
-                <label for="algorithmTierId"></label>
-                <div>${algorithmQuestionVO.algorithmTierId}</div>
 
             </div>
             <div id="line"></div>
@@ -515,7 +515,7 @@
 				</c:if>
                   <!-- 일반회원이 로그인 했을 시 -->
                   <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.memberType eq 'GENERAL'}">
-                    <button id="submit-btn">제출 후 채점하기</button>
+                    <button id="submit-btn" >제출 후 채점하기</button>
                   </c:if>
                 <div id="checkAnswer">${popupMessage}</div>
             </div>

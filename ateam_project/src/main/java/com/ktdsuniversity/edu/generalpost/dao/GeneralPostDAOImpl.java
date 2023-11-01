@@ -1,5 +1,8 @@
 /**
- * 수정자: 장보늬(2023-10-22)
+ * 작성자: 김시하
+ * 수정자: 김시하(2023-11-01)
+ * 작성일자: 2013-10-16
+ * 내용: 질답게시글을 위한 DAO Impl입니다
  */
 package com.ktdsuniversity.edu.generalpost.dao;
 
@@ -15,9 +18,7 @@ import org.springframework.stereotype.Repository;
 
 import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
-import com.ktdsuniversity.edu.generalpost.vo.SearchForumVO;
 import com.ktdsuniversity.edu.generalpost.web.FreePostController;
-import com.ktdsuniversity.edu.member.vo.MemberVO;
 
 @Repository
 public class GeneralPostDAOImpl extends SqlSessionDaoSupport
@@ -118,6 +119,11 @@ public class GeneralPostDAOImpl extends SqlSessionDaoSupport
 	@Override
 	public List<GeneralPostVO> searchAllBoardByKeyword(AbstractSearchVO abstractSearchVO) {
 		return getSqlSession().selectList("searchAllBoardByKeyword", abstractSearchVO);
+	}
+
+	@Override
+	public List<GeneralPostVO> getViewRanking(String date) {
+		return getSqlSession().selectList("getViewRanking", date);
 	}
 	
 }

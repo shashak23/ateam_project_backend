@@ -5,6 +5,9 @@
  */
 package com.ktdsuniversity.edu.generalposthashtag.vo;
 
+import java.util.List;
+
+import com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 
@@ -12,10 +15,19 @@ public class HashtagVO {
 	private String generalPostHashtagId;
 	private String hashtagId;
 	private String generalPostId;
+	// 코드명 가져오기
+	private List<CommonCodeVO> commonCodeList;
 	// 회원 가져오기
 	private MemberVO memberVO;
 	// 게시글 가져오기
 	private GeneralPostVO generalPostVO;
+	
+	public List<CommonCodeVO> getCommonCodeList() {
+		return commonCodeList;
+	}
+	public void setCommonCodeList(List<CommonCodeVO> commonCodeList) {
+		this.commonCodeList = commonCodeList;
+	}
 	
 	public MemberVO getMemberVO() {
 		return memberVO;

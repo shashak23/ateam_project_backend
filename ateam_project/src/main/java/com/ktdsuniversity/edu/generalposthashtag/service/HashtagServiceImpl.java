@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.ktdsuniversity.edu.generalpost.web.FreePostController;
 import com.ktdsuniversity.edu.generalposthashtag.dao.HashtagDAO;
+import com.ktdsuniversity.edu.generalposthashtag.vo.HashtagListVO;
 import com.ktdsuniversity.edu.generalposthashtag.vo.HashtagVO;
 
 import jakarta.validation.Valid;
@@ -21,10 +22,17 @@ public class HashtagServiceImpl implements HashtagService{
 	@Autowired
 	private HashtagDAO hashtagDAO;
 
+	// 전체조회
 	@Override
-	public boolean createHashtags(List<String> hashtags) {
-		// TODO Auto-generated method stub
-		return false;
+	public HashtagListVO getAllHashtag() {
+		HashtagListVO hashtagListVO = new HashtagListVO();
+		hashtagListVO.setHashtagList(hashtagDAO.getAllHashtag());
+		return hashtagListVO;
+	}
+
+	@Override
+	public List<HashtagVO> getHashtagList(String postId) {
+		return hashtagDAO.getHashtagList(postId);
 	}
 
 

@@ -1,13 +1,15 @@
 /**
  * 작성자: 김시하 
- * 수정자: 김시하(2023-10-23)
+ * 수정자: 김시하(2023-11-01)
  * 작성일자: 2023-10-16
  * 내용: 질답게시판의 view와 연동되는 controller입니다 
  */
 package com.ktdsuniversity.edu.generalpost.web;
 
-import java.util.Collections;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
@@ -20,16 +22,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ktdsuniversity.edu.generalpost.service.GeneralPostService;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostListVO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
-import com.ktdsuniversity.edu.generalpost.vo.SearchForumVO;
-import com.ktdsuniversity.edu.generalposthashtag.service.HashtagService;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 import com.ktdsuniversity.edu.util.XssIgnoreUtil;
 
@@ -102,7 +101,7 @@ public class QnAPostController {
 			return modelAndView;
 		}
 		else {
-			modelAndView.setViewName("forum/qnaboardcreate");
+			modelAndView.setViewName("forum/qnaboardlist");
 			modelAndView.addObject("generalPostVO", generalPostVO);
 			return modelAndView;
 		}
@@ -113,8 +112,6 @@ public class QnAPostController {
 	public ModelAndView qnaBoardSingle(@PathVariable String generalPostId) {
 		ModelAndView view = new ModelAndView();
 		GeneralPostVO generalPostVO = generalPostService.getOneQnABoard(generalPostId);
-		//TODO TRUE: FALSE 분기 나누기
-		//generalPostService.increaseViewCount(generalPostId);
 		XssIgnoreUtil.ignore(generalPostVO); 
 
 		log.debug("--1------컨트롤러---------------------------");
@@ -237,29 +234,14 @@ public class QnAPostController {
 		}
 	}
 	
-	// 해시태그 구현
-	@Autowired
-	private HashtagService hashtagService;
-	
-	@PostMapping("/hashtag/post")
-    public ModelAndView createHashtags(@RequestBody List<String> hashtags) {
-        ModelAndView view = new ModelAndView();
-        log.debug("컨트롤러 도착");
-
-        if (hashtags == null || hashtags.isEmpty()) {
-            // 해시태그가 비어있는 경우 적절한 기본값 설정 가능
-            hashtags = Collections.singletonList("기본값");
-        }
-
-        // 해시태그 리스트를 서비스로 전달하고 작업을 수행
-        boolean isSuccess = hashtagService.createHashtags(hashtags);
-
-        if (isSuccess) {
-            view.setViewName("redirect:/qnaboard/list");
-        } else {
-            view.setViewName("forum/qnaboardcreate");
-            view.addObject("generalPostVO", new GeneralPostVO());
-        }
-        return view;
-    }
+	// 조회수 순 랭킹
+	@ResponseBody
+	@GetMapping("/qnaboard/rank/viewcnt/{data}")
+	public Map<String, Object> getWeeklyRanking(@PathVariable String date) {
+		Map<String, Object> resultMap = new HashMap<>();
+		List<GeneralPostVO> rankingList = new ArrayList<>();
+		rankingList.addAll(generalPostService.getViewRanking(date));
+		resultMap.put("rankings", rankingList);
+		return resultMap;
+	}
 }

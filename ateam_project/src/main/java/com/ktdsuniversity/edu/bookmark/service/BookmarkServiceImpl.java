@@ -45,7 +45,8 @@ public class BookmarkServiceImpl implements BookmarkService {
 	
 	@Transactional
 	@Override
-	public boolean createBookmark(BookmarkVO bookmarkVO) {
+	public boolean createBookmark(BookmarkVO bookmarkVO, BookmarkSearchVO bookmarkSearchVO) {
+		bookmarkDAO.deleteBookmark(bookmarkSearchVO);
 		return bookmarkDAO.createBookmark(bookmarkVO) > 0;
 	}
 		

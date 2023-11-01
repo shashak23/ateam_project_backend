@@ -1,7 +1,12 @@
 /**
- * 수정자: 장보늬(2023-10-22)
+ * 작성자: 김시하
+ * 수정자: 김시하(2023-11-01)
+ * 작성일자: 2023-10-16
+ * 내용: 질답 게시판을 위한 ServieImpl입니다
  * **/
 package com.ktdsuniversity.edu.generalpost.service;
+
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -9,13 +14,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.ktdsuniversity.edu.algorithmexplanation.vo.AlgorithmExplanationListVO;
 import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
 import com.ktdsuniversity.edu.generalpost.dao.GeneralPostDAO;
+import com.ktdsuniversity.edu.generalpost.dao.GeneralPostHashtagDAO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostListVO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
-import com.ktdsuniversity.edu.generalpost.vo.SearchForumVO;
 import com.ktdsuniversity.edu.generalpost.web.FreePostController;
+import com.ktdsuniversity.edu.generalposthashtag.vo.HashtagVO;
 
 @Service
 public class GeneralPostServiceImpl implements GeneralPostService{
@@ -26,6 +31,8 @@ private Logger log = LoggerFactory.getLogger(FreePostController.class);
 	@Autowired
 	private GeneralPostDAO generalPostDAO;
 	
+	@Autowired
+	private GeneralPostHashtagDAO generalPostHashtagDAO;
 	
 	// 자유게시판
 	@Transactional
@@ -84,9 +91,6 @@ private Logger log = LoggerFactory.getLogger(FreePostController.class);
 	@Transactional
 	@Override
 	public GeneralPostListVO getAllQnABoard() {
-
-		System.out.println(generalPostDAO);
-		System.out.println(generalPostDAO.getClass().getSimpleName());
 		GeneralPostListVO generalPostListVO = new GeneralPostListVO();
 		
 		generalPostListVO.setBoardCnt( generalPostDAO.getBoardAllCount());
@@ -98,23 +102,27 @@ private Logger log = LoggerFactory.getLogger(FreePostController.class);
 	@Override
 	public boolean createNewQnABoard(GeneralPostVO generalPostVO) {
 		int boardCount = generalPostDAO.createNewQnABoard(generalPostVO);
-
+		List<HashtagVO> hashtagList = generalPostVO.getHashtagVO();
+		for (HashtagVO hashtagVO : hashtagList) {
+			hashtagVO.setGeneralPostId(generalPostVO.getGeneralPostId());
+			boardCount += generalPostHashtagDAO.createPostHashtag(hashtagVO);
+		}
 		return boardCount > 0;
 	}
 
 	@Transactional
 	@Override
 	public GeneralPostVO getOneQnABoard(String generalPostId) {
-		int updateCount = generalPostDAO.increaseViewCount(generalPostId);
-		if (updateCount == 0) {
+
+		int boardCount = generalPostDAO.increaseViewCount(generalPostId);
+		if (boardCount == 0) {
 			throw new IllegalArgumentException();
 		}else {
 			return generalPostDAO.getOneFreeBoard(generalPostId);
 		}
+	
 	}
 	
-	
-
 	@Transactional
 	@Override
 	public boolean updateOneQnABoard(GeneralPostVO generalPostVO) {
@@ -153,5 +161,10 @@ private Logger log = LoggerFactory.getLogger(FreePostController.class);
 		GeneralPostListVO generalPostListVO = new GeneralPostListVO();
 		generalPostListVO.setGeneralPostList(generalPostDAO.searchAllBoardByKeyword(abstractSearchVO));
 		return generalPostListVO;
+	}
+
+	@Override
+	public List<GeneralPostVO> getViewRanking(String date) {
+		return generalPostDAO.getViewRanking(date);
 	}
 }

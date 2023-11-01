@@ -1,7 +1,6 @@
 /**
  * 작성자: 김시하
- * 수정자: 김시하(2023-10-16)
- * 수정자: 장보늬(2023-10-22)
+ * 수정자: 김시하(2023-11-01)
  * 작성일자: 2023-10-16
  * 내용: 자유 및 질답게시판의 mapper를 실행하기 위한 interface DAO입니다.
  */
@@ -11,7 +10,6 @@ import java.util.List;
 
 import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
-import com.ktdsuniversity.edu.generalpost.vo.SearchForumVO;
 
 public interface GeneralPostDAO {
 	// 게시글 수 
@@ -46,7 +44,8 @@ public interface GeneralPostDAO {
 	public int updateLikeQnAPost(GeneralPostVO generalPostVO);
 	// 내 게시글 조회
 	public List<GeneralPostVO> getMyPost(GeneralPostVO generalPostVO);
-	
 	// 통합검색
 	public List<GeneralPostVO> searchAllBoardByKeyword(AbstractSearchVO abstractSearchVO);
+	// 조회수순 랭킹
+	public List<GeneralPostVO> getViewRanking(String date);
 }
