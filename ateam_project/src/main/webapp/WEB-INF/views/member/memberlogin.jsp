@@ -274,9 +274,10 @@
           <div class="line"></div>
         </div>
         <div class="button_container tab_content" id="tab1">
-          <button><a class="p-2" href="https://kauth.kakao.com/oauth/authorize?client_id=2a9927f831835710fa3d3d37b078389c&redirect_uri=    
-			http://localhost:8080/member/kakaoLogin&response_type=code">
-   			 카카오톡</a></button>
+          <button>
+          <a class="p-2" href="https://kauth.kakao.com/oauth/authorize?client_id=2a9927f831835710fa3d3d37b078389c&redirect_uri=http://localhost:8080/member/kakaoLogin&response_type=code">
+   			 카카오톡
+   		  </a></button>
           <button class="not_btn">네이버</button>
           <button class="not_btn">구글</button>
         </div>
