@@ -1,29 +1,28 @@
 <!-- 작성자: 김태현
-	 작성일: 2023-10-26
-	 내용: 로그인 화면을 표시하는 파일입니다. -->
-
-     <%@ page language="java" contentType="text/html; charset=UTF-8"
-     pageEncoding="UTF-8"%>
- <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
- <%@ taglib prefix="c" uri="jakarta.tags.core" %>
- <!DOCTYPE html>
- <html>
- <head>
- <meta charset="UTF-8">
- <title>개인 로그인</title>
- <link rel="preconnect" href="https://fonts.googleapis.com">
- <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
- <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
- <!-- <link rel="stylesheet" href="/css/style.css"> -->
- <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
- <script src="/js/lib/jquery-3.7.1.js"></script>
- <link rel="stylesheet" href="/css/style.css">
- <style>
+  작성일: 2023-10-26
+  내용: 로그인 화면을 표시하는 파일입니다. -->
+    <%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>로그인</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
+<!-- <link rel="stylesheet" href="/css/style.css"> -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+<script src="/js/lib/jquery-3.7.1.js"></script>
+<link rel="stylesheet" href="/css/style.css">
+<style>
   *:lang(en) {
-    font-family: 'Open Sans', sans-serif;
+      font-family: 'Open Sans', sans-serif;
   }
   *:lang(ko-KR) {
-    font-family: 'Noto Sans KR', sans-serif;
+      font-family: 'Noto Sans KR', sans-serif;
   }
   * {
     margin: 0;
@@ -149,12 +148,12 @@
   }
 
   .line_container > .line:first-child {
-    top: 10px;
+    top: 12px;
     left: 0;
   }
     
   .line_container > .line:last-child {
-    top: 10px;
+    top: 12px;
     right: 0;
   }
 
@@ -228,11 +227,9 @@
     height: 70px;
     display: none;
   }
-
   .errors {
   text-align: center;
   color: var(--red);
-
   }
 </style>
 </head>
@@ -243,7 +240,6 @@
         <button id="company_btn" class="personal_tab">기업</button>
     </div>
     <form:form class="login_form" method="post" action="/member/auth">
-      <div class="input_container">
       <div>
         <form:errors path="email" element="div" cssClass="errors"/>
         <form:errors path="pw" element="div" cssClass="errors"/>
@@ -282,7 +278,6 @@
           <button class="not_btn">구글</button>
         </div>
         <div class="message tab_content" id="tab2">
-          기업회원으로 가입하시면 다양한<br> 혜택을 이용하실 수 있습니다.
         </div>
         <div class="signup_container">
           <div>아직 회원이 아니신가요?</div>
