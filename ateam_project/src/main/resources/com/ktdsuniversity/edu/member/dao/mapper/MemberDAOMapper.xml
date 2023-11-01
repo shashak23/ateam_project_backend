@@ -256,12 +256,14 @@
         , SOCAIL_EMAIL
         , SOCIAL_TYPE
         , SOCIAL_NICKNAME
-        , DELETE_YN)    
+        , DELETE_YN
+        , SOCIAL_TOKEN)    
         VALUES
         ( 'SC-' || TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_SOCIAL_PK.NEXTVAL, 6, '0')
         , #{email}
         , 'kakao'
         , #{nickname}
-        , 'N')
+        , 'N'
+        , #{accessToken})
     </insert>
 </mapper>
