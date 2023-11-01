@@ -88,6 +88,63 @@ position: absolute;
     left: 83%;
     transform: translate(-50%, -50%);
 }
+    .btn-primary, a {
+        padding: 5px 8px;
+        text-decoration: none;
+        color: #4052f7;
+        background-color: #d0eaff;
+        margin-right: 15px;
+        border-radius: 10px;
+        border: 0px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .create_container {
+        visibility: hidden;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -80%);
+        z-index: 10;
+        box-shadow: 0 0 10px #19191948;
+        border: 1px solid;
+        width: 500px;
+        padding: 30px;
+        opacity: 0;
+        border: none;
+        border-radius: 5px;
+        background-color: #ffffff;
+        transition: 0.5s;
+    }
+
+    .create_container.active {
+        visibility: visible;
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+
+    .create_container > * {
+        margin-bottom: 10px;
+    }
+
+    .btn-close {
+        position: absolute;
+        top: 6px;
+        right: 10px;
+        background-color: transparent;
+        font-size: 18px;
+        color: #888;
+        cursor: pointer;
+    }
+
+    .btn-close:hover {
+        color: #191919;
+    }
+    
+    .create_title {
+        text-align: center;
+    }
 
 </style>
 <link rel="stylesheet" type="text/css" href="/css/myProfile.css" />
@@ -347,9 +404,13 @@ position: absolute;
 		</div>
 	</div>
 	<div class="follow">
-		<a href="#">팔로워</a> <a href="#">팔로잉</a>
-		<p></p>
+	  <div class="btn-close">&times;</div>
+	  <div class="create_title">팔로워</div>
+	  <div>
+	    모달창에 띄울 내용
+	  </div>
 	</div>
+	<div class="overlay"></div>
 	<div class="related_link">
 		<img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="Icon 1" id="githubIcon">
         <img src="https://w7.pngwing.com/pngs/863/247/png-transparent-email-computer-icons-email-miscellaneous-angle-text.png" alt="Icon 2" id="emailIcon">
@@ -492,13 +553,13 @@ position: absolute;
 
 </body>
 <script>
-	//미완성된 기능을 알려주는 모달창
-	$('.incomplete').click(function() {
-	  $('.modal, .overlay').addClass('modal_active')
-	})
-	$('.overlay').click(function() {
-	  $('.modal, .overlay').removeClass('modal_active')
-	})	
+    //모달 실행을 위한 문장
+    $('.btn-primary').click(function() {
+        $('.create_container, .overlay').addClass('active')
+    })
+    $('.btn-close, .overlay').click(function() {
+        $('.create_container, .overlay').removeClass('active')
+    })
 	
 	// 스크롤 버튼, IDE
 	let calcScrollValue = () => {
