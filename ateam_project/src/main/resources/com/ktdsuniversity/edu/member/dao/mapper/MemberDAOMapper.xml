@@ -237,4 +237,31 @@
 		   SET 	PROFILE_PIC='https://w7.pngwing.com/pngs/384/868/png-transparent-person-profile-avatar-user-basic-ui-icon.png'
 		 WHERE EMAIL=#{email}
 	</update>
+	    <select id="findkakao"
+              resultType="com.ktdsuniversity.edu.member.vo.SocialVO"
+              parameterType="java.util.HashMap">
+        SELECT SOCIAL_ID
+             , SOCAIL_EMAIL
+             , SOCIAL_TYPE
+             , SOCIAL_NICKNAME
+             , DELETE_YN
+          FROM SOCIAL
+         WHERE SOCAIL_EMAIL = #{email}
+           AND SOCIAL_NICKNAME = #{nickname}
+    </select>
+    <insert id="kakaoinsert"
+            parameterType="java.util.HashMap">
+        INSERT INTO SOCIAL
+        ( SOCIAL_ID
+        , SOCAIL_EMAIL
+        , SOCIAL_TYPE
+        , SOCIAL_NICKNAME
+        , DELETE_YN)    
+        VALUES
+        ( 'SC-' || TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_SOCIAL_PK.NEXTVAL, 6, '0')
+        , #{email}
+        , 'kakao'
+        , #{nickname}
+        , 'N')
+    </insert>
 </mapper>
