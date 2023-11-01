@@ -16,7 +16,7 @@ public interface BookmarkService {
 	public BookmarkVO getBookmarkStatus(BookmarkSearchVO bookmarkSearchVO);
 	public List<BookmarkVO> getFreeboardBookmark(String email);
 	public List<BookmarkVO> getQnaboardBookmark(String email);
-	public boolean createBookmark(BookmarkVO bookmarkVO);
+	public boolean createBookmark(BookmarkVO bookmarkVO, BookmarkSearchVO bookmarkSearchVO);
 	public boolean deleteBookmark(BookmarkSearchVO bookmarkSearchVO);
 	public boolean toggleBookmark(String bookmarkId);
 }

@@ -166,14 +166,17 @@ public class CompanyNewsController {
 			                        , @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 		logger.debug("PathVariable: " + companyNewsPostId);
 		
-        companyNewsService.deleteOneCompanyNews(companyNewsPostId);
-		
         CompanyNewsVO companyNewsVO = companyNewsService.getOneCompanyNews(companyNewsPostId, false);
 		
 		if(!companyNewsVO.getPostWriter().equals(memberVO.getEmail())) {
 			throw new PageNotFoundException("잘못된 접근입니다.");
 		}
-		
-		return "redirect:/news/list";
+		boolean isSuccess = companyNewsService.deleteOneCompanyNews(companyNewsPostId);
+		if (isSuccess) {
+			return "redirect:/news/list";
+		}
+		else {
+			return "redirect:/news/view/{companyNewsPostId}";
+		}
 	}
 }

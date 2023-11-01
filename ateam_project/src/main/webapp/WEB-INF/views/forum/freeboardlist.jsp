@@ -12,11 +12,17 @@
          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
          <script src="/js/lib/jquery-3.7.1.js"></script> 
          <link rel="stylesheet" href="/css/style.css"> 
+         <script src="./js/swiper.min.js"></script>
+         <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+         <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
         <jsp:include page="../layout/header.jsp"/>
         <style>
+            wrap-wrap{
+            	position: grid;
+            }
             
             table {
-            border-collapse: collapse;
+            	border-collapse: collapse;
             }
             .bbs_title {
                 font-weight: bold;
@@ -100,11 +106,9 @@
 
             #button_list_1 tr th {
                 background-color: var(--light-gray);
-               
                 border-bottom: 1px solid var(--dark-gray);
                 color: var(--dark-gray);
                 
-     
             }
             
             .table-header_01 {                        
@@ -124,11 +128,39 @@
                 position: relative;
                 bottom: 20px;
              }
+             /*swiper제어*/
+       
+            .swiper-slide img {
+                position: relative;
+            max-width: 100%;
+            height: auto;
+            overflow: hidden; /* 이미지가 부모 컨테이너를 벗어나지 않도록 함 */
+            }
+
+            .swiper-button-prev,
+            .swiper-button-next {
+                margin-top: -100px;
+            }
         </style>
 </head>
 <body>
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <img src="https://asset.programmers.co.kr/image/origin/production/competition/167560/e8ef54c9-7dd9-460c-a1fb-5f4845a64e0f.jpg" alt="데브 게시판 표시">
+            </div>
+            <div class="swiper-slide">
+                <img src="https://asset.programmers.co.kr/image/origin/production/competition/166055/a73b3c4b-1be8-4c34-b5ff-7fd691bf529b.png" alt="데브 게시판 표시">
+            </div>
+            <div class="swiper-slide">
+                <img src="https://asset.programmers.co.kr/image/origin/production/competition/168189/e31a3bf1-8c84-4169-81af-c74a9aa1880e.jpg" alt="데브 게시판 표시">
+            </div>
+          </div>
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+    </div>
     <p class="bbs_title">게시글 목록</p>
-    <!-- 게시물 검색 -->
+    	<!-- 게시물 검색 -->
         <div class="button_list">
                 <select class="select">
                     <option value="제목">제목</option>
@@ -138,14 +170,11 @@
                 <button type="submit" class="btn_st_2">
                     <a href="#">조회</a>
                 </button>
-                <!-- <button type="submit" class="btn_st_3">
-                    <a href="/freeboard/create">등록</a>
-                </button> -->
-    </div>
+                
+    	</div>
     <div id="wrap" class="wrap">
         <!-- 본문 -->
         <section id="container" class="container">
-            
             <main class="contents">         
                     <!-- 게시판 리스트 -->
                     <form action="#" method="">
@@ -199,30 +228,10 @@
                                 <a href="/freeboard/create">글쓰기</a>
                             </button>
                         </div>
-                        <div id="page">
-                            <a class="active_page" href="javascript:void(0)">1</a>
-                            <a href="#">2</a>
-                            <a href="#">3</a>
-                            <a href="#">4</a>
-                            <a href="#">5</a>
-                            <a href="#">다음</a>
-                        </div>
+                        
                     </form>
-    </div>        
-            </main>
-            <!-- <footer id="footer" class="footer">
-                <div class="inner">
-                    <address>
-                        <span>상호명 : SNAPCHAT</span>
-                        <span>개인정보책임관리자 : 홍길동</span>
-                        <span>주소 : kt ds</span>
-                        <span>사업자등록번호 : 313-34432</span>
-                    </address>
-                    <div class="copyright">
-                        &copy; 2023 by SNAPCHAT. All rights reserved
-                    </div>
-                </div>
-            </footer> -->
+    		</div> 
+
     <jsp:include page="../layout/footer.jsp" />
 </body>
     <script>
@@ -290,5 +299,13 @@
                                 'color': 'var(--blue)',
                                 'box-shadow': 'none'})
         })
+        var swiper = new Swiper('.swiper-container', {
+           slidesPerView: 1, // 한 번에 보일 슬라이드 개수
+           spaceBetween: 10, // 슬라이드 사이 간격
+           navigation: {
+               nextEl: '.swiper-button-next', // 다음 버튼의 클래스
+               prevEl: '.swiper-button-prev'  // 이전 버튼의 클래스
+           }
+       });
     </script>
 </html>

@@ -128,7 +128,7 @@ public class HomeController {
 	}
 	
 	@ResponseBody
-	@GetMapping("home/maincontent/commentcnt")
+	@GetMapping("/home/maincontent/commentcnt")
 	public List<HomecommentCntVO> getAllGeneralCommentCnt() {
 		return homeBoardService.getAllGeneralCommentCnt();
 	}

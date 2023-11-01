@@ -118,14 +118,28 @@ $(document).on('click', '.incomplete', function() {
 	}
 
 	#contents{
-		margin-top: 150px;
+		margin-top: 120px;
 		border-radius: 5px;
 		border: 1px solid;
-		margin-bottom: 100px;
 	}
 
 	#contents > #contents_text{
 		margin:20px;
+	}
+
+	#back{
+		width:80px;
+		height:40px;		
+		border:none;
+		border-radius: 10px;
+		cursor: pointer;
+		margin: 20px 0px 40px 10px;
+		transition: box-shadow 0.1s ease;
+		margin: 15px 0px 30px 1000px;
+	}
+
+	#back:hover{
+		box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); 
 	}
 </style>
 </head>
@@ -150,6 +164,9 @@ $(document).on('click', '.incomplete', function() {
 		<div id="contents">
 			<div id="contents_text">${algorithmExplanationVO.postContent}</div>
 		</div>
+		<button id="back" onclick="location.href='/algorithm/explanation/list';">목록</button>
+			<!-- <a href="/algorithm/question/list" id="back">목록</a> -->
+		
 
 			<div class="btn-group">
 				<!-- 로그인 하지 않았을 때 -->

@@ -3,6 +3,7 @@
  * 수정자: 신진영(2023-10-19)
  * 수정자: 장보늬(2023-10-20)
  * 수정자: 김광원(2023-10-21)
+ * 수정자: 김태현(2023-10-31)
  * 작성일자: 2023-10-19
  * 내용: 
  */
@@ -66,16 +67,46 @@ public class MemberController {
 	}
 
 	/**
-	 * 로그인 관련
+	 * 일반 회원 로그인 관련
+	 * @return 일반 회원 로그인 화면으로 이동
 	 */
-
 	@GetMapping("/member/auth")
-	public String signIn() {
+	public String memberSignIn() {
+		System.out.println("Member");
 		return "member/memberlogin";
+	}
+	
+	/**
+	 * 기업 회원 로그인 관련
+	 * @return 기업 로그인 화면으로 이동
+	 */
+	@GetMapping("/company/auth")
+	public String companySignIn() {
+		System.out.println("Company");
+		return "member/companylogin";
 	}
 
 	@PostMapping("/member/auth")
-	public String doSignIn(@Validated(MemberAuthGroup.class) @ModelAttribute MemberVO memberVO,
+	public String doMemberSignIn(@Validated(MemberAuthGroup.class) @ModelAttribute MemberVO memberVO,
+			BindingResult bindingResult, @RequestParam(required = false, defaultValue = "/devground/home") String next,
+			HttpSession session, Model model) {
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("memberVO", memberVO);
+			return "member/memberlogin";
+		}
+		MemberVO member = memberService.getGeneralMember(memberVO);
+//		System.out.println(member.getEmail());
+		session.setAttribute("_LOGIN_USER_", member);
+		
+		if(next.equals("http://localhost:8080/member/signup")) {
+			next = "/devground/home";
+		}
+
+		return "redirect:" + next;
+	}
+	
+	@PostMapping("/company/auth")
+	public String doCompanySignIn(@Validated(MemberAuthGroup.class) @ModelAttribute MemberVO memberVO,
 			BindingResult bindingResult, @RequestParam(required = false, defaultValue = "/devground/home") String next,
 			HttpSession session, Model model) {
 		if (bindingResult.hasErrors()) {
@@ -83,7 +114,7 @@ public class MemberController {
 			return "member/memberlogin";
 		}
 
-		MemberVO member = memberService.getMember(memberVO);
+		MemberVO member = memberService.getCompanyMember(memberVO);
 //		System.out.println(member.getEmail());
 		session.setAttribute("_LOGIN_USER_", member);
 		

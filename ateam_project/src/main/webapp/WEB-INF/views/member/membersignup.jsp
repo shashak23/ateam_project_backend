@@ -27,19 +27,51 @@ button, input {
   background-color: #f003;
 }
 
-fieldset {
+.personal_signup.select {
+    background-color: var(--blue);
+}
+
+.signup_container {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    padding: 30px;
-    border-radius: 10px;
-    border: 1px solid var(--light-blue);
+    display: flex;
+    flex-direction: column;
 }
 
-form legend {
-  font-size: 20px;
+fieldset {
+  width: 400px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-left: 1px solid var(--light-blue);
+  border-right: 1px solid var(--light-blue);
+  border-bottom: 1px solid var(--light-blue);
+  border-top: none;
+  padding-top: 20px;
+}
+
+.signup_btn_wrap {
+    display: flex;
+    width: 412px;
+    background-color: var(--light-blue);
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    overflow: hidden;
+}
+
+.signup_btn_wrap button {
+  font-size: 15px;
+  color: var(--white);
   text-align: center;
+  width: 50%;
+  background-color: var(--light-blue);
+  border: none;
+  cursor: pointer;
+}
+
+.signup_btn_wrap button:active {
+    background-color: var(--deep-blue);
 }
 
 label {
@@ -48,7 +80,8 @@ label {
 }
 
 .line {
-    margin-bottom: 10px;
+  display: block;
+  margin: 10px 30px;
 }
 
 .line input {
@@ -69,12 +102,14 @@ label {
   width: 350px;
   height: 180px;
   font-size: var(--font-x-small);
-  overflow: auto;
+  overflow-y: auto;
   margin-bottom: 10px;
 }
+
 form .final_btn {
   text-align: center;
 }
+
 div.errors {
   background-color: #ff00004a;
   opacity: 0.8;
@@ -84,58 +119,81 @@ div.errors {
 div.errors:last-child {
   margin-bottom: 15px;
 }
+
+#id_test_div {
+  display: block;
+  background-color: ghostwhite;
+}
 </style>
-<script src="/js/lib/jquery-3.7.1.js"></script>
 </head>
 <body>
-  <form:form modelAttribute="memberVO" method="post">
-	<div>
+  <form:form method="post">
+	  <div>
       <form:errors path="email" element="div" cssClass="errors" />
       <form:errors path="nickname" element="div" cssClass="errors" />
       <form:errors path="pw" element="div" cssClass="errors" />
       <form:errors path="confirmPw" element="div" cssClass="errors" />
     </div>	
-    <fieldset>
-      <legend>개인회원 회원가입</legend>
+    <div class="signup_container">
+      <div class="signup_btn_wrap">
+        <button class="personal_signup select">개인 회원가입</button>
+        <button class="company_signup">기업 회원가입</button>
+      </div>
+      <fieldset>
         <div class="line">
           <label for="email" class="label">이메일</label>
-          <input type="email" name="email" id="email" value="${memberVO.email}">
+          <input type="email" name="email" id="email" value="${memberVO.email}" />
         </div>
         <div class="line">
-		  <label for="pw" class="label">비밀번호</label>
-		  <input id="pw" type="password" name="pw" value="${memberVO.pw}"/>
-		  <br><span class="err_password"></span>
-		</div>
-		<div class="line">
-		  <label for="confirmPw" class="label">비밀번호 확인</label>
-		  <input id="confirmPw" type="password" name="confirmPw" value="${memberVO.confirmPw}"/>
-		  <br><span class="err_confirm_password"></span>
-		</div>
+          <label for="pw" class="label">비밀번호</label>
+          <input id="pw" type="password" name="pw" value="${memberVO.pw}"/>
+          <br><span class="err_password"></span>
+        </div>
+        <div class="line">
+          <label for="confirmPw" class="label">비밀번호 확인</label>
+          <input id="confirmPw" type="password" name="confirmPw" value="${memberVO.confirmPw}"/>
+          <br><span class="err_confirm_password"></span>
+        </div>
         <div class="line">
           <label for="nickname" class="label">닉네임</label>
           <input type="text" name="nickname" id="nickname" value="${memberVO.nickname}">
         </div>
-        <div>
+        <div class="line">
           <input type="checkbox" name="agree" id="agree">
           <label for="agree">모두 동의</label>
           <br>
         </div>
-        <p>
+        <div class="line">
           <div>
             <span class="personal_info_agree_title">[ 개인정보 수집 및 이용 동의 ]</span>
           </div>
-          <div id="id_test_div" style="display:block;">
+          <div id="id_test_div">
           </div>
-		<div>
-        <p class="final_btn">
-   		  <input id="btn-regist" disabled="disabled" type="submit" value="작성완료" />
-        </p>
-        </div>     
+          <div>
+            <p class="final_btn">
+            <input id="btn-regist" disabled="disabled" type="submit" value="작성완료" />
+            </p>
+          </div>     
+        </div>
       </fieldset>
-    </form:form> 
+    </div>
+  </form:form> 
 </body>
 <script type="text/javascript">
 $().ready(function() {
+    // 회원가입 창 이동
+    $('.personal_signup').click(function(event) {
+        event.preventDefault()
+        // window.open('/member/signup')
+        window.location.href = '/member/signup'
+    })
+
+    $('.company_signup').click(function(event) {
+        event.preventDefault()
+        // window.open('/member/companysignup2')
+        window.location.href = '/member/companysignup'
+
+    })
 
   function checkAvailability(inputId, paramName) {
     var inputValue = $(inputId).val();
@@ -205,9 +263,8 @@ DevGround가 취급하는 모든 개인정보는 개인정보보호법 등
 있습니다.
 
 DevGround는 개인정보보호법 제30조에 따라 이용자의 개인정보
-보호 및 권익을 보호하고 이와 관련한 고충을 신속하고
-원활하게 처리할 수 있도록 다음과 같이 개인정보 처리방침을
-두고 있습니다.
+보호 및 권익을 보호하고 이와 관련한 고충을 신속하고 원활하게
+처리할 수 있도록 다음과 같이 개인정보 처리방침을 두고 있습니다.
 
 <strong>제1조 (개인정보의 처리 목적)</strong>
 DevGround는 회원제 서비스 이용에 따른 본인확인 및 상담처리
@@ -218,8 +275,8 @@ DevGround는 회원제 서비스 이용에 따른 본인확인 및 상담처리
 DevGround에서 처리하는 개인정보는 원칙적으로 개인정보의
 처리목적이 달성되거나 정보주체의 요청이 있을 시 지체
 없이(5일이내) 파기합니다.
-단, 다음의 개인정보는 수집․이용 목적으로 명시한 범위
-내에서 처리합니다.
+단, 다음의 개인정보는 수집․이용 목적으로 명시한 범위 내에서
+처리합니다.
 
 가. 개인정보 파일명 : 공동주택관리 홈페이지 회원정보
  ○ 개인정보항목 : 이름, 주소, 이메일, 일반전화번호,
@@ -259,9 +316,9 @@ DevGround에서 처리하는 개인정보는 원칙적으로 개인정보의
  
 <strong>제3조 (개인정보의 목적 외 이용 및 제3자 제공)</strong>
 DevGround는 원칙적으로 정보주체의 개인정보를 수집·이용
-목적으로 명시한 범위 내에서 처리하며, 아래의 경우를
-제외하고는 정보주체의 사전 동의 없이는 본래의 목적 범위를
-초과하여 처리하거나 제3자에게 제공하지 않습니다.
+목적으로 명시한 범위 내에서 처리하며, 아래의 경우를 제외하고는
+정보주체의 사전 동의 없이는 본래의 목적 범위를 초과하여
+처리하거나 제3자에게 제공하지 않습니다.
 
 가. 정보주체로부터 별도의 동의를 받는 경우
 나. 법률에 특별한 규정이 있는 경우

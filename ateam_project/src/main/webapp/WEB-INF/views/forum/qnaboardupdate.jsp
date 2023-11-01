@@ -1,18 +1,115 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri ="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<script src="/js/lib/jquery-3.7.1.js"></script>
+   <meta charset="UTF-8">
+    <title>Dev ground</title>
+         <link rel="preconnect" href="https://fonts.googleapis.com"> 
+         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet"> 
+         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" /> 
+         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+         <script src="/js/lib/jquery-3.7.1.js"></script> 
+         <link rel="stylesheet" href="/css/style.css"> 
+        <jsp:include page="../layout/header.jsp"/>
 <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/super-build/ckeditor.js"></script>
-	
-	<style type= "text/css">
+<script>
+   document.addEventListener('DOMContentLoaded', function() {
+const viewCountElement = document.getElementById('viewCount');
+
+const postId = freeboard.generalPostId; // 게시물의 고유 ID (예시로 대입)
+
+// 서버로부터 조회수 업데이트 정보를 가져옵니다.
+function updateViewCount() {
+   fetch(`/updateViewCount?postId=${postId}`, {
+      method: 'GET'
+   })
+   .then(response => response.json())
+   .then(data => {
+      // 업데이트된 조회수를 가져와서 화면에 표시합니다.
+      viewCountElement.textContent = data.viewCount;
+   })
+   .catch(error => {
+      console.error('에러 발생:', error);
+   });
+}
+
+// 페이지 로딩 시 초기 조회수 업데이트를 수행합니다.
+updateViewCount();
+
+// 페이지 뷰 시 매번 업데이트하는 대신, 필요한 이벤트(예: 게시물 뷰)에서 호출하세요.
+// updateViewCount();
+});
+
+   // 미완성된 기능을 알려주는 모달창
+   $('.incomplete').click(function() {
+      $('.modal, .overlay').addClass('modal_active')
+   })
+   $('.overlay').click(function() {
+      $('.modal, .overlay').removeClass('modal_active')
+   })   
+
+   // 스크롤 버튼, IDE
+   let calcScrollValue = () => {
+   let scrollProgress = document.getElementById('progress')
+   let progressValue = document.getElementById('progress-value')
+   let pos = document.documentElement.scrollTop
+   let calcHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight
+   let scrollValue = Math.round((pos * 100) / calcHeight)
+
+   scrollProgress.addEventListener('click', () => {
+      document.documentElement.scrollTop = 0
+   })
+   }
+   
+   window.onscroll = calcScrollValue
+
+   // 서브 리스트가 있다면? 아래로 떨군다.
+   $('.visible').hide()
+   $('.list_company').mouseover(function() {
+      $('.visible').show()
+      $(this).find('a').css({'background-color': 'var(--blue)',
+                     'color': 'white',
+                     'box-shadow': '0 0 5px var(--gray)'})
+   })
+   $('.list_company').mouseleave(function() {
+      $('.visible').hide()
+      $(this).find('a').css({'background-color': 'white',
+                     'color': 'var(--blue)',
+                     'box-shadow': 'none'})
+   })
+</script>
+   
+<!-- 소스 다운 -->
+<script src="https://unpkg.com/@yaireo/tagify"></script>
+<link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+
+<style type= "text/css">
+		#container{
+			width: 800px;
+			margin: 0 auto;
+			margin-left: 20%;
+			
+		}
+
+	  .seperate-line {
+      border: 1px solid #ccc;
+ 	  margin: 10px 0px 7px 0px;
+	  width: 1079px;
+   		}
+
+		.title_name {
+			margin-top: 50px;
+			margin-left: 2px;
+			margin-bottom: 30px;
+		}
 		div.grid {
 			display: grid;
 			grid-template-columns: 80px 1fr;
-			grid-template-rows: 28px 28px 28px 320px 1fr;
+			grid-template-rows: 50px 28px 50px 320px 1fr;
 			row-gap: 10px;
 		}
 
@@ -23,36 +120,63 @@
 
 		div.grid div.right-align {
 			text-align: right;
-			margin-top: 800px;
 		}
 
 		label {
-			padding-left: 10px;
+			padding-left: 10px; 
+			margin-top: 10px;
+			/* margin-left: 30px; */
 		}
-
-		button, input, textarea {
-			padding:10px;
+		input, textarea {
+			margin: auto 0;
+			margin-top: 10px;
+			height: 30px;		
+			width: 1000px;
 		}
+		.ck-editor__editable { 
+			height: 430px; 
+			width: 1000px;
+			margin: auto 0;
 		
-		input[type=file] {
-			padding: 0px;
 		}
+	    .ck-content {
+			 font-size: 12px; 	
+		}
+	
+	    #hashtag {
+	      margin-top: 5px;
+	    }	
+	    .btn-group {
+	    	margin-top: 420px;
+	    }
+		#save_button {
+			margin: auto 0;
+			margin-top: 70px;
+			margin-right: 1px;
+			border: none;
+			cursor: pointer;
+			width: 70px;
+			height: 30px;
+			background-color: var(--light-blue);
+			border-radius: 5px;
+		}	
+
 		
 	</style>
 	
 </head>
 <body>
-	<jsp:include page="../member/membermenu.jsp"></jsp:include>
 
-	<h1>질답 게시글 수정</h1>
-
+ <div id="container">
+	<h1 class="title_name">질답 게시글 수정</h1>
+	<div class="seperate-line"></div>
 	<form method="post" action="/qnaboard/update" modelAttribute="generalPostVO" >
 		<input type="hidden" name="generalPostId" value="${generalPostVO.generalPostId}"/>
 		<div class="grid">
 			<label for="postTitle">제목</label>
 			<input id="postTitle" type="text" name="postTitle" value="${generalPostVO.postTitle}"/>
 			
-			<label for="postContent">내용</label>
+			<label for="postContent"></label>
 			<textarea id="editor" name="postContent">${generalPostVO.postContent}</textarea>
 				<script>
 		    	CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
@@ -198,10 +322,11 @@
 		        </script>			
 			<div class="btn-group">
 				<div class="right-align">
-					<input type="submit" value="저장" />
+					<input id="save_button" type="submit" value="저장" />
 				</div>
 			</div>
 		</div>
 	</form>
+</div>	
 </body>
 </html>

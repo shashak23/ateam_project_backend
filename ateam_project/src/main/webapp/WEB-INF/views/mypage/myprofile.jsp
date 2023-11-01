@@ -88,13 +88,70 @@ position: absolute;
     left: 83%;
     transform: translate(-50%, -50%);
 }
+    .btn-primary, a {
+        padding: 5px 8px;
+        text-decoration: none;
+        color: #4052f7;
+        background-color: #d0eaff;
+        margin-right: 15px;
+        border-radius: 10px;
+        border: 0px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .create_container, .create_container2 {
+        visibility: hidden;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -80%);
+        z-index: 10;
+        box-shadow: 0 0 10px #19191948;
+        border: 1px solid;
+        width: 500px;
+        padding: 30px;
+        opacity: 0;
+        border: none;
+        border-radius: 5px;
+        background-color: #ffffff;
+        transition: 0.5s;
+    }
+
+    .create_container.active, .create_container2.active {
+        visibility: visible;
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+
+    .create_container > *, .create_container2 > * {
+        margin-bottom: 10px;
+    }
+
+    .btn-close {
+        position: absolute;
+        top: 6px;
+        right: 10px;
+        background-color: transparent;
+        font-size: 18px;
+        color: #888;
+        cursor: pointer;
+    }
+
+    .btn-close:hover {
+        color: #191919;
+    }
+    
+    .create_title {
+        text-align: center;
+    }
 
 </style>
 <link rel="stylesheet" type="text/css" href="/css/myProfile.css" />
 <!-- 자바스크립트 시작 -->
 <jsp:include page="../layout/header.jsp" />
 <script type="text/javascript">
-//신고버튼
+	//신고버튼
 	$().ready(function() {
 	    // "신고" 버튼 클릭 시 모달 열기
 	    $(".report-btn").click(function() {
@@ -243,13 +300,9 @@ position: absolute;
 		</div>
 		<div class="flex_main">
 			<div class="follow_chat">
-				<button class="follow_icon">
-						<img src="https://cdn-icons-png.flaticon.com/512/907/907873.png">
-						팔로우
-					 </button> 
 				<%-- <c:choose>
 					<c:when
-						test="${not empty emptysessionScope._LOGIN_USER_.email eq memberVO.email}">
+						test="${not empty sessionScope._LOGIN_USER_.email eq memberVO.email}">
 						<!-- a유저가 로그인한 경우에만 신고 버튼을 표시합니다. -->
 						<form action="/reportUser" method="post">
 							<input type="hidden" id="reportUser"
@@ -261,9 +314,9 @@ position: absolute;
 						<!-- a유저가 로그인하지 않은 경우에는 신고 버튼을 표시하지 않습니다. -->
 					</c:otherwise>
 				</c:choose>
-				<button id="reportUser" value="5" class="report-btn">신고</button> --%>
+	
 				<!-- 모달 창 -->
-				<%-- <h2>신고 내용</h2>
+				 <h2>신고 내용</h2>
 				<form name="reportVO" method="post" action="/report/view/5">
 					<div>
 						<label for="reportReason">신고사유${reportVO.reportReason} <select
@@ -300,7 +353,7 @@ position: absolute;
 
 						</div>
 					</div>
-				</form>  --%>
+				</form>   --%>
 				<button class="message_icon">✉ 메시지</button>
 			</div>
 	
@@ -339,7 +392,7 @@ position: absolute;
 						<c:otherwise>
 							<li class="list_intro"><c:if
 									test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
-									<button data-introduce-id="${sessionScope._LOGIN_USER_.email }" class="introduce-create" ">
+									<button data-introduce-id="${sessionScope._LOGIN_USER_.email }" class="introduce-create">
 									자기소개 추가하기
 									</button>
 								</c:if></li>
@@ -351,8 +404,8 @@ position: absolute;
 		</div>
 	</div>
 	<div class="follow">
-		<a href="#">팔로워</a> <a href="#">팔로잉</a>
-		<p></p>
+	  <button class="follower">팔로워</button>
+	  <button class="followee">팔로잉</button>
 	</div>
 	<div class="related_link">
 		<img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="Icon 1" id="githubIcon">
@@ -488,21 +541,43 @@ position: absolute;
 						</c:if></li>
 				</c:otherwise>
 			</c:choose>
-		</ul>
-	</div>
-	</div>
-	</div>
-	<jsp:include page="../layout/footer.jsp" />
-
+		  </ul>
+	    </div>
+	  </div>
+	  <div class="create_container">
+	    <div class="btn-close">&times;</div>
+	    <div class="create_title">팔로워</div>
+	    <div class="follower_list">
+	      
+	    </div>
+	  </div>
+	  <div class="overlay"></div>
+	  <div class="create_container2">
+	    <div class="btn-close">&times;</div>
+	    <div class="create_title">팔로잉</div>
+	    <div class="followee_list">
+	      
+	    </div>
+	  </div>
+	  <div class="overlay"></div>
+    </div>
+<jsp:include page="../layout/footer.jsp" />
 </body>
 <script>
-	//미완성된 기능을 알려주는 모달창
-	$('.incomplete').click(function() {
-	  $('.modal, .overlay').addClass('modal_active')
-	})
-	$('.overlay').click(function() {
-	  $('.modal, .overlay').removeClass('modal_active')
-	})	
+    //모달 실행을 위한 문장
+    $('.follower').click(function() {
+        $('.create_container, .overlay').addClass('active')
+    })
+    $('.btn-close, .overlay').click(function() {
+        $('.create_container, .overlay').removeClass('active')
+    })
+    $('.followee').click(function() {
+        $('.create_container2, .overlay').addClass('active')
+    })
+    $('.btn-close, .overlay').click(function() {
+        $('.create_container2, .overlay').removeClass('active')
+    })
+    
 	
 	// 스크롤 버튼, IDE
 	let calcScrollValue = () => {
@@ -532,6 +607,74 @@ position: absolute;
 	  $(this).find('a').css({'background-color': 'white',
 	                         'color': 'var(--blue)',
 	                         'box-shadow': 'none'})
+	})
+
+	//마이페이지 회원 이메일
+      /* $('.follow_icon').click(function() {
+	    var email = $(this).data('email');
+	    console.log(email)
+	  }) */
+            
+            template = `
+            <c:if test="${sessionScope._LOGIN_USER_.email != memberVO.email}" >
+  				<button class="follow_icon" data-email="${memberVO.email}">
+  				  <img src="https://cdn-icons-png.flaticon.com/512/907/907873.png" />
+  				  팔로우
+  				  <input type="hidden" class="followerEmail" value="${sessionScope._LOGIN_USER_.email}" />
+  	              <input type="hidden" class="followeeEmail" value="${memberVO.email}" />
+  				</button>
+  			</c:if>`
+  				
+            let templateDom = $(template)
+            
+            // 팔로우 상태 가져오기
+            user_email = `${sessionScope._LOGIN_USER_.email}`
+            email = `${memberVO.email}`
+            console.log(email)
+
+		    $.get(`/follow/status/\${user_email}/\${email}`, function(state) {
+		    console.log(state.followYn)
+		      if(state.followYn === 'Y') {
+		        templateDom.css({'background-color':'var(--blue)', 'color':'var(--white)'}).addClass('follow_on')
+		        templateDom.find('.follow_icon').prepend($(`<input type="hidden" class="followId" value="\${state.followId}"/>`))
+		      }
+		    })
+		    $('.follow_chat').prepend(templateDom)
+
+	    
+	  // 팔로우 토글
+	  $(document).on('click', '.follow_icon', function(e) {
+	    let userEmail = `${sessionScope._LOGIN_USER_}`
+	    let content = {
+	      "follower": `${sessionScope._LOGIN_USER_.email}`,
+	      "followee": $(this).find(".followeeEmail").val(),
+	      "followId": $(e.currentTarget).find('.followId').val()
+	    }
+	    console.log(content.follower)
+	    console.log(content.followee)
+	    console.log(content.followId)
+	    console.log(e.currentTarget)
+	    if ($(e.currentTarget).hasClass('follow_on')) {
+	      $.post('/unfollow/member', content, function(result) {
+	        alert('언팔로우!')
+	        $(e.currentTarget).removeClass('follow_on')
+	        $(e.currentTarget).css({'background-color':'var(--white)', 'color':'var(--black)'})
+	        $('.followId').remove()
+	      })
+	    }
+	    else {
+	      $.post('/follow/member', content, function(result) {
+	         if(result) {
+	           alert('팔로우!')
+	           $(e.currentTarget).css({'background-color':'var(--blue)', 'color':'var(--white)'})
+	           $(e.currentTarget).addClass('follow_on')
+	           $('.follow_icon').prepend(`<input type="hidden" class="followId" value="\${result.followId}"/>`)
+	         }
+	         else {
+	           alert('처리하지 못했습니다.')
+	        }
+	      })
+	    }
 	})
 </script>
 </html>

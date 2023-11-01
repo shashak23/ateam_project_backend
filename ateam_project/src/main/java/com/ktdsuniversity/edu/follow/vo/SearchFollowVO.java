@@ -2,13 +2,19 @@ package com.ktdsuniversity.edu.follow.vo;
 
 public class SearchFollowVO {
 	
-	private String email;
+	private String followerEmail;
+	private String followeeEmail;
 	
-	public String getEmail() {
-		return email;
+	public String getFollowerEmail() {
+		return followerEmail;
 	}
-	public void setEmail(String email) {
-		this.email = email;
+	public void setFollowerEmail(String followerEmail) {
+		this.followerEmail = followerEmail;
 	}
-
+	public String getFolloweeEmail() {
+		return followeeEmail;
+	}
+	public void setFolloweeEmail(String followeeEmail) {
+		this.followeeEmail = followeeEmail;
+	}
 }

@@ -1,6 +1,7 @@
 <!-- 작성자: 김태현
-  작성일: 2023-10-26
-  내용: 로그인 화면을 표시하는 파일입니다. -->
+	 작성일: 2023-10-26
+	 내용: 로그인 화면을 표시하는 파일입니다. -->
+
     <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -9,7 +10,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>로그인</title>
+<title>기업 로그인</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
@@ -148,12 +149,12 @@
   }
 
   .line_container > .line:first-child {
-    top: 12px;
+    top: 10px;
     left: 0;
   }
     
   .line_container > .line:last-child {
-    top: 12px;
+    top: 10px;
     right: 0;
   }
 
@@ -227,6 +228,11 @@
     height: 70px;
     display: none;
   }
+
+  .tab_content {
+    margin: 31px 0;
+  }
+
   .errors {
   text-align: center;
   color: var(--red);
@@ -236,10 +242,11 @@
 <body>
   <section class="login_container">
     <div class="login_tab">
-        <button id="personal_btn" class="personal_tab active">개인</button>
-        <button id="company_btn" class="personal_tab">기업</button>
+        <button id="personal_btn" class="personal_tab">개인</button>
+        <button id="company_btn" class="personal_tab active">기업</button>
     </div>
-    <form:form class="login_form" method="post" action="/member/auth">
+    <form:form class="login_form" method="post" action="/company/auth">
+      <div class="input_container">
       <div>
         <form:errors path="email" element="div" cssClass="errors"/>
         <form:errors path="pw" element="div" cssClass="errors"/>
@@ -269,12 +276,13 @@
           <div class="textinline">또는</div>
           <div class="line"></div>
         </div>
-        <div class="button_container tab_content" id="tab1">
+        <div class="message button_container tab_content" id="tab1">
           <button class="not_btn">카카오톡</button>
           <button class="not_btn">네이버</button>
           <button class="not_btn">구글</button>
         </div>
-        <div class="message tab_content" id="tab2">
+        <div class="tab_content" id="tab2">
+          기업회원으로 가입하시면 다양한<br> 혜택을 이용하실 수 있습니다.
         </div>
         <div class="signup_container">
           <div>아직 회원이 아니신가요?</div>
@@ -285,7 +293,7 @@
           <span><a href="#" class="link_to_pw">비밀번호</a>를 잊으셨나요?</span>
         </div>
       </div>
-    </form:form>  
+    </form:form>
   </section>
   <script>
     $('#personal_btn').click(function() {
@@ -294,21 +302,21 @@
     //  $('#company_btn').removeClass('active')
     //  $('#tab1').css('display', 'flex')
     //  $('#tab2').css('display', 'none')
-    window.location.href='/member/auth'
+      window.location.href='/member/auth'
     })
- 
+
     $('#company_btn').click(function() {
-      //  console.log('회사버튼')
-      //  $(this).addClass('active')
-      //  $('#personal_btn').removeClass('active')
-      //  $('#tab2').css('display', 'block')
-      //  $('#tab1').css('display', 'none')
+    //  console.log('회사버튼')
+    //  $(this).addClass('active')
+    //  $('#personal_btn').removeClass('active')
+    //  $('#tab2').css('display', 'block')
+    //  $('#tab1').css('display', 'none')
       window.location.href='/company/auth'
     })
 
     $('.not_btn').click(function(e) {
       e.preventDefault()
     })
-   </script>
- </body>
+  </script>
+</body>
  </html>

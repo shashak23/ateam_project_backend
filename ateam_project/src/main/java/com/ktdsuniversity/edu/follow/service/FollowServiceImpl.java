@@ -1,5 +1,7 @@
 package com.ktdsuniversity.edu.follow.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,9 +43,9 @@ public class FollowServiceImpl implements FollowService {
 	}
 
 	@Override
-	public FollowListVO getAllFollowee(String eamil) {
+	public FollowListVO getAllFollowee(String email) {
 		FollowListVO followListVO = new FollowListVO();
-		followListVO.setFollowList(followDAO.getAllFollowee(eamil));
+		followListVO.setFollowList(followDAO.getAllFollowee(email));
 		return followListVO;
 	}
 	

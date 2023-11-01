@@ -129,15 +129,19 @@ public class AlgorithmExplanationController {
 			                                 , @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 		logger.debug("PathVariable: " + companyAlgorithmExplanationId);
 		
-		algorithmExplanationService.deleteOneAlgorithmExplanation(companyAlgorithmExplanationId);
-		
 		AlgorithmExplanationVO algorithmExplanationVO = algorithmExplanationService.getOneAlgorithmExplanation(companyAlgorithmExplanationId, false);
 		
 		if(!algorithmExplanationVO.getPostWriter().equals(memberVO.getEmail())) {
 			throw new PageNotFoundException("잘못된 접근입니다.");
 		}
+		boolean isSuccess = algorithmExplanationService.deleteOneAlgorithmExplanation(companyAlgorithmExplanationId);
+		if (isSuccess) {
+			return "redirect:/algorithm/explanation/list";			
+		}
+		else {
+			return "redirect:/algorithm/explanation/view/{companyAlgorithmExplanationId}";
+		}
 		
-		return "redirect:/algorithm/explanation/list";
 		
 	}
 }

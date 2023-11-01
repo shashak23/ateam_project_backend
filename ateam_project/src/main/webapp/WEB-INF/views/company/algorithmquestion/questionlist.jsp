@@ -37,7 +37,7 @@
 			}
 		});
 		
-		$("#click_search").click(function() {
+		$("#search-btn").click(function() {
 			$("#search-form").attr({
 				"method": "get",
 				"action": "/algorithm/question/list"
@@ -239,9 +239,10 @@
 			</div>
 
 			<div class="button_list">   
-            <input autocomplete="off" class="sc_text" type="text" placeholder="검색어 입력" name="searchKeyword" list="nicList" />
-                <datalist id="nicList"></datalist>
-                <button type="submit" id="click_search" class="btn_st_2">조회</button>
+            	<input class="sc_text" type="text" placeholder="검색어 입력" name="searchKeyword" value="${SearchAlgorithmQuestionVO.searchKeyword}" />
+                <button type="submit" class="btn_st_2">
+                    <a href="#" id="click_search">조회</a>
+                </button>
 				<button class="reset">
 					<a href="/algorithm/question/list">초기화</a>
 				</button>

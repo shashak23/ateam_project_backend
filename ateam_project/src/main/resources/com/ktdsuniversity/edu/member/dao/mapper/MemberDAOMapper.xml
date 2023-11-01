@@ -1,5 +1,5 @@
-<!-- 수정자: 김태현
-	 수정일: 2023-10-29
+<!-- 수정자: 김태현(2023-10-29)
+	 수정자: 김태현(2023-10-31)
 	 내용:  -->
 <!DOCTYPE mapper
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
@@ -80,7 +80,7 @@
 	 WHERE EMAIL =#{_parameter}
 	</select>
 	
-	<select id="getMember"
+	<select id="getGeneralMember"
 			parameterType="com.ktdsuniversity.edu.member.vo.MemberVO"
 			resultType="com.ktdsuniversity.edu.member.vo.MemberVO">
 		SELECT EMAIL
@@ -95,6 +95,28 @@
 		  FROM "MEMBER"
 		 WHERE EMAIL = #{email}
 		   AND PW = #{pw}
+		   AND MEMBER_TYPE = 'GENERAL'
+	</select>
+	
+	<select id="getCompanyMember"
+			parameterType="com.ktdsuniversity.edu.member.vo.MemberVO"
+			resultMap="CompanyTypeMemberMap">
+		SELECT EMAIL
+			 , PW
+			 , SALT
+			 , NICKNAME
+			 , INFO_AGREEMENT_YN
+			 , PROFILE_PIC
+			 , SYSDATE
+			 , MEMBER_TYPE
+			 , WITHDRAW_YN
+		  FROM MEMBER M
+		 INNER JOIN COMPANY C
+		    ON C.COMPANY_EMAIL = M.EMAIL 
+		 WHERE EMAIL = #{email}
+		   AND PW = #{pw}
+		   AND MEMBER_TYPE = 'COMPANY'
+		   AND CONFIRM_YN = 'Y'
 	</select>
 	
 	<select id="getOneFile"

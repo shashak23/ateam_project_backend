@@ -9,10 +9,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" id="viewport" content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, width=device-width"/>
     <!-- <title>SnapChat</title> -->
-    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+   
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" type="text/css" href="/css/style.css" />
-    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+   
     <script src="js/lib/jquery-3.7.1.js"></script>
     <jsp:include page="../layout/header.jsp"/>
     <style>
@@ -115,21 +115,32 @@
         .text_controller {
             position: relative;
             bottom: 20px;
+        }.loading {
+            display: none;
+        }
+        .scrollable-table {
+            max-height: 400px;
+            overflow-y: scroll;
         }
 
-        /*swiper제어*/
-       
-        .swiper-slide img {
-            position: relative;
-        max-width: 100%;
-        height: auto;
-        overflow: hidden; /* 이미지가 부모 컨테이너를 벗어나지 않도록 함 */
-        }
-
-        .swiper-button-prev,
-        .swiper-button-next {
-            margin-top: -100px;
-        }
+        .hashtag_wrap {
+		    display: flex;
+		    width: 250px;
+		    flex-wrap: wrap;
+		    margin-top: 30px;
+		    border: 1px solid var(--gray);
+		    border-radius: 10px;
+		    padding: 10px;
+		}
+		.ranking_wrap {
+		    display: flex;
+		    width: 250px;
+		    flex-wrap: wrap;
+		    margin-top: 30px;
+		    border: 1px solid var(--gray);
+		    border-radius: 10px;
+		    padding: 10px;
+		}
     </style>
 </head>
 <body>
@@ -137,21 +148,6 @@
       <!-- ... -->
   </div>
   
-  <div class="swiper-container">
-      <div class="swiper-wrapper">
-          <div class="swiper-slide">
-              <img src="https://asset.programmers.co.kr/image/origin/production/competition/167560/e8ef54c9-7dd9-460c-a1fb-5f4845a64e0f.jpg" alt="데브 게시판 표시">
-          </div>
-          <div class="swiper-slide">
-              <img src="https://asset.programmers.co.kr/image/origin/production/competition/166055/a73b3c4b-1be8-4c34-b5ff-7fd691bf529b.png" alt="데브 게시판 표시">
-          </div>
-          <div class="swiper-slide">
-              <img src="https://asset.programmers.co.kr/image/origin/production/competition/168189/e31a3bf1-8c84-4169-81af-c74a9aa1880e.jpg" alt="데브 게시판 표시">
-          </div>
-        </div>
-        <div class="swiper-button-prev"></div>
-        <div class="swiper-button-next"></div>
-    </div>
     <main class="contents">
       <div class="board">
           <p class="bbs_title">게시글 목록</p>
@@ -171,7 +167,15 @@
                   <a href="/qnaboard/create">글쓰기</a>
               </button>
           </div>
-  
+        <!-- 해시태그 -->
+  		<div id="hashtagList">
+		  <h3>해시태그</h3>
+		    <div class="hashtag_wrap"></div>
+		<div>
+			<!-- 조회수순 랭킹 -->
+			<h3>주간 조회수순 랭킹</h3>
+				<div class="ranking_wrap"></div>
+		</div>
           <!-- 게시판 리스트 -->
           <form action="" method="">
               <fieldset class="board_list_box">
@@ -194,7 +198,8 @@
                                   <th scope="col" class="table-header_05">조회수</th>
                               </tr>
                           </thead>
-                          <tbody>
+                          <tbody id="user-list"></tbody>
+                          <div class="loading text-center" id="loading">로딩 중...</div>
                               <c:forEach items="${generalPostListVO.generalPostList}" var="qnaboard" varStatus="index">
                                       <tr>
                                           <td class="pratice_01">${(index.index + 1) * (searchForumVO.pageNo + 1)}</td>
@@ -203,7 +208,8 @@
                                               <a class="text_controller" href="/qnaboard/view/${qnaboard.generalPostId}">
                                                   ${qnaboard.postTitle}
                                               </a>
-                          </div>   
+                          </div> 
+                          <script src="https://unpkg.com/axios/dist/axios.min.js"></script>  
                                           </td>
                                           <td class="pratice_02"> ${qnaboard.memberVO.nickname}</td>
                                           <td class="pratice_03">${qnaboard.postDate}</td>
@@ -219,14 +225,7 @@
                       <a href="/qnaboard/create">글쓰기</a>
                   </button>
               </div>
-               <div id="page">
-                  <a class="active_page" href="javascript:void(0)">1</a>
-                  <a href="#">2</a>
-                  <a href="#">3</a>
-                  <a href="#">4</a>
-                  <a href="#">5</a>
-                  <a href="#">다음</a>
-               </div>  
+               
            </div>
           </form>
       </div>
@@ -234,31 +233,114 @@
    <jsp:include page="../layout/footer.jsp" />
    <script src="./js/jquery-1.11.3.min.js"></script>
    <script src="./js/jquery.easing.1.3.js"></script>
-   <script src="./js/swiper.min.js"></script>
    <script src="./js/common.js"></script>
    <script>
-      //  $(document).ready(function() {
-      //      alert('힘내용ㅎㅎ');
-           // $.get('/code/질답게시판', function(response) {
-           //     for (let i = 0; i < response.length; i++) {
-           //         let template = `
-           //             <tr>
-           //                 <td>${qnaboard.generalPostId}</td>
-           //                 <td>
-           //                     <a href="/qnaboard/view/${qnaboard.generalPostId}">
-           //                         ${qnaboard.postTitle}
-           //                     </a>
-           //                 </td>
-           //                 <td>${qnaboard.postWriter}</td>
-           //                 <td>${qnaboard.postDate}</td>
-           //                 <td>${qnaboard.viewCnt}</td>
-           //             </tr>
-           //         `;
-           //     }
-           // });
-      //  });
    </script>
    <script>
+   // 월요일마다 갱신함
+   const today = new Date()
+   const currentDay = today.getDay() // (0: 일요일, 1:월요일)
+   const targetDay = 0
+   const daysAfterTargetDay = currentDay - targetDay
+
+   const prevMonday = new Date(today)
+   prevMonday.setDate(today.getDate() - daysAfterTargetDay + 1)
+   
+   const year = prevMonday.getFullYear()
+   const month = String(prevMonday.getMonth() + 1).padStart(2, '0')
+   const day = String(prevMonday.getDate()).padStart(2, '0')
+
+   const formattedMonday = year + '-' + month + '-' + day
+
+   $.get('/home/ranking/\${formattedMonday}', function(response) {
+	   console.log(response);
+     let list = response.rankings
+     for (let i = 0; i < 10; i++) {
+
+       if (list[i].boardId === 'CC-20231017-000030') {
+         let ranking_template = `
+           <li class="hot_post">
+           <a href="/freeboard/view/\${list[i].generalPostId}" target="_blank"">\${list[i].postTitle}</a>
+           </li>`
+         let ranking_templateDom = $(ranking_template)
+ 
+         $('.ranking_wrap').append(ranking_templateDom)
+       }
+     }
+   })
+	// 사이드바에 해시태그 리스트 조회해주는 코드 
+	   $.get('/code/해시태그', function(response) {
+	     for (let i = 0; i < response.length; i++) {
+	       let hash_template = `<button class="hashtag incomplete">#\${response[i].codeContent}</button>`
+	       $('.hashtag_wrap').append(hash_template)
+	     }
+	   })	
+	   
+      const userList = document.getElementById('user-list');
+      const tableContainer = document.querySelector('.board_list_ty1');
+      const loading = document.getElementById('loading');
+      let page = 1;
+      let isFetching = false;
+
+        
+        async function getYourData(page) {
+			try {
+			  const response = await axios.get(`/qnaboard/list?page=${page}`, {
+			    headers: {
+			      'Content-Type': 'application/json'
+			    }
+			  });
+			return response.data;
+			} catch (error) {
+			  console.error('Error fetching data: ', error);
+			 return [];
+			}
+        }
+        /*async function displa yData() {
+            if (isFetching) return;
+            isFetching = true;
+            loading.style.display = 'block';
+            const data = await getYourData(page);
+            loading.style. display = 'none';
+
+            // 데이터를 사용해 행을 생성하는 로직을 여러분의 데이터에 맞게 수정하세요.
+            data.forEach(qnaboard => {
+                const row = document.createElement('tr');
+                row.innerHTML =`
+         
+            <td class="pratice_01">${qnaboard.generalPostId}</td>
+        <td>
+          <div class="pratice">
+            <a class="text_controller" href="/qnaboard/view/${qnaboard.generalPostId}">
+              ${qnaboard.postTitle}
+            </a>
+          </div>
+        </td>
+        <td class="pratice_02">${qnaboard.memberVO.nickname}</td>
+        <td class="pratice_03">${qnaboard.postDate}</td>
+        <td class="pratice_04">${qnaboard.viewCnt}</td>
+      `;
+      userList.appendChild(row) ;
+    });
+            page++;
+}
+            isFetching = false; */
+        
+
+        /* tableContainer.addEventListener('scroll', () => {
+            const { scrollTop, scrollHeight, clientHeight } = tableContainer;
+            if (scrollTop + clientHeight >= scrollHeight - 5) {
+                displayData();
+            }
+            if (scrollTop === 0) {
+                userList.innerHTML = '';
+                page = 1;
+                displayData();
+            }
+        });
+
+        displayData(); */
+    
        // 미완성된 기능을 알려주는 모달창
        $('.incomplete').click(function() {
            $('.modal, .overlay').addClass('modal_active');
@@ -292,14 +374,8 @@
            $('.visible').hide();
            $(this).find('a').css({'background-color': 'white', 'color': 'var(--blue)', 'box-shadow': 'none'});
        });
-       var swiper = new Swiper('.swiper-container', {
-           slidesPerView: 1, // 한 번에 보일 슬라이드 개수
-           spaceBetween: 10, // 슬라이드 사이 간격
-           navigation: {
-               nextEl: '.swiper-button-next', // 다음 버튼의 클래스
-               prevEl: '.swiper-button-prev'  // 이전 버튼의 클래스
-           }
-       });
+      
+       
    </script>
 </body>
 </html>

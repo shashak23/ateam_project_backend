@@ -2,6 +2,7 @@
  * 작성자: 김광원
  * 수정자: 신진영(2023-10-20)
  * 수정자: 김태현(2023-10-27)
+ * 수정자: 김태현(2023-10-31)
  * 작성일자: 2023-10-19
  * 내용: 일반회원 비밀번호 수정 및 닉네임 수정
  */
@@ -90,9 +91,12 @@ public class MemberServiceImpl implements MemberService{
 		int nicknameCount = memberDAO.getNicknameCount(nickname);
 		return nicknameCount==0;
 	}
-
+	
+	/**
+	 * 일반 회원 로그인
+	 */
 	@Override
-	public MemberVO getMember(MemberVO memberVO) {
+	public MemberVO getGeneralMember(MemberVO memberVO) {
 		String salt = memberDAO.getSalt(memberVO.getEmail());
 		if(salt == null) {
 			throw new UserIdentityNotMatchException(memberVO, "아이디 또는 비밀번호가 일치하지 않습니다.");
@@ -101,7 +105,27 @@ public class MemberServiceImpl implements MemberService{
 		String encryptedPassword = sha.getEncrypt(password, salt);
 		memberVO.setPw(encryptedPassword);
 		
-		MemberVO member = memberDAO.getMember(memberVO);
+		MemberVO member = memberDAO.getGeneralMember(memberVO);
+		if(member == null) {
+			throw new UserIdentityNotMatchException(memberVO, "아이디 또는 비밀번호가 일치하지 않습니다.");
+		}
+		return member;
+	}
+	
+	/**
+	 * 기업 회원 로그인
+	 */
+	@Override
+	public MemberVO getCompanyMember(MemberVO memberVO) {
+		String salt = memberDAO.getSalt(memberVO.getEmail());
+		if(salt == null) {
+			throw new UserIdentityNotMatchException(memberVO, "아이디 또는 비밀번호가 일치하지 않습니다.");
+		}
+		String password = memberVO.getPw();
+		String encryptedPassword = sha.getEncrypt(password, salt);
+		memberVO.setPw(encryptedPassword);
+		
+		MemberVO member = memberDAO.getCompanyMember(memberVO);
 		if(member == null) {
 			throw new UserIdentityNotMatchException(memberVO, "아이디 또는 비밀번호가 일치하지 않습니다.");
 		}

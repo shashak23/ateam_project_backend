@@ -1,5 +1,8 @@
 /**
- * 수정자: 장보늬(2023-10-22)
+ * 작성자: 김시하
+ * 수정자: 김시하(2023-11-01)
+ * 작성일자: 2013-10-16
+ * 내용: 질답게시글을 위한 DAO Impl입니다
  */
 package com.ktdsuniversity.edu.generalpost.dao;
 
@@ -17,7 +20,6 @@ import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
 import com.ktdsuniversity.edu.generalpost.vo.SearchForumVO;
 import com.ktdsuniversity.edu.generalpost.web.FreePostController;
-import com.ktdsuniversity.edu.member.vo.MemberVO;
 
 @Repository
 public class GeneralPostDAOImpl extends SqlSessionDaoSupport
@@ -75,6 +77,11 @@ public class GeneralPostDAOImpl extends SqlSessionDaoSupport
 		return getSqlSession().update("updateLikeFreePost", generalPostVO);
 	}
 	
+	@Override
+	public List<GeneralPostVO> getAllFreeBoardRest() {
+		return getSqlSession().selectList("getAllFreeBoardRest");
+	}
+	
 	// 질답게시판
 	@Override
 	public List<GeneralPostVO> getAllQnABoard() {
@@ -107,6 +114,11 @@ public class GeneralPostDAOImpl extends SqlSessionDaoSupport
 	public int updateLikeQnAPost(GeneralPostVO generalPostVO) {
 		return getSqlSession().update("updateLikeQnAPost", generalPostVO);
 	}
+	
+	@Override
+	public List<GeneralPostVO> getAllQnaBoardRest() {
+		return getSqlSession().selectList("getAllQnaBoardRest");
+	}
 
 	// 내 게시글 조회
 	@Override
@@ -119,5 +131,19 @@ public class GeneralPostDAOImpl extends SqlSessionDaoSupport
 	public List<GeneralPostVO> searchAllBoardByKeyword(AbstractSearchVO abstractSearchVO) {
 		return getSqlSession().selectList("searchAllBoardByKeyword", abstractSearchVO);
 	}
+
+	@Override
+	public List<GeneralPostVO> getViewRanking(String date) {
+		return getSqlSession().selectList("getViewRanking", date);
+	}
 	
+	@Override
+	public List<GeneralPostVO> SearchFreeBoardRest(SearchForumVO searchForumVO) {
+		return getSqlSession().selectList("SearchFreeBoardRest", searchForumVO);
+	}
+	
+	@Override
+	public List<GeneralPostVO> SearchQnaBoardRest(SearchForumVO searchForumVO) {
+		return getSqlSession().selectList("SearchQnaBoardRest", searchForumVO);
+	}
 }
