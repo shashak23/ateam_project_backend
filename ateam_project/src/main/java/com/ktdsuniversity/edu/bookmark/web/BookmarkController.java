@@ -69,15 +69,14 @@ public class BookmarkController {
 	public Map<String, Object> doCreateGeneralPostBookmark(@SessionAttribute("_LOGIN_USER_") MemberVO memberVO,
 														   @ModelAttribute BookmarkVO bookmarkVO) {
 		bookmarkVO.setGeneralMemberEmail(memberVO.getEmail());
+		
 		BookmarkSearchVO bookmarkSearchVO = new BookmarkSearchVO();
 		bookmarkSearchVO.setEmail(bookmarkVO.getGeneralMemberEmail());
 		bookmarkSearchVO.setGeneralPostId(bookmarkVO.getPostId());
 		
-		bookmarkService.deleteBookmark(bookmarkSearchVO);
+		boolean isSuccess = bookmarkService.createBookmark(bookmarkVO, bookmarkSearchVO);
 		
 		Map<String, Object> resultMap = new HashMap<>();
-		
-		boolean isSuccess = bookmarkService.createBookmark(bookmarkVO);
 		
 		String bookmarkId = bookmarkService.getBookmarkStatus(bookmarkSearchVO).getBookmarkId();
 		
