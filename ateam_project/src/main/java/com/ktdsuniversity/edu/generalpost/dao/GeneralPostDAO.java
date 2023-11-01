@@ -48,14 +48,14 @@ public interface GeneralPostDAO {
 	public int updateLikeQnAPost(GeneralPostVO generalPostVO);
 	
 	public List<GeneralPostVO> getAllQnaBoardRest();
-	
 	// 내 게시글 조회
 	public List<GeneralPostVO> getMyPost(GeneralPostVO generalPostVO);
 	// 통합검색
 	public List<GeneralPostVO> searchAllBoardByKeyword(AbstractSearchVO abstractSearchVO);
-
 	// 조회수순 랭킹
 	public List<GeneralPostVO> getViewRanking(String date);
+	// 좋아요순 랭킹
+	public List<GeneralPostVO> getLikeRanking(String date);
 
 	public List<GeneralPostVO> SearchFreeBoardRest(SearchForumVO searchForumVO);
 

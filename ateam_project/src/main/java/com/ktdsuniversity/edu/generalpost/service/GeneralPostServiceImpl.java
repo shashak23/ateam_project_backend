@@ -181,10 +181,18 @@ private Logger log = LoggerFactory.getLogger(FreePostController.class);
 		return generalPostListVO;
 	}
 	
+	// 조회수순 랭킹
 	@Override
 	public List<GeneralPostVO> getViewRanking(String date) {
 		return generalPostDAO.getViewRanking(date);
 	}
+	
+	// 좋아요순 랭킹
+	@Override
+	public List<GeneralPostVO> getLikeRanking(String date) {
+		return generalPostDAO.getLikeRanking(date);
+	}
+	
 	
 	// 자유게시판 검색용(미사용)
 	@Override
