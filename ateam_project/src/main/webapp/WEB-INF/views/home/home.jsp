@@ -587,9 +587,9 @@
                             <div class="writer_name incomplete">
                             	<a href="/memberinfo/view/\${email}">\${nickname}</a>
                             	<button class="follow_btn">follow
-                            	  <input type="hidden" class="followerEmail" value="${sessionScope._LOGIN_USER_.email}" />
-                            	  <input type="hidden" class="followeeEmail" value="\${email}" />
-                            	</button>
+                                  <input type="hidden" class="followerEmail" value="${sessionScope._LOGIN_USER_.email}" />
+                                  <input type="hidden" class="followeeEmail" value="\${email}" />
+                                </button>
                             </div>
                             <div class="posting_date">\${article.postDate}</div>
                           </div>

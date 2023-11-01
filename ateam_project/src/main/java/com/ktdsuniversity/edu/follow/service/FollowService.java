@@ -12,7 +12,7 @@ public interface FollowService {
 	public boolean unFollow(SearchFollowVO searchFollowVO);
 	public boolean toggleFollower(String followId);
 	public FollowListVO getAllFollower(String email);
-	public FollowListVO getAllFollowee(String eamil);
+	public FollowListVO getAllFollowee(String email);
 	public FollowVO getFollowStatus(SearchFollowVO searchFollowVO);
 
 }

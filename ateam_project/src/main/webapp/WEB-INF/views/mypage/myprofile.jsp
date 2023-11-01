@@ -530,24 +530,19 @@ position: absolute;
 	                         'box-shadow': 'none'})
 	})
 
-	$().ready(function() {
-		
-	    let email
-	    
-	 
-	  //마이페이지 회원 이메일
-      $.get('/memberinfo/view/{generalMemberEmail}', function(response) {
-		console.log(response)
-        email = response.generalMemberEmail
-      })
+	//마이페이지 회원 이메일
+      /* $('.follow_icon').click(function() {
+	    var email = $(this).data('email');
+	    console.log(email)
+	  }) */
             
             template = `
             <c:if test="${sessionScope._LOGIN_USER_.email != memberVO.email}" >
-  				<button class="follow_icon">
+  				<button class="follow_icon" data-email="${memberVO.email}">
   				  <img src="https://cdn-icons-png.flaticon.com/512/907/907873.png" />
   				  팔로우
   				  <input type="hidden" class="followerEmail" value="${sessionScope._LOGIN_USER_.email}" />
-  	              <input type="hidden" class="followeeEmail" value="\${email}" />
+  	              <input type="hidden" class="followeeEmail" value="${memberVO.email}" />
   				</button>
   			</c:if>`
   				
@@ -556,10 +551,12 @@ position: absolute;
             // 팔로우 상태 가져오기
             user_email = `${sessionScope._LOGIN_USER_.email}`
             email = `${memberVO.email}`
+            console.log(email)
 
 		    $.get(`/follow/status/\${user_email}/\${email}`, function(state) {
+		    console.log(state.followYn)
 		      if(state.followYn === 'Y') {
-		        templateDom.find('.follow_icon').css({'background-color':'var(--blue)', 'color':'var(--white)'}).addClass('follow_on')
+		        templateDom.css({'background-color':'var(--blue)', 'color':'var(--white)'}).addClass('follow_on')
 		        templateDom.find('.follow_icon').prepend($(`<input type="hidden" class="followId" value="\${state.followId}"/>`))
 		      }
 		    })
@@ -588,7 +585,6 @@ position: absolute;
 	    }
 	    else {
 	      $.post('/follow/member', content, function(result) {
-	         console.log(result)
 	         if(result) {
 	           alert('팔로우!')
 	           $(e.currentTarget).css({'background-color':'var(--blue)', 'color':'var(--white)'})
@@ -601,6 +597,5 @@ position: absolute;
 	      })
 	    }
 	})
-})	
 </script>
 </html>
