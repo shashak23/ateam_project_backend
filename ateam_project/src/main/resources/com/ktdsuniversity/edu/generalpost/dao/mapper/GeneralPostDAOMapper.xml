@@ -15,7 +15,7 @@
 			         <id column="EMAIL" property="email" />
 			         <id column="NICKNAME" property="nickname" />
 	    </association>
-	    <collection property="hashtagVO"
+	    <collection property="hashtagListVO"
 	    			ofType="com.ktdsuniversity.edu.generalposthashtag.vo.HashtagVO"
 	    			autoMapping="true">
 	         <id column="GENERAL_POST_HASHTAG_ID" property="generalPostHashtagId" />

@@ -18,6 +18,7 @@ import org.springframework.stereotype.Repository;
 
 import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
+import com.ktdsuniversity.edu.generalpost.vo.SearchForumVO;
 import com.ktdsuniversity.edu.generalpost.web.FreePostController;
 
 @Repository
@@ -76,6 +77,11 @@ public class GeneralPostDAOImpl extends SqlSessionDaoSupport
 		return getSqlSession().update("updateLikeFreePost", generalPostVO);
 	}
 	
+	@Override
+	public List<GeneralPostVO> getAllFreeBoardRest() {
+		return getSqlSession().selectList("getAllFreeBoardRest");
+	}
+	
 	// 질답게시판
 	@Override
 	public List<GeneralPostVO> getAllQnABoard() {
@@ -108,6 +114,11 @@ public class GeneralPostDAOImpl extends SqlSessionDaoSupport
 	public int updateLikeQnAPost(GeneralPostVO generalPostVO) {
 		return getSqlSession().update("updateLikeQnAPost", generalPostVO);
 	}
+	
+	@Override
+	public List<GeneralPostVO> getAllQnaBoardRest() {
+		return getSqlSession().selectList("getAllQnaBoardRest");
+	}
 
 	// 내 게시글 조회
 	@Override
@@ -126,4 +137,13 @@ public class GeneralPostDAOImpl extends SqlSessionDaoSupport
 		return getSqlSession().selectList("getViewRanking", date);
 	}
 	
+	@Override
+	public List<GeneralPostVO> SearchFreeBoardRest(SearchForumVO searchForumVO) {
+		return getSqlSession().selectList("SearchFreeBoardRest", searchForumVO);
+	}
+	
+	@Override
+	public List<GeneralPostVO> SearchQnaBoardRest(SearchForumVO searchForumVO) {
+		return getSqlSession().selectList("SearchQnaBoardRest", searchForumVO);
+	}
 }
