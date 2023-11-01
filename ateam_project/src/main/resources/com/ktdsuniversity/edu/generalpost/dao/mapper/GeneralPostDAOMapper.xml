@@ -189,6 +189,7 @@
 		  FROM GENERAL_POST GP
 		 INNER JOIN MEMBER M
 		    ON M.EMAIL = GP.POST_WRITER
+		 INNER JOIN 
 		 WHERE GENERAL_POST_ID = #{_parameter}		 
 	</select>
 	
@@ -261,5 +262,14 @@
 		 ORDER BY POST_DATE DESC
 	</select>
 
+	<!-- 질답의 조회수 순 랭킹 -->
+	<select id="getViewRanking">
+		SELECT *
+		  FROM GENERAL_POST GP
+		 WHERE BOARD_ID = 'CC-20231017-000030'
+		 ORDER BY VIEW_CNT DESC
+	</select>	
+	
+	<!-- 질답의 좋아요 순 랭킹 -->
 	
 </mapper>

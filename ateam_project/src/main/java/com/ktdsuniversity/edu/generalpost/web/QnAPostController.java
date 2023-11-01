@@ -6,7 +6,10 @@
  */
 package com.ktdsuniversity.edu.generalpost.web;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 import org.slf4j.Logger;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -108,8 +112,6 @@ public class QnAPostController {
 	public ModelAndView qnaBoardSingle(@PathVariable String generalPostId) {
 		ModelAndView view = new ModelAndView();
 		GeneralPostVO generalPostVO = generalPostService.getOneQnABoard(generalPostId);
-		//TODO TRUE: FALSE 분기 나누기
-		//generalPostService.increaseViewCount(generalPostId);
 		XssIgnoreUtil.ignore(generalPostVO); 
 
 		log.debug("--1------컨트롤러---------------------------");
@@ -232,5 +234,14 @@ public class QnAPostController {
 		}
 	}
 	
-	
+	// 조회수 순 랭킹
+	@ResponseBody
+	@GetMapping("/qnaboard/rank/viewcnt/{data}")
+	public Map<String, Object> getWeeklyRanking(@PathVariable String date) {
+		Map<String, Object> resultMap = new HashMap<>();
+		List<GeneralPostVO> rankingList = new ArrayList<>();
+		rankingList.addAll(generalPostService.getViewRanking(date));
+		resultMap.put("rankings", rankingList);
+		return resultMap;
+	}
 }
