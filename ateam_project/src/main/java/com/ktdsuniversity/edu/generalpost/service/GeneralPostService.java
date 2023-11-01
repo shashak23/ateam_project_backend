@@ -7,6 +7,9 @@
  */
 package com.ktdsuniversity.edu.generalpost.service;
 
+import java.util.Collection;
+import java.util.List;
+
 import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostListVO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
@@ -40,8 +43,9 @@ public interface GeneralPostService {
 	public boolean likeQnABoard(GeneralPostVO generalPostVO);
 	// 내 게시글 조회
 	public GeneralPostListVO getMyPost(GeneralPostVO generalPostVO);
-	
 	// 통합검색
 	public GeneralPostListVO searchAllBoardByKeyword(AbstractSearchVO abstractSearchVO);
+	// 조회수순 랭킹
+	public List<GeneralPostVO> getViewRanking(String date);
 
 }
