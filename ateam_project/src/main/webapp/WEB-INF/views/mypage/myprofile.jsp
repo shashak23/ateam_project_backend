@@ -100,7 +100,7 @@ position: absolute;
         cursor: pointer;
     }
 
-    .create_container {
+    .create_container, .create_container2 {
         visibility: hidden;
         position: fixed;
         top: 50%;
@@ -118,13 +118,13 @@ position: absolute;
         transition: 0.5s;
     }
 
-    .create_container.active {
+    .create_container.active, .create_container2.active {
         visibility: visible;
         opacity: 1;
         transform: translate(-50%, -50%);
     }
 
-    .create_container > * {
+    .create_container > *, .create_container2 > * {
         margin-bottom: 10px;
     }
 
@@ -404,13 +404,9 @@ position: absolute;
 		</div>
 	</div>
 	<div class="follow">
-	  <div class="btn-close">&times;</div>
-	  <div class="create_title">팔로워</div>
-	  <div>
-	    모달창에 띄울 내용
-	  </div>
+	  <button class="follower">팔로워</button>
+	  <button class="followee">팔로잉</button>
 	</div>
-	<div class="overlay"></div>
 	<div class="related_link">
 		<img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="Icon 1" id="githubIcon">
         <img src="https://w7.pngwing.com/pngs/863/247/png-transparent-email-computer-icons-email-miscellaneous-angle-text.png" alt="Icon 2" id="emailIcon">
@@ -545,21 +541,43 @@ position: absolute;
 						</c:if></li>
 				</c:otherwise>
 			</c:choose>
-		</ul>
-	</div>
-	</div>
-	</div>
-	<jsp:include page="../layout/footer.jsp" />
-
+		  </ul>
+	    </div>
+	  </div>
+	  <div class="create_container">
+	    <div class="btn-close">&times;</div>
+	    <div class="create_title">팔로워</div>
+	    <div class="follower_list">
+	      
+	    </div>
+	  </div>
+	  <div class="overlay"></div>
+	  <div class="create_container2">
+	    <div class="btn-close">&times;</div>
+	    <div class="create_title">팔로잉</div>
+	    <div class="followee_list">
+	      
+	    </div>
+	  </div>
+	  <div class="overlay"></div>
+    </div>
+<jsp:include page="../layout/footer.jsp" />
 </body>
 <script>
     //모달 실행을 위한 문장
-    $('.btn-primary').click(function() {
+    $('.follower').click(function() {
         $('.create_container, .overlay').addClass('active')
     })
     $('.btn-close, .overlay').click(function() {
         $('.create_container, .overlay').removeClass('active')
     })
+    $('.followee').click(function() {
+        $('.create_container2, .overlay').addClass('active')
+    })
+    $('.btn-close, .overlay').click(function() {
+        $('.create_container2, .overlay').removeClass('active')
+    })
+    
 	
 	// 스크롤 버튼, IDE
 	let calcScrollValue = () => {
