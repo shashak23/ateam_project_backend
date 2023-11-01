@@ -17,6 +17,7 @@ import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
 import com.ktdsuniversity.edu.generalpost.vo.SearchForumVO;
 import com.ktdsuniversity.edu.generalpost.web.FreePostController;
+import com.ktdsuniversity.edu.generalposthashtag.vo.HashtagVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 
 @Repository

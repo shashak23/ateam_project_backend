@@ -12,6 +12,7 @@ import java.util.List;
 import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
 import com.ktdsuniversity.edu.generalpost.vo.SearchForumVO;
+import com.ktdsuniversity.edu.generalposthashtag.vo.HashtagVO;
 
 public interface GeneralPostDAO {
 	// 게시글 수 

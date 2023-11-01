@@ -7,17 +7,20 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     <resultMap type="com.ktdsuniversity.edu.generalpost.vo.GeneralCommentVO"
                id="generalCommentVOMap"
                autoMapping="true">
-        <id column="GENERAL_COMMENT_ID" property="generalCommentId" />
+               <id column="GENERAL_COMMENT_ID" property="generalCommentId" />
+               
      <association property="generalPostVO"
-                     javaType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO"
-                     autoMapping="true">
-                <id column="GENERAL_POST_ID" property="generalPostId" />
-     </association>   
+                  javaType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO"
+                  autoMapping="true">
+                  <id column="GENERAL_POST_ID" property="generalPostId" />
+     </association> 
+       
      <association property="generalMemberVO"
-                     javaType="com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO"
-                     autoMapping="true">
-                <id column="GENERAL_MEMBER_EMAIL" property="generalMemberEmail" />
+                  javaType="com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO"
+                  autoMapping="true">
+                  <id column="GENERAL_MEMBER_EMAIL" property="generalMemberEmail" />
      </association>
+
     </resultMap>
     <select id="getAllComments"
             parameterType="string"
@@ -31,7 +34,10 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	             , GC.UPPER_COMMENT_ID
 	             , GC.LIKE_CNT
 	             , GC.DELETE_YN
+	             , M.NICKNAME
 	          FROM GENERAL_COMMENT GC
+	         INNER JOIN MEMBER M
+	            ON M.EMAIL = GC.COMMENT_WRITER
 	         INNER JOIN GENERAL_POST GP
 	            ON GC.GENERAL_POST_ID = GP.GENERAL_POST_ID 
 	          WHERE GC.GENERAL_POST_ID = #{_parameter}

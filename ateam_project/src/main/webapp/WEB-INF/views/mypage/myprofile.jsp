@@ -94,7 +94,7 @@ position: absolute;
 <!-- 자바스크립트 시작 -->
 <jsp:include page="../layout/header.jsp" />
 <script type="text/javascript">
-//신고버튼
+	//신고버튼
 	$().ready(function() {
 	    // "신고" 버튼 클릭 시 모달 열기
 	    $(".report-btn").click(function() {
@@ -257,9 +257,9 @@ position: absolute;
 						<!-- a유저가 로그인하지 않은 경우에는 신고 버튼을 표시하지 않습니다. -->
 					</c:otherwise>
 				</c:choose>
-				<button id="reportUser" value="5" class="report-btn">신고</button> --%>
+	
 				<!-- 모달 창 -->
-				<%-- <h2>신고 내용</h2>
+				 <h2>신고 내용</h2>
 				<form name="reportVO" method="post" action="/report/view/5">
 					<div>
 						<label for="reportReason">신고사유${reportVO.reportReason} <select
@@ -296,7 +296,7 @@ position: absolute;
 
 						</div>
 					</div>
-				</form>  --%>
+				</form>   --%>
 				<button class="message_icon">✉ 메시지</button>
 			</div>
 	
