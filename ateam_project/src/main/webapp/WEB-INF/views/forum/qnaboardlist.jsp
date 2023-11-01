@@ -123,7 +123,15 @@
             overflow-y: scroll;
         }
 
-        
+        .hashtag_wrap {
+		    display: flex;
+		    width: 250px;
+		    flex-wrap: wrap;
+		    margin-top: 30px;
+		    border: 1px solid var(--gray);
+		    border-radius: 10px;
+		    padding: 10px;
+		}
     </style>
 </head>
 <body>
@@ -150,7 +158,10 @@
                   <a href="/qnaboard/create">글쓰기</a>
               </button>
           </div>
-  
+  		<div id="hashtagList">
+		  <h3>해시태그</h3>
+		    <div class="hashtag_wrap">
+		</div>
           <!-- 게시판 리스트 -->
           <form action="" method="">
               <fieldset class="board_list_box">
@@ -212,6 +223,14 @@
    <script>
    </script>
    <script>
+	// 사이드바에 해시태그 리스트 조회해주는 코드 
+	   $.get('/code/해시태그', function(response) {
+	     for (let i = 0; i < response.length; i++) {
+	       let hash_template = `<button class="hashtag incomplete">#\${response[i].codeContent}</button>`
+	       $('.hashtag_wrap').append(hash_template)
+	     }
+	   })	
+	   
       const userList = document.getElementById('user-list');
       const tableContainer = document.querySelector('.board_list_ty1');
       const loading = document.getElementById('loading');
@@ -220,17 +239,17 @@
 
         
         async function getYourData(page) {
-            try {
-  const response = await axios.get(`/qnaboard/list?page=${page}`, {
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  });
-return response.data;
-} catch (error) {
-  console.error('Error fetching data: ', error);
- return [];
-}
+			try {
+			  const response = await axios.get(`/qnaboard/list?page=${page}`, {
+			    headers: {
+			      'Content-Type': 'application/json'
+			    }
+			  });
+			return response.data;
+			} catch (error) {
+			  console.error('Error fetching data: ', error);
+			 return [];
+			}
         }
         async function displayData() {
             if (isFetching) return;

@@ -1,5 +1,8 @@
 /**
- * 수정자: 장보늬(2023-10-22)
+ * 작성자: 김시하
+ * 수정자: 김시하(2023-11-01)
+ * 작성일자: 2023-10-16
+ * 내용: 질답 게시판을 위한 ServieImpl입니다
  * **/
 package com.ktdsuniversity.edu.generalpost.service;
 
