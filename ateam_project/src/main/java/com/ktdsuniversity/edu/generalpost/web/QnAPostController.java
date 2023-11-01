@@ -218,7 +218,7 @@ public class QnAPostController {
 	}
 	
 	// 좋아요 기능
-	@PostMapping("/qnaboard/like")
+	@PostMapping("/qnaboard/like")  
     public ModelAndView likeQnABoard(@ModelAttribute GeneralPostVO generalPostVO) {
 
 		ModelAndView view = new ModelAndView();
@@ -236,11 +236,22 @@ public class QnAPostController {
 	
 	// 조회수 순 랭킹
 	@ResponseBody
-	@GetMapping("/qnaboard/rank/viewcnt/{data}")
-	public Map<String, Object> getWeeklyRanking(@PathVariable String date) {
+	@GetMapping("/qnaboard/rank/viewcnt/{date}")
+	public Map<String, Object> getWeeklyRankingView(@PathVariable String date) {
 		Map<String, Object> resultMap = new HashMap<>();
 		List<GeneralPostVO> rankingList = new ArrayList<>();
 		rankingList.addAll(generalPostService.getViewRanking(date));
+		resultMap.put("rankings", rankingList);
+		return resultMap;
+	}
+	
+	// 좋아요 순 랭킹
+	@ResponseBody
+	@GetMapping("/qnaboard/rank/likecnt/{date}")
+	public Map<String, Object> getWeeklyRankingLike(@PathVariable String date){
+		Map<String, Object> resultMap = new HashMap<>();
+		List<GeneralPostVO> rankingList = new ArrayList<>();
+		rankingList.addAll(generalPostService.getLikeRanking(date));
 		resultMap.put("rankings", rankingList);
 		return resultMap;
 	}

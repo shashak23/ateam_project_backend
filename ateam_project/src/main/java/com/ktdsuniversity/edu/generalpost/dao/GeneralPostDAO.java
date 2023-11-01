@@ -48,4 +48,6 @@ public interface GeneralPostDAO {
 	public List<GeneralPostVO> searchAllBoardByKeyword(AbstractSearchVO abstractSearchVO);
 	// 조회수순 랭킹
 	public List<GeneralPostVO> getViewRanking(String date);
+	// 좋아요순 랭킹
+	public List<GeneralPostVO> getLikeRanking(String date);
 }
