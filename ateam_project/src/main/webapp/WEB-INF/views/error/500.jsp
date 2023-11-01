@@ -219,23 +219,8 @@ canvas.addEventListener('mousemove', e => {
   mouse.y = e.clientY
 })
 
+init()
+render()
 
-function getWeatherData() {
-  const lat = 36.648521
-  const lon = 127.430123
-  const appKey = '08b29d7c5c19a6c5ceaf4903ebcb20d2'
-  const data = axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=\${lat}&lon=\${lon}&appid=\${appKey}`)
-  return data
-}
-
-getWeatherData().then(res => {
-  const currentWeather = res.data.weather[0].main
-  console.log(currentWeather)
-  const rainingStatus = ['Rain', 'Thunderstorm', 'Drizzle', 'Clear', 'Clouds']
-  if (rainingStatus.includes(currentWeather)) {
-    init()
-    render()
-  }
-})
   </script>
 </html>

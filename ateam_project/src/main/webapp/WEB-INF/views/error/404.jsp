@@ -47,6 +47,14 @@
     text-align: center;
     opacity: .7;
   }
+  
+  .home_link {
+    display: block;
+    text-decoration: none;
+    color: rgb(162, 162, 255);
+    text-align: center;
+    opacity: .7;
+  }
 
   @keyframes swing {
     0% {
@@ -66,7 +74,7 @@
         <div class="error_txt_wrap">
           <div class="error">ERROR</div>
           <div class="message">잘못된 접근입니다.</div>
-          <a href="/devground/home" class="home_link">홈메인으로 가기</a>
+          <a href="/devground/home" class="home_link">메인으로 가기</a>
         </div>
       </div>
       <canvas></canvas>
@@ -161,8 +169,8 @@ class Thunder {
 
   draw() {
     const gradient = ctx.createLinearGradient(0, 0, 0, innerHeight)
-    gradient.addColorStop(0, `rgba(66, 84, 99, ${this.opacity})`)
-    gradient.addColorStop(1, `rgba(18, 23, 27, ${this.opacity})`)
+    gradient.addColorStop(0, `rgba(66, 84, 99, \${this.opacity})`)
+    gradient.addColorStop(1, `rgba(18, 23, 27, \${this.opacity})`)
     ctx.fillStyle = gradient
     ctx.fillRect(0, 0, innerWidth, innerHeight)
   }
@@ -218,23 +226,7 @@ canvas.addEventListener('mousemove', e => {
   mouse.y = e.clientY
 })
 
-
-function getWeatherData() {
-  const lat = 36.648521
-  const lon = 127.430123
-  const appKey = '08b29d7c5c19a6c5ceaf4903ebcb20d2'
-  const data = axios.get(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${appKey}`)
-  return data
-}
-
-getWeatherData().then(res => {
-  const currentWeather = res.data.weather[0].main
-  console.log(currentWeather)
-  const rainingStatus = ['Rain', 'Thunderstorm', 'Drizzle', 'Clear', 'Clouds']
-  if (rainingStatus.includes(currentWeather)) {
-    init()
-    render()
-  }
-})
+init()
+render()
   </script>
 </html>
