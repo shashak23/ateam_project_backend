@@ -113,7 +113,7 @@
   }
 
   .input_container > .login_btn {
-    margin-left: 240px;
+    margin-left: 220px;
     margin-bottom: 5px;
   }
 
@@ -235,7 +235,9 @@
         <button id="personal_btn" class="personal_tab active">개인</button>
         <button id="company_btn" class="personal_tab ">기업</button>
     </div>
-    <form:form class="login_form" modelAttribute="memberVO" method="post" action="/member/auth">
+    <c:if test="">
+      <form:form class="login_form" modelAttribute="memberVO" method="post" action="/member/auth">
+    </c:if>
       <div>
         <form:errors path="email" element="div" cssClass="errors"/>
         <form:errors path="pw" element="div" cssClass="errors"/>
