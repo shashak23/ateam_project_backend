@@ -14,9 +14,12 @@
          <link rel="stylesheet" href="/css/style.css"> 
         <jsp:include page="../layout/header.jsp"/>
         <style>
+            wrap-wrap{
+            	position: grid;
+            }
             
             table {
-            border-collapse: collapse;
+            	border-collapse: collapse;
             }
             .bbs_title {
                 font-weight: bold;
@@ -100,11 +103,9 @@
 
             #button_list_1 tr th {
                 background-color: var(--light-gray);
-               
                 border-bottom: 1px solid var(--dark-gray);
                 color: var(--dark-gray);
                 
-     
             }
             
             .table-header_01 {                        
@@ -128,7 +129,7 @@
 </head>
 <body>
     <p class="bbs_title">게시글 목록</p>
-    <!-- 게시물 검색 -->
+    	<!-- 게시물 검색 -->
         <div class="button_list">
                 <select class="select">
                     <option value="제목">제목</option>
@@ -138,14 +139,11 @@
                 <button type="submit" class="btn_st_2">
                     <a href="#">조회</a>
                 </button>
-                <!-- <button type="submit" class="btn_st_3">
-                    <a href="/freeboard/create">등록</a>
-                </button> -->
-    </div>
+                
+    	</div>
     <div id="wrap" class="wrap">
         <!-- 본문 -->
         <section id="container" class="container">
-            
             <main class="contents">         
                     <!-- 게시판 리스트 -->
                     <form action="#" method="">
@@ -208,21 +206,8 @@
                             <a href="#">다음</a>
                         </div>
                     </form>
-    </div>        
-            </main>
-            <!-- <footer id="footer" class="footer">
-                <div class="inner">
-                    <address>
-                        <span>상호명 : SNAPCHAT</span>
-                        <span>개인정보책임관리자 : 홍길동</span>
-                        <span>주소 : kt ds</span>
-                        <span>사업자등록번호 : 313-34432</span>
-                    </address>
-                    <div class="copyright">
-                        &copy; 2023 by SNAPCHAT. All rights reserved
-                    </div>
-                </div>
-            </footer> -->
+    		</div> 
+
     <jsp:include page="../layout/footer.jsp" />
 </body>
     <script>

@@ -42,7 +42,7 @@
            border-bottom:none;
            border-left: none;
            border-right: none;
-            width: 1000px;
+           width: 1000px;
          }
          /*게시판 테이블 제어*/
          table {
@@ -121,15 +121,24 @@
        
         .swiper-slide img {
             position: relative;
-        max-width: 100%;
-        height: auto;
-        overflow: hidden; /* 이미지가 부모 컨테이너를 벗어나지 않도록 함 */
+	        max-width: 100%;
+	        height: auto;
+	        overflow: hidden; /* 이미지가 부모 컨테이너를 벗어나지 않도록 함 */
         }
 
         .swiper-button-prev,
         .swiper-button-next {
             margin-top: -100px;
         }
+        .hashtag_wrap {
+		    display: flex;
+		    width: 250px;
+		    flex-wrap: wrap;
+		    margin-top: 30px;
+		    border: 1px solid var(--gray);
+		    border-radius: 10px;
+		    padding: 10px;
+		}
     </style>
 </head>
 <body>
@@ -172,7 +181,15 @@
               </button>
           </div>
   
+  		<div id="hashtagList">
+		    <h3>해시태그</h3>
+		    	<div class="hashtag_wrap">
+		    	
+		    
+		</div>
+
           <!-- 게시판 리스트 -->
+        <div class="container">
           <form action="" method="">
               <fieldset class="board_list_box">
                   <!-- 리스트 -->
@@ -229,36 +246,22 @@
                </div>  
            </div>
           </form>
-      </div>
+        </div>
   </main>
    <jsp:include page="../layout/footer.jsp" />
    <script src="./js/jquery-1.11.3.min.js"></script>
    <script src="./js/jquery.easing.1.3.js"></script>
    <script src="./js/swiper.min.js"></script>
-   <script src="./js/common.js"></script>
+   
    <script>
-      //  $(document).ready(function() {
-      //      alert('힘내용ㅎㅎ');
-           // $.get('/code/질답게시판', function(response) {
-           //     for (let i = 0; i < response.length; i++) {
-           //         let template = `
-           //             <tr>
-           //                 <td>${qnaboard.generalPostId}</td>
-           //                 <td>
-           //                     <a href="/qnaboard/view/${qnaboard.generalPostId}">
-           //                         ${qnaboard.postTitle}
-           //                     </a>
-           //                 </td>
-           //                 <td>${qnaboard.postWriter}</td>
-           //                 <td>${qnaboard.postDate}</td>
-           //                 <td>${qnaboard.viewCnt}</td>
-           //             </tr>
-           //         `;
-           //     }
-           // });
-      //  });
-   </script>
-   <script>
+		// 사이드바에 해시태그 리스트 조회해주는 코드 
+	    $.get('/code/해시태그', function(response) {
+	      for (let i = 0; i < response.length; i++) {
+	        let hash_template = `<button class="hashtag incomplete">#\${response[i].codeContent}</button>`
+	        $('.hashtag_wrap').append(hash_template)
+	      }
+	    })	
+   
        // 미완성된 기능을 알려주는 모달창
        $('.incomplete').click(function() {
            $('.modal, .overlay').addClass('modal_active');

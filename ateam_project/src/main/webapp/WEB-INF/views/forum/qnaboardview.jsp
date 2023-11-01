@@ -579,9 +579,7 @@ textarea {
       
          <label for="postContent"></label>
          <!-- <div class="postContent_Controller"> -->
-         <div class="postContent_controller_1">${generalPostVO.postContent}</div>
-         
-         
+         <div class="postContent_controller_1">${generalPostVO.postContent}</div>        
          <%-- <!-- </div> -->
          <div class="btn-group">
             <div class="right-align">

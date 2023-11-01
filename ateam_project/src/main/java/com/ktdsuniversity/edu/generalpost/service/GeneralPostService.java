@@ -29,7 +29,7 @@ public interface GeneralPostService {
 	// 질답게시판
 	public GeneralPostListVO getAllQnABoard();
 
-	public boolean createNewQnABoard(GeneralPostVO generalPostVO);
+	public boolean createNewQnABoard(GeneralPostVO generalPostId);
 
 	public GeneralPostVO getOneQnABoard(String generalPostId);
 	

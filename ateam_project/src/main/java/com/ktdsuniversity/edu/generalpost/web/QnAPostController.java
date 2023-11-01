@@ -30,6 +30,7 @@ import com.ktdsuniversity.edu.generalpost.vo.GeneralPostListVO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
 import com.ktdsuniversity.edu.generalpost.vo.SearchForumVO;
 import com.ktdsuniversity.edu.generalposthashtag.service.HashtagService;
+import com.ktdsuniversity.edu.generalposthashtag.vo.HashtagVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 import com.ktdsuniversity.edu.util.XssIgnoreUtil;
 
@@ -102,7 +103,7 @@ public class QnAPostController {
 			return modelAndView;
 		}
 		else {
-			modelAndView.setViewName("forum/qnaboardcreate");
+			modelAndView.setViewName("forum/qnaboardlist");
 			modelAndView.addObject("generalPostVO", generalPostVO);
 			return modelAndView;
 		}
@@ -236,30 +237,23 @@ public class QnAPostController {
 			return view;
 		}
 	}
-	
-	// 해시태그 구현
-	@Autowired
-	private HashtagService hashtagService;
-	
-	@PostMapping("/hashtag/post")
-    public ModelAndView createHashtags(@RequestBody List<String> hashtags) {
-        ModelAndView view = new ModelAndView();
-        log.debug("컨트롤러 도착");
-
-        if (hashtags == null || hashtags.isEmpty()) {
-            // 해시태그가 비어있는 경우 적절한 기본값 설정 가능
-            hashtags = Collections.singletonList("기본값");
-        }
-
-        // 해시태그 리스트를 서비스로 전달하고 작업을 수행
-        boolean isSuccess = hashtagService.createHashtags(hashtags);
-
-        if (isSuccess) {
-            view.setViewName("redirect:/qnaboard/list");
-        } else {
-            view.setViewName("forum/qnaboardcreate");
-            view.addObject("generalPostVO", new GeneralPostVO());
-        }
-        return view;
-    }
+	/*
+	 * // 해시태그 구현
+	 * 
+	 * @Autowired private HashtagService hashtagService;
+	 * 
+	 * @PostMapping("/hashtag/post") public ModelAndView createHashtags(@RequestBody
+	 * List<String> hashtags) { ModelAndView view = new ModelAndView();
+	 * log.debug("컨트롤러 도착");
+	 * 
+	 * if (hashtags == null || hashtags.isEmpty()) { // 해시태그가 비어있는 경우 적절한 기본값 설정 가능
+	 * hashtags = Collections.singletonList("기본값"); }
+	 * 
+	 * // 해시태그 리스트를 서비스로 전달하고 작업을 수행 boolean isSuccess =
+	 * hashtagService.createHashtags(hashtags);
+	 * 
+	 * if (isSuccess) { view.setViewName("redirect:/qnaboard/list"); } else {
+	 * view.setViewName("forum/qnaboardcreate"); view.addObject("generalPostVO", new
+	 * GeneralPostVO()); } return view; }
+	 */
 }
