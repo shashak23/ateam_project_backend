@@ -162,12 +162,7 @@ updateViewCount();
 			background-color: var(--light-blue);
 			border-radius: 5px;
 		}
-		.seperate-line {
-	      	 boarder: 1px solid #ccc;
-	      	 width: 1000px;
-	      	 height: 1px;
-	      	 margin: 10px 0px 7px 0px;
-	      }
+		
 	
 </style>
 <script type="text/javascript">
