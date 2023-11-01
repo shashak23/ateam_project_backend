@@ -1,0 +1,144 @@
+<!-- 작성자: 김태현
+	 작성일: 2023-11-01
+	 내용: API 호출용 Mapper -->
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ktdsuniversity.edu.generalpost.dao.GeneralPostDAO">
+	<resultMap type="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO"
+	           id="GeneralPostRestDAOMap"
+	           autoMapping="true">
+    	<id column="GENERAL_POST_ID" property="generalPostId" />
+	    <association property="memberVO"
+	                 javaType="com.ktdsuniversity.edu.member.vo.MemberVO"
+			         autoMapping="true">
+	        <id column="EMAIL" property="email" />
+	    </association>
+	    <collection property="commonCodeListVO"
+	    			ofType="com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO"
+	    			autoMapping="true">
+	    	<id column="CODE_ID" property="codeId"/>			
+	    </collection>
+	    <collection property="hashtagListVO"
+	    			ofType="com.ktdsuniversity.edu.generalposthashtag.vo.HashtagVO"
+	    			autoMapping="true">
+	         <id column="GENERAL_POST_HASHTAG_ID" property="generalPostHashtagId" />
+	    </collection>
+	</resultMap>
+	
+	<!-- 자유게시판 멤버, 해시태그, 게시글 -->
+	<select id="getAllFreeBoardRest"
+			resultMap="GeneralPostRestDAOMap">
+		SELECT GP.GENERAL_POST_ID 
+			 , GP.POST_TITLE 
+			 , GP.POST_WRITER
+		     , GP.POST_CONTENT
+		     , GP.POST_DATE 
+		     , GP.VIEW_CNT
+		     , GP.LIKE_CNT 
+		     , CC.CODE_CONTENT
+		     , GPH.GENERAL_POST_HASHTAG_ID
+		     , GPH.HASHTAG_ID
+		     , M.NICKNAME 
+		  FROM GENERAL_POST GP
+		  LEFT JOIN GENERAL_POST_HASHTAG GPH
+		    ON GPH.GENERAL_POST_ID = GP.GENERAL_POST_ID 
+		  LEFT JOIN COMMON_CODE CC
+		    ON CC.CODE_ID = GPH.HASHTAG_ID
+		 INNER JOIN MEMBER M
+		    ON M.EMAIL = GP.POST_WRITER
+		 WHERE GP.BOARD_ID = 'CC-20231017-000029'
+	</select>
+	
+	<select id="getAllQnaBoardRest"
+			resultMap="GeneralPostRestDAOMap">
+		SELECT GP.GENERAL_POST_ID 
+			 , GP.POST_TITLE 
+			 , GP.POST_WRITER
+		     , GP.POST_CONTENT
+		     , GP.POST_DATE 
+		     , GP.VIEW_CNT
+		     , GP.LIKE_CNT 
+		     , CC.CODE_CONTENT
+		     , GPH.GENERAL_POST_HASHTAG_ID
+		     , GPH.HASHTAG_ID
+		     , M.NICKNAME
+		  FROM GENERAL_POST GP
+		  LEFT JOIN GENERAL_POST_HASHTAG GPH
+		    ON GPH.GENERAL_POST_ID = GP.GENERAL_POST_ID 
+		  LEFT JOIN COMMON_CODE CC
+		    ON CC.CODE_ID = GPH.HASHTAG_ID
+		 INNER JOIN MEMBER M
+		    ON M.EMAIL = GP.POST_WRITER
+		 WHERE GP.BOARD_ID = 'CC-20231017-000030'
+	</select>
+	
+	<select id="SearchFreeBoardRest"
+			parameterType="com.ktdsuniversity.edu.generalpost.vo.SearchForumVO"
+			resultMap="GeneralPostRestDAOMap">
+		<include refid="common.pagination_header" />
+		SELECT GP.GENERAL_POST_ID 
+			 , GP.POST_TITLE 
+			 , GP.POST_WRITER
+		     , GP.POST_CONTENT
+		     , GP.POST_DATE 
+		     , GP.VIEW_CNT
+		     , GP.LIKE_CNT 
+		     , CC.CODE_CONTENT
+		     , GPH.GENERAL_POST_HASHTAG_ID
+		     , GPH.HASHTAG_ID
+		     , M.NICKNAME
+		  FROM GENERAL_POST GP
+		  LEFT JOIN GENERAL_POST_HASHTAG GPH
+		    ON GPH.GENERAL_POST_ID = GP.GENERAL_POST_ID 
+		  LEFT JOIN COMMON_CODE CC
+		    ON CC.CODE_ID = GPH.HASHTAG_ID
+		 INNER JOIN MEMBER M
+		    ON M.EMAIL = GP.POST_WRITER
+		 WHERE GP.BOARD_ID = 'CC-20231017-000029'
+		 <if test='searchKeyword != null and searchKeyword != ""'>
+			<if test='searchType=="subject"'>
+		   AND GP.POST_TITLE LIKE '%' || #{searchKeyword} || '%'
+			</if>
+			<if test='searchType=="content"'>
+		   AND GP.POST_CONTENT LIKE '%' || #{searchKeyword} || '%'
+			</if>
+		</if>
+		 <include refid="common.pagination_footer" />
+	</select>
+	
+	<select id="SearchQnaBoardRest"
+			parameterType="com.ktdsuniversity.edu.generalpost.vo.SearchForumVO"
+			resultMap="GeneralPostRestDAOMap">
+		<include refid="common.pagination_header" />
+		SELECT GP.GENERAL_POST_ID 
+			 , GP.POST_TITLE 
+			 , GP.POST_WRITER
+		     , GP.POST_CONTENT
+		     , GP.POST_DATE 
+		     , GP.VIEW_CNT
+		     , GP.LIKE_CNT 
+		     , CC.CODE_CONTENT
+		     , GPH.GENERAL_POST_HASHTAG_ID
+		     , GPH.HASHTAG_ID
+		     , M.NICKNAME
+		  FROM GENERAL_POST GP
+		  LEFT JOIN GENERAL_POST_HASHTAG GPH
+		    ON GPH.GENERAL_POST_ID = GP.GENERAL_POST_ID 
+		  LEFT JOIN COMMON_CODE CC
+		    ON CC.CODE_ID = GPH.HASHTAG_ID
+		 INNER JOIN MEMBER M
+		    ON M.EMAIL = GP.POST_WRITER
+		 WHERE GP.BOARD_ID = 'CC-20231017-000030'
+		 <if test='searchKeyword != null and searchKeyword != ""'>
+			<if test='searchType=="subject"'>
+		   AND GP.POST_TITLE LIKE '%' || #{searchKeyword} || '%'
+			</if>
+			<if test='searchType=="content"'>
+		   AND GP.POST_CONTENT LIKE '%' || #{searchKeyword} || '%'
+			</if>
+		</if>
+		 <include refid="common.pagination_footer" />
+	</select>
+</mapper>

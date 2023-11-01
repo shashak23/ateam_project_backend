@@ -7,9 +7,12 @@
  */
 package com.ktdsuniversity.edu.generalpost.service;
 
+import java.util.List;
+
 import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostListVO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
+import com.ktdsuniversity.edu.generalpost.vo.SearchForumVO;
 
 
 public interface GeneralPostService {
@@ -26,6 +29,8 @@ public interface GeneralPostService {
 	
 	public boolean likeFreeBoard(GeneralPostVO generalPostVO);
 	
+	public List<GeneralPostVO> getAllFreeBoardRest();
+	
 	// 질답게시판
 	public GeneralPostListVO getAllQnABoard();
 
@@ -38,10 +43,17 @@ public interface GeneralPostService {
 	public boolean deleteOneQnABoard(String generalPostId);
 
 	public boolean likeQnABoard(GeneralPostVO generalPostVO);
+	
+	public List<GeneralPostVO> getAllQnaBoardRest();
+
 	// 내 게시글 조회
 	public GeneralPostListVO getMyPost(GeneralPostVO generalPostVO);
 	
 	// 통합검색
 	public GeneralPostListVO searchAllBoardByKeyword(AbstractSearchVO abstractSearchVO);
+
+	public List<GeneralPostVO> SearchFreeBoardRest(SearchForumVO searchForumVO);
+	
+	public List<GeneralPostVO> SearchQnaBoardRest(SearchForumVO searchForumVO);
 
 }

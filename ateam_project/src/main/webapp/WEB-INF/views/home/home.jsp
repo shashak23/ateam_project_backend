@@ -803,5 +803,9 @@
       }
     })
   })
+
+  $.get('/generalpost/freeboard/all', function(response) {
+    console.log(response)
+  })
 </script>
 </html>

@@ -33,6 +33,8 @@ public interface GeneralPostDAO {
 
 	public int updateLikeFreePost(GeneralPostVO generalPostVO);
 	
+	public List<GeneralPostVO> getAllFreeBoardRest();
+	
 	// 질답게시판
 	public List<GeneralPostVO> getAllQnABoard();
 	
@@ -45,9 +47,16 @@ public interface GeneralPostDAO {
 	public int deleteOneQnABoard(String generalPostId);
 
 	public int updateLikeQnAPost(GeneralPostVO generalPostVO);
+	
+	public List<GeneralPostVO> getAllQnaBoardRest();
+	
 	// 내 게시글 조회
 	public List<GeneralPostVO> getMyPost(GeneralPostVO generalPostVO);
 	
 	// 통합검색
 	public List<GeneralPostVO> searchAllBoardByKeyword(AbstractSearchVO abstractSearchVO);
+
+	public List<GeneralPostVO> SearchFreeBoardRest(SearchForumVO searchForumVO);
+
+	public List<GeneralPostVO> SearchQnaBoardRest(SearchForumVO searchForumVO);
 }

@@ -15,6 +15,6 @@ import com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO;
 
 public interface CommonCodeService {
 	public CommonCodeListVO getAllCommonType(String codeName);
-	public boolean createCommonCode(CommonCodeVO commonVO);
+	public boolean createCommonCode(CommonCodeVO commonVO, String codeName);
 	public List<CommonCodeVO> searchCode(String codeName);
 }

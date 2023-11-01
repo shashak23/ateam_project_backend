@@ -1,5 +1,6 @@
 /**
  * 수정자: 장보늬(2023-10-22)
+ * 수정자: 김태현(2023-11-01)
  * **/
 package com.ktdsuniversity.edu.generalpost.service;
 
@@ -16,6 +17,7 @@ import com.ktdsuniversity.edu.generalpost.dao.GeneralPostDAO;
 import com.ktdsuniversity.edu.generalpost.dao.GeneralPostHashtagDAO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostListVO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
+import com.ktdsuniversity.edu.generalpost.vo.SearchForumVO;
 import com.ktdsuniversity.edu.generalpost.web.FreePostController;
 import com.ktdsuniversity.edu.generalposthashtag.vo.HashtagVO;
 
@@ -84,6 +86,11 @@ private Logger log = LoggerFactory.getLogger(FreePostController.class);
 		return likeCount > 0;
 	}
 	
+	@Override
+	public List<GeneralPostVO> getAllFreeBoardRest() {
+		return generalPostDAO.getAllFreeBoardRest();
+	}
+	
 	// 질답게시판 
 	@Transactional
 	@Override
@@ -99,7 +106,7 @@ private Logger log = LoggerFactory.getLogger(FreePostController.class);
 	@Override
 	public boolean createNewQnABoard(GeneralPostVO generalPostVO) {
 		int boardCount = generalPostDAO.createNewQnABoard(generalPostVO);
-		List<HashtagVO> hashtagList = generalPostVO.getHashtagVO();
+		List<HashtagVO> hashtagList = generalPostVO.getHashtagListVO();
 		for (HashtagVO hashtagVO : hashtagList) {
 			hashtagVO.setGeneralPostId(generalPostVO.getGeneralPostId());
 			boardCount += generalPostHashtagDAO.createPostHashtag(hashtagVO);
@@ -141,6 +148,13 @@ private Logger log = LoggerFactory.getLogger(FreePostController.class);
 		int likeCount = generalPostDAO.updateLikeQnAPost(generalPostVO);
 		return likeCount > 0;
 	}
+	
+	@Override
+	public List<GeneralPostVO> getAllQnaBoardRest() {
+		return generalPostDAO.getAllQnaBoardRest();
+	}
+	
+	
 	// 내게시글 조회
 	@Override
 	public GeneralPostListVO getMyPost(GeneralPostVO generalPostVO) {
@@ -158,5 +172,16 @@ private Logger log = LoggerFactory.getLogger(FreePostController.class);
 		GeneralPostListVO generalPostListVO = new GeneralPostListVO();
 		generalPostListVO.setGeneralPostList(generalPostDAO.searchAllBoardByKeyword(abstractSearchVO));
 		return generalPostListVO;
+	}
+	
+	// 자유게시판 검색용(미사용)
+	@Override
+	public List<GeneralPostVO> SearchFreeBoardRest(SearchForumVO searchForumVO) {
+		return generalPostDAO.SearchFreeBoardRest(searchForumVO);
+	}
+	// 질답게시판 검색용(미사용)
+	@Override
+	public List<GeneralPostVO> SearchQnaBoardRest(SearchForumVO searchForumVO) {
+		return generalPostDAO.SearchQnaBoardRest(searchForumVO);
 	}
 }
