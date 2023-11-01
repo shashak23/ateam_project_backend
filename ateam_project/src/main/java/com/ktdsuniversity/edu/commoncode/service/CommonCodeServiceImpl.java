@@ -8,7 +8,9 @@
 
 package com.ktdsuniversity.edu.commoncode.service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,8 +35,52 @@ public class CommonCodeServiceImpl implements CommonCodeService {
 	}
 
 	@Override
-	public boolean createCommonCode(CommonCodeVO commonCodeVO) {
-		return commonCodeDAO.createCommonCode(commonCodeVO) > 0;
+	public boolean createCommonCode(CommonCodeVO commonCodeVO, String codeName) {
+		// 보내준 코드 리스트를 받아오기
+		List<CommonCodeVO> originCommonCodeList = commonCodeDAO.searchCode(codeName);
+		
+		// 띄어쓰기를 기준으로 배열에 저장
+		String[] newCommonContentArr = commonCodeVO.getCodeContent().split(" ");
+		
+		// Set을 이용해 중복된 값을 제거하기
+		Set<String> newCommonContentSet = new HashSet<>();
+		for (String str : newCommonContentArr) {
+			newCommonContentSet.add(str);
+		}
+		
+		int count = 0;
+		int createCnt = 0;
+		boolean isExist = false;
+		
+		// DB에 중복된 값이 있는지 검사
+		for (String newContents : newCommonContentSet) {
+			for (CommonCodeVO originContents : originCommonCodeList) {
+				if(newContents.equals(originContents.getCodeContent())) {
+					count++;
+					isExist = true;
+					break;
+				}
+			}
+			if (!isExist) {
+				commonCodeVO.setCodeType(codeName);
+				commonCodeVO.setCodeContent(newContents);
+				// 없으면 공통 코드 생성
+				createCnt = commonCodeDAO.createCommonCode(commonCodeVO);
+				
+				if (createCnt != 0) {
+					count++;
+				}
+			}
+			isExist = false;
+			createCnt = 0;
+		}
+		
+		if (count == newCommonContentSet.size()) {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	
 	@Override
