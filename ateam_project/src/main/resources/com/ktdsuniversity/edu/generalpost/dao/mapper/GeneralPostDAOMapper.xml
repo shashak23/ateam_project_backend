@@ -271,5 +271,11 @@
 	</select>	
 	
 	<!-- 질답의 좋아요 순 랭킹 -->
+	<select id="getLikeRanking">
+		SELECT *
+		  FROM GENERAL_POST GP
+		 WHERE BOARD_ID = 'CC-20231017-000030'
+		 ORDER BY LIKE_CNT DESC
+	</select>
 	
 </mapper>

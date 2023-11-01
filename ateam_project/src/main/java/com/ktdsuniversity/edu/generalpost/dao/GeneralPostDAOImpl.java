@@ -132,9 +132,16 @@ public class GeneralPostDAOImpl extends SqlSessionDaoSupport
 		return getSqlSession().selectList("searchAllBoardByKeyword", abstractSearchVO);
 	}
 
+	// 조회수순 랭킹
 	@Override
 	public List<GeneralPostVO> getViewRanking(String date) {
 		return getSqlSession().selectList("getViewRanking", date);
+	}
+
+	// 좋아요순 랭킹
+	@Override
+	public List<GeneralPostVO> getLikeRanking(String date) {
+		return getSqlSession().selectList("getLikeRanking", date);
 	}
 	
 	@Override
