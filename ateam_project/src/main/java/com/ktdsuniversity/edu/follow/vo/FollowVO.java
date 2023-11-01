@@ -1,3 +1,7 @@
+/**
+ * 작성자: 장보늬
+ * 작성일자: 2023-11-01
+ */
 package com.ktdsuniversity.edu.follow.vo;
 
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
