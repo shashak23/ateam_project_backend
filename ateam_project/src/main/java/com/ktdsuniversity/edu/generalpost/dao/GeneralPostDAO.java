@@ -44,7 +44,8 @@ public interface GeneralPostDAO {
 	public int updateLikeQnAPost(GeneralPostVO generalPostVO);
 	// 내 게시글 조회
 	public List<GeneralPostVO> getMyPost(GeneralPostVO generalPostVO);
-	
 	// 통합검색
 	public List<GeneralPostVO> searchAllBoardByKeyword(AbstractSearchVO abstractSearchVO);
+	// 조회수순 랭킹
+	public List<GeneralPostVO> getViewRanking(String date);
 }

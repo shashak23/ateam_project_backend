@@ -120,5 +120,10 @@ public class GeneralPostDAOImpl extends SqlSessionDaoSupport
 	public List<GeneralPostVO> searchAllBoardByKeyword(AbstractSearchVO abstractSearchVO) {
 		return getSqlSession().selectList("searchAllBoardByKeyword", abstractSearchVO);
 	}
+
+	@Override
+	public List<GeneralPostVO> getViewRanking(String date) {
+		return getSqlSession().selectList("getViewRanking", date);
+	}
 	
 }

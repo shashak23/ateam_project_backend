@@ -114,8 +114,8 @@ private Logger log = LoggerFactory.getLogger(FreePostController.class);
 	@Override
 	public GeneralPostVO getOneQnABoard(String generalPostId) {
 
-		int updateCount = generalPostDAO.increaseViewCount(generalPostId);
-		if (updateCount == 0) {
+		int boardCount = generalPostDAO.increaseViewCount(generalPostId);
+		if (boardCount == 0) {
 			throw new IllegalArgumentException();
 		}else {
 			return generalPostDAO.getOneFreeBoard(generalPostId);
@@ -161,5 +161,10 @@ private Logger log = LoggerFactory.getLogger(FreePostController.class);
 		GeneralPostListVO generalPostListVO = new GeneralPostListVO();
 		generalPostListVO.setGeneralPostList(generalPostDAO.searchAllBoardByKeyword(abstractSearchVO));
 		return generalPostListVO;
+	}
+
+	@Override
+	public List<GeneralPostVO> getViewRanking(String date) {
+		return generalPostDAO.getViewRanking(date);
 	}
 }
