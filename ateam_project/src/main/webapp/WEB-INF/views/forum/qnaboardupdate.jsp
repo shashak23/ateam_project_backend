@@ -110,9 +110,7 @@ $().ready(function(){
 	    })
 		
 	})
-	
-	
-    
+
 	// 폼 제출 이벤트 처리
 	$('#hashtagForm').submit(function(e) {
         
@@ -189,26 +187,7 @@ $().ready(function(){
     }
     // 저장 버튼 클릭 이벤트 핸들러
     function savePost() {
-        // hashtagsArray를 JSON 문자열로 변환
-        const hashtagsJSON = JSON.stringify(hashtagsArray);
-        // hashtagsJSON을 서버로 전송 (AJAX 등을 사용)
-        // 이때, 서버 컨트롤러에서 JSON 문자열을 파싱하여 처리
-        $.ajax({
-            url: "/qnaboard/update", // 서버의 엔드포인트 URL로 변경
-            type: "POST",
-            data: {
-            	"hashtagId" : "${generalPostHashtagVO.hashtagId}",
-            	"postTitle" : "${generalPostVO.postTitle}",
-            	"postContent" : "${generalPostVO.postContent}"
-            },
-            success: function (data) {
-                // 서버 응답에 따른 동작
-                console.log("서버 응답:", data);
-            },
-            error: function(data){
-            	console.log("서버 실패:", error)
-            }
-        })
+        $("#postForm").submit();
     }
 </script>
    
@@ -299,14 +278,14 @@ $().ready(function(){
  <div id="container">
 	<h1 class="title_name">질답 게시글 수정</h1>
 	<div class="seperate-line"></div>
-	<form method="post" action="/qnaboard/update" modelAttribute="generalPostVO" >
+	<form method="post" id="postForm" action="/qnaboard/update">
 		<input type="hidden" name="generalPostId" value="${generalPostVO.generalPostId}"/>
 		<div class="grid">
 			<label for="postTitle">제목</label>
 			<input id="postTitle" type="text" name="postTitle" value="${generalPostVO.postTitle}"/>
 			
-			<label for="postContent"></label>
-			<textarea id="editor" name="postContent">${generalPostVO.postContent}</textarea>
+			<label for="postContent">내용</label>
+			<textarea name="postContent" id="editor" >${generalPostVO.postContent}</textarea>
 				<script>
 		    	CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
 	                // https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html#extended-toolbar-configuration-format
@@ -448,17 +427,23 @@ $().ready(function(){
 	                    'MathType'
 	                ]
 	            });  
-		        </script>	
-		  <div class="hashtag">
-		    <label for="hashtag">해시태그</label>
-   			<input type="hidden" id="hashtagInput" name='hashtag' placeholder="#해시태그" value="${generalPostHashtagVO.hashtagId}">		
+		        </script>
+		 <div class="hashtag">
+		 <label for="hashtag">해시태그</label>
+   			<input type="hidden" id="hashtagInput" name='hashtag' placeholder="#해시태그" value="${generalPostHashtagVO.hashtagId}">
+   	
+   			<label for="general_post_hashtag_id"></label>
+   			<input type="hidden" id="general_post_hashtag_id" value="${generalPostHashtagVO.generalPostHashtagId}"/>
+   		
+   			<label for="general_post_id"></label>
+   			<input type="hidden" id="general_post_id" value="${generalPostHashtagVO.generalPostId}"/>
 		  </div>
-			<div class="btn-group">
-				<div class="right-align">
-                 	<input type="button" value="추가" onclick="addHashtag()">
-					<input type="button" value="완료" onclick="savePost()"/>
+				<div class="btn-group">
+					<div class="right-align">
+	                 	<input type="button" value="추가" onclick="addHashtag()">
+						<input type="button" value="완료" onclick="savePost()"/>
+					</div>
 				</div>
-			</div>
 			<div id="displayHashtags"></div>
 		</div>
 	</form>
