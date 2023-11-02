@@ -94,7 +94,7 @@
   .personal_modal_content > div,
   .company_modal_content > div,
   .hashtag_modal > div,
-  .notice_modal_content > div
+  .notice_modal_content > div,
   .report_modal_content > div {
     padding: 20px;
   }
@@ -106,7 +106,7 @@
     margin: 15px 0 25px 0;
   }
 
-  .desc-header div:first-child {
+  .desc-header > div:first-child {
     font-size: 14pt;
     border-left: 10px solid crimson;
     padding: 10px;
@@ -127,6 +127,10 @@
     color: #e05454;
     padding: 5px 10px;
     margin-left: 10px;
+  }
+
+  .desc-header .notice_crud {
+    display: flex;
   }
 
   .member_container,
@@ -183,9 +187,11 @@
   .notice_modal .desc-header .create_notice {
     border: 0;
     padding: 5px;
+    margin-left: 10px;
     color: white;
-    background-color: #e07272;
+    background-color: #f12e2e;
     border-radius: 5px;
+    cursor: pointer;
   }
 
   .notice_modal .desc-header .notice_search_wrap {
@@ -202,7 +208,7 @@
 
   .notice_modal .notice_group_title {
     display: grid;
-    grid-template-columns: 40px 100px 275px 100px 100px;
+    grid-template-columns: 40px 100px 575px 60px 120px 120px;
     column-gap: 10px;
     align-items: center;
     color: #888;
@@ -218,7 +224,7 @@
 
   .notice_modal .notice_group_content {
     display: grid;
-    grid-template-columns: 40px 100px 275px 100px 100px;
+    grid-template-columns: 40px 100px 575px 60px 120px 120px;
     column-gap: 10px;
     align-items: center;
     color: #191919;
@@ -312,6 +318,24 @@
     background-color: crimson;
     color: #e5e5e5;
     padding: 8px;
+  }
+
+  .notice_group_content .notice_modify_btn {
+    display: block;
+    width: 100%;
+    border: none;
+    background-color: rgb(255, 137, 161);
+    color: #e5e5e5;
+    padding: 7px 1px;
+  }
+
+  .notice_group_content .notice_date {
+    text-align: center;
+  }
+
+  .notice_group_content .notice_off_btn {
+    background-color: #e5e5e5;
+    color: #888;
   }
 
   .hashtag_content {
@@ -651,7 +675,10 @@
     <div class="notice_modal_content">
       <div class="desc">
         <div class="desc-header">
-          <button class="create_notice">공지생성</button>
+          <div class="notice_crud">
+            <div>공지 관리</div>
+            <button class="create_notice">공지생성</button>
+          </div>
           <div class="notice_search_wrap">
             <input type="text" placeholder="홍길동"/>
             <button class="admin_notice_search">검색</button>
@@ -661,7 +688,7 @@
         <div class="desc-title">
           <div class="notice_container">
             <div class="notice_group_title">
-              <div></div><div>제목</div><div>내용</div><div>시작날짜</div><div>끝날짜</div>
+              <div></div><div>제목</div><div>내용</div><div>수정</div><div>시작날짜</div><div>끝날짜</div>
             </div>
           </div>
         </div>
@@ -979,21 +1006,23 @@
         if (today < endDate) {
           noticeTemplate = `
           <div class="notice_group_content">
-            <div>On</div>
+            <button class="notice_on_btn">On</button>
             <div class="notice_title">\${notice.postTitle}</div>
             <div class="notice_content">\${notice.noticeContent}</div>
-            <div>\${formattedStartDate}</div>
-            <div>\${formattedEndDate}</div>
+            <button class="notice_modify_btn">수정</button>
+            <div class="notice_date">\${formattedStartDate}</div>
+            <div class="notice_date">\${formattedEndDate}</div>
           </div>`
         }
         else {
           noticeTemplate = `
           <div class="notice_group_content notice_expired">
-            <div>Off</div>
+            <button class="notice_off_btn">Off</button>
             <div class="notice_title">\${notice.postTitle}</div>
             <div class="notice_content">\${notice.noticeContent}</div>
-            <div>\${formattedStartDate}</div>
-            <div>\${formattedEndDate}</div>
+            <button class="notice_modify_btn">수정</button>
+            <div class="notice_date">\${formattedStartDate}</div>
+            <div class="notice_date">\${formattedEndDate}</div>
           </div>`
         }
 
@@ -1004,6 +1033,18 @@
   }
 
   loadAdminNoticeList()
+
+  $(document).on('click', '.notice_off_btn', function() {
+    alert('기능 준비중')
+  })
+
+  $(document).on('click', '.notice_on_btn', function() {
+    alert('기능 준비중')
+  })
+
+  $(document).on('click', '.notice_modify_btn', function() {
+    alert('기능 준비중 기다리셈')
+  })
 
   function loadReportList() {
     $.get('/admin/reportlist', function(response) {
