@@ -208,7 +208,6 @@ $().ready(function() {
         let selectedFilePath = $(this).val()
         let parts = selectedFilePath.split('\\')
         let selectedFile = parts[parts.length - 1]
-        $(this).val(selectedFile)
         console.log(selectedFile)
         $('#file_text').val(selectedFile)
     })
