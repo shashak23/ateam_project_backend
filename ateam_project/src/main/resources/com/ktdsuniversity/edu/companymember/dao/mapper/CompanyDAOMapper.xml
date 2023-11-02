@@ -54,7 +54,6 @@
 			resultType="com.ktdsuniversity.edu.companymember.vo.CompanyVO">
 		SELECT COMPANY_EMAIL
 			  , CONTACT_NUMBER
-			  , CONTACT_NAME
 			  , COMPANY_NAME
 			  , INDUSTRY_TYPE
 			  , COMPANY_REGIST_NUMBER

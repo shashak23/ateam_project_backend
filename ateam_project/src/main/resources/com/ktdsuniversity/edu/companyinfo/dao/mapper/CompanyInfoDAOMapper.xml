@@ -17,7 +17,6 @@
 			resultType="com.ktdsuniversity.edu.companyinfo.vo.CompanyInfoVO">
 		SELECT COMPANY_EMAIL
 			 , CONTACT_NUMBER
-			 , CONTACT_NAME
 			 , COMPANY_NAME
 			 , INDUSTRY_TYPE
 			 , COMPANY_REGIST_NUMBER
