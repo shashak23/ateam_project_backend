@@ -89,8 +89,13 @@ public class GeneralMemberDAOImpl extends SqlSessionDaoSupport implements Genera
 	public int deleteSelfIntro(String generalMemberEmail) {
 		return getSqlSession().update("deleteSelfIntro",generalMemberEmail);
 	}
-
-	
-	
+	@Override
+	public int updateTierId(GeneralMemberVO generalMemberVO) {
+		return getSqlSession().update("updateTierId", generalMemberVO);
+	}
+	@Override
+	public int updateTierDate(GeneralMemberVO generalMemberVO) {
+		return getSqlSession().update("updateTierDate", generalMemberVO);
+	}
 
 }

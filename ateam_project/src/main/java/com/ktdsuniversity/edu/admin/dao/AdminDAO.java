@@ -2,12 +2,10 @@ package com.ktdsuniversity.edu.admin.dao;
 
 import java.util.List;
 
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-
+import com.ktdsuniversity.edu.admin.vo.AdminTierVO;
 import com.ktdsuniversity.edu.admin.vo.ReportVO;
 
-public interface ReportDAO {
+public interface AdminDAO {
 	
 	/**
 	 * DB에 저장된 모든 신고물 개수 조회
@@ -86,5 +84,17 @@ public interface ReportDAO {
 
 	// 게시글 신고
 	public int createReport(ReportVO reportVO);
+	
+	/**
+	 * 승급 예정인 멤버 목록 조회
+	 * @return 승급 예정 멤버 목록
+	 */
+	public List<AdminTierVO> tierMemberAllList();
 
+	/**
+	 * 승급 예정인 멤버 수 조회
+	 * @return 승급 예정 멤버 수
+	 */
+	public int tierMemberAllCount();
+	
 }
