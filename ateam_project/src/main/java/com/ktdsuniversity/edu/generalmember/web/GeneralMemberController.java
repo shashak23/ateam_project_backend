@@ -43,15 +43,12 @@ public class GeneralMemberController {
 	@Autowired
 	private GeneralMemberService generalMemberService;
 
-	@Autowired
-	private FollowService followService;
 	
 	/**
 	 * 마이페이지 조회
 	 */
 	@GetMapping("/memberinfo/view/{generalMemberEmail}")
-	public ModelAndView viewMemberInfo(@PathVariable String generalMemberEmail
-			                         , @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+	public ModelAndView viewMemberInfo(@PathVariable String generalMemberEmail) {
 		ModelAndView modelAndView = new ModelAndView();
 		List<CareerVO> careerListVO = generalMemberService.getAllCareerListByMemberEmail(generalMemberEmail);
 		List<GeneralMemberVO> generalMemberListVO = generalMemberService.getAllGeeralMemberList(generalMemberEmail);
@@ -59,8 +56,6 @@ public class GeneralMemberController {
 		MemberVO member = generalMemberService.getSelectNickname(generalMemberEmail);
 		List<CommonCodeVO> commonCodeVO = generalMemberService.getSelectCommonCode(generalMemberEmail);
 		GeneralMemberVO generalMemberVO = generalMemberService.getSelectGeneralMember(generalMemberEmail);
-		FollowListVO followerList = followService.getAllFollower(memberVO.getEmail());
-		FollowListVO followeeList = followService.getAllFollowee(memberVO.getEmail());
 		modelAndView.setViewName("/mypage/myprofile");
 		modelAndView.addObject("generalMemberEmail", generalMemberEmail);
 		modelAndView.addObject("careerList", careerListVO);
@@ -69,8 +64,6 @@ public class GeneralMemberController {
 		modelAndView.addObject("memberVO", member);
 		modelAndView.addObject("commonCodeList", commonCodeVO);
 		modelAndView.addObject("educationList", educationListVO);
-		modelAndView.addObject("followerList", followerList);
-		modelAndView.addObject("followeeList", followeeList);
 		return modelAndView;
 	}
 	

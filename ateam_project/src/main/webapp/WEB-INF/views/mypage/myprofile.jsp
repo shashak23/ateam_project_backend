@@ -736,36 +736,43 @@ position: absolute;
 	  // 팔로우 토글
 	  $(document).on('click', '.follow_icon', function(e) {
 	    let userEmail = `${sessionScope._LOGIN_USER_}`
-	    let content = {
-	      "follower": `${sessionScope._LOGIN_USER_.email}`,
-	      "followee": $(this).find(".followeeEmail").val(),
-	      "followId": $(e.currentTarget).find('.followId').val()
-	    }
-	    console.log(content.follower)
-	    console.log(content.followee)
-	    console.log(content.followId)
-	    console.log(e.currentTarget)
-	    if ($(e.currentTarget).hasClass('follow_on')) {
-	      $.post('/unfollow/member', content, function(result) {
-	        alert('언팔로우!')
-	        $(e.currentTarget).removeClass('follow_on')
-	        $(e.currentTarget).css({'background-color':'var(--white)', 'color':'var(--black)'})
-	        $('.followId').remove()
-	      })
-	    }
-	    else {
-	      $.post('/follow/member', content, function(result) {
-	         if(result) {
-	           alert('팔로우!')
-	           $(e.currentTarget).css({'background-color':'var(--blue)', 'color':'var(--white)'})
-	           $(e.currentTarget).addClass('follow_on')
-	           $('.follow_icon').prepend(`<input type="hidden" class="followId" value="\${result.followId}"/>`)
-	         }
-	         else {
-	           alert('처리하지 못했습니다.')
+	      if (userEmail === '') {
+	        if(confirm('로그인이 필요한 서비스입니다. 로그인하시겠습니까?') ) {
+	          window.location.href="/member/auth"
 	        }
-	      })
-	    }
+	      }
+	      else {
+			  let content = {
+				"follower": `${sessionScope._LOGIN_USER_.email}`,
+				"followee": $(this).find(".followeeEmail").val(),
+				"followId": $(e.currentTarget).find('.followId').val()
+			  }
+			  console.log(content.follower)
+			  console.log(content.followee)
+			  console.log(content.followId)
+			  console.log(e.currentTarget)
+			  if ($(e.currentTarget).hasClass('follow_on')) {
+				$.post('/unfollow/member', content, function(result) {
+				  alert('언팔로우!')
+				  $(e.currentTarget).removeClass('follow_on')
+				  $(e.currentTarget).css({'background-color':'var(--white)', 'color':'var(--black)'})
+				  $('.followId').remove()
+				})
+			  }
+			  else {
+				$.post('/follow/member', content, function(result) {
+				   if(result) {
+					 alert('팔로우!')
+					 $(e.currentTarget).css({'background-color':'var(--blue)', 'color':'var(--white)'})
+					 $(e.currentTarget).addClass('follow_on')
+					 $('.follow_icon').prepend(`<input type="hidden" class="followId" value="\${result.followId}"/>`)
+				   }
+				   else {
+					 alert('처리하지 못했습니다.')
+				  }
+				})
+			  }
+	      }
 	})
 </script>
 </html>

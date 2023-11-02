@@ -90,13 +90,12 @@ public class GeneralPostDAOImpl extends SqlSessionDaoSupport
 
 	@Override
 	public int createNewQnABoard(GeneralPostVO generalPostVO) {
+		log.debug("--3--------------디에이오-------------------------");
 		return getSqlSession().insert("createNewQnABoard", generalPostVO);
 	}
 
 	@Override
 	public GeneralPostVO getOneQnABoard(String generalPostId) {
-		log.debug("--3--------------디에이오-------------------------");
-
 		return getSqlSession().selectOne("getOneQnABoard", generalPostId);
 	}
 
@@ -154,10 +153,14 @@ public class GeneralPostDAOImpl extends SqlSessionDaoSupport
 		return getSqlSession().selectList("SearchQnaBoardRest", searchForumVO);
 	}
 
-	// 검색
+	// 자유검색
 	@Override
-	public List<GeneralPostVO> searchAllGeneralPost(SearchForumVO searchForumVO) {
-		log.debug("--3--DAO 도착---------------------------");
-		return getSqlSession().selectList("searchAllGeneralPost", searchForumVO);
+	public List<GeneralPostVO> searchAllFreePost(SearchForumVO searchForumVO) {
+		return getSqlSession().selectList("searchAllFreePost", searchForumVO);
+	}
+	// 질답검색
+	@Override
+	public List<GeneralPostVO> searchAllQnAPost(SearchForumVO searchForumVO) {
+		return getSqlSession().selectList("searchAllQnAPost", searchForumVO);
 	}
 }

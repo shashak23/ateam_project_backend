@@ -326,7 +326,6 @@ updateViewCount();
 				</div>
 		</div>
 	</div>	
-		</form>
-		
-	</body>
-	</html>
+</form>
+</body>
+</html>

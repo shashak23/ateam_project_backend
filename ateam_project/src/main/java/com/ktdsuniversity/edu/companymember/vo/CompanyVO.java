@@ -6,7 +6,6 @@ public class CompanyVO extends MemberVO {
 	
 	private String companyEmail;
 	private String contactNumber;
-	private String contactName;
 	private String companyName;
 	private String industryType;
 	private String companyRegistNumber;
@@ -32,12 +31,6 @@ public class CompanyVO extends MemberVO {
 	}
 	public void setContactNumber(String contactNumber) {
 		this.contactNumber = contactNumber;
-	}
-	public String getContactName() {
-		return contactName;
-	}
-	public void setContactName(String contactName) {
-		this.contactName = contactName;
 	}
 	public String getCompanyName() {
 		return companyName;

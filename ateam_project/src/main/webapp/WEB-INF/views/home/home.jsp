@@ -588,7 +588,7 @@
                         <div class="flex_left">
                           <img class="incomplete" src="/images/꼬부기.png" alt="꼬부기" />
                           <div>
-                            <div class="writer_name incomplete">
+                            <div class="writer_name">
                             	<a href="/memberinfo/view/\${email}">\${nickname}</a>
                             	<button class="follow_btn">follow
                             	  <input type="hidden" class="followerEmail" value="${sessionScope._LOGIN_USER_.email}" />

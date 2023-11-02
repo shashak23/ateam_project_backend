@@ -62,7 +62,6 @@ public class FollowController {
 	@GetMapping("/member/getfollowers/{email}")
 	public Map<String, Object> getFollowers(@PathVariable String email) {
 		FollowListVO followListVO = followService.getAllFollower(email);
-		
 		List<FollowVO> followerList = followListVO.getFollowList();
 		
 		Map<String, Object> resultMap = new HashMap<>();
@@ -96,7 +95,7 @@ public class FollowController {
 		searchFollowVO.setFollowerEmail(followVO.getFollower());
 		searchFollowVO.setFolloweeEmail(followVO.getFollowee());
 		
-		followService.unFollow(searchFollowVO);
+		// followService.unFollow(searchFollowVO);
 		
 		Map<String, Object> resultMap = new HashMap<>();
 

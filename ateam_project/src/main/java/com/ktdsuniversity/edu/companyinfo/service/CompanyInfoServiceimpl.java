@@ -21,12 +21,7 @@ public class CompanyInfoServiceimpl implements CompanyInfoService {
 	
 	@Autowired
 	private MemberDAO memberDAO;
-
-	@Override
-	public boolean updateCompanyContactName(CompanyVO companyVO) {
-		int updateCompanyContactNameCount = companyInfoDAO.updateCompanyContactName(companyVO);
-		return updateCompanyContactNameCount > 0;
-	}
+	
 
 	@Override
 	public boolean updateCompanyContactNumber(CompanyVO companyVO) {
