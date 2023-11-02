@@ -23,6 +23,10 @@
   .error_txt_wrap {
     cursor: default;
     animation: swing 5s ease-in-out infinite;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
   }
 
   .error_txt_wrap div {
@@ -40,20 +44,14 @@
   .error_txt_wrap .message {
     font-size: 25pt;
   }
-
-  .home_link {
-    text-decoration: none;
-    color: aliceblue;
-    text-align: center;
-    opacity: .7;
-  }
   
   .home_link {
-    display: block;
     text-decoration: none;
     color: rgb(162, 162, 255);
     text-align: center;
     opacity: .7;
+    display: inline;
+    width: 120px;
   }
 
   @keyframes swing {

@@ -88,7 +88,7 @@ position: absolute;
     left: 83%;
     transform: translate(-50%, -50%);
 }
-    .btn-primary, a {
+    .btn-primary, .anchor {
         padding: 5px 8px;
         text-decoration: none;
         color: #4052f7;
@@ -611,7 +611,7 @@ position: absolute;
 					const followerItem =
 						`<div>
 							<img style="width: 50px; height: 50px;" src="\${profilePic}" />
-							<a href="/memberinfo/view/\${followerEmail}">\${nickname}</a>
+							<a class="anchor" href="/memberinfo/view/\${followerEmail}">\${nickname}</a>
 						</div>`;
 					console.log(followerItem)
 					followerTemplate += followerItem
@@ -643,7 +643,7 @@ position: absolute;
 					const followeeItem =
 						`<div>
 							<img style="width: 50px; height: 50px;" src="\${profilePic}" />
-							<a href="/memberinfo/view/\${followeeEmail}">\${nickname}</a>
+							<a class="anchor" href="/memberinfo/view/\${followeeEmail}">\${nickname}</a>
 						</div>`;
 					console.log(followeeItem)
 					followeeTemplate += followeeItem
