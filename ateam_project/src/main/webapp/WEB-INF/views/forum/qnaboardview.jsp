@@ -575,20 +575,16 @@ textarea {
 
          <label for="postDate">등록일</label>
          <div>${generalPostVO.postDate}</div>
+         
+         <label for="hashtag">해시태그</label>
+         <%-- <div>${generalPostVO.hashtagListVO[1].commonCodeList}</div> --%>
+		 <c:forEach var="hashtag" items="${generalPostVO.hashtagListVO}">
+		 	<c:out value="${hashtag.commonCodeVO.codeContent}" />
+		 </c:forEach>
       </div>
       
          <label for="postContent"></label>
-         <!-- <div class="postContent_Controller"> -->
          <div class="postContent_controller_1">${generalPostVO.postContent}</div>        
-         <%-- <!-- </div> -->
-         <div class="btn-group">
-            <div class="right-align">
-                   <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq generalPostVO.postWriter}">
-                  
-               </c:if>
-            </div>
-         </div> --%>
-      
    </form>
 </div>   
    <div class="replies">

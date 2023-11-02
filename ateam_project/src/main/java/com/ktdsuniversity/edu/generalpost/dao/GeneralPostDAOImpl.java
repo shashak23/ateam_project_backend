@@ -43,8 +43,8 @@ public class GeneralPostDAOImpl extends SqlSessionDaoSupport
 	}
 	
 	@Override
-	public int getBoardAllCount() {
-		return getSqlSession().selectOne("com.ktdsuniversity.edu.generalpost.dao.GeneralPostDAO.getBoardAllCount");
+	public int getBoardAllCount(SearchForumVO searchForumVO) {
+		return getSqlSession().selectOne("com.ktdsuniversity.edu.generalpost.dao.GeneralPostDAO.getBoardAllCount", searchForumVO);
 	}
 	// 자유게시판
 	@Override
@@ -152,5 +152,12 @@ public class GeneralPostDAOImpl extends SqlSessionDaoSupport
 	@Override
 	public List<GeneralPostVO> SearchQnaBoardRest(SearchForumVO searchForumVO) {
 		return getSqlSession().selectList("SearchQnaBoardRest", searchForumVO);
+	}
+
+	// 검색
+	@Override
+	public List<GeneralPostVO> searchAllGeneralPost(SearchForumVO searchForumVO) {
+		log.debug("--3--DAO 도착---------------------------");
+		return getSqlSession().selectList("searchAllGeneralPost", searchForumVO);
 	}
 }

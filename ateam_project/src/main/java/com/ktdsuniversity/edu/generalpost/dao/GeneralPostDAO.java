@@ -15,7 +15,7 @@ import com.ktdsuniversity.edu.generalpost.vo.SearchForumVO;
 
 public interface GeneralPostDAO {
 	// 게시글 수 
-	public int getBoardAllCount();
+	public int getBoardAllCount(SearchForumVO searchForumVO);
 	// 조회수 
 	public int increaseViewCount(String generalPostId);
 
@@ -61,4 +61,6 @@ public interface GeneralPostDAO {
 
 	public List<GeneralPostVO> SearchQnaBoardRest(SearchForumVO searchForumVO);
 
+	// 검색
+	public List<GeneralPostVO> searchAllGeneralPost(SearchForumVO searchForumVO);
 }

@@ -16,19 +16,18 @@ public class HashtagVO {
 	private String hashtagId;
 	private String generalPostId;
 	// 코드명 가져오기
-	private List<CommonCodeVO> commonCodeList;
+	private CommonCodeVO commonCodeVO;
 	// 회원 가져오기
 	private MemberVO memberVO;
 	// 게시글 가져오기
 	private GeneralPostVO generalPostVO;
 	
-	public List<CommonCodeVO> getCommonCodeList() {
-		return commonCodeList;
+	public CommonCodeVO getCommonCodeVO() {
+		return commonCodeVO;
 	}
-	public void setCommonCodeList(List<CommonCodeVO> commonCodeList) {
-		this.commonCodeList = commonCodeList;
+	public void setCommonCodeVO(CommonCodeVO commonCodeVO) {
+		this.commonCodeVO = commonCodeVO;
 	}
-	
 	public MemberVO getMemberVO() {
 		return memberVO;
 	}

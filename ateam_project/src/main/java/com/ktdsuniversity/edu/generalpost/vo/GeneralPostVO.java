@@ -31,11 +31,23 @@ public class GeneralPostVO {
 	// 해시태그list 받아오기
 	private List<HashtagVO> hashtagListVO;
 	
+	// 해시태그 받아오기
+	private HashtagVO hashtagVO;
+
 	// 게시글을 작성하는 회원의 정보
 	private MemberVO memberVO;
 
 	// 공통코드 받아오기
 	private CommonCodeVO commonCodeVO;
+	
+	
+	public HashtagVO getHashtagVO() {
+		return hashtagVO;
+	}
+	
+	public void setHashtagVO(HashtagVO hashtagVO) {
+		this.hashtagVO = hashtagVO;
+	}
 	
 	private List<CommonCodeVO> commonCodeListVO;
 

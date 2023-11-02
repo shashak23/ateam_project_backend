@@ -42,8 +42,8 @@ public class FreePostController {
 
 	// 전체조회
 	@GetMapping("/freeboard/list")
-	public ModelAndView freeBoardList() {
-		GeneralPostListVO generalPostListVO = generalPostService.getAllFreeBoard();
+	public ModelAndView freeBoardList(SearchForumVO searchForumVO) {
+		GeneralPostListVO generalPostListVO = generalPostService.getAllFreeBoard(searchForumVO);
 		ModelAndView modelAndView = new ModelAndView();
 		
 		modelAndView.setViewName("forum/freeboardlist");
