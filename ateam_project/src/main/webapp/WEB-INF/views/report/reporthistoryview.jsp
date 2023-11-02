@@ -80,18 +80,16 @@ button, input, textarea {
                 <input type="button" value="회원탈퇴">
             </div>
 
-		<form:form name="reportVO" method="post" action="/freeboard/view/${reportVO.reportContentId}">
         <label for="reportContentId">신고물</br>고유 ID</label>
-        </form:form>
-        <div>${reportVO.reportContentId}</a></div>
-        <div></div>
+        <div><a href="/freeboard/view/${reportVO.reportContentId}">${reportVO.reportContentId}</a></div>
+      	<div></div>
         
         <label for="reportTypeId">신고 유형</label>
-        <div>${reportVO.reportTypeId}</div>
+        <div>${reportVO.commonCodeVOTemp.codeContentTemp}</div>
         <div></div>
         
         <label for="reportReason">신고 사유</label>
-        <div>${reportVO.reportReason}</div>
+        <div>${reportVO.commonCodeVO.codeContent}</div>
         <div></div>
         
         <label for="reportReasonContent">신고 사유</br>상세</label>
