@@ -43,11 +43,11 @@ private Logger log = LoggerFactory.getLogger(FreePostController.class);
 	// 자유게시판
 	@Transactional
 	@Override
-	public GeneralPostListVO getAllFreeBoard() {
+	public GeneralPostListVO getAllFreeBoard(SearchForumVO searchForumVO) {
 
 		GeneralPostListVO generalPostListVO = new GeneralPostListVO();
 		
-		generalPostListVO.setBoardCnt( generalPostDAO.getBoardAllCount());
+		generalPostListVO.setBoardCnt( generalPostDAO.getBoardAllCount(searchForumVO));
 		generalPostListVO.setGeneralPostList( generalPostDAO.getAllFreeBoard());
 		return generalPostListVO;
 	}
@@ -101,11 +101,17 @@ private Logger log = LoggerFactory.getLogger(FreePostController.class);
 	// 질답게시판 
 	@Transactional
 	@Override
-	public GeneralPostListVO getAllQnABoard() {
+	public GeneralPostListVO getAllQnABoard(SearchForumVO searchForumVO) {
+		log.debug("--2----서비스 도착---------------------------");
 		GeneralPostListVO generalPostListVO = new GeneralPostListVO();
 		
-		generalPostListVO.setBoardCnt( generalPostDAO.getBoardAllCount());
-		generalPostListVO.setGeneralPostList( generalPostDAO.getAllQnABoard());
+		generalPostListVO.setBoardCnt( generalPostDAO.getBoardAllCount(searchForumVO));
+		if(searchForumVO == null) {
+			generalPostListVO.setGeneralPostList( generalPostDAO.getAllQnABoard());
+			
+		} else {
+			generalPostListVO.setGeneralPostList( generalPostDAO.searchAllGeneralPost(searchForumVO));
+		}
 		return generalPostListVO;	
 	}
 	
@@ -129,7 +135,7 @@ private Logger log = LoggerFactory.getLogger(FreePostController.class);
 		if (boardCount == 0) {
 			throw new IllegalArgumentException();
 		}else {
-			return generalPostDAO.getOneFreeBoard(generalPostId);
+			return generalPostDAO.getOneQnABoard(generalPostId);
 		}
 	
 	}

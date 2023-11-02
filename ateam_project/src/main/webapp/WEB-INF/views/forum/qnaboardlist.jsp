@@ -132,7 +132,7 @@
 		    border-radius: 10px;
 		    padding: 10px;
 		}
-		.ranking_wrap {
+		.view_ranking_wrap, .like_ranking_wrap {
 		    display: flex;
 		    width: 250px;
 		    flex-wrap: wrap;
@@ -153,29 +153,39 @@
           <p class="bbs_title">게시글 목록</p>
   
           <!-- 게시물검색 -->
+          <form id="search-form" method="get" action="/qnaboard/list">
           <div class="list_search">
               <select name="searchType">
-                  <option value="subject" ${searchForumVO.searchType eq 'subject' ? 'selected' : ''}>제목</option>
-                  <option value="content" ${searchForumVO.searchType eq 'content' ? 'selected' : ''}>내용</option>
-                  <option value="writer" ${searchForumVO.searchType eq 'email' ? 'selected' : ''}>이메일</option>
+                  <option value="postTitle" ${searchForumVO.searchType eq 'postTitle' ? 'selected' : ''}>제목</option>
+                  <option value="postContent" ${searchForumVO.searchType eq 'postContent' ? 'selected' : ''}>내용</option>
+                  <option value="postWriter" ${searchForumVO.searchType eq 'postWriter' ? 'selected' : ''}>작성자</option>
               </select>
               <input type="text" class="sc_text" placeholder="검색어 입력" name="searchKeyword" value="${searchForumVO.searchKeyword}" />
               <button type="submit" class="btn btn_st_2">
-                  <a href="#">조회</a>
+              	검색
               </button>
               <button type="submit" class="btn btn_st_3">
                   <a href="/qnaboard/create">글쓰기</a>
               </button>
           </div>
+          </form>
         <!-- 해시태그 -->
   		<div id="hashtagList">
 		  <h3>해시태그</h3>
 		    <div class="hashtag_wrap"></div>
+
+		<!-- 조회수순 랭킹 -->
 		<div>
-			<!-- 조회수순 랭킹 -->
-			<h3>주간 조회수순 랭킹</h3>
-				<div class="ranking_wrap"></div>
+			<h3>주간 조회수 랭킹</h3>
+				<div class="view_ranking_wrap"></div>
 		</div>
+
+		<!-- 좋아요순 랭킹 -->
+		<div>
+			<h3>주간 좋아요 랭킹</h3>
+				<div class="like_ranking_wrap"></div>
+		</div>
+		
           <!-- 게시판 리스트 -->
           <form action="" method="">
               <fieldset class="board_list_box">
@@ -251,7 +261,25 @@
    const day = String(prevMonday.getDate()).padStart(2, '0')
 
    const formattedMonday = year + '-' + month + '-' + day
+   // 좋아요순 랭킹
+   $.get('/home/ranking/\${formattedMonday}', function(response) {
+	   console.log(response);
+     let list = response.rankings
+     for (let i = 0; i < 10; i++) {
 
+       if (list[i].boardId === 'CC-20231017-000030') {
+         let ranking_template = `
+           <p class="hot_post">
+           <a href="/qnaboard/view/\${list[i].generalPostId}" target="_blank"">\${list[i].likeCnt}</a>
+           </p>`
+         let ranking_templateDom = $(ranking_template)
+ 
+         $('.like_ranking_wrap').append(ranking_templateDom)
+       }
+     }
+   })
+   
+   // 조회수순 랭킹
    $.get('/home/ranking/\${formattedMonday}', function(response) {
 	   console.log(response);
      let list = response.rankings
@@ -260,11 +288,11 @@
        if (list[i].boardId === 'CC-20231017-000030') {
          let ranking_template = `
            <li class="hot_post">
-           <a href="/freeboard/view/\${list[i].generalPostId}" target="_blank"">\${list[i].postTitle}</a>
+           <a href="/qnaboard/view/\${list[i].generalPostId}" target="_blank"">\${list[i].postTitle}</a>
            </li>`
          let ranking_templateDom = $(ranking_template)
  
-         $('.ranking_wrap').append(ranking_templateDom)
+         $('.view_ranking_wrap').append(ranking_templateDom)
        }
      }
    })

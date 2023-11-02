@@ -18,7 +18,12 @@
 	    <collection property="hashtagListVO"
 	    			ofType="com.ktdsuniversity.edu.generalposthashtag.vo.HashtagVO"
 	    			autoMapping="true">
-	         <id column="GENERAL_POST_HASHTAG_ID" property="generalPostHashtagId" />
+	         		<id column="GENERAL_POST_HASHTAG_ID" property="generalPostHashtagId" />
+	    		<association property="commonCodeVO"
+	    					 javaType="com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO"
+	    					 autoMapping="true">
+	    					 <id column="CODE_ID" property="codeId"></id>
+	    		</association>
 	    </collection>
 	</resultMap>
 	
@@ -176,21 +181,25 @@
 	<select id="getOneQnABoard"
 		parameterType="string"
 		resultMap="GeneralPostDAOMap">
-		SELECT GP.GENERAL_POST_ID
-		     , GP.POST_WRITER
-		     , GP.BOARD_ID
-		     , GP.POST_TITLE
-		     , GP.POST_CONTENT
-		     , GP.POST_DATE
-		     , GP.LIKE_CNT
-		     , GP.VIEW_CNT
-		     , GP.DELETE_YN
-		     , M.NICKNAME
-		  FROM GENERAL_POST GP
-		 INNER JOIN MEMBER M
-		    ON M.EMAIL = GP.POST_WRITER
-		 INNER JOIN 
-		 WHERE GENERAL_POST_ID = #{_parameter}		 
+			SELECT M.NICKNAME
+			     , GPH.HASHTAG_ID
+			     , CC.CODE_CONTENT
+			     , GP.GENERAL_POST_ID 
+			     , GP.POST_WRITER 
+			     , GP.POST_TITLE
+			     , GP.POST_CONTENT 
+			     , GP.POST_DATE 
+			     , GP.VIEW_CNT 
+			     , GP.LIKE_CNT 
+			     , GPH.*
+			  FROM MEMBER M 
+			 INNER JOIN GENERAL_POST GP
+			    ON GP.POST_WRITER = M.EMAIL
+			 INNER JOIN GENERAL_POST_HASHTAG GPH
+			    ON GPH.GENERAL_POST_ID = GP.GENERAL_POST_ID
+			 INNER JOIN COMMON_CODE CC
+			    ON CC.CODE_ID = GPH.HASHTAG_ID
+			 WHERE GPH.GENERAL_POST_ID = #{_parameter}
 	</select>
 	
 	<update id="updateOneQnABoard"
@@ -278,4 +287,34 @@
 		 ORDER BY LIKE_CNT DESC
 	</select>
 	
+	<!-- 검색 -->
+	<select id="searchAllGeneralPost"
+	        parameterType="com.ktdsuniversity.edu.generalpost.vo.SearchForumVO"
+	        resultMap="GeneralPostDAOMap">
+	        SELECT GP.POST_WRITER
+	             , GP.GENERAL_POST_ID
+	        	 , GP.POST_TITLE
+	             , GP.POST_CONTENT
+	             , TO_CHAR(GP.POST_DATE, 'YYYY-MM-DD HH24:MI') POST_DATE
+	             , GP.VIEW_CNT
+	             , GP.LIKE_CNT
+	             , GP.DELETE_YN
+	             , M.NICKNAME
+	          FROM GENERAL_POST GP
+	         INNER JOIN MEMBER M
+	            ON M.EMAIL = GP.POST_WRITER
+	         WHERE GP.DELETE_YN = 'N'
+	         <if test='searchKeyword != null and searchKeyword != ""'>
+			  <if test='searchType == "postTitle"'>
+			   AND GP.POST_TITLE LIKE '%' || #{searchKeyword} || '%'
+			  </if>
+			  <if test='searchType == "postContent"'>
+			   AND GP.POST_CONTENT LIKE '%' || #{searchKeyword} || '%'
+			  </if>
+			  <if test='searchType == "postWriter"'>
+			   AND M.NICKNAME LIKE '%' || #{searchKeyword} || '%'
+			  </if>
+			</if>
+			  ORDER BY GP.POST_DATE DESC
+	</select>
 </mapper>

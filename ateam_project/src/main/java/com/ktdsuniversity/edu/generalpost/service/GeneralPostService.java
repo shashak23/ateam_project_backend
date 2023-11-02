@@ -18,7 +18,7 @@ import com.ktdsuniversity.edu.generalpost.vo.SearchForumVO;
 
 public interface GeneralPostService {
 	// 자유게시판
-	public GeneralPostListVO getAllFreeBoard();
+	public GeneralPostListVO getAllFreeBoard(SearchForumVO searchForumVO);
 
 	public boolean createNewFreeBoard(GeneralPostVO generalPostVO);
 
@@ -33,7 +33,7 @@ public interface GeneralPostService {
 	public List<GeneralPostVO> getAllFreeBoardRest();
 	
 	// 질답게시판
-	public GeneralPostListVO getAllQnABoard();
+	public GeneralPostListVO getAllQnABoard(SearchForumVO searchForumVO);
 
 	public boolean createNewQnABoard(GeneralPostVO generalPostId);
 
@@ -59,5 +59,4 @@ public interface GeneralPostService {
 	public List<GeneralPostVO> SearchFreeBoardRest(SearchForumVO searchForumVO);
 	
 	public List<GeneralPostVO> SearchQnaBoardRest(SearchForumVO searchForumVO);
-
 }

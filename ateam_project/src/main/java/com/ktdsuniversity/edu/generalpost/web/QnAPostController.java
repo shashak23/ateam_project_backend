@@ -29,6 +29,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.ktdsuniversity.edu.generalpost.service.GeneralPostService;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostListVO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
+import com.ktdsuniversity.edu.generalpost.vo.SearchForumVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 import com.ktdsuniversity.edu.util.XssIgnoreUtil;
 
@@ -45,11 +46,14 @@ public class QnAPostController {
 
 	// 전체조회 
 	@GetMapping("/qnaboard/list")
-	public ModelAndView qnaBoardList() {
-		GeneralPostListVO generalPostListVO = generalPostService.getAllQnABoard();
+	public ModelAndView qnaBoardList(SearchForumVO searchForumVO) {
+		log.debug("--1--컨트롤러도착---------------------------");
+		GeneralPostListVO generalPostListVO = generalPostService.getAllQnABoard(searchForumVO);
 		ModelAndView view = new ModelAndView();
 		view.setViewName("forum/qnaboardlist");
 		view.addObject("generalPostListVO", generalPostListVO);
+		view.addObject("searchForumVO", searchForumVO);
+		
 		return view;
 	}
 	
@@ -87,7 +91,7 @@ public class QnAPostController {
 //		System.out.println(generalPostVO.getPostWriter());
 		
 		if (bindingResult.hasErrors()) {
-			log.debug("qkdlseldflwjfxm");
+//			log.debug("qkdlseldflwjfxm");
 			modelAndView.setViewName("forum/qnaboardcreate");
 			modelAndView.addObject("generalPostVO", generalPostVO);
 			return modelAndView;
@@ -112,7 +116,7 @@ public class QnAPostController {
 	public ModelAndView qnaBoardSingle(@PathVariable String generalPostId) {
 		ModelAndView view = new ModelAndView();
 		GeneralPostVO generalPostVO = generalPostService.getOneQnABoard(generalPostId);
-		XssIgnoreUtil.ignore(generalPostVO); 
+		//XssIgnoreUtil.ignore(generalPostVO); // 들어오는 파라미터한테만 해야해요
 
 		log.debug("--1------컨트롤러---------------------------");
 		log.debug("글번호 : " + generalPostVO.getBoardId());
@@ -255,4 +259,5 @@ public class QnAPostController {
 		resultMap.put("rankings", rankingList);
 		return resultMap;
 	}
+
 }
