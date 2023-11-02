@@ -577,7 +577,6 @@ textarea {
          <div>${generalPostVO.postDate}</div>
          
          <label for="hashtag">해시태그</label>
-         <%-- <div>${generalPostVO.hashtagListVO[1].commonCodeList}</div> --%>
 		 <c:forEach var="hashtag" items="${generalPostVO.hashtagListVO}">
 		 	<c:out value="${hashtag.commonCodeVO.codeContent}" />
 		 </c:forEach>

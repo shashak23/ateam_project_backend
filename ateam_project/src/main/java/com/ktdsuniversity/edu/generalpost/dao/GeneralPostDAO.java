@@ -60,7 +60,9 @@ public interface GeneralPostDAO {
 	public List<GeneralPostVO> SearchFreeBoardRest(SearchForumVO searchForumVO);
 
 	public List<GeneralPostVO> SearchQnaBoardRest(SearchForumVO searchForumVO);
-
-	// 검색
-	public List<GeneralPostVO> searchAllGeneralPost(SearchForumVO searchForumVO);
+	// 자유 검색
+	public List<GeneralPostVO> searchAllFreePost(SearchForumVO searchForumVO);
+	// 질답 검색
+	public List<GeneralPostVO> searchAllQnAPost(SearchForumVO searchForumVO);
+	
 }

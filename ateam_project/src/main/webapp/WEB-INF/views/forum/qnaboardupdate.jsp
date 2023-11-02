@@ -20,7 +20,7 @@
    document.addEventListener('DOMContentLoaded', function() {
 const viewCountElement = document.getElementById('viewCount');
 
-const postId = freeboard.generalPostId; // 게시물의 고유 ID (예시로 대입)
+const postId = qnaboard.generalPostId; // 게시물의 고유 ID (예시로 대입)
 
 // 서버로부터 조회수 업데이트 정보를 가져옵니다.
 function updateViewCount() {
@@ -81,6 +81,135 @@ updateViewCount();
                      'color': 'var(--blue)',
                      'box-shadow': 'none'})
    })
+   
+// 해시태그 수정
+var allHashTags = [];
+
+function getHashTagId(tagName) {
+	console.log(allHashTags.filter(tagElem => tagElem.tagContent == tagName), tagName, allHashTags)
+	return allHashTags.filter(tagElem => tagElem.tagContent == tagName)[0].tagId;
+}
+
+$().ready(function(){
+	
+	var input = document.querySelector('input[name=hashtag]')
+	
+	$.get("/code/해시태그", function(response) {
+		
+		response.forEach(tagElem => {
+			var tagId = tagElem.codeId;
+			var tagContent = tagElem.codeContent;
+			allHashTags.push( {tagId, tagContent} );
+		});
+		
+		var tagify = new Tagify(input, {	        
+	    	//whitelist : ["Python","Java","Oracle","React","Vue.js","C","JavaScript", "CSS", "HTML", "Spring", "Rudy", "MYSQL", "jQuery", "Angular", "C++"],
+	    	whitelist : allHashTags.map(tag => tag.tagContent),
+	    	maxTags: 10,
+	    	enforceWhitelist: true,
+	    })
+		
+	})
+	
+	
+    
+	// 폼 제출 이벤트 처리
+	$('#hashtagForm').submit(function(e) {
+        
+    });
+	
+});
+	// 해시태그를 저장할 배열
+    const hashtagsArray = [];
+
+    // 해시태그 추가 버튼 클릭 이벤트 핸들러
+    function addHashtag() {
+        const hashtagInput = document.getElementById("hashtagInput");
+        const hashtag = hashtagInput.value;
+		
+        
+        
+        if (hashtag.trim() !== "") {
+	        const addedHashTag = JSON.parse(hashtag);
+        	
+	        for (let index in addedHashTag) {
+	        	let tagName = addedHashTag[index].value;
+	        	
+	        	let tagId = getHashTagId(tagName);
+	        	
+	            // 중복 해시태그 체크 (중복일 경우 추가하지 않음)
+	            if (!hashtagsArray.includes(tagId)) {
+	                hashtagsArray.push( { tagId, tagName } );
+	                displayHashtags();
+	            }
+	        }
+	        
+        }
+
+        // 입력 필드 초기화
+        hashtagInput.value = "";
+    }
+
+    // 해시태그 배열을 화면에 표시
+    function displayHashtags() {
+        const displayHashtagsDiv = document.getElementById("displayHashtags");
+        displayHashtagsDiv.innerHTML = "";
+
+        for (const hashtag of hashtagsArray) {
+            const hashtagSpan = document.createElement("span");
+            hashtagSpan.className = "hashtag-display";
+            hashtagSpan.textContent = hashtag.tagName;
+            hashtagSpan.dataset.tagId = hashtag.tagId;
+
+           	
+            const removeButton = document.createElement("button");
+            removeButton.textContent = "X";
+            removeButton.addEventListener("click", function () {
+                removeHashtag(hashtag);
+            });
+
+			const inputtag = document.createElement("input");
+			inputtag.type = "hidden";
+			inputtag.name = "hashtagVO["+hashtagsArray.indexOf(hashtag)+"].hashtagId";
+			inputtag.value = hashtag.tagId;
+
+            hashtagSpan.appendChild(removeButton);
+			hashtagSpan.appendChild(inputtag);
+            displayHashtagsDiv.appendChild(hashtagSpan);
+        }
+    }
+
+    // 해시태그 삭제 버튼 클릭 이벤트 핸들러
+    function removeHashtag(hashtag) {
+        const index = hashtagsArray.indexOf(hashtag);
+        if (index > -1) {
+            hashtagsArray.splice(index, 1);
+            displayHashtags();
+        }
+    }
+    // 저장 버튼 클릭 이벤트 핸들러
+    function savePost() {
+        // hashtagsArray를 JSON 문자열로 변환
+        const hashtagsJSON = JSON.stringify(hashtagsArray);
+        // hashtagsJSON을 서버로 전송 (AJAX 등을 사용)
+        // 이때, 서버 컨트롤러에서 JSON 문자열을 파싱하여 처리
+        $.ajax({
+            url: "/qnaboard/update", // 서버의 엔드포인트 URL로 변경
+            type: "POST",
+            data: {
+            	"hashtagId" : "${generalPostHashtagVO.hashtagId}",
+            	"postTitle" : "${generalPostVO.postTitle}",
+            	"postContent" : "${generalPostVO.postContent}"
+            },
+            success: function (data) {
+                // 서버 응답에 따른 동작
+                console.log("서버 응답:", data);
+            },
+            error: function(data){
+            	console.log("서버 실패:", error)
+            }
+        })
+    }
 </script>
    
 <!-- 소스 다운 -->
@@ -319,12 +448,18 @@ updateViewCount();
 	                    'MathType'
 	                ]
 	            });  
-		        </script>			
+		        </script>	
+		  <div class="hashtag">
+		    <label for="hashtag">해시태그</label>
+   			<input type="hidden" id="hashtagInput" name='hashtag' placeholder="#해시태그" value="${generalPostHashtagVO.hashtagId}">		
+		  </div>
 			<div class="btn-group">
 				<div class="right-align">
-					<input id="save_button" type="submit" value="저장" />
+                 	<input type="button" value="추가" onclick="addHashtag()">
+					<input type="button" value="완료" onclick="savePost()"/>
 				</div>
 			</div>
+			<div id="displayHashtags"></div>
 		</div>
 	</form>
 </div>	
