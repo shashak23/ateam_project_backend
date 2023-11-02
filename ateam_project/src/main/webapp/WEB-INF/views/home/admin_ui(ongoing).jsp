@@ -823,7 +823,7 @@
               <div class="profile_group">
               <img src="\${company.profilePic}" alt="."><div class="company_info">
                 <strong>\${company.nickname}</strong>(\${company.email})
-                <a class="certificate_download" href='\${company.companyInfoVO.companyRegistCertificateUrl}'>[사업자등록증]</a>
+                <a class="certificate_download" href='/company/file/download/\${company.email}'>[사업자등록증]</a>
                 </div>
                 <div class="btn_group">
                   <button class="company_approval" id="\${company.email}">승인</button>
@@ -842,7 +842,7 @@
               <div class="profile_group">
               <img src="\${company.profilePic}" alt="."><div class="company_info">
                 <strong>\${company.nickname}</strong>(\${company.email})
-                <a class="certificate_download" href='/file/download/\${company.email}'>[사업자등록증]</a>
+                <a class="certificate_download" href='\${company.companyInfoVO.companyRegistCertificateUrl}'>[사업자등록증]</a>
                 </div>
                 <div class="btn_group">
                   <button class="confirm_complete_btn">승인완료</button>
@@ -869,6 +869,13 @@
     loadCompanytypeMember(val)
   })
 
+  $('.admin_company_member_input').keyup(function(e) {
+    if (e.key === 'Enter') {
+      let val = $('.admin_company_member_input').val()
+    loadCompanytypeMember(val)
+    }
+  })
+
   // 기업 승인 처리
   $(document).on('click', '.company_approval', function() {
     let body = {
@@ -876,11 +883,14 @@
       val: 'approval'
     }
     let url = '/admin/companymember'
-    $.post(url, body, function(response) {
-      alert('승인 처리되었습니다.')
-      $('.company_modal').find('.desc-content').empty()
-      loadCompanytypeMember()
-    })
+
+    if (confirm('정말 승인하시겠습니까?')) {
+      $.post(url, body, function(response) {
+        alert('승인 처리되었습니다.')
+        $('.company_modal').find('.desc-content').empty()
+        loadCompanytypeMember()
+      })
+    }
   })
   
   // 기업 반려 처리
@@ -890,11 +900,14 @@
       val: 'refuse'
     }
     let url = '/admin/companymember'
-    $.post(url, body, function(response) {
-      alert('반려 처리되었습니다.')
-      $('.company_modal').find('.desc-content').empty()
-      loadCompanytypeMember()
-    })
+
+    if (confirm('정말 반려하시겠습니까?')) {
+      $.post(url, body, function(response) {
+        alert('반려 처리되었습니다.')
+        $('.company_modal').find('.desc-content').empty()
+        loadCompanytypeMember()
+      })
+    }
   })
 
   // 기업 회원 탈퇴 조치

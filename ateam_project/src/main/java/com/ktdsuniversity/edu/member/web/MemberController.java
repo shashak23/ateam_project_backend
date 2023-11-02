@@ -10,6 +10,8 @@
 package com.ktdsuniversity.edu.member.web;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +19,10 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
 import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,11 +40,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.ktdsuniversity.edu.beans.FileHandler;
 import com.ktdsuniversity.edu.beans.SHA;
+import com.ktdsuniversity.edu.companyinfo.service.CompanyInfoService;
+import com.ktdsuniversity.edu.companyinfo.vo.CompanyInfoVO;
 import com.ktdsuniversity.edu.companymember.vo.CompanyVO;
-import com.ktdsuniversity.edu.companynews.vo.CompanyNewsVO;
 import com.ktdsuniversity.edu.exceptions.PageNotFoundException;
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
-import com.ktdsuniversity.edu.generalpost.web.FreePostController;
 import com.ktdsuniversity.edu.member.service.MemberService;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 import com.ktdsuniversity.edu.member.vo.SocialVO;
@@ -54,6 +59,8 @@ import jakarta.validation.Valid;
 
 @Controller
 public class MemberController {
+	@Autowired
+	private CompanyInfoService companyInfoService;
 	@Autowired
 	private MemberService memberService;
 	@Autowired
@@ -382,7 +389,7 @@ public class MemberController {
 		}
 	}
 	/**
-	 * 파일다운로드
+	 * 일반 회원 파일다운로드
 	 */
 	@GetMapping("/member/file/download/{email}")
 	public ResponseEntity<Resource> downloadFile (@PathVariable String email) {
@@ -398,6 +405,41 @@ public class MemberController {
 		return fileHandler.getResponseEntity(storedFile, 
                                              memberVO.getProfilePic());
 	}
+	
+	/**
+	 * 사업자등록증 파일 다운로드
+	 */
+	@GetMapping("/company/file/download/{email}")
+	public ResponseEntity<Resource> downloadLicenseFile (@PathVariable String email) {
+		
+		// 파일 정보를 얻어오기 위해 게시글을 조회한다.
+		CompanyInfoVO companyVO = companyInfoService.getOneCompanyInfo(email);
+		if(companyVO == null) {
+			throw new PageNotFoundException("잘못된 접근입니다.");
+		}
+		// 서버에 등록되어있는 파일을 가져온다.
+		File storedFile = fileHandler.getStoredFile(companyVO.getCompanyRegistCertificateUrl());
+		
+		HttpHeaders header = new HttpHeaders();
+		header.add(HttpHeaders.CONTENT_DISPOSITION, 
+				"attachment; filename=" + companyVO.getCompanyOriginRegistCertificateUrl());
+
+		InputStreamResource resource;
+		
+		try {
+			resource = new InputStreamResource(new FileInputStream(storedFile));
+		} catch (FileNotFoundException e) {
+			throw new PageNotFoundException("파일이 존재하지 않습니다.");
+		}
+		
+		return ResponseEntity.ok()
+							.headers(header)
+							.contentLength(storedFile.length())
+							.contentType(MediaType.parseMediaType("application/octet-stream"))
+							.body(resource);
+		
+	}
+	
 	/**
 	 * 프로필사진 삭제
 	 */

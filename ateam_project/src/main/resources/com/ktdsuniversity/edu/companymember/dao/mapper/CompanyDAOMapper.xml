@@ -27,7 +27,8 @@
 			 , INVESTMENT
 			 , COMPANY_INTRO
 			 , HOME_URL
-			 , CONFIRM_YN)
+			 , CONFIRM_YN
+			 , COMPANY_ORIGIN_REGIST_CERTIFICATE_URL)
 		VALUES (#{companyEmail}
 			  , #{contactNumber}
 			  , '담당자'
@@ -41,7 +42,8 @@
 			  , ''
 			  , ''
 			  , ''
-			  , #{confirmYn})
+			  , #{confirmYn}
+			  , #{companyOriginRegistCertificateUrl})
 	</insert>
 	
 	<select id="companyMemberAllCount"

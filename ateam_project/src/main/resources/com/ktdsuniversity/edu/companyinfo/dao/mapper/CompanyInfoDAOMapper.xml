@@ -18,5 +18,35 @@
    		   SET CONTACT_NUMBER = #{contactNumber}
  		 WHERE COMPANY_EMAIL = #{companyEmail}
 	</update>
+	
+	<select id="getOneCompanyInfo"
+			parameterType="string"
+			resultType="com.ktdsuniversity.edu.companyinfo.vo.CompanyInfoVO">
+		SELECT COMPANY_EMAIL
+			 , CONTACT_NUMBER
+			 , CONTACT_NAME
+			 , COMPANY_NAME
+			 , INDUSTRY_TYPE
+			 , COMPANY_REGIST_NUMBER
+			 , COMPANY_REGIST_CERTIFICATE_URL
+			 , ADDRESS
+			 , SALES
+			 , STAFF_CNT
+			 , INVESTMENT
+			 , COMPANY_INTRO
+			 , HOME_URL
+			 , CONFIRM_YN
+		  FROM COMPANY
+		 WHERE COMPANY_EMAIL = #{_parameter}
+	</select>
+	
+	<select id="getOneLicense"
+			parameterType="string"
+			resultType="com.ktdsuniversity.edu.companyinfo.vo.CompanyInfoVO">
+		SELECT COMPANY_EMAIL
+		     , COMPANY_REGIST_CERTIFICATE_URL
+		  FROM COMPANY
+		 WHERE COMPANY_EMAIL = #{_parameter}
+	</select>
 
 </mapper>

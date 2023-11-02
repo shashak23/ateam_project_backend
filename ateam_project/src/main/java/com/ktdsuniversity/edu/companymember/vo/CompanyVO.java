@@ -18,6 +18,7 @@ public class CompanyVO extends MemberVO {
 	private String companyINTRO;
 	private String homeURL;
 	private String confirmYn;
+	private String companyOriginRegistCertificateUrl;
 	
 	
 	public String getCompanyEmail() {
@@ -104,6 +105,10 @@ public class CompanyVO extends MemberVO {
 	public void setConfirmYn(String confirmYN) {
 		this.confirmYn = confirmYN;
 	}
-	
-	
+	public String getCompanyOriginRegistCertificateUrl() {
+		return companyOriginRegistCertificateUrl;
+	}
+	public void setCompanyOriginRegistCertificateUrl(String companyOriginRegistCertificateUrl) {
+		this.companyOriginRegistCertificateUrl = companyOriginRegistCertificateUrl;
+	}
 }
