@@ -44,12 +44,13 @@ public class FreePostController {
 	@GetMapping("/freeboard/list")
 	public ModelAndView freeBoardList(SearchForumVO searchForumVO) {
 		GeneralPostListVO generalPostListVO = generalPostService.getAllFreeBoard(searchForumVO);
-		ModelAndView modelAndView = new ModelAndView();
+		ModelAndView view = new ModelAndView();
 		
-		modelAndView.setViewName("forum/freeboardlist");
-		modelAndView.addObject("generalPostListVO", generalPostListVO);
+		view.setViewName("forum/freeboardlist");
+		view.addObject("generalPostListVO", generalPostListVO);
+		view.addObject("searchForumVO", searchForumVO);
 
-		return modelAndView;
+		return view;
 	}
 
 	// 글쓰기 화면 보이기
