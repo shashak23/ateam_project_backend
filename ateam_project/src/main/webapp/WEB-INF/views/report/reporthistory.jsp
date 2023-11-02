@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+    <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html>
@@ -40,6 +40,7 @@
 								reportListDOM.append($("<td>"+response.reportList[i].reportReasonContent+"</td>"))
 							}
 							reportListDOM.append($("<td>"+response.reportList[i].commonCodeVO.codeContent+"</td>"))
+							// reporListDOM.append($("<td>"+"test"+"</td>"))
 							reportListDOM.append($("<td>"+response.reportList[i].reportDate+"</td>"))
 							reportListDOM.append($("<td>"+response.reportList[i].progressYn+"</td>"))
 	
@@ -52,15 +53,7 @@
 			// if (categoryName == null) {
 			// 	categoryName = "?"
 			// }
-		
-		// 여기서부터 새 코드
-		// 상세 조회 페이지로 이동시 vo 같이 전달 form으로 감싸서?
-		$(".test").click(function(){
-			console.log("와..")
-		})
-
-
-
+			
 		// $.post("/report/list", selectedValue, function(response) {
 		// 	console.log(response)
 		// })
@@ -98,7 +91,7 @@
 		<tbody id="reportListArea">
 			<c:forEach items="${reportListVO.reportList}" var="report">
 				<tr class="allReportList">
-					<td><a id=test href="/admin/report/view/${report.reportId}">${report.reportId}</a></td>
+					<td><a href="/admin/report/view/${report.reportId}">${report.reportId}</a></td>
 					<td>${report.reportReasonContent}</td>
 					<td>${report.commonCodeVO.codeContent}</td>
 					<td>${report.reportDate}</td>
