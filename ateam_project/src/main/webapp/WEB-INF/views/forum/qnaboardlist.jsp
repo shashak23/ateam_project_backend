@@ -16,37 +16,87 @@
     <script src="js/lib/jquery-3.7.1.js"></script>
     <jsp:include page="../layout/header.jsp"/>
     <style>
+       
+        
          /*게시판 title 제어*/
-         .bbs_title {
+         /* .bbs_title {
             font-weight: bold;
             font-size: 25px;
-            margin-top: 160px;
+            
             margin-left: 530px;
-         }
-         
-         .wrap {
-            display: flex;
-            justify-content: center;
+         } */
+         #container_controller {
+           
+            margin: 0 auto;
+            margin-left: 30%;      
+            border: none;
+            /* width: 1080px; */
          }
 
+         /* aside{
+            height:500px;
+         } */
+         #hashtag {
+            margin: 0 auto;
+            margin-top: 50px;
+            text-align: center;
+            font-size: 30px;
+         }
+         .hashtag_wrap {
+        margin: 0 auto;  
+        margin-top: 50px;
+        margin-bottom: 100px;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: 780px;
+        }
+     .fieldset_controller {
+        display: flex;
+        /* width: 3000px; */
+        margin: 0 auto;
+        margin-right: 300px;
+    }  
+     /* .board_list_box {
+        width: 1000px;
+        display: flex;
+        flex: 1;
+    } */
+    .board_list_ty1 {
+        width: 800px;
+    } 
+
+     #container_controller{
+        display: flex;
+    } 
+   
+         .hashtag_incomplete {
+            background-color: yellow;        
+            margin: 0 auto;
+            margin-left: 10px;
+            margin-top: 30px;
+            width: 85px;
+            height: 35px;
+            border-radius: 10px;
+            border: 1px solid var(--light-gray);
+            cursor: pointer;
+            
+         }
+         .hashtag_incomplete:hover {
+            background-color: var(--blue);
+         }
+ 
          .list_search {
+            margin: 0 auto;
             margin-bottom: 15px;
-            margin-left: 500px;
+            margin-left: 1000px;
            
          }
-         
-        .board_list_box {
-           position: relative;
-           left: 500px;
-           border-top: 3px solid var(--hashtag-blue);
-           border-bottom:none;
-           border-left: none;
-           border-right: none;
-            width: 1000px;
-         }
+
          /*게시판 테이블 제어*/
          table {
              border-collapse: collapse;
+          
          }
          
          .table-header_01 {
@@ -54,7 +104,7 @@
            height: 35px;
          }
          /*pagenation 제어*/
-         #page {
+         /* #page {
             text-align: center;
          }
 
@@ -73,7 +123,7 @@
             border: 1px solid var(--red);
             color: var(--red);
             font-weight: bold;
-         }
+         } */
          /*버튼 속성제어*/
          .btn_st_2,.btn_st_3 {
             background-color: var(--hashtag-blue);
@@ -82,18 +132,19 @@
             width: 60px;
             height: 30px;
          }
-         .btn_write_1 {
-             position: relative;
-             left: 1420px;
+         .btn_write_1 {  
+             margin: 0 auto;  
              margin-top: 30px;
+             margin-left: 930px;
              background-color: var(--hashtag-blue);
              border-radius: 5px;
              border: none;
              width: 70px;
              height: 30px;
-             margin-bottom: 50px;
+           
          }
-         
+       
+ 
          #button_list_1 tr th {
             background-color: var(--light-gray);
             border-bottom: 1px solid var(--dark-gray);
@@ -115,131 +166,290 @@
         .text_controller {
             position: relative;
             bottom: 20px;
-        }.loading {
-            display: none;
         }
-        .scrollable-table {
-            max-height: 400px;
-            overflow-y: scroll;
+        .ranking_list {
+        position: absolute;
+        top: 0;
+        right: 10px; /* right 속성을 사용하여 오른쪽으로 이동 */
+        width: 200px;
+        height: 500px;
+        border: 1px solid var(--gray);
+        margin: 0 auto;
+        margin-top: 90px;
+        margin-right: 50px;
+        }
+        .advertising {
+            /* position: relative;
+            left: 25px;
+            margin: 0 auto;
+            margin-top: 600px;
+            margin-right: 100px;
+            border: 1px solid #ccc;
+            width: 200px;
+            height: 500px;
+            cursor: pointer; */
+            position: absolute;
+        top: 0;
+        right: 10px; /* right 속성을 사용하여 오른쪽으로 이동 */
+        width: 200px;
+        height: 500px;
+        border: 1px solid var(--gray);
+        margin: 0 auto;
+        margin-top: 650px;
+        margin-right: 50px;
         }
 
-        .hashtag_wrap {
-		    display: flex;
-		    width: 250px;
-		    flex-wrap: wrap;
-		    margin-top: 30px;
-		    border: 1px solid var(--gray);
-		    border-radius: 10px;
-		    padding: 10px;
-		}
-		.view_ranking_wrap, .like_ranking_wrap {
-		    display: flex;
-		    width: 250px;
-		    flex-wrap: wrap;
-		    margin-top: 30px;
-		    border: 1px solid var(--gray);
-		    border-radius: 10px;
-		    padding: 10px;
-		}
+   
+    .contents {
+       position: relative;
+       bottom: 250px;
+        margin: 0 auto;
+
+    }
+    .controll_all {
+        margin: 0 auto;
+        margin-top: 320px;   
+       
+    }
+    h3 {
+        position: relative;
+        bottom: 10px;
+        margin: 0 auto;      
+        margin-left: 90px;
+        margin-bottom: 30px;
+        left: 150px;
+    }
+    #like_top {
+     
+       position: relative;
+       top: 470px;
+      
+
+    }
+/*     
+    .box {
+        margin-bottom: 30px;
+        background-color: orangered;
+        transition-property: background-color, width;
+        transition-duration: 2s ;
+        width: 10px;
+        height: 35px;
+    }
+    .box:hover {
+        width: 200px;
+        background-color: navy;
+    }
+    .box_1 {
+        margin-bottom: 30px;
+        background-color: orangered;
+        transition-property: background-color, width;
+        transition-duration: 2s ;
+        width: 10px;
+        height: 35px;
+        transition-timing-function: linear;
+
+    }
+    .box_1:hover {
+        width: 200px;
+        background-color: navy;
+    }
+    .box_2 {
+        margin-bottom: 30px;
+        background-color: orangered;
+        transition-property: background-color, width;
+        transition-duration: 2s ;
+        width: 10px;
+        height: 35px;
+        transition-timing-function: linear;
+
+    }
+    .box_2:hover {
+        width: 200px;
+        background-color: navy;
+    }
+    .box_3 {
+        margin-bottom: 30px;
+        background-color: orangered;
+        transition-property: background-color, width;
+        transition-duration: 2s ;
+        width: 10px;
+        height: 35px;
+        transition-timing-function: linear;
+
+    }
+    .box_3:hover {
+        width: 200px;
+        background-color: navy;
+    }
+    .box_4 {
+        margin-bottom: 30px;
+        background-color: orangered;
+        transition-property: background-color, width;
+        transition-duration: 2s ;
+        width: 10px;
+        height: 35px;
+        transition-timing-function: ease;
+
+    }
+    .box_4:hover {
+        width: 200px;
+        background-color: navy;
+    }
+    .box_5 {
+        margin-bottom: 30px;
+        background-color: orangered;
+        transition-property: background-color, width;
+        transition-duration: 2s ;
+        width: 10px;
+        height: 35px;
+        transition-timing-function: ease-in;
+
+    }
+    .box_5:hover {
+        width: 200px;
+        background-color: navy;
+    }
+    .box_6 {
+        margin-bottom: 30px;
+        background-color: orangered;
+        transition-property: background-color, width;
+        transition-duration: 2s ;
+        width: 10px;
+        height: 35px;
+        transition-timing-function: ease-in-out;
+
+    }
+    .box_6:hover {
+        width: 200px;
+        background-color: navy;
+    } */
+    #hot_post a {
+    color: black; /* 글자 색상 설정 */
+    margin: 0 auto;
+    
+    line-height: 3; /* 원하는 높이로 조절 (예: 1.5는 텍스트 높이의 1.5배) */
+}
+
+
+
+
     </style>
 </head>
 <body>
-   <div id="wrap" class="wrap">
-      <!-- ... -->
-  </div>
-  
-    <main class="contents">
-      <div class="board">
-          <p class="bbs_title">게시글 목록</p>
-  
-          <!-- 게시물검색 -->
-          <form id="search-form" method="get" action="/qnaboard/list">
-          <div class="list_search">
-              <select name="searchType">
-                  <option value="postTitle" ${searchForumVO.searchType eq 'postTitle' ? 'selected' : ''}>제목</option>
-                  <option value="postContent" ${searchForumVO.searchType eq 'postContent' ? 'selected' : ''}>내용</option>
-                  <option value="postWriter" ${searchForumVO.searchType eq 'postWriter' ? 'selected' : ''}>작성자</option>
-              </select>
-              <input type="text" class="sc_text" placeholder="검색어 입력" name="searchKeyword" value="${searchForumVO.searchKeyword}" />
-              <button type="submit" class="btn btn_st_2">
-              	검색
-              </button>
-              <button type="submit" class="btn btn_st_3">
-                  <a href="/qnaboard/create">글쓰기</a>
-              </button>
-          </div>
-          </form>
-        <!-- 해시태그 -->
-  		<div id="hashtagList">
-		  <h3>해시태그</h3>
-		    <div class="hashtag_wrap"></div>
-
-		<!-- 조회수순 랭킹 -->
-		<div>
-			<h3>주간 조회수 랭킹</h3>
-				<div class="view_ranking_wrap"></div>
-		</div>
-
-		<!-- 좋아요순 랭킹 -->
-		<div>
-			<h3>주간 좋아요 랭킹</h3>
-				<div class="like_ranking_wrap"></div>
-		</div>
-		
-          <!-- 게시판 리스트 -->
-          <form action="" method="">
-              <fieldset class="board_list_box">
-                  <!-- 리스트 -->
-                  <div class="board_list_ty1">
-                      <table>
-                          <colgroup>
-                              <col width="10%">
-                              <col width="*">
-                              <col width="10%">
-                              <col width="15%">
-                              <col width="10%">
-                          </colgroup>
-                          <thead id="button_list_1">
-                              <tr>
-                                  <th scope="col" class="table-header_01">번호</th>
-                                  <th scope="col" class="table-header_02">제목</th>
-                                  <th scope="col" class="table-header_03">등록자</th>
-                                  <th scope="col" class="table-header_04">등록일</th>
-                                  <th scope="col" class="table-header_05">조회수</th>
-                              </tr>
-                          </thead>
-                          <tbody id="user-list"></tbody>
-                          <div class="loading text-center" id="loading">로딩 중...</div>
-                              <c:forEach items="${generalPostListVO.generalPostList}" var="qnaboard" varStatus="index">
-                                      <tr>
-                                          <td class="pratice_01">${(index.index + 1) * (searchForumVO.pageNo + 1)}</td>
-                                          <td>
-                          <div class="pratice">   
-                                              <a class="text_controller" href="/qnaboard/view/${qnaboard.generalPostId}">
-                                                  ${qnaboard.postTitle}
-                                              </a>
-                          </div> 
-                          <script src="https://unpkg.com/axios/dist/axios.min.js"></script>  
-                                          </td>
-                                          <td class="pratice_02"> ${qnaboard.memberVO.nickname}</td>
-                                          <td class="pratice_03">${qnaboard.postDate}</td>
-                                          <td class="pratice_04">${qnaboard.viewCnt}</td>
-                                      </tr>
-                               </c:forEach>
-                          </tbody>
-                      </table>
-                  </div>
-              </fieldset>
-              <div class="btn_write">
-                  <button type="submit" class="btn_write_1">
-                      <a href="/qnaboard/create">글쓰기</a>
-                  </button>
-              </div>
-               
-           </div>
-          </form>
-      </div>
-  </main>
+    <!-- <p class="bbs_title">QnA게시글 목록</p> -->
+    <nav>
+        <div id="hashtagList">
+            <p id="hashtag"># Hashtags</p>
+            <div class="hashtag_wrap"></div>
+        </div> 
+    </nav>
+    <div class="controll_all">
+        
+        <main class="contents">
+            <!-- 게시물검색 -->
+            
+            <div class="list_search">
+                <select name="searchType">
+                    <option value="subject" ${searchForumVO.searchType eq 'subject' ? 'selected' : ''}>제목</option>
+                    <option value="content" ${searchForumVO.searchType eq 'content' ? 'selected' : ''}>내용</option>
+                    <option value="writer" ${searchForumVO.searchType eq 'email' ? 'selected' : ''}>이메일</option>
+                </select>
+                <input type="text" class="sc_text" placeholder="검색어 입력" name="searchKeyword" value="${searchForumVO.searchKeyword}" />
+                <button type="submit" class="btn btn_st_2">
+                    <a href="#">조회</a>
+                </button>
+                <button type="submit" class="btn btn_st_3">
+                    <a href="/qnaboard/create">글쓰기</a>
+                </button>
+            </div>
+           
+        
+            <!-- 해시태그 -->
+            
+            
+            <!-- 게시판 리스트 -->
+            <div id="container_controller">
+                <form class="fieldset_controller" action="" method="">
+                    <fieldset class="board_list_box">
+                        <!-- 리스트 -->
+                        <div class="board_list_ty1">
+                            <table>
+                                <colgroup>
+                                    <col width="10%">
+                                    <col width="*">
+                                    <col width="10%">
+                                    <col width="15%">
+                                    <col width="10%">
+                                </colgroup>
+                                <thead id="button_list_1">
+                                    <tr>
+                                        <th scope="col" class="table-header_01">번호</th>
+                                        <th scope="col" class="table-header_02">제목</th>
+                                        <th scope="col" class="table-header_03">등록자</th> <!-- 수정: 등호 추가 -->
+                                        <th scope="col" class="table-header_04">등록일</th>
+                                        <th scope="col" class="table-header_05">조회수</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="user-list">
+                                    <c:forEach items="${generalPostListVO.generalPostList}" var="qnaboard" varStatus="index">
+                                        <tr>
+                                            <td class="pratice_01">${(index.index + 1) * (searchForumVO.pageNo + 1)}</td>
+                                            <td>
+                                                <div class="pratice">
+                                                    <a class="text_controller" href="/qnaboard/view/${qnaboard.generalPostId}">
+                                                        ${qnaboard.postTitle}
+                                                    </a>
+                                                </div>
+                                                <script src="https://unpkg.com/axios/dist/axios.min.js"></script>  
+                                            </td>
+                                            <td class="pratice_02"> ${qnaboard.memberVO.nickname}</td>
+                                            <td class="pratice_03">${qnaboard.postDate}</td>
+                                            <td class="pratice_04">${qnaboard.viewCnt}</td>
+                                        </tr>
+                                    </c:forEach>
+                                </tbody>
+                            </table>
+                        </div>
+                    </fieldset>
+                    <aside class="my-aside">
+                        <!-- 조회수순 랭킹 -->
+                        <h3 id="viewCnt">Hot topic ▶ </h3>
+                        <div class="advertising">
+                            <!-- <a href="https://blog.naver.com/roborang/221827208404"> -->
+                            <!-- <img class="why_code" src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMDAyMjZfOTcg%2FMDAxNTgyNzAzOTk2MzQ1.bsJ-QZhJSxCCLwgYAk4ibsKrPqHNk-7SlEYEowKsf6Ug.MReP1pZZeA_b7SBVMUbJUspOftiFOZ-_rvBxkWVktmIg.PNG.roborang%2F%25C4%25DA%25B5%25F9%25B1%25B3%25C0%25B0_%25BF%25D6_%25C7%25D8%25BE%25DF_%25C7%25D2%25B1%25EE%25BF%25E4.png&type=sc960_832"> -->
+                            </a>    
+                        </div>
+                        <h3 id="like_top">명예의 전당 ▶ </h3>
+                         <div class= "ranking_list">
+                            
+                            <ul class="ranking_wrap">
+                              
+                            </ul>
+                            <!-- <ui>
+                                <li>꼬부기</li>
+                                <div class="box"></div>
+                                <li>꼬부기</li>
+                                <div class="box_1"></div>
+                                <li>꼬부기</li>
+                                <div class="box_2"></div>
+                                <li>꼬부기</li>
+                                <div class="box_3"></div>
+                                <li>꼬부기</li>
+                                <div class="box_4"></div>
+                                <li>꼬부기</li>
+                                <div class="box_5"></div>
+                                
+                            </ui> -->
+                            </div>                       
+                          
+                    </aside>       
+                        <!-- <button type="submit" class="btn_write_1">
+                            <a href="/qnaboard/create">글쓰기</a>
+                        </button> -->
+                </form>
+            </div>
+        </main>
+    </div>
    <jsp:include page="../layout/footer.jsp" />
    <script src="./js/jquery-1.11.3.min.js"></script>
    <script src="./js/jquery.easing.1.3.js"></script>
@@ -261,113 +471,37 @@
    const day = String(prevMonday.getDate()).padStart(2, '0')
 
    const formattedMonday = year + '-' + month + '-' + day
-   // 좋아요순 랭킹
+// 랭킹
    $.get('/home/ranking/\${formattedMonday}', function(response) {
-	   console.log(response);
+      console.log(response);
      let list = response.rankings
      for (let i = 0; i < 10; i++) {
 
        if (list[i].boardId === 'CC-20231017-000030') {
          let ranking_template = `
-           <p class="hot_post">
-           <a href="/qnaboard/view/\${list[i].generalPostId}" target="_blank"">\${list[i].likeCnt}</a>
-           </p>`
-         let ranking_templateDom = $(ranking_template)
- 
-         $('.like_ranking_wrap').append(ranking_templateDom)
-       }
-     }
-   })
-   
-   // 조회수순 랭킹
-   $.get('/home/ranking/\${formattedMonday}', function(response) {
-	   console.log(response);
-     let list = response.rankings
-     for (let i = 0; i < 10; i++) {
-
-       if (list[i].boardId === 'CC-20231017-000030') {
-         let ranking_template = `
-           <li class="hot_post">
+           <li id="hot_post">
            <a href="/qnaboard/view/\${list[i].generalPostId}" target="_blank"">\${list[i].postTitle}</a>
            </li>`
          let ranking_templateDom = $(ranking_template)
  
-         $('.view_ranking_wrap').append(ranking_templateDom)
+         $('.ranking_wrap').append(ranking_templateDom)
        }
      }
    })
-	// 사이드바에 해시태그 리스트 조회해주는 코드 
-	   $.get('/code/해시태그', function(response) {
-	     for (let i = 0; i < response.length; i++) {
-	       let hash_template = `<button class="hashtag incomplete">#\${response[i].codeContent}</button>`
-	       $('.hashtag_wrap').append(hash_template)
-	     }
-	   })	
-	   
+   // 사이드바에 해시태그 리스트 조회해주는 코드 
+      $.get('/code/해시태그', function(response) {
+        for (let i = 0; i < response.length; i++) {
+          let hash_template = `<button class="hashtag_incomplete">#\${response[i].codeContent}</button>`
+          $('.hashtag_wrap').append(hash_template)
+        }
+      })   
+      
       const userList = document.getElementById('user-list');
       const tableContainer = document.querySelector('.board_list_ty1');
       const loading = document.getElementById('loading');
       let page = 1;
       let isFetching = false;
 
-        
-        async function getYourData(page) {
-			try {
-			  const response = await axios.get(`/qnaboard/list?page=${page}`, {
-			    headers: {
-			      'Content-Type': 'application/json'
-			    }
-			  });
-			return response.data;
-			} catch (error) {
-			  console.error('Error fetching data: ', error);
-			 return [];
-			}
-        }
-        /*async function displa yData() {
-            if (isFetching) return;
-            isFetching = true;
-            loading.style.display = 'block';
-            const data = await getYourData(page);
-            loading.style. display = 'none';
-
-            // 데이터를 사용해 행을 생성하는 로직을 여러분의 데이터에 맞게 수정하세요.
-            data.forEach(qnaboard => {
-                const row = document.createElement('tr');
-                row.innerHTML =`
-         
-            <td class="pratice_01">${qnaboard.generalPostId}</td>
-        <td>
-          <div class="pratice">
-            <a class="text_controller" href="/qnaboard/view/${qnaboard.generalPostId}">
-              ${qnaboard.postTitle}
-            </a>
-          </div>
-        </td>
-        <td class="pratice_02">${qnaboard.memberVO.nickname}</td>
-        <td class="pratice_03">${qnaboard.postDate}</td>
-        <td class="pratice_04">${qnaboard.viewCnt}</td>
-      `;
-      userList.appendChild(row) ;
-    });
-            page++;
-}
-            isFetching = false; */
-        
-
-        /* tableContainer.addEventListener('scroll', () => {
-            const { scrollTop, scrollHeight, clientHeight } = tableContainer;
-            if (scrollTop + clientHeight >= scrollHeight - 5) {
-                displayData();
-            }
-            if (scrollTop === 0) {
-                userList.innerHTML = '';
-                page = 1;
-                displayData();
-            }
-        });
-
-        displayData(); */
     
        // 미완성된 기능을 알려주는 모달창
        $('.incomplete').click(function() {
@@ -407,3 +541,4 @@
    </script>
 </body>
 </html>
+
