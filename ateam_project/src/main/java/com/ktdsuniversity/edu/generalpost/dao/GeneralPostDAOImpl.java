@@ -18,6 +18,7 @@ import org.springframework.stereotype.Repository;
 
 import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
+import com.ktdsuniversity.edu.generalpost.vo.SearchForumVO;
 import com.ktdsuniversity.edu.generalpost.web.FreePostController;
 
 @Repository
@@ -42,8 +43,8 @@ public class GeneralPostDAOImpl extends SqlSessionDaoSupport
 	}
 	
 	@Override
-	public int getBoardAllCount() {
-		return getSqlSession().selectOne("com.ktdsuniversity.edu.generalpost.dao.GeneralPostDAO.getBoardAllCount");
+	public int getBoardAllCount(SearchForumVO searchForumVO) {
+		return getSqlSession().selectOne("com.ktdsuniversity.edu.generalpost.dao.GeneralPostDAO.getBoardAllCount", searchForumVO);
 	}
 	// 자유게시판
 	@Override
@@ -74,6 +75,11 @@ public class GeneralPostDAOImpl extends SqlSessionDaoSupport
 	@Override
 	public int updateLikeFreePost(GeneralPostVO generalPostVO) {
 		return getSqlSession().update("updateLikeFreePost", generalPostVO);
+	}
+	
+	@Override
+	public List<GeneralPostVO> getAllFreeBoardRest() {
+		return getSqlSession().selectList("getAllFreeBoardRest");
 	}
 	
 	// 질답게시판
@@ -108,6 +114,11 @@ public class GeneralPostDAOImpl extends SqlSessionDaoSupport
 	public int updateLikeQnAPost(GeneralPostVO generalPostVO) {
 		return getSqlSession().update("updateLikeQnAPost", generalPostVO);
 	}
+	
+	@Override
+	public List<GeneralPostVO> getAllQnaBoardRest() {
+		return getSqlSession().selectList("getAllQnaBoardRest");
+	}
 
 	// 내 게시글 조회
 	@Override
@@ -121,9 +132,32 @@ public class GeneralPostDAOImpl extends SqlSessionDaoSupport
 		return getSqlSession().selectList("searchAllBoardByKeyword", abstractSearchVO);
 	}
 
+	// 조회수순 랭킹
 	@Override
 	public List<GeneralPostVO> getViewRanking(String date) {
 		return getSqlSession().selectList("getViewRanking", date);
 	}
+
+	// 좋아요순 랭킹
+	@Override
+	public List<GeneralPostVO> getLikeRanking(String date) {
+		return getSqlSession().selectList("getLikeRanking", date);
+	}
 	
+	@Override
+	public List<GeneralPostVO> SearchFreeBoardRest(SearchForumVO searchForumVO) {
+		return getSqlSession().selectList("SearchFreeBoardRest", searchForumVO);
+	}
+	
+	@Override
+	public List<GeneralPostVO> SearchQnaBoardRest(SearchForumVO searchForumVO) {
+		return getSqlSession().selectList("SearchQnaBoardRest", searchForumVO);
+	}
+
+	// 검색
+	@Override
+	public List<GeneralPostVO> searchAllGeneralPost(SearchForumVO searchForumVO) {
+		log.debug("--3--DAO 도착---------------------------");
+		return getSqlSession().selectList("searchAllGeneralPost", searchForumVO);
+	}
 }

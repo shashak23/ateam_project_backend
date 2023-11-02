@@ -8,10 +8,12 @@
  */
 package com.ktdsuniversity.edu.member.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
+import com.ktdsuniversity.edu.member.vo.SocialVO;
 
 public interface MemberDAO {
 	/**
@@ -105,4 +107,9 @@ public interface MemberDAO {
 	
 	// 통합검색
 	public List<MemberVO> searchAllMemberByKeyword(AbstractSearchVO abstractSearchVO);
+	
+	public int kakaoinsert(HashMap<String, Object> userInfo);
+	
+	public  SocialVO findkakao(HashMap<String, Object> userInfo);
+	
 }

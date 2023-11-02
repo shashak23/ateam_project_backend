@@ -88,6 +88,73 @@ position: absolute;
     left: 83%;
     transform: translate(-50%, -50%);
 }
+    .btn-primary, a {
+        padding: 5px 8px;
+        text-decoration: none;
+        color: #4052f7;
+        background-color: #d0eaff;
+        margin-right: 15px;
+        border-radius: 10px;
+        border: 0px;
+        font-weight: bold;
+        cursor: pointer;
+    }
+
+    .create_container, .create_container2 {
+        visibility: hidden;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -80%);
+        z-index: 10;
+        box-shadow: 0 0 10px #19191948;
+        border: 1px solid;
+        width: 500px;
+        padding: 30px;
+        opacity: 0;
+        border: none;
+        border-radius: 5px;
+        background-color: #ffffff;
+        transition: 0.5s;
+    }
+
+    .create_container.active, .create_container2.active {
+        visibility: visible;
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+
+    .create_container > *, .create_container2 > * {
+        margin-bottom: 10px;
+    }
+
+    .btn-close {
+        position: absolute;
+        top: 6px;
+        right: 10px;
+        background-color: transparent;
+        font-size: 18px;
+        color: #888;
+        cursor: pointer;
+    }
+
+    .btn-close:hover {
+        color: #191919;
+    }
+    
+    .create_title {
+        text-align: center;
+    }
+
+	.follow {
+		display: flex;
+		flex-direction: row;
+	}
+
+	.follow div {
+		margin-right: 7px;
+		cursor: pointer;
+	}
 
 </style>
 <link rel="stylesheet" type="text/css" href="/css/myProfile.css" />
@@ -340,15 +407,15 @@ position: absolute;
 									</button>
 								</c:if></li>
 						</c:otherwise>
-
 					</c:choose>
 				</ul>
 			</div>
+			
 		</div>
 	</div>
 	<div class="follow">
-		<a href="#">팔로워</a> <a href="#">팔로잉</a>
-		<p></p>
+	  <div class="follower" data-email="${memberVO.email}">팔로워</div>
+	  <div class="followee" data-email="${memberVO.email}">팔로잉</div>
 	</div>
 	<div class="related_link">
 		<img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="Icon 1" id="githubIcon">
@@ -484,21 +551,124 @@ position: absolute;
 						</c:if></li>
 				</c:otherwise>
 			</c:choose>
-		</ul>
-	</div>
-	</div>
-	</div>
-	<jsp:include page="../layout/footer.jsp" />
-
+		  </ul>
+	    </div>
+	  </div>
+	  <div class="create_container">
+	    <div class="btn-close">&times;</div>
+	    <div class="create_title">팔로워</div>
+	    <div class="follower_list"></div>
+	  </div>
+	  <div class="overlay"></div>
+	  <div class="create_container2">
+	    <div class="btn-close">&times;</div>
+	    <div class="create_title">팔로잉</div>
+	    <div class="followee_list"></div>
+	  </div>
+	  <div class="overlay"></div>
+    </div>
+<jsp:include page="../layout/footer.jsp" />
 </body>
 <script>
-	//미완성된 기능을 알려주는 모달창
-	$('.incomplete').click(function() {
-	  $('.modal, .overlay').addClass('modal_active')
-	})
-	$('.overlay').click(function() {
-	  $('.modal, .overlay').removeClass('modal_active')
-	})	
+    //모달 실행을 위한 문장
+    $('.follower').click(function() {
+    	var followerEmail = $(this).data('email');
+        $('.create_container, .overlay').addClass('active')
+
+		var url = '/member/getfollowers/' + followerEmail;
+		loadFollower(url);
+    })
+    $('.btn-close, .overlay').click(function() {
+        $('.create_container, .overlay').removeClass('active')
+    })
+    $('.followee').click(function() {
+		var followeeEmail = $(this).data('email');
+        $('.create_container2, .overlay').addClass('active')
+
+		var url2 = '/member/getfollowees/' + followeeEmail;
+		loadFollowee(url2);
+    })
+    $('.btn-close, .overlay').click(function() {
+        $('.create_container2, .overlay').removeClass('active')
+    })
+    
+	function loadFollower(url) {
+		$.get(url, function(response) {
+			console.log(response.followerList);
+			let followerTemplate = '';
+
+			if (response && response.followerList && response.followerList.length > 0) {
+				const followerList = response.followerList;
+
+				for (let i = 0; i < followerList.length; i++) {
+					let account = followerList[i];
+					console.log(account);
+
+					const profilePic = account.memberVO.profilePic;
+					const followerEmail = account.follower;
+					const nickname = account.memberVO.nickname;
+
+					const followerItem =
+						`<div>
+							<img style="width: 50px; height: 50px;" src="\${profilePic}" />
+							<a href="/memberinfo/view/\${followerEmail}">\${nickname}</a>
+						</div>`;
+					console.log(followerItem)
+					followerTemplate += followerItem
+				}
+
+				$('.create_container .follower_list').html(followerTemplate);
+			} else {
+				followerTemplate = "팔로워가 없습니다.";
+				$('.create_container .follower_list').html(followerTemplate);
+			}
+		});
+	}
+	function loadFollowee(url2) {
+		$.get(url2, function(response2) {
+			console.log(response2.followeeList);
+			let followeeTemplate = '';
+
+			if (response2 && response2.followeeList && response2.followeeList.length > 0) {
+				const followeeList = response2.followeeList;
+
+				for (let i = 0; i < followeeList.length; i++) {
+					let account = followeeList[i];
+					console.log(account);
+
+					const profilePic = account.memberVO.profilePic;
+					const followeeEmail = account.followee;
+					const nickname = account.memberVO.nickname;
+
+					const followeeItem =
+						`<div>
+							<img style="width: 50px; height: 50px;" src="\${profilePic}" />
+							<a href="/memberinfo/view/\${followeeEmail}">\${nickname}</a>
+						</div>`;
+					console.log(followeeItem)
+					followeeTemplate += followeeItem
+				}
+
+				$('.create_container2 .followee_list').html(followeeTemplate);
+			} else {
+				followeeTemplate = "팔로우하는 계정이 없습니다.";
+				$('.create_container2 .followee_list').html(followeeTemplate);
+			}
+		});
+	}
+
+
+
+
+
+
+
+
+
+
+
+
+
 	
 	// 스크롤 버튼, IDE
 	let calcScrollValue = () => {

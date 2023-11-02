@@ -38,4 +38,5 @@ public class SearchForumVO extends AbstractSearchVO {
 		this.searchKeyword = searchKeyword;
 	}
 
+	
 }

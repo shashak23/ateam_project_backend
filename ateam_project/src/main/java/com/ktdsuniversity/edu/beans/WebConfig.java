@@ -72,6 +72,7 @@ public class WebConfig implements WebMvcConfigurer, WebSocketConfigurer  {
 	      checkSessionExcludePatterns.add("/js/**");
 	      checkSessionExcludePatterns.add("/css/**");
 	      checkSessionExcludePatterns.add("/img/**");
+	      checkSessionExcludePatterns.add("/images/**");
 	      checkSessionExcludePatterns.add("/news/**");
 	      checkSessionExcludePatterns.add("/error");
 	      checkSessionExcludePatterns.add("/algorithm/**");

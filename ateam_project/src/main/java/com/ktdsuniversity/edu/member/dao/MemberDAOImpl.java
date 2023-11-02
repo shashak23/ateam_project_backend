@@ -9,6 +9,7 @@
  */
 package com.ktdsuniversity.edu.member.dao;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -18,6 +19,7 @@ import org.springframework.stereotype.Repository;
 
 import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
+import com.ktdsuniversity.edu.member.vo.SocialVO;
 
 @Repository
 public class MemberDAOImpl extends SqlSessionDaoSupport implements MemberDAO{
@@ -168,5 +170,13 @@ public class MemberDAOImpl extends SqlSessionDaoSupport implements MemberDAO{
 	@Override
 	public List<MemberVO> searchAllMemberByKeyword(AbstractSearchVO abstractSearchVO) {
 		return getSqlSession().selectList("searchAllMemberByKeyword", abstractSearchVO);
+	}
+	@Override
+	public int kakaoinsert(HashMap<String, Object> userInfo) {
+		return getSqlSession().insert("kakaoinsert",userInfo);
+	}
+	@Override
+	public SocialVO findkakao(HashMap<String, Object> userInfo) {
+		return getSqlSession().selectOne("findkakao",userInfo);
 	}
 }

@@ -28,7 +28,7 @@
 	   INNER JOIN MEMBER M
 	      ON M.EMAIL = F.FOLLOWER
 	   WHERE F.FOLLOW_YN = 'Y'
-	     AND F.FOLLOWEE = #{_parameter} 
+	     AND F.FOLLOWEE = #{_parameter}
 	</select>
 	
 	<!-- 내가 팔로우 하는 사람들 목록 조회 -->
@@ -43,7 +43,7 @@
 	       , M.PROFILE_PIC
 	    FROM FOLLOW F
 	   INNER JOIN MEMBER M
-	      ON M.EMAIL = F.FOLLOWER
+	      ON M.EMAIL = F.FOLLOWEE
 	   WHERE F.FOLLOW_YN = 'Y'
 	     AND F.FOLLOWER = #{_parameter}
 	</select>

@@ -540,7 +540,7 @@
         
         <div class="create_container">
             <div class="btn-close">&times;</div>
-            <h1 class="create_title">문제 풀이</h1>
+            <h1 class="create_title">제한 사항</h1>
             <div>
                 ${algorithmQuestionVO.algorithmSolution}
             </div>

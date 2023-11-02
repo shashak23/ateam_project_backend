@@ -42,10 +42,12 @@ import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 import com.ktdsuniversity.edu.generalpost.web.FreePostController;
 import com.ktdsuniversity.edu.member.service.MemberService;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
+import com.ktdsuniversity.edu.member.vo.SocialVO;
 import com.ktdsuniversity.edu.member.vo.validategroup.MemberAuthGroup;
 import com.ktdsuniversity.edu.member.vo.validategroup.MemberEditNickGroup;
 import com.ktdsuniversity.edu.member.vo.validategroup.MemberEditPWGroup;
 import com.ktdsuniversity.edu.member.vo.validategroup.MemberSignupGroup;
+import com.ktdsuniversity.edu.util.RequestUtil;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -412,6 +414,30 @@ public class MemberController {
 		} else {
 			return "redirect:/memberInfo/modify/modify-profile-pic/"+ email;
 		}
+	}
+	@GetMapping("/member/kakaoLogin")
+	public String kakaoLogin(@RequestParam(value = "code", required = false) String code, 
+			                 HttpSession session) {
+		String accessToken = memberService.getAccessToken(code);
+		
+		RequestUtil.addCookie("kakao_access_token", accessToken);
+		
+		SocialVO social = memberService.getUserInfo(accessToken);
+		System.out.println("###access_Token#### : " + accessToken);
+//		SocialVO userInfo = memberService.getUserInfo(accessToken);
+		session.setAttribute("_KAKAO_USER_", social);
+		return "redirect:/devground/home";
+		
+	}
+	@GetMapping("/member/kakaoLogout")
+	public String logout(HttpSession session) {
+		String kakaoAccessToken = RequestUtil.getCookieValue("kakao_access_token");
+		System.out.println("AccessToken~~" + kakaoAccessToken);
+		
+		memberService.kakaoLogout(kakaoAccessToken);
+		session.invalidate();
+		RequestUtil.removeCookie("kakao_access_token");
+		return "redirect:/devground/home";
 	}
 	
 }

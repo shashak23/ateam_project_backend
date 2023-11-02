@@ -27,9 +27,12 @@ public class GeneralPostVO {
 	private int likeCnt;
 	private int viewCnt;
 	private String deleteYn;
-	
+
 	// 해시태그list 받아오기
-	private List<HashtagVO> hashtagVO;
+	private List<HashtagVO> hashtagListVO;
+	
+	// 해시태그 받아오기
+	private HashtagVO hashtagVO;
 
 	// 게시글을 작성하는 회원의 정보
 	private MemberVO memberVO;
@@ -38,12 +41,22 @@ public class GeneralPostVO {
 	private CommonCodeVO commonCodeVO;
 	
 	
-	public List<HashtagVO> getHashtagVO() {
+	public HashtagVO getHashtagVO() {
 		return hashtagVO;
 	}
-
-	public void setHashtagVO(List<HashtagVO> hashtagVO) {
+	
+	public void setHashtagVO(HashtagVO hashtagVO) {
 		this.hashtagVO = hashtagVO;
+	}
+	
+	private List<CommonCodeVO> commonCodeListVO;
+
+	public List<HashtagVO> getHashtagListVO() {
+		return hashtagListVO;
+	}
+
+	public void setHashtagListVO(List<HashtagVO> hashtagListVO) {
+		this.hashtagListVO = hashtagListVO;
 	}
 
 	public String getGeneralPostId() {
@@ -134,4 +147,11 @@ public class GeneralPostVO {
 		this.commonCodeVO = commonCodeVO;
 	}
 
+	public List<CommonCodeVO> getCommonCodeListVO() {
+		return commonCodeListVO;
+	}
+
+	public void setCommonCodeListVO(List<CommonCodeVO> commonCodeListVO) {
+		this.commonCodeListVO = commonCodeListVO;
+	}
 }

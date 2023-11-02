@@ -62,6 +62,7 @@ public class GeneralMemberController {
 		FollowListVO followerList = followService.getAllFollower(memberVO.getEmail());
 		FollowListVO followeeList = followService.getAllFollowee(memberVO.getEmail());
 		modelAndView.setViewName("/mypage/myprofile");
+		modelAndView.addObject("generalMemberEmail", generalMemberEmail);
 		modelAndView.addObject("careerList", careerListVO);
 		modelAndView.addObject("generalMemberList", generalMemberListVO);
 		modelAndView.addObject("generalMemberVO", generalMemberVO);

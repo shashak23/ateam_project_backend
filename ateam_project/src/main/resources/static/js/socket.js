@@ -76,18 +76,20 @@ function connectSocket(userName, userEmail, receiveCallback) {
                 sendType: "connect",
                 userName: userName,
                 userEmail: userEmail,
-                message: userName
+                message: userName + "님이 로그인 했습니다."
         })
         
         // onmessage : message를 받았을 때의 callback
         sock.onmessage = function(e) {
             var content = JSON.parse(e.data);
-
             if (content.sendType == "all" 
             		|| content.sendType == "enter"
             		|| content.sendType == "leave"
             		|| content.sendType == "invite" ) {
                 receiveCallback(send, content);
+            }
+            else if (content.sendType == "connect") {
+                AlertBox(content.message);
             }
         }
     }

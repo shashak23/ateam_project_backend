@@ -97,10 +97,11 @@ updateViewCount();
 			
 		}
 
-	  .seperate-line {
-      border: 1px solid #ccc;
- 	  margin: 10px 0px 7px 0px;
-	  width: 1079px;
+	    .seperate-line {
+	       border: 1px solid #ccc;
+	 	   margin: 10px 0px 7px 0px;
+		   width: 1079px;
+		   grid-column: 1/3;
    		}
 
 		.title_name {
@@ -108,16 +109,18 @@ updateViewCount();
 			margin-left: 2px;
 			margin-bottom: 30px;
 		}
+		
 		div.grid {
 			display: grid;
 			grid-template-columns: 80px 1fr;
-			grid-template-rows: 50px 28px 50px 320px 1fr;
+			grid-template-rows: 50px 28px 10px 50px 10px 320px 1fr;
 			row-gap: 10px;
 		}
 
 		div.grid > div.btn-group {
 			display: grid;
 			grid-column: 1 / 3;
+			margin-top: 500px;
 		}
 
 		div.grid div.right-align {
@@ -142,16 +145,20 @@ updateViewCount();
 		
 		}
 	    .ck-content {
-			 font-size: 12px; 	
+			font-size: 12px; 	
 		}
 	
-	    #hashtag {
-	      margin-top: 5px;
-	    }	
-	    .btn-group {
-	    	margin-top: 420px;
+	    .hashtag {
+	    	grid-column: 1 / 3;
+	     	margin-top: 460px;
 	    }
-		#save_button {
+	    
+	    .hashtag > input {
+	     	margin-left: 10000000px;
+	     	margin-right: 1000000px;
+	    }	
+
+		/* #save_button {
 			margin: auto 0;
 			margin-top: 70px;
 			margin-right: 1px;
@@ -161,8 +168,13 @@ updateViewCount();
 			height: 30px;
 			background-color: var(--light-blue);
 			border-radius: 5px;
-		}
-		
+		} */
+		.seperate-line {
+	      	boarder: 1px solid #ccc;
+	      	width: 1000px;
+	      	height: 1px;
+	      	margin: 10px 0px 7px 0px;
+	      }
 	
 </style>
 <script type="text/javascript">
@@ -307,7 +319,7 @@ $().ready(function(){
 				
 				<label for = "postContent"> 내용 </label>
 				<textarea name="postContent" id="editor"></textarea>
-					<!-- <script>
+					<script>
 					CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
 						// https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html#extended-toolbar-configuration-format
 						toolbar: {
@@ -448,7 +460,7 @@ $().ready(function(){
 							'MathType'
 						]
 					});  
-					</script> -->
+					</script>
 	<div class = "seperate-line" ></div>
         <div class="hashtag">
 			<label for="hashtag">해시태그</label>

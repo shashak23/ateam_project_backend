@@ -48,48 +48,9 @@ public class CommonCodeController {
 	public Map<String, Object> createCommonCode(@PathVariable String codeName,
 										 @ModelAttribute CommonCodeVO commonCodeVO) {
 		Map<String, Object> resultMap = new HashMap<>();
+		boolean isSuccess = commonCodeService.createCommonCode(commonCodeVO, codeName);
 		
-		// 보내준 코드 리스트를 받아오기
-		List<CommonCodeVO> originCommonCodeList = commonCodeService.searchCode(codeName);
-		
-		// 띄어쓰기를 기준으로 배열에 저장
-		String[] newCommonContentArr = commonCodeVO.getCodeContent().split(" ");
-
-		// Set을 이용해 중복된 값을 제거하기
-		Set<String> newCommonContentSet = new HashSet<>();
-		for (String str : newCommonContentArr) {
-			newCommonContentSet.add(str);
-		}
-		for (String string : newCommonContentSet) {
-			System.out.println(string);
-		}
-		int count = 0;
-		boolean isExist = false;
-		boolean isSuccess = false;
-		
-		// DB에 중복된 값이 있는지 검사
-		for (String newContents : newCommonContentSet) {
-			for (CommonCodeVO originContents : originCommonCodeList) {
-				if(newContents.equals(originContents.getCodeContent())) {
-					count++;
-					isExist = true;
-					break;
-				}
-			}
-			if (!isExist) {
-				commonCodeVO.setCodeType(codeName);
-				commonCodeVO.setCodeContent(newContents);
-				// 없으면 공통 코드 생성
-				isSuccess = commonCodeService.createCommonCode(commonCodeVO);
-				
-				if (isSuccess) {
-					count++;
-				}
-			}
-			isExist = false;
-		}
-		
-		if (count == newCommonContentSet.size()) {
+		if (isSuccess) {
 			resultMap.put("result", isSuccess);
 			return resultMap;
 		}

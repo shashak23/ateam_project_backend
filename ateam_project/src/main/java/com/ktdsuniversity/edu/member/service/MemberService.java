@@ -9,6 +9,7 @@
  */
 package com.ktdsuniversity.edu.member.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
@@ -18,6 +19,7 @@ import com.ktdsuniversity.edu.companymember.vo.CompanyVO;
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 import com.ktdsuniversity.edu.member.vo.MemberListVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
+import com.ktdsuniversity.edu.member.vo.SocialVO;
 
 public interface MemberService {
 	
@@ -109,4 +111,16 @@ public interface MemberService {
 	
 	// 통합검색
 	public MemberListVO searchAllMemberByKeyword(AbstractSearchVO abstractSearchVO);
+	/**
+	 * kakao토큰 받아오기
+	 */
+	public String getAccessToken (String authorizeCode);
+	/**
+	 * kakao 유저정보 
+	 */
+	public SocialVO getUserInfo(String accessToken);
+	/**
+	 * 카카오 로그아웃 
+	 */
+	public void kakaoLogout(String accessToken);
 }
