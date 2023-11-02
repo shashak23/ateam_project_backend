@@ -11,8 +11,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,9 +19,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ktdsuniversity.edu.admin.service.ReportService;
+import com.ktdsuniversity.edu.admin.vo.ReportListVO;
+import com.ktdsuniversity.edu.admin.vo.ReportVO;
 import com.ktdsuniversity.edu.algorithmexplanation.service.AlgorithmExplanationService;
 import com.ktdsuniversity.edu.algorithmexplanation.vo.AlgorithmExplanationListVO;
 import com.ktdsuniversity.edu.algorithmquestion.service.AlgorithmQuestionService;
@@ -75,6 +77,9 @@ public class HomeController {
 	private CompanyInfoService companyInfoService;
 	
 	@Autowired
+	private ReportService reportService;
+	
+	@Autowired
 	private FileHandler fileHandler;
 	
 	@GetMapping("/devground/home")
@@ -85,6 +90,13 @@ public class HomeController {
 	@GetMapping("/home/admin")
 	public String viewAdmin() {
 		return "home/admin_ui(ongoing)";
+	}
+	
+	@ResponseBody
+	@GetMapping("/admin/reportlist")
+	public List<ReportVO> getAllReport() {
+		ReportListVO reportListVO = reportService.getAllReport();
+		return reportListVO.getReportList();
 	}
 	
 	@PostMapping("/devground/home")

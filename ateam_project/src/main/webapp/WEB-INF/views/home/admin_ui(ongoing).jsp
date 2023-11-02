@@ -55,7 +55,8 @@
   .personal_modal,
   .company_modal,
   .hashtag_modal,
-  .notice_modal {
+  .notice_modal,
+  .report_modal {
     position: fixed;
     max-height: 650px;
     top: 50%;
@@ -72,7 +73,8 @@
   .personal_modal.active,
   .company_modal.active,
   .hashtag_modal.active,
-  .notice_modal.active {
+  .notice_modal.active,
+  .report_modal.active {
     opacity: 1;
     visibility: visible;
     transform: translate(-50%, -50%) scale(1);
@@ -81,7 +83,8 @@
   .personal_modal_content,
   .company_modal_content,
   .hashtag_modal_content,
-  .notice_modal_content  {
+  .notice_modal_content,
+  .report_modal_content  {
     display: flex;
     border-radius: 5px;
     overflow: hidden;
@@ -91,7 +94,8 @@
   .personal_modal_content > div,
   .company_modal_content > div,
   .hashtag_modal > div,
-  .notice_modal_content > div {
+  .notice_modal_content > div
+  .report_modal_content > div {
     padding: 20px;
   }
 
@@ -840,7 +844,6 @@
   // 기업 회원 조회
   function loadCompanytypeMember(val = '') {
     $.get('/home/admin/company', function(response) {
-      console.log(response)
       $('.company_modal').find('.desc-content').empty()
       for (let i = 0; i < response.length; i++) {
         let company = response[i]
@@ -1002,6 +1005,14 @@
 
   loadAdminNoticeList()
 
+  function loadReportList() {
+    $.get('/admin/reportlist', function(response) {
+      console.log(response)
+    })
+  }
+
+  loadReportList()
+
   // $(document).on('click', '.create_notice', function() {
   //   window.open('/notice/create', '공지 생성', 'width=500, height=800px')
   // })
@@ -1042,7 +1053,6 @@
         }
         else {
           alert('실패!')
-          console.log($('#codeContent').val())
         }
       })
     }
@@ -1066,9 +1076,9 @@
 
 
   // 신고 관리창으로 이동
-  $('.admin_report_btn').click(function() {
-    window.open('/admin/report/list', '_blank')
-  })
+  // $('.admin_report_btn').click(function() {
+  //   window.open('/admin/report/list', '_blank')
+  // })
 
   // 달력 포맷
   flatpickr.localize(flatpickr.l10ns.ko);
