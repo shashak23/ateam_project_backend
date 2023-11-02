@@ -4,7 +4,6 @@ public class CompanyInfoVO {
 
 	private String companyEmail;
 	private String contactNumber;
-	private String contactName;
 	private String companyName;
 	private String industryType;
 	private String companyRegistNumber;
@@ -16,6 +15,7 @@ public class CompanyInfoVO {
 	private String companyINTRO;
 	private String homeURL;
 	private String confirmYn;
+	private String companyOriginRegistCertificateUrl;
 	
 	
 	public String getCompanyEmail() {
@@ -29,12 +29,6 @@ public class CompanyInfoVO {
 	}
 	public void setContactNumber(String contactNumber) {
 		this.contactNumber = contactNumber;
-	}
-	public String getContactName() {
-		return contactName;
-	}
-	public void setContactName(String contactName) {
-		this.contactName = contactName;
 	}
 	public String getCompanyName() {
 		return companyName;
@@ -101,5 +95,11 @@ public class CompanyInfoVO {
 	}
 	public void setConfirmYn(String confirmYN) {
 		this.confirmYn = confirmYN;
+	}
+	public String getCompanyOriginRegistCertificateUrl() {
+		return companyOriginRegistCertificateUrl;
+	}
+	public void setCompanyOriginRegistCertificateUrl(String companyOriginRegistCertificateUrl) {
+		this.companyOriginRegistCertificateUrl = companyOriginRegistCertificateUrl;
 	}
 }

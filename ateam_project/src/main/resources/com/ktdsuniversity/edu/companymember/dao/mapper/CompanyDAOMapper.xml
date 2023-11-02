@@ -16,7 +16,6 @@
 			parameterType="com.ktdsuniversity.edu.companymember.vo.CompanyVO">
 		INSERT INTO COMPANY (COMPANY_EMAIL
 			 , CONTACT_NUMBER
-			 , CONTACT_NAME
 			 , COMPANY_NAME
 			 , INDUSTRY_TYPE
 			 , COMPANY_REGIST_NUMBER
@@ -27,10 +26,10 @@
 			 , INVESTMENT
 			 , COMPANY_INTRO
 			 , HOME_URL
-			 , CONFIRM_YN)
+			 , CONFIRM_YN
+			 , COMPANY_ORIGIN_REGIST_CERTIFICATE_URL)
 		VALUES (#{companyEmail}
 			  , #{contactNumber}
-			  , '담당자'
 			  , ''
 			  , ''
 			  , ''
@@ -41,7 +40,8 @@
 			  , ''
 			  , ''
 			  , ''
-			  , #{confirmYn})
+			  , #{confirmYn}
+			  , #{companyOriginRegistCertificateUrl})
 	</insert>
 	
 	<select id="companyMemberAllCount"

@@ -148,6 +148,11 @@
     align-items: center;
     color: #888;
   }
+
+  .personal_modal .admin_anchor {
+    color: #191919;
+    text-decoration: none;
+  }
   
   .company_modal {
     width: 1140px;
@@ -693,6 +698,29 @@
   </form:form>
   <div class="notice_create_overlay"></div>
 
+  <!-- 신고 관리 모달 -->
+  <div class="report_modal">
+    <div class="report_modal_content">
+      <button class="btn-close">&times;</button>
+      <div class="desc">
+        <div class="desc-header">
+          <div>신고 목록</div>
+          <div class="admin_report_search_wrap">
+            <input type="text" class="admin_report_input" />
+            <button class="admin_report_search">검색</button>
+          </div>
+        </div>
+        <div class="desc_title">
+          <div class="report_container">
+            <div class="report_title">
+              <div>신고번호</div><div>내용</div><div>신고사유</div><div>신고일자</div><div>처리진행상황</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- 해시태그 관리 모달 -->
   <div class="hashtag_modal">
     <div class="hashtag_modal_content">
@@ -764,7 +792,7 @@
         generalMemberTemplate = 
           `<div class="member_container">
               <div class="profile_group">
-              <img src="\${member.profilePic}" alt="."><div class="member_info">\${member.nickname}(\${member.email})</div><div class=tier>\${member.generalMemberVO.tierId}</div>
+              <img src="\${member.profilePic}" alt="."><div class="member_info"><a href="/memberinfo/view/\${member.email}" target="_blank" class="admin_anchor">\${member.nickname}(\${member.email})</a></div><div class=tier>\${member.generalMemberVO.tierId}</div>
               <div class="btn_group">
                   <button>경고</button>
                   <button class="general_member_withdraw_btn" id="\${member.email}">탈퇴</button>
@@ -812,8 +840,8 @@
   // 기업 회원 조회
   function loadCompanytypeMember(val = '') {
     $.get('/home/admin/company', function(response) {
-      $('.company_modal').find('.desc-content').empty()
       console.log(response)
+      $('.company_modal').find('.desc-content').empty()
       for (let i = 0; i < response.length; i++) {
         let company = response[i]
         let companyTemplateDom
@@ -823,7 +851,7 @@
               <div class="profile_group">
               <img src="\${company.profilePic}" alt="."><div class="company_info">
                 <strong>\${company.nickname}</strong>(\${company.email})
-                <a class="certificate_download" href='\${company.companyInfoVO.companyRegistCertificateUrl}'>[사업자등록증]</a>
+                <a class="certificate_download" href='/company/file/download/\${company.email}'>[사업자등록증]</a>
                 </div>
                 <div class="btn_group">
                   <button class="company_approval" id="\${company.email}">승인</button>
@@ -842,7 +870,7 @@
               <div class="profile_group">
               <img src="\${company.profilePic}" alt="."><div class="company_info">
                 <strong>\${company.nickname}</strong>(\${company.email})
-                <a class="certificate_download" href='/file/download/\${company.email}'>[사업자등록증]</a>
+                <a class="certificate_download" href='\${company.companyInfoVO.companyRegistCertificateUrl}'>[사업자등록증]</a>
                 </div>
                 <div class="btn_group">
                   <button class="confirm_complete_btn">승인완료</button>
@@ -869,6 +897,13 @@
     loadCompanytypeMember(val)
   })
 
+  $('.admin_company_member_input').keyup(function(e) {
+    if (e.key === 'Enter') {
+      let val = $('.admin_company_member_input').val()
+    loadCompanytypeMember(val)
+    }
+  })
+
   // 기업 승인 처리
   $(document).on('click', '.company_approval', function() {
     let body = {
@@ -876,11 +911,14 @@
       val: 'approval'
     }
     let url = '/admin/companymember'
-    $.post(url, body, function(response) {
-      alert('승인 처리되었습니다.')
-      $('.company_modal').find('.desc-content').empty()
-      loadCompanytypeMember()
-    })
+
+    if (confirm('정말 승인하시겠습니까?')) {
+      $.post(url, body, function(response) {
+        alert('승인 처리되었습니다.')
+        $('.company_modal').find('.desc-content').empty()
+        loadCompanytypeMember()
+      })
+    }
   })
   
   // 기업 반려 처리
@@ -890,11 +928,14 @@
       val: 'refuse'
     }
     let url = '/admin/companymember'
-    $.post(url, body, function(response) {
-      alert('반려 처리되었습니다.')
-      $('.company_modal').find('.desc-content').empty()
-      loadCompanytypeMember()
-    })
+
+    if (confirm('정말 반려하시겠습니까?')) {
+      $.post(url, body, function(response) {
+        alert('반려 처리되었습니다.')
+        $('.company_modal').find('.desc-content').empty()
+        loadCompanytypeMember()
+      })
+    }
   })
 
   // 기업 회원 탈퇴 조치

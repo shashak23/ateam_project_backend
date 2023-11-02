@@ -84,14 +84,12 @@ public class QnAPostController {
 		XssIgnoreUtil.ignore(generalPostVO); 
 		ModelAndView modelAndView = new ModelAndView();
 		
-		log.debug("1--컨트롤러---------------------------");
+		log.debug("1--컨트롤러-도착--------------------------");
 		log.debug("데이터 =  " + generalPostVO.getBoardId());
 		log.debug("데이터 =  " + generalPostVO.getPostWriter());
 		generalPostVO.setPostWriter(memberVO.getEmail());
-//		System.out.println(generalPostVO.getPostWriter());
 		
 		if (bindingResult.hasErrors()) {
-//			log.debug("qkdlseldflwjfxm");
 			modelAndView.setViewName("forum/qnaboardcreate");
 			modelAndView.addObject("generalPostVO", generalPostVO);
 			return modelAndView;

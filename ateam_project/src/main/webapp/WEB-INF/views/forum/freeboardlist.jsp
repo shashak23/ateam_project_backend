@@ -161,17 +161,22 @@
     </div>
     <p class="bbs_title">게시글 목록</p>
     	<!-- 게시물 검색 -->
-        <div class="button_list">
-                <select class="select">
-                    <option value="제목">제목</option>
-                    <option value="작성자">작성자</option>
-                </select>
-            <input type="text" class="sc_text" placeholder="검색어 입력">
-                <button type="submit" class="btn_st_2">
-                    <a href="#">조회</a>
-                </button>
-                
-    	</div>
+         <form id="search-form" method="get" action="/qnaboard/list">
+          <div class="button_list">
+              <select name="searchType">
+                  <option value="postTitle" ${searchForumVO.searchType eq 'postTitle' ? 'selected' : ''}>제목</option>
+                  <option value="postContent" ${searchForumVO.searchType eq 'postContent' ? 'selected' : ''}>내용</option>
+                  <option value="postWriter" ${searchForumVO.searchType eq 'postWriter' ? 'selected' : ''}>작성자</option>
+              </select>
+              <input type="text" class="sc_text" placeholder="검색어 입력" name="searchKeyword" value="${searchForumVO.searchKeyword}" />
+              <button type="submit" class="btn btn_st_2">
+              	검색
+              </button>
+              <button type="submit" class="btn btn_st_3">
+                  <a href="/qnaboard/create">글쓰기</a>
+              </button>
+          </div>
+          </form>
     <div id="wrap" class="wrap">
         <!-- 본문 -->
         <section id="container" class="container">

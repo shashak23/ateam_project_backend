@@ -205,7 +205,10 @@ $().ready(function() {
 
     // 파일을 등록하면 파일의 이름을 텍스트에 써줌
     $('#file').change(function() {
-        let selectedFile = $(this).val()
+        let selectedFilePath = $(this).val()
+        let parts = selectedFilePath.split('\\')
+        let selectedFile = parts[parts.length - 1]
+        console.log(selectedFile)
         $('#file_text').val(selectedFile)
     })
 

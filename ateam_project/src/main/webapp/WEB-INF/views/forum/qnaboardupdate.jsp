@@ -20,7 +20,7 @@
    document.addEventListener('DOMContentLoaded', function() {
 const viewCountElement = document.getElementById('viewCount');
 
-const postId = freeboard.generalPostId; // 게시물의 고유 ID (예시로 대입)
+const postId = qnaboard.generalPostId; // 게시물의 고유 ID (예시로 대입)
 
 // 서버로부터 조회수 업데이트 정보를 가져옵니다.
 function updateViewCount() {
@@ -81,6 +81,114 @@ updateViewCount();
                      'color': 'var(--blue)',
                      'box-shadow': 'none'})
    })
+   
+// 해시태그 수정
+var allHashTags = [];
+
+function getHashTagId(tagName) {
+	console.log(allHashTags.filter(tagElem => tagElem.tagContent == tagName), tagName, allHashTags)
+	return allHashTags.filter(tagElem => tagElem.tagContent == tagName)[0].tagId;
+}
+
+$().ready(function(){
+	
+	var input = document.querySelector('input[name=hashtag]')
+	
+	$.get("/code/해시태그", function(response) {
+		
+		response.forEach(tagElem => {
+			var tagId = tagElem.codeId;
+			var tagContent = tagElem.codeContent;
+			allHashTags.push( {tagId, tagContent} );
+		});
+		
+		var tagify = new Tagify(input, {	        
+	    	//whitelist : ["Python","Java","Oracle","React","Vue.js","C","JavaScript", "CSS", "HTML", "Spring", "Rudy", "MYSQL", "jQuery", "Angular", "C++"],
+	    	whitelist : allHashTags.map(tag => tag.tagContent),
+	    	maxTags: 10,
+	    	enforceWhitelist: true,
+	    })
+		
+	})
+
+	// 폼 제출 이벤트 처리
+	$('#hashtagForm').submit(function(e) {
+        
+    });
+	
+});
+	// 해시태그를 저장할 배열
+    const hashtagsArray = [];
+
+    // 해시태그 추가 버튼 클릭 이벤트 핸들러
+    function addHashtag() {
+        const hashtagInput = document.getElementById("hashtagInput");
+        const hashtag = hashtagInput.value;
+		
+        
+        
+        if (hashtag.trim() !== "") {
+	        const addedHashTag = JSON.parse(hashtag);
+        	
+	        for (let index in addedHashTag) {
+	        	let tagName = addedHashTag[index].value;
+	        	
+	        	let tagId = getHashTagId(tagName);
+	        	
+	            // 중복 해시태그 체크 (중복일 경우 추가하지 않음)
+	            if (!hashtagsArray.includes(tagId)) {
+	                hashtagsArray.push( { tagId, tagName } );
+	                displayHashtags();
+	            }
+	        }
+	        
+        }
+
+        // 입력 필드 초기화
+        hashtagInput.value = "";
+    }
+
+    // 해시태그 배열을 화면에 표시
+    function displayHashtags() {
+        const displayHashtagsDiv = document.getElementById("displayHashtags");
+        displayHashtagsDiv.innerHTML = "";
+
+        for (const hashtag of hashtagsArray) {
+            const hashtagSpan = document.createElement("span");
+            hashtagSpan.className = "hashtag-display";
+            hashtagSpan.textContent = hashtag.tagName;
+            hashtagSpan.dataset.tagId = hashtag.tagId;
+
+           	
+            const removeButton = document.createElement("button");
+            removeButton.textContent = "X";
+            removeButton.addEventListener("click", function () {
+                removeHashtag(hashtag);
+            });
+
+			const inputtag = document.createElement("input");
+			inputtag.type = "hidden";
+			inputtag.name = "hashtagVO["+hashtagsArray.indexOf(hashtag)+"].hashtagId";
+			inputtag.value = hashtag.tagId;
+
+            hashtagSpan.appendChild(removeButton);
+			hashtagSpan.appendChild(inputtag);
+            displayHashtagsDiv.appendChild(hashtagSpan);
+        }
+    }
+
+    // 해시태그 삭제 버튼 클릭 이벤트 핸들러
+    function removeHashtag(hashtag) {
+        const index = hashtagsArray.indexOf(hashtag);
+        if (index > -1) {
+            hashtagsArray.splice(index, 1);
+            displayHashtags();
+        }
+    }
+    // 저장 버튼 클릭 이벤트 핸들러
+    function savePost() {
+        $("#postForm").submit();
+    }
 </script>
    
 <!-- 소스 다운 -->
@@ -170,14 +278,14 @@ updateViewCount();
  <div id="container">
 	<h1 class="title_name">질답 게시글 수정</h1>
 	<div class="seperate-line"></div>
-	<form method="post" action="/qnaboard/update" modelAttribute="generalPostVO" >
+	<form method="post" id="postForm" action="/qnaboard/update">
 		<input type="hidden" name="generalPostId" value="${generalPostVO.generalPostId}"/>
 		<div class="grid">
 			<label for="postTitle">제목</label>
 			<input id="postTitle" type="text" name="postTitle" value="${generalPostVO.postTitle}"/>
 			
-			<label for="postContent"></label>
-			<textarea id="editor" name="postContent">${generalPostVO.postContent}</textarea>
+			<label for="postContent">내용</label>
+			<textarea name="postContent" id="editor" >${generalPostVO.postContent}</textarea>
 				<script>
 		    	CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
 	                // https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html#extended-toolbar-configuration-format
@@ -319,12 +427,24 @@ updateViewCount();
 	                    'MathType'
 	                ]
 	            });  
-		        </script>			
-			<div class="btn-group">
-				<div class="right-align">
-					<input id="save_button" type="submit" value="저장" />
+		        </script>
+		 <div class="hashtag">
+		 <label for="hashtag">해시태그</label>
+   			<input type="hidden" id="hashtagInput" name='hashtag' placeholder="#해시태그" value="${generalPostHashtagVO.hashtagId}">
+   	
+   			<label for="general_post_hashtag_id"></label>
+   			<input type="hidden" id="general_post_hashtag_id" value="${generalPostHashtagVO.generalPostHashtagId}"/>
+   		
+   			<label for="general_post_id"></label>
+   			<input type="hidden" id="general_post_id" value="${generalPostHashtagVO.generalPostId}"/>
+		  </div>
+				<div class="btn-group">
+					<div class="right-align">
+	                 	<input type="button" value="추가" onclick="addHashtag()">
+						<input type="button" value="완료" onclick="savePost()"/>
+					</div>
 				</div>
-			</div>
+			<div id="displayHashtags"></div>
 		</div>
 	</form>
 </div>	

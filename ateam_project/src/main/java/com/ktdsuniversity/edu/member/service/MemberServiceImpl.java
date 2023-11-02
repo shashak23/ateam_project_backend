@@ -193,6 +193,7 @@ public class MemberServiceImpl implements MemberService {
 
 		StoredFile storedFile = fileHandler.storeFile(file);
 		companyVO.setCompanyRegistCertificateUrl(storedFile.getRealFilePath());
+		companyVO.setCompanyOriginRegistCertificateUrl(storedFile.getFileName());
 
 		int companyEmailCount = memberDAO.getEmailCount(companyVO.getCompanyEmail());
 

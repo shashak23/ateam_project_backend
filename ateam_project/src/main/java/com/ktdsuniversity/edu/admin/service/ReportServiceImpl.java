@@ -6,7 +6,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-import com.ktdsuniversity.edu.admin.dao.ReportDAO;
+import com.ktdsuniversity.edu.admin.dao.AdminDAO;
 import com.ktdsuniversity.edu.admin.vo.ReportListVO;
 import com.ktdsuniversity.edu.admin.vo.ReportVO;
 
@@ -16,7 +16,7 @@ import jakarta.mail.internet.MimeMessage;
 public class ReportServiceImpl implements ReportService{
 
 	@Autowired
-	private ReportDAO reportDAO;
+	private AdminDAO reportDAO;
 
 	@Override
 	public ReportListVO getAllReport() {

@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,7 +28,9 @@ import com.ktdsuniversity.edu.algorithmexplanation.service.AlgorithmExplanationS
 import com.ktdsuniversity.edu.algorithmexplanation.vo.AlgorithmExplanationListVO;
 import com.ktdsuniversity.edu.algorithmquestion.service.AlgorithmQuestionService;
 import com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionListVO;
+import com.ktdsuniversity.edu.beans.FileHandler;
 import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
+import com.ktdsuniversity.edu.companyinfo.service.CompanyInfoService;
 import com.ktdsuniversity.edu.companynews.service.CompanyNewsService;
 import com.ktdsuniversity.edu.companynews.vo.CompanyNewsListVO;
 import com.ktdsuniversity.edu.generalpost.service.GeneralPostService;
@@ -67,11 +71,16 @@ public class HomeController {
 	@Autowired
 	private NoticeService noticeService;
 	
+	@Autowired
+	private CompanyInfoService companyInfoService;
+	
+	@Autowired
+	private FileHandler fileHandler;
+	
 	@GetMapping("/devground/home")
 	public String homeLink() {
 		return "home/home";
 	}
-	
 
 	@GetMapping("/home/admin")
 	public String viewAdmin() {
@@ -231,5 +240,15 @@ public class HomeController {
 	public String algorithmmain() {
 		return "/algorithmmain/main";
 	}
+	
+//	@GetMapping("/file/download/${email}")
+//	public ResponseEntity<Resource> downloadFile(@PathVariable String email) {
+//		CompanyVO companyVO = companyInfoService.getOneCompanyInfo(email);
+//		if (companyVO == null) {
+//			throw new PageNotFoundException("잘못된 접근입니다.");
+//		}
+//		
+//		File storedFile = fileHandler.getStoredFile(companyVO.getCompanyRegistCertificateUrl());
+//	}
 	
 }

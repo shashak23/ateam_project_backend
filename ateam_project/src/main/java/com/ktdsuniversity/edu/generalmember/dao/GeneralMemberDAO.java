@@ -85,4 +85,18 @@ public interface GeneralMemberDAO {
 	 * blog 삭제
 	 */
 	public int deleteSelfIntro(String generalMemberEmail);
+	
+	/**
+	 * 티어 승급한 회원의 TierId 변경
+	 * @param generalMemberEmail 티어 승급한 회원 email
+	 * @return
+	 */
+	public int updateTierId(GeneralMemberVO generalMemberVO);
+	
+	/**
+	 * 티어 승급한 회원의 TierDate 변경
+	 * @param generalMemberEmail 티어 승급한 회원 email
+	 * @return
+	 */
+	public int updateTierDate(GeneralMemberVO generalMemberVO);
 }

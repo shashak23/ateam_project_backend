@@ -167,7 +167,6 @@
 		     , M.NICKNAME 
 		     , M.PROFILE_PIC 
 		     , M.WITHDRAW_YN 
-		     , C.CONTACT_NAME 
 		     , C.COMPANY_REGIST_CERTIFICATE_URL 
 		     , C.CONFIRM_YN 
 		  FROM MEMBER M

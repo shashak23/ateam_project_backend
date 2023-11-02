@@ -38,13 +38,6 @@ public class CompanyInfoController {
 					, @SessionAttribute("_LOGIN_USER_") MemberVO loginMemberVO
 					, Model model) {
 		
-		if (companyVO.getContactName() != null && companyVO.getContactName() != "") {
-			companyVO.setCompanyEmail(loginMemberVO.getEmail());
-			boolean updateContactNameisSuccess = companyInfoService.updateCompanyContactName(companyVO);
-			if (updateContactNameisSuccess) {
-				return "companyinfo/companyinfomodify";
-			}
-		}
 		if (companyVO.getContactNumber() != null && companyVO.getContactNumber() != "") {
 			companyVO.setCompanyEmail(loginMemberVO.getEmail());
 			boolean updateContactNumberisSuccess = companyInfoService.updateCompanyContactNumber(companyVO);

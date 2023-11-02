@@ -48,7 +48,11 @@ private Logger log = LoggerFactory.getLogger(FreePostController.class);
 		GeneralPostListVO generalPostListVO = new GeneralPostListVO();
 		
 		generalPostListVO.setBoardCnt( generalPostDAO.getBoardAllCount(searchForumVO));
-		generalPostListVO.setGeneralPostList( generalPostDAO.getAllFreeBoard());
+		if(searchForumVO == null) {
+			generalPostListVO.setGeneralPostList( generalPostDAO.getAllFreeBoard());
+		} else {
+			generalPostListVO.setGeneralPostList( generalPostDAO.searchAllFreePost(searchForumVO));
+		}
 		return generalPostListVO;
 	}
 
@@ -110,7 +114,7 @@ private Logger log = LoggerFactory.getLogger(FreePostController.class);
 			generalPostListVO.setGeneralPostList( generalPostDAO.getAllQnABoard());
 			
 		} else {
-			generalPostListVO.setGeneralPostList( generalPostDAO.searchAllGeneralPost(searchForumVO));
+			generalPostListVO.setGeneralPostList( generalPostDAO.searchAllQnAPost(searchForumVO));
 		}
 		return generalPostListVO;	
 	}

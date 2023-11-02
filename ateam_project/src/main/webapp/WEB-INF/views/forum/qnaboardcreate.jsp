@@ -157,18 +157,6 @@ updateViewCount();
 	     	margin-left: 10000000px;
 	     	margin-right: 1000000px;
 	    }	
-
-		/* #save_button {
-			margin: auto 0;
-			margin-top: 70px;
-			margin-right: 1px;
-			border: none;
-			cursor: pointer;
-			width: 70px;
-			height: 30px;
-			background-color: var(--light-blue);
-			border-radius: 5px;
-		} */
 		.seperate-line {
 	      	boarder: 1px solid #ccc;
 	      	width: 1000px;
@@ -206,9 +194,7 @@ $().ready(function(){
 	    })
 		
 	})
-	
-	
-    
+
 	// 폼 제출 이벤트 처리
 	$('#hashtagForm').submit(function(e) {
         
@@ -266,7 +252,7 @@ $().ready(function(){
 
 			const inputtag = document.createElement("input");
 			inputtag.type = "hidden";
-			inputtag.name = "hashtagVO["+hashtagsArray.indexOf(hashtag)+"].hashtagId";
+			inputtag.name = "hashtagListVO["+hashtagsArray.indexOf(hashtag)+"].hashtagId";
 			inputtag.value = hashtag.tagId;
 
             hashtagSpan.appendChild(removeButton);
@@ -285,25 +271,8 @@ $().ready(function(){
     }
 
     // 저장 버튼 클릭 이벤트 핸들러
-    function saveHashtags() {
-        // hashtagsArray를 JSON 문자열로 변환
-        const hashtagsJSON = JSON.stringify(hashtagsArray);
-        // hashtagsJSON을 서버로 전송 (AJAX 등을 사용)
-        // 이때, 서버 컨트롤러에서 JSON 문자열을 파싱하여 처리
-        // 예시: AJAX로 서버로 데이터 전송 (jQuery 사용)
-        $.ajax({
-            type: "POST",
-            url: "/qnaboard/create", // 서버의 엔드포인트 URL로 변경
-            data: $("#postForm").serialize(),
-            success: function (response) {
-                // 서버 응답에 따른 동작
-                console.log("서버 응답:", response);
-            },
-            error: function (error) {
-                // 오류 처리
-                console.error("에러 발생:", error);
-            }
-        });
+    function savePost() {
+        $("#postForm").submit();
     }
 </script>
 </head>
@@ -315,7 +284,7 @@ $().ready(function(){
 		<form method = "post" id="postForm">
 			<div class = "grid">
 				<label for = "postTitle"> 제목 </label>
-				<input id = "postTitle" type = "text" name="postTitle" />
+				<input id = "postTitle" type="text" name="postTitle" />
 				
 				<label for = "postContent"> 내용 </label>
 				<textarea name="postContent" id="editor"></textarea>
@@ -471,16 +440,14 @@ $().ready(function(){
    		
    			<label for="general_post_id"></label>
    			<input type="hidden" id="general_post_id" value="${generalPostHashtagVO.generalPostId}"/>
-    	
 		</div>
-          <div class = "btn-group">
-             <div class="right-align">
-                 <input type="button" value="추가" onclick="addHashtag()">
-	        	 <input type="button" value="완료" onclick="saveHashtags()">
-             </div>
-          </div>
-          <div id="displayHashtags">
-		  </div>
+	          <div class="btn-group">
+	             <div class="right-align">
+	                 <input type="button" value="추가" onclick="addHashtag()">
+		        	 <input type="button" value="완료" onclick="savePost()">
+	             </div>
+	          </div>
+          <div id="displayHashtags"></div>
       </div>
     </form>
   </div>         

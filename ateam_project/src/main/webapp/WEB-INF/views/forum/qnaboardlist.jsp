@@ -25,13 +25,7 @@
             
             margin-left: 530px;
          } */
-         #container_controller {
-           
-            margin: 0 auto;
-            margin-left: 30%;      
-            border: none;
-            /* width: 1080px; */
-         }
+         
 
          /* aside{
             height:500px;
@@ -44,8 +38,6 @@
          }
          .hashtag_wrap {
         margin: 0 auto;  
-        margin-top: 50px;
-        margin-bottom: 100px;
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
@@ -66,9 +58,6 @@
         width: 800px;
     } 
 
-     #container_controller{
-        display: flex;
-    } 
    
          .hashtag_incomplete {
             background-color: yellow;        
@@ -87,10 +76,8 @@
          }
  
          .list_search {
-            margin: 0 auto;
-            margin-bottom: 15px;
-            margin-left: 1000px;
-           
+            text-align: right;
+
          }
 
          /*게시판 테이블 제어*/
@@ -103,27 +90,7 @@
             width: 50px;
            height: 35px;
          }
-         /*pagenation 제어*/
-         /* #page {
-            text-align: center;
-         }
-
-         #page > a {
-            margin-top: 15px;
-            margin-bottom: 15px;
-            padding: 5px 10px 5px 10px;
-            display: inline-block;
-            border-radius: 4px;
-            background-color:var(--white);
-            color: #666;
-            text-decoration: none;
-         }
-
-        #page > a.active_page {
-            border: 1px solid var(--red);
-            color: var(--red);
-            font-weight: bold;
-         } */
+         
          /*버튼 속성제어*/
          .btn_st_2,.btn_st_3 {
             background-color: var(--hashtag-blue);
@@ -167,27 +134,9 @@
             position: relative;
             bottom: 20px;
         }
-        .ranking_list {
-        position: absolute;
-        top: 0;
-        right: 10px; /* right 속성을 사용하여 오른쪽으로 이동 */
-        width: 200px;
-        height: 500px;
-        border: 1px solid var(--gray);
-        margin: 0 auto;
-        margin-top: 90px;
-        margin-right: 50px;
-        }
+
         .advertising {
-            /* position: relative;
-            left: 25px;
-            margin: 0 auto;
-            margin-top: 600px;
-            margin-right: 100px;
-            border: 1px solid #ccc;
-            width: 200px;
-            height: 500px;
-            cursor: pointer; */
+
             position: absolute;
         top: 0;
         right: 10px; /* right 속성을 사용하여 오른쪽으로 이동 */
@@ -200,139 +149,34 @@
         }
 
    
-    .contents {
-       position: relative;
-       bottom: 250px;
-        margin: 0 auto;
 
-    }
-    .controll_all {
-        margin: 0 auto;
-        margin-top: 320px;   
-       
-    }
-    h3 {
-        position: relative;
-        bottom: 10px;
-        margin: 0 auto;      
-        margin-left: 90px;
-        margin-bottom: 30px;
-        left: 150px;
-    }
-    #like_top {
-     
-       position: relative;
-       top: 470px;
-      
 
-    }
-/*     
-    .box {
-        margin-bottom: 30px;
-        background-color: orangered;
-        transition-property: background-color, width;
-        transition-duration: 2s ;
-        width: 10px;
-        height: 35px;
-    }
-    .box:hover {
-        width: 200px;
-        background-color: navy;
-    }
-    .box_1 {
-        margin-bottom: 30px;
-        background-color: orangered;
-        transition-property: background-color, width;
-        transition-duration: 2s ;
-        width: 10px;
-        height: 35px;
-        transition-timing-function: linear;
-
-    }
-    .box_1:hover {
-        width: 200px;
-        background-color: navy;
-    }
-    .box_2 {
-        margin-bottom: 30px;
-        background-color: orangered;
-        transition-property: background-color, width;
-        transition-duration: 2s ;
-        width: 10px;
-        height: 35px;
-        transition-timing-function: linear;
-
-    }
-    .box_2:hover {
-        width: 200px;
-        background-color: navy;
-    }
-    .box_3 {
-        margin-bottom: 30px;
-        background-color: orangered;
-        transition-property: background-color, width;
-        transition-duration: 2s ;
-        width: 10px;
-        height: 35px;
-        transition-timing-function: linear;
-
-    }
-    .box_3:hover {
-        width: 200px;
-        background-color: navy;
-    }
-    .box_4 {
-        margin-bottom: 30px;
-        background-color: orangered;
-        transition-property: background-color, width;
-        transition-duration: 2s ;
-        width: 10px;
-        height: 35px;
-        transition-timing-function: ease;
-
-    }
-    .box_4:hover {
-        width: 200px;
-        background-color: navy;
-    }
-    .box_5 {
-        margin-bottom: 30px;
-        background-color: orangered;
-        transition-property: background-color, width;
-        transition-duration: 2s ;
-        width: 10px;
-        height: 35px;
-        transition-timing-function: ease-in;
-
-    }
-    .box_5:hover {
-        width: 200px;
-        background-color: navy;
-    }
-    .box_6 {
-        margin-bottom: 30px;
-        background-color: orangered;
-        transition-property: background-color, width;
-        transition-duration: 2s ;
-        width: 10px;
-        height: 35px;
-        transition-timing-function: ease-in-out;
-
-    }
-    .box_6:hover {
-        width: 200px;
-        background-color: navy;
-    } */
     #hot_post a {
-    color: black; /* 글자 색상 설정 */
-    margin: 0 auto;
-    
-    line-height: 3; /* 원하는 높이로 조절 (예: 1.5는 텍스트 높이의 1.5배) */
-}
-
-
-
-
+	    color: black; /* 글자 색상 설정 */
+	    margin: 0 auto;
+	    
+	    line-height: 3; /* 원하는 높이로 조절 (예: 1.5는 텍스트 높이의 1.5배) */
+	}
+	
+	.my-aside {
+		position: fixed;
+		right: 0;
+		top: 220px;
+		width: 250px;
+		
+	}
+	
+	.my-aside a {
+	display: block;
+	overflow:hidden;
+      text-overflow:ellipsis;
+      white-space:nowrap;
+	}
+	
+	.contents {
+	    width: 780px;
+    	margin: 0 auto;
+    }
     </style>
 </head>
 <body>
@@ -362,11 +206,6 @@
                     <a href="/qnaboard/create">글쓰기</a>
                 </button>
             </div>
-           
-        
-            <!-- 해시태그 -->
-            
-            
             <!-- 게시판 리스트 -->
             <div id="container_controller">
                 <form class="fieldset_controller" action="" method="">
@@ -411,44 +250,42 @@
                             </table>
                         </div>
                     </fieldset>
-                    <aside class="my-aside">
-                        <!-- 조회수순 랭킹 -->
-                        <h3 id="viewCnt">Hot topic ▶ </h3>
-                        <div class="advertising">
-                            <!-- <a href="https://blog.naver.com/roborang/221827208404"> -->
-                            <!-- <img class="why_code" src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMDAyMjZfOTcg%2FMDAxNTgyNzAzOTk2MzQ1.bsJ-QZhJSxCCLwgYAk4ibsKrPqHNk-7SlEYEowKsf6Ug.MReP1pZZeA_b7SBVMUbJUspOftiFOZ-_rvBxkWVktmIg.PNG.roborang%2F%25C4%25DA%25B5%25F9%25B1%25B3%25C0%25B0_%25BF%25D6_%25C7%25D8%25BE%25DF_%25C7%25D2%25B1%25EE%25BF%25E4.png&type=sc960_832"> -->
-                            </a>    
-                        </div>
-                        <h3 id="like_top">명예의 전당 ▶ </h3>
-                         <div class= "ranking_list">
-                            
-                            <ul class="ranking_wrap">
-                              
-                            </ul>
-                            <!-- <ui>
-                                <li>꼬부기</li>
-                                <div class="box"></div>
-                                <li>꼬부기</li>
-                                <div class="box_1"></div>
-                                <li>꼬부기</li>
-                                <div class="box_2"></div>
-                                <li>꼬부기</li>
-                                <div class="box_3"></div>
-                                <li>꼬부기</li>
-                                <div class="box_4"></div>
-                                <li>꼬부기</li>
-                                <div class="box_5"></div>
-                                
-                            </ui> -->
-                            </div>                       
-                          
-                    </aside>       
-                        <!-- <button type="submit" class="btn_write_1">
-                            <a href="/qnaboard/create">글쓰기</a>
-                        </button> -->
                 </form>
             </div>
         </main>
+        
+        <aside class="my-aside">
+	          <!-- 조회수순 랭킹 -->
+	          <h3 id="viewCnt">주간 질답 랭킹 ▶ </h3>
+	         <!--  <div class="advertising">
+	              <a href="https://blog.naver.com/roborang/221827208404">
+	              <img class="why_code" src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMDAyMjZfOTcg%2FMDAxNTgyNzAzOTk2MzQ1.bsJ-QZhJSxCCLwgYAk4ibsKrPqHNk-7SlEYEowKsf6Ug.MReP1pZZeA_b7SBVMUbJUspOftiFOZ-_rvBxkWVktmIg.PNG.roborang%2F%25C4%25DA%25B5%25F9%25B1%25B3%25C0%25B0_%25BF%25D6_%25C7%25D8%25BE%25DF_%25C7%25D2%25B1%25EE%25BF%25E4.png&type=sc960_832">
+	              </a>   --> 
+	          <div class="view_ranking_wrap"></div>
+	          
+	          <h3 id="like_top">명예의 전당 ▶ </h3>
+	           <div class= "ranking_list">
+	              
+	              <ul class="ranking_wrap">
+	                
+	              </ul>
+	              <!-- <ui>
+	                  <li>꼬부기</li>
+	                  <div class="box"></div>
+	                  <li>꼬부기</li>
+	                  <div class="box_1"></div>
+	                  <li>꼬부기</li>
+	                  <div class="box_2"></div>
+	                  <li>꼬부기</li>
+	                  <div class="box_3"></div>
+	                  <li>꼬부기</li>
+	                  <div class="box_4"></div>
+	                  <li>꼬부기</li>
+	                  <div class="box_5"></div>
+	                  
+	              </ui> -->
+	              </div>                       
+	      </aside>
     </div>
    <jsp:include page="../layout/footer.jsp" />
    <script src="./js/jquery-1.11.3.min.js"></script>
