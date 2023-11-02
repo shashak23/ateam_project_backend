@@ -16,7 +16,6 @@
 			parameterType="com.ktdsuniversity.edu.companymember.vo.CompanyVO">
 		INSERT INTO COMPANY (COMPANY_EMAIL
 			 , CONTACT_NUMBER
-			 , CONTACT_NAME
 			 , COMPANY_NAME
 			 , INDUSTRY_TYPE
 			 , COMPANY_REGIST_NUMBER
@@ -30,7 +29,6 @@
 			 , CONFIRM_YN)
 		VALUES (#{companyEmail}
 			  , #{contactNumber}
-			  , '담당자'
 			  , ''
 			  , ''
 			  , ''
