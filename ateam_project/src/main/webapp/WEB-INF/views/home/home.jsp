@@ -41,7 +41,7 @@
 
 	/* 글쓰기 영역 */
 	.body_left .home_edit_container .text_area {
-		position: sticky;
+		/* position: sticky; */
 		top: 100px;
 		z-index: 10;
 		width: 670px;
@@ -437,7 +437,7 @@
     const loadContents = function() {
       $.get('/home/maincontent', function(response) {
         articles = response
-        console.log(skip, articles)
+
         all_count = response.length
         if (skip === 0) {
           for (let i = skip; i < skip + 10; i++) {
@@ -508,7 +508,7 @@
                 </div>
               </article>`
             let templateDom = $(template)
-
+            
             // 북마크 상태 가져오기
             user_email = `${sessionScope._LOGIN_USER_.email}`
 
@@ -527,6 +527,10 @@
             	templateDom.find('.follow_btn').prepend($(`<input type="hidden" class="followId" value="\${state.followId}"/>`))
             	}
             })
+
+            if (article.postWriter === user_email) {
+              templateDom.find('.follow_btn').css('visibility', 'hidden')
+            }
             
 
             // 게시글 유형이 자유 유형이면 대문짝만한 Q 삭제
@@ -636,7 +640,6 @@
 
                    // 팔로우 상태 가져오기
                    $.get(`/follow/status/\${user_email}/\${email}`, function(state) {
-                	   console.log(state)
                      if(state.followYn === 'Y') {
                        templateDom.find('.follow_btn').css({'background-color':'var(--blue)', 'color':'var(--white)'}).addClass('follow_on')
                        templateDom.find('.follow_btn').prepend($(`<input type="hidden" class="followId" value="\${state.followId}"/>`))
@@ -680,11 +683,7 @@
           "boardId": $(this).find(".boardId").val(),
           "bookmarkId": $(e.currentTarget).find('.bookmarkId').val()
           }
-          console.log(body.email)
-          console.log(body.postId)
-          console.log(body.boardId)
-          console.log(body.bookmarkId)
-          console.log(e.currentTarget)
+
           if ($(e.currentTarget).find('svg').hasClass('bookmark_on')) {
             $.post('/unbookmark', body, function(result) {
               alert('북마크가 취소되었습니다.')
@@ -723,10 +722,6 @@
 	            "followee": $(this).find(".followeeEmail").val(),
 	            "followId": $(e.currentTarget).find('.followId').val()
 	       	  }
-	       	  console.log(content.follower)
-	       	  console.log(content.followee)
-	       	  console.log(content.followId)
-	       	  console.log(e.currentTarget)
 	       	  if ($(e.currentTarget).hasClass('follow_on')) {
 	            $.post('/unfollow/member', content, function(result) {
 	              $(e.currentTarget).removeClass('follow_on')
@@ -736,7 +731,7 @@
 	       	  }
 	       	  else {
 	            $.post('/follow/member', content, function(result) {
-	              console.log(result)
+
 	              if(result) {
 	                $(e.currentTarget).css({'background-color':'var(--blue)', 'color':'var(--white)'})
 	                $(e.currentTarget).addClass('follow_on')

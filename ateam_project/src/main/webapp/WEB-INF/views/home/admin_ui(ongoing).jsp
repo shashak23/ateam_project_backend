@@ -15,12 +15,6 @@
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 </head>
 <style>
-  .business_license {
-    text-decoration: none;
-    color: #67869b;
-    font-size: 8pt;
-    padding: 2px;
-  }
   .admin_container ul {
     list-style: none;
     padding: 0;
@@ -72,6 +66,7 @@
     visibility: hidden;
     transition: all 0.5s;
     overflow: auto;
+    box-shadow: 0 0 10px rgba(12, 12, 12, 0.178);
   }
 
   .personal_modal.active,
@@ -91,7 +86,6 @@
     border-radius: 5px;
     overflow: hidden;
     background-color: #eee;
-    box-shadow: 0 0 10px rgba(12, 12, 12, 0.178);
   }
 
   .personal_modal_content > div,
@@ -102,8 +96,33 @@
   }
 
   .desc-header {
-    float: right;
-    margin: 15px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 15px 0 25px 0;
+  }
+
+  .desc-header div:first-child {
+    font-size: 14pt;
+    border-left: 10px solid crimson;
+    padding: 10px;
+  }
+
+  .desc-header .admin_company_search_wrap .admin_company_member_input {
+    outline: none;
+    border: 0;
+    padding: 5px;
+    width: 200px;
+    height: 25px;
+  } 
+
+  .desc-header .admin_company_search_wrap .admin_company_member_search {
+    border: #e07272;
+    outline: none;
+    background-color: #ebd9d9;
+    color: #e05454;
+    padding: 5px 10px;
+    margin-left: 10px;
   }
 
   .member_container,
@@ -112,7 +131,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    width: 615px;
+    width: 1080px;
     font-size: 9pt;
     margin-bottom: 5px;
   }
@@ -129,22 +148,25 @@
     align-items: center;
     color: #888;
   }
+  
+  .company_modal {
+    width: 1140px;
+  }
 
   .company_modal .profile_group {
     display: grid;
-    grid-template-columns: 45px 350px 160px 60px;
+    grid-template-columns: 45px 815px 160px 60px;
     align-items: center;
   }
 
   .company_modal .profile_group_title {
     display: grid;
-    grid-template-columns: 45px 350px 160px 60px;
+    grid-template-columns: 45px 815px 160px 60px;
     align-items: center;
     color: #888;
   }
 
   .notice_modal .desc-header {
-    float: none;
     display: flex;
     justify-content: space-between;
   }
@@ -215,14 +237,10 @@
   }
 
   .profile_group .tier,
-  .profile_group_title .tier {
+  .profile_group_title .tier,
+  .profile_group_title .withdraw_txt {
     margin-left: 20px;
     text-align: center;
-  }
-
-  .profile_group .member_info,
-  .profile_group .company_info {
-    font-weight: bold;
   }
 
   .btn_group {
@@ -238,8 +256,13 @@
     width: 80px;
   }
   
-  .company_modal .btn_group .confirm_complete {
+  .company_modal .btn_group .confirm_complete_btn {
     background-color: #888;
+  }
+
+  .company_modal .btn_group .company_member_withdraw_btn {
+    background-color: #e2e2e2;
+    color: #c9c9c9;
   }
 
   .admin_overlay {
@@ -378,7 +401,6 @@
         padding: 5px 8px;
         text-decoration: none;
         color: #4052f7;
-        background-color: #d0eaff;
         margin-right: 15px;
         border-radius: 10px;
         border: 0px;
@@ -567,14 +589,17 @@
     <div class="personal_modal_content">
       <div class="desc">
         <div class="desc-header">
-          <input type="text" placeholder="홍길동"/>
-          <button class="admin_general_member_search">검색</button>
-          <button class="btn-close">&times;</button>
+          <div>일반 회원 명단</div>
+          <div class="admin_company_search_wrap">
+            <input class="admin_general_member_input" type="text" placeholder="홍길동"/>
+            <button class="admin_general_member_search">검색</button>
+          </div>
         </div>
+        <button class="btn-close">&times;</button>
         <div class="desc-title">
           <div class="member_container">
             <div class="profile_group_title">
-              <span>이미지</span> <div class="member_info" style="text-align: center;">회원 정보</div><div class=tier>티어</div>
+              <span>이미지</span> <div class="member_info" style="text-align: center;">회원 정보</div><div class=tier>티어</div><div class="withdraw_txt">탈퇴</div>
               <div class="btn_group">
               </div>
             </div>
@@ -584,52 +609,57 @@
       </div>
     </div>
   </div>
-<!-- 기업 계정 관리 모달 -->
-<div class="company_modal">
-  <div class="company_modal_content">
-    <div class="desc">
-      <div class="desc-header">
-        <input type="text" placeholder="홍길동"/>
-        <button class="admin_company_member_search">검색</button>
-        <button class="btn-close">&times;</button>
-      </div>
-      <div class="desc-title">
-        <div class="company_container">
-          <div class="profile_group_title">
-            <span>이미지</span> <div class="member_info" style="text-align: center;">회원 정보</div><div class=tier>승인여부</div>
-            <div class="btn_group">
+
+  <!-- 기업 계정 관리 모달 -->
+  <div class="company_modal">
+    <div class="company_modal_content">
+      <div class="desc">
+        <div class="desc-header">
+          <div>기업명단</div>
+          <div class="admin_company_search_wrap">
+            <input class="admin_company_member_input" type="text" placeholder="기업 이름 및 이메일"/>
+            <button class="admin_company_member_search">검색</button>
+          </div>
+          <button class="btn-close">&times;</button>
+        </div>
+        <div class="desc-title">
+          <div class="company_container">
+            <div class="profile_group_title">
+              <span>이미지</span> <div class="member_info" style="text-align: center;">회원 정보</div><div class=tier>승인여부</div><div class="withdraw_txt">탈퇴</div>
+              <div class="btn_group">
+              </div>
             </div>
           </div>
         </div>
+        <div class="desc-content"></div>
+        <div class="admin_company_pagination"></div>
       </div>
-      <div class="desc-content"></div>
     </div>
   </div>
-</div>
 
-<!-- 공지 관리 모달 -->
-<div class="notice_modal">
-  <div class="notice_modal_content">
-    <div class="desc">
-      <div class="desc-header">
-        <button class="create_notice">공지생성</button>
-        <div class="notice_search_wrap">
-          <input type="text" placeholder="홍길동"/>
-          <button class="admin_notice_search">검색</button>
-          <button class="btn-close">&times;</button>
-        </div>
-      </div>
-      <div class="desc-title">
-        <div class="notice_container">
-          <div class="notice_group_title">
-            <div></div><div>제목</div><div>내용</div><div>시작날짜</div><div>끝날짜</div>
+  <!-- 공지 관리 모달 -->
+  <div class="notice_modal">
+    <div class="notice_modal_content">
+      <div class="desc">
+        <div class="desc-header">
+          <button class="create_notice">공지생성</button>
+          <div class="notice_search_wrap">
+            <input type="text" placeholder="홍길동"/>
+            <button class="admin_notice_search">검색</button>
+            <button class="btn-close">&times;</button>
           </div>
         </div>
+        <div class="desc-title">
+          <div class="notice_container">
+            <div class="notice_group_title">
+              <div></div><div>제목</div><div>내용</div><div>시작날짜</div><div>끝날짜</div>
+            </div>
+          </div>
+        </div>
+        <div class="desc-content"></div>
       </div>
-      <div class="desc-content"></div>
     </div>
   </div>
-</div>
   <!-- 공지 입력 폼 -->
   <form:form modelAttribute="noticeVO" method="post" action="/home/admin">
     <div class="create_container">
@@ -726,27 +756,43 @@
   })
 
   // 일반 회원 조회
-  function loadGeneralTypeMember() {
+  function loadGeneralTypeMember(val = '') {
+    $('.personal_modal').find('.desc-content').empty()
     $.get('/home/admin/person', function(response) {
       for (let i = 0; i < response.length; i++) {
-          let member = response[i]
-          generalMemberTemplate = 
-              `<div class="member_container">
-                  <div class="profile_group">
-                  <img src="\${member.profilePic}" alt="."><div class="member_info">\${member.nickname}(\${member.email})</div><div class=tier>\${member.generalMemberVO.tierId}</div>
-                  <div class="btn_group">
-                      <button>경고</button>
-                      <button class="general_member_withdraw_btn" id="\${member.email}">탈퇴</button>
-                  </div>
-                  </div>
-              </div>`
-          generalMemberTemplateDom = $(generalMemberTemplate)
-          
+        let member = response[i]
+        generalMemberTemplate = 
+          `<div class="member_container">
+              <div class="profile_group">
+              <img src="\${member.profilePic}" alt="."><div class="member_info">\${member.nickname}(\${member.email})</div><div class=tier>\${member.generalMemberVO.tierId}</div>
+              <div class="btn_group">
+                  <button>경고</button>
+                  <button class="general_member_withdraw_btn" id="\${member.email}">탈퇴</button>
+              </div>
+              </div>
+          </div>`
+        generalMemberTemplateDom = $(generalMemberTemplate)
+        
+        if (member.nickname.includes(val) || member.email.includes(val)) {
           $('.personal_modal').find('.desc-content').append(generalMemberTemplateDom)
+        }
       }
     })
   }
   loadGeneralTypeMember()
+
+  // 일반 회원 검색
+  $('.admin_general_member_search').click(function() {
+    let val = $('.admin_general_member_input').val()
+    loadGeneralTypeMember(val)
+  })
+
+  $('.admin_general_member_input').keyup(function(e) {
+    if (e.key === 'Enter') {
+      let val = $('.admin_general_member_input').val()
+      loadGeneralTypeMember(val)
+    }
+  })
 
   // 일반 회원 탈퇴 조치
   $(document).on('click', '.general_member_withdraw_btn', function(e) {
@@ -764,55 +810,64 @@
   })
 
   // 기업 회원 조회
-  function loadCompanytypeMember() {
+  function loadCompanytypeMember(val = '') {
     $.get('/home/admin/company', function(response) {
+      $('.company_modal').find('.desc-content').empty()
       console.log(response)
       for (let i = 0; i < response.length; i++) {
-          let company = response[i]
-          let companyTemplateDom
-          if (company.companyInfoVO.confirmYn === 'N') {
-            let companyTemplate = 
-              `<div class="company_container">
-                <div class="profile_group">
-                <img src="\${company.profilePic}" alt="."><div class="company_info">
-                  \${company.nickname}(\${company.email})
-                  <a class="certificate_download" href='\${company.companyInfoVO.companyRegistCertificateUrl}' download='\${company.nickname}'" class="business_license">[사업자등록증]</a>
-                  </div>
-                  <div class="btn_group">
-                    <button class="company_approval" id="\${company.email}">승인</button>
-                    <button class="company_refuse" id="\${company.email}">반려</button>
-                  </div>
-                  <div class="btn_group">
-                    <button class="company_member_withdraw_btn" id="\${company.email}">탈퇴</button>  
-                  </div>
+        let company = response[i]
+        let companyTemplateDom
+        if (company.companyInfoVO.confirmYn === 'N') {
+          let companyTemplate = 
+            `<div class="company_container">
+              <div class="profile_group">
+              <img src="\${company.profilePic}" alt="."><div class="company_info">
+                <strong>\${company.nickname}</strong>(\${company.email})
+                <a class="certificate_download" href='\${company.companyInfoVO.companyRegistCertificateUrl}'>[사업자등록증]</a>
                 </div>
-              </div>`
-            companyTemplateDom = $(companyTemplate)
-          }
-          else {
-            let companyTemplate = 
-              `<div class="company_container">
-                <div class="profile_group">
-                <img src="\${company.profilePic}" alt="."><div class="company_info">
-                  \${company.nickname}(\${company.email})
-                  <a class="certificate_download" href='\${company.companyInfoVO.companyRegistCertificateUrl}' download='\${company.nickname}'" class="business_license">[사업자등록증]</a>
-                  </div>
-                  <div class="btn_group">
-                    <button class="confirm_complete_btn">승인완료</button>
-                  </div>
-                  <div class="btn_group">
-                    <button class="company_member_withdraw_btn" id="\${company.email}">탈퇴</button>
-                  </div>
+                <div class="btn_group">
+                  <button class="company_approval" id="\${company.email}">승인</button>
+                  <button class="company_refuse" id="\${company.email}">반려</button>
                 </div>
-              </div>`
-            companyTemplateDom = $(companyTemplate)
-          }
-          
+                <div class="btn_group">
+                  <button class="company_member_withdraw_btn" id="\${company.email}">탈퇴</button>  
+                </div>
+              </div>
+            </div>`
+          companyTemplateDom = $(companyTemplate)
+        }
+        else {
+          let companyTemplate = 
+            `<div class="company_container">
+              <div class="profile_group">
+              <img src="\${company.profilePic}" alt="."><div class="company_info">
+                <strong>\${company.nickname}</strong>(\${company.email})
+                <a class="certificate_download" href='/file/download/\${company.email}'>[사업자등록증]</a>
+                </div>
+                <div class="btn_group">
+                  <button class="confirm_complete_btn">승인완료</button>
+                </div>
+                <div class="btn_group">
+                  <button class="company_member_withdraw_btn" id="\${company.email}">탈퇴</button>
+                </div>
+              </div>
+            </div>`
+          companyTemplateDom = $(companyTemplate)
+        }
+        if (company.nickname.includes(val) || company.email.includes(val)) {
           $('.company_modal').find('.desc-content').append(companyTemplateDom)
+        }
       }
     })
   }
+
   loadCompanytypeMember()
+
+  // 기업 회원 검색
+  $('.admin_company_member_search').click(function() {
+    let val = $('.admin_company_member_input').val()
+    loadCompanytypeMember(val)
+  })
 
   // 기업 승인 처리
   $(document).on('click', '.company_approval', function() {
