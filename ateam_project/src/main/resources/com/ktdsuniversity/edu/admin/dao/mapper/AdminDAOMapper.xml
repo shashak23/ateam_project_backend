@@ -3,10 +3,10 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.ktdsuniversity.edu.amdin.dao.ReportDAO">
+<mapper namespace="com.ktdsuniversity.edu.amdin.dao.AdminDAO">
 
 	<resultMap type="com.ktdsuniversity.edu.admin.vo.ReportVO" id="reportVOMap" autoMapping="true">
-		<id column = "REPORT_ID" property="reportId" />
+		<id column="REPORT_ID" property="reportId" />
 		<result column="REPORT_MEMBER" property="reportMember" />
 		<result column="REPORT_TYPE_ID" property="reportTypeId" />
 		<result column="RECEIVED_REPORT_MEMBER" property="receivedReportMember" />
@@ -67,9 +67,29 @@
 			<result column="UPPER_COMMENT_ID" property="upperCommentId" />
 			<result column="LIKE_CNT" property="likeCnt" />
 			<result column="DELETE_YN" property="deleteYn" />
+		</association>		
+	</resultMap>
+	
+	<resultMap type="com.ktdsuniversity.edu.admin.vo.AdminTierVO" id="adminTierVOMap" autoMapping="true">
+		<id column="MEMBER_EMAIL" property="memberEmail" />
+		<result column="SCORE" property="score" />
+		<result column="NOW_TIER" property="nowTier" />
+		<result column="NEXT_TIER" property="nextTier" />
+		
+		<association property="tierVO"
+					javaType="com.ktdsuniversity.edu.tier.TierVO">
+			<id column="TIER_ID" property="tierId" />
+			<result column="NOW_TIER_NAME" property="tierName" />
+			<result column="TIER_CRITERIA_SCORE" property="tierCriteriaScore" />
+		</association>
+		
+		<association property="tierVOTemp"
+					javaType="com.ktdsuniversity.edu.tier.TierVO">
+			<id column="TIER_ID" property="tierIdTemp" />
+			<result column="NEXT_TIER_NAME" property="tierNameTemp" />
+			<result column="TIER_CRITERIA_SCORE" property="tierCriteriaScoreTemp" />
 		</association>
 	</resultMap>
-
 	
 	<select id="reportAllList"
 			resultMap="reportVOMap">
@@ -309,5 +329,24 @@
 		  , #{attachedImg}
 		  , 'N')
 	</insert>
+	
+	<select id="tierMemberAllList"
+			resultMap="adminTierVOMap">
+		SELECT A_T.MEMBER_EMAIL
+			 , A_T.SCORE
+			 , T1.TIER_NAME NOW_TIER_NAME
+			 , T2.TIER_NAME NEXT_TIER_NAME
+		  FROM ADMIN_TIER A_T
+		  LEFT JOIN TIER T1
+		    ON A_T.NOW_TIER = T1.TIER_ID
+		  LEFT JOIN TIER T2
+		    ON A_T.NEXT_TIER = T2.TIER_ID
+	</select>
 
+	<select id="tierMemberAllCount"
+			resultType="_int">
+		SELECT COUNT(1)
+		  FROM ADMIN_TIER
+	</select>
+	
 </mapper>

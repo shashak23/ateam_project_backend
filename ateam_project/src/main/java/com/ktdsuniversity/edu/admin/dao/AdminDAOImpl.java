@@ -17,11 +17,12 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.ktdsuniversity.edu.admin.vo.AdminTierVO;
 import com.ktdsuniversity.edu.admin.vo.ReportVO;
 import com.ktdsuniversity.edu.admin.web.UserReportController;
 
 @Repository
-public class ReportDAOImpl extends SqlSessionDaoSupport implements ReportDAO {
+public class AdminDAOImpl extends SqlSessionDaoSupport implements AdminDAO {
 	
 	private Logger log = LoggerFactory.getLogger(UserReportController.class);
 
@@ -96,5 +97,15 @@ public class ReportDAOImpl extends SqlSessionDaoSupport implements ReportDAO {
 	public int createReport(ReportVO reportVO) {
 		log.debug("--3--디에이오--------------------------------------");
 		return getSqlSession().insert("createReport", reportVO);
+	}
+
+	@Override
+	public List<AdminTierVO> tierMemberAllList() {
+		return getSqlSession().selectList("tierMemberAllList");
+	}
+
+	@Override
+	public int tierMemberAllCount() {
+		return getSqlSession().selectOne("tierMemberAllCount");
 	}
 }

@@ -1,8 +1,5 @@
 package com.ktdsuniversity.edu.admin.web;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,15 +10,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.ktdsuniversity.edu.admin.service.MailService;
 import com.ktdsuniversity.edu.admin.service.ReportService;
+import com.ktdsuniversity.edu.admin.service.TierService;
+import com.ktdsuniversity.edu.admin.vo.AdminTierListVO;
 import com.ktdsuniversity.edu.admin.vo.ReportListVO;
 import com.ktdsuniversity.edu.admin.vo.ReportVO;
+import com.ktdsuniversity.edu.beans.FileHandler;
 import com.ktdsuniversity.edu.companymember.vo.CompanyListVO;
 import com.ktdsuniversity.edu.companymember.vo.CompanyVO;
-import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
 
 @Controller
 public class AdminController {
@@ -31,6 +29,12 @@ public class AdminController {
 	
 	@Autowired
 	private MailService mailService;
+	
+	@Autowired
+	private TierService tierService;
+	
+	@Autowired
+	private FileHandler fileHandler;
 
 //	@ResponseBody
 //	@GetMapping("/report/list")
@@ -123,9 +127,34 @@ public class AdminController {
 			mailService.doCompleteCompanyMemberRegistrationYn(companyEmail);
 			mailService.sendRefuseMail(companyVO);
 		}
+//		if (val.equals("download")) {
+//			companyVO.setCompanyEmail(companyEmail);
+//			File storedFile = fileHandler.getStoredFile(companyVO.getCompanyRegistCertificateUrl());
+//		}
 		return "redirect:/admin/companymember";
 	}
 	
+	@GetMapping("/admin/companymember/{companyEmail}")
+	public void downloadCompanyCertificate(@PathVariable String companyEmail
+											, CompanyVO companyVO) {
+		
+		
+//		companyVO.setCompanyEmail(companyEmail); 
+//		
+//		HttpHeaders header = new HttpHeaders();
+//		header.add(HttpHeaders.CONTENT_DISPOSITION,
+//		"attachment; filename=" + companyVO.getCompanyRegistCertificateUrl());
+//		
+//		InputStreamResource resource;
+//		
+//		return  ResponseEntity.ok()
+//				.headers(header)
+//				.contentLength(companyVO.getCompanyRegistCertificateUrl().length())
+//				.contentType(MediaType.parseMediaType("application/octet-stream"))
+//				.body(resource);
+	}
+	
+
 	@GetMapping("/admin/report/view/{reportId}")
 	public String viewOneReport(@PathVariable String reportId,
 								Model model,
@@ -148,6 +177,19 @@ public class AdminController {
 		}
 		
 		return "redirect:/admin/report/view/" + reportId;
-	}	
+	}
+	
+	//doMemberTierUpgrade
+	@GetMapping("admin/tier")
+	public String viewMemberTierHistory(Model model) {
+		AdminTierListVO adminTierListVO = tierService.getTierMemberAllList();
+		model.addAttribute("adminTierListVO", adminTierListVO);
+		return "tier/tierhistory";
+	}
+	
+	@GetMapping("/test/webide")
+	public String webIdeTest() {
+		return "temp/webidetest";
+	}
 
 }
