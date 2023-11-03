@@ -38,10 +38,18 @@ public class NoticeServiceImpl implements NoticeService{
 	
 	@Override
 	public NoticeListVO getInvalidateList() {
-		NoticeListVO validateNoticeListVO = new NoticeListVO();
-		validateNoticeListVO.setNoticeListCnt(noticeDAO.getInvalidateList().size());
-		validateNoticeListVO.setNoticeList(noticeDAO.getInvalidateList());
-		return validateNoticeListVO;
+		NoticeListVO invalidateNoticeListVO = new NoticeListVO();
+		invalidateNoticeListVO.setNoticeListCnt(noticeDAO.getInvalidateList().size());
+		invalidateNoticeListVO.setNoticeList(noticeDAO.getInvalidateList());
+		return invalidateNoticeListVO;
+	}
+
+	@Override
+	public NoticeListVO getDeleteList() {
+		NoticeListVO deleteteNoticeListVO = new NoticeListVO();
+		deleteteNoticeListVO.setNoticeListCnt(noticeDAO.getDeleteList().size());
+		deleteteNoticeListVO.setNoticeList(noticeDAO.getDeleteList());
+		return deleteteNoticeListVO;
 	}
 	
 	@Override

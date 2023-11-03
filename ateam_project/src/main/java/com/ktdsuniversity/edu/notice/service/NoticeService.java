@@ -13,6 +13,7 @@ public interface NoticeService {
 	public NoticeListVO getNoticeListVO();
 	public NoticeListVO getValidateList();
 	public NoticeListVO getInvalidateList();
+	public NoticeListVO getDeleteList();
 	public NoticeVO getOneNotice(String id);
 	public boolean createNotice(NoticeVO noticeVO);
 	public boolean updateNotice(NoticeVO noticeVO);

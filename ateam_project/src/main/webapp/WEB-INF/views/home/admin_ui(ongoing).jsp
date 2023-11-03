@@ -112,7 +112,8 @@
     padding: 10px;
   }
 
-  .desc-header .admin_company_search_wrap .admin_company_member_input {
+  .desc-header .admin_company_search_wrap .admin_company_member_input,
+  .admin_notice_input {
     outline: none;
     border: 0;
     padding: 5px;
@@ -120,7 +121,8 @@
     height: 25px;
   } 
 
-  .desc-header .admin_company_search_wrap .admin_company_member_search {
+  .desc-header .admin_company_search_wrap .admin_company_member_search,
+  .admin_notice_search {
     border: #e07272;
     outline: none;
     background-color: #ebd9d9;
@@ -238,6 +240,7 @@
   .notice_modal .notice_group_content .notice_title,
   .notice_modal .notice_group_content .notice_content {
     font-weight: bold;
+    cursor: pointer;
   }
 
   .notice_modal .notice_group_content.notice_expired .notice_title,
@@ -313,7 +316,8 @@
     pointer-events: all;
   }
 
-  .btn-close {
+  .btn-close,
+  .notice_btn-close {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -347,7 +351,8 @@
     text-align: center;
   }
 
-  .notice_group_content .notice_off_btn {
+  .notice_group_content .notice_off_btn,
+  .notice_group_content .notice_del_btn   {
     background-color: #e5e5e5;
     color: #888;
   }
@@ -455,7 +460,8 @@
         cursor: pointer;
     }
 
-    .create_container {
+    .create_container,
+    .notice_view_container {
         visibility: hidden;
         position: fixed;
         top: 50%;
@@ -473,17 +479,50 @@
         transition: 0.5s;
     }
 
-    .create_container.active {
-        visibility: visible;
-        opacity: 1;
-        transform: translate(-50%, -50%);
-    }
+    .create_container.active,
+    .notice_view_container.active {
+			visibility: visible;
+			opacity: 1;
+			transform: translate(-50%, -50%);
+	}
 
-    .create_container > * {
+    .create_container > *,
+    .notice_view_container > * {
         margin-bottom: 10px;
     }
 
-    .btn-close {
+    .notice_view_container {
+      visibility: hidden;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate((-50%, -50%));
+    }
+
+    .notice_view_title {
+      text-align: center;
+    }
+
+    .notice_view_overlay {
+      background-color: #47474754;
+      position: fixed;
+      width: 100%;
+      height: 100vh;
+      top: 0;
+      left: 0;
+      transition: 0.5s;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 50;
+    }
+    
+    .notice_view_overlay.active {
+      opacity: 1;
+      pointer-events: all;
+    }
+
+    .btn-close,
+    .notice_btn-close {
         position: absolute;
         top: 6px;
         right: 10px;
@@ -493,7 +532,8 @@
         cursor: pointer;
     }
 
-    .btn-close:hover {
+    .btn-close:hover,
+    .notice_btn-close:hover {
         color: #191919;
     }
 
@@ -694,7 +734,7 @@
             <button class="create_notice">공지생성</button>
           </div>
           <div class="notice_search_wrap">
-            <input type="text" placeholder="홍길동"/>
+            <input class="admin_notice_input" type="text" placeholder="제목 및 내용"/>
             <button class="admin_notice_search">검색</button>
             <button class="btn-close">&times;</button>
           </div>
@@ -710,6 +750,7 @@
       </div>
     </div>
   </div>
+
   <!-- 공지 입력 폼 -->
   <form:form modelAttribute="noticeVO" method="post" action="/notice/create">
     <div class="create_container">
@@ -742,6 +783,19 @@
     </div>
   </form:form>
   <div class="notice_create_overlay"></div>
+
+  <!-- 공지 조회 모달 -->
+  <div class="notice_view_container">
+    <div class="notice_btn-close">&times;</div>
+    <h1 class="notice_view_title">공지</h1>
+    <div>
+      <label for="postTitle" class="notice_post_title_label">제목</label>
+      <div class="notice_post_title"></div>
+    </div>
+    <label for="noticeContent" class="notice_post_content_label">내용</label>
+    <p class="notice_post_content"></p>
+  </div>
+  <div class="notice_view_overlay"></div>
 
   <!-- 신고 관리 모달 -->
   <div class="report_modal">
@@ -998,10 +1052,11 @@
   })
 
   // 공지 사항 목록 조회
-  function loadAdminNoticeList() {
+  function loadAdminNoticeList(val = '') {
     $.get('/admin/noticelist', function(response) {
       for (let i = 0; i < response.length; i++) {
         let notice = response[i]
+
         let startDate = new Date(notice.releaseStartDate)
         let startYear = startDate.getFullYear()
         let startMonth = (startDate.getMonth() + 1).toString().padStart(2, '0')
@@ -1017,32 +1072,44 @@
         let today = new Date()
         let noticeTemplate
 
-        if (today < endDate && notice.onOff === 'On') {
+        if (today < endDate && notice.onOff === 'On' && notice.deleteYn == 'N') {
           noticeTemplate = `
           <div class="notice_group_content">
             <button class="notice_on_btn" data-id="\${notice.noticeId}">On</button>
-            <div class="notice_title">\${notice.postTitle}</div>
-            <div class="notice_content">\${notice.noticeContent}</div>
-            <button class="notice_modify_btn">수정</button>
+            <div class="notice_title" data-id="\${notice.noticeId}">\${notice.postTitle}</div>
+            <div class="notice_content" data-id="\${notice.noticeId}">\${notice.noticeContent}</div>
+            <button class="notice_modify_btn" data-id="\${notice.noticeId}">수정</button>
             <div class="notice_date">\${formattedStartDate}</div>
             <div class="notice_date">\${formattedEndDate}</div>
           </div>`
         }
-        else if (today < endDate && notice.onOff === 'Off') {
+        else if (today < endDate && notice.onOff === 'Off' && notice.deleteYn == 'N') {
           noticeTemplate = `
           <div class="notice_group_content">
             <button class="notice_off_btn" data-id="\${notice.noticeId}">Off</button>
-            <div class="notice_title">\${notice.postTitle}</div>
-            <div class="notice_content">\${notice.noticeContent}</div>
-            <button class="notice_modify_btn">수정</button>
+            <div class="notice_title" data-id="\${notice.noticeId}">\${notice.postTitle}</div>
+            <div class="notice_content" data-id="\${notice.noticeId}">\${notice.noticeContent}</div>
+            <button class="notice_modify_btn" data-id="\${notice.noticeId}">수정</button>
             <div class="notice_date">\${formattedStartDate}</div>
             <div class="notice_date">\${formattedEndDate}</div>
           </div>`
         }
-        else {
+        else if (notice.deleteYn == 'N') {
           noticeTemplate = `
           <div class="notice_group_content notice_expired">
             <button class="notice_off_btn" data-id="\${notice.noticeId}">Off</button>
+            <div class="notice_title" data-id="\${notice.noticeId}">\${notice.postTitle}</div>
+            <div class="notice_content" data-id="\${notice.noticeId}">\${notice.noticeContent}</div>
+            <button class="notice_modify_btn" data-id="\${notice.noticeId}">수정</button>
+            <div class="notice_date">\${formattedStartDate}</div>
+            <div class="notice_date">\${formattedEndDate}</div>
+          </div>`
+        }
+
+        else {
+          noticeTemplate = `
+          <div class="notice_group_content notice_expired">
+            <button class="notice_del_btn" data-id="\${notice.noticeId}">Del</button>
             <div class="notice_title">\${notice.postTitle}</div>
             <div class="notice_content">\${notice.noticeContent}</div>
             <button class="notice_modify_btn">수정</button>
@@ -1052,13 +1119,34 @@
         }
 
         let noticeTemplateDom = $(noticeTemplate)
-        $('.notice_modal').find('.desc-content').append(noticeTemplateDom)
+
+        if (notice.postTitle.includes(val) || notice.noticeContent.includes(val)) {
+          $('.notice_modal').find('.desc-content').append(noticeTemplateDom)
+        }
       }
     })
   }
 
   loadAdminNoticeList()
 
+  // 공지사항 검색
+  $('.admin_notice_search').click(function() {
+    let val = $('.admin_notice_input').val()
+
+    $('.notice_modal').find('.desc-content').empty()
+    loadAdminNoticeList(val)
+  })
+
+  $('.admin_notice_input').keyup(function(e) {
+    if(e.key === 'Enter') {
+    let val = $('.admin_notice_input').val()
+
+    $('.notice_modal').find('.desc-content').empty()
+    loadAdminNoticeList(val)
+    }
+  })
+
+  // 공지 off 버튼 클릭했을 때
   $(document).on('click', '.notice_off_btn', function() {
     let onoff = $(this).text()
     let id = $(this).data('id')
@@ -1073,12 +1161,11 @@
         $(currBtn).addClass('notice_on_btn')
         $(currBtn).text('On')
         $('.notice_group_content').removeClass('.notice_expired')
-        console.log(response)
-        console.log(currBtn)
       })
     }
   })
 
+  // 공지 on 버튼 클릭했을 때
   $(document).on('click', '.notice_on_btn', function() {
     let onoff = $(this).text()
     let id = $(this).data('id')
@@ -1089,13 +1176,60 @@
       $(currBtn).addClass('notice_off_btn')
       $(currBtn).text('Off')
       $('.notice_group_content').addClass('.notice_expired')
-      console.log(response)
-      console.log(currBtn)
+
     })
   })
 
+  $(document).on('click', '.notice_del_btn', function() {
+    alert('삭제된 공지입니다.')
+  })
+
+  // 공지 조회 기능(제목 클릭했을 때)
+  $(document).on('click', '.notice_title', function() {
+    let id = $(this).data('id')
+
+    $.get(`/admin/notice/view/\${id}`, function(response) {
+      $('.notice_post_title').text('')
+      $('.notice_post_content').text('')
+      $('.notice_post_title').text(response.postTitle)
+      $('.notice_post_content').text(response.noticeContent)
+      $('.notice_view_container, .notice_view_overlay').addClass('active')
+
+      $('.notice_btn-close, .notice_view_overlay').click(function() {
+        $('.notice_view_container, .notice_view_overlay').removeClass('active')
+      })
+
+      $('.notice_view_container').keyup(function(e) {
+        console.log(e)
+        if (e.key === 'Escape') {
+          $('.notice_view_container, .notice_view_overlay').removeClass('active')
+        }
+      })
+    })
+  })
+
+    // 공지 조회 기능(본문 클릭했을 때)
+  $(document).on('click', '.notice_content', function() {
+    let id = $(this).data('id')
+    $.get(`/admin/notice/view/\${id}`, function(response) {
+      $('.notice_post_title').text('')
+      $('.notice_post_content').text('')
+      $('.notice_post_title').text(response.postTitle)
+      $('.notice_post_content').text(response.noticeContent)
+      $('.notice_view_container, .notice_view_overlay').addClass('active')
+
+      $('.notice_btn-close, .notice_view_overlay').click(function() {
+        $('.notice_view_container, .notice_view_overlay').removeClass('active')
+      })
+    })
+  })
+
+  // 공지 수정 기능
   $(document).on('click', '.notice_modify_btn', function() {
-    alert('기능 준비중 기다리셈')
+    let id = $(this).data('id')
+    $.get(`/admin/notice/view/\${id}`, function(response) {
+      alert('곧 땡길 예정')
+    })
   })
 
   // 신고 목록 조회
