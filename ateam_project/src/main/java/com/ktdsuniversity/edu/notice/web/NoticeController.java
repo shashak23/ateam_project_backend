@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.collections4.Put;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -145,6 +146,8 @@ public class NoticeController {
 		resultList.addAll(noticeListVO.getNoticeList());
 		noticeListVO = noticeService.getInvalidateList();
 		resultList.addAll(noticeListVO.getNoticeList());
+		noticeListVO = noticeService.getDeleteList();
+		resultList.addAll(noticeListVO.getNoticeList());
 		
 		return resultList;
 	}
@@ -167,5 +170,16 @@ public class NoticeController {
 			resultSet.put("result", "fail");
 			return resultSet;
 		}
+	}
+	
+	@ResponseBody
+	@GetMapping("/admin/notice/view/{noticeId}")
+	public NoticeVO getOneNotice(@PathVariable String noticeId) {
+
+		NoticeVO noticeVO = noticeService.getOneNotice(noticeId);
+		
+		XssIgnoreUtil.ignore(noticeVO);
+		
+		return noticeVO;
 	}
 }
