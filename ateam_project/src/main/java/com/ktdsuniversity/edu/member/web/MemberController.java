@@ -493,4 +493,18 @@ public class MemberController {
 		session.invalidate();
 		return "redirect:/devground/home";
 	}
+	@GetMapping("/member/googleLogin")
+	public String googleLogin(@RequestParam(value = "code", required = false) String code, 
+			                 HttpSession session) {
+		String accessToken = memberService.getGoogleAccessToken(code);
+		SocialVO social = memberService.getGoogleUserInfo(accessToken);
+		session.setAttribute("_GOOGLE_USER_", social);
+		return "redirect:/devground/home";
+		
+	}
+	@GetMapping("/member/googleLogout")
+	public String googleLogout(HttpSession session) {
+		session.invalidate();
+		return "redirect:/devground/home";
+	}
 }
