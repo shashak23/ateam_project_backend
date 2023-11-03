@@ -4,7 +4,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>Buffer Overflow</title>
+    <title>dev Ground</title>
          <link rel="preconnect" href="https://fonts.googleapis.com"> 
          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
         <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet"> 
@@ -17,26 +17,15 @@
          <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
         <jsp:include page="../layout/header.jsp"/>
         <style>
-            wrap-wrap{
-            	position: grid;
-            }
-            
             table {
             	border-collapse: collapse;
             }
-            .bbs_title {
-                font-weight: bold;
-                font-size: 25px;
-                margin: 0 auto;
-                margin-top: 155px;
-                margin-left: 465px;
-
-            }
-
             .wrap {
-                display: flex;
-                justify-content: center;        
-            }
+            display: flex;
+            justify-content: center;
+            margin: 0 auto;
+            margin-right: 15%;
+        }
 
             .container {
                 display: inline-block;
@@ -44,19 +33,24 @@
                 margin: 0 auto;     
             }
             .button_list {
+                margin:  0 auto;
                 margin-bottom: 15px;
-                position: relative;
-                left: 1120px;
                 
             }
             .board_list_box {
+                margin: 0 auto;
+                margin-top: 90px;
                 border-top: 3px solid var(--hashtag-blue);
                 border-bottom:none;
                 border-left: none;
                 border-right: none;
             }
 
-            .btn_st_2,.btn_st_3 {
+            .btn_st_2 {
+                position: relative;
+                left: 65px;
+                margin: 0 auto;    
+                margin-right: 30px;          
                 background-color: var(--hashtag-blue);
                 border-radius: 5px;
                 border: none;
@@ -75,27 +69,40 @@
                 height: 30px;
                 margin-bottom: 50px;
             }
+            .viedo_ver {
+            position: absolute;
+            top: 0;
+            right: 10px; 
+            margin: 0 auto;
+            margin-top: 700px;
+            margin-right: 10px;
+
+            }
             .advertising {
             position: absolute;
             top: 0;
-            right: 10px; /* right 속성을 사용하여 오른쪽으로 이동 */
-            width: 200px;
-            height: 500px;
-            border: 1px solid var(--gray);
+            right: 10px; 
             margin: 0 auto;
-            margin-top: 650px;
-            margin-right: 50px;
+            margin-top: 1000px;
+            margin-right: 10px;
             }
-
-
+            .why_code {
+                width: 380px;
+                height: 280px;
+            }
+            .sc_text {
+                position: relative;
+                left: 70px;
+                margin: 0 auto;
+                margin-right: 20px;
+                width: 150px;
+            }
 
             #button_list_1 tr th {
                 background-color: var(--light-gray);
                 border-bottom: 1px solid var(--dark-gray);
-                color: var(--dark-gray);
-                
-            }
-            
+                color: var(--dark-gray);       
+            }    
             .table-header_01 {                        
                 width: 50px;
                 height: 35px;
@@ -126,6 +133,60 @@
             .swiper-button-next {
                 margin-top: -100px;
             }
+            .button_box {
+                position: relative;
+                left: 95px;
+                margin: 0 auto;
+                margin-top: 5px;
+              
+            }
+         
+
+            /* 추가css */
+            #left_container{
+      display: flex;
+      justify-content: center;
+      width:300px;
+      min-height: 500px;
+      margin-top: 8px;
+   }
+
+   #toolbar{
+      width: 300px;
+      position: fixed;
+      margin: 25px 0px 0px 20px;
+      width: 200px;
+      padding: 15px;
+      align-items: center; 
+   }
+
+   #toolbar > #registerArticle{
+      width:180px;   
+   }
+
+   #toolbar > #registerArticle > .register{
+      width: 220px;
+      height:35px;
+      margin-top: 9px;
+      color:black;
+      background-color: var(--hashtag-blue);
+      border-radius: 6px;
+      border:none;
+      transition: box-shadow 0.1s ease;
+   }
+
+   #toolbar > #registerArticle > .register:hover{
+      border: 2px solid #1E90FF;
+   }
+   #pageName {
+    font-size: 30px;
+    font-weight: bold;
+   }
+   .search_menu {
+    position: relative;
+    top: 22px;
+   }
+
         </style>
 </head>
 <body>
@@ -144,31 +205,47 @@
           <div class="swiper-button-prev"></div>
           <div class="swiper-button-next"></div>
     </div>
-    <p class="bbs_title">게시글 목록</p>
-    	<!-- 게시물 검색 -->
-         <form id="search-form" method="get" action="/qnaboard/list">
-          <div class="button_list">
-              <select name="searchType">
-                  <option value="postTitle" ${searchForumVO.searchType eq 'postTitle' ? 'selected' : ''}>제목</option>
-                  <option value="postContent" ${searchForumVO.searchType eq 'postContent' ? 'selected' : ''}>내용</option>
-                  <option value="postWriter" ${searchForumVO.searchType eq 'postWriter' ? 'selected' : ''}>작성자</option>
-              </select>
-              <input type="text" class="sc_text" placeholder="검색어 입력" name="searchKeyword" value="${searchForumVO.searchKeyword}" />
-              <button type="submit" class="btn btn_st_2">
-              	검색
-              </button>
-              <button type="submit" class="btn btn_st_3">
-                  <a href="/qnaboard/create">글쓰기</a>
-              </button>
-          </div>
-          </form>
           <aside>
              <div class="advertising">
 	              <a href="https://blog.naver.com/roborang/221827208404">
 	              <img class="why_code" src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMDAyMjZfOTcg%2FMDAxNTgyNzAzOTk2MzQ1.bsJ-QZhJSxCCLwgYAk4ibsKrPqHNk-7SlEYEowKsf6Ug.MReP1pZZeA_b7SBVMUbJUspOftiFOZ-_rvBxkWVktmIg.PNG.roborang%2F%25C4%25DA%25B5%25F9%25B1%25B3%25C0%25B0_%25BF%25D6_%25C7%25D8%25BE%25DF_%25C7%25D2%25B1%25EE%25BF%25E4.png&type=sc960_832">
-	              </a>   
+	              </a> 
+            </div>
+            <div class="viedo_ver">
+                <a href="https://www.youtube.com/watch?v=iI0s1JtKpy8">
+                    <iframe width="380" height="250" src="https://www.youtube.com/embed/iI0s1JtKpy8" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                </a>
+            </div>        
           </aside>
     <div id="wrap" class="wrap">
+        <!-- 좌측 툴바 -->
+        <div id="left_container">
+            <div id="toolbar">
+                <div id="pageName">자유게시판</div>
+                <div id="registerArticle">
+                    <button class="register" type="button" onclick="location.href='/freeboard/create';">글작성</button>
+                </div>
+                <div class="search_area">
+                   
+                    <form id="search-form" method="get" action="/qnaboard/list">
+                      <div class="button_list">
+                        <select class="search_menu" name="searchType">
+                            <option value="postTitle" ${searchForumVO.searchType eq 'postTitle' ? 'selected' : ''}>제목</option>
+                            <option value="postContent" ${searchForumVO.searchType eq 'postContent' ? 'selected' : ''}>내용</option>
+                            <option value="postWriter" ${searchForumVO.searchType eq 'postWriter' ? 'selected' : ''}>작성자</option>
+                        </select>
+                        <input type="text" class="sc_text" placeholder="검색어 입력" name="searchKeyword" value="${searchForumVO.searchKeyword}" />
+                            <div class="button_box">
+                        <button type="submit" class="btn_st_2">
+                            검색
+                        </button>       
+                            </div>                         
+                      </div>               
+                   </form>               
+                </div>            
+             </div>
+    
+        </div>
         <!-- 본문 -->
         <section id="container" class="container">
             <main class="contents">         
@@ -219,15 +296,9 @@
                                 </table>
                             </div>                       
                         </fieldset>
-                        <div class="btn_write">
-                            <button type="submit" class="btn_write_1">
-                                <a href="/freeboard/create">글쓰기</a>
-                            </button>
-                        </div>
-                        
                     </form>
     		</div> 
-
+        
     <jsp:include page="../layout/footer.jsp" />
 </body>
     <script>
@@ -303,5 +374,20 @@
                prevEl: '.swiper-button-prev'  // 이전 버튼의 클래스
            }
        });
+       var mySwiper = new Swiper('.swiper-container', {
+  // 기타 Swiper 설정...
+
+  // autoplay 속성을 사용하여 자동 전환을 활성화하고 설정합니다.
+  autoplay: {
+    delay: 2000, // 슬라이드 간의 전환 지연 시간 (밀리초)
+    disableOnInteraction: false, // 사용자 상호 작용 후에도 자동 전환을 유지할지 여부
+  },
+
+  // navigation 속성은 이전/다음 버튼을 추가하는데 사용할 수 있습니다.
+  navigation: {
+    nextEl: '.swiper-button-next',
+    prevEl: '.swiper-button-prev'
+  }
+});
     </script>
 </html>
