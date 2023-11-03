@@ -227,7 +227,7 @@
                 </div>
                 <div class="search_area">
                    
-                    <form id="search-form" method="get" action="/qnaboard/list">
+                    <form id="search-form" method="get" action="/freeboard/list">
                       <div class="button_list">
                         <select class="search_menu" name="searchType">
                             <option value="postTitle" ${searchForumVO.searchType eq 'postTitle' ? 'selected' : ''}>제목</option>

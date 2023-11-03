@@ -15,7 +15,7 @@
    
     <script src="js/lib/jquery-3.7.1.js"></script>
     <jsp:include page="../layout/header.jsp"/>
-    <style>
+<style>
          #hashtag {
             margin: 0 auto;
             margin-top: 50px;
@@ -103,21 +103,6 @@
            color: var(--dark-gray);
        }
 
-<<<<<<< HEAD
-     
-    #hot_post a {
-	    color: black; /* 글자 색상 설정 */
-	    margin: 0 auto;
-	    
-	    line-height: 3; /* 원하는 높이로 조절 (예: 1.5는 텍스트 높이의 1.5배) */
-	}
-	
-	.my-aside {
-		position: fixed;
-		right: 0;
-		top: 220px;
-		width: 250px;
-=======
        .pratice {
            margin-top: 42px;
            border-bottom: 1px solid var(--gray);
@@ -146,7 +131,6 @@
 		    
 		    line-height: 3; 
 		}
->>>>>>> main
 		
 		.my-aside {
 			position: fixed;
@@ -241,10 +225,6 @@
         <aside class="my-aside">
 	          <!-- 조회수순 랭킹 -->
 	          <h3 id="viewCnt">주간 질답 랭킹 ▶ </h3>
-<<<<<<< HEAD
-	         
-=======
->>>>>>> main
 	          <div class="view_ranking_wrap"></div>
 	          <h3 id="like_top">명예의 전당 ▶ </h3>
 	           <div class= "ranking_list">
