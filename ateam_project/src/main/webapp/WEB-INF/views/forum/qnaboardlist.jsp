@@ -16,20 +16,6 @@
     <script src="js/lib/jquery-3.7.1.js"></script>
     <jsp:include page="../layout/header.jsp"/>
     <style>
-       
-        
-         /*게시판 title 제어*/
-         /* .bbs_title {
-            font-weight: bold;
-            font-size: 25px;
-            
-            margin-left: 530px;
-         } */
-         
-
-         /* aside{
-            height:500px;
-         } */
          #hashtag {
             margin: 0 auto;
             margin-top: 50px;
@@ -37,150 +23,137 @@
             font-size: 30px;
          }
          .hashtag_wrap {
-        margin: 0 auto;  
-        display: flex;
-        flex-direction: row;
-        flex-wrap: wrap;
-        width: 780px;
-        }
-     .fieldset_controller {
-        display: flex;
-        /* width: 3000px; */
-        margin: 0 auto;
-        margin-right: 300px;
-    }  
-     /* .board_list_box {
-        width: 1000px;
-        display: flex;
-        flex: 1;
-    } */
-    .board_list_ty1 {
-        width: 800px;
-    } 
+	        margin: 0 auto;  
+	        display: flex;
+	        flex-direction: row;
+	        flex-wrap: wrap;
+	        width: 780px;
+	        }
+	     .fieldset_controller {
+	        display: flex;
+	        margin: 0 auto;
+	        margin-right: 300px;
+	    } 
+	    .board_list_ty1 {
+	        width: 800px;
+	    } 
 
    
-         .hashtag_incomplete {
-            background-color: yellow;        
-            margin: 0 auto;
-            margin-left: 10px;
-            margin-top: 30px;
-            width: 85px;
-            height: 35px;
-            border-radius: 10px;
-            border: 1px solid var(--light-gray);
-            cursor: pointer;
-            
-         }
-         .hashtag_incomplete:hover {
-            background-color: var(--blue);
-         }
- 
-         .list_search {
-            text-align: right;
-
-         }
-
-         /*게시판 테이블 제어*/
-         table {
-             border-collapse: collapse;
-          
-         }
-         
-         .table-header_01 {
-            width: 50px;
+        .hashtag_incomplete {
+           background-color: yellow;        
+           margin: 0 auto;
+           margin-left: 10px;
+           margin-top: 30px;
+           width: 85px;
            height: 35px;
-         }
+           border-radius: 10px;
+           border: 1px solid var(--light-gray);
+           cursor: pointer;
+           
+        }
+        .hashtag_incomplete:hover {
+           background-color: var(--blue);
+        }
+
+        .list_search {
+           text-align: right;
+
+        }
+
+        /*게시판 테이블 제어*/
+        table {
+            border-collapse: collapse;
          
-         /*버튼 속성제어*/
-         .btn_st_2,.btn_st_3 {
+        }
+        
+        .table-header_01 {
+           width: 50px;
+          height: 35px;
+        }
+        
+        /*버튼 속성제어*/
+        .btn_st_2,.btn_st_3 {
+           background-color: var(--hashtag-blue);
+           border-radius: 5px;
+           border: none;
+           width: 60px;
+           height: 30px;
+        }
+        .btn_write_1 {  
+            margin: 0 auto;  
+            margin-top: 30px;
+            margin-left: 930px;
             background-color: var(--hashtag-blue);
             border-radius: 5px;
             border: none;
-            width: 60px;
+            width: 70px;
             height: 30px;
-         }
-         .btn_write_1 {  
-             margin: 0 auto;  
-             margin-top: 30px;
-             margin-left: 930px;
-             background-color: var(--hashtag-blue);
-             border-radius: 5px;
-             border: none;
-             width: 70px;
-             height: 30px;
-           
-         }
-       
- 
-         #button_list_1 tr th {
-            background-color: var(--light-gray);
-            border-bottom: 1px solid var(--dark-gray);
-            color: var(--dark-gray);
-        }
-        /*게시판 내역 제어*/
-
-        .pratice_01,.pratice_02,.pratice_03,.pratice_04 {
-            border-bottom: 1px solid var(--gray);
-            text-align: center;
-            color: var(--dark-gray);
+          
         }
 
-        .pratice {
-            margin-top: 42px;
-            border-bottom: 1px solid var(--gray);
-        }
+        #button_list_1 tr th {
+           background-color: var(--light-gray);
+           border-bottom: 1px solid var(--dark-gray);
+           color: var(--dark-gray);
+       }
 
-        .text_controller {
-            position: relative;
-            bottom: 20px;
-        }
+       .pratice_01,.pratice_02,.pratice_03,.pratice_04 {
+           border-bottom: 1px solid var(--gray);
+           text-align: center;
+           color: var(--dark-gray);
+       }
 
-        .advertising {
+       .pratice {
+           margin-top: 42px;
+           border-bottom: 1px solid var(--gray);
+       }
 
-            position: absolute;
-        top: 0;
-        right: 10px; /* right 속성을 사용하여 오른쪽으로 이동 */
-        width: 200px;
-        height: 500px;
-        border: 1px solid var(--gray);
-        margin: 0 auto;
-        margin-top: 650px;
-        margin-right: 50px;
-        }
+       .text_controller {
+           position: relative;
+           bottom: 20px;
+       }
 
-   
+       .advertising {
 
-
-    #hot_post a {
-	    color: black; /* 글자 색상 설정 */
-	    margin: 0 auto;
-	    
-	    line-height: 3; /* 원하는 높이로 조절 (예: 1.5는 텍스트 높이의 1.5배) */
-	}
-	
-	.my-aside {
-		position: fixed;
-		right: 0;
-		top: 220px;
-		width: 250px;
+           position: absolute;
+	       top: 0;
+	       right: 10px;
+	       width: 200px;
+	       height: 500px;
+	       border: 1px solid var(--gray);
+	       margin: 0 auto;
+	       margin-top: 650px;
+	       margin-right: 50px;
+       }
+	    #hot_post a {
+		    color: black; 
+		    margin: 0 auto;
+		    
+		    line-height: 3; 
+		}
 		
-	}
-	
-	.my-aside a {
-	display: block;
-	overflow:hidden;
-      text-overflow:ellipsis;
-      white-space:nowrap;
-	}
-	
-	.contents {
-	    width: 780px;
-    	margin: 0 auto;
-    }
+		.my-aside {
+			position: fixed;
+			right: 0;
+			top: 220px;
+			width: 250px;
+			
+		}
+		
+		.my-aside a {
+		display: block;
+		overflow:hidden;
+	      text-overflow:ellipsis;
+	      white-space:nowrap;
+		}
+		
+		.contents {
+		    width: 780px;
+	    	margin: 0 auto;
+	    }
     </style>
 </head>
 <body>
-    <!-- <p class="bbs_title">QnA게시글 목록</p> -->
     <nav>
         <div id="hashtagList">
             <p id="hashtag"># Hashtags</p>
@@ -188,10 +161,8 @@
         </div> 
     </nav>
     <div class="controll_all">
-        
         <main class="contents">
             <!-- 게시물검색 -->
-            
             <div class="list_search">
                 <select name="searchType">
                     <option value="subject" ${searchForumVO.searchType eq 'subject' ? 'selected' : ''}>제목</option>
@@ -253,38 +224,14 @@
                 </form>
             </div>
         </main>
-        
         <aside class="my-aside">
 	          <!-- 조회수순 랭킹 -->
 	          <h3 id="viewCnt">주간 질답 랭킹 ▶ </h3>
-	         <!--  <div class="advertising">
-	              <a href="https://blog.naver.com/roborang/221827208404">
-	              <img class="why_code" src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMDAyMjZfOTcg%2FMDAxNTgyNzAzOTk2MzQ1.bsJ-QZhJSxCCLwgYAk4ibsKrPqHNk-7SlEYEowKsf6Ug.MReP1pZZeA_b7SBVMUbJUspOftiFOZ-_rvBxkWVktmIg.PNG.roborang%2F%25C4%25DA%25B5%25F9%25B1%25B3%25C0%25B0_%25BF%25D6_%25C7%25D8%25BE%25DF_%25C7%25D2%25B1%25EE%25BF%25E4.png&type=sc960_832">
-	              </a>   --> 
 	          <div class="view_ranking_wrap"></div>
-	          
 	          <h3 id="like_top">명예의 전당 ▶ </h3>
 	           <div class= "ranking_list">
-	              
-	              <ul class="ranking_wrap">
-	                
-	              </ul>
-	              <!-- <ui>
-	                  <li>꼬부기</li>
-	                  <div class="box"></div>
-	                  <li>꼬부기</li>
-	                  <div class="box_1"></div>
-	                  <li>꼬부기</li>
-	                  <div class="box_2"></div>
-	                  <li>꼬부기</li>
-	                  <div class="box_3"></div>
-	                  <li>꼬부기</li>
-	                  <div class="box_4"></div>
-	                  <li>꼬부기</li>
-	                  <div class="box_5"></div>
-	                  
-	              </ui> -->
-	              </div>                       
+	              <ul class="ranking_wrap"></ul>
+	          </div>                       
 	      </aside>
     </div>
    <jsp:include page="../layout/footer.jsp" />
@@ -308,36 +255,70 @@
    const day = String(prevMonday.getDate()).padStart(2, '0')
 
    const formattedMonday = year + '-' + month + '-' + day
-// 랭킹
-   $.get('/home/ranking/\${formattedMonday}', function(response) {
-      console.log(response);
-     let list = response.rankings
-     for (let i = 0; i < 10; i++) {
+	// 랭킹
+    $.get('/home/ranking/\${formattedMonday}', function(response) {
+       console.log(response);
+      let list = response.rankings
+      for (let i = 0; i < 10; i++) {
 
-       if (list[i].boardId === 'CC-20231017-000030') {
-         let ranking_template = `
-           <li id="hot_post">
-           <a href="/qnaboard/view/\${list[i].generalPostId}" target="_blank"">\${list[i].postTitle}</a>
-           </li>`
-         let ranking_templateDom = $(ranking_template)
- 
-         $('.ranking_wrap').append(ranking_templateDom)
-       }
-     }
-   })
-   // 사이드바에 해시태그 리스트 조회해주는 코드 
+        if (list[i].boardId === 'CC-20231017-000030') {
+          let ranking_template = `
+            <li id="hot_post">
+            <a href="/qnaboard/view/\${list[i].generalPostId}" target="_blank"">\${list[i].postTitle}</a>
+            </li>`
+          let ranking_templateDom = $(ranking_template)
+  
+          $('.ranking_wrap').append(ranking_templateDom)
+        }
+      }
+    })
+   	  // 가운데에 해시태그 리스트 조회해주는 코드 
       $.get('/code/해시태그', function(response) {
         for (let i = 0; i < response.length; i++) {
           let hash_template = `<button class="hashtag_incomplete">#\${response[i].codeContent}</button>`
           $('.hashtag_wrap').append(hash_template)
         }
+        
       })   
-      
-      const userList = document.getElementById('user-list');
-      const tableContainer = document.querySelector('.board_list_ty1');
-      const loading = document.getElementById('loading');
-      let page = 1;
-      let isFetching = false;
+      $().ready(function() {
+	  // 'codeContent' 클릭 시 이벤트 처리
+	  $('.hashtag_wrap').click(function() {
+	    $.get('/hashtag/list', function(response) {
+	      if (response.hashtagId != null) {
+	        // 해시태그 목록을 반복하여 처리
+	        response.hashtagListVO.forEach(function(hashtagId) {
+	          console.log(generalPostHashtagVO.hashtagId);
+	        });
+	      } else {
+	        console.log('무언가 잘못됐답니당 ~~~~~~~ ');
+	      }
+	    });
+	  });
+	});
+
+		// 버튼 클릭 이벤트 핸들러 연결
+		// $('.hashtag_wrap').on('click', '.hashtag_incomplete', redirectToNewPage);
+        // 버튼 클릭 시 페이지 이동 이벤트 핸들러
+		/* function redirectToNewPage() {
+		    // 클릭한 버튼의 hashtagId 값을 가져오기
+		    let hashtagId = $(this).data('hashtagId');
+		
+		    // 새로운 URL 생성
+		    let newURL = `/hashtag/list/${hashtagId}`;
+		
+		    // $.get 방식으로 URL로 이동
+		    $.get(newURL, function(data) {
+		        // 이동한 페이지에서 반환된 데이터(data)에 대한 처리를 여기에 추가
+		        console.log("이동한 페이지에서 받은 데이터:", data);
+		    });
+		}
+ */
+		
+       const userList = document.getElementById('user-list');
+       const tableContainer = document.querySelector('.board_list_ty1');
+       const loading = document.getElementById('loading');
+       let page = 1;
+       let isFetching = false;
 
     
        // 미완성된 기능을 알려주는 모달창
@@ -373,8 +354,7 @@
            $('.visible').hide();
            $(this).find('a').css({'background-color': 'white', 'color': 'var(--blue)', 'box-shadow': 'none'});
        });
-      
-       
+
    </script>
 </body>
 </html>

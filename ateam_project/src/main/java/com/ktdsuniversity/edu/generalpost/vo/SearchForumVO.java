@@ -14,6 +14,7 @@ public class SearchForumVO extends AbstractSearchVO {
 	 * 제목검색 혹은 내용검색을 하기위한 구분자.
 	 * 제목검색: subject
 	 * 내용검색: content
+	 * 작성자검색: writer
 	 */
 	private String searchType;
 

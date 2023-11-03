@@ -18,6 +18,28 @@
      	 , #{generalPostId})
 </insert>
 
+<select id="getHashtagCnt"
+		resultType="_int">
+	SELECT COUNT(1)
+	  FROM GENERAL_POST_HASHTAG GPH
+	 INNER JOIN GENERAL_POST GP
+	    ON GPH.GENERAL_POST_ID = GP.GENERAL_POST_ID
+	 INNER JOIN MEMBER M
+	    ON M.EMAIL = GP.POST_WRITER
+</select>
+
+<!-- 해시태그 소팅 -->
+<select id="getAllHashtag"
+		parameterType="string"
+		resultType="com.ktdsuniversity.edu.generalposthashtag.vo.HashtagVO">
+	SELECT GPH.* 
+	     , GP.*
+	  FROM GENERAL_POST GP
+	 INNER JOIN GENERAL_POST_HASHTAG GPH
+	    ON GP.GENERAL_POST_ID = GPH.GENERAL_POST_ID 
+	 WHERE GPH.HASHTAG_ID = #{_parameter}
+</select>
+
 <!-- 커먼코드 리스트 가져오기 -->
 <select id="getHastagList"
 		parameterType="string"

@@ -9,6 +9,8 @@ import jakarta.validation.Valid;
 
 public interface HashtagDAO {
 
+	public int getHashtagCnt();
+
 	public List<HashtagVO> getAllHashtag();
 
 	public List<HashtagVO> getHashtagList(String postId);
