@@ -15,44 +15,69 @@ import com.ktdsuniversity.edu.generalpost.vo.SearchForumVO;
 
 public interface GeneralPostDAO {
 	// 게시글 수 
+	// boardId 필요.
 	public int getBoardAllCount(SearchForumVO searchForumVO);
 	// 조회수 
 	public int increaseViewCount(String generalPostId);
 
-	// 자유게시판
-	public List<GeneralPostVO> getAllFreeBoard();
 	
-	public int createNewFreeBoard(GeneralPostVO generalVO);
 	
-	public GeneralPostVO getOneFreeBoard(String generalPostId);
-
-	public int updateOneFreeBoard(GeneralPostVO generaVO);
+	public List<GeneralPostVO> getAllBoard(String boardId);
 	
-	public int deleteOneFreeBoard(String generalPostId);
-
-	public int updateLikeFreePost(GeneralPostVO generalPostVO);
 	
-	public List<GeneralPostVO> getAllFreeBoardRest();
+	//boardId 필요.
+	public List<GeneralPostVO> searchAllPost(SearchForumVO searchForumVO);
 	
-	// 자유 검색
-	public List<GeneralPostVO> searchAllFreePost(SearchForumVO searchForumVO);
-
-	// 질답게시판
-	public List<GeneralPostVO> getAllQnABoard();
+	//boardId 필요.
+	public int createNewBoard(GeneralPostVO generalPostVO);
 	
-	public int createNewQnABoard(GeneralPostVO generalVO);
+	public GeneralPostVO getOneBoard(String generalPostId);
 	
-	public GeneralPostVO getOneQnABoard(String generalPostId);
-
-	public int updateOneQnABoard(GeneralPostVO generaVO);
+	public int updateOneBoard(GeneralPostVO generalPostVO);
 	
-	public int deleteOneQnABoard(String generalPostId);
-
-	public int updateLikeQnAPost(GeneralPostVO generalPostVO);
+	public int deleteOneBoard(String generalPostId);
 	
-	public List<GeneralPostVO> getAllQnaBoardRest();
-	// 질답 검색
-	public List<GeneralPostVO> searchAllQnAPost(SearchForumVO searchForumVO);
+	public int updateLikePost(GeneralPostVO generalPostVO);
+	
+	// FIXME 쿼리 찾아서 고쳐야함.
+	public List<GeneralPostVO> getAllBoardRest(String boardId);
+	
+	
+	
+//	// 자유게시판
+//	public List<GeneralPostVO> getAllFreeBoard();
+//	
+//	public int createNewFreeBoard(GeneralPostVO generalVO);
+//	
+//	public GeneralPostVO getOneFreeBoard(String generalPostId);
+//
+//	public int updateOneFreeBoard(GeneralPostVO generaVO);
+//	
+//	public int deleteOneFreeBoard(String generalPostId);
+//
+//	public int updateLikeFreePost(GeneralPostVO generalPostVO);
+//	
+//	public List<GeneralPostVO> getAllFreeBoardRest();
+//	
+//	// 자유 검색
+//	public List<GeneralPostVO> searchAllFreePost(SearchForumVO searchForumVO);
+//
+//	// 질답게시판
+//	public List<GeneralPostVO> getAllQnABoard();
+//	
+//	public int createNewQnABoard(GeneralPostVO generalVO);
+//	
+//	public GeneralPostVO getOneQnABoard(String generalPostId);
+//
+//	public int updateOneQnABoard(GeneralPostVO generaVO);
+//	
+//	public int deleteOneQnABoard(String generalPostId);
+//
+//	public int updateLikeQnAPost(GeneralPostVO generalPostVO);
+//	
+//	public List<GeneralPostVO> getAllQnaBoardRest();
+//	// 질답 검색
+//	public List<GeneralPostVO> searchAllQnAPost(SearchForumVO searchForumVO);
 	
 	// 내 게시글 조회
 	public List<GeneralPostVO> getMyPost(GeneralPostVO generalPostVO);
@@ -66,4 +91,6 @@ public interface GeneralPostDAO {
 	public List<GeneralPostVO> SearchFreeBoardRest(SearchForumVO searchForumVO);
 
 	public List<GeneralPostVO> SearchQnaBoardRest(SearchForumVO searchForumVO);
+	
+	
 }

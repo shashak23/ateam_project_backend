@@ -87,8 +87,8 @@
       </div>
       <nav class="gnb">
         <ul>
-          <li><a href="/qnaboard/list" target="_blank">질답게시판</a></li>
-          <li><a href="/freeboard/list" target="_blank">자유게시판</a></li>
+          <li><a href="/qnaboard/list">질답게시판</a></li>
+          <li><a href="/freeboard/list">자유게시판</a></li>
           <li class="list_company"><a href="#" class="incomplete">기업게시판</a>
             <ul class="company_sublist visible">
               <li><a href="#" class="incomplete">채용게시판</a></li>

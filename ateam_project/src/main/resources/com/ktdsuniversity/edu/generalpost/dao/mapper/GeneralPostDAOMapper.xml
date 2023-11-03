@@ -28,11 +28,32 @@
 	</resultMap>
 	
 	<select id="getBoardAllCount"
+			parameterType="com.ktdsuniversity.edu.generalpost.vo.SearchForumVO"
 			resultType="_int">
-		SELECT COUNT(1)
-		  FROM GENERAL_POST GP
-		 INNER JOIN MEMBER M
-		    ON GP.POST_WRITER = M.EMAIL
+		SELECT COUNT(GP.GENERAL_POST_ID)
+          FROM GENERAL_POST GP
+         INNER JOIN MEMBER M
+            ON M.EMAIL = GP.POST_WRITER
+         <if test='searchType == "hashtagId"'>
+         INNER JOIN GENERAL_POST_HASHTAG GPH
+            ON GP.GENERAL_POST_ID = GPH.GENERAL_POST_ID
+         </if>
+         WHERE GP.DELETE_YN = 'N'
+           AND GP.BOARD_ID = #{boardId}
+         <if test='searchKeyword != null and searchKeyword != ""'>
+		  <if test='searchType == "postTitle"'>
+		   AND GP.POST_TITLE LIKE '%' || #{searchKeyword} || '%'
+		  </if>
+		  <if test='searchType == "postContent"'>
+		   AND GP.POST_CONTENT LIKE '%' || #{searchKeyword} || '%'
+		  </if>
+		  <if test='searchType == "postWriter"'>
+		   AND M.NICKNAME LIKE '%' || #{searchKeyword} || '%'
+		  </if>
+		  <if test='searchType == "hashtagId"'>
+		   AND GPH.HASHTAG_ID = #{searchKeyword}
+		  </if>
+		</if>
 	</select>
 	
 	<update id="increaseViewCount"
@@ -43,8 +64,12 @@
 	</update>
 
 	<!-- 자유게시판 -->
-	<insert id="createNewFreeBoard"
+	<insert id="createNewBoard"
 			parameterType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
+		<selectKey keyProperty="generalPostId" resultType="string" order="BEFORE">
+			SELECT 'GP-' || TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_GENERAL_POST_PK.NEXTVAL, 6, '0')
+			  FROM DUAL
+		</selectKey>
 		INSERT INTO GENERAL_POST 
 			(GENERAL_POST_ID
 			, POST_WRITER
@@ -56,9 +81,9 @@
 			, VIEW_CNT
 			, DELETE_YN) 
 		VALUES 
-		 ( 'GP-' || TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_GENERAL_POST_PK.NEXTVAL, 6, '0')
+		 ( #{generalPostId}
 	        , #{postWriter}
-			, 'CC-20231017-000029' 
+			, #{boardId}
 			, #{postTitle}
 			, #{postContent}
 			, SYSDATE
@@ -67,7 +92,7 @@
 			, 'N' )
 	</insert>
 	
-	<select id="getOneFreeBoard"
+	<select id="getOneBoard"
 		parameterType="string"
 		resultMap="GeneralPostDAOMap">
 		SELECT GP.GENERAL_POST_ID
@@ -80,13 +105,20 @@
 		     , GP.VIEW_CNT
 		     , GP.DELETE_YN
 		     , M.NICKNAME
+		     , GPH.*
+			 , CC.CODE_CONTENT
 		  FROM GENERAL_POST GP
 		 INNER JOIN MEMBER M
 		    ON M.EMAIL = GP.POST_WRITER
-		 WHERE GENERAL_POST_ID = #{_parameter}
+		  LEFT OUTER JOIN GENERAL_POST_HASHTAG GPH
+			ON GPH.GENERAL_POST_ID = GP.GENERAL_POST_ID
+	      LEFT OUTER JOIN COMMON_CODE CC
+			ON CC.CODE_ID = GPH.HASHTAG_ID
+		 WHERE GP.GENERAL_POST_ID = #{_parameter}
 	</select>
 	
-	<select id="getAllFreeBoard"
+	<select id="getAllBoard"
+	parameterType="string"
 	resultMap="GeneralPostDAOMap">
 		SELECT GP.GENERAL_POST_ID
 		     , GP.POST_WRITER
@@ -102,11 +134,12 @@
 		 INNER JOIN MEMBER M
 		    ON M.EMAIL = GP.POST_WRITER
 		 WHERE DELETE_YN = 'N'
-		   AND BOARD_ID = 'CC-20231017-000029'
+		   /*AND BOARD_ID = 'CC-20231017-000029'*/
+		   AND BOARD_ID = #{_parameter}
 		 ORDER BY POST_DATE DESC
 	</select>
 	
-	<update id="updateOneFreeBoard"
+	<update id="updateOneBoard"
 		parameterType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
 		UPDATE GENERAL_POST
 		   SET POST_TITLE = #{postTitle}
@@ -115,14 +148,14 @@
 		 WHERE GENERAL_POST_ID = #{generalPostId}
 	</update>
 
-    <update id="deleteOneFreeBoard"
+    <update id="deleteOneBoard"
 	parameterType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
 		UPDATE GENERAL_POST
 		   SET DELETE_YN = 'Y'
 		 WHERE GENERAL_POST_ID = #{generalPostId}
 	</update>
 	
-	<update id="updateLikeFreePost"
+	<update id="updateLikePost"
 	parameterType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
 		UPDATE GENERAL_POST
 		   SET LIKE_CNT = #{likeCnt} + 1
@@ -130,7 +163,7 @@
 	</update>
 	
 	<!-- 질답게시판 -->
-	<select id="getAllQnABoard"
+	<!-- <select id="getAllQnABoard"
 	resultMap="GeneralPostDAOMap">
 		SELECT GP.GENERAL_POST_ID
 		     , GP.POST_WRITER
@@ -148,9 +181,9 @@
 		 WHERE DELETE_YN = 'N'
 		   AND BOARD_ID = 'CC-20231017-000030'
 		 ORDER BY POST_DATE DESC
-	</select>
+	</select> -->
 	
-	<insert id="createNewQnABoard"
+	<!-- <insert id="createNewQnABoard"
 			parameterType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
 		<selectKey keyProperty="generalPostId" resultType="string" order="BEFORE">
 			SELECT 'GP-' || TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_GENERAL_POST_PK.NEXTVAL, 6, '0')
@@ -176,9 +209,9 @@
 			 , 0
 			 , 0
 			 , 'N' )
-	</insert>
+	</insert> -->
 	
-	<select id="getOneQnABoard"
+	<!-- <select id="getOneQnABoard"
 		parameterType="string"
 		resultMap="GeneralPostDAOMap">
 			SELECT M.NICKNAME
@@ -200,30 +233,30 @@
 			 INNER JOIN COMMON_CODE CC
 			    ON CC.CODE_ID = GPH.HASHTAG_ID
 			 WHERE GPH.GENERAL_POST_ID = #{_parameter}
-	</select>
+	</select> -->
 	
-	<update id="updateOneQnABoard"
+	<!-- <update id="updateOneQnABoard"
 		parameterType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
 		UPDATE GENERAL_POST
 		   SET POST_TITLE = #{postTitle}
 		     , POST_CONTENT = #{postContent}
 		     , POST_DATE = SYSDATE
 		 WHERE GENERAL_POST_ID = #{generalPostId}
-	</update>
+	</update> -->
 
-    <update id="deleteOneQnABoard"
+    <!-- <update id="deleteOneQnABoard"
 	parameterType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
 		UPDATE GENERAL_POST
 		   SET DELETE_YN = 'Y'
 		 WHERE GENERAL_POST_ID = #{generalPostId}
-	</update>
+	</update> -->
 	
-	<update id="updateLikeQnAPost"
+	<!-- <update id="updateLikeQnAPost"
 	parameterType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
 		UPDATE GENERAL_POST
 		   SET LIKE_CNT = #{likeCnt} + 1
 		 WHERE GENERAL_POST_ID = #{generalPostId}
-	</update>
+	</update> -->
 	
 	<!-- 내게시글 조회 쿼리 -->
 	<select id="getMyPost"
@@ -288,7 +321,7 @@
 	</select>
 	
 	<!-- 자유 검색 -->
-	<select id="searchAllFreePost"
+	<!-- <select id="searchAllFreePost"
 	        parameterType="com.ktdsuniversity.edu.generalpost.vo.SearchForumVO"
 	        resultMap="GeneralPostDAOMap">
 	        SELECT GP.POST_WRITER
@@ -318,10 +351,10 @@
 			  </if>
 			</if>
 			  ORDER BY GP.POST_DATE DESC
-	</select>
+	</select> -->
 	
 	<!-- 질답 검색 -->
-	<select id="searchAllQnAPost"
+	<select id="searchAllPost"
 	        parameterType="com.ktdsuniversity.edu.generalpost.vo.SearchForumVO"
 	        resultMap="GeneralPostDAOMap">
 	        SELECT GP.POST_WRITER
@@ -337,8 +370,12 @@
 	          FROM GENERAL_POST GP
 	         INNER JOIN MEMBER M
 	            ON M.EMAIL = GP.POST_WRITER
+	         <if test='searchType == "hashtagId"'>
+	         INNER JOIN GENERAL_POST_HASHTAG GPH
+	            ON GP.GENERAL_POST_ID = GPH.GENERAL_POST_ID
+	         </if>
 	         WHERE GP.DELETE_YN = 'N'
-	           AND GP.BOARD_ID = 'CC-20231017-000030'
+	           AND GP.BOARD_ID = #{boardId}
 	         <if test='searchKeyword != null and searchKeyword != ""'>
 			  <if test='searchType == "postTitle"'>
 			   AND GP.POST_TITLE LIKE '%' || #{searchKeyword} || '%'
@@ -348,6 +385,9 @@
 			  </if>
 			  <if test='searchType == "postWriter"'>
 			   AND M.NICKNAME LIKE '%' || #{searchKeyword} || '%'
+			  </if>
+			  <if test='searchType == "hashtagId"'>
+			   AND GPH.HASHTAG_ID = #{searchKeyword}
 			  </if>
 			</if>
 			  ORDER BY GP.POST_DATE DESC
