@@ -123,16 +123,21 @@ public class NoticeController {
 		}
 	}
 	
+	@ResponseBody
 	@GetMapping("/notice/delete/{noticeId}")
-	public String doDeleteNotice(@PathVariable String noticeId) {
+	public Map<String, Object> doDeleteNotice(@PathVariable String noticeId) {
 		boolean isSuccess = noticeService.deleteNotice(noticeId);
+		Map<String, Object> resultSet = new HashMap<>();
+		
 		
 		if (isSuccess) {
-			return "redirect:/notice/list";
+			resultSet.put("result", "success");
+			return resultSet;
 		}
 		
 		else {
-			return "/notice/noticedeletefail";
+			resultSet.put("result", "fail");
+			return resultSet;
 		}
 	}
 	
@@ -178,7 +183,7 @@ public class NoticeController {
 
 		NoticeVO noticeVO = noticeService.getOneNotice(noticeId);
 		
-		XssIgnoreUtil.ignore(noticeVO);
+//		XssIgnoreUtil.ignore(noticeVO);
 		
 		return noticeVO;
 	}

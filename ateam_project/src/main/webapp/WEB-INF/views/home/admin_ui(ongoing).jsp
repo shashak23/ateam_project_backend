@@ -210,7 +210,7 @@
 
   .notice_modal .notice_group_title {
     display: grid;
-    grid-template-columns: 40px 100px 575px 60px 120px 120px;
+    grid-template-columns: 50px 605px 70px 70px 120px 120px;
     column-gap: 10px;
     align-items: center;
     color: #888;
@@ -226,7 +226,7 @@
 
   .notice_modal .notice_group_content {
     display: grid;
-    grid-template-columns: 40px 100px 575px 60px 120px 120px;
+    grid-template-columns: 50px 605px 70px 70px 120px 120px;
     column-gap: 10px;
     align-items: center;
     color: #191919;
@@ -235,16 +235,16 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    font-size: 11pt;
   }
 
-  .notice_modal .notice_group_content .notice_title,
-  .notice_modal .notice_group_content .notice_content {
+  .notice_modal .notice_group_content .notice_title {
     font-weight: bold;
     cursor: pointer;
+    text-align: center;
   }
 
-  .notice_modal .notice_group_content.notice_expired .notice_title,
-  .notice_modal .notice_group_content.notice_expired .notice_content {
+  .notice_modal .notice_group_content.notice_expired .notice_title {
     font-weight: normal;
   }
 
@@ -345,6 +345,11 @@
     background-color: rgb(255, 137, 161);
     color: #e5e5e5;
     padding: 7px 1px;
+  }
+
+  .notice_group_content .notice_delete_btn {
+    background-color: #e5e5e5;
+    color: #ccc;
   }
 
   .notice_group_content .notice_date {
@@ -734,7 +739,7 @@
             <button class="create_notice">공지생성</button>
           </div>
           <div class="notice_search_wrap">
-            <input class="admin_notice_input" type="text" placeholder="제목 및 내용"/>
+            <input class="admin_notice_input" type="text" placeholder="제목"/>
             <button class="admin_notice_search">검색</button>
             <button class="btn-close">&times;</button>
           </div>
@@ -742,7 +747,7 @@
         <div class="desc-title">
           <div class="notice_container">
             <div class="notice_group_title">
-              <div></div><div>제목</div><div>내용</div><div>수정</div><div>시작날짜</div><div>끝날짜</div>
+              <div>온/오프</div><div>제목</div><div>수정</div><div>삭제</div><div>시작날짜</div><div>끝날짜</div>
             </div>
           </div>
         </div>
@@ -758,24 +763,22 @@
       <h1 class="create_title">공지 생성</h1>
       <div>
         <label for="postTitle" class="mb10">제목</label>
-        <input type="text" name="postTitle" id="postTitle" placeholder="제목을 입력해주세요"
-                value="${noticeVO.postTitle}"/>
+        <input type="text" name="postTitle" id="postTitle" placeholder="제목을 입력해주세요"/>
         <!-- <form:errors path="postTitle" element="div" cssClass="errors" /> -->
       </div>
       <label for="noticeContent" class="mb10">내용</label>
       <div>
-        <textarea name="noticeContent" id="editor" placeholder="내용을 입력해주세요."
-                  value="${noticeVO.noticeContent}"></textarea>
+        <textarea name="noticeContent" id="editor" placeholder="내용을 입력해주세요."></textarea>
         <!-- <form:errors path="postTitle" element="div" cssClass="errors" /> -->
       </div>
       <div class="date_wrap">
         <label for="start-date">시작일</label>
         <input class="dateSelector1" placeholder="시작 날짜" id="start-date"
-                name="releaseStartDate" value="${noticeVO.releaseStartDate}"/>
+                name="releaseStartDate"/>
         <span>~</span>
         <label for="end-date">종료일</label>
         <input class="dateSelector2" placeholder="종료 날짜" id="end-date"
-                name="releaseEndDate" value="${noticeVO.releaseEndDate}"/>
+                name="releaseEndDate"/>
       </div>
       <div class="submit_btn_wrap">
         <input type="submit" value="생성" class="submit_btn"/>
@@ -783,6 +786,38 @@
     </div>
   </form:form>
   <div class="notice_create_overlay"></div>
+
+    <!-- 공지 수정 폼 -->
+    <form:form modelAttribute="noticeVO" method="post" action="/notice/modify">
+      <div class="modify_container">
+        <div class="btn-close">&times;</div>
+        <h1 class="create_title">공지 수정</h1>
+        <div>
+          <label for="postTitle" class="mb10">제목</label>
+          <input type="text" name="postTitle" id="postTitle" placeholder="제목을 입력해주세요"/>
+          <!-- <form:errors path="postTitle" element="div" cssClass="errors" /> -->
+        </div>
+        <label for="noticeContent" class="mb10">내용</label>
+        <div>
+          <textarea name="noticeContent" id="editor" placeholder="내용을 입력해주세요."
+                    value="${noticeVO.noticeContent}"></textarea>
+          <!-- <form:errors path="postTitle" element="div" cssClass="errors" /> -->
+        </div>
+        <div class="date_wrap">
+          <label for="start-date">시작일</label>
+          <input class="dateSelector1" placeholder="시작 날짜" id="start-date"
+                  name="releaseStartDate" value="${noticeVO.releaseStartDate}"/>
+          <span>~</span>
+          <label for="end-date">종료일</label>
+          <input class="dateSelector2" placeholder="종료 날짜" id="end-date"
+                  name="releaseEndDate" value="${noticeVO.releaseEndDate}"/>
+        </div>
+        <div class="submit_btn_wrap">
+          <input type="submit" value="생성" class="submit_btn"/>
+        </div>
+      </div>
+    </form:form>
+    <div class="notice_create_overlay"></div>
 
   <!-- 공지 조회 모달 -->
   <div class="notice_view_container">
@@ -1077,8 +1112,8 @@
           <div class="notice_group_content">
             <button class="notice_on_btn" data-id="\${notice.noticeId}">On</button>
             <div class="notice_title" data-id="\${notice.noticeId}">\${notice.postTitle}</div>
-            <div class="notice_content" data-id="\${notice.noticeId}">\${notice.noticeContent}</div>
             <button class="notice_modify_btn" data-id="\${notice.noticeId}">수정</button>
+            <button class="notice_delete_btn" data-id="\${notice.noticeId}">삭제</button>
             <div class="notice_date">\${formattedStartDate}</div>
             <div class="notice_date">\${formattedEndDate}</div>
           </div>`
@@ -1088,8 +1123,8 @@
           <div class="notice_group_content">
             <button class="notice_off_btn" data-id="\${notice.noticeId}">Off</button>
             <div class="notice_title" data-id="\${notice.noticeId}">\${notice.postTitle}</div>
-            <div class="notice_content" data-id="\${notice.noticeId}">\${notice.noticeContent}</div>
             <button class="notice_modify_btn" data-id="\${notice.noticeId}">수정</button>
+            <button class="notice_delete_btn" data-id="\${notice.noticeId}">삭제</button>
             <div class="notice_date">\${formattedStartDate}</div>
             <div class="notice_date">\${formattedEndDate}</div>
           </div>`
@@ -1099,8 +1134,8 @@
           <div class="notice_group_content notice_expired">
             <button class="notice_off_btn" data-id="\${notice.noticeId}">Off</button>
             <div class="notice_title" data-id="\${notice.noticeId}">\${notice.postTitle}</div>
-            <div class="notice_content" data-id="\${notice.noticeId}">\${notice.noticeContent}</div>
             <button class="notice_modify_btn" data-id="\${notice.noticeId}">수정</button>
+            <button class="notice_delete_btn" data-id="\${notice.noticeId}">삭제</button>
             <div class="notice_date">\${formattedStartDate}</div>
             <div class="notice_date">\${formattedEndDate}</div>
           </div>`
@@ -1110,9 +1145,9 @@
           noticeTemplate = `
           <div class="notice_group_content notice_expired">
             <button class="notice_del_btn" data-id="\${notice.noticeId}">Del</button>
-            <div class="notice_title">\${notice.postTitle}</div>
-            <div class="notice_content">\${notice.noticeContent}</div>
-            <button class="notice_modify_btn">수정</button>
+            <div class="notice_title" data-id="\${notice.noticeId}">\${notice.postTitle}</div>
+            <button class="notice_modify_btn" data-id="\${notice.noticeId}">수정</button>
+            <button class="notice_delete_btn" data-id="\${notice.noticeId}">삭제</button>
             <div class="notice_date">\${formattedStartDate}</div>
             <div class="notice_date">\${formattedEndDate}</div>
           </div>`
@@ -1192,30 +1227,7 @@
       $('.notice_post_title').text('')
       $('.notice_post_content').text('')
       $('.notice_post_title').text(response.postTitle)
-      $('.notice_post_content').text(response.noticeContent)
-      $('.notice_view_container, .notice_view_overlay').addClass('active')
-
-      $('.notice_btn-close, .notice_view_overlay').click(function() {
-        $('.notice_view_container, .notice_view_overlay').removeClass('active')
-      })
-
-      $('.notice_view_container').keyup(function(e) {
-        console.log(e)
-        if (e.key === 'Escape') {
-          $('.notice_view_container, .notice_view_overlay').removeClass('active')
-        }
-      })
-    })
-  })
-
-    // 공지 조회 기능(본문 클릭했을 때)
-  $(document).on('click', '.notice_content', function() {
-    let id = $(this).data('id')
-    $.get(`/admin/notice/view/\${id}`, function(response) {
-      $('.notice_post_title').text('')
-      $('.notice_post_content').text('')
-      $('.notice_post_title').text(response.postTitle)
-      $('.notice_post_content').text(response.noticeContent)
+      $('.notice_post_content').html(response.noticeContent)
       $('.notice_view_container, .notice_view_overlay').addClass('active')
 
       $('.notice_btn-close, .notice_view_overlay').click(function() {
@@ -1229,6 +1241,20 @@
     let id = $(this).data('id')
     $.get(`/admin/notice/view/\${id}`, function(response) {
       alert('곧 땡길 예정')
+    })
+  })
+
+  // 공지 삭제 기능
+  $(document).on('click', '.notice_delete_btn', function() {
+    let noticeId = $(this).data('id')
+    
+    $.get(`/notice/delete/\${noticeId}`, function(response) {
+      if (response.result === 'success') {
+        alert('성공했삼ㅋ')
+      }
+      else {
+        alert('실패했삼ㅋ')
+      }
     })
   })
 
