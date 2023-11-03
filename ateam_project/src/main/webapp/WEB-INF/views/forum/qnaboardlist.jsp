@@ -135,22 +135,7 @@
             bottom: 20px;
         }
 
-        .advertising {
-
-            position: absolute;
-        top: 0;
-        right: 10px; /* right 속성을 사용하여 오른쪽으로 이동 */
-        width: 200px;
-        height: 500px;
-        border: 1px solid var(--gray);
-        margin: 0 auto;
-        margin-top: 650px;
-        margin-right: 50px;
-        }
-
-   
-
-
+     
     #hot_post a {
 	    color: black; /* 글자 색상 설정 */
 	    margin: 0 auto;
@@ -257,10 +242,7 @@
         <aside class="my-aside">
 	          <!-- 조회수순 랭킹 -->
 	          <h3 id="viewCnt">주간 질답 랭킹 ▶ </h3>
-	         <!--  <div class="advertising">
-	              <a href="https://blog.naver.com/roborang/221827208404">
-	              <img class="why_code" src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMDAyMjZfOTcg%2FMDAxNTgyNzAzOTk2MzQ1.bsJ-QZhJSxCCLwgYAk4ibsKrPqHNk-7SlEYEowKsf6Ug.MReP1pZZeA_b7SBVMUbJUspOftiFOZ-_rvBxkWVktmIg.PNG.roborang%2F%25C4%25DA%25B5%25F9%25B1%25B3%25C0%25B0_%25BF%25D6_%25C7%25D8%25BE%25DF_%25C7%25D2%25B1%25EE%25BF%25E4.png&type=sc960_832">
-	              </a>   --> 
+	         
 	          <div class="view_ranking_wrap"></div>
 	          
 	          <h3 id="like_top">명예의 전당 ▶ </h3>

@@ -27,8 +27,9 @@
             .bbs_title {
                 font-weight: bold;
                 font-size: 25px;
+                margin: 0 auto;
                 margin-top: 155px;
-                margin-left: 350px;
+                margin-left: 465px;
 
             }
 
@@ -40,9 +41,7 @@
             .container {
                 display: inline-block;
                 width: 980px;
-                margin: 0 auto;
-            
-                
+                margin: 0 auto;     
             }
             .button_list {
                 margin-bottom: 15px;
@@ -76,33 +75,19 @@
                 height: 30px;
                 margin-bottom: 50px;
             }
-
-            
-            #page {
-            text-align: center;
-            }
-
-            #page > a {
-            margin-top: 15px;
-            margin-bottom: 15px;
-            padding: 5px 10px 5px 10px;
-            display: inline-block;
-            border-radius: 4px;
-            background-color: #FFF;
-            color: #666;
-            text-decoration: none;
-            }
-
-            #page > a.active_page {
-                border: 1px solid var(--red);
-                color: var(--red);
-                font-weight: bold;
+            .advertising {
+            position: absolute;
+            top: 0;
+            right: 10px; /* right 속성을 사용하여 오른쪽으로 이동 */
+            width: 200px;
+            height: 500px;
+            border: 1px solid var(--gray);
+            margin: 0 auto;
+            margin-top: 650px;
+            margin-right: 50px;
             }
 
 
-            .footer {
-                margin-top: 100px;
-            }
 
             #button_list_1 tr th {
                 background-color: var(--light-gray);
@@ -177,6 +162,12 @@
               </button>
           </div>
           </form>
+          <aside>
+             <div class="advertising">
+	              <a href="https://blog.naver.com/roborang/221827208404">
+	              <img class="why_code" src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMDAyMjZfOTcg%2FMDAxNTgyNzAzOTk2MzQ1.bsJ-QZhJSxCCLwgYAk4ibsKrPqHNk-7SlEYEowKsf6Ug.MReP1pZZeA_b7SBVMUbJUspOftiFOZ-_rvBxkWVktmIg.PNG.roborang%2F%25C4%25DA%25B5%25F9%25B1%25B3%25C0%25B0_%25BF%25D6_%25C7%25D8%25BE%25DF_%25C7%25D2%25B1%25EE%25BF%25E4.png&type=sc960_832">
+	              </a>   
+          </aside>
     <div id="wrap" class="wrap">
         <!-- 본문 -->
         <section id="container" class="container">
