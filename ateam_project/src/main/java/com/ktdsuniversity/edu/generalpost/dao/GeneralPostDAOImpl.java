@@ -171,4 +171,9 @@ public class GeneralPostDAOImpl extends SqlSessionDaoSupport
 	public List<GeneralPostVO> searchAllPost(SearchForumVO searchForumVO) {
 		return getSqlSession().selectList("searchAllPost", searchForumVO);
 	}
+
+	@Override
+	public int createNewFreeBoard(GeneralPostVO generalPostVO) {
+		return getSqlSession().insert("createNewFreeBoard", generalPostVO);
+	}
 }
