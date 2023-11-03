@@ -86,9 +86,6 @@ updateViewCount();
 <!-- 소스 다운 -->
 <script src="https://unpkg.com/@yaireo/tagify"></script>
 <link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
-
-
-
 <style type= "text/css">
 		#container{
 			width: 800px;
@@ -174,7 +171,6 @@ updateViewCount();
 			<div class = "grid">
 				<label for = "postTitle"> 제목 </label>
 				<input id = "postTitle" type = "text" name="postTitle" />
-				
 				<label for = "postContent"></label>
 				<textarea name="postContent" id="editor"></textarea>
 					<script>
@@ -319,13 +315,13 @@ updateViewCount();
 						]
 					});  
 					</script>
-				<div class = "btn-group">
-					<div class="right-align">
-						<input id="save_button" type="submit" value="저장" />
-					</div>
+			<div class = "btn-group">
+				<div class="right-align">
+					<input id="save_button" type="submit" value="저장" />
 				</div>
+			</div>
 		</div>
-	</div>	
-</form>
+	</form>
+</div>	
 </body>
 </html>

@@ -63,7 +63,6 @@
 		 WHERE GENERAL_POST_ID = #{_parameter}
 	</update>
 
-	<!-- 자유게시판 -->
 	<insert id="createNewBoard"
 			parameterType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
 		<selectKey keyProperty="generalPostId" resultType="string" order="BEFORE">
@@ -84,6 +83,31 @@
 		 ( #{generalPostId}
 	        , #{postWriter}
 			, #{boardId}
+			, #{postTitle}
+			, #{postContent}
+			, SYSDATE
+			, 0
+			, 0
+			, 'N' )
+	</insert>
+	
+	<!-- 자유게시판 등록 -->
+	<insert id="createNewFreeBoard"
+			parameterType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
+		INSERT INTO GENERAL_POST 
+			(GENERAL_POST_ID
+			, POST_WRITER
+			, BOARD_ID
+			, POST_TITLE
+			, POST_CONTENT
+			, POST_DATE
+			, LIKE_CNT
+			, VIEW_CNT
+			, DELETE_YN) 
+		VALUES 
+		 ( #{generalPostId}
+	        , #{postWriter}
+			, 'CC-20231017-000029'
 			, #{postTitle}
 			, #{postContent}
 			, SYSDATE

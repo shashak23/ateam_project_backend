@@ -54,7 +54,7 @@ private Logger log = LoggerFactory.getLogger(FreePostController.class);
 		return generalPostListVO;
 	}
 
-	@Transactional
+	
 	@Override
 	public boolean createNewBoard(GeneralPostVO generalPostVO) {
 		log.debug("2-----서비스---------------------------");		
@@ -64,6 +64,15 @@ private Logger log = LoggerFactory.getLogger(FreePostController.class);
 			hashtagVO.setGeneralPostId(generalPostVO.getGeneralPostId());
 			boardCount += generalPostHashtagDAO.createPostHashtag(hashtagVO);
 		}
+		return boardCount > 0;
+	}
+	
+	
+	@Override
+	public boolean createNewFreeBoard(GeneralPostVO generalPostVO) {
+		log.debug("2-----서비스---------------------------");		
+		int boardCount = generalPostDAO.createNewBoard(generalPostVO);
+		
 		return boardCount > 0;
 	}
 

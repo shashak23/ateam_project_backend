@@ -78,4 +78,6 @@ public interface GeneralPostService {
 	public List<GeneralPostVO> SearchFreeBoardRest(SearchForumVO searchForumVO);
 	
 	public List<GeneralPostVO> SearchQnaBoardRest(SearchForumVO searchForumVO);
+
+	public boolean createNewFreeBoard(GeneralPostVO generalPostVO);
 }

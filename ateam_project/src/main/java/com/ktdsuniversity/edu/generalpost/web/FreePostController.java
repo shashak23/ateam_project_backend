@@ -43,7 +43,7 @@ public class FreePostController {
 	// 전체조회
 	@GetMapping("/freeboard/list")
 	public ModelAndView freeBoardList(SearchForumVO searchForumVO) {
-		
+		log.debug("--1--리스트컨트롤러 도착--------");
 		searchForumVO.setBoardId("CC-20231017-000029");
 		GeneralPostListVO generalPostListVO = generalPostService.getAllBoard(searchForumVO);
 		ModelAndView view = new ModelAndView();
@@ -91,11 +91,12 @@ public class FreePostController {
 			modelAndView.addObject("generalPostVO", generalPostVO);
 			return modelAndView;
 		}
+		log.debug("--2--작성-컨트롤러 도착--------");
 
 		generalPostVO.setBoardId("CC-20231017-000029");
 		generalPostVO.setPostWriter(memberVO.getEmail());
 		// 게시글을 등록한다.
-		boolean isSuccess = generalPostService.createNewBoard(generalPostVO);
+		boolean isSuccess = generalPostService.createNewFreeBoard(generalPostVO);
 		if (isSuccess) {
 			modelAndView.setViewName("redirect:/freeboard/list");
 			return modelAndView;

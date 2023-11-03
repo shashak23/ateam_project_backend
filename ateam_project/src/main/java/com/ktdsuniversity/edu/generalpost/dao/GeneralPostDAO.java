@@ -19,8 +19,8 @@ public interface GeneralPostDAO {
 	public int getBoardAllCount(SearchForumVO searchForumVO);
 	// 조회수 
 	public int increaseViewCount(String generalPostId);
-
 	
+	public int createNewFreeBoard(GeneralPostVO generalPostVO);
 	
 	public List<GeneralPostVO> getAllBoard(String boardId);
 	
