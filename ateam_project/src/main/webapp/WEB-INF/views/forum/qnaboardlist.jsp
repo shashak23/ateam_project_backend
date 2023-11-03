@@ -197,7 +197,6 @@
                                         <th scope="col" class="table-header_02">제목</th>
                                         <th scope="col" class="table-header_03">등록자</th> <!-- 수정: 등호 추가 -->
                                         <th scope="col" class="table-header_04">등록일</th>
-                                        <th scope="col" class="table-header_05">조회수</th>
                                     </tr>
                                 </thead>
                                 <tbody id="user-list">
@@ -214,7 +213,6 @@
                                             </td>
                                             <td class="pratice_02"> ${qnaboard.memberVO.nickname}</td>
                                             <td class="pratice_03">${qnaboard.postDate}</td>
-                                            <td class="pratice_04">${qnaboard.viewCnt}</td>
                                         </tr>
                                     </c:forEach>
                                 </tbody>
@@ -313,7 +311,7 @@
 		    });
 		}
  */
-		
+	
        const userList = document.getElementById('user-list');
        const tableContainer = document.querySelector('.board_list_ty1');
        const loading = document.getElementById('loading');
