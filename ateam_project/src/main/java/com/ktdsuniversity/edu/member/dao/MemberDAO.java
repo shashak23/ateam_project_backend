@@ -112,4 +112,8 @@ public interface MemberDAO {
 	
 	public  SocialVO findkakao(HashMap<String, Object> userInfo);
 	
+	public int naverinsert(HashMap<String, Object> userInfo);
+	
+	public  SocialVO findnaver(HashMap<String, Object> userInfo);
+	
 }

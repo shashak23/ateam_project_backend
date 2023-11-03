@@ -179,4 +179,12 @@ public class MemberDAOImpl extends SqlSessionDaoSupport implements MemberDAO{
 	public SocialVO findkakao(HashMap<String, Object> userInfo) {
 		return getSqlSession().selectOne("findkakao",userInfo);
 	}
+	@Override
+	public int naverinsert(HashMap<String, Object> userInfo) {
+		return getSqlSession().insert("naverinsert",userInfo);
+	}
+	@Override
+	public SocialVO findnaver(HashMap<String, Object> userInfo) {
+		return getSqlSession().selectOne("findnaver",userInfo);
+	}
 }

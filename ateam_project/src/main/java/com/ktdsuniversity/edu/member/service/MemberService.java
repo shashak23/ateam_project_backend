@@ -123,4 +123,12 @@ public interface MemberService {
 	 * 카카오 로그아웃 
 	 */
 	public void kakaoLogout(String accessToken);
+	/**
+	 * 네이버 토큰 받아오기
+	 */
+	public String getNaverAccessToken(String authorizeCode);
+	/**
+	 * 네이버 유저정보 
+	 */
+	public SocialVO getNavertUserInfo(String accessToken);
 }
