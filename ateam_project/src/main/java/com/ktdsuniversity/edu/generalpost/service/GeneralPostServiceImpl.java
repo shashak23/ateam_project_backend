@@ -40,89 +40,25 @@ private Logger log = LoggerFactory.getLogger(FreePostController.class);
 	@Autowired
 	private GeneralPostHashtagDAO generalPostHashtagDAO;
 	
-	// 자유게시판
-	@Transactional
+	
 	@Override
-	public GeneralPostListVO getAllFreeBoard(SearchForumVO searchForumVO) {
-
+	public GeneralPostListVO getAllBoard(SearchForumVO searchForumVO) {
 		GeneralPostListVO generalPostListVO = new GeneralPostListVO();
 		
 		generalPostListVO.setBoardCnt( generalPostDAO.getBoardAllCount(searchForumVO));
 		if(searchForumVO == null) {
-			generalPostListVO.setGeneralPostList( generalPostDAO.getAllFreeBoard());
+			generalPostListVO.setGeneralPostList( generalPostDAO.getAllBoard(searchForumVO.getBoardId()));
 		} else {
-			generalPostListVO.setGeneralPostList( generalPostDAO.searchAllFreePost(searchForumVO));
+			generalPostListVO.setGeneralPostList( generalPostDAO.searchAllPost(searchForumVO));
 		}
 		return generalPostListVO;
 	}
 
 	@Transactional
 	@Override
-	public boolean createNewFreeBoard(GeneralPostVO generalPostVO) {
+	public boolean createNewBoard(GeneralPostVO generalPostVO) {
 		log.debug("2-----서비스---------------------------");		
-		int boardCount = generalPostDAO.createNewFreeBoard(generalPostVO);
-		
-		return boardCount > 0;
-	}
-
-	//@Transactional
-	@Override
-	public GeneralPostVO getOneFreeBoard(String generalPostId) {
-		int updateCount = generalPostDAO.increaseViewCount(generalPostId);
-		if (updateCount == 0) {
-			throw new IllegalArgumentException();
-		}else {
-			return generalPostDAO.getOneFreeBoard(generalPostId);
-		}
-	}
-	
-	@Transactional
-	@Override
-	public boolean updateOneFreeBoard(GeneralPostVO generalPostVO) {
-		int updateCount = generalPostDAO.updateOneFreeBoard(generalPostVO);
-		return updateCount > 0;
-	}
-
-	@Transactional
-	@Override
-	public boolean deleteOneFreeBoard(String generalPostId) {
-		int deleteCount = generalPostDAO.deleteOneFreeBoard(generalPostId);
-		
-		return deleteCount > 0;
-	}
-	@Transactional
-	@Override
-	public boolean likeFreeBoard(GeneralPostVO generalPostVO) {
-		int likeCount = generalPostDAO.updateLikeFreePost(generalPostVO);
-		return likeCount > 0;
-	}
-	
-	@Override
-	public List<GeneralPostVO> getAllFreeBoardRest() {
-		return generalPostDAO.getAllFreeBoardRest();
-	}
-	
-	// 질답게시판 
-	@Transactional
-	@Override
-	public GeneralPostListVO getAllQnABoard(SearchForumVO searchForumVO) {
-		log.debug("--2----서비스 도착---------------------------");
-		GeneralPostListVO generalPostListVO = new GeneralPostListVO();
-		
-		generalPostListVO.setBoardCnt( generalPostDAO.getBoardAllCount(searchForumVO));
-		if(searchForumVO == null) {
-			generalPostListVO.setGeneralPostList( generalPostDAO.getAllQnABoard());
-			
-		} else {
-			generalPostListVO.setGeneralPostList( generalPostDAO.searchAllQnAPost(searchForumVO));
-		}
-		return generalPostListVO;	
-	}
-	
-	@Transactional
-	@Override
-	public boolean createNewQnABoard(GeneralPostVO generalPostVO) {
-		int boardCount = generalPostDAO.createNewQnABoard(generalPostVO);
+		int boardCount = generalPostDAO.createNewBoard(generalPostVO);
 		List<HashtagVO> hashtagList = generalPostVO.getHashtagListVO();
 		for (HashtagVO hashtagVO : hashtagList) {
 			hashtagVO.setGeneralPostId(generalPostVO.getGeneralPostId());
@@ -133,43 +69,172 @@ private Logger log = LoggerFactory.getLogger(FreePostController.class);
 
 	@Transactional
 	@Override
-	public GeneralPostVO getOneQnABoard(String generalPostId) {
-
-		int boardCount = generalPostDAO.increaseViewCount(generalPostId);
-		if (boardCount == 0) {
+	public GeneralPostVO getOneBoard(String generalPostId) {
+		int updateCount = generalPostDAO.increaseViewCount(generalPostId);
+		if (updateCount == 0) {
 			throw new IllegalArgumentException();
 		}else {
-			return generalPostDAO.getOneQnABoard(generalPostId);
+			return generalPostDAO.getOneBoard(generalPostId);
 		}
-	
 	}
-	
+
 	@Transactional
 	@Override
-	public boolean updateOneQnABoard(GeneralPostVO generalPostVO) {
-		int updateCount = generalPostDAO.updateOneQnABoard(generalPostVO);
+	public boolean updateOneBoard(GeneralPostVO generalPostVO) {
+		int updateCount = generalPostDAO.updateOneBoard(generalPostVO);
 		return updateCount > 0;
 	}
 
 	@Transactional
 	@Override
-	public boolean deleteOneQnABoard(String generalPostId) {
-		int deleteCount = generalPostDAO.deleteOneQnABoard(generalPostId);
-		
+	public boolean deleteOneBoard(String generalPostId) {
+		int deleteCount = generalPostDAO.deleteOneBoard(generalPostId);
 		return deleteCount > 0;
 	}
 
 	@Transactional
 	@Override
-	public boolean likeQnABoard(GeneralPostVO generalPostVO) {
-		int likeCount = generalPostDAO.updateLikeQnAPost(generalPostVO);
+	public boolean likeBoard(GeneralPostVO generalPostVO) {
+		int likeCount = generalPostDAO.updateLikePost(generalPostVO);
 		return likeCount > 0;
 	}
-	
+
 	@Override
-	public List<GeneralPostVO> getAllQnaBoardRest() {
-		return generalPostDAO.getAllQnaBoardRest();
+	public List<GeneralPostVO> getAllBoardRest(String boardId) {
+		return generalPostDAO.getAllBoardRest(boardId);
 	}
+	
+	
+//	// 자유게시판
+//	@Transactional
+//	@Override
+//	public GeneralPostListVO getAllFreeBoard(SearchForumVO searchForumVO) {
+//
+//		GeneralPostListVO generalPostListVO = new GeneralPostListVO();
+//		
+//		generalPostListVO.setBoardCnt( generalPostDAO.getBoardAllCount(searchForumVO));
+//		if(searchForumVO == null) {
+//			generalPostListVO.setGeneralPostList( generalPostDAO.getAllFreeBoard());
+//		} else {
+//			generalPostListVO.setGeneralPostList( generalPostDAO.searchAllFreePost(searchForumVO));
+//		}
+//		return generalPostListVO;
+//	}
+//
+//	@Transactional
+//	@Override
+//	public boolean createNewFreeBoard(GeneralPostVO generalPostVO) {
+//		log.debug("2-----서비스---------------------------");		
+//		int boardCount = generalPostDAO.createNewFreeBoard(generalPostVO);
+//		
+//		return boardCount > 0;
+//	}
+//
+//	//@Transactional
+//	@Override
+//	public GeneralPostVO getOneFreeBoard(String generalPostId) {
+//		int updateCount = generalPostDAO.increaseViewCount(generalPostId);
+//		if (updateCount == 0) {
+//			throw new IllegalArgumentException();
+//		}else {
+//			return generalPostDAO.getOneFreeBoard(generalPostId);
+//		}
+//	}
+//	
+//	@Transactional
+//	@Override
+//	public boolean updateOneFreeBoard(GeneralPostVO generalPostVO) {
+//		int updateCount = generalPostDAO.updateOneFreeBoard(generalPostVO);
+//		return updateCount > 0;
+//	}
+//
+//	@Transactional
+//	@Override
+//	public boolean deleteOneFreeBoard(String generalPostId) {
+//		int deleteCount = generalPostDAO.deleteOneFreeBoard(generalPostId);
+//		
+//		return deleteCount > 0;
+//	}
+//	@Transactional
+//	@Override
+//	public boolean likeFreeBoard(GeneralPostVO generalPostVO) {
+//		int likeCount = generalPostDAO.updateLikeFreePost(generalPostVO);
+//		return likeCount > 0;
+//	}
+//	
+//	@Override
+//	public List<GeneralPostVO> getAllFreeBoardRest() {
+//		return generalPostDAO.getAllFreeBoardRest();
+//	}
+//	
+//	// 질답게시판 
+//	@Transactional
+//	@Override
+//	public GeneralPostListVO getAllQnABoard(SearchForumVO searchForumVO) {
+//		log.debug("--2----서비스 도착---------------------------");
+//		GeneralPostListVO generalPostListVO = new GeneralPostListVO();
+//		
+//		generalPostListVO.setBoardCnt( generalPostDAO.getBoardAllCount(searchForumVO));
+//		if(searchForumVO == null) {
+//			generalPostListVO.setGeneralPostList( generalPostDAO.getAllQnABoard());
+//			
+//		} else {
+//			generalPostListVO.setGeneralPostList( generalPostDAO.searchAllQnAPost(searchForumVO));
+//		}
+//		return generalPostListVO;	
+//	}
+//	
+//	@Transactional
+//	@Override
+//	public boolean createNewQnABoard(GeneralPostVO generalPostVO) {
+//		int boardCount = generalPostDAO.createNewQnABoard(generalPostVO);
+//		List<HashtagVO> hashtagList = generalPostVO.getHashtagListVO();
+//		for (HashtagVO hashtagVO : hashtagList) {
+//			hashtagVO.setGeneralPostId(generalPostVO.getGeneralPostId());
+//			boardCount += generalPostHashtagDAO.createPostHashtag(hashtagVO);
+//		}
+//		return boardCount > 0;
+//	}
+//
+//	@Transactional
+//	@Override
+//	public GeneralPostVO getOneQnABoard(String generalPostId) {
+//
+//		int boardCount = generalPostDAO.increaseViewCount(generalPostId);
+//		if (boardCount == 0) {
+//			throw new IllegalArgumentException();
+//		}else {
+//			return generalPostDAO.getOneQnABoard(generalPostId);
+//		}
+//	
+//	}
+//	
+//	@Transactional
+//	@Override
+//	public boolean updateOneQnABoard(GeneralPostVO generalPostVO) {
+//		int updateCount = generalPostDAO.updateOneQnABoard(generalPostVO);
+//		return updateCount > 0;
+//	}
+//
+//	@Transactional
+//	@Override
+//	public boolean deleteOneQnABoard(String generalPostId) {
+//		int deleteCount = generalPostDAO.deleteOneQnABoard(generalPostId);
+//		
+//		return deleteCount > 0;
+//	}
+//
+//	@Transactional
+//	@Override
+//	public boolean likeQnABoard(GeneralPostVO generalPostVO) {
+//		int likeCount = generalPostDAO.updateLikeQnAPost(generalPostVO);
+//		return likeCount > 0;
+//	}
+//	
+//	@Override
+//	public List<GeneralPostVO> getAllQnaBoardRest() {
+//		return generalPostDAO.getAllQnaBoardRest();
+//	}
 	
 	
 	// 내게시글 조회
@@ -214,4 +279,6 @@ private Logger log = LoggerFactory.getLogger(FreePostController.class);
 	public List<GeneralPostVO> SearchQnaBoardRest(SearchForumVO searchForumVO) {
 		return generalPostDAO.SearchQnaBoardRest(searchForumVO);
 	}
+
+	
 }

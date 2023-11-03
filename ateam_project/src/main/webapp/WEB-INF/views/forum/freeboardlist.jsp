@@ -173,7 +173,7 @@
               	검색
               </button>
               <button type="submit" class="btn btn_st_3">
-                  <a href="/qnaboard/create">글쓰기</a>
+                  <a href="/freeboard/create">글쓰기</a>
               </button>
           </div>
           </form>

@@ -17,35 +17,54 @@ import com.ktdsuniversity.edu.generalpost.vo.SearchForumVO;
 
 
 public interface GeneralPostService {
+	
 	// 자유게시판
-	public GeneralPostListVO getAllFreeBoard(SearchForumVO searchForumVO);
+	public GeneralPostListVO getAllBoard(SearchForumVO searchForumVO);
 
-	public boolean createNewFreeBoard(GeneralPostVO generalPostVO);
+	public boolean createNewBoard(GeneralPostVO generalPostVO);
 
-	public GeneralPostVO getOneFreeBoard(String generalPostId);
+	public GeneralPostVO getOneBoard(String generalPostId);
 	
-	public boolean updateOneFreeBoard(GeneralPostVO generalPostVO);
+	public boolean updateOneBoard(GeneralPostVO generalPostVO);
 		
-	public boolean deleteOneFreeBoard(String generalPostId);
+	public boolean deleteOneBoard(String generalPostId);
 	
-	public boolean likeFreeBoard(GeneralPostVO generalPostVO);
+	public boolean likeBoard(GeneralPostVO generalPostVO);
 	
-	public List<GeneralPostVO> getAllFreeBoardRest();
+	public List<GeneralPostVO> getAllBoardRest(String boardId);
 	
-	// 질답게시판
-	public GeneralPostListVO getAllQnABoard(SearchForumVO searchForumVO);
-
-	public boolean createNewQnABoard(GeneralPostVO generalPostId);
-
-	public GeneralPostVO getOneQnABoard(String generalPostId);
 	
-	public boolean updateOneQnABoard(GeneralPostVO generalPostVO);
-		
-	public boolean deleteOneQnABoard(String generalPostId);
-
-	public boolean likeQnABoard(GeneralPostVO generalPostVO);
 	
-	public List<GeneralPostVO> getAllQnaBoardRest();
+	
+//	// 자유게시판
+//	public GeneralPostListVO getAllFreeBoard(SearchForumVO searchForumVO);
+//
+//	public boolean createNewFreeBoard(GeneralPostVO generalPostVO);
+//
+//	public GeneralPostVO getOneFreeBoard(String generalPostId);
+//	
+//	public boolean updateOneFreeBoard(GeneralPostVO generalPostVO);
+//		
+//	public boolean deleteOneFreeBoard(String generalPostId);
+//	
+//	public boolean likeFreeBoard(GeneralPostVO generalPostVO);
+//	
+//	public List<GeneralPostVO> getAllFreeBoardRest();
+//	
+//	// 질답게시판
+//	public GeneralPostListVO getAllQnABoard(SearchForumVO searchForumVO);
+//
+//	public boolean createNewQnABoard(GeneralPostVO generalPostId);
+//
+//	public GeneralPostVO getOneQnABoard(String generalPostId);
+//	
+//	public boolean updateOneQnABoard(GeneralPostVO generalPostVO);
+//		
+//	public boolean deleteOneQnABoard(String generalPostId);
+//
+//	public boolean likeQnABoard(GeneralPostVO generalPostVO);
+//	
+//	public List<GeneralPostVO> getAllQnaBoardRest();
 
 	// 내 게시글 조회
 	public GeneralPostListVO getMyPost(GeneralPostVO generalPostVO);

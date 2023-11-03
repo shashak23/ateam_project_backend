@@ -169,7 +169,7 @@
                     <option value="content" ${searchForumVO.searchType eq 'content' ? 'selected' : ''}>내용</option>
                     <option value="writer" ${searchForumVO.searchType eq 'email' ? 'selected' : ''}>이메일</option>
                 </select>
-                <input type="text" class="sc_text" placeholder="검색어 입력" name="searchKeyword" value="${searchForumVO.searchKeyword}" />
+                <input type="text" class="sc_text" placeholder="검색어 입력" name="searchKeyword" value="${searchForumVO.searchType ne 'hashtagId' ? searchForumVO.searchKeyword : ''}" />
                 <button type="submit" class="btn btn_st_2">
                     <a href="#">조회</a>
                 </button>
@@ -273,14 +273,14 @@
    	  // 가운데에 해시태그 리스트 조회해주는 코드 
       $.get('/code/해시태그', function(response) {
         for (let i = 0; i < response.length; i++) {
-          let hash_template = `<button class="hashtag_incomplete">#\${response[i].codeContent}</button>`
+          let hash_template = `<a href="/qnaboard/list?hashtagId=\${response[i].codeId}" class="hashtag_incomplete">#\${response[i].codeContent}</button>`
           $('.hashtag_wrap').append(hash_template)
         }
         
       })   
       $().ready(function() {
 	  // 'codeContent' 클릭 시 이벤트 처리
-	  $('.hashtag_wrap').click(function() {
+	 /*  $('.hashtag_wrap').click(function() {
 	    $.get('/hashtag/list', function(response) {
 	      if (response.hashtagId != null) {
 	        // 해시태그 목록을 반복하여 처리
@@ -291,7 +291,7 @@
 	        console.log('무언가 잘못됐답니당 ~~~~~~~ ');
 	      }
 	    });
-	  });
+	  }); */
 	});
 
 		// 버튼 클릭 이벤트 핸들러 연결

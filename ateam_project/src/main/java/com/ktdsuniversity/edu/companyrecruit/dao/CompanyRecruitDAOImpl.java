@@ -40,7 +40,7 @@ public class CompanyRecruitDAOImpl extends SqlSessionDaoSupport
 
 	@Override
 	public int createNewBoard(CompanyRecruitVO companyRecruitVO) {
-		return getSqlSession().insert("createNewBoard", companyRecruitVO);
+		return getSqlSession().insert("com.ktdsuniversity.edu.companyrecruit.dao.CompanyRecruitDAO.createNewBoard", companyRecruitVO);
 	}
 
 	@Override
