@@ -229,6 +229,20 @@
     align-items: center;
     color: #191919;
     margin: 10px 0;
+    height: 32px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
+
+  .notice_modal .notice_group_content .notice_title,
+  .notice_modal .notice_group_content .notice_content {
+    font-weight: bold;
+  }
+
+  .notice_modal .notice_group_content.notice_expired .notice_title,
+  .notice_modal .notice_group_content.notice_expired .notice_content {
+    font-weight: normal;
   }
 
   .notice_modal .notice_group_content.notice_expired {
@@ -697,7 +711,7 @@
     </div>
   </div>
   <!-- 공지 입력 폼 -->
-  <form:form modelAttribute="noticeVO" method="post" action="/home/admin">
+  <form:form modelAttribute="noticeVO" method="post" action="/notice/create">
     <div class="create_container">
       <div class="btn-close">&times;</div>
       <h1 class="create_title">공지 생성</h1>
@@ -1003,10 +1017,21 @@
         let today = new Date()
         let noticeTemplate
 
-        if (today < endDate) {
+        if (today < endDate && notice.onOff === 'On') {
           noticeTemplate = `
           <div class="notice_group_content">
-            <button class="notice_on_btn">On</button>
+            <button class="notice_on_btn" data-id="\${notice.noticeId}">On</button>
+            <div class="notice_title">\${notice.postTitle}</div>
+            <div class="notice_content">\${notice.noticeContent}</div>
+            <button class="notice_modify_btn">수정</button>
+            <div class="notice_date">\${formattedStartDate}</div>
+            <div class="notice_date">\${formattedEndDate}</div>
+          </div>`
+        }
+        else if (today < endDate && notice.onOff === 'Off') {
+          noticeTemplate = `
+          <div class="notice_group_content">
+            <button class="notice_off_btn" data-id="\${notice.noticeId}">Off</button>
             <div class="notice_title">\${notice.postTitle}</div>
             <div class="notice_content">\${notice.noticeContent}</div>
             <button class="notice_modify_btn">수정</button>
@@ -1017,7 +1042,7 @@
         else {
           noticeTemplate = `
           <div class="notice_group_content notice_expired">
-            <button class="notice_off_btn">Off</button>
+            <button class="notice_off_btn" data-id="\${notice.noticeId}">Off</button>
             <div class="notice_title">\${notice.postTitle}</div>
             <div class="notice_content">\${notice.noticeContent}</div>
             <button class="notice_modify_btn">수정</button>
@@ -1035,20 +1060,48 @@
   loadAdminNoticeList()
 
   $(document).on('click', '.notice_off_btn', function() {
-    alert('기능 준비중')
+    let onoff = $(this).text()
+    let id = $(this).data('id')
+    let currBtn =$(this)
+
+    if ($(this).parent().hasClass('notice_expired')) {
+      alert('이 공지는 만료되었습니다. 날짜를 먼저 수정해주세요.')
+    }
+    else {
+      $.get(`/admin/notice/onoff/\${onoff}/\${id}`, function(response) {
+        $(currBtn).removeClass('notice_off_btn')
+        $(currBtn).addClass('notice_on_btn')
+        $(currBtn).text('On')
+        $('.notice_group_content').removeClass('.notice_expired')
+        console.log(response)
+        console.log(currBtn)
+      })
+    }
   })
 
   $(document).on('click', '.notice_on_btn', function() {
-    alert('기능 준비중')
+    let onoff = $(this).text()
+    let id = $(this).data('id')
+    let currBtn =$(this) 
+
+    $.get(`/admin/notice/onoff/\${onoff}/\${id}`, function(response) {
+      $(currBtn).removeClass('notice_on_btn')
+      $(currBtn).addClass('notice_off_btn')
+      $(currBtn).text('Off')
+      $('.notice_group_content').addClass('.notice_expired')
+      console.log(response)
+      console.log(currBtn)
+    })
   })
 
   $(document).on('click', '.notice_modify_btn', function() {
     alert('기능 준비중 기다리셈')
   })
 
+  // 신고 목록 조회
   function loadReportList() {
     $.get('/admin/reportlist', function(response) {
-      console.log(response)
+
     })
   }
 

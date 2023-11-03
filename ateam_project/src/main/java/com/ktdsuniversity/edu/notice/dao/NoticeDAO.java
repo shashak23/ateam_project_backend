@@ -19,4 +19,5 @@ public interface NoticeDAO {
 	public int createNotice(NoticeVO noticeVO);
 	public int updateNotice(NoticeVO noticeVO);
 	public int deleteNotice(String id);
+	public int toggleOnOff(NoticeVO noticeVO);
 }

@@ -7,7 +7,9 @@
 package com.ktdsuniversity.edu.notice.web;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,6 +25,7 @@ import com.ktdsuniversity.edu.member.vo.MemberVO;
 import com.ktdsuniversity.edu.notice.service.NoticeService;
 import com.ktdsuniversity.edu.notice.vo.NoticeListVO;
 import com.ktdsuniversity.edu.notice.vo.NoticeVO;
+import com.ktdsuniversity.edu.util.XssIgnoreUtil;
 
 @Controller
 public class NoticeController {
@@ -68,6 +71,9 @@ public class NoticeController {
 	@PostMapping("/notice/create")
 	public ModelAndView doCreateaNotify(@ModelAttribute NoticeVO noticeVO,
 										@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+		
+		XssIgnoreUtil.ignore(noticeVO);
+
 		ModelAndView mav = new ModelAndView();
 		
 		noticeVO.setPostWriter(memberVO.getEmail());
@@ -76,7 +82,7 @@ public class NoticeController {
 		System.out.println();
 		
 		if (isSuccess) {
-			mav.setViewName("redirect:/notice/list");
+			mav.setViewName("redirect:/home/admin");
 			return mav;
 		}
 		else {
@@ -141,5 +147,25 @@ public class NoticeController {
 		resultList.addAll(noticeListVO.getNoticeList());
 		
 		return resultList;
+	}
+	
+	@ResponseBody
+	@GetMapping("/admin/notice/onoff/{onOff}/{noticeId}")
+	public Map<String, Object> toggleOnOff(@PathVariable String onOff, @PathVariable String noticeId) {
+		NoticeVO noticeVO = new NoticeVO();
+		noticeVO.setOnOff(onOff);
+		noticeVO.setNoticeId(noticeId);
+		
+		boolean isSuccess = noticeService.toggleOnOff(noticeVO);
+		Map<String, Object> resultSet = new HashMap<>();
+		
+		if (isSuccess) {
+			resultSet.put("result", "success");
+			return resultSet;
+		}
+		else {
+			resultSet.put("result", "fail");
+			return resultSet;
+		}
 	}
 }

@@ -63,4 +63,8 @@ public class NoticeDAOImpl extends SqlSessionDaoSupport implements NoticeDAO {
 		return getSqlSession().update("deleteNotice", id);
 	}
 
+	@Override
+	public int toggleOnOff(NoticeVO noticeVO) {
+		return getSqlSession().update("toggleOnOff", noticeVO);
+	}
 }

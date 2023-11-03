@@ -8,7 +8,9 @@ package com.ktdsuniversity.edu.notice.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.ktdsuniversity.edu.exceptions.PageNotFoundException;
 import com.ktdsuniversity.edu.notice.dao.NoticeDAO;
 import com.ktdsuniversity.edu.notice.vo.NoticeListVO;
 import com.ktdsuniversity.edu.notice.vo.NoticeVO;
@@ -52,15 +54,32 @@ public class NoticeServiceImpl implements NoticeService{
 	public boolean createNotice(NoticeVO noticeVO) {
 		return noticeDAO.createNotice(noticeVO) > 0;
 	}
-
+	
+	@Transactional
 	@Override
 	public boolean updateNotice(NoticeVO noticeVO) {
 		return noticeDAO.updateNotice(noticeVO) > 0;
 	}
-
+	
+	@Transactional
 	@Override
 	public boolean deleteNotice(String id) {
 		return noticeDAO.deleteNotice(id) > 0;
 	}
-
+	
+	@Transactional
+	@Override
+	public boolean toggleOnOff(NoticeVO noticeVO) {
+		if (noticeVO.getOnOff().equals("On")) {
+			noticeVO.setOnOff("Off");
+			return noticeDAO.toggleOnOff(noticeVO) > 0;
+		}
+		else if (noticeVO.getOnOff().equals("Off")) {
+			noticeVO.setOnOff("On");
+			return noticeDAO.toggleOnOff(noticeVO) > 0;
+		}
+		else {
+			throw new PageNotFoundException("잘못된 접근입니다.");
+		}
+	}
 }

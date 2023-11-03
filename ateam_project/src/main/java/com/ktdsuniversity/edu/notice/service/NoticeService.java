@@ -17,4 +17,5 @@ public interface NoticeService {
 	public boolean createNotice(NoticeVO noticeVO);
 	public boolean updateNotice(NoticeVO noticeVO);
 	public boolean deleteNotice(String id);
+	public boolean toggleOnOff(NoticeVO noticeVO);
 }
