@@ -22,20 +22,21 @@ public class HashtagServiceImpl implements HashtagService{
 	@Autowired
 	private HashtagDAO hashtagDAO;
 
-	// 전체조회
+	// 해시태그별 목록 조회 
 	@Override
-	public HashtagListVO getAllHashtag() {
+	public HashtagListVO getAllHashtag(String hashtagId) {
+		// 해시태그 리스트를 가지는 객체 선언
 		HashtagListVO hashtagListVO = new HashtagListVO();
+		// 해시태그 총 건수 조회
+		hashtagListVO.setHashtagCnt(hashtagDAO.getHashtagCnt());
+		// 해시태그 목록 조회
 		hashtagListVO.setHashtagList(hashtagDAO.getAllHashtag());
 		return hashtagListVO;
-	}
+	}	
 
 	@Override
 	public List<HashtagVO> getHashtagList(String postId) {
 		return hashtagDAO.getHashtagList(postId);
 	}
-
-
-
 
 }

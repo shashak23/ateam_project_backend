@@ -300,11 +300,12 @@
 	             , GP.LIKE_CNT
 	             , GP.DELETE_YN
 	             , M.NICKNAME
+	             , GP.BOARD_ID
 	          FROM GENERAL_POST GP
 	         INNER JOIN MEMBER M
 	            ON M.EMAIL = GP.POST_WRITER
 	         WHERE GP.DELETE_YN = 'N'
-	           AND BOARD_ID = 'CC-20231017-000029'
+	           AND GP.BOARD_ID = 'CC-20231017-000029'
 	         <if test='searchKeyword != null and searchKeyword != ""'>
 			  <if test='searchType == "postTitle"'>
 			   AND GP.POST_TITLE LIKE '%' || #{searchKeyword} || '%'
@@ -332,11 +333,12 @@
 	             , GP.LIKE_CNT
 	             , GP.DELETE_YN
 	             , M.NICKNAME
+	             , GP.BOARD_ID
 	          FROM GENERAL_POST GP
 	         INNER JOIN MEMBER M
 	            ON M.EMAIL = GP.POST_WRITER
 	         WHERE GP.DELETE_YN = 'N'
-	           AND BOARD_ID = 'CC-20231017-000030'
+	           AND GP.BOARD_ID = 'CC-20231017-000030'
 	         <if test='searchKeyword != null and searchKeyword != ""'>
 			  <if test='searchType == "postTitle"'>
 			   AND GP.POST_TITLE LIKE '%' || #{searchKeyword} || '%'

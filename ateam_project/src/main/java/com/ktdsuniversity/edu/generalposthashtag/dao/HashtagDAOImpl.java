@@ -34,5 +34,10 @@ public class HashtagDAOImpl extends SqlSessionDaoSupport
 		return getSqlSession().selectList("getHastagList");
 	}
 
+	@Override
+	public int getHashtagCnt() {
+		return getSqlSession().selectOne("getHashtagCnt");
+	}
+
 
 }
