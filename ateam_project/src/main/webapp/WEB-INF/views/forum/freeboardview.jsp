@@ -161,13 +161,17 @@
        color: #888;
    }
    #like-btn, #reportFreeBoard  {
-      margin-left: 10px;
+      margin-left: 5px;
       background-color: var(--hashtag-blue);
       border: none;
       width: 70px;
       height: 30px;
       border-radius: 5px;
       cursor: pointer;
+   }
+   #reportFreeBoard {
+      position: relative;
+      right: 3px;
    }
    #button-id-list {
    bottom: -230px;
@@ -243,14 +247,14 @@
    }
    #btn-save-comment {
       position: relative;
-      bottom: -10px; 
-      border: none;
-      background-color:var(--hashtag-blue) ;
-      cursor: pointer;
-      width: 70px;
-      height: 30px;
-      left: 850px;
-      border-radius: 5px;
+    bottom: -11px;
+    border: none;
+    background-color: var(--hashtag-blue);
+    cursor: pointer;
+    width: 70px;
+    height: 30px;
+    left: 857px;
+    border-radius: 5px;
    }
    .comment{
       display: flex;

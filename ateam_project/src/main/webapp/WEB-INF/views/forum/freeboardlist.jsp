@@ -383,7 +383,7 @@
     disableOnInteraction: false, // 사용자 상호 작용 후에도 자동 전환을 유지할지 여부
   },
 
-  // navigation 속성은 이전/다음 버튼을 추가하는데 사용할 수 있습니다.
+  
   navigation: {
     nextEl: '.swiper-button-next',
     prevEl: '.swiper-button-prev'
