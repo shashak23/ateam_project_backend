@@ -161,8 +161,9 @@ public class MemberController {
 	}
 
 	@PostMapping("/member/signup")
-	public String doMemberSignUp(@Validated(MemberSignupGroup.class) @ModelAttribute GeneralMemberVO generalMemberVO,
-			BindingResult bindingResult, Model model) {
+	public String doMemberSignUp(@Validated(MemberSignupGroup.class) @ModelAttribute GeneralMemberVO generalMemberVO
+								 , BindingResult bindingResult
+								 , Model model) {
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("memberVO", generalMemberVO);
 			return "member/membersignup";

@@ -42,8 +42,7 @@ public class MemberVO {
 	private String confirmPw;
 	private String salt;
 	@NotBlank(groups= {MemberSignupGroup.class,
-					   MemberEditNickGroup.class},
-			   		   message = "닉네임을 입력해주세요.")
+					   MemberEditNickGroup.class})
 	@Size(groups= {MemberSignupGroup.class,
 			   	   MemberEditNickGroup.class}
 				   ,min = 3,max = 8,message = "닉네임은 3~8글자로 작성해주세요")
