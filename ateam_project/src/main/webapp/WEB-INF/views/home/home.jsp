@@ -320,9 +320,14 @@
   .recommend_container {
     display: flex;
     flex-direction: column;
-    border: 1px solid;
-    border-radius: 5px;
+    border: 1px solid var(--light-gray);
+    border-radius: 10px;
   }
+
+  .recommend_container:hover, .member_profile:hover {
+    box-shadow: 0 0 8px var(--gray);
+  }
+
   .title {
       margin-left: 10px;
       font-weight: bold;
@@ -344,15 +349,24 @@
   .member_profile{
       display: flex;
       flex-direction: column;
-      border: 1px solid;
-      border-radius: 5px;
+      border: 1px solid var(--light-gray);
+      border-radius: 10px;
       align-items: center;
+      margin: 5px;
       padding: 10px;
   }
 
   .member_profile > button {
       width: 120px;
+      color: var(--blue);
+      background-color: var(--light-gray);
   }
+
+  .member_profile > img {
+    width: 50px;
+    height: 50px;
+  }
+
 </style>
 
   <!-- 메인 컨텐츠 영역 -->
