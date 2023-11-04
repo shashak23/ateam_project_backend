@@ -37,10 +37,12 @@ public class AlgorithmExplanationController {
 
 	@GetMapping("/algorithm/explanation/list")
 	public String viewAlgorithmExplanationList(@ModelAttribute SearchAlgorithmExplanationVO searchAlgorithmExplanationVO
+											 , @ModelAttribute AlgorithmExplanationVO algorithmExplanationVO
 			                                 , Model model) {
 		AlgorithmExplanationListVO algorithmExplanationListVO = algorithmExplanationService.getAllAlgorithmExplanation(searchAlgorithmExplanationVO);
 		model.addAttribute("algorithmExplanationList", algorithmExplanationListVO);
 		model.addAttribute("searchAlgorithmExplanationVO", searchAlgorithmExplanationVO);
+		model.addAttribute("algorithmCategoryId",algorithmExplanationVO);	//남현욱 추가
 		return "company/algorithmexplanation/explanationlist";
 	}
 	
@@ -142,6 +144,17 @@ public class AlgorithmExplanationController {
 			return "redirect:/algorithm/explanation/view/{companyAlgorithmExplanationId}";
 		}
 		
-		
+	}
+	
+	/**
+	 * 남현욱 추가
+	 */
+	@GetMapping("/algorithm/explanation/detail/{algorithmCategoryId}")
+	public String viewAlgorithmExplanationDetail(@PathVariable String algorithmCategoryId
+											   , Model model) {
+		SearchAlgorithmExplanationVO searchAlgorithmExplanationVO = new SearchAlgorithmExplanationVO();
+		AlgorithmExplanationListVO algorithmExplanationListVO = algorithmExplanationService.getAllAlgorithmExplanation(searchAlgorithmExplanationVO);
+		model.addAttribute("algorithmExplanationList", algorithmExplanationListVO);
+		return "company/algorithmexplanation/explanationdetail";
 	}
 }

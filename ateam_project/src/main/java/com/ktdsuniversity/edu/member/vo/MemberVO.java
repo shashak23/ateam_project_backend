@@ -16,6 +16,7 @@ import com.ktdsuniversity.edu.myalgorithm.vo.MyAlgorithmVO;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 public class MemberVO {
 	@NotBlank(groups= {MemberSignupGroup.class,
@@ -28,6 +29,10 @@ public class MemberVO {
 	@NotBlank(groups= {MemberSignupGroup.class,
 				       MemberEditPWGroup.class},
 			message = "비밀번호를 입력해주세요.")
+	@Size(groups= {MemberSignupGroup.class,
+				   MemberEditPWGroup.class},
+			min = 5, max = 10,
+			message = "5~10글자까지만 입력 가능합니다.")
 	private String pw;
 	
 	@NotBlank(groups={MemberSignupGroup.class,
@@ -39,6 +44,9 @@ public class MemberVO {
 	@NotBlank(groups= {MemberSignupGroup.class,
 					   MemberEditNickGroup.class},
 			   		   message = "닉네임을 입력해주세요.")
+	@Size(groups= {MemberSignupGroup.class,
+			   	   MemberEditNickGroup.class}
+				   ,min = 3,max = 8,message = "닉네임은 3~8글자로 작성해주세요")
 	private String nickname;
 	private String infoAgreementYn;
 	private String profilePic;

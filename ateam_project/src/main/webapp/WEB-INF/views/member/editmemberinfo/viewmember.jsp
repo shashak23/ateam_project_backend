@@ -53,7 +53,7 @@ h3{
 		<div class="flex_button">
 			<c:if
 				test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
-				<button>마이페이지</button>
+				<button id="my_profile">마이페이지</button>
 				<button>북마크</button>
 				<button id="modify_info">정보 수정</button>
 				<button>내가 쓴 게시글</button>
@@ -131,5 +131,8 @@ h3{
 	                         'color': 'var(--blue)',
 	                         'box-shadow': 'none'})
 	})
+	 $("#my_profile").click(function() {
+	        redirectToURL(`/memberInfo/view/${memberVO.email}`);
+	    });
 </script>
 </html>

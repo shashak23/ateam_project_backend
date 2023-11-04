@@ -457,6 +457,9 @@ public class MemberController {
 			return "redirect:/memberInfo/modify/modify-profile-pic/"+ email;
 		}
 	}
+	/**
+	 * 카카오 로그인
+	 */
 	@GetMapping("/member/kakaoLogin")
 	public String kakaoLogin(@RequestParam(value = "code", required = false) String code, 
 			                 HttpSession session) {
@@ -469,6 +472,9 @@ public class MemberController {
 		return "redirect:/devground/home";
 		
 	}
+	/**
+	 * 카카오 로그아웃
+	 */
 	@GetMapping("/member/kakaoLogout")
 	public String logout(HttpSession session) {
 		String kakaoAccessToken = RequestUtil.getCookieValue("kakao_access_token");
@@ -479,6 +485,9 @@ public class MemberController {
 		RequestUtil.removeCookie("kakao_access_token");
 		return "redirect:/devground/home";
 	}
+	/**
+	 * 네이버 로그인
+	 */
 	@GetMapping("/member/naverLogin")
 	public String naverLogin(@RequestParam(value = "code", required = false) String code, 
 			                 HttpSession session) {
@@ -488,11 +497,17 @@ public class MemberController {
 		return "redirect:/devground/home";
 		
 	}
+	/**
+	 * 네이버 로그아웃
+	 */
 	@GetMapping("/member/naverLogout")
 	public String naverLogout(HttpSession session) {
 		session.invalidate();
 		return "redirect:/devground/home";
 	}
+	/**
+	 * 구글 로그인
+	 */
 	@GetMapping("/member/googleLogin")
 	public String googleLogin(@RequestParam(value = "code", required = false) String code, 
 			                 HttpSession session) {
@@ -502,6 +517,9 @@ public class MemberController {
 		return "redirect:/devground/home";
 		
 	}
+	/**
+	 * 구글 로그아웃
+	 */
 	@GetMapping("/member/googleLogout")
 	public String googleLogout(HttpSession session) {
 		session.invalidate();

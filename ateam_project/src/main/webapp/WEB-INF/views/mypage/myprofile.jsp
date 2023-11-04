@@ -55,6 +55,12 @@ background-color: var(--gray);
     width: 118px;
     height: 27px;
 }
+
+#container {
+  display: flex;
+  justify-content: center;
+  
+}
 /* 추가하기 */
 #insert_techstack, #addEducationButton,.addCareer,.region_create{
 	background-color: var(--gray);
@@ -567,6 +573,7 @@ position: absolute;
 	  </div>
 	  <div class="overlay"></div>
     </div>
+</div>
 <jsp:include page="../layout/footer.jsp" />
 </body>
 <script>
