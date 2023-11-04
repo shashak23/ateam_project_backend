@@ -465,8 +465,6 @@ public class MemberController {
 		RequestUtil.addCookie("kakao_access_token", accessToken);
 		
 		SocialVO social = memberService.getUserInfo(accessToken);
-		System.out.println("###access_Token#### : " + accessToken);
-//		SocialVO userInfo = memberService.getUserInfo(accessToken);
 		session.setAttribute("_KAKAO_USER_", social);
 		return "redirect:/devground/home";
 		
@@ -481,5 +479,32 @@ public class MemberController {
 		RequestUtil.removeCookie("kakao_access_token");
 		return "redirect:/devground/home";
 	}
-	
+	@GetMapping("/member/naverLogin")
+	public String naverLogin(@RequestParam(value = "code", required = false) String code, 
+			                 HttpSession session) {
+		String accessToken = memberService.getNaverAccessToken(code);
+		SocialVO social = memberService.getNavertUserInfo(accessToken);
+		session.setAttribute("_NAVER_USER_", social);
+		return "redirect:/devground/home";
+		
+	}
+	@GetMapping("/member/naverLogout")
+	public String naverLogout(HttpSession session) {
+		session.invalidate();
+		return "redirect:/devground/home";
+	}
+	@GetMapping("/member/googleLogin")
+	public String googleLogin(@RequestParam(value = "code", required = false) String code, 
+			                 HttpSession session) {
+		String accessToken = memberService.getGoogleAccessToken(code);
+		SocialVO social = memberService.getGoogleUserInfo(accessToken);
+		session.setAttribute("_GOOGLE_USER_", social);
+		return "redirect:/devground/home";
+		
+	}
+	@GetMapping("/member/googleLogout")
+	public String googleLogout(HttpSession session) {
+		session.invalidate();
+		return "redirect:/devground/home";
+	}
 }

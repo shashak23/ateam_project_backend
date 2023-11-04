@@ -285,7 +285,7 @@
                 // 댓글 목록 삭제.
                 $(".comment-items").html("");
 
-                // 댓글 조회.
+                
                 $.get("/qnaboard/view/comment/${generalPostId}", function(response) {               
                     // 댓글 목록을 response에서 받아와서 처리하는 부분
                     var replies = response.comments;
@@ -297,7 +297,7 @@
                             `<div class="comment"
                                data-comment-id="\${comment.generalCommentId}"
                                 style="padding-left: \${(comment.level - 1) * 40}px">
-                                <div class="author">\${comment.commentWriter}</div>
+                                <div class="author">\${comment.generalMemberVO.nickname}</div>
                                 <div class="recommend-count">추천수: \${comment.likeCnt}</div>
                                 <div class="datetime">
                                     <span class="crtdt">등록일: \${comment.postDate}</span>
@@ -306,25 +306,22 @@
                                         : ""}
                                 </div>
                                 <pre class="content">\${comment.commentContent}</pre>
-                                \${comment.commentWriter == "${sessionScope._LOGIN_USER_.email}" ?
-                                    '<div>' +
-                                    '<button class="recommend-comment">좋아요</button>'+
-                                    '<button class="update-comment">수정</button>'+
-                                    '<button class="delete-comment">삭제</button>'+
-                                    '</div>'
-                                    :                                    
-                                    `<div>
-                                        <button class="recommend-comment">좋아요</button>
-                                        <button class="update-comment">수정</button>
-                                        <button class="delete-comment">삭제</button>
-                                        <button class="report-comment" value="2">신고</button>
-                                        <div class="seperate-line"></div>
-
-                                    </div>`}
+                                \${comment.email == "${sessionScope._LOGIN_USER_.email}" ?
+                                	    `<div>
+                                	        <button class="recommend-comment">좋아요</button>
+                                	        <button class="update-comment">수정</button>
+                                	        <button class="delete-comment">삭제</button>
+                                	    </div>`
+                                	    :
+                                	    `<div>
+                                	        <button class="recommend-comment">좋아요</button>
+                                	        <button class="report-comment" value="2">신고</button>
+                                	        <div class="separate-line"></div>
+                                	    </div>`}
                             </div>`;
                         var commentDom = $(commentTemplate);
                   commentDom.find(".delete-comment").click(deleteComment);
-                  // 추천 버튼 클릭 이벤트 핸들러를 등록합니다.
+               		// 추천 버튼 클릭 이벤트 핸들러를 등록합니다.
                   commentDom.find(".recommend-comment").click(recommendComment);
                   commentDom.find(".update-comment").click(updateComment);
                   commentDom.find(".report-comment").click(reportComment);

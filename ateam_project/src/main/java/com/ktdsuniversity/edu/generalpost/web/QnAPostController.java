@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
@@ -46,9 +47,16 @@ public class QnAPostController {
 
 	// 전체조회 
 	@GetMapping("/qnaboard/list")
-	public ModelAndView qnaBoardList(SearchForumVO searchForumVO) {
-		log.debug("--1--컨트롤러도착---------------------------");
-		GeneralPostListVO generalPostListVO = generalPostService.getAllQnABoard(searchForumVO);
+	public ModelAndView qnaBoardList(SearchForumVO searchForumVO, @RequestParam(required = false) String hashtagId) {
+		log.debug("--1--컨트롤러도착---------------------------"+ hashtagId);
+		if (hashtagId != null && hashtagId.length() > 0) {
+			searchForumVO.setSearchType("hashtagId");
+			searchForumVO.setSearchKeyword(hashtagId);
+		}
+		
+		searchForumVO.setBoardId("CC-20231017-000030");
+		
+		GeneralPostListVO generalPostListVO = generalPostService.getAllBoard(searchForumVO);
 		ModelAndView view = new ModelAndView();
 		view.setViewName("forum/qnaboardlist");
 		view.addObject("generalPostListVO", generalPostListVO);
@@ -95,8 +103,9 @@ public class QnAPostController {
 			return modelAndView;
 		}
 		
+		generalPostVO.setBoardId("CC-20231017-000030");
 		// 게시글을 등록한다.
-		boolean isSuccess = generalPostService.createNewQnABoard(generalPostVO);
+		boolean isSuccess = generalPostService.createNewBoard(generalPostVO);
 		log.debug("서비스 실행");
 		if (isSuccess) {
 			modelAndView.setViewName("redirect:/qnaboard/list");
@@ -113,7 +122,7 @@ public class QnAPostController {
 	@GetMapping("/qnaboard/view/{generalPostId}")
 	public ModelAndView qnaBoardSingle(@PathVariable String generalPostId) {
 		ModelAndView view = new ModelAndView();
-		GeneralPostVO generalPostVO = generalPostService.getOneQnABoard(generalPostId);
+		GeneralPostVO generalPostVO = generalPostService.getOneBoard(generalPostId);
 		//XssIgnoreUtil.ignore(generalPostVO); // 들어오는 파라미터한테만 해야해요
 
 		log.debug("--1------컨트롤러---------------------------");
@@ -127,7 +136,7 @@ public class QnAPostController {
 	@GetMapping("/qnaboard/update/{generalPostId}")
 	public ModelAndView viewUpdatePage(@PathVariable String generalPostId) {
 		   // 요런식으로다가 서비스에서 -> DB에서 게시글 ID로 게시글 가져오는 쿼리 실행
-	      GeneralPostVO generalPostVO  = generalPostService.getOneQnABoard(generalPostId); 
+	      GeneralPostVO generalPostVO  = generalPostService.getOneBoard(generalPostId); 
 	      XssIgnoreUtil.ignore(generalPostVO); 
 	      ModelAndView view = new ModelAndView();
 	      view.setViewName("forum/qnaboardupdate");
@@ -149,7 +158,7 @@ public class QnAPostController {
 		ModelAndView view = new ModelAndView();
 		generalPostVO.setPostWriter(memberVO.getEmail());
 
-		boolean isSuccess = generalPostService.updateOneQnABoard(generalPostVO);
+		boolean isSuccess = generalPostService.updateOneBoard(generalPostVO);
 		if(isSuccess) {
 			// 게시글의 수정이 성공이라면
 			view.setViewName("redirect:/qnaboard/list");
@@ -182,11 +191,11 @@ public class QnAPostController {
 
 		ModelAndView view = new ModelAndView();
 		
-		GeneralPostVO origingeneralPostVO  = generalPostService.getOneQnABoard(generalPostVO.getGeneralPostId());		
+		GeneralPostVO origingeneralPostVO  = generalPostService.getOneBoard(generalPostVO.getGeneralPostId());		
 		log.debug("삭제여부 : " + origingeneralPostVO.getDeleteYn());
 
 		// 게시글을 등록한다.
-		boolean isSuccess = generalPostService.deleteOneQnABoard(origingeneralPostVO.getGeneralPostId());
+		boolean isSuccess = generalPostService.deleteOneBoard(origingeneralPostVO.getGeneralPostId());
 		if (isSuccess) {
 			view.setViewName("redirect:/qnaboard/list");
 			return view;
@@ -224,7 +233,7 @@ public class QnAPostController {
     public ModelAndView likeQnABoard(@ModelAttribute GeneralPostVO generalPostVO) {
 
 		ModelAndView view = new ModelAndView();
-		boolean isSuccess = generalPostService.likeQnABoard(generalPostVO);
+		boolean isSuccess = generalPostService.likeBoard(generalPostVO);
 		if(isSuccess) {
 			view.setViewName("redirect:/qnaboard/list");
 			return view;

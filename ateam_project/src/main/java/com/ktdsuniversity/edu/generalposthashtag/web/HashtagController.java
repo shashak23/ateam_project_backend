@@ -36,34 +36,21 @@ public class HashtagController {
 	@Autowired
     private HashtagService hashtagService;
 
-	// 해시태그 전체 조회
+	// 해시태그별 목록 조회
 	@GetMapping("/hashtag/list")
-	public ModelAndView hashtagList() {
-		HashtagListVO hashtagListVO = hashtagService.getAllHashtag();
-		
+	public ModelAndView qnaBoardSearchByHashtag() {
+		HashtagListVO hashtagListVO = new HashtagListVO();
 		ModelAndView view = new ModelAndView();
-		view.setViewName("hashtaglist");
+		view.setViewName("forum/qnaboardlist");
 		view.addObject("hashtagListVO", hashtagListVO);
 		return view;
 	}
-
+	
 	// 사이드바 해시태그 전체 조회
 	@ResponseBody
 	@GetMapping("/qnaboard/hashtag/{postId}")
 	public List<HashtagVO> getHashtagList(@PathVariable String postId){
 		return hashtagService.getHashtagList(postId);
 	}
-	
-	/*
-	 * // 게시글 상세조회 해시태그 조회
-	 * 
-	 * @GetMapping("/hashtag/{generalPostId}") public ModelAndView
-	 * hashtahSingle(@ModelAttribute GeneralPostVO generalPostVO , @PathVariable
-	 * String generalPostId , BindingResult bindingResult
-	 * , @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) { ModelAndView view =
-	 * new ModelAndView(); XssIgnoreUtil.ignore(generalPostVO);
-	 * generalPostVO.setPostWriter(memberVO.getEmail());
-	 * view.setViewName("forum/qnaboardview"); view.addObject("generalPostVO",
-	 * generalPostVO); return view; }
-	 */
+
 }

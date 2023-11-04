@@ -11,9 +11,7 @@ import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
 public class SearchForumVO extends AbstractSearchVO {
 
 	/**
-	 * 제목검색 혹은 내용검색을 하기위한 구분자.
-	 * 제목검색: subject
-	 * 내용검색: content
+	 * 제목검색 혹은 내용검색을 하기위한 구분자. 제목검색: subject 내용검색: content 작성자검색: writer
 	 */
 	private String searchType;
 
@@ -21,6 +19,8 @@ public class SearchForumVO extends AbstractSearchVO {
 	 * 검색어
 	 */
 	private String searchKeyword;
+
+	private String boardId;
 
 	public String getSearchType() {
 		return searchType;
@@ -38,5 +38,12 @@ public class SearchForumVO extends AbstractSearchVO {
 		this.searchKeyword = searchKeyword;
 	}
 
-	
+	public String getBoardId() {
+		return boardId;
+	}
+
+	public void setBoardId(String boardId) {
+		this.boardId = boardId;
+	}
+
 }

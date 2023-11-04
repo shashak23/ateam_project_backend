@@ -10,9 +10,9 @@ import com.ktdsuniversity.edu.generalposthashtag.vo.HashtagListVO;
 import com.ktdsuniversity.edu.generalposthashtag.vo.HashtagVO;
 
 public interface HashtagService {
-
-	public HashtagListVO getAllHashtag();
-
+	// 해시태그별 목록 조회
+	public HashtagListVO getAllHashtag(String hashtagId);
+	
 	public List<HashtagVO> getHashtagList(String postId);
 
 	

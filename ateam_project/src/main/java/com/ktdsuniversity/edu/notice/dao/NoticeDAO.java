@@ -15,8 +15,10 @@ public interface NoticeDAO {
 	public List<NoticeVO> getNoticeAllList();
 	public List<NoticeVO> getValidateList();
 	public List<NoticeVO> getInvalidateList();
+	public List<NoticeVO> getDeleteList();	
 	public NoticeVO getOneNotice(String id);
 	public int createNotice(NoticeVO noticeVO);
 	public int updateNotice(NoticeVO noticeVO);
 	public int deleteNotice(String id);
+	public int toggleOnOff(NoticeVO noticeVO);
 }

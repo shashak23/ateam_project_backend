@@ -28,7 +28,8 @@
 	</resultMap>
 	
 	<!-- 자유게시판 멤버, 해시태그, 게시글 -->
-	<select id="getAllFreeBoardRest"
+	<select id="getAllBoardRest"
+			parameterType="string"
 			resultMap="GeneralPostRestDAOMap">
 		SELECT GP.GENERAL_POST_ID 
 			 , GP.POST_TITLE 
@@ -48,10 +49,10 @@
 		    ON CC.CODE_ID = GPH.HASHTAG_ID
 		 INNER JOIN MEMBER M
 		    ON M.EMAIL = GP.POST_WRITER
-		 WHERE GP.BOARD_ID = 'CC-20231017-000029'
+		 WHERE GP.BOARD_ID = #{_parameter}
 	</select>
 	
-	<select id="getAllQnaBoardRest"
+	<!-- <select id="getAllQnaBoardRest"
 			resultMap="GeneralPostRestDAOMap">
 		SELECT GP.GENERAL_POST_ID 
 			 , GP.POST_TITLE 
@@ -72,7 +73,7 @@
 		 INNER JOIN MEMBER M
 		    ON M.EMAIL = GP.POST_WRITER
 		 WHERE GP.BOARD_ID = 'CC-20231017-000030'
-	</select>
+	</select> -->
 	
 	<select id="SearchFreeBoardRest"
 			parameterType="com.ktdsuniversity.edu.generalpost.vo.SearchForumVO"

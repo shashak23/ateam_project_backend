@@ -168,7 +168,7 @@ $().ready(function(){
 
 			const inputtag = document.createElement("input");
 			inputtag.type = "hidden";
-			inputtag.name = "hashtagVO["+hashtagsArray.indexOf(hashtag)+"].hashtagId";
+			inputtag.name = "hashtagListVO["+hashtagsArray.indexOf(hashtag)+"].hashtagId";
 			inputtag.value = hashtag.tagId;
 
             hashtagSpan.appendChild(removeButton);

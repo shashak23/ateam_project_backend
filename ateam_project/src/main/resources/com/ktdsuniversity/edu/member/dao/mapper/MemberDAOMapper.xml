@@ -237,14 +237,12 @@
 		   SET 	PROFILE_PIC='https://w7.pngwing.com/pngs/384/868/png-transparent-person-profile-avatar-user-basic-ui-icon.png'
 		 WHERE EMAIL=#{email}
 	</update>
-	    <select id="findkakao"
+	    <select id="findSocial"
               resultType="com.ktdsuniversity.edu.member.vo.SocialVO"
               parameterType="java.util.HashMap">
-        SELECT SOCIAL_ID
-             , SOCAIL_EMAIL
+        SELECT SOCAIL_EMAIL
              , SOCIAL_TYPE
              , SOCIAL_NICKNAME
-             , DELETE_YN
           FROM SOCIAL
          WHERE SOCAIL_EMAIL = #{email}
            AND SOCIAL_NICKNAME = #{nickname}
@@ -262,6 +260,40 @@
         ( 'SC-' || TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_SOCIAL_PK.NEXTVAL, 6, '0')
         , #{email}
         , 'kakao'
+        , #{nickname}
+        , 'N'
+        , #{accessToken})
+    </insert>
+    <insert id="naverinsert"
+            parameterType="java.util.HashMap">
+        INSERT INTO SOCIAL
+        ( SOCIAL_ID
+        , SOCAIL_EMAIL
+        , SOCIAL_TYPE
+        , SOCIAL_NICKNAME
+        , DELETE_YN
+        , SOCIAL_TOKEN)    
+        VALUES
+        ( 'SC-' || TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_SOCIAL_PK.NEXTVAL, 6, '0')
+        , #{email}
+        , 'naver'
+        , #{nickname}
+        , 'N'
+        , #{accessToken})
+    </insert>
+    <insert id="googleinsert"
+            parameterType="java.util.HashMap">
+        INSERT INTO SOCIAL
+        ( SOCIAL_ID
+        , SOCAIL_EMAIL
+        , SOCIAL_TYPE
+        , SOCIAL_NICKNAME
+        , DELETE_YN
+        , SOCIAL_TOKEN)    
+        VALUES
+        ( 'SC-' || TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_SOCIAL_PK.NEXTVAL, 6, '0')
+        , #{email}
+        , 'google'
         , #{nickname}
         , 'N'
         , #{accessToken})

@@ -42,6 +42,11 @@ public class NoticeDAOImpl extends SqlSessionDaoSupport implements NoticeDAO {
 	public List<NoticeVO> getInvalidateList() {
 		return getSqlSession().selectList("getInvalidateList");
 	}
+	
+	@Override
+	public List<NoticeVO> getDeleteList() {
+		return getSqlSession().selectList("getDeleteList");
+	}
 
 	@Override
 	public NoticeVO getOneNotice(String id) {
@@ -63,4 +68,8 @@ public class NoticeDAOImpl extends SqlSessionDaoSupport implements NoticeDAO {
 		return getSqlSession().update("deleteNotice", id);
 	}
 
+	@Override
+	public int toggleOnOff(NoticeVO noticeVO) {
+		return getSqlSession().update("toggleOnOff", noticeVO);
+	}
 }

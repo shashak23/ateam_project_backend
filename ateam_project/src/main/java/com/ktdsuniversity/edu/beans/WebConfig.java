@@ -46,9 +46,11 @@ public class WebConfig implements WebMvcConfigurer, WebSocketConfigurer  {
 		registry.addResourceHandler("/js/**")
 		        .addResourceLocations("classpath:/static/js/");
 		registry.addResourceHandler("/css/**")
-        .addResourceLocations("classpath:/static/css/");
+        		.addResourceLocations("classpath:/static/css/");
 		registry.addResourceHandler("/images/**")
-        .addResourceLocations("classpath:/static/images/");
+        		.addResourceLocations("classpath:/static/images/");
+		registry.addResourceHandler("/html/**")
+				.addResourceLocations("classpath:/static/html/");
 	}
 	
 	@Override
@@ -80,6 +82,7 @@ public class WebConfig implements WebMvcConfigurer, WebSocketConfigurer  {
 	      checkSessionExcludePatterns.add("/code/**");
 	      checkSessionExcludePatterns.add("/recruit/list");
 	      checkSessionExcludePatterns.add("/memberinfo/view/**");
+	      checkSessionExcludePatterns.add("/html/**");
 
 		
 		registry.addInterceptor(new CheckSessionInterceptor())

@@ -316,18 +316,17 @@ textarea {
                                 </div>
                                 <pre class="content">\${comment.commentContent}</pre>
                                 \${comment.email == "${sessionScope._LOGIN_USER_.email}" ?
-                                    '<div>' +
-                                    '<button class="recommend-comment">좋아요</button>' +
-                                    
-                                    '</div>'
-                                    :
-                                    `<div>
-                                        <button class="recommend-comment">좋아요</button>
-                                        <button class="update-comment">수정</button>
-                                        <button class="delete-comment">삭제</button>
-                                        <button class="report-comment" value="4">신고</button>
-                                        <div class="separate-line"></div>
-                                    </div>`}
+                                	    `<div>
+                                	        <button class="recommend-comment">좋아요</button>
+                                	        <button class="update-comment">수정</button>
+                                	        <button class="delete-comment">삭제</button>
+                                	    </div>`
+                                	    :
+                                	    `<div>
+                                	        <button class="recommend-comment">좋아요</button>
+                                	        <button class="report-comment" value="2">신고</button>
+                                	        <div class="separate-line"></div>
+                                	    </div>`}
                             </div>`;
                         var commentDom = $(commentTemplate);
                   commentDom.find(".delete-comment").click(deleteComment);

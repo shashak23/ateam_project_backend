@@ -23,6 +23,7 @@ public class NoticeVO {
 //	@FutureOrPresent(message = "마지막 날짜를 입력해주세요.")
 	private String releaseEndDate;
 	private String deleteYn;
+	private String onOff;
 	
 	private MemberVO memberVO;
 	
@@ -80,5 +81,11 @@ public class NoticeVO {
 	}
 	public void setMemberVO(MemberVO memberVO) {
 		this.memberVO = memberVO;
+	}
+	public String getOnOff() {
+		return onOff;
+	}
+	public void setOnOff(String onOff) {
+		this.onOff = onOff;
 	}
 }

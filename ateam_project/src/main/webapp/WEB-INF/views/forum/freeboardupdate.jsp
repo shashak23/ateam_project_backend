@@ -197,14 +197,13 @@
 	                    'MathType'
 	                ]
 	            });  
-		        </script>
-			<div class="btn-group">
-				<div class="right-align">
-					<input type="submit" value="저장" />
-				</div>
+		    	</script>
+		<div class = "btn-group">
+			<div class="right-align">
+				<input id="save_button" type="submit" value="저장" />
 			</div>
-		</div>
-	</form>
-	
+	   </div>
+	</div>
+</form>
 </body>
 </html>
