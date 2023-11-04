@@ -317,6 +317,42 @@
     box-shadow: 0 0 2px var(--dark-gray);
     cursor: pointer;
   }
+  .recommend_container {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid;
+    border-radius: 5px;
+  }
+  .title {
+      margin-left: 10px;
+      font-weight: bold;
+  }
+
+  .member_info_area {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      column-gap: 10px;
+      margin: 10px;
+  }
+/* 
+  .member_info_area {
+    display: flex;
+    justify-content: space-evenly;
+      margin: 10px;
+  } */
+
+  .member_profile{
+      display: flex;
+      flex-direction: column;
+      border: 1px solid;
+      border-radius: 5px;
+      align-items: center;
+      padding: 10px;
+  }
+
+  .member_profile > button {
+      width: 120px;
+  }
 </style>
 
   <!-- 메인 컨텐츠 영역 -->
@@ -423,6 +459,8 @@
     let nicknameList
     let nickname
     let email
+    let members
+    let page = 0
 
     // 댓글 개수 가져오기
     $.get('/home/maincontent/commentcnt', function(response_of_comment) {
@@ -437,10 +475,10 @@
     const loadContents = function() {
       $.get('/home/maincontent', function(response) {
         articles = response
-
+        //console.log(articles)
         all_count = response.length
         if (skip === 0) {
-          for (let i = skip; i < skip + 10; i++) {
+          for (let i = skip; i < skip + 5; i++) {
             article = articles[i]
 
             // 게시판의 타입 결정
@@ -519,9 +557,9 @@
               }
             })
             
-//             let followee_email = $('.follow_btn').val()
             // 팔로우 상태 가져오기
             $.get(`/follow/status/\${user_email}/\${article.postWriter}`, function(state) {
+
             	if(state.followYn === 'Y') {
             	templateDom.find('.follow_btn').css({'background-color':'var(--blue)', 'color':'var(--white)'}).addClass('follow_on')
             	templateDom.find('.follow_btn').prepend($(`<input type="hidden" class="followId" value="\${state.followId}"/>`))
@@ -546,19 +584,75 @@
                 }
               }
             })
+
             $('.body_left').append(templateDom)
 
-          }
+          }          
+          skip += 5
+
+          let userEmail = `${sessionScope._LOGIN_USER_}`
+
+
           
-          skip += 10
+          if (userEmail != '') {
+            let recommendTemplate = '';
+            recommendTemplate = `
+              <article class="recommend_container">
+              <div class="title">
+                  <h4>알 수도 있는 사람</h4>
+              </div>
+              <div class="member_info_area"></div>
+            </article>`
+  
+            $('.body_left').append(recommendTemplate)
+                       
+            function loadRecFollower() {
+              $.get(`/recommend/follower/\${user_email}`, function(response) {
+                let memberTemplate = '';
+                let recommendList = response.recommendList;
+                console.log(recommendList)
+                
+                if (page == 0) {
+                  for(let i = page; i < page + 3; i++) {
+                    let member = recommendList[i]
+                    console.log(member)
+                    const profilePic = member.memberVO.profilePic;
+                    const nickname = member.memberVO.nickname;
+                    const email = member.memberVO.email;
+                   
+                  memberTemplate = 
+                    `<div class="memberList">
+                        <div class="member_profile">
+                          <div>
+                            <img class="profile_pic" src="\${profilePic}" />
+                          </div>
+                          <div class="nickname">
+                            <p>\${nickname}</p>
+                          </div>
+                          <button class="follow_btn">팔로우
+                            <input type="hidden" class="followerEmail" value="${sessionScope._LOGIN_USER_.email}" />
+                            <input type="hidden" class="followeeEmail" value="\${email}"/>   
+                          </button>
+                        </div>
+                    </div>`
+    
+                  let memberTemplateDom = $(memberTemplate)
+    
+                  $('.member_info_area').append(memberTemplateDom)
+                  }
+                page += 3
+                }
+              })
+            }
+            loadRecFollower()
+          }
         }
-
-
+        //$('.rec_follow_btn').click(doFollow())
 
         $(window).scroll(function() {
           if ($(window).scrollTop() + $(window).height() >= $('body').height() - 200 && !loading) {
             if (skip < all_count) {
-              for (let i = skip; i < skip + 10; i++) {
+              for (let i = skip; i < skip + 5; i++) {
                 if (i < all_count) {
                   article = articles[i]
 
@@ -662,8 +756,63 @@
                   })
                 }
               }
-              skip += 10
+
+              skip += 5
+
+              let userEmail = `${sessionScope._LOGIN_USER_}`
+
+              if (userEmail != '') {
+                let recommendTemplate = '';
+                recommendTemplate = `
+                <article class="recommend_container">
+                  <div class="title">
+                      <h4>알 수도 있는 사람</h4>
+                  </div>
+                  <div class="member_info_area"></div>
+                </article>`
+      
+                $('.body_left').append(recommendTemplate)
+                
+                function loadRecFollower() {
+                  $.get(`/recommend/follower/\${user_email}`, function(response) {
+                    let memberTemplate = '';
+                    let recommendList = response.recommendList;
+                  
+                    for(let i = page; i < page + 3; i++) {
+                      let member = recommendList[i]
+                      //console.log(member)
+                      const profilePic = member.memberVO.profilePic;
+                      const nickname = member.memberVO.nickname;
+                      const email = member.memberVO.email;
+                    
+                      memberTemplate = 
+                        `<div class="memberList">
+                            <div class="member_profile">
+                              <div>
+                                <img class="profile_pic" src="\${profilePic}" />
+                              </div>
+                              <div class="nickname">
+                                <p>\${nickname}</p>
+                              </div>
+                              <button class="follow_btn">팔로우
+                                <input type="hidden" class="followerEmail" value="${sessionScope._LOGIN_USER_.email}" />
+                                <input type="hidden" class="followeeEmail" value="\${email}"/>   
+                              </button>
+                            </div>
+                        </div>`
+        
+                      let memberTemplateDom = $(memberTemplate)
+        
+                      $('.member_info_area').append(memberTemplateDom)
+                    
+                      page += 3
+                    }
+                  })
+                }
+                loadRecFollower()
+              }
             }
+            //$('.rec_follow_btn').click(doFollow())
           }
         })
 
@@ -709,41 +858,44 @@
           }
         })
         // 팔로우 토글
-        $(document).on('click', '.follow_btn', function(e) {
-        	let userEmail = `${sessionScope._LOGIN_USER_}`
-        	if (userEmail === '') {
-        		if(confirm('로그인이 필요한 서비스입니다. 로그인하시겠습니까?') ) {
-        			window.location.href="/member/auth"
-        		}
-        	}
-        	else {
-	       	  let content = {
-	            "follower": `${sessionScope._LOGIN_USER_.email}`,
-	            "followee": $(this).find(".followeeEmail").val(),
-	            "followId": $(e.currentTarget).find('.followId').val()
-	       	  }
-	       	  if ($(e.currentTarget).hasClass('follow_on')) {
-	            $.post('/unfollow/member', content, function(result) {
-	              $(e.currentTarget).removeClass('follow_on')
-	              $(e.currentTarget).css({'background-color':'var(--gray)', 'color':'var(--blue)'})
-	              $('.followId').remove()
-	            })
-	       	  }
-	       	  else {
-	            $.post('/follow/member', content, function(result) {
-
-	              if(result) {
-	                $(e.currentTarget).css({'background-color':'var(--blue)', 'color':'var(--white)'})
-	                $(e.currentTarget).addClass('follow_on')
-	                $('.follow_btn').prepend(`<input type="hidden" class="followId" value="\${result.followId}"/>`)
-	              }
-	              else {
-	                alert('처리하지 못했습니다.')
-	              }
-	            })
-	       	  }
-        	}
-        })
+        //function doFollow() {
+          $(document).on('click', '.follow_btn', function(e) {
+            let userEmail = `${sessionScope._LOGIN_USER_}`
+            if (userEmail === '') {
+              if(confirm('로그인이 필요한 서비스입니다. 로그인하시겠습니까?') ) {
+                window.location.href="/member/auth"
+              }
+            }
+            else {
+               let content = {
+                "follower": `${sessionScope._LOGIN_USER_.email}`,
+                "followee": $(e.currentTarget).find(".followeeEmail").val(),
+                "followId": $(e.currentTarget).find('.followId').val()
+               }
+               if ($(this).hasClass('follow_on')) {
+                $.post('/unfollow/member', content, function(result) {
+                  alert('팔로우를 취소합니다.')
+                  $(e.currentTarget).removeClass('follow_on')
+                  $(e.currentTarget).css({'background-color':'var(--gray)', 'color':'var(--blue)'})
+                  $('.followId').remove()
+                })
+               }
+               else {
+                $.post('/follow/member', content, function(result) {
+                  if(result) {
+                    alert('팔로우 합니다.')
+                    $(e.currentTarget).css({'background-color':'var(--blue)', 'color':'var(--white)'})
+                    $(e.currentTarget).addClass('follow_on')
+                    $('.follow_btn').prepend(`<input type="hidden" class="followId" value="\${result.followId}"/>`)
+                  }
+                  else {
+                    alert('처리하지 못했습니다.')
+                  }
+                })
+               }
+            }
+          })
+        //}
       })
     }
     loadContents()

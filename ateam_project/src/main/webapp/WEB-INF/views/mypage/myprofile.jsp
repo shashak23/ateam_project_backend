@@ -753,7 +753,6 @@ position: absolute;
 			  console.log(e.currentTarget)
 			  if ($(e.currentTarget).hasClass('follow_on')) {
 				$.post('/unfollow/member', content, function(result) {
-				  alert('언팔로우!')
 				  $(e.currentTarget).removeClass('follow_on')
 				  $(e.currentTarget).css({'background-color':'var(--white)', 'color':'var(--black)'})
 				  $('.followId').remove()
@@ -762,7 +761,6 @@ position: absolute;
 			  else {
 				$.post('/follow/member', content, function(result) {
 				   if(result) {
-					 alert('팔로우!')
 					 $(e.currentTarget).css({'background-color':'var(--blue)', 'color':'var(--white)'})
 					 $(e.currentTarget).addClass('follow_on')
 					 $('.follow_icon').prepend(`<input type="hidden" class="followId" value="\${result.followId}"/>`)

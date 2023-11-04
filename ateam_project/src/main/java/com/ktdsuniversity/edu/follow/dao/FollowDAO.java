@@ -24,4 +24,6 @@ public interface FollowDAO {
 	public int unFollow(SearchFollowVO searchFollowVO);
 	
 	public int toggleFollower(String followId);
+	
+	public List<FollowVO> getMutualMembers(String email);
 }
