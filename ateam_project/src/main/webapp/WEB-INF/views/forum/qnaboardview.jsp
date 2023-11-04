@@ -13,7 +13,7 @@
     <link rel="stylesheet" type="text/css" href="/css/style.css" />
     <script src="js/lib/jquery-3.7.1.js"></script>
     <jsp:include page="../layout/header.jsp"/>
-<title>Insert title here</title>
+<title>dev Ground</title>
 
 <style>
 
@@ -23,16 +23,12 @@ a:link, a:hover, a:visited, a:active {
 }
 
 .grid {
+   margin: 0 auto;
    display: grid;
    grid-template-columns: 80px 1fr;
    grid-template-rows: 28px 28px 28px 28px 28px 320px 1fr;
-   margin-left: 20px;
+   margin-left: 15px;
    border-top: 1px solid var(--light-gray);
-}
-
-.grid>.btn-group {
-   display: grid;
-   grid-column: 1/3;
 }
 
 .grid .right-align {
@@ -177,11 +173,10 @@ pre.content {
 
 }
 #button-id-list {
-   bottom: 50px;
-   position: absolute;
-   left: 900px;
-   margin-left: 10px;
-   background-color: var(--light-blue);
+   position: relative;
+   left:930px; 
+   top: 177px;
+   background-color: var(--hashtag-blue);
    border: none;
    width: 70px;
    height: 30px;
@@ -189,9 +184,9 @@ pre.content {
    cursor: pointer;
 
 }
-.main_Container {
-      position: relative;
-      left: 500px;
+.main_container {
+      margin: 0 auto;
+      margin-right: 21%;
       border-radius: 10px;
       border: 1px solid var(--light-gray);
       margin-top: 130px;
@@ -204,7 +199,14 @@ pre.content {
       margin-bottom: 10px;
       position: relative;
       left: 30px;
+   
    }
+   .btn_controller {
+   margin: 0 auto;
+   margin-left: 1430px;
+   position: relative;
+   top: 120px;
+}
 
 
 h1 {
@@ -259,7 +261,7 @@ textarea {
    cursor: pointer;
    width: 70px;
    height: 30px;
-   left: 930px;
+   left: 855px;
    border-radius: 5px;
 }
 .comment{
@@ -283,9 +285,20 @@ textarea {
    height: 1px;
    margin: 10px 0px 7px 0px;
 }
-#update-link #delete-link {
-   margin-left: 5000px;
+#btn-group {
+  
+   margin: 0 auto;
+   margin-right: 10px;
+
 }
+#btn-controller_1 {
+   
+   margin: 0 auto;
+   margin-left: 1430px;
+   position: relative;
+   top: 120px;
+}
+
 
 
 </style>
@@ -494,21 +507,18 @@ textarea {
 </script>
 </head>
 <body>
-<div class="main_Container">
-	<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq generalPostVO.postWriter}">					
-		<button id="update-link" onclick="location.href='/qnaboard/update/${generalPostId}'">수정</button>
-		<button id="delete-link" onclick="location.href='/qnaboard/delete/${generalPostId}'">삭제</button>
+   <div id="btn-controller_1">					
+		<a id="update-link" onclick="location.href='/qnaboard/update/${generalPostId}'">수정</a>
+		<a id="delete-link" onclick="location.href='/qnaboard/delete/${generalPostId}'">삭제</a>
+   </div>
+<div class="main_container">
+	<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq generalPostVO.postWriter}">  
 	</c:if>
    <p class="qna_Title">질답게시판 > </p>
    <label for="postTitle"></label>
          <div id="title_Name">${generalPostVO.postTitle}</div>
-
-   <!-- <h1>[스프링부트] 스프링 부트 3 자바 백엔드 개발 입문이요</h1> -->
-   
-
    <!-- 목록보기 -->
-   <button id="button-id-list" onclick="window.location.href='/qnaboard/list'">목록</button>
-   
+  
    <div id="move_button">
    <!-- 좋아요 기능 -->
    <button id="like-btn">좋아요</button>
@@ -589,6 +599,7 @@ textarea {
       <div class="comment-header">
          <h3>댓글</h3>
       </div>
+      <button id="button-id-list" onclick="window.location.href='/qnaboard/list'">목록</button>
       <div class="write-comment">
             <textarea id="txt-comment" placeholder="의견을 입력하세요" maxlength="500"></textarea>
             <button id="btn-save-comment" type="submit">등록</button>
