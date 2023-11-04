@@ -130,11 +130,9 @@
 		justify-content: center;
 		width:300px;
 		padding-right: 30px;
-		
 	}
 
 	#toolbar{
-		width: 300px;
 		position: fixed;
 		margin: 25px 0px 0px 20px;
 		width: 200px;
@@ -175,7 +173,6 @@
 	#container{
 		width: 1000px;
 		margin: 40px 0px 100px 0px;
-		/* margin:0 auto; */
 		display: flex;
 	}
 
@@ -191,6 +188,15 @@
 		height:60px
 	}
 
+	.resetIcon{
+		width: 35px;
+		height: 34px;
+		background-color: transparent;
+		position: absolute;
+		top: 551px;
+		left: 175px;
+	}
+
 	h3{
 		margin-top: 170px;
 	}
@@ -201,10 +207,9 @@
 
 	.table {
 		border-collapse: collapse;
-		
 		font-size: 14px;
 		width:1000px;
-		margin-bottom: 100px;
+		margin: 50px 0px 100px 0px
 	}
 	table.table > thead > tr {
 		background-color: #FFF;
@@ -248,24 +253,6 @@
    		cursor: pointer;
 		/* transition: box-shadow 0.1s ease; */
 	}
-
-	/* #upload:hover{
-		box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); 
-	} */
-
-	/* .search_area > #search-form > #companyName{
-		font-weight: bold;
-		margin-top: 30px;
-		margin-bottom: 5px;
-	} */
-
-	.search_area > #search-form > #search_items > .gohome .reset{	
-		height:40px;
-		width:40px;	
-		vertical-align: middle; 
-  		margin-right: 5px; 
-	}
-
 	.button_list{
 		display: flex;
 		margin-top: 20px;
@@ -273,8 +260,8 @@
 
 	.btn_st_2{
 		position: absolute;
-		left: 155px;
-    	bottom: 15px;
+		left: 125px;
+		bottom: 15px;
 		width: 70px;
 		height: 30px;
 		border-radius: 5px;
@@ -282,21 +269,18 @@
 		margin-left: 5px;
 		border: none;
 		background-color: transparent;
+		opacity: 0.4;
 	}
 
 	.sc_text{
-		/* margin-bottom: 110px; */
 		padding:6px;
+		width: 165px;
 	}
 
-	.reset{
-		background-color: var(--light-blue);
-		border: none;
-		width: 70px;
-		height: 30px;
-		border-radius: 5px;
-		cursor: pointer;
-		margin-left: 5px;
+	.resetLink{
+		width: 30px;
+   		height: 30px;
+		margin-left: 30px;
 	}
 
 	#spaceBottom{
@@ -333,9 +317,6 @@
 							<div><input type="checkbox" name="algorithmTierList" value="Lv.4"/><label for="Lv.4">Lv.4</label></div>
 							<div><input type="checkbox" name="algorithmTierList" value="Lv.5"/><label for="Lv.5">Lv.5</label></div>
 						</div>
-						<!-- <div id="companyName">
-							<label  for="company"></label>
-						</div> -->
 			
 						<div class="button_list">   
 							<!-- <input autocomplete="off" class="sc_text" type="text" placeholder="검색어 입력" name="searchKeyword" list="nicList" />
@@ -346,12 +327,10 @@
 								<img src="/images/search.svg" alt="search">
 								<!-- <a href="#" id="search-btn">조회</a> -->
 							</button>
-							<button class="reset">
-								<a href="/algorithm/question/list">초기화</a>
-							</button>
-							<!-- <button type="submit" class="btn_st_3">
-								<a href="/freeboard/create">등록</a>
-							</button> -->
+								
+								<a href="/algorithm/question/list" class="resetLink">
+									<img class="resetIcon" src="/images/reset.png" alt="reset">
+								</a>									
 						</div>
 						
 			
