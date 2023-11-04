@@ -592,62 +592,67 @@
 
           let userEmail = `${sessionScope._LOGIN_USER_}`
 
-
-          
           if (userEmail != '') {
             let recommendTemplate = '';
-            recommendTemplate = `
-              <article class="recommend_container">
-              <div class="title">
-                  <h4>알 수도 있는 사람</h4>
-              </div>
-              <div class="member_info_area"></div>
-            </article>`
-  
-            $('.body_left').append(recommendTemplate)
-                       
+
             function loadRecFollower() {
               $.get(`/recommend/follower/\${user_email}`, function(response) {
-                let memberTemplate = '';
                 let recommendList = response.recommendList;
                 console.log(recommendList)
-                
-                if (page == 0) {
-                  for(let i = page; i < page + 3; i++) {
-                    let member = recommendList[i]
-                    console.log(member)
-                    const profilePic = member.memberVO.profilePic;
-                    const nickname = member.memberVO.nickname;
-                    const email = member.memberVO.email;
-                   
-                  memberTemplate = 
-                    `<div class="memberList">
-                        <div class="member_profile">
-                          <div>
-                            <img class="profile_pic" src="\${profilePic}" />
-                          </div>
-                          <div class="nickname">
-                            <p>\${nickname}</p>
-                          </div>
-                          <button class="follow_btn">팔로우
-                            <input type="hidden" class="followerEmail" value="${sessionScope._LOGIN_USER_.email}" />
-                            <input type="hidden" class="followeeEmail" value="\${email}"/>   
-                          </button>
-                        </div>
-                    </div>`
-    
-                  let memberTemplateDom = $(memberTemplate)
-    
-                  $('.member_info_area').append(memberTemplateDom)
-                  }
-                page += 3
-                }
+                const totalMembers = recommendList.length;
+                console.log("총 추천수 :" + totalMembers)
+                console.log("페이지번호 :" + page)
+
+                if (totalMembers > 0) {
+                  recommendTemplate = `
+                    <article class="recommend_container">
+                      <div class="title">
+                          <h4>알 수도 있는 사람</h4>
+                      </div>
+                      <div class="member_info_area"></div>
+                    </article>`
+        
+                  $('.body_left').append(recommendTemplate)
+
+                  if (page < totalMembers ) {
+                    let memberTemplate = '';
+                    for(let i = page; i < page + 3; i++) {
+                      if(i < totalMembers) {
+                        let member = recommendList[i]
+                        console.log(member)
+                        const profilePic = member.memberVO.profilePic;
+                        const nickname = member.memberVO.nickname;
+                        const email = member.memberVO.email;
+                       
+                      memberTemplate += 
+                        `<div class="memberList">
+                            <div class="member_profile">
+                              <div>
+                                <img class="profile_pic" src="\${profilePic}" />
+                              </div>
+                              <div class="nickname">
+                                <p>\${nickname}</p>
+                              </div>
+                              <button class="follow_btn">팔로우
+                                <input type="hidden" class="followerEmail" value="${sessionScope._LOGIN_USER_.email}" />
+                                <input type="hidden" class="followeeEmail" value="\${email}"/>   
+                              </button>
+                            </div>
+                        </div>`
+        
+                      // let memberTemplateDom = $(memberTemplate)
+  
+                      }
+                    } 
+                    $('.member_info_area').append(memberTemplate)
+                    page += 3
+                  } 
+                }    
               })
             }
             loadRecFollower()
           }
         }
-        //$('.rec_follow_btn').click(doFollow())
 
         $(window).scroll(function() {
           if ($(window).scrollTop() + $(window).height() >= $('body').height() - 200 && !loading) {
@@ -763,56 +768,63 @@
 
               if (userEmail != '') {
                 let recommendTemplate = '';
-                recommendTemplate = `
-                <article class="recommend_container">
-                  <div class="title">
-                      <h4>알 수도 있는 사람</h4>
-                  </div>
-                  <div class="member_info_area"></div>
-                </article>`
-      
-                $('.body_left').append(recommendTemplate)
-                
                 function loadRecFollower() {
                   $.get(`/recommend/follower/\${user_email}`, function(response) {
-                    let memberTemplate = '';
                     let recommendList = response.recommendList;
+                    const totalMembers = recommendList.length;
+                    console.log("총 추천수 :" + totalMembers)
+                    console.log("페이지번호 :" + page)
+
+                    if (totalMembers > 0 && totalMembers >= page) {
+                      recommendTemplate = `
+                      <article class="recommend_container">
+                        <div class="title">
+                            <h4>알 수도 있는 사람</h4>
+                        </div>
+                        <div class="member_info_area2"></div>
+                      </article>`
+            
+                      $('.body_left').append(recommendTemplate)
                   
-                    for(let i = page; i < page + 3; i++) {
-                      let member = recommendList[i]
-                      //console.log(member)
-                      const profilePic = member.memberVO.profilePic;
-                      const nickname = member.memberVO.nickname;
-                      const email = member.memberVO.email;
-                    
-                      memberTemplate = 
-                        `<div class="memberList">
-                            <div class="member_profile">
-                              <div>
-                                <img class="profile_pic" src="\${profilePic}" />
-                              </div>
-                              <div class="nickname">
-                                <p>\${nickname}</p>
-                              </div>
-                              <button class="follow_btn">팔로우
-                                <input type="hidden" class="followerEmail" value="${sessionScope._LOGIN_USER_.email}" />
-                                <input type="hidden" class="followeeEmail" value="\${email}"/>   
-                              </button>
-                            </div>
-                        </div>`
-        
-                      let memberTemplateDom = $(memberTemplate)
-        
-                      $('.member_info_area').append(memberTemplateDom)
-                    
-                      page += 3
+                      
+                      if(page < totalMembers) {
+                        let memberTemplate = '';
+                        for(let i = page; i < page + 3; i++) {
+                          if(i < totalMembers) {
+                            let member = recommendList[i]
+                            //console.log(member)
+                            const profilePic = member.memberVO.profilePic;
+                            const nickname = member.memberVO.nickname;
+                            const email = member.memberVO.email;
+                          
+                            memberTemplate = 
+                              `<div class="memberList">
+                                  <div class="member_profile">
+                                    <div>
+                                      <img class="profile_pic" src="\${profilePic}" />
+                                    </div>
+                                    <div class="nickname">
+                                      <p>\${nickname}</p>
+                                    </div>
+                                    <button class="follow_btn">팔로우
+                                      <input type="hidden" class="followerEmail" value="${sessionScope._LOGIN_USER_.email}" />
+                                      <input type="hidden" class="followeeEmail" value="\${email}"/>   
+                                    </button>
+                                  </div>
+                              </div>`
+  
+                              //let memberTemplateDom = $(memberTemplate)
+                          }         
+                        }
+                        $('.member_info_area2').append(memberTemplate)
+                        page += 3
+                      } 
                     }
                   })
                 }
                 loadRecFollower()
               }
             }
-            //$('.rec_follow_btn').click(doFollow())
           }
         })
 
