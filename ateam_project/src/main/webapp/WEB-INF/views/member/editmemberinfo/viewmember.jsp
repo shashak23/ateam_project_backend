@@ -47,12 +47,21 @@ h3{
 <link rel="stylesheet" type="text/css" href="/css/myProfile.css" />
 <!-- 자바스크립트 시작 -->
 <jsp:include page="../../layout/header.jsp" />
+<script type="text/javascript">
+	function redirectToURL(url) {
+	    window.location.href = url;
+	}
+$().ready(function() {
+	$("#my_profile").click(function() {
+		redirectToURL(`/memberinfo/view/${memberVO.email}`);
+	});
+});
+</script>
 </head>
 <body>
 	<div id="container">
 		<div class="flex_button">
-			<c:if
-				test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
+			<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
 				<button id="my_profile">마이페이지</button>
 				<button>북마크</button>
 				<button id="modify_info">정보 수정</button>

@@ -47,8 +47,20 @@
             })
         })
     })
+    $().ready(function() {
+	 $("#nickname").click(function() {
+ 	      $(".nickname_errors").hide();
+ 	  	 });
+});
 </script>
-
+<style type="text/css">
+.nickname_errors {
+	opacity: 0.8;
+	padding: 10px;
+	color: red;
+	font-size: 10pt;
+}
+</style>
 </head>
 <body>
 
@@ -61,7 +73,7 @@
 				<input type="text" name="nickname" id="nickname" value="${memberVO.nickname}">
 					<input id="btn-regist" disabled="disabled"
                        type="submit" value="수정" />
-				<form:errors path="nickname" element="div" cssClass="errors" />	
+					<form:errors path="nickname" element="div" cssClass="nickname_errors" />	
 	</form:form>
 </body>
 </html>

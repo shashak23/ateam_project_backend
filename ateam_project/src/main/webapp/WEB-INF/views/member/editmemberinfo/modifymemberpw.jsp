@@ -46,8 +46,23 @@ $().ready(function() {
 	        $(".err_password").text("* 5~10글자까지만 입력 가능합니다.");
 	    }
 	});
+	$("#pw").click(function() {
+	      $(".pw_errors").hide();
+	});
+	$("#confirmPw").click(function() {
+	      $(".confirmPw_errors").hide();
+	});
 });
 </script>
+<style type="text/css">
+.pw_errors,
+.confirmPw_errors {
+	opacity: 0.8;
+	padding: 10px;
+	color: red;
+	font-size: 10pt;
+}
+</style>
 </head>
 <body>
 
@@ -58,14 +73,14 @@ $().ready(function() {
 		<label for="pw">비밀번호</label>
 		<input type="password" name="pw" id="pw">
 		 <br><span class="err_password"></span>
-		<form:errors path="pw" element="div" cssClass="errors" />
+		<form:errors path="pw" element="div" cssClass="pw_errors" />
 		<div>
 		<label for="confirmPw">비밀번호 확인</label>
 		<input id="confirmPw" type="password" name="confirmPw" />
 		<input id="btn-regist" type="submit" value="수정" />
 		 <br><span class="err_confirm_password"></span>
 		
-		<form:errors path="confirmPw" element="div" cssClass="errors" />
+		<form:errors path="confirmPw" element="div" cssClass="confirmPw_errors" />
 		</div>
 	</form:form>
 </body>
