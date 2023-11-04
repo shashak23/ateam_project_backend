@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <title>작업용 관리자 ui</title>
 <script src="/js/lib/jquery-3.7.1.js"></script>
-<script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <script src="https://npmcdn.com/flatpickr/dist/flatpickr.min.js"></script>
 <script src="https://npmcdn.com/flatpickr/dist/l10n/ko.js"></script>
@@ -317,7 +317,8 @@
   }
 
   .btn-close,
-  .notice_btn-close {
+  .notice_btn-close,
+  .notice_create_btn-close {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -466,7 +467,8 @@
     }
 
     .create_container,
-    .notice_view_container {
+    .notice_view_container,
+    .modify_container {
         visibility: hidden;
         position: fixed;
         top: 50%;
@@ -485,14 +487,16 @@
     }
 
     .create_container.active,
-    .notice_view_container.active {
+    .notice_view_container.active,
+    .modify_container.active {
 			visibility: visible;
 			opacity: 1;
 			transform: translate(-50%, -50%);
 	}
 
     .create_container > *,
-    .notice_view_container > * {
+    .notice_view_container > *,
+    .modify_container > * {
         margin-bottom: 10px;
     }
 
@@ -508,7 +512,9 @@
       text-align: center;
     }
 
-    .notice_view_overlay {
+    .notice_view_overlay,
+    .notice_create_overlay,
+    .notice_modify_overlay  {
       background-color: #47474754;
       position: fixed;
       width: 100%;
@@ -521,13 +527,16 @@
       z-index: 50;
     }
     
-    .notice_view_overlay.active {
+    .notice_view_overlay.active,
+    .notice_create_overlay.active,
+    .notice_modify_overlay.active {
       opacity: 1;
       pointer-events: all;
     }
 
     .btn-close,
-    .notice_btn-close {
+    .notice_btn-close,
+    .notice_modify_btn-close {
         position: absolute;
         top: 6px;
         right: 10px;
@@ -538,7 +547,8 @@
     }
 
     .btn-close:hover,
-    .notice_btn-close:hover {
+    .notice_btn-close:hover,
+    .notice_modify_btn-close:hover {
         color: #191919;
     }
 
@@ -546,7 +556,8 @@
         text-align: center;
     }
 
-    #postTitle {
+    #postTitle,
+    #postTitle_mdfy {
         border: 0px;
         background-color: #e9f3ff;
         width: 100%;
@@ -556,7 +567,8 @@
         color: #333;
     }
 
-    #noticeContent {
+    #noticeContent,
+    .notice_modify_content {
         border: 0px;
         background-color: #e9f3ff;
         width: 100%;
@@ -568,12 +580,16 @@
     }
 
     #postTitle::placeholder,
-    #noticeContent::placeholder {
+    #noticeContent::placeholder,
+    #postTitle_mdfy::placeholder,
+    .notice_modify_content::placeholder {
         color: #bbb;
     }
 
     #postTitle:focus::placeholder,
-    #noticeContent:focus::placeholder {
+    #noticeContent:focus::placeholder,
+    #postTitle_mdfy::placeholder,
+    #notice_modify_content::placeholder {
         visibility: hidden;
     }
 
@@ -584,7 +600,9 @@
     }
 
     .dateSelector1,
-    .dateSelector2 {
+    .dateSelector2,
+    .modify_dateSelector1,
+    .modify_dateSelector2 {
         width: 150px;
         height: 30px;
         outline: none;
@@ -603,7 +621,8 @@
         margin-top: 30px;
     }
 
-    .submit_btn {
+    .submit_btn,
+    .modify_submit_btn {
         background-color: #e9f3ff;
         border: 0px;
         padding: 5px 10px;
@@ -613,22 +632,13 @@
         text-align: center;
     }
 
-    .notice_create_overlay  {
-        background-color: #47474754;
-        position: fixed;
-        z-index: 50;
-        width: 100%;
-        height: 100vh;
-        top: 0;
-        left: 0;
-        transition: 0.5s;
-        opacity: 0;
-        pointer-events: none;
-    }
 
-    .notice_create_overlay.active {
-        opacity: 1;
-        pointer-events: all;
+
+    .notice_post_title_label,
+    .notice_post_content_label {
+      display: block;
+      margin-bottom: 10px;
+      color: #888;
     }
 
     .errors {
@@ -759,7 +769,7 @@
   <!-- 공지 입력 폼 -->
   <form:form modelAttribute="noticeVO" method="post" action="/notice/create">
     <div class="create_container">
-      <div class="btn-close">&times;</div>
+      <div class="notice_create_btn-close">&times;</div>
       <h1 class="create_title">공지 생성</h1>
       <div>
         <label for="postTitle" class="mb10">제목</label>
@@ -768,7 +778,7 @@
       </div>
       <label for="noticeContent" class="mb10">내용</label>
       <div>
-        <textarea name="noticeContent" id="editor" placeholder="내용을 입력해주세요."></textarea>
+        <textarea name="noticeContent" id="editor1" placeholder="내용을 입력해주세요."></textarea>
         <!-- <form:errors path="postTitle" element="div" cssClass="errors" /> -->
       </div>
       <div class="date_wrap">
@@ -787,37 +797,38 @@
   </form:form>
   <div class="notice_create_overlay"></div>
 
-    <!-- 공지 수정 폼 -->
-    <form:form modelAttribute="noticeVO" method="post" action="/notice/modify">
-      <div class="modify_container">
-        <div class="btn-close">&times;</div>
-        <h1 class="create_title">공지 수정</h1>
-        <div>
-          <label for="postTitle" class="mb10">제목</label>
-          <input type="text" name="postTitle" id="postTitle" placeholder="제목을 입력해주세요"/>
-          <!-- <form:errors path="postTitle" element="div" cssClass="errors" /> -->
-        </div>
-        <label for="noticeContent" class="mb10">내용</label>
-        <div>
-          <textarea name="noticeContent" id="editor" placeholder="내용을 입력해주세요."
-                    value="${noticeVO.noticeContent}"></textarea>
-          <!-- <form:errors path="postTitle" element="div" cssClass="errors" /> -->
-        </div>
-        <div class="date_wrap">
-          <label for="start-date">시작일</label>
-          <input class="dateSelector1" placeholder="시작 날짜" id="start-date"
-                  name="releaseStartDate" value="${noticeVO.releaseStartDate}"/>
-          <span>~</span>
-          <label for="end-date">종료일</label>
-          <input class="dateSelector2" placeholder="종료 날짜" id="end-date"
-                  name="releaseEndDate" value="${noticeVO.releaseEndDate}"/>
-        </div>
-        <div class="submit_btn_wrap">
-          <input type="submit" value="생성" class="submit_btn"/>
-        </div>
+  <!-- 공지 수정 폼 -->
+  <form:form modelAttribute="noticeVO" method="post" action="/notice/modify">
+    <div class="modify_container">
+      <input type="hidden" name="noticeId" class="notice_id">
+      <div class="notice_modify_btn-close">&times;</div>
+      <h1 class="create_title">공지 수정</h1>
+      <div>
+        <label for="postTitle" class="mb10">제목</label>
+        <input type="text" name="postTitle" id="postTitle_mdfy" class="notice_modify_title" placeholder="제목을 입력해주세요"/>
+        <!-- <form:errors path="postTitle" element="div" cssClass="errors" /> -->
       </div>
-    </form:form>
-    <div class="notice_create_overlay"></div>
+      <label for="noticeContent" class="mb10">내용</label>
+      <div>
+        <textarea name="noticeContent" id="editor2" class="notice_modify_content" placeholder="내용을 입력해주세요."
+                  value="${noticeVO.noticeContent}"></textarea>
+        <!-- <form:errors path="postTitle" element="div" cssClass="errors" /> -->
+      </div>
+      <div class="date_wrap">
+        <label for="start-date_mdfy">시작일</label>
+        <input class="modify_dateSelector1" placeholder="시작 날짜" id="start-date_mdfy"
+                name="releaseStartDate" value="${noticeVO.releaseStartDate}"/>
+        <span>~</span>
+        <label for="end-date_mdfy">종료일</label>
+        <input class="modify_dateSelector2" placeholder="종료 날짜" id="end-date_mdfy"
+                name="releaseEndDate" value="${noticeVO.releaseEndDate}"/>
+      </div>
+      <div class="submit_btn_wrap">
+        <input type="submit" value="수정" class="modify_submit_btn"/>
+      </div>
+    </div>
+  </form:form>
+  <div class="notice_modify_overlay"></div>
 
   <!-- 공지 조회 모달 -->
   <div class="notice_view_container">
@@ -1219,7 +1230,7 @@
     alert('삭제된 공지입니다.')
   })
 
-  // 공지 조회 기능(제목 클릭했을 때)
+  // 공지 조회 기능(제목 클릭)
   $(document).on('click', '.notice_title', function() {
     let id = $(this).data('id')
 
@@ -1237,25 +1248,58 @@
   })
 
   // 공지 수정 기능
-  $(document).on('click', '.notice_modify_btn', function() {
-    let id = $(this).data('id')
-    $.get(`/admin/notice/view/\${id}`, function(response) {
-      alert('곧 땡길 예정')
+  ClassicEditor.create(document.querySelector('#editor2'))
+  .then(editor => {
+    $(document).on('click', '.notice_modify_btn', function() {
+      $('.modify_container, .notice_modify_overlay').addClass('active')
+      let id = $(this).data('id')
+  
+      $.get(`/admin/notice/view/\${id}`, function(response) {
+        let startDate = new Date(response.releaseStartDate)
+        let startYear = startDate.getFullYear()
+        let startMonth = (startDate.getMonth() + 1).toString().padStart(2, '0')
+        let startDay = startDate.getDate().toString().padStart(2, '0')
+        let formattedStartDate = `\${startYear}-\${startMonth}-\${startDay}`
+  
+        let endDate = new Date(response.releaseEndDate)
+        let endYear = endDate.getFullYear()
+        let endMonth = (endDate.getMonth() + 1).toString().padStart(2, '0')
+        let endDay = endDate.getDate().toString().padStart(2, '0')
+        let formattedEndDate = `\${endYear}-\${endMonth}-\${endDay}`
+        
+        $('.modify_container').find('.notice_id').val(id)
+        $('.notice_modify_title').val(response.postTitle)
+        // $('.notice_modify_content').val(response.noticeContent)
+        $('.modify_dateSelector1').val(formattedStartDate)
+        $('.modify_dateSelector2').val(formattedEndDate)
+  
+        editor.setData(response.noticeContent)
+  
+  
+        $('.modify_container, .notice_modify_overlay').addClass('active')
+  
+        $('.notice_modify_btn-close, .notice_modify_overlay').click(function() {
+          $('.modify_container, .notice_modify_overlay').removeClass('active')
+        })
+      })
     })
+
   })
 
   // 공지 삭제 기능
   $(document).on('click', '.notice_delete_btn', function() {
     let noticeId = $(this).data('id')
     
-    $.get(`/notice/delete/\${noticeId}`, function(response) {
-      if (response.result === 'success') {
-        alert('성공했삼ㅋ')
-      }
-      else {
-        alert('실패했삼ㅋ')
-      }
-    })
+    if (confirm('정말 삭제하시겠습니까?')) {
+      $.get(`/notice/delete/\${noticeId}`, function(response) {
+        if (response.result === 'success') {
+          alert('삭제를 완료했습니다.')
+        }
+        else {
+          alert('삭제에 실패했습니다.')
+        }
+      })
+    }
   })
 
   // 신고 목록 조회
@@ -1346,6 +1390,16 @@
       minDate: 'today',
       local: 'ko'
   })
+
+  $('.modify_dateSelector1').flatpickr({
+      minDate: 'today',
+      local: 'ko'
+  })
+
+  $('.modify_dateSelector2').flatpickr({
+      minDate: 'today',
+      local: 'ko'
+  })
   // 달력 포맷 끝
 
   // 공지 생성 모달 실행을 위한 문장
@@ -1353,7 +1407,7 @@
       $('.create_container, .notice_create_overlay').addClass('active')
   })
 
-  $('.btn-close, .notice_create_overlay').click(function() {
+  $('.notice_create_btn-close, .notice_create_overlay').click(function() {
       $('.create_container, .notice_create_overlay').removeClass('active')
   })
 
@@ -1361,9 +1415,11 @@
   })
 
 // ck 에디터
-ClassicEditor.create( document.querySelector( '#editor' ), {
+ClassicEditor.create( document.querySelector( '#editor1' ), {
 language: "ko"
 })
+
+
 
 // 유효성 체크
 $('.submit_btn').addClass('inactive')

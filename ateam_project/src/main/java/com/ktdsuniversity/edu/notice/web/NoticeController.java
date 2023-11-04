@@ -112,7 +112,7 @@ public class NoticeController {
 		boolean isSuccess = noticeService.updateNotice(noticeVO);
 		
 		if (isSuccess) {
-			mav.setViewName("redirect:/notice/list");
+			mav.setViewName("redirect:/home/admin");
 			return mav;
 		}
 		else {
