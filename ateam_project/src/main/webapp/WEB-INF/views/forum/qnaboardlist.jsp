@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" id="viewport" content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, width=device-width"/>
-    <!-- <title>SnapChat</title> -->
+    <title>devGround</title>
    
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" type="text/css" href="/css/style.css" />
@@ -208,7 +208,45 @@
     margin: 0 auto;
     margin-left: 68px;
     width: 150px;
+   }.ranking_controller {
+    border: 1px solid var(--light-gray);
+    border-radius: 8px;
+    margin-right: 40px;
+   
    }
+   /* 그래프 */
+   .ranking_controller.expanded {
+    overflow: hidden;
+    height: 0;
+    transition: height 1s;
+}
+
+.ranking_controller.expanded.expanded {
+    height: 200px; /* 원하는 높이로 설정하세요. */
+    transition: height 1s;
+}
+
+.ranking_wrap_1 {
+    list-style: none;
+    padding: 0;
+}
+
+.ranking_wrap_1 li {
+    background-color: var(--default-color); /* 기본 배경색 */
+    margin-bottom: 5px;
+    transition: width 0.5s;
+}
+
+.ranking_wrap_1 li:hover {
+    background-color: var(--highlight-color); /* 마우스를 올렸을 때 배경색 변경 */
+}
+
+
+
+
+
+
+
     </style>
 </head>
 <body>
@@ -293,11 +331,18 @@
         <aside class="my-aside">
 	          <!-- 조회수순 랭킹 -->
 	          <h3 id="viewCnt">주간 질답 랭킹 ▶ </h3>
-	          <div class="view_ranking_wrap"></div>
-	          <h3 id="like_top">명예의 전당 ▶ </h3>
+              <div class="ranking_controller">
+	          <div class="view_ranking_wrap"></div>         
 	           <div class= "ranking_list">
 	              <ul class="ranking_wrap"></ul>
-	          </div>                       
+	          </div> 
+             </div>
+              <h3 id="like_top">명예의 전당 ▶ </h3>
+              <div class="ranking_controller expanded">
+                <div class="view_ranking_wrap_1">
+                    <ul class="ranking_wrap_1">
+                </div>
+              </div>
 	      </aside>
     </div>
    <jsp:include page="../layout/footer.jsp" />
@@ -379,6 +424,41 @@
 		    });
 		}
  */
+
+
+//  랭킹
+$(document).ready(function() {
+    // AJAX 요청을 통해 데이터 가져오기
+    $.get('/home/ranking/\${formattedMonday}', function(response) {
+        // 데이터를 가져왔을 때 실행되는 콜백 함수
+        if (response && response.data) {
+            const rankingData = response.data;
+
+            // rankingData를 이용하여 그래프를 생성하고 ranking_wrap_1에 추가
+            const rankingWrap = $('.ranking_wrap_1');
+            rankingWrap.empty(); // 기존 내용을 지우고 다시 생성
+
+            rankingData.forEach(item => {
+                const views = item.views;
+                const postTitle = item.postTitle;
+
+                // 그래프 항목 생성
+                const ranking_template = `
+                    <li>
+                        <a href="/qnaboard/view/${item.generalPostId}" target="_blank">${postTitle}</a>
+                    </li>`;
+                const ranking_templateDom = $(ranking_template);
+                ranking_templateDom.css('width', views + 'px');
+                rankingWrap.append(ranking_templateDom);
+            });
+
+            // 페이지가 로드될 때 랭킹 컨트롤러를 확장 (올라가도록)합니다.
+            $('.ranking_controller').addClass('expanded');
+        }
+    });
+});
+
+//랭킹
 	
        const userList = document.getElementById('user-list');
        const tableContainer = document.querySelector('.board_list_ty1');
