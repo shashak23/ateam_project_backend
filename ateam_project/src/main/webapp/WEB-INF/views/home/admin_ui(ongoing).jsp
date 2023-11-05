@@ -979,8 +979,8 @@
     <div class="report_view_grid">
       <label for="report_id">신고ID</label>
       <div class="detail_report_id"></div>
-      <label for="report_date">신고 날짜</label>
-      <div class="report_date"></div>
+      <label for="detail_report_date">신고 날짜</label>
+      <div class="detail_report_date"></div>
       <label for="report_member">신고한 유저</label>
       <div class="report_member">
         <div class="punishment_btn_wrap">
@@ -1556,8 +1556,8 @@
       $.get(`/admin/report/view/\${reportId}`, function(response) {
         $('.detail_report_id').html('')
         $('.detail_report_id').html(response.reportId)
-        $('.report_date').html('')
-        $('.report_date').html(response.reportDate)
+        $('.detail_report_date').html('')
+        $('.detail_report_date').html(response.reportDate)
         $('.report_member').contents().filter(function() {
           return this.nodeType === 3
         }).remove()
