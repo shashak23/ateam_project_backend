@@ -14,59 +14,61 @@
     <!-- jQuery UI DatePicker를 한국어로 설정 -->
    <script type="text/javascript">
     $().ready(function() {
-        $.datepicker.regional['ko'] = {
-            closeText: '닫기',
-            prevText: '이전달',
-            nextText: '다음달',
-            currentText: '오늘',
-            monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-            monthNamesShort: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
-            dayNames: ['일', '월', '화', '수', '목', '금', '토'],
-            dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
-            dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
-            weekHeader: '주',
-            dateFormat: 'yy-mm-dd',
-            firstDay: 0,
-            isRTL: false,
-            showMonthAfterYear: true,
-            yearSuffix: '년'
-        };
-        $.datepicker.setDefaults($.datepicker.regional['ko']);
-        
-        $(".date-picker").datepicker({
-            changeYear: true,
-            showButtonPanel: true,
-            yearRange: "1900:+0",
-            dateFormat: "yy-mm-dd"
-        });
-        
-        $("#openPopupButton").click(function() {
-            $("#popup").dialog({
-                width: 400,
-                modal: true
-            });
-        });
-        
-        $("#hireDate, #resignDate").change(function() {
+    	$("#hireDate, #resignDate").change(function() {
             var currentDate = new Date(); // 현재 날짜 가져오기
-            var hireDate = $("#hireDate").datepicker("getDate");
-            var resignDate = $("#resignDate").datepicker("getDate");
+            var hireDateValue = $("#hireDate").val();
+            var resignDateValue = $("#resignDate").val();
             
-            if (hireDate && resignDate) {
+            // 빈 값인 경우 비교하지 않음
+            if (hireDateValue && resignDateValue) {
+                var hireDate = new Date(hireDateValue);
+                var resignDate = new Date(resignDateValue);
+                
                 if (hireDate > currentDate || resignDate > currentDate) {
                     alert("입사일과 퇴사일은 현재 날짜보다 클 수 없습니다.");
                     // 입사일과 퇴사일을 초기화
                     $("#hireDate").val("");
                     $("#resignDate").val("");
                 } else if (hireDate > resignDate) {
-                    alert("입사일이 퇴사일보다 이전일 수 없습니다.");
+                    alert("입사일이 퇴사일보다 이후일 수 없습니다.");
                     // 입사일을 초기화
                     $("#hireDate").val("");
                 }
+                else if (hireDate === resignDate) {
+                    alert("입사일이 퇴사일보다 이후일 수 없습니다.");
+                    // 입사일을 초기화
+                    $("#hireDate").val("");
+                }
+                else if (hireDate.toDateString() === resignDate.toDateString()) {
+                    alert("입사일과 퇴사일이 같을 수 없습니다.");
+                    // 입사일과 퇴사일을 초기화
+                    $("#hireDate").val("");
+                    $("#resignDate").val("");
+                }
             }
         });
+        $("#previousCompanyName").click(function() {
+  	      $(".companyName_errors").hide();
+  	 	 });
+  	
+  	    $("#jobTitle").click(function() {
+  	      $(".jobTitle_errors").hide();
+  	 	 });
+  	    $("#hireDate").click(function() {
+  	      $(".hireDate_errors").hide();
+  	  	 });
     });
 </script>
+<style type="text/css">
+.companyName_errors,
+.jobTitle_errors,
+.hireDate_errors {
+	opacity: 0.8;
+	padding: 10px;
+	color: red;
+	font-size: 10pt;
+}
+</style>
 </head>
 <body>
     <form:form modelAttribute="careerVO" method="post" action="/memberInfo/modify/update-career" enctype ="multipart/form-data">
@@ -74,30 +76,24 @@
         <div>
             <label for="previousCompanyName">근무 회사명:</label>
             <input type="text" id="previousCompanyName" name="previousCompanyName" value="${careerVO.previousCompanyName }" >
-        <div>
-            <form:errors path="previousCompanyName" element="div" cssClass="errors" />
-        </div>
+      		<form:errors path="previousCompanyName" element="div" cssClass="companyName_errors" />
         </div>
         
         <div>
             <label for="jobTitle">직무명:</label>
             <input type="text" id="jobTitle" name="jobTitle" value="${careerVO.jobTitle }">
-        <div>
-            <form:errors path="jobTitle" element="div" cssClass="errors" />
-        </div>
+        	<form:errors path="jobTitle" element="div" cssClass="jobTitle_errors" />
         </div>
         <div>
             <label for="hireDate">입사일:</label>
-            <input type="text" id="hireDate" name="hireDate" class="date-picker" placeholder="YYYY-MM-DD"
-            value="${careerVO.hireDate }" readonly="readonly">
-        <div>
-            <form:errors path="hireDate" element="div" cssClass="errors" />
-        </div>	
+            <input type="date" id="hireDate" name="hireDate" class="date-picker" placeholder="YYYY-MM-DD"
+            value="${careerVO.hireDate }">
+       	   <form:errors path="hireDate" element="div" cssClass="hireDate_errors" />
         </div>
         <div>
             <label for="resignDate">퇴사일:</label>
-            <input type="text" id="resignDate" name="resignDate" class="date-picker" placeholder="YYYY-MM-DD" 
-            value="${careerVO.resignDate }" readonly="readonly">
+            <input type="date" id="resignDate" name="resignDate" class="date-picker" placeholder="YYYY-MM-DD" 
+            value="${careerVO.resignDate }">
         </div>
         <input type="submit" value="수정">
         <a href="/memberInfo/modify/delete-career/${careerVO.careerId}">삭제</a>

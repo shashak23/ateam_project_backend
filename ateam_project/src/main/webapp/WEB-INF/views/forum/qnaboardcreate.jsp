@@ -6,7 +6,7 @@
 <html>
 <head>
    <meta charset="UTF-8">
-    <title>Dev ground</title>
+    <title>devGround</title>
          <link rel="preconnect" href="https://fonts.googleapis.com"> 
          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
         <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet"> 
@@ -122,10 +122,28 @@ updateViewCount();
 			grid-column: 1 / 3;
 			margin-top: 500px;
 		}
-
-		div.grid div.right-align {
-			text-align: right;
+		.right-align {
+			margin: 0 auto;
+			margin-top: 450px;
 		}
+		.right-align >.btn_controller,.btn_controller_1 {
+			margin-left: 850px;
+			background-color: var(--hashtag-blue);
+			border-radius: 5px;
+			border: none;
+			width: 60px; 
+			height: 30px;
+			
+		}
+		.right-align >.btn_controller_1 {
+			position: relative;
+			left: 70px;
+			bottom: 40px;
+		}
+		
+		
+		
+
 
 		label {
 			padding-left: 10px; 
@@ -136,11 +154,11 @@ updateViewCount();
 			margin: auto 0;
 			margin-top: 10px;
 			height: 30px;		
-			width: 1000px;
+			width: 500px;
 		}
 		.ck-editor__editable { 
-			height: 430px; 
-			width: 1000px;
+			height: 350px; 
+			width: 900px;
 			margin: auto 0;
 		
 		}
@@ -158,12 +176,12 @@ updateViewCount();
 	     	margin-right: 1000000px;
 	    }	
 		.seperate-line {
-	      	boarder: 1px solid #ccc;
+	      	border: 1px solid #ccc;
 	      	width: 1000px;
 	      	height: 1px;
 	      	margin: 10px 0px 7px 0px;
-	      }
-	
+	    }
+		
 </style>
 <script type="text/javascript">
 
@@ -279,14 +297,13 @@ $().ready(function(){
 <body>
 
 	<div id="container">
-		<h1 class="title_name"> 질답게시판의 게시글 작성 </h1>
+		<h1 class="title_name"> 질문 게시판 작성 </h1>
 		<div class="seperate-line"></div>
-		<form method = "post" id="postForm">
+		<form method = "post" >		
 			<div class = "grid">
 				<label for = "postTitle"> 제목 </label>
-				<input id = "postTitle" type="text" name="postTitle" />
-				
-				<label for = "postContent"> 내용 </label>
+				<input id = "postTitle" type = "text" name="postTitle" />
+				<label for = "postContent"></label>
 				<textarea name="postContent" id="editor"></textarea>
 					<script>
 					CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
@@ -430,23 +447,11 @@ $().ready(function(){
 						]
 					});  
 					</script>
-	<div class = "seperate-line" ></div>
-        <div class="hashtag">
-			<label for="hashtag">해시태그</label>
-   			<input type="hidden" id="hashtagInput" name='hashtag' placeholder="#해시태그" value="${generalPostHashtagVO.hashtagId}">
-   	
-   			<label for="general_post_hashtag_id"></label>
-   			<input type="hidden" id="general_post_hashtag_id" value="${generalPostHashtagVO.generalPostHashtagId}"/>
-   		
-   			<label for="general_post_id"></label>
-   			<input type="hidden" id="general_post_id" value="${generalPostHashtagVO.generalPostId}"/>
-		</div>
-	          <div class="btn-group">
+	          
 	             <div class="right-align">
-	                 <input type="button" value="추가" onclick="addHashtag()">
-		        	 <input type="button" value="완료" onclick="savePost()">
+	                 <input class="btn_controller" type="button" value="추가" onclick="addHashtag()">
+		        	 <input class="btn_controller_1"type="button" value="완료" onclick="savePost()">
 	             </div>
-	          </div>
           <div id="displayHashtags"></div>
       </div>
     </form>

@@ -6,7 +6,7 @@
 <html>
 <head>
    <meta charset="UTF-8">
-    <title>Dev ground</title>
+    <title>devGround</title>
          <link rel="preconnect" href="https://fonts.googleapis.com"> 
          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
         <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet"> 
@@ -239,11 +239,11 @@ $().ready(function(){
 			margin: auto 0;
 			margin-top: 10px;
 			height: 30px;		
-			width: 1000px;
+			width: 500px;
 		}
 		.ck-editor__editable { 
-			height: 430px; 
-			width: 1000px;
+			height: 350px; 
+			width: 900px;
 			margin: auto 0;
 		
 		}
@@ -251,22 +251,30 @@ $().ready(function(){
 			 font-size: 12px; 	
 		}
 	
-	    #hashtag {
-	      margin-top: 5px;
+	    .hashtag {
+		  margin: 0 auto;
+		  margin-top: 450px;
+		  
+		  margin-left: 70px;
+	     
 	    }	
 	    .btn-group {
 	    	margin-top: 420px;
 	    }
-		#save_button {
+		
+		.btn_controller, .btn_controller_1 {
+			position: relative;
+			bottom:50px;
 			margin: auto 0;
 			margin-top: 70px;
-			margin-right: 1px;
+		    margin-bottom: 60px;
 			border: none;
 			cursor: pointer;
 			width: 70px;
 			height: 30px;
 			background-color: var(--light-blue);
 			border-radius: 5px;
+
 		}	
 
 		
@@ -284,7 +292,7 @@ $().ready(function(){
 			<label for="postTitle">제목</label>
 			<input id="postTitle" type="text" name="postTitle" value="${generalPostVO.postTitle}"/>
 			
-			<label for="postContent">내용</label>
+			<label for="postContent"></label>
 			<textarea name="postContent" id="editor" >${generalPostVO.postContent}</textarea>
 				<script>
 		    	CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
@@ -429,7 +437,7 @@ $().ready(function(){
 	            });  
 		        </script>
 		 <div class="hashtag">
-		 <label for="hashtag">해시태그</label>
+		 <label for="hashtag"></label>
    			<input type="hidden" id="hashtagInput" name='hashtag' placeholder="#해시태그" value="${generalPostHashtagVO.hashtagId}">
    	
    			<label for="general_post_hashtag_id"></label>
@@ -440,8 +448,8 @@ $().ready(function(){
 		  </div>
 				<div class="btn-group">
 					<div class="right-align">
-	                 	<input type="button" value="추가" onclick="addHashtag()">
-						<input type="button" value="완료" onclick="savePost()"/>
+	                 	<input class="btn_controller" type="button" value="추가" onclick="addHashtag()">
+						<input class="btn_controller_1" type="button" value="저장" onclick="savePost()"/>
 					</div>
 				</div>
 			<div id="displayHashtags"></div>

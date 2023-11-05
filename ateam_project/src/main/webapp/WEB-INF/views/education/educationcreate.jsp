@@ -86,8 +86,27 @@
                 searchResultsContainer.empty();
             });
         }
+  	 
+      $("#search-university-input").click(function() {
+  	      $(".school_errors").hide();
+  	  });
+  	
+  	  $("#search-department-input").click(function() {
+  	      $(".department_errors").hide();
+  	  });
     });
+     
     </script>
+    <style type="text/css">
+    .school_errors
+	, .department_errors {
+		  opacity: 0.8;
+		  padding: 10px;
+		  color: red;
+		  font-size: 10pt;
+  
+	}
+    </style>
 </head>
 <body>
 	<form:form modelAttribute="educationVO" method ="post">
@@ -97,9 +116,7 @@
 	    <div id="university-section">
 	        <h3>대학교 검색</h3>
 	        <input type="text" id="search-university-input" name="schoolName" placeholder="대학교 검색">
-		<div>
-            <form:errors path="schoolName" element="div" cssClass="errors" />
-        </div>
+            <form:errors path="schoolName" element="div" cssClass="school_errors" />
 	        <div id="search-university-results">
 	            <!-- 검색 결과를 여기에 표시할 예정입니다. -->
 	        </div>
@@ -108,9 +125,7 @@
 	    <div id="department-section">
 	        <h3>학과 검색</h3>
 	        <input type="text" id="search-department-input" name="schoolDepartment" placeholder="학과 검색">
-		<div>
-            <form:errors path="schoolDepartment" element="div" cssClass="errors" />
-        </div>
+            <form:errors path="schoolDepartment" element="div" cssClass="department_errors" />
 	        <div id="search-department-results">
 	            <!-- 검색 결과를 여기에 표시할 예정입니다. -->
 	        </div>

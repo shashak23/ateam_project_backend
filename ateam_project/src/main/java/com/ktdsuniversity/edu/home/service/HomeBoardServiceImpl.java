@@ -46,4 +46,14 @@ public class HomeBoardServiceImpl implements HomeBoardService {
 	public List<HomeBoardVO> getHashtag(String postId) {
 		return homeBoardDAO.getHashtag(postId);
 	}
+
+	@Override
+	public boolean freeboardCreateByMain(GeneralPostVO generalPostVO) {
+		return homeBoardDAO.freeboardCreateByMain(generalPostVO) > 0;
+	}
+
+	@Override
+	public boolean qnaboardCreateByMain(GeneralPostVO generalPostVO) {
+		return homeBoardDAO.qnaboardCreateByMain(generalPostVO) > 0;
+	}
 }

@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <title>작업용 관리자 ui</title>
 <script src="/js/lib/jquery-3.7.1.js"></script>
-<script src="https://cdn.ckeditor.com/ckeditor5/34.0.0/classic/ckeditor.js"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/super-build/ckeditor.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <script src="https://npmcdn.com/flatpickr/dist/flatpickr.min.js"></script>
 <script src="https://npmcdn.com/flatpickr/dist/l10n/ko.js"></script>
@@ -113,7 +113,8 @@
   }
 
   .desc-header .admin_company_search_wrap .admin_company_member_input,
-  .admin_notice_input {
+  .admin_notice_input,
+  .admin_report_input {
     outline: none;
     border: 0;
     padding: 5px;
@@ -122,7 +123,8 @@
   } 
 
   .desc-header .admin_company_search_wrap .admin_company_member_search,
-  .admin_notice_search {
+  .admin_notice_search,
+  .admin_report_search {
     border: #e07272;
     outline: none;
     background-color: #ebd9d9;
@@ -137,7 +139,8 @@
 
   .member_container,
   .company_container,
-  .notice_container {
+  .notice_container,
+  .report_container {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -275,6 +278,39 @@
     text-align: center;
   }
 
+  .report_title,
+  .report_list_group {
+    display: grid;
+    grid-template-columns: 50px 80px 640px 170px 120px;
+    column-gap: 10px;
+    color: #888;
+  }
+
+  .report_title > div {
+    text-align: center;
+  }
+
+  .report_list_group > div {
+    text-align: center;
+    font-size: 11pt;
+    color: #333;
+  }
+
+  .report_container {
+    padding: 5px 0;
+  }
+
+  .report_list_group > .report_content {
+    padding-left: 15px;
+    text-align: inherit;
+  }
+
+  .report_list_group > .report_content > a {
+    color: #191919;
+    text-decoration: none;
+  }
+
+
   .btn_group {
     display: flex;
     justify-content: center;
@@ -317,7 +353,8 @@
   }
 
   .btn-close,
-  .notice_btn-close {
+  .notice_btn-close,
+  .notice_create_btn-close {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -370,7 +407,7 @@
     cursor: default;
   }
 
-  .hashtag_wrap {
+  .admin_hashtag_wrap {
     display: flex;
     flex-wrap: wrap;
     width: 300px;
@@ -380,7 +417,7 @@
     margin-top: 10px;
   }
 
-  .hashtag_wrap > .hashtag_content {
+  .admin_hashtag_wrap > .hashtag_content {
     padding: 3px 10px;
     margin: 5px 6px;
     border-radius: 12px;
@@ -466,7 +503,9 @@
     }
 
     .create_container,
-    .notice_view_container {
+    .notice_view_container,
+    .modify_container,
+    .report_view_container {
         visibility: hidden;
         position: fixed;
         top: 50%;
@@ -485,14 +524,18 @@
     }
 
     .create_container.active,
-    .notice_view_container.active {
+    .notice_view_container.active,
+    .modify_container.active,
+    .report_view_container.active {
 			visibility: visible;
 			opacity: 1;
 			transform: translate(-50%, -50%);
 	}
 
     .create_container > *,
-    .notice_view_container > * {
+    .notice_view_container > *,
+    .modify_container > *,
+    .report_view_container > * {
         margin-bottom: 10px;
     }
 
@@ -508,7 +551,10 @@
       text-align: center;
     }
 
-    .notice_view_overlay {
+    .notice_view_overlay,
+    .notice_create_overlay,
+    .notice_modify_overlay,
+    .report_view_overlay  {
       background-color: #47474754;
       position: fixed;
       width: 100%;
@@ -521,13 +567,18 @@
       z-index: 50;
     }
     
-    .notice_view_overlay.active {
+    .notice_view_overlay.active,
+    .notice_create_overlay.active,
+    .notice_modify_overlay.active,
+    .report_view_overlay.active {
       opacity: 1;
       pointer-events: all;
     }
 
     .btn-close,
-    .notice_btn-close {
+    .notice_btn-close,
+    .notice_modify_btn-close,
+    .report_close_btn {
         position: absolute;
         top: 6px;
         right: 10px;
@@ -538,7 +589,9 @@
     }
 
     .btn-close:hover,
-    .notice_btn-close:hover {
+    .notice_btn-close:hover,
+    .notice_modify_btn-close:hover,
+    .report_close_btn:hover {
         color: #191919;
     }
 
@@ -546,7 +599,8 @@
         text-align: center;
     }
 
-    #postTitle {
+    #postTitle,
+    #postTitle_mdfy {
         border: 0px;
         background-color: #e9f3ff;
         width: 100%;
@@ -556,7 +610,8 @@
         color: #333;
     }
 
-    #noticeContent {
+    #noticeContent,
+    .notice_modify_content {
         border: 0px;
         background-color: #e9f3ff;
         width: 100%;
@@ -568,12 +623,16 @@
     }
 
     #postTitle::placeholder,
-    #noticeContent::placeholder {
+    #noticeContent::placeholder,
+    #postTitle_mdfy::placeholder,
+    .notice_modify_content::placeholder {
         color: #bbb;
     }
 
     #postTitle:focus::placeholder,
-    #noticeContent:focus::placeholder {
+    #noticeContent:focus::placeholder,
+    #postTitle_mdfy::placeholder,
+    #notice_modify_content::placeholder {
         visibility: hidden;
     }
 
@@ -584,7 +643,9 @@
     }
 
     .dateSelector1,
-    .dateSelector2 {
+    .dateSelector2,
+    .modify_dateSelector1,
+    .modify_dateSelector2 {
         width: 150px;
         height: 30px;
         outline: none;
@@ -603,7 +664,8 @@
         margin-top: 30px;
     }
 
-    .submit_btn {
+    .submit_btn,
+    .modify_submit_btn {
         background-color: #e9f3ff;
         border: 0px;
         padding: 5px 10px;
@@ -613,23 +675,76 @@
         text-align: center;
     }
 
-    .notice_create_overlay  {
-        background-color: #47474754;
-        position: fixed;
-        z-index: 50;
-        width: 100%;
-        height: 100vh;
-        top: 0;
-        left: 0;
-        transition: 0.5s;
-        opacity: 0;
-        pointer-events: none;
+    .notice_post_title_label,
+    .notice_post_content_label {
+      display: block;
+      margin-bottom: 10px;
+      color: #888;
     }
+ 
 
-    .notice_create_overlay.active {
-        opacity: 1;
-        pointer-events: all;
-    }
+  .report_view_container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .report_view_grid {
+    display: grid;
+    grid-template-columns: 120px 300px;
+    grid-template-rows: 40px 40px 40px 40px 40px 40px 40px 40px 150px 40px 40px;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .report_view_container .report_member,
+  .report_view_container .report_received_member {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .report_view_container .punishment_btn_wrap,
+  .report_btn_wrap {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0;
+  }
+
+  .report_view_container .punishment_btn_wrap button,
+  .report_btn_wrap button {
+    margin-left: 5px;
+    border: 1px solid #ffafaf;
+    color: #e05454;
+    font-size: 9pt;
+  }
+
+  .report_container .report_confirm.progressing {
+    color: red;
+    background-color: #ffdada;
+    font-weight: bold;
+  }
+
+  .report_container .report_view_btn,
+  .report_view_container .report_content_id {
+    cursor: pointer;
+  }
+
+  .report_view_container .report_content_id {
+    color: #4052f7;
+  }
+
+  .report_view_grid * {
+    padding: 5px;
+  }
+
+  .report_view_grid label {
+    color: #888;
+    font-size: 10pt;
+  }
+
+  .report_view_grid .attached_img {
+    overflow: auto;
+  }
+
 
     .errors {
         background-color: rgb(255, 244, 244);
@@ -759,7 +874,7 @@
   <!-- 공지 입력 폼 -->
   <form:form modelAttribute="noticeVO" method="post" action="/notice/create">
     <div class="create_container">
-      <div class="btn-close">&times;</div>
+      <div class="notice_create_btn-close">&times;</div>
       <h1 class="create_title">공지 생성</h1>
       <div>
         <label for="postTitle" class="mb10">제목</label>
@@ -768,7 +883,7 @@
       </div>
       <label for="noticeContent" class="mb10">내용</label>
       <div>
-        <textarea name="noticeContent" id="editor" placeholder="내용을 입력해주세요."></textarea>
+        <textarea name="noticeContent" id="editor1" placeholder="내용을 입력해주세요."></textarea>
         <!-- <form:errors path="postTitle" element="div" cssClass="errors" /> -->
       </div>
       <div class="date_wrap">
@@ -787,37 +902,38 @@
   </form:form>
   <div class="notice_create_overlay"></div>
 
-    <!-- 공지 수정 폼 -->
-    <form:form modelAttribute="noticeVO" method="post" action="/notice/modify">
-      <div class="modify_container">
-        <div class="btn-close">&times;</div>
-        <h1 class="create_title">공지 수정</h1>
-        <div>
-          <label for="postTitle" class="mb10">제목</label>
-          <input type="text" name="postTitle" id="postTitle" placeholder="제목을 입력해주세요"/>
-          <!-- <form:errors path="postTitle" element="div" cssClass="errors" /> -->
-        </div>
-        <label for="noticeContent" class="mb10">내용</label>
-        <div>
-          <textarea name="noticeContent" id="editor" placeholder="내용을 입력해주세요."
-                    value="${noticeVO.noticeContent}"></textarea>
-          <!-- <form:errors path="postTitle" element="div" cssClass="errors" /> -->
-        </div>
-        <div class="date_wrap">
-          <label for="start-date">시작일</label>
-          <input class="dateSelector1" placeholder="시작 날짜" id="start-date"
-                  name="releaseStartDate" value="${noticeVO.releaseStartDate}"/>
-          <span>~</span>
-          <label for="end-date">종료일</label>
-          <input class="dateSelector2" placeholder="종료 날짜" id="end-date"
-                  name="releaseEndDate" value="${noticeVO.releaseEndDate}"/>
-        </div>
-        <div class="submit_btn_wrap">
-          <input type="submit" value="생성" class="submit_btn"/>
-        </div>
+  <!-- 공지 수정 폼 -->
+  <form:form modelAttribute="noticeVO" method="post" action="/notice/modify">
+    <div class="modify_container">
+      <input type="hidden" name="noticeId" class="notice_id">
+      <div class="notice_modify_btn-close">&times;</div>
+      <h1 class="create_title">공지 수정</h1>
+      <div>
+        <label for="postTitle" class="mb10">제목</label>
+        <input type="text" name="postTitle" id="postTitle_mdfy" class="notice_modify_title" placeholder="제목을 입력해주세요"/>
+        <!-- <form:errors path="postTitle" element="div" cssClass="errors" /> -->
       </div>
-    </form:form>
-    <div class="notice_create_overlay"></div>
+      <label for="noticeContent" class="mb10">내용</label>
+      <div>
+        <textarea name="noticeContent" id="editor2" class="notice_modify_content" placeholder="내용을 입력해주세요."
+                  value="${noticeVO.noticeContent}"></textarea>
+        <!-- <form:errors path="postTitle" element="div" cssClass="errors" /> -->
+      </div>
+      <div class="date_wrap">
+        <label for="start-date_mdfy">시작일</label>
+        <input class="modify_dateSelector1" placeholder="시작 날짜" id="start-date_mdfy"
+                name="releaseStartDate" value="${noticeVO.releaseStartDate}"/>
+        <span>~</span>
+        <label for="end-date_mdfy">종료일</label>
+        <input class="modify_dateSelector2" placeholder="종료 날짜" id="end-date_mdfy"
+                name="releaseEndDate" value="${noticeVO.releaseEndDate}"/>
+      </div>
+      <div class="submit_btn_wrap">
+        <input type="submit" value="수정" class="modify_submit_btn"/>
+      </div>
+    </div>
+  </form:form>
+  <div class="notice_modify_overlay"></div>
 
   <!-- 공지 조회 모달 -->
   <div class="notice_view_container">
@@ -840,20 +956,64 @@
         <div class="desc-header">
           <div>신고 목록</div>
           <div class="admin_report_search_wrap">
-            <input type="text" class="admin_report_input" />
+            <input type="text" class="admin_report_input" placeholder="내용 또는 사유 검색"/>
             <button class="admin_report_search">검색</button>
           </div>
         </div>
         <div class="desc_title">
           <div class="report_container">
             <div class="report_title">
-              <div>신고번호</div><div>내용</div><div>신고사유</div><div>신고일자</div><div>처리진행상황</div>
+              <div>신고번호</div><div>처리진행상황</div><div>내용</div><div>신고사유</div><div>신고일자</div>
             </div>
           </div>
         </div>
+        <div class="desc-content"></div>
       </div>
     </div>
   </div>
+
+  <!-- 신고 상세 조회 모달 -->
+  <div class="report_view_container">
+    <div class="report_close_btn">&times;</div>
+    <h1>신고물 조회</h1>
+    <div class="report_view_grid">
+      <label for="report_id">신고ID</label>
+      <div class="detail_report_id"></div>
+      <label for="detail_report_date">신고 날짜</label>
+      <div class="detail_report_date"></div>
+      <label for="report_member">신고한 유저</label>
+      <div class="report_member">
+        <div class="punishment_btn_wrap">
+          <button class="report_btn member_warn">경고누적</button>
+          <button class="report_btn report_member_withdraw">회원탈퇴</button>
+        </div>
+      </div>
+      <label for="report_received_member">신고당한 유저</label>
+      <div class="report_received_member">
+        <div class="punishment_btn_wrap">
+          <button class="report_btn member_warn">경고누적</button>
+          <button class="report_btn received_report_member_withdraw">회원탈퇴</button>
+        </div>
+      </div>
+      <label for="report_content_id">신고물 ID</label>
+      <div class="report_content_id"></div>
+      <label for="report_type">신고 유형</label>
+      <div class="report_type"></div>
+      <label for="detail_report_reason">신고 사유</label>
+      <div class="detail_report_reason"></div>
+      <label for="report_reason_content">신고 상세 사유</label>
+      <div class="report_reason_content"></div>
+      <label for="attached_img">첨부 파일</label>
+      <div class="attached_img"></div>
+      <label for="progress_yn">처리 여부</label>
+      <div class="progress_yn"></div>
+      <div></div>
+      <div class="report_btn_wrap">
+        <button>처리상태 변경</button>
+      </div>
+    </div>
+  </div>
+  <div class="report_view_overlay"></div>
 
   <!-- 해시태그 관리 모달 -->
   <div class="hashtag_modal">
@@ -863,7 +1023,7 @@
         <div>
           <strong>해시태그 목록</strong>
         </div>
-        <div class="hashtag_wrap"></div>
+        <div class="admin_hashtag_wrap"></div>
         <div class="hashtag_create_title"><strong>해시태그 생성</strong></div>
         <label for="codeContent">입력: </label>
         <input type="text" name="codeContent" id="codeContent" />
@@ -886,6 +1046,7 @@
     $('.company_modal, .admin_overlay').removeClass('active')
     $('.hashtag_modal, .admin_overlay').removeClass('active')
     $('.notice_modal, .admin_overlay').removeClass('active')
+    $('.report_modal, .admin_overlay').removeClass('active')
   })
 
   $('body').keyup(function(e) {
@@ -894,6 +1055,7 @@
       $('.company_modal, .admin_overlay').removeClass('active')
       $('.hashtag_modal, .admin_overlay').removeClass('active')
       $('.notice_modal, .admin_overlay').removeClass('active')
+      $('.report_modal, .admin_overlay').removeClass('active')
     }
   })
   
@@ -910,6 +1072,11 @@
   // 공지사항 관리 목록 열기
   $('.admin_notice_btn').click(function() {
     $('.notice_modal, .admin_overlay').addClass('active')
+  })
+
+  // 신고 관리 목록 열기
+  $('.admin_report_btn').click(function() {
+    $('.report_modal, .admin_overlay').addClass('active')
   })
 
   // 해시태그 목록 열기
@@ -1219,7 +1386,7 @@
     alert('삭제된 공지입니다.')
   })
 
-  // 공지 조회 기능(제목 클릭했을 때)
+  // 공지 조회 기능(제목 클릭)
   $(document).on('click', '.notice_title', function() {
     let id = $(this).data('id')
 
@@ -1237,39 +1404,250 @@
   })
 
   // 공지 수정 기능
-  $(document).on('click', '.notice_modify_btn', function() {
-    let id = $(this).data('id')
-    $.get(`/admin/notice/view/\${id}`, function(response) {
-      alert('곧 땡길 예정')
+  CKEDITOR.ClassicEditor.create(document.getElementById("editor2"), {
+    toolbar: {
+      items: [
+        'findAndReplace', 'selectAll', '|',
+        'bold', 'italic', 'strikethrough', 'underline', 'removeFormat', '|',
+        'bulletedList', 'numberedList', 'todoList', '|',
+        'outdent', 'indent', '|',
+        'undo', 'redo', 'fontSize', 'alignment'
+      ],
+      shouldNotGroupWhenFull: true
+    },
+    removePlugins: [
+      'CKBox',
+      'CKFinder',
+      'EasyImage',
+      'RealTimeCollaborativeComments',
+      'RealTimeCollaborativeTrackChanges',
+      'RealTimeCollaborativeRevisionHistory',
+      'PresenceList',
+      'Comments',
+      'TrackChanges',
+      'TrackChangesData',
+      'RevisionHistory',
+      'Pagination',
+      'WProofreader',
+      'MathType'
+    ]
+  })
+  .then(editor => {
+    $(document).on('click', '.notice_modify_btn', function() {
+      $('.modify_container, .notice_modify_overlay').addClass('active')
+      let id = $(this).data('id')
+  
+      $.get(`/admin/notice/view/\${id}`, function(response) {
+        let startDate = new Date(response.releaseStartDate)
+        let startYear = startDate.getFullYear()
+        let startMonth = (startDate.getMonth() + 1).toString().padStart(2, '0')
+        let startDay = startDate.getDate().toString().padStart(2, '0')
+        let formattedStartDate = `\${startYear}-\${startMonth}-\${startDay}`
+  
+        let endDate = new Date(response.releaseEndDate)
+        let endYear = endDate.getFullYear()
+        let endMonth = (endDate.getMonth() + 1).toString().padStart(2, '0')
+        let endDay = endDate.getDate().toString().padStart(2, '0')
+        let formattedEndDate = `\${endYear}-\${endMonth}-\${endDay}`
+        
+        $('.modify_container').find('.notice_id').val(id)
+        $('.notice_modify_title').val(response.postTitle)
+        // $('.notice_modify_content').val(response.noticeContent)
+        $('.modify_dateSelector1').val(formattedStartDate)
+        $('.modify_dateSelector2').val(formattedEndDate)
+  
+        editor.setData(response.noticeContent)
+  
+  
+        $('.modify_container, .notice_modify_overlay').addClass('active')
+  
+        $('.notice_modify_btn-close, .notice_modify_overlay').click(function() {
+          $('.modify_container, .notice_modify_overlay').removeClass('active')
+        })
+      })
     })
+
   })
 
   // 공지 삭제 기능
   $(document).on('click', '.notice_delete_btn', function() {
     let noticeId = $(this).data('id')
     
-    $.get(`/notice/delete/\${noticeId}`, function(response) {
-      if (response.result === 'success') {
-        alert('성공했삼ㅋ')
-      }
-      else {
-        alert('실패했삼ㅋ')
-      }
-    })
+    if (confirm('정말 삭제하시겠습니까?')) {
+      $.get(`/notice/delete/\${noticeId}`, function(response) {
+        if (response.result === 'success') {
+          alert('삭제를 완료했습니다.')
+        }
+        else {
+          alert('삭제에 실패했습니다.')
+        }
+      })
+    }
   })
 
   // 신고 목록 조회
-  function loadReportList() {
+  function loadReportList(val = '') {
     $.get('/admin/reportlist', function(response) {
+      $('.report_modal').find('.desc-content').empty()
 
+      let reportTemplate, reportTemplateDom
+
+      for (let i = 0; i < response.length; i++) {
+        report = response[i]
+        report_reason = report.commonCodeVO.codeContent
+
+        if (report.reportReasonContent === null) {
+          report.reportReasonContent = '[내용 없음]'
+        }
+        reportTemplate = `
+        <div class="report_container">
+          <div class="report_list_group">
+            <div class="report_id">\${response.length - i}</div>
+            <div class="report_confirm">
+              \${report.progressYn}
+            </div>
+            <div class="report_content">
+              <span class="report_view_btn" data-id="\${report.reportId}" data-progress="\${report.progressYn}">
+                <strong>\${report.reportReasonContent}</strong>
+              </span>
+            </div>
+            <div class="report_reason">\${report_reason}</div>
+            <div class="report_date">
+              \${report.reportDate}
+            </div>
+          </div>
+        </div>`
+        reportTemplateDom = $(reportTemplate)
+
+        if (report.reportReasonContent.includes(val) || report_reason.includes(val)) {
+          $('.report_modal').find('.desc-content').append(reportTemplateDom)
+        }
+        if (reportTemplateDom.find('.report_confirm').text().trim() === 'N') {
+          reportTemplateDom.find('.report_confirm').addClass('progressing')
+        }
+      }
     })
   }
 
   loadReportList()
 
-  // $(document).on('click', '.create_notice', function() {
-  //   window.open('/notice/create', '공지 생성', 'width=500, height=800px')
-  // })
+  // 신고글 검색
+  $('.admin_report_search').click(function() {
+    let val = $('.admin_report_input').val()
+    loadReportList(val)
+  })
+
+  $('.admin_report_input').keyup(function(e) {
+    if (e.key === 'Enter') {
+      let val = $('.admin_report_input').val()
+      loadReportList(val)
+    }
+  })
+
+  // 신고 상세 조회
+  $(document).on('click', '.report_view_btn', function() {
+    $(this).data('progress')
+    if ($(this).data('progress') === 'Y') {
+      alert('이미 처리 완료된 건입니다.')
+    }
+    else {
+      let reportId = $(this).data('id')
+  
+      $.get(`/admin/report/view/\${reportId}`, function(response) {
+        $('.detail_report_id').html('')
+        $('.detail_report_id').html(response.reportId)
+        $('.detail_report_date').html('')
+        $('.detail_report_date').html(response.reportDate)
+        $('.report_member').contents().filter(function() {
+          return this.nodeType === 3
+        }).remove()
+        $('.report_member').prepend(response.reportMember)
+
+        $('.report_received_member').contents().filter(function() {
+          return this.nodeType === 3
+        }).remove()
+        $('.report_received_member').prepend(response.receivedReportMember)
+        $('.report_content_id').html('')
+        $('.report_content_id').html(response.reportContentId)
+        $('.report_type').html('')
+        $('.report_type').html(response.commonCodeVOTemp.codeContentTemp)
+        $('.detail_report_reason').html('')
+        $('.detail_report_reason').html(response.commonCodeVO.codeContent)
+        $('.report_reason_content').html('')
+        $('.report_reason_content').html(response.reportReasonContent)
+        $('.attached_img').html('')
+        $('.attached_img').html(response.attachedImg)
+        $('.progress_yn').html('')
+        $('.progress_yn').html(response.progressYn)
+      })
+
+      // 신고 게시글로 이동
+      $('.report_content_id').click(function() {
+        let reportContentId = $('.report_content_id').html()
+        window.open(`/freeboard/view/\${reportContentId}`, 'DevGround')
+      })
+
+      // 멤버 경고
+      $('.report_btn.member_warn').click(function() {
+        alert('경고를 주었습니다.')
+      })
+
+      // 회원 탈퇴
+      $('.report_member_withdraw').click(function() {
+        let emailNode = $(this).closest('.report_member').contents().filter(function() {
+          return this.nodeType === 3
+        })
+
+        let url = '/home/admin/person/delete/' + emailNode[0].nodeValue
+        
+        $.get(url, function(response) {
+          if (confirm('정말 탈퇴시키겠습니까?') && response.result === 'success') {
+            alert('탈퇴 처리하였습니다.')
+          }
+          else {
+            alert('탈퇴 처리에 실패했습니다.')
+          }
+        })
+      })
+
+      $('.received_report_member_withdraw').click(function() {
+        let emailNode = $(this).closest('.report_received_member').contents().filter(function() {
+          return this.nodeType === 3
+        })
+
+        let url = '/home/admin/person/delete/' + emailNode[0].nodeValue
+
+        $.get(url, function(response) {
+          if (confirm('정말 탈퇴시키겠습니까?') && response.result === 'success') {
+            alert('탈퇴 처리하였습니다.')
+          }
+          else {
+            alert('탈퇴 처리에 실패했습니다.')
+          }
+        })
+      })
+
+      $('.report_btn_wrap button').click(function() {
+        let reportId = $(this).closest('.report_view_container').find('.detail_report_id').html()
+
+        if (confirm('정말 처리 완료하시겠습니까?')) {
+          $.get(`/admin/report/progress/\${reportId}`, function(response) {
+             console.log(response)
+             console.log(reportId)
+            if (response.result === 'success') {
+              alert('처리 완료하였습니다.')
+            }
+          })
+        }
+      })
+  
+      $('.report_view_container, .report_view_overlay').addClass('active')
+  
+      $('.report_close_btn, .report_view_overlay').click(function() {
+        $('.report_view_container, .report_view_overlay').removeClass('active')
+      })
+    }
+  })
 
   // 해시태그 조회
   let tag = {}
@@ -1314,25 +1692,19 @@
 
   // 해시태그 목록 출력
   load_hashtag = function() {
-    $('.hashtag_wrap').html('')
+    $('.admin_hashtag_wrap').html('')
     $.get('/code/해시태그', function(response) {
       for (let i = 0; i < response.length; i++) {
         let template = `<div class="hashtag_content">
                           \${response[i].codeContent}
                         </div>`
         let templateDom = $(template)
-        $('.hashtag_wrap').append(templateDom)
+        $('.admin_hashtag_wrap').append(templateDom)
       }
     })
   }
 
   load_hashtag()
-
-
-  // 신고 관리창으로 이동
-  // $('.admin_report_btn').click(function() {
-  //   window.open('/admin/report/list', '_blank')
-  // })
 
   // 달력 포맷
   flatpickr.localize(flatpickr.l10ns.ko);
@@ -1346,6 +1718,16 @@
       minDate: 'today',
       local: 'ko'
   })
+
+  $('.modify_dateSelector1').flatpickr({
+      minDate: 'today',
+      local: 'ko'
+  })
+
+  $('.modify_dateSelector2').flatpickr({
+      minDate: 'today',
+      local: 'ko'
+  })
   // 달력 포맷 끝
 
   // 공지 생성 모달 실행을 위한 문장
@@ -1353,17 +1735,42 @@
       $('.create_container, .notice_create_overlay').addClass('active')
   })
 
-  $('.btn-close, .notice_create_overlay').click(function() {
+  $('.notice_create_btn-close, .notice_create_overlay').click(function() {
       $('.create_container, .notice_create_overlay').removeClass('active')
   })
 
   $('.dateSelector1').click(function() {
   })
 
-// ck 에디터
-ClassicEditor.create( document.querySelector( '#editor' ), {
-language: "ko"
-})
+  // ck 에디터
+  CKEDITOR.ClassicEditor.create(document.getElementById("editor1"), {
+    toolbar: {
+      items: [
+        'findAndReplace', 'selectAll', '|',
+        'bold', 'italic', 'strikethrough', 'underline', 'removeFormat', '|',
+        'bulletedList', 'numberedList', 'todoList', '|',
+        'outdent', 'indent', '|',
+        'undo', 'redo', 'fontSize', 'alignment'
+      ],
+      shouldNotGroupWhenFull: true
+    },
+    removePlugins: [
+      'CKBox',
+      'CKFinder',
+      'EasyImage',
+      'RealTimeCollaborativeComments',
+      'RealTimeCollaborativeTrackChanges',
+      'RealTimeCollaborativeRevisionHistory',
+      'PresenceList',
+      'Comments',
+      'TrackChanges',
+      'TrackChangesData',
+      'RevisionHistory',
+      'Pagination',
+      'WProofreader',
+      'MathType'
+    ]
+  });
 
 // 유효성 체크
 $('.submit_btn').addClass('inactive')

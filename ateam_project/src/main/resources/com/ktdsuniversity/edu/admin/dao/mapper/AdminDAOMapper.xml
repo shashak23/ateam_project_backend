@@ -17,7 +17,20 @@
 		<result column="ATTACHED_IMG" property="attachedImg" />
 		<result column="PROGRESS_YN" property="progressYn" />
 		
-		<association property="memberVO"
+		<association property="reportMemberVO"
+					javaType="com.ktdsuniversity.edu.member.vo.MemberVO">
+			<id column="EMAIL" property="email" />
+			<result column="PW" property="pw" />
+			<result column="SALT" property="salt" />
+			<result column="NICKNAME" property="nickname" />
+			<result column="INFO_AGREEMENT_YN" property="infoAgreementYn" />
+			<result column="PROFILE_PIC" property="profilePic" />
+			<result column="REGIST_DATE" property="registDate" />
+			<result column="MEMBER_TYPE" property="memberType" />
+			<result column="WITHDRAW_YN" property="withdrawYn" />
+		</association>
+		
+		<association property="receivedReportMemberVO"
 					javaType="com.ktdsuniversity.edu.member.vo.MemberVO">
 			<id column="EMAIL" property="email" />
 			<result column="PW" property="pw" />
@@ -78,16 +91,18 @@
 		
 		<association property="tierVO"
 					javaType="com.ktdsuniversity.edu.tier.TierVO">
-			<id column="TIER_ID" property="tierId" />
+			<id column="NOW_TIER_ID" property="tierId" />
 			<result column="NOW_TIER_NAME" property="tierName" />
 			<result column="TIER_CRITERIA_SCORE" property="tierCriteriaScore" />
+			<result column="TIER_IMAGE_URL" property="tierImageUrl" />
 		</association>
 		
 		<association property="tierVOTemp"
 					javaType="com.ktdsuniversity.edu.tier.TierVO">
-			<id column="TIER_ID" property="tierIdTemp" />
+			<id column="NEXT_TIER_ID" property="tierIdTemp" />
 			<result column="NEXT_TIER_NAME" property="tierNameTemp" />
 			<result column="TIER_CRITERIA_SCORE" property="tierCriteriaScoreTemp" />
+			<result column="TIER_IMAGE_URL" property="tierImageUrlTemp" />
 		</association>
 	</resultMap>
 	
@@ -98,7 +113,7 @@
 			  , R.REPORT_TYPE_ID
 			  , R.RECEIVED_REPORT_MEMBER
 			  , R.REPORT_CONTENT_ID
-			  , R.REPORT_DATE
+			  , TO_CHAR(R.REPORT_DATE, 'YYYY-MM-DD') REPORT_DATE
 			  , R.REPORT_REASON
 			  , R.REPORT_REASON_CONTENT
 			  , R.ATTACHED_IMG
@@ -123,7 +138,7 @@
 			  , R.REPORT_TYPE_ID
 			  , R.RECEIVED_REPORT_MEMBER
 			  , R.REPORT_CONTENT_ID
-			  , R.REPORT_DATE
+			  , TO_CHAR(R.REPORT_DATE, 'YYYY-MM-DD') REPORT_DATE
 			  , R.REPORT_REASON
 			  , R.REPORT_REASON_CONTENT
 			  , R.ATTACHED_IMG
@@ -334,7 +349,9 @@
 			resultMap="adminTierVOMap">
 		SELECT A_T.MEMBER_EMAIL
 			 , A_T.SCORE
+			 , T1.TIER_ID NOW_TIER_ID
 			 , T1.TIER_NAME NOW_TIER_NAME
+			 , T2.TIER_ID NEXT_TIER_ID
 			 , T2.TIER_NAME NEXT_TIER_NAME
 		  FROM ADMIN_TIER A_T
 		  LEFT JOIN TIER T1

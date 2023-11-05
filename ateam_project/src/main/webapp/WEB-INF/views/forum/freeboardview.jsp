@@ -8,12 +8,11 @@
 <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" id="viewport" content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, width=device-width"/>
-    <title>SnapChat</title>
+    <title>devGround</title>
    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" type="text/css" href="/css/style.css" />
     <jsp:include page="../layout/header.jsp"/>
-<title>Insert title here</title>
 
 <style>
 
@@ -161,7 +160,7 @@
        color: #888;
    }
    #like-btn, #reportFreeBoard  {
-      margin-left: 10px;
+      margin-left: 5px;
       background-color: var(--hashtag-blue);
       border: none;
       width: 70px;
@@ -169,12 +168,16 @@
       border-radius: 5px;
       cursor: pointer;
    }
+   #reportFreeBoard {
+      position: relative;
+      right: 3px;
+   }
    #button-id-list {
-   bottom: 50px;
+   bottom: -230px;
    position: absolute;
-   left: 900px;
+   left: 920px;
    margin-left: 10px;
-   background-color: var(--light-blue);
+   background-color: var(--hashtag-blue);
    border: none;
    width: 70px;
    height: 30px;
@@ -217,8 +220,10 @@
    
 }
    #move_button {
-      position: relative;
-      left: 20px;
+      margin: 0 auto;
+      margin-top: 10px;
+      margin-left: 20px;
+     
    }
 
    .postContent_controller_1 {
@@ -229,10 +234,11 @@
    
 
 }
-/*    .update_btn { */
-/*       top: -30px; */
-/*       right: 0; */
-/*    } */
+#btn {
+   margin: 0 auto;
+   margin-right: 10px;
+}
+
    
    textarea {
       width: 1000px;
@@ -240,14 +246,14 @@
    }
    #btn-save-comment {
       position: relative;
-      bottom: -10px;
-      border: none;
-      background-color:var(--hashtag-blue) ;
-      cursor: pointer;
-      width: 70px;
-      height: 30px;
-      left: 930px;
-      border-radius: 5px;
+    bottom: -11px;
+    border: none;
+    background-color: var(--hashtag-blue);
+    cursor: pointer;
+    width: 70px;
+    height: 30px;
+    left: 857px;
+    border-radius: 5px;
    }
    .comment{
       display: flex;
@@ -264,18 +270,19 @@
       margin-left: 5px;
       cursor: pointer;
    }
-   .seperate-line {
-      border: 1px solid #ccc;
-      width: 1000px;
-      height: 1px;
-      margin: 10px 0px 7px 0px;
-   }
-/*    #update-link , #delete-link { */
-/*      position: relative; */
-/*      left: 1400px; */
-/*      top: 120px; */
-/*    } */
-  
+   .separate-line {
+   border: 1px solid #ccc;
+   width: 1000px;
+   height: 1px;
+   margin: 10px 0px 7px 0px;
+}
+.btn_controller {
+   margin: 0 auto;
+   margin-left: 1430px;
+   position: relative;
+   top: 120px;
+}
+
    
    </style>
 <script type="text/javascript" src="/js/lib/jquery-3.7.1.js"></script>
@@ -486,18 +493,12 @@
 </script>
 </head>
 <body>
+   <div class="btn_controller">
+   <a href="/freeboard/update/${generalPostVO.generalPostId}">수정</a>
+	<a href="/freeboard/delete/${generalPostVO.generalPostId}">삭제</a>
+   </div>
 <div class="main_Container">
 <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq generalPostVO.postWriter}">               
-	<div class="btn-group">
-	    <div class="right-align">
-	        <div class="update_btn">
-	         <div id="btn">
-	            <a href="/freeboard/update/${generalPostVO.generalPostId}" id="update-link">수정</a>
-	      		<a href="/freeboard/delete/${generalPostVO.generalPostId}" id="delete-link">삭제</a>
-	         </div>
-	        </div>
-	    </div>
-	</div>
 </c:if>
    <p class="free_Title">자유게시판 ></p>
    <label for="postTitle"></label>

@@ -51,13 +51,13 @@
 	}
 
 	.btn-close {
-			position: absolute;
-			top: 6px;
-			right: 10px;
-			background-color: transparent;
-			font-size: 18px;
-			color: #888;
-			cursor: pointer;
+		position: absolute;
+		top: 6px;
+		right: 10px;
+		background-color: transparent;
+		font-size: 18px;
+		color: #888;
+		cursor: pointer;
 	}
 
 	.btn-close:hover {
@@ -161,7 +161,7 @@
 		$('.create_container, .overlay').addClass('active')
 
 		$('.btn-close, .overlay').click(function() {
-				$('.create_container, .overlay').removeClass('active')
+			$('.create_container, .overlay').removeClass('active')
 		})
 	})
 </script>

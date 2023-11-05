@@ -6,6 +6,8 @@
 <script type="text/javascript" src="/js/lib/jquery-3.7.1.js"></script>
 <script type="text/javascript">
 	$().ready(function() {
+		
+		
 		$.get("/code/알고리즘카테고리", function(response) {
 			var ul = $("<ul></ul>");
 			for (var i = 0; i < response.length; i++) {
@@ -51,7 +53,27 @@
 			}).submit()
 		});
 		
+	
 	})
+	
+	$(document).on('click', '.register', function(e) {
+		let userEmail = `${sessionScope._LOGIN_USER_}`
+		let memberType = `${sessionScope._LOGIN_USER_.memberType}`
+		if (userEmail === '') {
+			if(confirm('로그인이 필요한 서비스입니다. 로그인하시겠습니까?') ) {
+				window.location.href="/member/auth"
+			}
+		}
+		if (memberType === 'GENERAL') {
+			alert('기업회원만 이용하실 수 있는 서비스입니다.')
+			window.location.href="/algorithm/question/list"
+		}
+		if (memberType === 'COMPANY') {
+			window.location.href="/algorithm/question/create"
+		}
+
+	})
+	
 
 	// 모달창 열고 닫기
 	$(document).on('click', '.incomplete', function() {
@@ -66,6 +88,7 @@
       $('.modal, .overlay').removeClass('modal_active')
     }
   })
+  
 
   // 스크롤 버튼, IDE
   let calcScrollValue = () => {
@@ -115,6 +138,7 @@
             "action": "/algorithm/explanation/list"
         }).submit();
     });
+  
 </script>
 </head>
 <style>
@@ -295,7 +319,7 @@
 			<div id="toolbar">
 				<div id="pageName">코딩테스트</div>
 				<div id="registerArticle">
-					<button class="register" type="button" onclick="location.href='/algorithm/question/create';">글작성</button>
+					<button class="register" type="button" >글작성</button>
 				</div>
 				<div class="search_area">
 					<form id="search-form"
@@ -352,7 +376,7 @@
 			<div id="spaceBottom"></div>
 		</div>
 		<div id="container">	
-			<div class="btn-group"  style="margin-bottom: 20px;">
+			<%-- <div class="btn-group"  style="margin-bottom: 20px;">
 				<div class="right-align">
 					<!-- 로그인 하지 않았을 때 -->
 					<c:if test="${empty sessionScope._LOGIN_USER_}">
@@ -365,7 +389,7 @@
 						</button>  -->
 					</c:if>
 				</div>
-			</div>
+			</div> --%>
 
 			<table class="table">
 				<thead>

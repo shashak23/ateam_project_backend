@@ -4,19 +4,18 @@
  */
 package com.ktdsuniversity.edu.follow.service;
 
-import java.util.List;
-
 import com.ktdsuniversity.edu.follow.vo.FollowListVO;
 import com.ktdsuniversity.edu.follow.vo.FollowVO;
 import com.ktdsuniversity.edu.follow.vo.SearchFollowVO;
 
 public interface FollowService {
 	
-	public boolean doFollow(FollowVO followVO);
+	public boolean doFollow(FollowVO followVO, SearchFollowVO searchFollowVO);
 	public boolean unFollow(SearchFollowVO searchFollowVO);
 	public boolean toggleFollower(String followId);
 	public FollowListVO getAllFollower(String email);
 	public FollowListVO getAllFollowee(String email);
 	public FollowVO getFollowStatus(SearchFollowVO searchFollowVO);
+	public FollowListVO getMutualMembers(String email);
 
 }

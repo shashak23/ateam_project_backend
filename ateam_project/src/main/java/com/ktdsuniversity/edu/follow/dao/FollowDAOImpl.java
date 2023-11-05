@@ -52,5 +52,12 @@ public class FollowDAOImpl extends SqlSessionDaoSupport implements FollowDAO {
 	public int toggleFollower(String followId) {
 		return getSqlSession().update("toggleFollower", followId);
 	}
+
+	@Override
+	public List<FollowVO> getMutualMembers(String email) {
+		return getSqlSession().selectList("getMutualMembers", email);
+	}
+	
+	
 	
 }

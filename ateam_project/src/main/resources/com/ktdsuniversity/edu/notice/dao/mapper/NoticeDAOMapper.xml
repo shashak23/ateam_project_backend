@@ -79,13 +79,27 @@
 			 , POST_WRITER
 			 , POST_TITLE
 			 , NOTICE_CONTENT
-			 , POST_DATE
+			 , TO_CHAR(POST_DATE, 'YYYY-MM-DD') POST_DATE
 			 , RELEASE_START_DATE
 			 , RELEASE_END_DATE
 			 , DELETE_YN
 			 , ON_OFF
 		  FROM NOTICE
 		 WHERE NOTICE_ID = #{_parameter}
+	</select>
+	<select id="getNoticeOnList">
+		SELECT NOTICE_ID
+			 , POST_WRITER
+			 , POST_TITLE
+			 , NOTICE_CONTENT
+			 , TO_CHAR(POST_DATE, 'YYYY-MM-DD') POST_DATE
+			 , TO_CHAR(RELEASE_START_DATE, 'YYYY-MM-DD') RELEASE_START_DATE
+			 , TO_CHAR(RELEASE_END_DATE, 'YYYY-MM-DD') RELEASE_END_DATE
+			 , DELETE_YN
+			 , ON_OFF
+		  FROM NOTICE
+		 WHERE ON_OFF = 'On'
+		   AND DELETE_YN = 'N'
 	</select>
 	<insert id="createNotice"
 			parameterType="com.ktdsuniversity.edu.notice.vo.NoticeVO">

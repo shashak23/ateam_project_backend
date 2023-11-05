@@ -6,6 +6,9 @@
 
 package com.ktdsuniversity.edu.notice.service;
 
+import java.util.List;
+import java.util.Random;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -55,6 +58,18 @@ public class NoticeServiceImpl implements NoticeService{
 	@Override
 	public NoticeVO getOneNotice(String id) {
 		NoticeVO noticeVO = noticeDAO.getOneNotice(id);
+		return noticeVO;
+	}
+	
+	@Override
+	public NoticeVO getRandomNotice() {
+		List<NoticeVO> noticeList = noticeDAO.getNoticeOnList();
+		
+		Random rd = new Random();
+		int rdIndex = rd.nextInt(noticeList.size());
+		
+		NoticeVO noticeVO = noticeList.get(rdIndex);
+		
 		return noticeVO;
 	}
 

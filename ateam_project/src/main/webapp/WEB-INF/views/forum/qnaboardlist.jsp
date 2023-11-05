@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" id="viewport" content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, width=device-width"/>
-    <!-- <title>SnapChat</title> -->
+    <title>devGround</title>
    
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" type="text/css" href="/css/style.css" />
@@ -16,11 +16,89 @@
     <script src="js/lib/jquery-3.7.1.js"></script>
     <jsp:include page="../layout/header.jsp"/>
 <style>
+            table {
+            	border-collapse: collapse;
+            }
+            .wrap {
+            display: flex;
+            justify-content: center;
+            margin: 0 auto;
+            margin-right: 15%;
+            }
+
+            .container {
+                display: inline-block;
+                width: 980px;
+                margin: 0 auto;     
+            }
+            .button_list {
+                margin:  0 auto;
+                margin-bottom: 15px;
+                
+            }
+            .board_list_box {
+                position: relative;
+                bottom: 400px;
+                margin: 0 auto;
+                margin-left: 25%;
+                margin-top: 90px;
+                border-top:none;
+                border-bottom:none;
+                border-left: none;
+                border-right: none;
+            }
+
+            .btn_st_2 {
+                position: relative;
+                left: 65px;
+                margin: 0 auto;    
+                margin-right: 30px;          
+                background-color: var(--hashtag-blue);
+                border-radius: 5px;
+                border: none;
+                width: 60px; 
+                height: 30px;
+            }
+            .btn_write_1 {
+                position: relative;
+                left: 900px;
+                margin-top: 30px;
+                background-color: var(--hashtag-blue);
+                color: white;
+                border-radius: 5px;
+                border: none;
+                width: 70px; 
+                height: 30px;
+                margin-bottom: 50px;
+            }
+            #button_list_1 tr th {
+                background-color: var(--light-gray);
+                border-bottom: 1px solid var(--dark-gray);
+                color: var(--dark-gray);       
+            }    
+            .table-header_01 {                        
+                width: 50px;
+                height: 35px;
+             }
+             .pratice_01,.pratice_02,.pratice_03,.pratice_04 {
+                border-bottom: 1px solid var(--gray);
+                text-align: center;
+                color: var(--dark-gray);
+             }
+             .pratice {
+                margin-top: 42px;
+                border-bottom: 1px solid var(--gray);
+             }
+             .text_controller {
+                position: relative;
+                bottom: 20px;
+             }
          #hashtag {
             margin: 0 auto;
             margin-top: 50px;
             text-align: center;
-            font-size: 30px;
+            font-size: 40px;
+            font-weight: bold;
          }
          .hashtag_wrap {
 	        margin: 0 auto;  
@@ -29,26 +107,22 @@
 	        flex-wrap: wrap;
 	        width: 780px;
 	        }
-	     .fieldset_controller {
-	        display: flex;
-	        margin: 0 auto;
-	        margin-right: 300px;
-	    } 
-	    .board_list_ty1 {
-	        width: 800px;
-	    } 
+	    
 
    
         .hashtag_incomplete {
-           background-color: yellow;        
+           /* background-color: yellow;  */
+           text-align: center;
+           font-size: 20px;
            margin: 0 auto;
            margin-left: 10px;
            margin-top: 30px;
            width: 85px;
            height: 35px;
            border-radius: 10px;
-           border: 1px solid var(--light-gray);
+           border: none;
            cursor: pointer;
+           text-decoration: underline;
            
         }
         .hashtag_incomplete:hover {
@@ -57,74 +131,8 @@
 
         .list_search {
            text-align: right;
-
         }
 
-        /*게시판 테이블 제어*/
-        table {
-            border-collapse: collapse;
-         
-        }
-        
-        .table-header_01 {
-           width: 50px;
-          height: 35px;
-        }
-        
-        /*버튼 속성제어*/
-        .btn_st_2,.btn_st_3 {
-           background-color: var(--hashtag-blue);
-           border-radius: 5px;
-           border: none;
-           width: 60px;
-           height: 30px;
-        }
-        .btn_write_1 {  
-            margin: 0 auto;  
-            margin-top: 30px;
-            margin-left: 930px;
-            background-color: var(--hashtag-blue);
-            border-radius: 5px;
-            border: none;
-            width: 70px;
-            height: 30px;
-          
-        }
-
-        #button_list_1 tr th {
-           background-color: var(--light-gray);
-           border-bottom: 1px solid var(--dark-gray);
-           color: var(--dark-gray);
-       }
-
-       .pratice_01,.pratice_02,.pratice_03,.pratice_04 {
-           border-bottom: 1px solid var(--gray);
-           text-align: center;
-           color: var(--dark-gray);
-       }
-
-       .pratice {
-           margin-top: 42px;
-           border-bottom: 1px solid var(--gray);
-       }
-
-       .text_controller {
-           position: relative;
-           bottom: 20px;
-       }
-
-       .advertising {
-
-           position: absolute;
-	       top: 0;
-	       right: 10px;
-	       width: 200px;
-	       height: 500px;
-	       border: 1px solid var(--gray);
-	       margin: 0 auto;
-	       margin-top: 650px;
-	       margin-right: 50px;
-       }
 	    #hot_post a {
 		    color: black; 
 		    margin: 0 auto;
@@ -140,17 +148,105 @@
 			
 		}
 		
-		.my-aside a {
-		display: block;
-		overflow:hidden;
-	      text-overflow:ellipsis;
-	      white-space:nowrap;
-		}
 		
-		.contents {
-		    width: 780px;
-	    	margin: 0 auto;
-	    }
+        
+            /* 추가css */
+            #left_container{
+      display: flex;
+      justify-content: center;
+      width:300px;
+      min-height: 500px;
+      margin-top: 8px;
+   }
+
+   #toolbar{
+      width: 300px;
+      position: fixed;
+      margin: 25px 0px 0px 20px;
+      width: 200px;
+      padding: 15px;
+      align-items: center; 
+   }
+
+   #toolbar > #registerArticle{
+      width:180px;   
+   }
+
+   #toolbar > #registerArticle > .register{
+      width: 220px;
+      height:35px;
+      margin-top: 9px;
+      color:black;
+      background-color: var(--hashtag-blue);
+      border-radius: 6px;
+      border:none;
+      transition: box-shadow 0.1s ease;
+   }
+
+   #toolbar > #registerArticle > .register:hover{
+      border: 2px solid #1E90FF;
+   }
+   #pageName {
+    font-size: 30px;
+    font-weight: bold;
+   }
+   .search_menu {
+    position: relative;
+    top: 22px;
+   }
+   .button_box {
+    margin: 0 auto;
+    margin-left: 160px;
+    margin-top: 10px;
+    background-color: var(--hashtag-blue);
+    border-radius: 5px;
+    border: none;
+    width: 60px; 
+    height: 30px;
+   }
+   .sc_text {
+    margin: 0 auto;
+    margin-left: 68px;
+    width: 150px;
+   }.ranking_controller {
+    border: 1px solid var(--light-gray);
+    border-radius: 8px;
+    margin-right: 40px;
+   
+   }
+   /* 그래프 */
+   .ranking_controller.expanded {
+    overflow: hidden;
+    height: 0;
+    transition: height 1s;
+}
+
+.ranking_controller.expanded.expanded {
+    height: 200px; /* 원하는 높이로 설정하세요. */
+    transition: height 1s;
+}
+
+.ranking_wrap_1 {
+    list-style: none;
+    padding: 0;
+}
+
+.ranking_wrap_1 li {
+    background-color: var(--default-color); /* 기본 배경색 */
+    margin-bottom: 5px;
+    transition: width 0.5s;
+}
+
+.ranking_wrap_1 li:hover {
+    background-color: var(--highlight-color); /* 마우스를 올렸을 때 배경색 변경 */
+}
+
+
+
+
+
+
+
     </style>
 </head>
 <body>
@@ -160,23 +256,34 @@
             <div class="hashtag_wrap"></div>
         </div> 
     </nav>
+    <div id="left_container">
+        <div id="toolbar">
+            <div id="pageName">질문게시판</div>
+            <div id="registerArticle">
+                <button class="register" type="button" onclick="location.href='/qnaboard/create';">글작성</button>
+            </div>
+            <div class="search_area">
+               
+                <form id="search-form" method="get" action="/qnaboard/list">
+                  <div class="button_list">
+                    <select class="search_menu" name="searchType">
+                        <option value="postTitle" ${searchForumVO.searchType eq 'postTitle' ? 'selected' : ''}>제목</option>
+                        <option value="postContent" ${searchForumVO.searchType eq 'postContent' ? 'selected' : ''}>내용</option>
+                        <option value="postWriter" ${searchForumVO.searchType eq 'postWriter' ? 'selected' : ''}>작성자</option>
+                    </select>
+                    <input class="sc_text" type="text"  placeholder="검색어 입력" name="searchKeyword" value="${searchForumVO.searchKeyword}" />                    
+                            <button class="button_box" type="submit" class="btn_st_2">
+                                검색
+                            </button>                               
+                  </div>               
+               </form>               
+            </div>            
+         </div>
+    </div>
+   
+ 
     <div class="controll_all">
         <main class="contents">
-            <!-- 게시물검색 -->
-            <div class="list_search">
-                <select name="searchType">
-                    <option value="subject" ${searchForumVO.searchType eq 'subject' ? 'selected' : ''}>제목</option>
-                    <option value="content" ${searchForumVO.searchType eq 'content' ? 'selected' : ''}>내용</option>
-                    <option value="writer" ${searchForumVO.searchType eq 'email' ? 'selected' : ''}>이메일</option>
-                </select>
-                <input type="text" class="sc_text" placeholder="검색어 입력" name="searchKeyword" value="${searchForumVO.searchType ne 'hashtagId' ? searchForumVO.searchKeyword : ''}" />
-                <button type="submit" class="btn btn_st_2">
-                    <a href="#">조회</a>
-                </button>
-                <button type="submit" class="btn btn_st_3">
-                    <a href="/qnaboard/create">글쓰기</a>
-                </button>
-            </div>
             <!-- 게시판 리스트 -->
             <div id="container_controller">
                 <form class="fieldset_controller" action="" method="">
@@ -189,7 +296,7 @@
                                     <col width="*">
                                     <col width="10%">
                                     <col width="15%">
-                                    <col width="10%">
+                                    
                                 </colgroup>
                                 <thead id="button_list_1">
                                     <tr>
@@ -199,7 +306,7 @@
                                         <th scope="col" class="table-header_04">등록일</th>
                                     </tr>
                                 </thead>
-                                <tbody id="user-list">
+                                <tbody>
                                     <c:forEach items="${generalPostListVO.generalPostList}" var="qnaboard" varStatus="index">
                                         <tr>
                                             <td class="pratice_01">${(index.index + 1) * (searchForumVO.pageNo + 1)}</td>
@@ -208,8 +315,7 @@
                                                     <a class="text_controller" href="/qnaboard/view/${qnaboard.generalPostId}">
                                                         ${qnaboard.postTitle}
                                                     </a>
-                                                </div>
-                                                <script src="https://unpkg.com/axios/dist/axios.min.js"></script>  
+                                                </div>                                       
                                             </td>
                                             <td class="pratice_02"> ${qnaboard.memberVO.nickname}</td>
                                             <td class="pratice_03">${qnaboard.postDate}</td>
@@ -225,11 +331,18 @@
         <aside class="my-aside">
 	          <!-- 조회수순 랭킹 -->
 	          <h3 id="viewCnt">주간 질답 랭킹 ▶ </h3>
-	          <div class="view_ranking_wrap"></div>
-	          <h3 id="like_top">명예의 전당 ▶ </h3>
+              <div class="ranking_controller">
+	          <div class="view_ranking_wrap"></div>         
 	           <div class= "ranking_list">
 	              <ul class="ranking_wrap"></ul>
-	          </div>                       
+	          </div> 
+             </div>
+              <h3 id="like_top">명예의 전당 ▶ </h3>
+              <div class="ranking_controller expanded">
+                <div class="view_ranking_wrap_1">
+                    <ul class="ranking_wrap_1">
+                </div>
+              </div>
 	      </aside>
     </div>
    <jsp:include page="../layout/footer.jsp" />
@@ -311,7 +424,55 @@
 		    });
 		}
  */
-	
+
+
+//  랭킹
+$(document).ready(function() {
+    // AJAX 요청을 통해 데이터 가져오기
+    $.get('/home/ranking/\${formattedMonday}', function(response) {
+        // 데이터를 가져왔을 때 실행되는 콜백 함수
+        if (response && response.data) {
+            const rankingData = response.data;
+
+            // rankingData를 이용하여 그래프를 생성하고 ranking_wrap_1에 추가
+            const rankingWrap = $('.ranking_wrap_1');
+            rankingWrap.empty(); // 기존 내용을 지우고 다시 생성
+
+            rankingData.forEach(item => {
+                const views = item.views;
+                const postTitle = item.postTitle;
+
+                // 그래프 항목 생성
+                const ranking_template = `
+                    <li>
+                        <a href="/qnaboard/view/${item.generalPostId}" target="_blank">${postTitle}</a>
+                    </li>`;
+                const ranking_templateDom = $(ranking_template);
+                ranking_templateDom.css('width', views + 'px');
+                rankingWrap.append(ranking_templateDom);
+            });
+
+            // 페이지가 로드될 때 랭킹 컨트롤러를 확장 (올라가도록)합니다.
+            $('.ranking_controller').addClass('expanded');
+        }
+    });
+});
+
+// 명예의 전당
+    $.get("/qnaboard/topTenMember", function(response) {
+            console.log(response)
+            for (var i in response.generalMemberList) {
+                let listDOM = $("<ul></ul>");
+                let userEmailDOM = $("<li></li>");
+                userEmailDOM.text(response.generalMemberList[i].generalMemberEmail + " / " + response.generalMemberList[i].tierScore);
+                listDOM.append(userEmailDOM)
+                $(".ranking_wrap_1").append(listDOM)
+            }
+
+        })
+
+
+//랭킹
        const userList = document.getElementById('user-list');
        const tableContainer = document.querySelector('.board_list_ty1');
        const loading = document.getElementById('loading');

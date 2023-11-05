@@ -27,6 +27,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ktdsuniversity.edu.generalmember.service.GeneralMemberService;
+import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberListVO;
 import com.ktdsuniversity.edu.generalpost.service.GeneralPostService;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostListVO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
@@ -43,11 +45,19 @@ public class QnAPostController {
 	@Autowired
 	private GeneralPostService generalPostService;
 	
+	@Autowired
+	private GeneralMemberService generalMemberService;
+	
 	private Logger log = LoggerFactory.getLogger(FreePostController.class);
 
 	// 전체조회 
 	@GetMapping("/qnaboard/list")
-	public ModelAndView qnaBoardList(SearchForumVO searchForumVO, @RequestParam(required = false) String hashtagId) {
+	public ModelAndView qnaBoardList(SearchForumVO searchForumVO
+									, GeneralMemberListVO topTenMemberListVO
+									, @RequestParam(required = false) String hashtagId) {
+		
+		topTenMemberListVO = generalMemberService.getSelectTopTenScoreMemberList();
+		
 		log.debug("--1--컨트롤러도착---------------------------"+ hashtagId);
 		if (hashtagId != null && hashtagId.length() > 0) {
 			searchForumVO.setSearchType("hashtagId");
@@ -61,8 +71,21 @@ public class QnAPostController {
 		view.setViewName("forum/qnaboardlist");
 		view.addObject("generalPostListVO", generalPostListVO);
 		view.addObject("searchForumVO", searchForumVO);
+		view.addObject("topTenMemberListVO", topTenMemberListVO);
 		
 		return view;
+	}
+	
+	// 명예의 전당
+	@ResponseBody
+	@GetMapping("/qnaboard/topTenMember")
+	public Map<String, Object> topTen(GeneralMemberListVO topTenMemberListVO
+						, Model model) {
+		Map<String, Object> resultMap = new HashMap<>();
+		topTenMemberListVO = generalMemberService.getSelectTopTenScoreMemberList();
+		resultMap.put("generalMemberListCount", topTenMemberListVO.getGeneralMemberListCount());
+		resultMap.put("generalMemberList", topTenMemberListVO.getGeneralMemberList());
+		return resultMap;
 	}
 	
 	// 글쓰기 화면 보이기
@@ -70,7 +93,6 @@ public class QnAPostController {
 	public String createQnABoard() {
 		return "forum/qnaboardcreate";
 	}
-
 	
 	// 글 등록
 	@PostMapping("/qnaboard/create")
