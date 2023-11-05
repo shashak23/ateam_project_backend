@@ -310,6 +310,7 @@
     text-decoration: none;
   }
 
+
   .btn_group {
     display: flex;
     justify-content: center;
@@ -503,7 +504,8 @@
 
     .create_container,
     .notice_view_container,
-    .modify_container {
+    .modify_container,
+    .report_view_container {
         visibility: hidden;
         position: fixed;
         top: 50%;
@@ -523,7 +525,8 @@
 
     .create_container.active,
     .notice_view_container.active,
-    .modify_container.active {
+    .modify_container.active,
+    .report_view_container.active {
 			visibility: visible;
 			opacity: 1;
 			transform: translate(-50%, -50%);
@@ -531,7 +534,8 @@
 
     .create_container > *,
     .notice_view_container > *,
-    .modify_container > * {
+    .modify_container > *,
+    .report_view_container > * {
         margin-bottom: 10px;
     }
 
@@ -549,7 +553,8 @@
 
     .notice_view_overlay,
     .notice_create_overlay,
-    .notice_modify_overlay  {
+    .notice_modify_overlay,
+    .report_view_overlay  {
       background-color: #47474754;
       position: fixed;
       width: 100%;
@@ -564,14 +569,16 @@
     
     .notice_view_overlay.active,
     .notice_create_overlay.active,
-    .notice_modify_overlay.active {
+    .notice_modify_overlay.active,
+    .report_view_overlay.active {
       opacity: 1;
       pointer-events: all;
     }
 
     .btn-close,
     .notice_btn-close,
-    .notice_modify_btn-close {
+    .notice_modify_btn-close,
+    .report_close_btn {
         position: absolute;
         top: 6px;
         right: 10px;
@@ -583,7 +590,8 @@
 
     .btn-close:hover,
     .notice_btn-close:hover,
-    .notice_modify_btn-close:hover {
+    .notice_modify_btn-close:hover,
+    .report_close_btn:hover {
         color: #191919;
     }
 
@@ -673,6 +681,70 @@
       margin-bottom: 10px;
       color: #888;
     }
+ 
+
+  .report_view_container h1 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .report_view_grid {
+    display: grid;
+    grid-template-columns: 120px 300px;
+    grid-template-rows: 40px 40px 40px 40px 40px 40px 40px 40px 150px 40px 40px;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .report_view_container .report_member,
+  .report_view_container .report_received_member {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .report_view_container .punishment_btn_wrap,
+  .report_btn_wrap {
+    display: flex;
+    justify-content: flex-end;
+    padding: 0;
+  }
+
+  .report_view_container .punishment_btn_wrap button,
+  .report_btn_wrap button {
+    margin-left: 5px;
+    border: 1px solid #ffafaf;
+    color: #e05454;
+    font-size: 9pt;
+  }
+
+  .report_container .report_confirm.progressing {
+    color: red;
+    background-color: #ffdada;
+    font-weight: bold;
+  }
+
+  .report_container .report_view_btn,
+  .report_view_container .report_content_id {
+    cursor: pointer;
+  }
+
+  .report_view_container .report_content_id {
+    color: #4052f7;
+  }
+
+  .report_view_grid * {
+    padding: 5px;
+  }
+
+  .report_view_grid label {
+    color: #888;
+    font-size: 10pt;
+  }
+
+  .report_view_grid .attached_img {
+    overflow: auto;
+  }
+
 
     .errors {
         background-color: rgb(255, 244, 244);
@@ -899,6 +971,49 @@
       </div>
     </div>
   </div>
+
+  <!-- 신고 상세 조회 모달 -->
+  <div class="report_view_container">
+    <div class="report_close_btn">&times;</div>
+    <h1>신고물 조회</h1>
+    <div class="report_view_grid">
+      <label for="report_id">신고ID</label>
+      <div class="detail_report_id"></div>
+      <label for="report_date">신고 날짜</label>
+      <div class="report_date"></div>
+      <label for="report_member">신고한 유저</label>
+      <div class="report_member">
+        <div class="punishment_btn_wrap">
+          <button class="report_btn member_warn">경고누적</button>
+          <button class="report_btn report_member_withdraw">회원탈퇴</button>
+        </div>
+      </div>
+      <label for="report_received_member">신고당한 유저</label>
+      <div class="report_received_member">
+        <div class="punishment_btn_wrap">
+          <button class="report_btn member_warn">경고누적</button>
+          <button class="report_btn received_report_member_withdraw">회원탈퇴</button>
+        </div>
+      </div>
+      <label for="report_content_id">신고물 ID</label>
+      <div class="report_content_id"></div>
+      <label for="report_type">신고 유형</label>
+      <div class="report_type"></div>
+      <label for="detail_report_reason">신고 사유</label>
+      <div class="detail_report_reason"></div>
+      <label for="report_reason_content">신고 상세 사유</label>
+      <div class="report_reason_content"></div>
+      <label for="attached_img">첨부 파일</label>
+      <div class="attached_img"></div>
+      <label for="progress_yn">처리 여부</label>
+      <div class="progress_yn"></div>
+      <div></div>
+      <div class="report_btn_wrap">
+        <button>처리상태 변경</button>
+      </div>
+    </div>
+  </div>
+  <div class="report_view_overlay"></div>
 
   <!-- 해시태그 관리 모달 -->
   <div class="hashtag_modal">
@@ -1392,9 +1507,9 @@
               \${report.progressYn}
             </div>
             <div class="report_content">
-              <a href="/admin/report/view/\${report.reportId}">
+              <span class="report_view_btn" data-id="\${report.reportId}" data-progress="\${report.progressYn}">
                 <strong>\${report.reportReasonContent}</strong>
-              </a>
+              </span>
             </div>
             <div class="report_reason">\${report_reason}</div>
             <div class="report_date">
@@ -1406,6 +1521,9 @@
 
         if (report.reportReasonContent.includes(val) || report_reason.includes(val)) {
           $('.report_modal').find('.desc-content').append(reportTemplateDom)
+        }
+        if (reportTemplateDom.find('.report_confirm').text().trim() === 'N') {
+          reportTemplateDom.find('.report_confirm').addClass('progressing')
         }
       }
     })
@@ -1426,6 +1544,110 @@
     }
   })
 
+  // 신고 상세 조회
+  $(document).on('click', '.report_view_btn', function() {
+    $(this).data('progress')
+    if ($(this).data('progress') === 'Y') {
+      alert('이미 처리 완료된 건입니다.')
+    }
+    else {
+      let reportId = $(this).data('id')
+  
+      $.get(`/admin/report/view/\${reportId}`, function(response) {
+        $('.detail_report_id').html('')
+        $('.detail_report_id').html(response.reportId)
+        $('.report_date').html('')
+        $('.report_date').html(response.reportDate)
+        $('.report_member').contents().filter(function() {
+          return this.nodeType === 3
+        }).remove()
+        $('.report_member').prepend(response.reportMember)
+
+        $('.report_received_member').contents().filter(function() {
+          return this.nodeType === 3
+        }).remove()
+        $('.report_received_member').prepend(response.receivedReportMember)
+        $('.report_content_id').html('')
+        $('.report_content_id').html(response.reportContentId)
+        $('.report_type').html('')
+        $('.report_type').html(response.commonCodeVOTemp.codeContentTemp)
+        $('.detail_report_reason').html('')
+        $('.detail_report_reason').html(response.commonCodeVO.codeContent)
+        $('.report_reason_content').html('')
+        $('.report_reason_content').html(response.reportReasonContent)
+        $('.attached_img').html('')
+        $('.attached_img').html(response.attachedImg)
+        $('.progress_yn').html('')
+        $('.progress_yn').html(response.progressYn)
+      })
+
+      // 신고 게시글로 이동
+      $('.report_content_id').click(function() {
+        let reportContentId = $('.report_content_id').html()
+        window.open(`/freeboard/view/\${reportContentId}`, 'DevGround')
+      })
+
+      // 멤버 경고
+      $('.report_btn.member_warn').click(function() {
+        alert('경고를 주었습니다.')
+      })
+
+      // 회원 탈퇴
+      $('.report_member_withdraw').click(function() {
+        let emailNode = $(this).closest('.report_member').contents().filter(function() {
+          return this.nodeType === 3
+        })
+
+        let url = '/home/admin/person/delete/' + emailNode[0].nodeValue
+        
+        $.get(url, function(response) {
+          if (confirm('정말 탈퇴시키겠습니까?') && response.result === 'success') {
+            alert('탈퇴 처리하였습니다.')
+          }
+          else {
+            alert('탈퇴 처리에 실패했습니다.')
+          }
+        })
+      })
+
+      $('.received_report_member_withdraw').click(function() {
+        let emailNode = $(this).closest('.report_received_member').contents().filter(function() {
+          return this.nodeType === 3
+        })
+
+        let url = '/home/admin/person/delete/' + emailNode[0].nodeValue
+
+        $.get(url, function(response) {
+          if (confirm('정말 탈퇴시키겠습니까?') && response.result === 'success') {
+            alert('탈퇴 처리하였습니다.')
+          }
+          else {
+            alert('탈퇴 처리에 실패했습니다.')
+          }
+        })
+      })
+
+      $('.report_btn_wrap button').click(function() {
+        let reportId = $(this).closest('.report_view_container').find('.detail_report_id').html()
+
+        if (confirm('정말 처리 완료하시겠습니까?')) {
+          $.get(`/admin/report/progress/\${reportId}`, function(response) {
+             console.log(response)
+             console.log(reportId)
+            if (response.result === 'success') {
+              alert('처리 완료하였습니다.')
+            }
+          })
+        }
+      })
+  
+      $('.report_view_container, .report_view_overlay').addClass('active')
+  
+      $('.report_close_btn, .report_view_overlay').click(function() {
+        $('.report_view_container, .report_view_overlay').removeClass('active')
+      })
+    }
+  })
 
   // 해시태그 조회
   let tag = {}

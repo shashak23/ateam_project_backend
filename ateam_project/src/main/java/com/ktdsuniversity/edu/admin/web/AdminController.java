@@ -164,30 +164,31 @@ public class AdminController {
 //				.body(resource);
 	}
 	
-
-	@GetMapping("/admin/report/view/{reportId}")
-	public String viewOneReport(@PathVariable String reportId,
-								Model model,
-								ReportVO reportVO) {
-//		System.out.println(reportVO.getReportDate());
-		reportVO = reportService.getSingleReport(reportId);
-		model.addAttribute("reportVO", reportVO);
-		return "report/reporthistoryview";
-	}
 	
-	@Transactional
-	@PostMapping("/admin/report/view/{reportId}")
-	public String doCompleteProgressYn(@PathVariable String reportId,
-										@RequestParam String value) {
-		if (value.equals("reportHandlingStatus")) {
-			boolean doCompleteProgressYn = reportService.doCompleteProgressYn(reportId);
-			if (doCompleteProgressYn) {
-				return "redirect:/admin/report/view/" + reportId;		
-			}
-		}
-		
-		return "redirect:/admin/report/view/" + reportId;
-	}
+
+//	@GetMapping("/admin/report/view/{reportId}")
+//	public String viewOneReport(@PathVariable String reportId,
+//								Model model,
+//								ReportVO reportVO) {
+//		System.out.println(reportVO.getReportDate());
+//		reportVO = reportService.getSingleReport(reportId);
+//		model.addAttribute("reportVO", reportVO);
+//		return "report/reporthistoryview";
+//	}
+	
+//	@Transactional
+//	@PostMapping("/admin/report/view/{reportId}")
+//	public String doCompleteProgressYn(@PathVariable String reportId,
+//										@RequestParam String value) {
+//		if (value.equals("reportHandlingStatus")) {
+//			boolean doCompleteProgressYn = reportService.doCompleteProgressYn(reportId);
+//			if (doCompleteProgressYn) {
+//				return "redirect:/admin/report/view/" + reportId;		
+//			}
+//		}
+//		
+//		return "redirect:/admin/report/view/" + reportId;
+//	}
 	
 	@GetMapping("admin/tier")
 	public String viewMemberTierUpgrade(Model model) {

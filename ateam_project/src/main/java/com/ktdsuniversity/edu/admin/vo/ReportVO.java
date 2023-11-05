@@ -20,7 +20,8 @@ public class ReportVO {
 	private String progressYn;
 	private String attachedImg;
 	
-	private MemberVO memberVO;
+	private MemberVO reportMemberVO;
+	private MemberVO receivedReportMemberVO;
 	private CommonCodeVO commonCodeVO;
 	private CommonCodeVO commonCodeVOTemp;
 	private GeneralPostVO generalPostVO;
@@ -87,12 +88,18 @@ public class ReportVO {
 	public void setAttachedImg(String attachedImg) {
 		this.attachedImg = attachedImg;
 	}
-	public MemberVO getMemberVO() {
-		return memberVO;
+	MemberVO getReportMemberVO() {
+		return reportMemberVO;
 	}
-	public void setMemberVO(MemberVO memberVO) {
-		this.memberVO = memberVO;
-	}	
+	void setReportMemberVO(MemberVO reportMemberVO) {
+		this.reportMemberVO = reportMemberVO;
+	}
+	MemberVO getReceivedReportMemberVO() {
+		return receivedReportMemberVO;
+	}
+	void setReceivedReportMemberVO(MemberVO receivedReportMemberVO) {
+		this.receivedReportMemberVO = receivedReportMemberVO;
+	}
 	public CommonCodeVO getCommonCodeVO() {
 		return commonCodeVO;
 	}
