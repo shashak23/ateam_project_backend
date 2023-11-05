@@ -151,32 +151,90 @@
 		    width: 780px;
 	    	margin: 0 auto;
 	    }
+        
+            /* 추가css */
+            #left_container{
+      display: flex;
+      justify-content: center;
+      width:300px;
+      min-height: 500px;
+      margin-top: 8px;
+   }
+
+   #toolbar{
+      width: 300px;
+      position: fixed;
+      margin: 25px 0px 0px 20px;
+      width: 200px;
+      padding: 15px;
+      align-items: center; 
+   }
+
+   #toolbar > #registerArticle{
+      width:180px;   
+   }
+
+   #toolbar > #registerArticle > .register{
+      width: 220px;
+      height:35px;
+      margin-top: 9px;
+      color:black;
+      background-color: var(--hashtag-blue);
+      border-radius: 6px;
+      border:none;
+      transition: box-shadow 0.1s ease;
+   }
+
+   #toolbar > #registerArticle > .register:hover{
+      border: 2px solid #1E90FF;
+   }
+   #pageName {
+    font-size: 30px;
+    font-weight: bold;
+   }
+   .search_menu {
+    position: relative;
+    top: 22px;
+   }
     </style>
 </head>
 <body>
+    
     <nav>
         <div id="hashtagList">
             <p id="hashtag"># Hashtags</p>
             <div class="hashtag_wrap"></div>
         </div> 
     </nav>
+    <div id="left_container">
+        <div id="toolbar">
+            <div id="pageName">질문게시판</div>
+            <div id="registerArticle">
+                <button class="register" type="button" onclick="location.href='/freeboard/create';">글작성</button>
+            </div>
+            <div class="search_area">
+               
+                <form id="search-form" method="get" action="/freeboard/list">
+                  <div class="button_list">
+                    <select class="search_menu" name="searchType">
+                        <option value="postTitle" ${searchForumVO.searchType eq 'postTitle' ? 'selected' : ''}>제목</option>
+                        <option value="postContent" ${searchForumVO.searchType eq 'postContent' ? 'selected' : ''}>내용</option>
+                        <option value="postWriter" ${searchForumVO.searchType eq 'postWriter' ? 'selected' : ''}>작성자</option>
+                    </select>
+                    <input type="text" class="sc_text" placeholder="검색어 입력" name="searchKeyword" value="${searchForumVO.searchKeyword}" />
+                        <div class="button_box">
+                            <button type="submit" class="btn_st_2">
+                                검색
+                            </button>       
+                        </div>                         
+                  </div>               
+               </form>               
+            </div>            
+         </div>
+
+    </div>
     <div class="controll_all">
         <main class="contents">
-            <!-- 게시물검색 -->
-            <div class="list_search">
-                <select name="searchType">
-                    <option value="subject" ${searchForumVO.searchType eq 'subject' ? 'selected' : ''}>제목</option>
-                    <option value="content" ${searchForumVO.searchType eq 'content' ? 'selected' : ''}>내용</option>
-                    <option value="writer" ${searchForumVO.searchType eq 'email' ? 'selected' : ''}>이메일</option>
-                </select>
-                <input type="text" class="sc_text" placeholder="검색어 입력" name="searchKeyword" value="${searchForumVO.searchType ne 'hashtagId' ? searchForumVO.searchKeyword : ''}" />
-                <button type="submit" class="btn btn_st_2">
-                    <a href="#">조회</a>
-                </button>
-                <button type="submit" class="btn btn_st_3">
-                    <a href="/qnaboard/create">글쓰기</a>
-                </button>
-            </div>
             <!-- 게시판 리스트 -->
             <div id="container_controller">
                 <form class="fieldset_controller" action="" method="">

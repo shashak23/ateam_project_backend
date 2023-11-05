@@ -134,6 +134,7 @@
                 margin-top: -100px;
             }
             .button_box {
+                color: palevioletred; 
                 position: relative;
                 left: 95px;
                 margin: 0 auto;
@@ -185,6 +186,10 @@
    .search_menu {
     position: relative;
     top: 22px;
+   }
+   .input_box {
+    position: relative;
+    right: 100px;
    }
 
         </style>
