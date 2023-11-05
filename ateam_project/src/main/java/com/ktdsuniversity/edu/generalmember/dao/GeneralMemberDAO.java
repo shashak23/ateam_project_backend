@@ -7,10 +7,12 @@
 package com.ktdsuniversity.edu.generalmember.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import com.ktdsuniversity.edu.career.vo.CareerVO;
 import com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO;
 import com.ktdsuniversity.edu.education.vo.EducationVO;
+import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberListVO;
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 
@@ -99,4 +101,17 @@ public interface GeneralMemberDAO {
 	 * @return
 	 */
 	public int updateTierDate(GeneralMemberVO generalMemberVO);
+	
+	/**
+	 * 회원이 작성한 글과 댓글 조회
+	 * @param generalMemberEmail 활동 내역을 조회할 회원 email
+	 * @return
+	 */
+	public List<Map<String, Object>> selectMemberActivityLog(String generalMemberEmail);
+	
+	/**
+	 * 스코어 상위 10위까지의 회원 목록 조회
+	 * @return
+	 */
+	public List<GeneralMemberVO> selectTopTenScoreMemberList();
 }

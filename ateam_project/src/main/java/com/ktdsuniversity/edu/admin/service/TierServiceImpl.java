@@ -22,7 +22,6 @@ public class TierServiceImpl implements TierService {
 		AdminTierListVO adminTierListVO = new AdminTierListVO();
 		adminTierListVO.setAdminTierCount(tierDAO.tierMemberAllCount());
 		adminTierListVO.setAdminTierList(tierDAO.tierMemberAllList());
-	
 		return adminTierListVO;
 	}
 	

@@ -458,8 +458,21 @@ $(document).ready(function() {
     });
 });
 
+// 명예의 전당
+    $.get("/qnaboard/topTenMember", function(response) {
+            console.log(response)
+            for (var i in response.generalMemberList) {
+                let listDOM = $("<ul></ul>");
+                let userEmailDOM = $("<li></li>");
+                userEmailDOM.text(response.generalMemberList[i].generalMemberEmail + " / " + response.generalMemberList[i].tierScore);
+                listDOM.append(userEmailDOM)
+                $(".ranking_wrap_1").append(listDOM)
+            }
+
+        })
+
+
 //랭킹
-	
        const userList = document.getElementById('user-list');
        const tableContainer = document.querySelector('.board_list_ty1');
        const loading = document.getElementById('loading');

@@ -7,6 +7,7 @@
 package com.ktdsuniversity.edu.generalmember.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +18,7 @@ import com.ktdsuniversity.edu.career.vo.CareerVO;
 import com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO;
 import com.ktdsuniversity.edu.education.vo.EducationVO;
 import com.ktdsuniversity.edu.generalmember.dao.GeneralMemberDAO;
+import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberListVO;
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 import com.ktdsuniversity.edu.techstack.vo.TechstackVO;
@@ -154,8 +156,23 @@ public class GeneralMemberServiceImpl implements GeneralMemberService {
 		return deleteCount > 0;
 	}
 
+	/**
+	 * 회원의 커뮤니티 활동 내역 조회
+	 */
+	@Override
+	public List<Map<String, Object>> getSelectMemberActivityLog(String generalMemberEmail) {
+		return generalMemberDAO.selectMemberActivityLog(generalMemberEmail);
+	}
 
-
-
+	/**
+	 * 스코어 상위 10위까지의 회원 목록 조회
+	 */
+	@Override
+	public GeneralMemberListVO getSelectTopTenScoreMemberList() {
+		GeneralMemberListVO generalMemberListVO = new GeneralMemberListVO();
+		generalMemberListVO.setGeneralMemberList(generalMemberDAO.selectTopTenScoreMemberList()); 
+		generalMemberListVO.setGeneralMemberListCount(10);
+		return generalMemberListVO;
+	}
 
 }

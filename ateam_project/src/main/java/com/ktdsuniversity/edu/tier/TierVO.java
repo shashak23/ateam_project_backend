@@ -4,10 +4,12 @@ public class TierVO {
 	
 	private String tierId;
 	private String tierName;
-	private String tierCriteriaScore;
+	private int tierCriteriaScore;
+	private String tierImageUrl;
 	private String tierIdTemp;
 	private String tierNameTemp;
-	private String tierCriteriaScoreTemp;
+	private int tierCriteriaScoreTemp;
+	private String tierImageUrlTemp;
 	
 	
 	public String getTierId() {
@@ -22,11 +24,17 @@ public class TierVO {
 	public void setTierName(String tierName) {
 		this.tierName = tierName;
 	}
-	public String getTierCriteriaScore() {
+	public int getTierCriteriaScore() {
 		return tierCriteriaScore;
 	}
-	public void setTierCriteriaScore(String tierCriteriaScore) {
+	public void setTierCriteriaScore(int tierCriteriaScore) {
 		this.tierCriteriaScore = tierCriteriaScore;
+	}
+	public String getTierImageUrl() {
+		return tierImageUrl;
+	}
+	public void setTierImageUrl(String tierImageUrl) {
+		this.tierImageUrl = tierImageUrl;
 	}
 	public String getTierIdTemp() {
 		return tierIdTemp;
@@ -40,12 +48,17 @@ public class TierVO {
 	public void setTierNameTemp(String tierNameTemp) {
 		this.tierNameTemp = tierNameTemp;
 	}
-	public String getTierCriteriaScoreTemp() {
+	public int getTierCriteriaScoreTemp() {
 		return tierCriteriaScoreTemp;
 	}
-	public void setTierCriteriaScoreTemp(String tierCriteriaScoreTemp) {
+	public void setTierCriteriaScoreTemp(int tierCriteriaScoreTemp) {
 		this.tierCriteriaScoreTemp = tierCriteriaScoreTemp;
 	}
-	
+	public String getTierImageUrlTemp() {
+		return tierImageUrlTemp;
+	}
+	public void setTierImageUrlTemp(String tierImageUrlTemp) {
+		this.tierImageUrlTemp = tierImageUrlTemp;
+	}
 
 }
