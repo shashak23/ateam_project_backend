@@ -751,6 +751,7 @@
         $.post('/home/create/freeboard', body, function(response) {
           if (response.result === 'success') {
             alert('자유게시글을 성공적으로 등록했습니다.')
+            location.reload()
           }
           else {
             alert('등록에 실패했습니다.')
@@ -761,6 +762,7 @@
         $.post('/home/create/qnaboard', body, function(response) {
           if (response.result === 'success') {
             alert('질답게시글을 성공적으로 등록했습니다.')
+            location.reload()
           }
           else {
             alert('등록에 실패했습니다.')
