@@ -12,7 +12,7 @@
     <jsp:include page="./admin_ui.jsp" />
   </c:when>
 </c:choose>
-
+<script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/super-build/ckeditor.js"></script>
 <style>
   /* 메인 컨텐츠 영역 */
 	.body_container {
@@ -43,7 +43,6 @@
 	.body_left .home_edit_container .text_area {
 		/* position: sticky; */
 		top: 100px;
-		z-index: 10;
 		width: 670px;
 		height: 80px;
 		border: 1px solid var(--gray);
@@ -329,7 +328,6 @@
   }
 
   .title {
-      margin-left: 10px;
       font-weight: bold;
   }
 
@@ -446,13 +444,161 @@
 			opacity: 1;
 			pointer-events: all;
 	}
+
+  .editor_wrap {
+    visibility: hidden;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -80%);
+    z-index: 10;
+    box-shadow: 0 0 10px #19191948;
+    border: 1px solid;
+    width: 1000px;
+    padding: 30px;
+    opacity: 0;
+    border: none;
+    border-radius: 5px;
+    background-color: #ffffff;
+    transition: 0.5s;
+  }
+
+  .editor_wrap.active {
+    visibility: visible;
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+
+  .editor_overlay {
+		background-color: #47474754;
+		position: fixed;
+		width: 100%;
+		height: 100vh;
+		top: 0;
+		left: 0;
+		transition: 0.5s;
+		opacity: 0;
+		pointer-events: none;
+  }
+
+  .editor_overlay.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .editor_close_btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: transparent;
+    border: none;
+    font-size: 18px;
+    color: #888;
+    cursor: pointer;
+  }
+
+  .editor_head {
+    display: flex;
+    justify-content: center;
+  }
+
+  .editor_head {
+    margin-bottom: 15px;
+    margin-top: 15px;
+  }
+
+  #editor_title {
+    margin-left: 10px;
+    width: 830px;
+    height: 30px;
+    outline: none;
+    border: 1px solid var(--gray);
+    padding: 10px;
+  }
+  .editor_body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .editor_content_label {
+    display: block;
+    margin-bottom: 10px;
+    width: 880px;
+  }
+
+  .ck.ck-editor {
+    width: 875px;
+  }
+
+  .ck-rounded-corners .ck.ck-editor__main>.ck-editor__editable, .ck.ck-editor__main>.ck-editor__editable.ck-rounded-corners {
+    min-height: 300px;
+  }
+
+  .submit_wrap {
+    display: flex;
+    justify-content: flex-end;
+    width: 908px;
+    margin-top: 15px;
+  }
+
+  .submit_wrap .select_wrap {
+    display: flex;
+    margin-right: 15px;
+  }
+
+  .submit_wrap .select_wrap .free_land_btn,
+  .submit_wrap .select_wrap .qna_land_btn {
+    padding: 5px 10px;
+    background-color: var(--white);
+    color: var(--dark);
+    border: 1px solid var(--light-blue);
+  }
+
+  .submit_wrap .select_wrap .free_land_btn {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-top: 1px solid var(--light-blue);
+    border-bottom: 1px solid var(--light-blue);
+    border-left: 1px solid var(--light-blue);
+    border-right: 0;
+  }
+
+  .submit_wrap .select_wrap .qna_land_btn {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-top: 1px solid var(--light-blue);
+    border-bottom: 1px solid var(--light-blue);
+    border-right: 1px solid var(--light-blue);
+    border-left: 0;
+  }
+
+  .submit_wrap .select_wrap .free_land_btn.selected,
+  .submit_wrap .select_wrap .qna_land_btn.selected {
+    background-color: var(--hashtag-blue);
+  }
+
+  .submit_wrap .submit_btn {
+    padding: 5px 10px;
+    background-color: var(--white);
+    color: var(--dark);
+    border: 1px solid var(--light-blue);
+  }
+
+  .submit_wrap .submit_btn:hover {
+    background-color: var(--hashtag-blue);
+  }
+
+  .submit_wrap .submit_btn:active {
+    background-color: var(--light-blue);
+  }
 </style>
 
   <!-- 메인 컨텐츠 영역 -->
   <section class="body_container">
     <div class="body">
       <div class="body_left">
-        <div class="home_edit_container incomplete">
+        <div class="home_edit_container">
           <div class="text_area"></div>
           <div class="edit_btn">
             <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path d="M471.6 21.7c-21.9-21.9-57.3-21.9-79.2 0L362.3 51.7l97.9 97.9 30.1-30.1c21.9-21.9 21.9-57.3 0-79.2L471.6 21.7zm-299.2 220c-6.1 6.1-10.8 13.6-13.5 21.9l-29.6 88.8c-2.9 8.6-.6 18.1 5.8 24.6s15.9 8.7 24.6 5.8l88.8-29.6c8.2-2.7 15.7-7.4 21.9-13.5L437.7 172.3 339.7 74.3 172.4 241.7zM96 64C43 64 0 107 0 160V416c0 53 43 96 96 96H352c53 0 96-43 96-96V320c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H96z"/></svg>
@@ -471,7 +617,29 @@
     </div>
   </section>
 
-  <!-- 랜덤 공지 생성 모달 -->
+  <!-- 에디터 생성 -->
+  <div class="editor_container">
+    <div class="editor_wrap">
+      <div class="editor_close_btn">&times;</div>
+      <h1>게시글 작성</h1>
+      <div class="editor_head">
+        <label for="editor_title">제목</label>
+        <input type="text" id="editor_title"></input>
+      </div>
+      <div class="editor_body">
+        <label for="editor_content" class="editor_content_label">내용</label>
+        <textarea id="editor_content"></textarea>
+      </div>
+      <div class="submit_wrap">
+        <div class="select_wrap">
+          <button class="free_land_btn selected">자유</button>
+          <button class="qna_land_btn">질답</button>
+        </div>
+        <button class="submit_btn">작성</button>  
+      </div>
+    </div>
+    <div class="editor_overlay"></div>
+  </div>
 
   
 
@@ -524,6 +692,7 @@
                            'color': 'white',
                            'box-shadow': '0 0 5px var(--gray)'})
   })
+
   $('.list_company').mouseleave(function() {
     $('.visible').hide()
     $(this).find('a').css({'background-color': 'white',
@@ -539,6 +708,67 @@
     $('.edit_btn').css('background-color', '')
   })
 
+  // 메인 에디터 생성
+  $('.home_edit_container').click(function() {
+
+    $('.editor_wrap, .editor_overlay').addClass('active')
+
+    $('.editor_close_btn, .editor_overlay').click(function() {
+      $('.editor_wrap, .editor_overlay').removeClass('active')
+    })
+
+    $('body').keyup(function(e) {
+      if(e.key === 'Escape') {
+        $('.editor_wrap, .editor_overlay').removeClass('active')
+      }
+    })
+  })
+
+  // 에디터 작성 글 랜딩 장소 선택
+  $('.qna_land_btn').click(function() {
+    $('.free_land_btn').removeClass('selected')
+    $('.qna_land_btn').addClass('selected')
+  })
+  $('.free_land_btn').click(function() {
+    $('.qna_land_btn').removeClass('selected')
+    $('.free_land_btn').addClass('selected')
+  })
+
+  // 게시글 작성 ajax
+  $('.submit_btn').click(function() {
+    let userEmail = `${sessionScope._LOGIN_USER_.email}`
+
+    if (userEmail === '') {
+      alert('로그인을 먼저 진행해주세요.')
+    }
+    else {
+      let body = {
+        'postWriter': `${sessionScope._LOGIN_USER_.email}`,
+        'postTitle': $('#editor_title').val(),
+        'postContent': $('.ck-editor__main').find('p').text(),
+      }
+      if ($('.free_land_btn').hasClass('selected')) {
+        $.post('/home/create/freeboard', body, function(response) {
+          if (response.result === 'success') {
+            alert('자유게시글을 성공적으로 등록했습니다.')
+          }
+          else {
+            alert('등록에 실패했습니다.')
+          }
+        })
+      }
+      else {
+        $.post('/home/create/qnaboard', body, function(response) {
+          if (response.result === 'success') {
+            alert('질답게시글을 성공적으로 등록했습니다.')
+          }
+          else {
+            alert('등록에 실패했습니다.')
+          }
+        })
+      }
+    }
+  })
   // 게시글 클릭 시 단건 조회 창으로 이동
 
   // 무한 스크롤 컨텐츠
@@ -1064,14 +1294,14 @@
   $.get('/notice/random', function(response) {
     let randNoticeTemplate = `
       <div class="rand_notice_container">
-      <div class="rand_notice_close_btn">&times;</div>
-      <h1 class="create_title">공지</h1>
-      <div class="title_area">
-        <label for="postTitle" class="post_title_label">제목</label>
-        <div>\${response.postTitle}</div>
-      </div class=content_area>
-      <label for="noticeContent" class="post_content_label">내용</label>
-      <div class="noticeContent"></div>
+        <div class="rand_notice_close_btn">&times;</div>
+        <h1 class="create_title">공지</h1>
+        <div class="title_area">
+          <label for="postTitle" class="post_title_label">제목</label>
+          <div>\${response.postTitle}</div>
+        </div class=content_area>
+        <label for="noticeContent" class="post_content_label">내용</label>
+        <div class="noticeContent"></div>
       </div>
       <div class="rand_notice_overlay"></div>`
 
@@ -1087,11 +1317,153 @@
       $('.rand_notice_container, .rand_notice_overlay').removeClass('active')
     })
 
-    $(body).keyup(function(e) {
+    $('body').keyup(function(e) {
       if (e.key === 'Escape') {
         $('.rand_notice_container, .rand_notice_overlay').removeClass('active')
       }
     })
   })
+
+  // 메인 글 작성 ck에디터
+  CKEDITOR.ClassicEditor.create(document.getElementById("editor_content"), {
+    // https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html#extended-toolbar-configuration-format
+    toolbar: {
+      items: [
+        'exportPDF','exportWord', '|',
+        'findAndReplace', 'selectAll', '|',
+        'heading', '|',
+        'bold', 'italic', 'strikethrough', 'underline', 'code', 'subscript', 'superscript', 'removeFormat', '|',
+        'bulletedList', 'numberedList', 'todoList', '|',
+        'outdent', 'indent', '|',
+        'undo', 'redo',
+        '-',
+        'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'highlight', '|',
+        'alignment', '|',
+        'link', 'insertImage', 'blockQuote', 'insertTable', 'mediaEmbed', 'codeBlock', 'htmlEmbed', '|',
+        'specialCharacters', 'horizontalLine', 'pageBreak', '|',
+        'textPartLanguage', '|',
+        'sourceEditing'
+      ],
+      shouldNotGroupWhenFull: true
+    },
+    // Changing the language of the interface requires loading the language file using the <script> tag.
+    // language: 'es',
+    list: {
+      properties: {
+        styles: true,
+        startIndex: true,
+        reversed: true
+      }
+    },
+    // https://ckeditor.com/docs/ckeditor5/latest/features/headings.html#configuration
+    heading: {
+      options: [
+        { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+        { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
+        { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
+        { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
+        { model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' },
+        { model: 'heading5', view: 'h5', title: 'Heading 5', class: 'ck-heading_heading5' },
+        { model: 'heading6', view: 'h6', title: 'Heading 6', class: 'ck-heading_heading6' }
+      ]
+    },
+    // https://ckeditor.com/docs/ckeditor5/latest/features/editor-placeholder.html#using-the-editor-configuration
+    placeholder: '원하는 글을 작성하세요.',
+    // https://ckeditor.com/docs/ckeditor5/latest/features/font.html#configuring-the-font-family-feature
+    fontFamily: {
+      options: [
+        'default',
+        'Arial, Helvetica, sans-serif',
+        'Courier New, Courier, monospace',
+        'Georgia, serif',
+        'Lucida Sans Unicode, Lucida Grande, sans-serif',
+        'Tahoma, Geneva, sans-serif',
+        'Times New Roman, Times, serif',
+        'Trebuchet MS, Helvetica, sans-serif',
+        'Verdana, Geneva, sans-serif'
+      ],
+      supportAllValues: true
+    },
+    // https://ckeditor.com/docs/ckeditor5/latest/features/font.html#configuring-the-font-size-feature
+    fontSize: {
+      options: [ 10, 12, 14, 'default', 18, 20, 22 ],
+      supportAllValues: true
+    },
+    // Be careful with the setting below. It instructs CKEditor to accept ALL HTML markup.
+    // https://ckeditor.com/docs/ckeditor5/latest/features/general-html-support.html#enabling-all-html-features
+    htmlSupport: {
+      allow: [
+        {
+          name: /.*/,
+          attributes: true,
+          classes: true,
+          styles: true
+        }
+      ]
+    },
+    // Be careful with enabling previews
+    // https://ckeditor.com/docs/ckeditor5/latest/features/html-embed.html#content-previews
+    htmlEmbed: {
+      showPreviews: true
+    },
+    // https://ckeditor.com/docs/ckeditor5/latest/features/link.html#custom-link-attributes-decorators
+    link: {
+      decorators: {
+        addTargetToExternalLinks: true,
+        defaultProtocol: 'https://',
+        toggleDownloadable: {
+          mode: 'manual',
+          label: 'Downloadable',
+          attributes: {
+            download: 'file'
+          }
+        }
+      }
+    },
+    // https://ckeditor.com/docs/ckeditor5/latest/features/mentions.html#configuration
+    mention: {
+      feeds: [
+        {
+          marker: '@',
+          feed: [
+            '@apple', '@bears', '@brownie', '@cake', '@cake', '@candy', '@canes', '@chocolate', '@cookie', '@cotton', '@cream',
+            '@cupcake', '@danish', '@donut', '@dragée', '@fruitcake', '@gingerbread', '@gummi', '@ice', '@jelly-o',
+            '@liquorice', '@macaroon', '@marzipan', '@oat', '@pie', '@plum', '@pudding', '@sesame', '@snaps', '@soufflé',
+            '@sugar', '@sweet', '@topping', '@wafer'
+          ],
+          minimumCharacters: 1
+        }
+      ]
+    },
+    // The "super-build" contains more premium features that require additional configuration, disable them below.
+    // Do not turn them on unless you read the documentation and know how to configure them and setup the editor.
+    removePlugins: [
+      // These two are commercial, but you can try them out without registering to a trial.
+      // 'ExportPdf',
+      // 'ExportWord',
+      'CKBox',
+      'CKFinder',
+      'EasyImage',
+      // This sample uses the Base64UploadAdapter to handle image uploads as it requires no configuration.
+      // https://ckeditor.com/docs/ckeditor5/latest/features/images/image-upload/base64-upload-adapter.html
+      // Storing images as Base64 is usually a very bad idea.
+      // Replace it on production website with other solutions:
+      // https://ckeditor.com/docs/ckeditor5/latest/features/images/image-upload/image-upload.html
+      // 'Base64UploadAdapter',
+      'RealTimeCollaborativeComments',
+      'RealTimeCollaborativeTrackChanges',
+      'RealTimeCollaborativeRevisionHistory',
+      'PresenceList',
+      'Comments',
+      'TrackChanges',
+      'TrackChangesData',
+      'RevisionHistory',
+      'Pagination',
+      'WProofreader',
+      // Careful, with the Mathtype plugin CKEditor will not load when loading this sample
+      // from a local file system (file://) - load this site via HTTP server if you enable MathType
+      'MathType'
+    ]
+  });  
 </script>
 </html>

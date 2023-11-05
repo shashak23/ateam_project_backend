@@ -48,4 +48,14 @@ public class HomeBoardDAOImpl extends SqlSessionDaoSupport implements HomeBoardD
 	public List<HomeBoardVO> getHashtag(String postId) {
 		return getSqlSession().selectList("getHashtag", postId);
 	}
+
+	@Override
+	public int freeboardCreateByMain(GeneralPostVO generalPostVO) {
+		return getSqlSession().insert("freeboardCreateByMain", generalPostVO);
+	}
+
+	@Override
+	public int qnaboardCreateByMain(GeneralPostVO generalPostVO) {
+		return getSqlSession().insert("qnaboardCreateByMain", generalPostVO);
+	}
 }

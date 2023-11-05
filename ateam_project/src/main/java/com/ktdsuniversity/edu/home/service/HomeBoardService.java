@@ -13,4 +13,6 @@ public interface HomeBoardService {
 	public List<HomeNickNameVO> getNicknameList();
 	public List<GeneralPostVO> getWeeklyRanking(String date); 
 	public List<HomeBoardVO> getHashtag(String postId);
+	public boolean freeboardCreateByMain(GeneralPostVO generalPostVO);
+	public boolean qnaboardCreateByMain(GeneralPostVO generalPostVO);
 }

@@ -18,8 +18,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -210,6 +210,46 @@ public class HomeController {
 //		hashtagList.addAll(homeBoardService.getHashtag(postId));
 		
 		return homeBoardService.getHashtag(postId);
+	}
+	
+	@ResponseBody
+	@PostMapping("/home/create/freeboard")
+	public Map<String, Object> createOneFreeboard(@ModelAttribute GeneralPostVO generalPostVO) {
+		XssIgnoreUtil.ignore(generalPostVO);
+		
+		System.out.println("1. " + generalPostVO.getPostWriter());
+		System.out.println("2. " + generalPostVO.getPostTitle());
+		System.out.println("3. " + generalPostVO.getPostContent());
+		
+		Map<String, Object> resultSet = new HashMap<>();
+		boolean isSuccess = homeBoardService.freeboardCreateByMain(generalPostVO);
+		
+		if (isSuccess) {
+			resultSet.put("result", "success");
+			return resultSet;
+		}
+		else {
+			resultSet.put("result", "fail");
+			return resultSet;
+		}
+	}
+	
+	@ResponseBody
+	@PostMapping("/home/create/qnaboard")
+	public Map<String, Object> createOneQnaboard(@ModelAttribute GeneralPostVO generalPostVO) {
+		XssIgnoreUtil.ignore(generalPostVO);
+		
+		Map<String, Object> resultSet = new HashMap<>();
+		boolean isSuccess = homeBoardService.qnaboardCreateByMain(generalPostVO);
+		
+		if (isSuccess) {
+			resultSet.put("result", "success");
+			return resultSet;
+		}
+		else {
+			resultSet.put("result", "fail");
+			return resultSet;
+		}
 	}
 	
 	@GetMapping("/home/search")
