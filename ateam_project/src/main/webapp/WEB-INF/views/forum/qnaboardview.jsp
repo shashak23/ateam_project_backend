@@ -7,13 +7,13 @@
 <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" id="viewport" content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, width=device-width"/>
-    <title>SnapChat</title>
+    <title>devGround</title>
    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" type="text/css" href="/css/style.css" />
     <script src="js/lib/jquery-3.7.1.js"></script>
     <jsp:include page="../layout/header.jsp"/>
-<title>dev Ground</title>
+
 
 <style>
 
