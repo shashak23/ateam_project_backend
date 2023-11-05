@@ -1,10 +1,5 @@
 @charset "utf-8";
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap');/*글꼴을 가져오는 페이지*/
-#container {
-  display: grid;
-  grid-gap: 30px;
-  grid-template-columns: 300px 1fr;
-}
 
 .flex_button {
   display: flex;
@@ -50,10 +45,16 @@
   width: 15px;
 }
 .message_icon{
-  background-color: black;
-  cursor: pointer;
-  color: white;
-  height: 30px;
+ width:200px;
+		height: 30px;
+		background-color:  rgb(231,231,231);
+		justify-content: center;
+		border-radius: 5px;
+		display: flex;
+   		padding: 5px;
+   		border: none;
+    	font-weight: bold;
+    	cursor: pointer;
 }
 
 
@@ -67,11 +68,6 @@
   width: 150px;
   height: 150px;
   border-radius: 50%;
-}
-
-.follow {
-  border-bottom: 1px solid #333;
-
 }
 
 .follow>p {
@@ -92,11 +88,6 @@
 }
 .follow a:first-child{
   margin-left: 50px;
-}
-.related_link {
-  display: flex;
-  align-items: center;
-  margin-top: 20px;
 }
 
 .related_link img {
@@ -144,6 +135,7 @@
 #technology_stack {
   margin-top: 70px;
   border-bottom: 0.0625rem solid rgb(231,231,231);
+  display: flex;
 }
 
 #technology_stack ul {
@@ -159,9 +151,11 @@
 
 .education{
   border-bottom: 0.0625rem solid rgb(231,231,231);
+  display: flex;
 }
 .career{
   border-bottom: 0.0625rem solid rgb(231,231,231);
+  display: flex;
 }
 .education>ul,
 .career>ul,

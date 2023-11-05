@@ -103,6 +103,18 @@ $(document).on('click', '.incomplete', function() {
                            'color': 'var(--blue)',
                            'box-shadow': 'none'})
   })
+
+//   $("#myprofile").click(function() {
+// 			redirectToURL(`/memberinfo/view/${memberVO.email}`);
+// 		});
+
+$("#quit").click(function() {
+	        redirectToURL(`/member/logout`);
+	    });
+
+$('.seeMore').click(function() {
+	redirectToURL(`/algorithm/explanation/detail/CC-20231017-000002`);
+        });
 </script>
 </head>
 <style>
@@ -319,6 +331,7 @@ $(document).on('click', '.incomplete', function() {
 		margin-left: 6px;
 	}
 
+
 </style>
 <body>
 	<div id="overall">
@@ -394,18 +407,24 @@ $(document).on('click', '.incomplete', function() {
 		</div>
 		<div id="algorithmList">
 			
-			<ul>
+			<ul>				
 				<li class="col_item">
-					<div class="algorithmName">그리디</div>
-					<div class="briefing">
-						각 단계에서 최선의 선택을 하는 방식으로 문제를 해결하는 알고리즘입니다. 
-					</div>
+						<div class="algorithmName">해시</div>
+					
+						<div class="briefing">
+							각 단계에서 최선의 선택을 하는 방식으로 문제를 해결하는 알고리즘입니다. 
+						</div>
+						<a id="detailLink" href="/algorithm/explanation/detail/CC-20231017-000002">
 					<div class="seeMore">보러가기
+						
 						<!-- <a href="/algorithm/explanation/detail/${algorithmexplanationVO.algorithmCategoryId}">보러가자</a> -->
 						<!-- console.log(${algorithmexplanationVO.algorithmCategoryId}); -->
 						<img class="more" src="/images/화살표.png/" alt="more">
+						
 					</div>
+				</a>
 				</li>
+				
 				<li class="col_item">
 					<div class="algorithmName">구현</div>
 					<div class="briefing">

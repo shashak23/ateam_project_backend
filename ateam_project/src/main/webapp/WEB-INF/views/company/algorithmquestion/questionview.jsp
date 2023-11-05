@@ -7,14 +7,10 @@
 <script type="text/javascript" src="/js/lib/jquery-3.7.1.js"></script>
 <script type="text/javascript">
     $().ready(function() {
-    	
-    	//
-    	
     	$("#ide")[0].contentWindow.onload = function() {
     		this.setCode(`${algorithmQuestionVO.defaultCode}`);
     	}
-
-        
+   
     	// 모달 실행을 위한 문장
         $('.btn-primary').click(function() {
             $('.create_container, .overlay').addClass('active')
@@ -30,8 +26,7 @@
         	
         	$("#myAlgorithmVO").submit();
         	
-        })
-        
+        })     
     })
 
    // 모달창 열고 닫기
@@ -116,16 +111,14 @@
 
     
     #line{
-        border: 1px solid var(--light-gray);
-        width: 350px;
+        border: 2px solid #333;
+        transform: rotate(90deg);
+        width: 25px;
+        position: relative;
+        top: 15px;
+        left: -9px;
     }
 
-	/* div.grid {
-		display: grid;
-		grid-template-columns: 150px 1fr;
-		grid-template-rows: 28px 28px 28px 28px 1fr 50px 28px 1fr 28px 320px;
-		row-gap: 10px;
-	} */
 	div.flex {
 		display: flex;
 		flex-direction: column;
@@ -161,10 +154,6 @@
 		display: grid;
 		grid-column: 1 / 3;
 	}
-	
-	.btn-primary {
-        margin: 30px 15px;
-    }
 
     .create_wrapper {
         display: flex;
@@ -177,12 +166,13 @@
         display: flex;
     }
 
-    .btn-primary, a {
+    .btn-primary {
+        width: 100px;
         padding: 5px 8px;
         text-decoration: none;
-        color: #4052f7;
-        background-color: #d0eaff;
-        margin-right: 15px;
+        color: #333;
+        background-color: lightgray;
+        margin: 20px 0px 15px 0px;
         border-radius: 10px;
         border: 0px;
         font-weight: bold;
@@ -301,20 +291,31 @@
         width:980px;
     }
 
-    #submit-btn{
-        background-color: var(--light-blue);
-		border: none;
-		width: 150px;
-		height: 30px;
-		border-radius: 5px;
-		cursor: pointer;
-        margin: 20px 0px 20px 850px;
+    #buttonList{
+        display: flex;
+        margin: 20px 0px 100px 585px ;
     }
+
+    #submit-btn{
+		border: none;
+		width: 200px;
+		height: 30px;
+        margin-left: 15px;
+		border-radius: 5px;
+		cursor: pointer; 
+    }
+
+    #explanationLink{
+        width: 200px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
 
     #solution{
         font-weight: bold;
-        margin: 0px 0px 15px 15px; 
-       
+        margin: 0px 0px 15px 15px;    
     }
 
     #result{
@@ -323,23 +324,20 @@
     }
 
     #show_result{
-        width:1000px;
-        
-        border: 1px solid var(--dark-gray);
-        
-       
+        width:1000px;   
+        border: 1px solid var(--dark-gray);      
     }
     .btn-group {
     	margin-top: 10px;
     	margin-bottom: 10px;
     }
+    
 </style>
 <body>
     
 	<div id="container">
-        
-            <div id="question_info">
-                
+            <div id="line"></div>
+            <div id="question_info">              
                 <label for="algorithmWriter"></label>
                 <div>${algorithmQuestionVO.memberVO.nickname}</div>
 
@@ -348,25 +346,19 @@
                 
                 <label for="algorithmCategoryId"></label>
                 <div>${algorithmQuestionVO.commonCodeVO.codeContent}</div>
-
             </div>
-            <div id="line"></div>
+           
             <div id="algorithm_Title">
                 <label for="algorithmTitle"></label>
                 <div>${algorithmQuestionVO.algorithmTitle}</div>
             </div>
-            
-            
+
                 <label id="algorithmContent" for="algorithmContent"></label>
                 <div>${algorithmQuestionVO.algorithmContent}</div>
           
             <div class="flex">
-            
-                <div class="btn-text-right">
-                    <button class="btn btn-primary">제한사항</button>
-                    <a href="/algorithm/explanation/list">알고리즘 해설 보러가기</a>
-                </div>
-                
+            <button class="btn btn-primary">제한사항</button>
+                                
                 <form:form modelAttribute="myAlgorithmVO" method="post" action="/algorithm/question/view/${companyAlgorithmQuestionId}">	
                     <div>
                         <form:errors path="myAnswer" element="div" cssClass="errors" />
@@ -393,7 +385,10 @@
 				</c:if>
                   <!-- 일반회원이 로그인 했을 시 -->
                   <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.memberType eq 'GENERAL'}">
-                    <button id="submit-btn" >제출 후 채점하기</button>
+                    <div id="buttonList">
+                        <button id="explanationLink" type="button" onclick="location.href='/algorithm/explanation/list';">알고리즘 해설 보러가기</button>  
+                        <button id="submit-btn" >제출 후 채점하기</button>
+                    </div>
                   </c:if>
                 <div id="checkAnswer">${popupMessage}</div>
             </div>
