@@ -42,10 +42,7 @@ button, input, textarea {
             let currentURL = window.location.href;
             $.post(currentURL, {value: value}, function(response) {
                 alert("변경완료");
-                $(document).on("click", function(){
-                    window.location.href = "http://localhost:8080/admin/report/list";
-                })
-                
+                window.location.href = "http://localhost:8080/admin/report/list";
             })
         })
 

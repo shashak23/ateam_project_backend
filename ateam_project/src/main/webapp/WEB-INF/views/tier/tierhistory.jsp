@@ -11,10 +11,27 @@
 <script type="text/javascript" src="/js/lib/jquery-3.7.1.js"></script>
 <script type="text/javascript">
 	$().ready(function(){
-		$("#viewHistory").click(function(){
+		$(".viewHistory").click(function(){
 			var memberEmail = $(this).closest('tr').data('member-email')
 			var url = "/admin/tier/view/" + memberEmail
 			window.location.href = url;
+			// $("form").submit();
+		})
+
+		$(".accept").click(function(){
+			let memberEmail = $(this).closest('tr').data('member-email')
+			let tierId = $(this).closest('tr').data('tier-id')
+			let currentURL = window.location.href;
+			let trDOM = $(this).closest('tr')
+			$.post(currentURL, {memberEmail: memberEmail, tierId: tierId}, function(response){
+				alert("처리완료")
+				trDOM.empty()
+			})
+		})
+
+		$(".refuse").click(function(){
+			alert("처리완료")
+			$(this).closest('tr').empty()
 		})
 	})
 </script>
@@ -34,15 +51,20 @@
 		</thead>
 		<tbody id="tierListArea">
 			<c:forEach items="${adminTierListVO.adminTierList}" var="tier">
-				<tr class="allTierList" data-member-email="${tier.memberEmail}">
+				<tr class="allTierList" data-member-email="${tier.memberEmail}" data-tier-id="${tier.tierVOTemp.tierIdTemp}">
 					<td>${tier.memberEmail}</td>
 					<td>${tier.score}</td>
 					<td>${tier.tierVO.tierName}</td>
 					<td>${tier.tierVOTemp.tierNameTemp}</td>
-					<td><button id="viewHistory">내역조회</button></td>									
+
+					<!-- <form action="/admin/tier/view" method="post"> -->
+					<!-- <input type="hidden" name="memberEmail" value="${tier.memberEmail}" /> -->
+					<td><button class="viewHistory">내역조회</button></td>			
+					<!-- </form> -->
+					
 					<td>
-					<button>승인</button>
-					<button>거절</button>
+						<button class="accept">승인</button>
+						<button class="refuse">거절</button>
 					</td>										
 				</tr>
 			</c:forEach>

@@ -11,8 +11,11 @@ import java.util.List;
 import com.ktdsuniversity.edu.career.vo.CareerVO;
 import com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO;
 import com.ktdsuniversity.edu.education.vo.EducationVO;
+import com.ktdsuniversity.edu.generalpost.vo.GeneralCommentVO;
+import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 import com.ktdsuniversity.edu.techstack.vo.TechstackVO;
+import com.ktdsuniversity.edu.tier.TierVO;
 import com.ktdsuniversity.edu.util.XssIgnore;
 
 import jakarta.validation.constraints.NotBlank;
@@ -27,18 +30,21 @@ public class GeneralMemberVO extends MemberVO {
 	@NotBlank(message = "주소를 입력해주세요.")
 	private String region;
 	private String tierId;
+	private int tierScore;
+	private String tierDate;
 	private String githubUrl;
 	private String additionalEmail;
 	private String blogUrl;
+	
 	private List<GeneralMemberVO> generalMemberList;
 	private List<CareerVO> careerVOList;
 	private List<EducationVO> educationList;
 	private List<CommonCodeVO> commonCodeVO;
 	private TechstackVO techstackVO;
 	private MemberVO memberVO;
-	
-	
-	
+	private GeneralPostVO generalPostVO;
+	private GeneralCommentVO generalCommentVO;
+	private TierVO tierVO;
 	
 	
 	public List<CommonCodeVO> getCommonCodeVO() {
@@ -125,6 +131,35 @@ public class GeneralMemberVO extends MemberVO {
 	public void setMemberVO(MemberVO memberVO) {
 		this.memberVO = memberVO;
 	}
-	
+	public GeneralPostVO getGeneralPostVO() {
+		return generalPostVO;
+	}
+	public void setGeneralPostVO(GeneralPostVO generalPostVO) {
+		this.generalPostVO = generalPostVO;
+	}
+	public GeneralCommentVO getGeneralCommentVO() {
+		return generalCommentVO;
+	}
+	public void setGeneralCommentVO(GeneralCommentVO generalCommentVO) {
+		this.generalCommentVO = generalCommentVO;
+	}
+	public TierVO getTierVO() {
+		return tierVO;
+	}
+	public void setTierVO(TierVO tierVO) {
+		this.tierVO = tierVO;
+	}
+	public int getTierScore() {
+		return tierScore;
+	}
+	public void setTierScore(int tierScore) {
+		this.tierScore = tierScore;
+	}
+	public String getTierDate() {
+		return tierDate;
+	}
+	public void setTierDate(String tierDate) {
+		this.tierDate = tierDate;
+	}
 	
 }
