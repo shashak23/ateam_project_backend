@@ -222,11 +222,11 @@
         <div id="toolbar">
             <div id="pageName">질문게시판</div>
             <div id="registerArticle">
-                <button class="register" type="button" onclick="location.href='/freeboard/create';">글작성</button>
+                <button class="register" type="button" onclick="location.href='/qnaboard/create';">글작성</button>
             </div>
             <div class="search_area">
                
-                <form id="search-form" method="get" action="/freeboard/list">
+                <form id="search-form" method="get" action="/qnaboard/list">
                   <div class="button_list">
                     <select class="search_menu" name="searchType">
                         <option value="postTitle" ${searchForumVO.searchType eq 'postTitle' ? 'selected' : ''}>제목</option>

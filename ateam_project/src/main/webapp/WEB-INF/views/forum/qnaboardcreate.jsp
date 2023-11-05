@@ -122,10 +122,28 @@ updateViewCount();
 			grid-column: 1 / 3;
 			margin-top: 500px;
 		}
-
-		div.grid div.right-align {
-			text-align: right;
+		.right-align {
+			margin: 0 auto;
+			margin-top: 450px;
 		}
+		.right-align >.btn_controller,.btn_controller_1 {
+			margin-left: 850px;
+			background-color: var(--hashtag-blue);
+			border-radius: 5px;
+			border: none;
+			width: 60px; 
+			height: 30px;
+			
+		}
+		.right-align >.btn_controller_1 {
+			position: relative;
+			left: 70px;
+			bottom: 40px;
+		}
+		
+		
+		
+
 
 		label {
 			padding-left: 10px; 
@@ -163,21 +181,7 @@ updateViewCount();
 	      	height: 1px;
 	      	margin: 10px 0px 7px 0px;
 	    }
-		.btn_controller, .btn_controller_1 {
-			position: relative;
-			bottom:50px;
-			margin: auto 0;
-			margin-top: 70px;
-		    margin-bottom: 60px;
-			border: none;
-			cursor: pointer;
-			width: 70px;
-			height: 30px;
-			background-color: var(--light-blue);
-			border-radius: 5px;
-
-		}
-	
+		
 </style>
 <script type="text/javascript">
 
@@ -293,7 +297,7 @@ $().ready(function(){
 <body>
 
 	<div id="container">
-		<h1 class="title_name"> 자유게시판 게시글 작성 </h1>
+		<h1 class="title_name"> 질문 게시판 작성 </h1>
 		<div class="seperate-line"></div>
 		<form method = "post" >		
 			<div class = "grid">
@@ -443,12 +447,11 @@ $().ready(function(){
 						]
 					});  
 					</script>
-	          <div class="btn-group">
+	          
 	             <div class="right-align">
 	                 <input class="btn_controller" type="button" value="추가" onclick="addHashtag()">
-		        	 <input class="btn_comtroller_1"type="button" value="완료" onclick="savePost()">
+		        	 <input class="btn_controller_1"type="button" value="완료" onclick="savePost()">
 	             </div>
-	          </div>
           <div id="displayHashtags"></div>
       </div>
     </form>
