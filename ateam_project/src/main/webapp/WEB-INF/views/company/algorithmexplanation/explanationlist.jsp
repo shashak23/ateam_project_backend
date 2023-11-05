@@ -60,6 +60,24 @@ $().ready(function() {
 	
 })
 
+$(document).on('click', '.register', function(e) {
+	let userEmail = `${sessionScope._LOGIN_USER_}`
+	let memberType = `${sessionScope._LOGIN_USER_.memberType}`
+	if (userEmail === '') {
+		if(confirm('로그인이 필요한 서비스입니다. 로그인하시겠습니까?') ) {
+			window.location.href="/member/auth"
+		}
+	}
+	if (memberType === 'GENERAL') {
+		alert('기업회원만 이용하실 수 있는 서비스입니다.')
+		window.location.href="/algorithm/explanation/list"
+	}
+	if (memberType === 'COMPANY') {
+		window.location.href="/algorithm/explanation/create"
+	}
+
+})
+
 // 모달창 열고 닫기
 $(document).on('click', '.incomplete', function() {
     $('.modal, .overlay').addClass('modal_active')
@@ -326,7 +344,7 @@ $(document).on('click', '.incomplete', function() {
 			<div id="toolbar">
 				<div id="pageName">알고리즘 해설</div>
 				<div id="registerArticle">
-					<button class="register" type="button" onclick="location.href='/algorithm/explanation/create';">글작성</button>
+					<button class="register" type="button" >글작성</button>
 				</div>
 				<div class="search_area">
 					
