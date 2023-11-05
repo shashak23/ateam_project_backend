@@ -16,11 +16,89 @@
     <script src="js/lib/jquery-3.7.1.js"></script>
     <jsp:include page="../layout/header.jsp"/>
 <style>
+            table {
+            	border-collapse: collapse;
+            }
+            .wrap {
+            display: flex;
+            justify-content: center;
+            margin: 0 auto;
+            margin-right: 15%;
+            }
+
+            .container {
+                display: inline-block;
+                width: 980px;
+                margin: 0 auto;     
+            }
+            .button_list {
+                margin:  0 auto;
+                margin-bottom: 15px;
+                
+            }
+            .board_list_box {
+                position: relative;
+                bottom: 400px;
+                margin: 0 auto;
+                margin-left: 25%;
+                margin-top: 90px;
+                border-top:none;
+                border-bottom:none;
+                border-left: none;
+                border-right: none;
+            }
+
+            .btn_st_2 {
+                position: relative;
+                left: 65px;
+                margin: 0 auto;    
+                margin-right: 30px;          
+                background-color: var(--hashtag-blue);
+                border-radius: 5px;
+                border: none;
+                width: 60px; 
+                height: 30px;
+            }
+            .btn_write_1 {
+                position: relative;
+                left: 900px;
+                margin-top: 30px;
+                background-color: var(--hashtag-blue);
+                color: white;
+                border-radius: 5px;
+                border: none;
+                width: 70px; 
+                height: 30px;
+                margin-bottom: 50px;
+            }
+            #button_list_1 tr th {
+                background-color: var(--light-gray);
+                border-bottom: 1px solid var(--dark-gray);
+                color: var(--dark-gray);       
+            }    
+            .table-header_01 {                        
+                width: 50px;
+                height: 35px;
+             }
+             .pratice_01,.pratice_02,.pratice_03,.pratice_04 {
+                border-bottom: 1px solid var(--gray);
+                text-align: center;
+                color: var(--dark-gray);
+             }
+             .pratice {
+                margin-top: 42px;
+                border-bottom: 1px solid var(--gray);
+             }
+             .text_controller {
+                position: relative;
+                bottom: 20px;
+             }
          #hashtag {
             margin: 0 auto;
             margin-top: 50px;
             text-align: center;
-            font-size: 30px;
+            font-size: 40px;
+            font-weight: bold;
          }
          .hashtag_wrap {
 	        margin: 0 auto;  
@@ -29,26 +107,22 @@
 	        flex-wrap: wrap;
 	        width: 780px;
 	        }
-	     .fieldset_controller {
-	        display: flex;
-	        margin: 0 auto;
-	        margin-right: 300px;
-	    } 
-	    .board_list_ty1 {
-	        width: 800px;
-	    } 
+	    
 
    
         .hashtag_incomplete {
-           background-color: yellow;        
+           /* background-color: yellow;  */
+           text-align: center;
+           font-size: 20px;
            margin: 0 auto;
            margin-left: 10px;
            margin-top: 30px;
            width: 85px;
            height: 35px;
            border-radius: 10px;
-           border: 1px solid var(--light-gray);
+           border: none;
            cursor: pointer;
+           text-decoration: underline;
            
         }
         .hashtag_incomplete:hover {
@@ -57,74 +131,8 @@
 
         .list_search {
            text-align: right;
-
         }
 
-        /*게시판 테이블 제어*/
-        table {
-            border-collapse: collapse;
-         
-        }
-        
-        .table-header_01 {
-           width: 50px;
-          height: 35px;
-        }
-        
-        /*버튼 속성제어*/
-        .btn_st_2,.btn_st_3 {
-           background-color: var(--hashtag-blue);
-           border-radius: 5px;
-           border: none;
-           width: 60px;
-           height: 30px;
-        }
-        .btn_write_1 {  
-            margin: 0 auto;  
-            margin-top: 30px;
-            margin-left: 930px;
-            background-color: var(--hashtag-blue);
-            border-radius: 5px;
-            border: none;
-            width: 70px;
-            height: 30px;
-          
-        }
-
-        #button_list_1 tr th {
-           background-color: var(--light-gray);
-           border-bottom: 1px solid var(--dark-gray);
-           color: var(--dark-gray);
-       }
-
-       .pratice_01,.pratice_02,.pratice_03,.pratice_04 {
-           border-bottom: 1px solid var(--gray);
-           text-align: center;
-           color: var(--dark-gray);
-       }
-
-       .pratice {
-           margin-top: 42px;
-           border-bottom: 1px solid var(--gray);
-       }
-
-       .text_controller {
-           position: relative;
-           bottom: 20px;
-       }
-
-       .advertising {
-
-           position: absolute;
-	       top: 0;
-	       right: 10px;
-	       width: 200px;
-	       height: 500px;
-	       border: 1px solid var(--gray);
-	       margin: 0 auto;
-	       margin-top: 650px;
-	       margin-right: 50px;
-       }
 	    #hot_post a {
 		    color: black; 
 		    margin: 0 auto;
@@ -140,17 +148,7 @@
 			
 		}
 		
-		.my-aside a {
-		display: block;
-		overflow:hidden;
-	      text-overflow:ellipsis;
-	      white-space:nowrap;
-		}
 		
-		.contents {
-		    width: 780px;
-	    	margin: 0 auto;
-	    }
         
             /* 추가css */
             #left_container{
@@ -196,10 +194,24 @@
     position: relative;
     top: 22px;
    }
+   .button_box {
+    margin: 0 auto;
+    margin-left: 160px;
+    margin-top: 10px;
+    background-color: var(--hashtag-blue);
+    border-radius: 5px;
+    border: none;
+    width: 60px; 
+    height: 30px;
+   }
+   .sc_text {
+    margin: 0 auto;
+    margin-left: 68px;
+    width: 150px;
+   }
     </style>
 </head>
 <body>
-    
     <nav>
         <div id="hashtagList">
             <p id="hashtag"># Hashtags</p>
@@ -221,18 +233,17 @@
                         <option value="postContent" ${searchForumVO.searchType eq 'postContent' ? 'selected' : ''}>내용</option>
                         <option value="postWriter" ${searchForumVO.searchType eq 'postWriter' ? 'selected' : ''}>작성자</option>
                     </select>
-                    <input type="text" class="sc_text" placeholder="검색어 입력" name="searchKeyword" value="${searchForumVO.searchKeyword}" />
-                        <div class="button_box">
-                            <button type="submit" class="btn_st_2">
+                    <input class="sc_text" type="text"  placeholder="검색어 입력" name="searchKeyword" value="${searchForumVO.searchKeyword}" />                    
+                            <button class="button_box" type="submit" class="btn_st_2">
                                 검색
-                            </button>       
-                        </div>                         
+                            </button>                               
                   </div>               
                </form>               
             </div>            
          </div>
-
     </div>
+   
+ 
     <div class="controll_all">
         <main class="contents">
             <!-- 게시판 리스트 -->
@@ -247,7 +258,7 @@
                                     <col width="*">
                                     <col width="10%">
                                     <col width="15%">
-                                    <col width="10%">
+                                    
                                 </colgroup>
                                 <thead id="button_list_1">
                                     <tr>
@@ -257,7 +268,7 @@
                                         <th scope="col" class="table-header_04">등록일</th>
                                     </tr>
                                 </thead>
-                                <tbody id="user-list">
+                                <tbody>
                                     <c:forEach items="${generalPostListVO.generalPostList}" var="qnaboard" varStatus="index">
                                         <tr>
                                             <td class="pratice_01">${(index.index + 1) * (searchForumVO.pageNo + 1)}</td>
@@ -266,8 +277,7 @@
                                                     <a class="text_controller" href="/qnaboard/view/${qnaboard.generalPostId}">
                                                         ${qnaboard.postTitle}
                                                     </a>
-                                                </div>
-                                                <script src="https://unpkg.com/axios/dist/axios.min.js"></script>  
+                                                </div>                                       
                                             </td>
                                             <td class="pratice_02"> ${qnaboard.memberVO.nickname}</td>
                                             <td class="pratice_03">${qnaboard.postDate}</td>

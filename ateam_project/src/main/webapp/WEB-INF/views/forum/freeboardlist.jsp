@@ -25,7 +25,7 @@
             justify-content: center;
             margin: 0 auto;
             margin-right: 15%;
-        }
+            }
 
             .container {
                 display: inline-block;
@@ -40,7 +40,7 @@
             .board_list_box {
                 margin: 0 auto;
                 margin-top: 90px;
-                border-top: 3px solid var(--hashtag-blue);
+                border-top: none;
                 border-bottom:none;
                 border-left: none;
                 border-right: none;
@@ -134,7 +134,6 @@
                 margin-top: -100px;
             }
             .button_box {
-                color: palevioletred; 
                 position: relative;
                 left: 95px;
                 margin: 0 auto;
