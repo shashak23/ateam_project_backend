@@ -367,6 +367,85 @@
     height: 50px;
   }
 
+  .rand_notice_container {
+    visibility: hidden;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -80%);
+    z-index: 10;
+    box-shadow: 0 0 10px #19191948;
+    border: 1px solid;
+    width: 500px;
+    padding: 30px;
+    opacity: 0;
+    border: none;
+    border-radius: 5px;
+    background-color: #ffffff;
+    transition: 0.5s;
+  }
+
+  .rand_notice_container.active {
+    visibility: visible;
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+
+  .create_container > * {
+			margin-bottom: 10px;
+	}
+
+  .post_title_label,
+	.post_content_label {
+		color: gray;
+		display: block;
+		margin-bottom: 10px;
+		font-size: 10pt;
+	}
+
+  .rand_notice_close_btn {
+    position: absolute;
+    top: 6px;
+    right: 10px;
+    background-color: transparent;
+    font-size: 18px;
+    color: #888;
+    cursor: pointer;
+	}
+
+  .rand_notice_close_btn {
+    color: #191919;
+  }
+
+  .create_title {
+			text-align: center;
+	}
+
+  .title_area,
+  .content_area {
+    margin-bottom: 15px;
+  }
+
+  .post_title_label + div {
+    font-weight: bold;
+  }
+
+  .rand_notice_overlay {
+		background-color: #47474754;
+		position: fixed;
+		width: 100%;
+		height: 100vh;
+		top: 0;
+		left: 0;
+		transition: 0.5s;
+		opacity: 0;
+		pointer-events: none;
+	}
+
+	.rand_notice_overlay.active {
+			opacity: 1;
+			pointer-events: all;
+	}
 </style>
 
   <!-- 메인 컨텐츠 영역 -->
@@ -391,6 +470,10 @@
       </div>
     </div>
   </section>
+
+  <!-- 랜덤 공지 생성 모달 -->
+
+  
 
   <jsp:include page="../layout/footer.jsp" />
 </body>
@@ -973,6 +1056,40 @@
       for (let i = 0; i < response.length; i++) {
         let hash_template = `<button class="hashtag incomplete">#\${response[i].codeContent}</button>`
         $('.hashtag_wrap').append(hash_template)
+      }
+    })
+  })
+
+  // 랜덤 공지 생성
+  $.get('/notice/random', function(response) {
+    let randNoticeTemplate = `
+      <div class="rand_notice_container">
+      <div class="rand_notice_close_btn">&times;</div>
+      <h1 class="create_title">공지</h1>
+      <div class="title_area">
+        <label for="postTitle" class="post_title_label">제목</label>
+        <div>\${response.postTitle}</div>
+      </div class=content_area>
+      <label for="noticeContent" class="post_content_label">내용</label>
+      <div class="noticeContent"></div>
+      </div>
+      <div class="rand_notice_overlay"></div>`
+
+    let randNoticeTemplateDom = $(randNoticeTemplate)
+    randNoticeTemplateDom.find('.noticeContent').html(response.noticeContent)
+
+    $('body').append(randNoticeTemplateDom)
+
+
+    $('.rand_notice_container, .rand_notice_overlay').addClass('active')
+
+    $('.rand_notice_close_btn, .rand_notice_overlay').click(function() {
+      $('.rand_notice_container, .rand_notice_overlay').removeClass('active')
+    })
+
+    $(body).keyup(function(e) {
+      if (e.key === 'Escape') {
+        $('.rand_notice_container, .rand_notice_overlay').removeClass('active')
       }
     })
   })

@@ -52,6 +52,11 @@ public class NoticeDAOImpl extends SqlSessionDaoSupport implements NoticeDAO {
 	public NoticeVO getOneNotice(String id) {
 		return getSqlSession().selectOne("getOneNotice", id);
 	}
+	
+	@Override
+	public List<NoticeVO> getNoticeOnList() {
+		return getSqlSession().selectList("getNoticeOnList");
+	}
 
 	@Override
 	public int createNotice(NoticeVO noticeVO) {

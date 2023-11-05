@@ -632,8 +632,6 @@
         text-align: center;
     }
 
-
-
     .notice_post_title_label,
     .notice_post_content_label {
       display: block;
