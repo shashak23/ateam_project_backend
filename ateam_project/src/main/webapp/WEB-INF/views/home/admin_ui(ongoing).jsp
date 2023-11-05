@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <title>작업용 관리자 ui</title>
 <script src="/js/lib/jquery-3.7.1.js"></script>
-<script src="https://cdn.ckeditor.com/ckeditor5/36.0.1/classic/ckeditor.js"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/super-build/ckeditor.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <script src="https://npmcdn.com/flatpickr/dist/flatpickr.min.js"></script>
 <script src="https://npmcdn.com/flatpickr/dist/l10n/ko.js"></script>
@@ -113,7 +113,8 @@
   }
 
   .desc-header .admin_company_search_wrap .admin_company_member_input,
-  .admin_notice_input {
+  .admin_notice_input,
+  .admin_report_input {
     outline: none;
     border: 0;
     padding: 5px;
@@ -122,7 +123,8 @@
   } 
 
   .desc-header .admin_company_search_wrap .admin_company_member_search,
-  .admin_notice_search {
+  .admin_notice_search,
+  .admin_report_search {
     border: #e07272;
     outline: none;
     background-color: #ebd9d9;
@@ -137,7 +139,8 @@
 
   .member_container,
   .company_container,
-  .notice_container {
+  .notice_container,
+  .report_container {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -275,6 +278,38 @@
     text-align: center;
   }
 
+  .report_title,
+  .report_list_group {
+    display: grid;
+    grid-template-columns: 50px 80px 640px 170px 120px;
+    column-gap: 10px;
+    color: #888;
+  }
+
+  .report_title > div {
+    text-align: center;
+  }
+
+  .report_list_group > div {
+    text-align: center;
+    font-size: 11pt;
+    color: #333;
+  }
+
+  .report_container {
+    padding: 5px 0;
+  }
+
+  .report_list_group > .report_content {
+    padding-left: 15px;
+    text-align: inherit;
+  }
+
+  .report_list_group > .report_content > a {
+    color: #191919;
+    text-decoration: none;
+  }
+
   .btn_group {
     display: flex;
     justify-content: center;
@@ -371,7 +406,7 @@
     cursor: default;
   }
 
-  .hashtag_wrap {
+  .admin_hashtag_wrap {
     display: flex;
     flex-wrap: wrap;
     width: 300px;
@@ -381,7 +416,7 @@
     margin-top: 10px;
   }
 
-  .hashtag_wrap > .hashtag_content {
+  .admin_hashtag_wrap > .hashtag_content {
     padding: 3px 10px;
     margin: 5px 6px;
     border-radius: 12px;
@@ -849,17 +884,18 @@
         <div class="desc-header">
           <div>신고 목록</div>
           <div class="admin_report_search_wrap">
-            <input type="text" class="admin_report_input" />
+            <input type="text" class="admin_report_input" placeholder="내용 또는 사유 검색"/>
             <button class="admin_report_search">검색</button>
           </div>
         </div>
         <div class="desc_title">
           <div class="report_container">
             <div class="report_title">
-              <div>신고번호</div><div>내용</div><div>신고사유</div><div>신고일자</div><div>처리진행상황</div>
+              <div>신고번호</div><div>처리진행상황</div><div>내용</div><div>신고사유</div><div>신고일자</div>
             </div>
           </div>
         </div>
+        <div class="desc-content"></div>
       </div>
     </div>
   </div>
@@ -872,7 +908,7 @@
         <div>
           <strong>해시태그 목록</strong>
         </div>
-        <div class="hashtag_wrap"></div>
+        <div class="admin_hashtag_wrap"></div>
         <div class="hashtag_create_title"><strong>해시태그 생성</strong></div>
         <label for="codeContent">입력: </label>
         <input type="text" name="codeContent" id="codeContent" />
@@ -895,6 +931,7 @@
     $('.company_modal, .admin_overlay').removeClass('active')
     $('.hashtag_modal, .admin_overlay').removeClass('active')
     $('.notice_modal, .admin_overlay').removeClass('active')
+    $('.report_modal, .admin_overlay').removeClass('active')
   })
 
   $('body').keyup(function(e) {
@@ -903,6 +940,7 @@
       $('.company_modal, .admin_overlay').removeClass('active')
       $('.hashtag_modal, .admin_overlay').removeClass('active')
       $('.notice_modal, .admin_overlay').removeClass('active')
+      $('.report_modal, .admin_overlay').removeClass('active')
     }
   })
   
@@ -919,6 +957,11 @@
   // 공지사항 관리 목록 열기
   $('.admin_notice_btn').click(function() {
     $('.notice_modal, .admin_overlay').addClass('active')
+  })
+
+  // 신고 관리 목록 열기
+  $('.admin_report_btn').click(function() {
+    $('.report_modal, .admin_overlay').addClass('active')
   })
 
   // 해시태그 목록 열기
@@ -1246,7 +1289,34 @@
   })
 
   // 공지 수정 기능
-  ClassicEditor.create(document.querySelector('#editor2'))
+  CKEDITOR.ClassicEditor.create(document.getElementById("editor2"), {
+    toolbar: {
+      items: [
+        'findAndReplace', 'selectAll', '|',
+        'bold', 'italic', 'strikethrough', 'underline', 'removeFormat', '|',
+        'bulletedList', 'numberedList', 'todoList', '|',
+        'outdent', 'indent', '|',
+        'undo', 'redo', 'fontSize', 'alignment'
+      ],
+      shouldNotGroupWhenFull: true
+    },
+    removePlugins: [
+      'CKBox',
+      'CKFinder',
+      'EasyImage',
+      'RealTimeCollaborativeComments',
+      'RealTimeCollaborativeTrackChanges',
+      'RealTimeCollaborativeRevisionHistory',
+      'PresenceList',
+      'Comments',
+      'TrackChanges',
+      'TrackChangesData',
+      'RevisionHistory',
+      'Pagination',
+      'WProofreader',
+      'MathType'
+    ]
+  })
   .then(editor => {
     $(document).on('click', '.notice_modify_btn', function() {
       $('.modify_container, .notice_modify_overlay').addClass('active')
@@ -1301,17 +1371,61 @@
   })
 
   // 신고 목록 조회
-  function loadReportList() {
+  function loadReportList(val = '') {
     $.get('/admin/reportlist', function(response) {
+      $('.report_modal').find('.desc-content').empty()
 
+      let reportTemplate, reportTemplateDom
+
+      for (let i = 0; i < response.length; i++) {
+        report = response[i]
+        report_reason = report.commonCodeVO.codeContent
+
+        if (report.reportReasonContent === null) {
+          report.reportReasonContent = '[내용 없음]'
+        }
+        reportTemplate = `
+        <div class="report_container">
+          <div class="report_list_group">
+            <div class="report_id">\${response.length - i}</div>
+            <div class="report_confirm">
+              \${report.progressYn}
+            </div>
+            <div class="report_content">
+              <a href="/admin/report/view/\${report.reportId}">
+                <strong>\${report.reportReasonContent}</strong>
+              </a>
+            </div>
+            <div class="report_reason">\${report_reason}</div>
+            <div class="report_date">
+              \${report.reportDate}
+            </div>
+          </div>
+        </div>`
+        reportTemplateDom = $(reportTemplate)
+
+        if (report.reportReasonContent.includes(val) || report_reason.includes(val)) {
+          $('.report_modal').find('.desc-content').append(reportTemplateDom)
+        }
+      }
     })
   }
 
   loadReportList()
 
-  // $(document).on('click', '.create_notice', function() {
-  //   window.open('/notice/create', '공지 생성', 'width=500, height=800px')
-  // })
+  // 신고글 검색
+  $('.admin_report_search').click(function() {
+    let val = $('.admin_report_input').val()
+    loadReportList(val)
+  })
+
+  $('.admin_report_input').keyup(function(e) {
+    if (e.key === 'Enter') {
+      let val = $('.admin_report_input').val()
+      loadReportList(val)
+    }
+  })
+
 
   // 해시태그 조회
   let tag = {}
@@ -1356,25 +1470,19 @@
 
   // 해시태그 목록 출력
   load_hashtag = function() {
-    $('.hashtag_wrap').html('')
+    $('.admin_hashtag_wrap').html('')
     $.get('/code/해시태그', function(response) {
       for (let i = 0; i < response.length; i++) {
         let template = `<div class="hashtag_content">
                           \${response[i].codeContent}
                         </div>`
         let templateDom = $(template)
-        $('.hashtag_wrap').append(templateDom)
+        $('.admin_hashtag_wrap').append(templateDom)
       }
     })
   }
 
   load_hashtag()
-
-
-  // 신고 관리창으로 이동
-  // $('.admin_report_btn').click(function() {
-  //   window.open('/admin/report/list', '_blank')
-  // })
 
   // 달력 포맷
   flatpickr.localize(flatpickr.l10ns.ko);
@@ -1412,12 +1520,35 @@
   $('.dateSelector1').click(function() {
   })
 
-// ck 에디터
-ClassicEditor.create( document.querySelector( '#editor1' ), {
-language: "ko"
-})
-
-
+  // ck 에디터
+  CKEDITOR.ClassicEditor.create(document.getElementById("editor1"), {
+    toolbar: {
+      items: [
+        'findAndReplace', 'selectAll', '|',
+        'bold', 'italic', 'strikethrough', 'underline', 'removeFormat', '|',
+        'bulletedList', 'numberedList', 'todoList', '|',
+        'outdent', 'indent', '|',
+        'undo', 'redo', 'fontSize', 'alignment'
+      ],
+      shouldNotGroupWhenFull: true
+    },
+    removePlugins: [
+      'CKBox',
+      'CKFinder',
+      'EasyImage',
+      'RealTimeCollaborativeComments',
+      'RealTimeCollaborativeTrackChanges',
+      'RealTimeCollaborativeRevisionHistory',
+      'PresenceList',
+      'Comments',
+      'TrackChanges',
+      'TrackChangesData',
+      'RevisionHistory',
+      'Pagination',
+      'WProofreader',
+      'MathType'
+    ]
+  });
 
 // 유효성 체크
 $('.submit_btn').addClass('inactive')
