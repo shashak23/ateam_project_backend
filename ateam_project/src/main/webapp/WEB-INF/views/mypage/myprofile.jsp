@@ -12,9 +12,6 @@
 <!--뷰포트는 화면에 표시되는 웹영역 표시, 모바일 등에서 상호작용 할 수있는지 제어-->
 <meta name="viewport" id="viewport"
 	content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, width=device-width" />
-<!--스타일,폰트 지정-->
-<!--스와이퍼 기능 지정-->
-<!--스타일 입히기-->
 <style>
 /* 수정버튼  */
 .introduce-modify,#edit_button1,#edit_button2,#delete_tech,
