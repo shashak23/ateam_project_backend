@@ -255,7 +255,6 @@ position: absolute;
 	     $("#delete_tech").click(function() {
 	    	 var email = $(this).data('deleteteach');
 		     var url = '/memberInfo/modify/delete-tech/' + email;
-	       	 window.location.href = url;
 	    });
 	    
 	    /* 기술스택 추가버튼 */
@@ -264,7 +263,7 @@ position: absolute;
 	    });
 	    /* 채팅 */
 	    $(".message_icon").click(function() {
-	    	inviteUser(send, userName, email, "${memberVO.email}");
+	    	inviteUser(send, "${sessionScope._LOGIN_USER_.nickname}", "${sessionScope._LOGIN_USER_.email}", "${memberVO.email}");
 	    });
 	    /* 학력 수정*/
 	    $('.education-modify').click(function() {
@@ -771,6 +770,14 @@ position: absolute;
 					 $(e.currentTarget).css({'background-color':'var(--blue)', 'color':'var(--white)'})
 					 $(e.currentTarget).addClass('follow_on')
 					 $('.follow_icon').prepend(`<input type="hidden" class="followId" value="\${result.followId}"/>`)
+				   	 send({
+			         	roomName: "main",
+			            sendType: "follow",
+			            userName: "${sessionScope._LOGIN_USER_.nickname}",
+			            userEmail: "${sessionScope._LOGIN_USER_.email}",
+			            message: "${sessionScope._LOGIN_USER_.nickname}님이 팔로우 했습니다.",
+			            to: "${memberVO.email}"
+			        })
 				   }
 				   else {
 					 alert('처리하지 못했습니다.')

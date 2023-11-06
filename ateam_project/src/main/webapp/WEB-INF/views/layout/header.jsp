@@ -30,13 +30,13 @@
 	
     $().ready(function() {
         <c:if test="${not empty sessionScope._LOGIN_USER_}">
-            send = connectSocket(userName, email, function(send, receiveMessage) {
+            send = connectSocket("${sessionScope._LOGIN_USER_.nickname}", "${sessionScope._LOGIN_USER_.email}", function(send, receiveMessage) {
                 if (receiveMessage.sendType == "invite") {
                     if (confirm(receiveMessage.message)) {
                         // 대화에 참여하는 코드 생성
                         // 다른 URL로 이동하면 안됨.
                         // 대화목록, 창 모달
-                        enterRoom(send, userName, email, receiveMessage.roomName);
+                        enterRoom(send, "${sessionScope._LOGIN_USER_.nickname}", "${sessionScope._LOGIN_USER_.email}", receiveMessage.roomName);
                     }
                 }
                 // 상대방이 입장했을 때
