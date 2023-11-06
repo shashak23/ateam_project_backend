@@ -23,6 +23,7 @@ import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ktdsuniversity.edu.admin.service.ReportService;
+import com.ktdsuniversity.edu.admin.service.TierService;
 import com.ktdsuniversity.edu.admin.vo.ReportListVO;
 import com.ktdsuniversity.edu.admin.vo.ReportVO;
 import com.ktdsuniversity.edu.algorithmexplanation.service.AlgorithmExplanationService;
@@ -46,6 +47,7 @@ import com.ktdsuniversity.edu.member.vo.MemberListVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 import com.ktdsuniversity.edu.notice.service.NoticeService;
 import com.ktdsuniversity.edu.notice.vo.NoticeVO;
+import com.ktdsuniversity.edu.tier.TierVO;
 import com.ktdsuniversity.edu.util.XssIgnoreUtil;
 
 @Controller
@@ -79,7 +81,11 @@ public class HomeController {
 	private ReportService reportService;
 	
 	@Autowired
+	private TierService tierService;
+
+	@Autowired
 	private FileHandler fileHandler;
+	
 	
 	@GetMapping("/devground/home")
 	public String homeLink() {
@@ -276,6 +282,16 @@ public class HomeController {
 			resultSet.put("result", "fail");
 			return resultSet;
 		}
+	}
+	
+	// 회원 티어 조회
+	@ResponseBody
+	@GetMapping("/admin/member/tier/{email}")
+	public TierVO getMemberTier(@PathVariable String email) {
+		TierVO adminTierList = tierService.getMemberAndTier(email);
+		
+		return adminTierList;
+		
 	}
 	
 	

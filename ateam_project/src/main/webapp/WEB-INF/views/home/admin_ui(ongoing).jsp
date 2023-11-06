@@ -107,12 +107,13 @@
   }
 
   .desc-header > div:first-child {
-    font-size: 14pt;
+    font-size: 12pt;
     border-left: 10px solid crimson;
     padding: 10px;
   }
 
   .desc-header .admin_company_search_wrap .admin_company_member_input,
+  .admin_general_member_input,
   .admin_notice_input,
   .admin_report_input {
     outline: none;
@@ -123,6 +124,7 @@
   } 
 
   .desc-header .admin_company_search_wrap .admin_company_member_search,
+  .admin_general_member_search,
   .admin_notice_search,
   .admin_report_search {
     border: #e07272;
@@ -151,20 +153,49 @@
 
   .personal_modal .profile_group {
     display: grid;
-    grid-template-columns: 45px 350px 80px 140px;
+    grid-template-columns: 50px 750px 80px 80px 80px;
     align-items: center;
+    margin-bottom: 10px;
   }
 
   .personal_modal .profile_group_title {
     display: grid;
-    grid-template-columns: 45px 350px 80px 140px;
+    grid-template-columns: 50px 750px 80px 80px 80px;
     align-items: center;
+    margin-bottom: 10px;
     color: #888;
+  }
+
+  .personal_modal .profile_group_title * {
+    text-align: center;
+  }
+
+  .member_container_body .member_info {
+    margin-left: 15px;
+    font-weight: bold;
+    font-size: 11pt;
+  }
+
+  .member_container_body .tier {
+    font-size: 10pt;
+    text-align: center;
   }
 
   .personal_modal .admin_anchor {
     color: #191919;
     text-decoration: none;
+  }
+
+  .member_container_body .admin_member_warn_btn,
+  .member_container_body .general_member_withdraw_btn {
+    width: 70%;
+    padding: 5px 10px;
+    margin: 0 auto;
+  }
+
+  .member_container_body .general_member_withdraw_btn {
+    background-color: #ccc;
+    color: #eee;
   }
   
   .company_modal {
@@ -266,17 +297,11 @@
   }
 
   .profile_group > img {
-    margin-right: 15px;
+    margin: 0 10px;
     width: 30px;
     height: 30px;
   }
 
-  .profile_group .tier,
-  .profile_group_title .tier,
-  .profile_group_title .withdraw_txt {
-    margin-left: 20px;
-    text-align: center;
-  }
 
   .report_title,
   .report_list_group {
@@ -806,9 +831,11 @@
         <div class="desc-title">
           <div class="member_container">
             <div class="profile_group_title">
-              <span>이미지</span> <div class="member_info" style="text-align: center;">회원 정보</div><div class=tier>티어</div><div class="withdraw_txt">탈퇴</div>
-              <div class="btn_group">
-              </div>
+              <span>이미지</span>
+              <div class="member_info" style="text-align: center;">회원 정보</div>
+              <div class=tier>티어</div>
+              <div class="admin_member_warn_title">경고</div>
+              <div class="admin_member_withdraw_title">탈퇴</div>
             </div>
           </div>
         </div>
@@ -1089,24 +1116,33 @@
     $('.personal_modal').find('.desc-content').empty()
     $.get('/home/admin/person', function(response) {
       for (let i = 0; i < response.length; i++) {
+        let tier = ''
         let member = response[i]
-        generalMemberTemplate = 
-          `<div class="member_container">
-              <div class="profile_group">
-              <img src="\${member.profilePic}" alt="."><div class="member_info"><a href="/memberinfo/view/\${member.email}" target="_blank" class="admin_anchor">\${member.nickname}(\${member.email})</a></div><div class=tier>\${member.generalMemberVO.tierId}</div>
-              <div class="btn_group">
-                  <button>경고</button>
-                  <button class="general_member_withdraw_btn" id="\${member.email}">탈퇴</button>
-              </div>
-              </div>
-          </div>`
-        generalMemberTemplateDom = $(generalMemberTemplate)
         
-        if (member.nickname.includes(val) || member.email.includes(val)) {
-          $('.personal_modal').find('.desc-content').append(generalMemberTemplateDom)
-        }
+        // 멤버 티어 get
+        $.get(`/admin/member/tier/\${member.email}`, function(tier_response) {
+          tier = tier_response.tierName
+          
+          generalMemberTemplate = 
+            `<div class="member_container_body">
+              <div class="profile_group">
+                <img src="\${member.profilePic}" alt=".">
+                <div class="member_info"><a href="/memberinfo/view/\${member.email}" target="_blank" class="admin_anchor">\${member.nickname}(\${member.email})</a></div>
+                <div class=tier>\${tier}</div>
+                <button class="admin_member_warn_btn">경고</button>
+                <button class="general_member_withdraw_btn" id="\${member.email}">탈퇴</button>
+              </div>
+            </div>`
+          generalMemberTemplateDom = $(generalMemberTemplate)
+          
+          if (member.nickname.includes(val) || member.email.includes(val)) {
+            $('.personal_modal').find('.desc-content').append(generalMemberTemplateDom)
+          }
+        })
+        
       }
     })
+
   }
   loadGeneralTypeMember()
 
@@ -1120,6 +1156,13 @@
     if (e.key === 'Enter') {
       let val = $('.admin_general_member_input').val()
       loadGeneralTypeMember(val)
+    }
+  })
+
+  // 일반 회원 경고 조치
+  $(document).on('click', '.admin_member_warn_btn', function() {
+    if (confirm('정말 경고를 주시겠습니까?')) {
+      alert('경고 조치 하였습니다.')
     }
   })
 
@@ -1411,7 +1454,7 @@
         'bold', 'italic', 'strikethrough', 'underline', 'removeFormat', '|',
         'bulletedList', 'numberedList', 'todoList', '|',
         'outdent', 'indent', '|',
-        'undo', 'redo', 'fontSize', 'alignment'
+        'undo', 'redo', 'fontSize', 'alignment', 'insertImage'
       ],
       shouldNotGroupWhenFull: true
     },
@@ -1750,7 +1793,7 @@
         'bold', 'italic', 'strikethrough', 'underline', 'removeFormat', '|',
         'bulletedList', 'numberedList', 'todoList', '|',
         'outdent', 'indent', '|',
-        'undo', 'redo', 'fontSize', 'alignment'
+        'undo', 'redo', 'fontSize', 'alignment', 'insertImage'
       ],
       shouldNotGroupWhenFull: true
     },
