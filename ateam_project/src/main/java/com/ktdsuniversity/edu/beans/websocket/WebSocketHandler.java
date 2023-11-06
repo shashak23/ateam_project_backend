@@ -40,6 +40,9 @@ public class WebSocketHandler extends TextWebSocketHandler {
 			chatRoom.enter(session, receiveMessage);
 			chatRoom.sendTo(receiveMessage);
 		}
+		else if (sendType.equals(ChatType.FOLLOW)) {
+			chatRoom.sendTo(receiveMessage);
+		}
 		else if (sendType.equals(ChatType.ENTER)) {
 			chatRoom.enter(session, receiveMessage);
 			chatRoom.sendAll(session, receiveMessage);

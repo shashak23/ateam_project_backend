@@ -12,9 +12,6 @@
 <!--뷰포트는 화면에 표시되는 웹영역 표시, 모바일 등에서 상호작용 할 수있는지 제어-->
 <meta name="viewport" id="viewport"
 	content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, width=device-width" />
-<!--스타일,폰트 지정-->
-<!--스와이퍼 기능 지정-->
-<!--스타일 입히기-->
 <style>
 /* 수정버튼  */
 .introduce-modify,#edit_button1,#edit_button2,#delete_tech,
@@ -45,6 +42,10 @@
   /* background-color: var(--light-blue); */
   color: white;
 }
+
+#delete_tech{
+	margin-left: 10px;
+}
 .introduce-create{
 background-color: var(--gray);
 	border: none;
@@ -56,11 +57,10 @@ background-color: var(--gray);
     height: 27px;
 }
 
-/* #overall{
+#overall{
 	display: flex;
-	flex-direction: row;
-	margin: 0 auto;
-} */
+	justify-content: center;
+}
 
 #container {
   display: flex;
@@ -96,7 +96,6 @@ background-color: var(--gray);
 
 .related_link{
 	display: flex;
-	flex-direction: column;
 	margin: 20px;
 }
 
@@ -216,28 +215,29 @@ position: absolute;
 	}
 
 	/* 모달 */
-	.modal {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            padding: 20px;
-            background-color: #fff;
-            border: 1px solid #ddd;
-            z-index: 1000;
-        }
-
-        .overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-        }
+	.signup_modal {
+	 position: fixed;
+	 top: 50%;
+	 left: 50%;
+	 transform: translate(-50%, -50%);
+	 display: flex;
+	 justify-content: center;
+	 align-items: center;
+	 width: 200px;
+	 height: 100px;
+	 background-color: white;
+	 font-weight: bold;
+	 font-size: var(--font-x-big);
+	 box-shadow: 0 0 5px;
+	 z-index: 999;
+	 opacity: 0;
+	 transition: 0.5s;
+	 visibility: hidden;
+ }
+ .signup_modal.modal_active {
+	 opacity: 1;
+	 visibility: visible;
+ }
 
 </style>
 <link rel="stylesheet" type="text/css" href="/css/myProfile.css" />
@@ -263,26 +263,31 @@ position: absolute;
 	              "opacity": "0"
 	           });
 	         });
+
+			
 	    });
 
 		
 	    
-	    function redirectToURL(url) {
+		function redirectToURL(url) {
 	        window.location.href = url;
 	    }
 	    /* 비밀번호, 닉네임 수정 버튼 */
 	    $("#myprofile").click(function() {
-			redirectToURL(`/memberinfo/view/${memberVO.email}`);
+			redirectToURL(`/memberinfo/view/${sessionScope._LOGIN_USER_.email}`);
 		});
 	    $("#mypost").click(function() {
 	        redirectToURL(`/member/mypost`);
 	    });
 	    $("#modify_info").click(function() {
-	        redirectToURL(`/member/selectmember/${memberVO.email}`);
+	        redirectToURL(`/member/selectmember/${sessionScope._LOGIN_USER_.email}`);
 	    });
 		$("#quit").click(function() {
 	        redirectToURL(`/member/logout`);
 	    });
+		$("#solve").click(function(){
+			redirectToURL(`/codingtest/mylist`);
+		});
 
 	    /* 프로필 사진 수정 */ 
 	  	$('.profile-modify').click(function() {
@@ -338,7 +343,6 @@ position: absolute;
 	     $("#delete_tech").click(function() {
 	    	 var email = $(this).data('deleteteach');
 		     var url = '/memberInfo/modify/delete-tech/' + email;
-	       	 window.location.href = url;
 	    });
 	    
 	    /* 기술스택 추가버튼 */
@@ -347,7 +351,7 @@ position: absolute;
 	    });
 	    /* 채팅 */
 	    $(".message_icon").click(function() {
-	    	inviteUser(send, userName, email, "${memberVO.email}");
+	    	inviteUser(send, "${sessionScope._LOGIN_USER_.nickname}", "${sessionScope._LOGIN_USER_.email}", "${memberVO.email}");
 	    });
 	    /* 학력 수정*/
 	    $('.education-modify').click(function() {
@@ -381,6 +385,8 @@ position: absolute;
 	        var url = '/memberInfo/modify/create-location/' + email;
        		window.location.href = url;
    		 });
+
+		
 	});
 </script>
 </head>
@@ -388,15 +394,15 @@ position: absolute;
 	<div id="overall">
 	<div id="container">
 		<div class="flex_button">
-			<c:if
-				test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
+			<!-- <c:if
+				test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}"> -->
 				<button id="myprofile">마이페이지</button>
 				<button>북마크</button>
 				<button id="modify_info">정보 수정</button>
 				<button id="mypost">내가 쓴 게시글</button>
-				<button>내가 푼 문제</button>
+				<button id="solve">내가 푼 문제</button>
 				<button id="quit">탈퇴</button>
-			</c:if>
+			<!-- </c:if> -->
 		</div>
 		<div class="flex_main">
 			
@@ -514,35 +520,32 @@ position: absolute;
 	</div>
 	<div class="related_link">
 		<div id="SNS">
-			<img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="Icon 1" id="githubIcon">: 
-			<div>${generalMemberVO.githubUrl}</div>
+			<img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="Icon 1" id="githubIcon">
+			<!-- <div>${generalMemberVO.githubUrl}</div> -->
 		</div>
 		<div id="SNS">
-        <img src="https://w7.pngwing.com/pngs/863/247/png-transparent-email-computer-icons-email-miscellaneous-angle-text.png" alt="Icon 2" id="emailIcon">: 
-		<div>${generalMemberVO.additionalEmail}</div>
+        <img src="https://w7.pngwing.com/pngs/863/247/png-transparent-email-computer-icons-email-miscellaneous-angle-text.png" alt="Icon 2" id="emailIcon"> 
+		<!-- <div>${generalMemberVO.additionalEmail}</div> -->
 		</div>
 		<div id="SNS">
-        <img src="https://i.pinimg.com/originals/f8/0b/dd/f80bdd79a51358da6ee41a0fda520394.png" alt="Icon 3" id="blogIcon">: 
-		<div>${generalMemberVO.blogUrl}</div>
+        <img src="https://i.pinimg.com/originals/f8/0b/dd/f80bdd79a51358da6ee41a0fda520394.png" alt="Icon 3" id="blogIcon">
+		<!-- <div>${generalMemberVO.blogUrl}</div> -->
 		</div>
+		<c:if
+		test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
+		<button data-sns="${sessionScope._LOGIN_USER_.email }" id="edit_button1"> 
+			수정
+		</button>
+	</c:if>
 	</div>
-	<c:if
-			test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
-			<button data-sns="${sessionScope._LOGIN_USER_.email }" id="edit_button1"> 
-				수정
-			</button>
-		</c:if>
+
 	<div class="show_pwf">
+		<p></p>
 		<p></p>
 		<button>
 			<h2>프로필</h2>
 		</button>
-		<button>
-			<h2>글</h2>
-		</button>
-		<button>
-			<h2>팔로잉</h2>
-		</button>
+		<p></p>
 		<p></p>
 	</div>
 	<div id="technology_stack">
@@ -682,6 +685,14 @@ position: absolute;
 	  </div>
 	  <div class="overlay"></div>
     </div>
+
+	<!-- 모달 -->
+	<div id="myModal" class="modal">
+		<div class="modal-content">
+		  <span class="close">&times;</span>
+		  <p>모달 내용이 여기에 들어갑니다.</p>
+		</div>
+	</div>
 </div>
 </div>
 <jsp:include page="../layout/footer.jsp" />
@@ -868,6 +879,14 @@ position: absolute;
 					 $(e.currentTarget).css({'background-color':'var(--blue)', 'color':'var(--white)'})
 					 $(e.currentTarget).addClass('follow_on')
 					 $('.follow_icon').prepend(`<input type="hidden" class="followId" value="\${result.followId}"/>`)
+				   	 send({
+			         	roomName: "main",
+			            sendType: "follow",
+			            userName: "${sessionScope._LOGIN_USER_.nickname}",
+			            userEmail: "${sessionScope._LOGIN_USER_.email}",
+			            message: "${sessionScope._LOGIN_USER_.nickname}님이 팔로우 했습니다.",
+			            to: "${memberVO.email}"
+			        })
 				   }
 				   else {
 					 alert('처리하지 못했습니다.')

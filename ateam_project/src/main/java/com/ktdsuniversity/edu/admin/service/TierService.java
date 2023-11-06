@@ -2,6 +2,7 @@ package com.ktdsuniversity.edu.admin.service;
 
 import com.ktdsuniversity.edu.admin.vo.AdminTierListVO;
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
+import com.ktdsuniversity.edu.tier.TierVO;
 
 public interface TierService {
 	
@@ -17,5 +18,10 @@ public interface TierService {
 	 * @return
 	 */
 	public boolean doUpdateTierMember (GeneralMemberVO generalMemberVO);
-
+	
+	/**
+	 * 멤버의 현재 티어를 조회한다.
+	 * @return 멤버의 이메일, 닉네임, 티어
+	 */
+	public TierVO getMemberAndTier(String email);
 }

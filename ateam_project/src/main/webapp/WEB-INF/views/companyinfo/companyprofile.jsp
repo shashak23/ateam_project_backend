@@ -1,0 +1,488 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet"
+	href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+	<link rel="stylesheet" type="text/css" href="./companyMyPage.css" />
+	<jsp:include page="../layout/header.jsp" />
+	<script
+		src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script
+		src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+		
+	<script type="text/javascript" src="/js/lib/jquery-3.7.1.js"></script>
+<script type="text/javascript">
+	$().ready(function() {
+		
+		$.get("/member/COMPANY", function(response) {
+			for (var i = 0; i < response.length; i++) {
+				var member = response[i]
+				var option = $("<option value='"+member.nickname+"'></option>");
+				$("#nicList").append(option);
+			}
+		});
+		
+		$("#search-btn").click(function() {
+			$("#search-form").attr({
+				"method": "get",
+				"action": "/algorithm/question/list"
+			}).submit()
+		});
+		
+	
+	})
+	
+	$(document).on('click', '.register', function(e) {
+		let userEmail = `${sessionScope._LOGIN_USER_}`
+		let memberType = `${sessionScope._LOGIN_USER_.memberType}`
+		if (userEmail === '') {
+			if(confirm('로그인이 필요한 서비스입니다. 로그인하시겠습니까?') ) {
+				window.location.href="/member/auth"
+			}
+		}
+		if (memberType === 'GENERAL') {
+			alert('기업회원만 이용하실 수 있는 서비스입니다.')
+			window.location.href="/algorithm/question/list"
+		}
+		if (memberType === 'COMPANY') {
+			window.location.href="/algorithm/question/create"
+		}
+
+	})
+	
+
+	// 모달창 열고 닫기
+	$(document).on('click', '.incomplete', function() {
+    $('.modal, .overlay').addClass('modal_active')
+  })
+  $(document).on('click', '.overlay', function() {
+    $('.modal, .overlay').removeClass('modal_active')
+  })
+
+  $(document).on('keyup', function(e) {
+    if (e.key === 'Escape') {
+      $('.modal, .overlay').removeClass('modal_active')
+    }
+  })
+  
+
+  // 스크롤 버튼, IDE
+  let calcScrollValue = () => {
+  let scrollProgress = document.getElementById('progress')
+  let progressValue = document.getElementById('progress-value')
+  let pos = document.documentElement.scrollTop
+  let calcHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight
+  let scrollValue = Math.round((pos * 100) / calcHeight)
+
+  scrollProgress.addEventListener('click', () => {
+    document.documentElement.scrollTop = 0
+  })
+  }
+  
+  window.onscroll = calcScrollValue
+
+  // 서브 리스트가 있다면? 아래로 떨군다.
+  $('.visible').hide()
+  $('.list_company').mouseover(function() {
+    $('.visible').show()
+    $(this).find('a').css({'background-color': 'var(--blue)',
+                           'color': 'white',
+                           'box-shadow': '0 0 5px var(--gray)'})
+  })
+  $('.list_company').mouseleave(function() {
+    $('.visible').hide()
+    $(this).find('a').css({'background-color': 'white',
+                           'color': 'var(--blue)',
+                           'box-shadow': 'none'})
+  })
+
+  //검색 전후 마진 바텀 적용
+  $("#search_btn").click(function() {
+        // 검색이 수행되었는지 확인하고 여백을 동적으로 조절합니다.
+        if ($("#search_form input[type='checkbox']:checked").length > 0) {
+            $("#overall").css("margin-bottom", "300px");
+            // $("#container").css("margin-bottom", "100px");
+        } else {
+            // 검색이 수행되지 않았다면 여백을 초기화합니다.
+            $("#left_container").css("margin-bottom", "0");
+            $("#container").css("margin-bottom", "0");
+        }
+
+        // 폼 제출을 계속 진행합니다.
+        $("#search_form").attr({
+            "method": "get",
+            "action": "/algorithm/explanation/list"
+        }).submit();
+    });
+
+	function redirectToURL(url) {
+	        window.location.href = url;
+	    }
+	    /* 비밀번호, 닉네임 수정 버튼 */
+	    $("#myprofile").click(function() {
+			redirectToURL(`/memberinfo/view/${memberVO.email}`);
+		});
+		$("#mypost").click(function() {
+	        redirectToURL(`/member/mypost`);
+	    });
+	    $("#modify_info").click(function() {
+	        redirectToURL(`/member/selectmember/${memberVO.email}`);
+	    });
+		$("#quit").click(function() {
+	        redirectToURL(`/member/logout`);
+	    });
+</script>
+</head>
+<style>
+	@charset "utf-8";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap');/*글꼴을 가져오는 페이지*/
+#overall{
+	display: flex;
+	justify-content: center;
+}
+
+#container {
+  display: grid;
+  grid-gap: 30px;
+  grid-template-columns: 300px 1fr;
+}
+
+.flex_button {
+  display: flex;
+  flex-direction: column;
+  margin-left: 120px;
+  margin-top: 51px;
+}
+
+.flex_main {
+  display: flex;
+  flex-direction: column;
+  width: 1200px;
+  margin: 0px 0px 200px 45px;
+}
+
+.flex_button button {
+  width: 150px;
+  height: 40px;
+  margin-bottom: 15px;
+  cursor: pointer;
+  border: 2px;
+}
+
+.flex_button button:hover {
+  background-color: #007BFF;
+  color: white;
+}
+
+.flex_button button:first-child {
+  /* margin-top: 51px; */
+}
+
+
+.leave_button {
+    position: relative;
+    left: 1100px;
+  margin-right: 0px;
+  color: white;
+  text-align: center;
+  border: none;
+  background-color: #75c2f6;
+  width: 70px;
+  height: 30px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+
+
+.profile {
+  display: grid;
+  grid-template-columns: 170px 20px 1fr;
+  margin-top: 100px;
+}
+
+.profile img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+}
+
+
+
+.introduction_list {
+  position: relative;
+  bottom:50px;
+  padding: 0px;
+  list-style: none;
+  grid-gap: 20px;
+  width: 1200px;
+}
+
+.list_name {
+  margin-top: 66px;
+}
+
+.follow a {
+  text-decoration: none;
+  color: #000;
+}
+.follow a:first-child{
+  margin-left: 50px;
+}
+.submit_btn {
+    border: none;
+    color: white;
+    text-align: center;
+    background-color: #75c2f6;
+    width: 70px;
+    height: 30px;
+    border-radius: 5px;
+    cursor: pointer;
+
+}
+
+.show_pwf {
+  display: grid;
+  grid-template-columns: 1fr 250px 250px 250px 1fr;
+}
+
+.show_pwf button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding-top: 30px;
+  text-decoration: none;
+  color: #575555;
+  position: relative;
+}
+
+.show_pwf button>h2 {
+  margin-bottom: 0px;
+}
+
+.show_pwf button:hover::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background-color: orange;
+  transform: scaleX(0.55);
+}
+
+#technology_stack{
+  margin-top: 120px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--light-gray);
+}
+#career_stack{
+  margin-top: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid var(--light-gray);
+}
+#address_stack {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+#edit_button1{
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding-left: 10px;
+            margin: 0;
+        }
+         #edit_button2,#edit_button3,#edit_button4, #edit_button5 {
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+            margin: 0;
+        }
+
+
+#technology_stack ul
+,#career_stack ul
+,#address_stack ul{
+  list-style: none;
+  padding: 0;
+  display: flex;
+  margin-bottom: 20px;
+}
+
+#career_stack ul{
+	flex-direction: column;
+	
+}
+
+#career_stack ul li{
+	list-style-type: disc;	
+	margin-left: 25px;
+}
+
+#technology_stack li 
+,#career_stack li
+,#address_stack li{
+  margin-right: 10px;
+}
+
+#technology_stack ul>li>button 
+,#career_stack ul>li>button 
+,#address_stack ul>li>button {
+  background-color:#75c2f6;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 5px 15px;
+  cursor: pointer;
+}
+
+.common{
+	display: grid;
+	grid-template-columns: 150px 50px 1fr;
+	padding: 0px;
+	grid-template-rows: 50px;
+}
+#fix_button{
+	margin-top: 13px;
+}
+#address_stack > img{
+	padding-top: 14px;
+
+}
+
+.info{
+	font-weight: bold;
+	font-size: larger;
+}
+
+.location{
+	width:200px;
+	margin-top: 10px;
+}
+
+.map{
+	margin-top: 30px;
+}
+
+.stackList{
+	background-color: rgba(214, 214, 214, 0.979);
+	border-radius: 5px;
+	font-weight: bold;
+	padding: 5px;
+}
+</style>
+
+<body>
+
+	<!-- 헤더를 넣어야함 -->
+	
+		<!-- 메인 -------------------------------------------------------------------------------- -->
+		<div id="overall">
+		<div id="container">
+			<div class="flex_button">
+				<c:if
+				test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
+				<a href="/companyinfo/view">
+				<button id="myprofile">마이프로필</button>
+			</a>
+				<a href="/companyinfo/modify">
+				<button id="modify_info">정보 수정</button>
+			</a>
+				<a href="/member/mypost">
+				<button id="mypost">내가 쓴 게시글</button>
+				</a>
+				<a href="/member/logout">
+				<button id="quit">탈퇴</button>
+			</a>
+			</c:if>
+			</div>
+			<div class="flex_main">
+				<!-- <div class="leave">
+					<button class="leave_button" type="submit">탈퇴</button>
+				</div> -->
+				<div class="profile">
+							<img src="https://cdn.thelec.kr/news/photo/202307/22027_19495_4334.jpg" />
+					<div>
+						<div>
+							<ul class="introduction_list">
+								<li class="list_name">
+									<h2>kt ds</h2>
+								</li>
+										<li class="list_intro"><p>kt는 국내 최대 통신사이자 디지털 플랫폼 기업으로 ICT, 금융사업, 위성방송서비스사업, 기타사업 등을 영위하고 있다.<br> 무선통신, 초고속인터넷, IPTV 등 핵심사업에서의 지속적인 성장뿐만 아니라<br> IDC, 클라우드, AI/DX 등 B2B 성장사업에서도 성과를 창출하였다.</p>
+											<!-- <button class="submit_btn">수정</button>								
+											 -->
+										</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="show_pwf">
+					<p></p>
+					<p></p>
+					<!-- <button>
+						<h2>기업 정보</h2>
+					</button> -->
+					<p></p>
+					<p></p>
+				</div>
+				<div id="technology_stack">
+					<div class="common">
+						<ul>
+							<li><p class="info">기술스택</p></li>
+							<!-- <li><button id="fix_button">수정</button></li> -->
+							<p></p>
+						</ul>
+					</div>
+								<ul class="technology_button">
+									<li class="stackList">java</li>
+									<li class="stackList">Docker</li>
+									<li class="stackList">Ubuntu</li>
+									<li class="stackList">OpenCV</li>
+									<li class="stackList">springboot</li>
+								</ul>
+								<span></span>
+								</li>
+				</div>
+				<div id="career_stack">
+					<div class="common">
+						<ul>
+							<p class="info">업무 소개</p>
+							<!-- <li><button id="fix_button">수정</button></li> -->
+							<p></p>
+						</ul>
+					</div>
+					<p class="career">
+						<ul>
+							<li> Gazebo 환경 구성 및 테스트</li>
+							<li> 제품 및 솔루션에 필요한 전자/전기 장치 구성 및 테스트</li>
+							<li> 그외 제품 개발에 필요한 SW 개발 및 테스트</li>
+							<li> 스마트팜에서 자동화 솔루션(제품) 테스트</li>
+						</ul>
+
+					</p>
+				</div>
+				<div id="address_stack">
+					<div class="common">
+						<ul>
+							<li>
+								<p class="info">오시는 길</p>
+								<p class="location">서울 서초구 효령로 176</p>
+							</li>
+							<!-- <li><button id="fix_button">수정</button></li> -->
+							<p></p>
+						</ul>
+					</div>
+					<img class="map" src="/images/오시는길.png"/>
+				</div>
+			</div>
+		</div>
+		</form>
+	</div>
+	<jsp:include page="../layout/footer.jsp" />
+	
+</body>
+</html>

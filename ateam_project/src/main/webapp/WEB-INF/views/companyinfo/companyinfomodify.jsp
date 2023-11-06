@@ -14,11 +14,23 @@
 	    margin: 20px 0;
 	    font-size: 25px; /* 글자 크기 설정 */
 	}
+
+	#overall{
+		display: flex;
+		/* justify-content: center; */
+	}
 	
 	#container {
 	    display: grid;
 	    grid-gap: 30px;
 	    grid-template-columns: 300px 1fr;
+		margin-top: 150px;
+		margin-left: 500px;
+	}
+
+	.companyInfo_update_table{
+		font-weight: bold;
+		margin-bottom: 50px;
 	}
 	
 	.flex_button {
@@ -34,45 +46,46 @@
 	}
 	
 	p {
-	    border-bottom: 1px solid #ccc;
-	    margin: 0;
+	    /* border-bottom: 1px solid #ccc; */
+	    margin-bottom: 10px;
 	    padding: 8px 0;
 	}
+
+	/* .submit_btn{
+		background-color: rgb(231,231,231);
+		
+	} */
 </style>
 </head>
 <body>
 <header></header>
-
-<div id="container">
-    <div class="flex_button">
-        <button>마이페이지</br>겸</br>정보 수정</button>
-        <button>기업이 쓴 글</button>
-    </div>
-
-    <div class="companyInfo_update_table">
-        기업정보수정
-	<form:form modelAttribute="companyVO" method="post">
-        <p>
-            <label for="contactName">담당자 이름 변경</label><br>
-            <input type="text" name="contactName" id="contactName" value="${companyVO.contactName}">
-            <input type="submit" value="변경완료" />
-        </p>
-        </form:form>
-        	<form:form modelAttribute="companyVO" method="post">
-        <p>
-            <label for="contactNumber">담당자 연락처 변경</label><br>
-            <input type="text" name="contactNumber" id="contactNumber" value="${companyVO.contactNumber}">
-            <input type="submit" value="변경완료" />
-        </p>
-    </form:form>
-    <form:form modelAttribute="memberVO" method="post">    
-        <p>
-            <label for="pw">기업회원 비밀번호 변경</label><br>
-            <input type="text" name="pw" id="pw" value="${memberVO.pw}" />
-            <input type="submit" value="변경완료" />
-        </p>
-     </form:form>
-    </div>
+<div id="overall">
+	<div id="container">
+		<div class="companyInfo_update_table">
+			<h2>기업정보수정</h2>
+		<form:form modelAttribute="companyVO" method="post">
+			<p>
+				<label for="contactName">담당자 이름 변경</label><br>
+				<input type="text" name="contactName" id="contactName" value="${companyVO.contactName}">
+				<input type="submit" value="변경완료" />
+			</p>
+			</form:form>
+				<form:form modelAttribute="companyVO" method="post">
+			<p>
+				<label for="contactNumber">담당자 연락처 변경</label><br>
+				<input type="text" name="contactNumber" id="contactNumber" value="${companyVO.contactNumber}">
+				<input type="submit" value="변경완료" />
+			</p>
+		</form:form>
+		<form:form modelAttribute="memberVO" method="post">    
+			<p>
+				<label for="pw">기업회원 비밀번호 변경</label><br>
+				<input type="text" name="pw" id="pw" value="${memberVO.pw}" />
+				<input class="submit_btn" type="submit" value="변경완료" />
+			</p>
+		</form:form>
+		</div>
+	</div>
 </div>
 </body>
 </html>

@@ -236,10 +236,7 @@
         </div>
         <div class="flex_main">
             <div class="follow_chat">
-                <button class="follow_icon">
-                    <img src="https://cdn-icons-png.flaticon.com/512/907/907873.png">
-                    팔로우
-            </button>
+           
                 <button class="message_icon">
                     ✉
                     메시지
@@ -258,6 +255,10 @@
                     </ul>
                 </div>
             </div>
+                 <button class="follow_icon">
+                    <img src="https://cdn-icons-png.flaticon.com/512/907/907873.png">
+                    팔로우
+           		</button>
             <div class="follow">
                 <a href="#">팔로워</a>
                 <a href="#">팔로잉</a>
