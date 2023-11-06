@@ -5,25 +5,21 @@
 <style>
   /* 메인 컨텐츠 영역 */
   .body_container {
-	position: relative;
-	bottom: 350px;
-	width: auto;
-	height: auto;
     margin: 0 auto;
-    margin-bottom: 50px;
-    
-    
+    margin-left: 55px; 
+    margin-top: -380px; 
+    margin-bottom: 100px;
+
+   
 }
-	.flex_button {
-		position: relative;
-		bottom:-29px;
+	.flex_button {	
 		margin-top: 100px;
 		display: flex;
 		flex-direction: column;
-		
+	
 	}
 	.flex_button button {
-	color: white;	
+	  color: white;	
     background-color: var(--gray);
     width: 150px;
     height: 40px;
@@ -90,15 +86,16 @@
 </style>
   <!-- 메인 컨텐츠 영역 -->
 <body> 
-  <div id="container">
-			<div class="flex_button">
-				<button id="myprofile">마이페이지</button>
+
+ 		<div class="flex_button">
+				<button id="myprofile">마이페이지11</button>
 				<button>북마크</button>
-				<button id="modify_info">정보 수정</button>
+				<button id="modify_info">정보 수정</button> 
 				<button id="mypost">내가 쓴 게시글</button>
-				<button>내가 푼 문제</button>
+				<button id="solve">내가 푼 문제</button>
 				<button>탈퇴</button>
-			</div>
+		</div>
+  <div id="container">    
 	<section class="body_container">
 		<div class="body">
 			<p></p>
@@ -334,6 +331,26 @@
 </body>
 
 <script>  
+	
+  function redirectToURL(url) {
+	        window.location.href = url;
+	    }
+	    /* 비밀번호, 닉네임 수정 버튼 */
+	    $("#myprofile").click(function() {
+			redirectToURL(`/memberinfo/view/$${sessionScope._LOGIN_USER_.email}`);
+		});
+	    $("#mypost").click(function() {
+	        redirectToURL(`/member/mypost`);
+	    });
+	    $("#modify_info").click(function() {
+	        redirectToURL(`/member/selectmember/${sessionScope._LOGIN_USER_.email}`);
+	    });
+		$("#quit").click(function() {
+	        redirectToURL(`/member/logout`);
+	    });
+		$("#solve").click(function(){
+			redirectToURL(`/codingtest/mylist`);
+		});
   // 모달창 열고 닫기
   $(document).on('click', '.incomplete', function() {
     $('.modal, .overlay').addClass('modal_active')
@@ -695,5 +712,6 @@
 //       }
 //     })
 //   })
+
 </script>
 </html>

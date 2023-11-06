@@ -1,5 +1,8 @@
 package com.ktdsuniversity.edu.tier;
 
+import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
+import com.ktdsuniversity.edu.member.vo.MemberVO;
+
 public class TierVO {
 	
 	private String tierId;
@@ -10,6 +13,9 @@ public class TierVO {
 	private String tierNameTemp;
 	private int tierCriteriaScoreTemp;
 	private String tierImageUrlTemp;
+	
+	private MemberVO memberVO;
+	private GeneralMemberVO generalMemberVO;
 	
 	
 	public String getTierId() {
@@ -60,5 +66,17 @@ public class TierVO {
 	public void setTierImageUrlTemp(String tierImageUrlTemp) {
 		this.tierImageUrlTemp = tierImageUrlTemp;
 	}
-
+	public MemberVO getMemberVO() {
+		return memberVO;
+	}
+	public void setMemberVO(MemberVO memberVO) {
+		this.memberVO = memberVO;
+	}
+	public GeneralMemberVO getGeneralMemberVO() {
+		return generalMemberVO;
+	}
+	public void setGeneralMemberVO(GeneralMemberVO generalMemberVO) {
+		this.generalMemberVO = generalMemberVO;
+	}
+	
 }

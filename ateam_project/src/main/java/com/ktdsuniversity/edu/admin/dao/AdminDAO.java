@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.ktdsuniversity.edu.admin.vo.AdminTierVO;
 import com.ktdsuniversity.edu.admin.vo.ReportVO;
+import com.ktdsuniversity.edu.tier.TierVO;
 
 public interface AdminDAO {
 	
@@ -97,4 +98,9 @@ public interface AdminDAO {
 	 */
 	public int tierMemberAllCount();
 	
+	/**
+	 * 멤버별 티어 조회
+	 * @return 이메일, 닉네임, 현재 티어
+	 */
+	public TierVO getMemberAndTier(String email);
 }

@@ -16,32 +16,68 @@
 <!--스와이퍼 기능 지정-->
 <!--스타일 입히기-->
 <style>
+
+#container{
+	display: flex;
+	justify-content: center;
+}
+
+.flex_button{
+	margin-left:120px;
+}
 .flex_mains {
 	display: flex;
 	flex-direction: column;
-	width: 800px;
-	margin-left: 320px;
+	width: 1200px;
 	height: 689px;
 }
 .emil{
 	margin-top: 97px;
 }
-	
 
+#emailSpace{
+	width: 400px;
+	height: 40px;
+    padding: 8px;
+	border: 2px solid rgb(231,231,231);
+}
+
+#nicknameSpace{
+	width: 400px;
+	height: 40px;
+    padding: 8px;
+	border: 2px solid rgb(231,231,231);
+}
+
+.info{
+	width:500px;
+	/* border-bottom: 0.0625rem solid rgb(231,231,231); */
+	margin-bottom: 15px;
+}
+	
 .value {
 	margin: 10px 0; /* 각 항목 사이의 여백을 설정합니다. */
+	display: flex;
 }
 
 a {
+	
+	margin-left: 10px;
 	text-decoration: none; /* 링크의 밑줄을 제거합니다. */
 	color: #007bff; /* 링크 텍스트의 색상을 설정합니다. */
 }
 
+img{
+	width:15px;
+	height: 15px;
+	text-decoration: none;
+}
+
 a:hover {
-	text-decoration: underline; /* 링크에 마우스 오버 시 밑줄을 추가합니다. */
+	text-decoration: none; /* 링크에 마우스 오버 시 밑줄을 추가합니다. */
 }
 h3{
-	margin-bottom: 30px;
+	margin-bottom: 15px;
 }
 </style>
 <link rel="stylesheet" type="text/css" href="/css/myProfile.css" />
@@ -71,36 +107,33 @@ $().ready(function() {
 			</c:if>
 		</div>
 		<div class="flex_mains">
-			<div class="education">
-				<h3 class="emil">이메일:${memberVO.email}</h3>
+			<div class="info">
+				<h3 class="emil">이메일</h3>
+				<div id="emailSpace">${memberVO.email}</div> 
 			</div>
-			<div class="education">
+			<div class="info">
+				<div class="value">
+					<h3>닉네임
+						<a href="/memberInfo/modify/update-nickname/${memberVO.email}">
+							<img src="/images/작성.png" alt="작성"> 수정</a>
+					</h3>
+					
+				</div>
+					<div id="nicknameSpace">${memberVO.nickname}</div>
+					
+				
+			</div>
+			<div class="info">
 				<div class="value">
 					<h3>
-						닉네임: ${memberVO.nickname} <a
-							href="/memberInfo/modify/update-nickname/${memberVO.email}">수정</a>
+						비밀번호 <a href="/memberInfo/modify/update-password/${memberVO.email}">
+						<img src="/images/작성.png" alt="작성">	수정</a>
 					</h3>
 				</div>
 			</div>
-			<div class="education">
-				<div class="value">
-					<h3>
-						비밀번호: <a
-						href="/memberInfo/modify/update-password/${memberVO.email}">수정</a>
-					</h3>
-				</div>
-			</div>
-			
-
-
-
-
 		</div>
-
-
 	</div>
 	<jsp:include page="../../layout/footer.jsp" />
-
 </body>
 <script>
 	//미완성된 기능을 알려주는 모달창
@@ -142,6 +175,14 @@ $().ready(function() {
 	})
 	 $("#my_profile").click(function() {
 	        redirectToURL(`/memberInfo/view/${memberVO.email}`);
+	    });
+
+		
+	    $("#mypost").click(function() {
+	        redirectToURL(`/member/mypost`);
+	    });
+	    $("#modify_info").click(function() {
+	        redirectToURL(`/member/selectmember/${memberVO.email}`);
 	    });
 </script>
 </html>

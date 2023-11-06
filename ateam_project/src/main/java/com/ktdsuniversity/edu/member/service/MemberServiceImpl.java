@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -45,8 +46,6 @@ import com.ktdsuniversity.edu.member.vo.MemberListVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 import com.ktdsuniversity.edu.member.vo.SocialVO;
 
-import io.github.seccoding.web.mimetype.factory.ExtensionFilterFactory;
-
 @Service
 public class MemberServiceImpl implements MemberService {
 	@Autowired
@@ -58,7 +57,40 @@ public class MemberServiceImpl implements MemberService {
 	@Autowired
 	private SHA sha;
 	@Autowired
-	FileHandler fileHandler;
+	private FileHandler fileHandler;
+	
+	@Value("${app.oauth.kakao.access-token.url}")
+	private String kakaoAccessTokenUrl;
+	@Value("${app.oauth.kakao.access-token.client-id}")
+	private String kakaoClientId;
+	@Value("${app.oauth.kakao.access-token.redirect-url}")
+	private String kakaoRedirectUrl;
+	@Value("${app.oauth.kakao.user-info.url}")
+	private String kakaoUserInfoUrl;
+	@Value("${app.oauth.kakao.logout.url}")
+	private String kakaoLogoutUrl;
+	
+	@Value("${app.oauth.naver.access-token.url}")
+	private String naverAccessTokenUrl;
+	@Value("${app.oauth.naver.access-token.client-id}")
+	private String naverClientId;
+	@Value("${app.oauth.naver.access-token.client-secret}")
+	private String naverClientSecret;
+	@Value("${app.oauth.naver.access-token.redirect-url}")
+	private String naverRedirectUrl;
+	@Value("${app.oauth.naver.user-info.url}")
+	private String naverUserInfoUrl;
+	
+	@Value("${app.oauth.google.access-token.url}")
+	private String googleAccessTokenUrl;
+	@Value("${app.oauth.google.access-token.client-id}")
+	private String googleClientId;
+	@Value("${app.oauth.google.access-token.client-secret}")
+	private String googleClientSecret;
+	@Value("${app.oauth.google.access-token.redirect-url}")
+	private String googleRedirectUrl;
+	@Value("${app.oauth.google.user-info.url}")
+	private String googleUserInfoUrl;
 
 	/**
 	 * 회원생성
@@ -301,10 +333,9 @@ public class MemberServiceImpl implements MemberService {
 	public String getAccessToken(String authorizeCode) {
 		String accessToken = "";
 		String refreshToken = "";
-		String reqURL = "https://kauth.kakao.com/oauth/token";
 
 		try {
-			URL url = new URL(reqURL);
+			URL url = new URL(kakaoAccessTokenUrl);
 
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			// POST 요청을 위해 기본값이 false인 setDoOutput을 true로
@@ -317,8 +348,8 @@ public class MemberServiceImpl implements MemberService {
 			StringBuilder sb = new StringBuilder();
 			sb.append("grant_type=authorization_code");
 
-			sb.append("&client_id=2a9927f831835710fa3d3d37b078389c"); // 본인이 발급받은 key
-			sb.append("&redirect_uri=http://localhost:8080/member/kakaoLogin"); // 본인이 설정한 주소
+			sb.append("&client_id=" + kakaoClientId); // 본인이 발급받은 key
+			sb.append("&redirect_uri=" + kakaoRedirectUrl); // 본인이 설정한 주소
 
 			sb.append("&code=" + authorizeCode);
 			bw.write(sb.toString());
@@ -358,9 +389,8 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public SocialVO getUserInfo(String accessToken) {
 		HashMap<String, Object> userInfo = new HashMap<String, Object>();
-		String reqURL = "https://kapi.kakao.com/v2/user/me";
 		try {
-			URL url = new URL(reqURL);
+			URL url = new URL(kakaoUserInfoUrl);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
 			conn.setRequestProperty("Authorization", "Bearer " + accessToken);
@@ -400,9 +430,8 @@ public class MemberServiceImpl implements MemberService {
 	 */
 	@Override
 	public void kakaoLogout(String accessToken) {
-        String reqURL = "https://kapi.kakao.com/v1/user/logout";
         try {
-            URL url = new URL(reqURL);
+            URL url = new URL(kakaoLogoutUrl);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Authorization", "Bearer " + accessToken);
@@ -428,10 +457,9 @@ public class MemberServiceImpl implements MemberService {
 	public String getNaverAccessToken(String authorizeCode) {
 		String accessToken = "";
 		String refreshToken = "";
-		String reqURL = "https://nid.naver.com/oauth2.0/token";
 
 		try {
-			URL url = new URL(reqURL);
+			URL url = new URL(naverAccessTokenUrl);
 
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			// POST 요청을 위해 기본값이 false인 setDoOutput을 true로
@@ -444,9 +472,9 @@ public class MemberServiceImpl implements MemberService {
 			StringBuilder sb = new StringBuilder();
 			sb.append("grant_type=authorization_code");
 
-			sb.append("&client_id=ePAK2QDzEMghBxsqTuce"); // 본인이 발급받은 key
-			sb.append("&client_secret=Fjfxbj04YU"); // 본인이 발급받은 key
-			sb.append("&redirect_uri=http://localhost:8080/member/naverLogin"); // 본인이 설정한 주소
+			sb.append("&client_id=" + naverClientId); // 본인이 발급받은 key
+			sb.append("&client_secret=" + naverClientSecret); // 본인이 발급받은 key
+			sb.append("&redirect_uri=" + naverRedirectUrl); // 본인이 설정한 주소
 
 			sb.append("&code=" + authorizeCode);
 			bw.write(sb.toString());
@@ -486,9 +514,8 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public SocialVO getNavertUserInfo(String accessToken) {
 		HashMap<String, Object> userInfo = new HashMap<String, Object>();
-		String reqURL = "https://openapi.naver.com/v1/nid/me";
 		try {
-			URL url = new URL(reqURL);
+			URL url = new URL(naverUserInfoUrl);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
 			conn.setRequestProperty("Authorization", "Bearer " + accessToken);
@@ -528,10 +555,9 @@ public class MemberServiceImpl implements MemberService {
 	public String getGoogleAccessToken(String authorizeCode) {
 		String accessToken = "";
 		String refreshToken = "";
-		String reqURL = "https://oauth2.googleapis.com/token";
 
 		try {
-			URL url = new URL(reqURL);
+			URL url = new URL(googleAccessTokenUrl);
 
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			// POST 요청을 위해 기본값이 false인 setDoOutput을 true로
@@ -543,10 +569,10 @@ public class MemberServiceImpl implements MemberService {
 			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
 			StringBuilder sb = new StringBuilder();
 			sb.append("grant_type=authorization_code");
-			sb.append("&client_id=595210277098-t430mu7sj0n7dkl8ji1usbuke043tgvv.apps.googleusercontent.com"); // 본인이 발급받은 key
-			sb.append("&client_secret=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"); // 본인이 발급받은 key
+			sb.append("&client_id=" + googleClientId); // 본인이 발급받은 key
+			sb.append("&client_secret=" + googleClientSecret); // 본인이 발급받은 key
 			sb.append("&code=" + authorizeCode);
-			sb.append("&redirect_uri=http://localhost:8080/member/googleLogin"); // 본인이 설정한 주소
+			sb.append("&redirect_uri=" + googleRedirectUrl); // 본인이 설정한 주소
 
 			bw.write(sb.toString());
 			bw.flush();
@@ -583,9 +609,8 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public SocialVO getGoogleUserInfo(String accessToken) {
 		HashMap<String, Object> userInfo = new HashMap<String, Object>();
-		String reqURL = "https://www.googleapis.com/userinfo/v2/me";
 		try {
-			URL url = new URL(reqURL);
+			URL url = new URL(googleUserInfoUrl);
 			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
 			conn.setRequestMethod("GET");
 			conn.setRequestProperty("Authorization", "Bearer " + accessToken);

@@ -12,9 +12,6 @@
 <!--뷰포트는 화면에 표시되는 웹영역 표시, 모바일 등에서 상호작용 할 수있는지 제어-->
 <meta name="viewport" id="viewport"
 	content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, width=device-width" />
-<!--스타일,폰트 지정-->
-<!--스와이퍼 기능 지정-->
-<!--스타일 입히기-->
 <style>
 /* 수정버튼  */
 .introduce-modify,#edit_button1,#edit_button2,#delete_tech,
@@ -42,7 +39,7 @@
 ,.addCareer:hover
 ,.region_create:hover
 ,.profile-modify:hover{
-  background-color: var(--light-blue);
+  /* background-color: var(--light-blue); */
   color: white;
 }
 .introduce-create{
@@ -56,22 +53,55 @@ background-color: var(--gray);
     height: 27px;
 }
 
+/* #overall{
+	display: flex;
+	flex-direction: row;
+	margin: 0 auto;
+} */
+
 #container {
   display: flex;
   justify-content: center;
   
 }
 /* 추가하기 */
-#insert_techstack, #addEducationButton,.addCareer,.region_create{
-	background-color: var(--gray);
+ #insert_techstack, #addEducationButton,.addCareer,.region_create{
+	/* background-color: var(--gray);
     border: none;
     color: var(--white);
     border-radius: 10px;
     cursor: pointer;
-    text-align: center;
-    width: 67px;
-    height: 24px;
+    text-align: center; */
+	background-color: none;
+	border: none;
+   margin-top: 15px;
+   cursor: pointer;
+} 
+
+.follow{
+	display: flex;
+	justify-content: space-evenly;
 }
+
+#add{
+	width: 15px;
+    height: 15px;
+	/* background-color: var(--gray); */
+	margin-left: 8px;
+	cursor: pointer;
+}
+
+.related_link{
+	display: flex;
+	flex-direction: column;
+	margin: 20px;
+}
+
+#SNS{
+	display: flex;
+	margin-top: 10px;
+}
+
 .flex_button button { 
    background-color:var(--gray); 
    width: 150px; 
@@ -154,13 +184,57 @@ position: absolute;
 
 	.follow {
 		display: flex;
-		flex-direction: row;
+   		justify-content: space-evenly;
+		border-bottom: 1px solid #333;
+		font-weight: bold;
+		margin-right: 140px;
 	}
 
 	.follow div {
 		margin-right: 7px;
 		cursor: pointer;
 	}
+
+	.follower,
+	.followee{
+		width:200px;
+		height: 30px;
+		background-color:  rgb(231,231,231);
+		justify-content: center;
+		border-radius: 5px;
+		display: flex;
+   		padding: 5px;
+	}
+
+	#arrow{
+		width: 8px;
+		height: 8px;
+		margin: 7px;
+	}
+
+	/* 모달 */
+	.modal {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            z-index: 1000;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
 
 </style>
 <link rel="stylesheet" type="text/css" href="/css/myProfile.css" />
@@ -187,20 +261,29 @@ position: absolute;
 	           });
 	         });
 	    });
+
+		
 	    
-	    function redirectToURL(url) {
+		function redirectToURL(url) {
 	        window.location.href = url;
 	    }
 	    /* 비밀번호, 닉네임 수정 버튼 */
 	    $("#myprofile").click(function() {
-			redirectToURL(`/memberinfo/view/${memberVO.email}`);
+			redirectToURL(`/memberinfo/view/$${sessionScope._LOGIN_USER_.email}`);
 		});
 	    $("#mypost").click(function() {
 	        redirectToURL(`/member/mypost`);
 	    });
 	    $("#modify_info").click(function() {
-	        redirectToURL(`/member/selectmember/${memberVO.email}`);
+	        redirectToURL(`/member/selectmember/${sessionScope._LOGIN_USER_.email}`);
 	    });
+		$("#quit").click(function() {
+	        redirectToURL(`/member/logout`);
+	    });
+		$("#solve").click(function(){
+			redirectToURL(`/codingtest/mylist`);
+		});
+
 	    /* 프로필 사진 수정 */ 
 	  	$('.profile-modify').click(function() {
 	        var email = $(this).data('pic-id');
@@ -301,76 +384,21 @@ position: absolute;
 </script>
 </head>
 <body>
+	<div id="overall">
 	<div id="container">
 		<div class="flex_button">
-			<c:if
-				test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
+			<!-- <c:if
+				test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}"> -->
 				<button id="myprofile">마이페이지</button>
 				<button>북마크</button>
 				<button id="modify_info">정보 수정</button>
 				<button id="mypost">내가 쓴 게시글</button>
-				<button>내가 푼 문제</button>
-				<button>탈퇴</button>
-			</c:if>
+				<button id="solve">내가 푼 문제</button>
+				<button id="quit">탈퇴</button>
+			<!-- </c:if> -->
 		</div>
 		<div class="flex_main">
-			<div class="follow_chat">
-				<%-- <c:choose>
-					<c:when
-						test="${not empty sessionScope._LOGIN_USER_.email eq memberVO.email}">
-						<!-- a유저가 로그인한 경우에만 신고 버튼을 표시합니다. -->
-						<form action="/reportUser" method="post">
-							<input type="hidden" id="reportUser"
-								value="${empty sessionScope._LOGIN_USER}">
-							<button type="submit" class="report-btn" value="5">신고</button>
-						</form>
-					</c:when>
-					<c:otherwise>
-						<!-- a유저가 로그인하지 않은 경우에는 신고 버튼을 표시하지 않습니다. -->
-					</c:otherwise>
-				</c:choose>
-	
-				<!-- 모달 창 -->
-				 <h2>신고 내용</h2>
-				<form name="reportVO" method="post" action="/report/view/5">
-					<div>
-						<label for="reportReason">신고사유${reportVO.reportReason} <select
-							name="reportReason">
-								<option value="6">영리 및 홍보 목적</option>
-								<option value="7">개인정보노출</option>
-								<option value="8">음란성/선정성</option>
-								<option value="9">같은 내용 반복(도배)</option>
-								<option value="10">이용규칙위반</option>
-								<option value="11">기타</option>
-						</select>
-						</label> <label for="reportReasonContent">신고 상세내용 <textarea
-								name="reportReasonContent" id="reportReasonContent">${reportVO.reportReasonContent}</textarea></label>
-
-						<label for="attachedImg">첨부파일${reportVO.attachedImg}</label> <input
-							id="attachedImg" type="file" name="attachedImg" /> <label
-							for="reportTypeId">${reportVO.reportTypeId}</label> <input
-							id="reportTypeId" type="hidden" name="reportTypeId" value="1" />
-
-						<label for="reportMemberEmail">${reportVO.reportMemberEmail}</label>
-						<input id="reportMemberEmail" type="hidden" name="reportMember"
-							value="${reportVO.reportMember}" /> <label
-							for="receivedReportMemberEmail">${reportVO.receivedReportMemberEmail}</label>
-						<input id="receivedReportMemberEmail" type="hidden"
-							name="receivedReportMember" value="${generalPostVO.postWriter}" />
-
-						<label for="reportContentId">${reportVO.reportContentId}</label> <input
-							id="reportContentId" type="hidden" name="reportContentId"
-							value="${generalPostVO.generalPostId}" />
-					</div>
-					<div class="btn-group">
-						<div class="right-align">
-							<input type="submit" value="완료" />
-
-						</div>
-					</div>
-				</form>   --%>
-				<button class="message_icon">✉ 메시지</button>
-			</div>
+			
 	
 	<div class="profile">
 	<div class="profile-fix">
@@ -419,20 +447,90 @@ position: absolute;
 		</div>
 	</div>
 	<div class="follow">
-	  <div class="follower" data-email="${memberVO.email}">팔로워</div>
-	  <div class="followee" data-email="${memberVO.email}">팔로잉</div>
+	  <div class="follower" data-email="${memberVO.email}">팔로워
+		<img id="arrow" src="/images/아래.png/" alt="arrow">
+	  </div>
+	  <div class="followee" data-email="${memberVO.email}">팔로잉
+		<img id="arrow" src="/images/아래.png/" alt="arrow">
+	  </div>
+	  <div class="follow_chat">
+		<%-- <c:choose>
+			<c:when
+				test="${not empty sessionScope._LOGIN_USER_.email eq memberVO.email}">
+				<!-- a유저가 로그인한 경우에만 신고 버튼을 표시합니다. -->
+				<form action="/reportUser" method="post">
+					<input type="hidden" id="reportUser"
+						value="${empty sessionScope._LOGIN_USER}">
+					<button type="submit" class="report-btn" value="5">신고</button>
+				</form>
+			</c:when>
+			<c:otherwise>
+				<!-- a유저가 로그인하지 않은 경우에는 신고 버튼을 표시하지 않습니다. -->
+			</c:otherwise>
+		</c:choose>
+
+		<!-- 모달 창 -->
+		 <h2>신고 내용</h2>
+		<form name="reportVO" method="post" action="/report/view/5">
+			<div>
+				<label for="reportReason">신고사유${reportVO.reportReason} <select
+					name="reportReason">
+						<option value="6">영리 및 홍보 목적</option>
+						<option value="7">개인정보노출</option>
+						<option value="8">음란성/선정성</option>
+						<option value="9">같은 내용 반복(도배)</option>
+						<option value="10">이용규칙위반</option>
+						<option value="11">기타</option>
+				</select>
+				</label> <label for="reportReasonContent">신고 상세내용 <textarea
+						name="reportReasonContent" id="reportReasonContent">${reportVO.reportReasonContent}</textarea></label>
+
+				<label for="attachedImg">첨부파일${reportVO.attachedImg}</label> <input
+					id="attachedImg" type="file" name="attachedImg" /> <label
+					for="reportTypeId">${reportVO.reportTypeId}</label> <input
+					id="reportTypeId" type="hidden" name="reportTypeId" value="1" />
+
+				<label for="reportMemberEmail">${reportVO.reportMemberEmail}</label>
+				<input id="reportMemberEmail" type="hidden" name="reportMember"
+					value="${reportVO.reportMember}" /> <label
+					for="receivedReportMemberEmail">${reportVO.receivedReportMemberEmail}</label>
+				<input id="receivedReportMemberEmail" type="hidden"
+					name="receivedReportMember" value="${generalPostVO.postWriter}" />
+
+				<label for="reportContentId">${reportVO.reportContentId}</label> <input
+					id="reportContentId" type="hidden" name="reportContentId"
+					value="${generalPostVO.generalPostId}" />
+			</div>
+			<div class="btn-group">
+				<div class="right-align">
+					<input type="submit" value="완료" />
+
+				</div>
+			</div>
+		</form>   --%>
+		<button class="message_icon">✉ 메시지</button>
+	</div>
 	</div>
 	<div class="related_link">
-		<img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="Icon 1" id="githubIcon">
-        <img src="https://w7.pngwing.com/pngs/863/247/png-transparent-email-computer-icons-email-miscellaneous-angle-text.png" alt="Icon 2" id="emailIcon">
-        <img src="https://i.pinimg.com/originals/f8/0b/dd/f80bdd79a51358da6ee41a0fda520394.png" alt="Icon 3" id="blogIcon">
-		<c:if
+		<div id="SNS">
+			<img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="Icon 1" id="githubIcon">: 
+			<div>${generalMemberVO.githubUrl}</div>
+		</div>
+		<div id="SNS">
+        <img src="https://w7.pngwing.com/pngs/863/247/png-transparent-email-computer-icons-email-miscellaneous-angle-text.png" alt="Icon 2" id="emailIcon">: 
+		<div>${generalMemberVO.additionalEmail}</div>
+		</div>
+		<div id="SNS">
+        <img src="https://i.pinimg.com/originals/f8/0b/dd/f80bdd79a51358da6ee41a0fda520394.png" alt="Icon 3" id="blogIcon">: 
+		<div>${generalMemberVO.blogUrl}</div>
+		</div>
+	</div>
+	<c:if
 			test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
 			<button data-sns="${sessionScope._LOGIN_USER_.email }" id="edit_button1"> 
 				수정
 			</button>
 		</c:if>
-	</div>
 	<div class="show_pwf">
 		<p></p>
 		<button>
@@ -467,7 +565,9 @@ position: absolute;
 				<c:otherwise>
 					<li><c:if
 							test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
-							<button id="insert_techstack">추가하기</button>
+							<button id="insert_techstack">
+								<img id="add" src="/images/작성.png/" alt="추가하기">
+							</button>
 						</c:if></li>
 				</c:otherwise>
 
@@ -490,13 +590,17 @@ position: absolute;
 					</c:forEach>
 					<c:if
 						test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
-						<button id="addEducationButton">추가하기</button>
+						<button id="addEducationButton">
+							<img id="add" src="/images/작성.png/" alt="추가하기">
+						</button>
 					</c:if>
 				</c:when>
 				<c:otherwise>
 					<li><c:if
 						test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
-						<button id="addEducationButton">추가하기</button>
+						<button id="addEducationButton">
+							<img id="add" src="/images/작성.png/" alt="추가하기">
+						</button>
 					</c:if></li>
 				</c:otherwise>
 
@@ -520,13 +624,17 @@ position: absolute;
 					</c:forEach>
 					<c:if
 						test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
-						<button class="addCareer">추가하기</button>
+						<button class="addCareer">
+							<img id="add" src="/images/작성.png/" alt="추가하기">
+						</button>
 					</c:if>
 				</c:when>
 				<c:otherwise>
 					<li><c:if
 							test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
-							<button class="addCareer">추가하기</button>
+							<button class="addCareer">
+								<img id="add" src="/images/작성.png/" alt="추가하기">
+							</button>
 						</c:if></li>
 				</c:otherwise>
 
@@ -535,6 +643,7 @@ position: absolute;
 	</div>
 	<div class="region">
 		<h3 class="region-font">주소</h3>
+		
 
 		<ul>
 			<c:choose>
@@ -551,7 +660,7 @@ position: absolute;
 					<li>
 					<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
 						<button data-region-id="${sessionScope._LOGIN_USER_.email }" class="region_create"> 
-						추가하기
+							추가하기
 						</button>
 						</c:if></li>
 				</c:otherwise>
@@ -572,6 +681,7 @@ position: absolute;
 	  </div>
 	  <div class="overlay"></div>
     </div>
+</div>
 </div>
 <jsp:include page="../layout/footer.jsp" />
 </body>
@@ -662,19 +772,6 @@ position: absolute;
 			}
 		});
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
 	
 	// 스크롤 버튼, IDE
 	let calcScrollValue = () => {

@@ -217,7 +217,7 @@
 		height: 34px;
 		background-color: transparent;
 		position: absolute;
-		top: 551px;
+		top: 561px;
 		left: 175px;
 	}
 
@@ -384,9 +384,9 @@
 					</c:if>
 					<!-- 기업회원에게만 보임  -->
 					<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.memberType eq 'COMPANY'}">
-						<button id="upload">
+						<!-- <button id="upload">
 							<a href="/algorithm/question/create">문제 등록</a>
-						</button> 
+						</button>  -->
 					</c:if>
 				</div>
 			</div> --%>

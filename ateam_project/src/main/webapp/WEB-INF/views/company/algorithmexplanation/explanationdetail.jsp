@@ -79,12 +79,25 @@
 
 #header{
     display: grid;
-    grid-template-columns: 200px 1fr;  
+    grid-template-columns: 200px 1fr;
+    margin-bottom: 13px;
+}
+
+.info{
+    font-size:small
+    
+}
+
+#pointLine{
+    border: 3px solid #FF8C00;
+    width: 100px;
+    position: relative;
+    top: 22px;
 }
 
 .title{
     font-weight: bold;
-    font-size: xx-large;
+    font-size: xxx-large;
 }
 
 #tip{
@@ -93,7 +106,7 @@
 
 #postList{
     display: grid;
-    grid-template-rows: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
     border-top: 0.0625rem solid rgb(231,231,231);
     margin-top: 20px;
     padding-top: 10px;
@@ -101,7 +114,17 @@
 
 .postTitle{
     font-weight: bold;
+    font-size: x-large;
+}
 
+.postWriter{
+    margin-top: 30px;
+}
+
+.postWriter,
+.postInfo{
+    font-size: medium;
+    color:	#A9A9A9;
 }
 </style>
 <body>
@@ -109,15 +132,18 @@
         <div id="header">
             <div id="algorithmName">
                 <div class="title">해시</div>   
-                <div class="info">회사명: 샘성 조회수</div>
+                <div class="info">게시글 수</div>
             </div>   
             <div id="tip">Key-value쌍으로 데이터를 빠르게 찾아보세요.</div>
         </div>
+        <div id="pointLine"></div>
         <!-- 여기까지 해당 카테고리 상단 내용 -->
         <ul id="list">
             <li>
                 <div id="postList">
+                    <a href="/algorithm/explanation/view/AE-20231029-000131">
                     <div class="postTitle">최단 경로를 찾는 알고리즘</div>
+                   </a>
                     <div class="postWriter">페이타랩</div>
                     <div class="postInfo">31 views</div>
                 </div>
