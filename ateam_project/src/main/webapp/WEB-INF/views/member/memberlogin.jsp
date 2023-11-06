@@ -166,7 +166,10 @@ body {
 }
 
 .button_container > a:first-child {
-  display: block;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 60px;
   height: 60px;
   border-radius: 50%;
@@ -218,7 +221,6 @@ body {
   border: 1px solid #8e8e8e;
   border-radius: 50%;
   position: relative;
-  margin-right: 20px;
 }
 
 .button_container > a:last-child > .google_img {
