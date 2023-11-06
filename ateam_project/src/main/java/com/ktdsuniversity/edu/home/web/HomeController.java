@@ -18,12 +18,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ktdsuniversity.edu.admin.service.ReportService;
 import com.ktdsuniversity.edu.admin.service.TierService;
+import com.ktdsuniversity.edu.admin.vo.AdminTierVO;
 import com.ktdsuniversity.edu.admin.vo.ReportListVO;
 import com.ktdsuniversity.edu.admin.vo.ReportVO;
 import com.ktdsuniversity.edu.algorithmexplanation.service.AlgorithmExplanationService;
@@ -35,6 +37,7 @@ import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
 import com.ktdsuniversity.edu.companyinfo.service.CompanyInfoService;
 import com.ktdsuniversity.edu.companynews.service.CompanyNewsService;
 import com.ktdsuniversity.edu.companynews.vo.CompanyNewsListVO;
+import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 import com.ktdsuniversity.edu.generalpost.service.GeneralPostService;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostListVO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
@@ -291,9 +294,36 @@ public class HomeController {
 		TierVO adminTierList = tierService.getMemberAndTier(email);
 		
 		return adminTierList;
-		
 	}
 	
+	// 회원 티어 관리 명단 호출
+	@ResponseBody
+	@GetMapping("/admin/management/tier")
+	public List<AdminTierVO> getMemberTierManagement() {
+		return tierService.getTierMemberAllList().getAdminTierList();
+	}
+	
+	// 티어 승급 처리
+	@ResponseBody
+	@PostMapping("admin/management/tier/upgrade")
+	public Map<String, Object> accessMemberTierUpgrade(@RequestParam String memberEmail,
+													   @RequestParam String tierId) {
+		Map<String, Object> resultSet = new HashMap<>();
+		GeneralMemberVO generalMemberVO = new GeneralMemberVO();
+		generalMemberVO.setGeneralMemberEmail(memberEmail);
+		generalMemberVO.setTierId(tierId);
+		
+		boolean isSuccess = tierService.doUpdateTierMember(generalMemberVO);
+		
+		if (isSuccess) {
+			resultSet.put("result", "success");
+			return resultSet;
+		}
+		else {
+			resultSet.put("result", "fail");
+			return resultSet;
+		}
+	}
 	
 	@GetMapping("/home/search")
 	public String searchAllBoardList(@ModelAttribute AbstractSearchVO abstractSearchVO, Model model) {
