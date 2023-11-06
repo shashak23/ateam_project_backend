@@ -583,7 +583,8 @@
     .create_container,
     .notice_view_container,
     .modify_container,
-    .report_view_container {
+    .report_view_container,
+    .member_activity_log_modal {
         visibility: hidden;
         position: fixed;
         top: 50%;
@@ -601,10 +602,16 @@
         transition: 0.5s;
     }
 
+    .member_activity_log_modal {
+      height: 700px;
+      overflow: auto;
+    }
+
     .create_container.active,
     .notice_view_container.active,
     .modify_container.active,
-    .report_view_container.active {
+    .report_view_container.active,
+    .member_activity_log_modal.active {
 			visibility: visible;
 			opacity: 1;
 			transform: translate(-50%, -50%);
@@ -632,7 +639,8 @@
     .notice_view_overlay,
     .notice_create_overlay,
     .notice_modify_overlay,
-    .report_view_overlay  {
+    .report_view_overlay,
+    .member_activity_log_overlay  {
       background-color: #47474754;
       position: fixed;
       width: 100%;
@@ -648,7 +656,8 @@
     .notice_view_overlay.active,
     .notice_create_overlay.active,
     .notice_modify_overlay.active,
-    .report_view_overlay.active {
+    .report_view_overlay.active,
+    .member_activity_log_overlay.active {
       opacity: 1;
       pointer-events: all;
     }
@@ -656,7 +665,8 @@
     .btn-close,
     .notice_btn-close,
     .notice_modify_btn-close,
-    .report_close_btn {
+    .report_close_btn,
+    .member_activity_log_close_btn {
         position: absolute;
         top: 6px;
         right: 10px;
@@ -669,7 +679,8 @@
     .btn-close:hover,
     .notice_btn-close:hover,
     .notice_modify_btn-close:hover,
-    .report_close_btn:hover {
+    .report_close_btn:hover
+    .member_activity_log_close_btn:hover {
         color: #191919;
     }
 
@@ -686,6 +697,33 @@
         padding: 0 15px;
         outline: none;
         color: #333;
+    }
+
+    .member_activity_log_wrap h1 {
+      margin-bottom: 15px;
+    }
+
+    .member_activity_log_head,
+    .activity_content {
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 10px;
+    }
+
+    .member_activity_log_head div:first-child,
+    .activity_content div:first-child {
+      width: 180px;
+      text-align: center;
+    }
+
+    .member_activity_log_head div:last-child,
+    .activity_content div:last-child {
+      width: 80px;
+      text-align: center;
+    }
+
+    .activity_content a {
+      color: #4052f7;
     }
 
     #noticeContent,
@@ -916,6 +954,20 @@
       </div>
     </div>
   </div>
+
+  <!-- 회원 티어 승급 활동 내역 조회 모달 -->
+  <div class="member_activity_log_modal">
+    <div class="member_activity_log_close_btn">&times;</div>
+    <div class="member_activity_log_wrap">
+      <h1>멤버 활동 내역 조회</h1>
+      <div class="member_activity_log_head">
+        <div>게시글 번호</div>
+        <div>활동 타입</div>
+      </div>
+      <div class="member_activity_log_content"></div>
+    </div>
+  </div>
+  <div class="member_activity_log_overlay"></div>
 
   <!-- 기업 계정 관리 모달 -->
   <div class="company_modal">
@@ -1232,7 +1284,7 @@
             <div class="member_tier_score">\${member.score}</div>
             <div class="current_tier">\${member.tierVO.tierName}</div>
             <div class="next_tier">\${member.tierVOTemp.tierNameTemp}</div>
-            <button class="admin_member_tier_log_btn">활동내역</button>
+            <button class="admin_member_tier_log_btn" data-email="\${member.memberEmail}">활동내역</button>
             <button class="admin_member_tier_upgrade_access_btn" data-email="\${member.memberEmail}" data-tier-id="\${member.tierVO.tierId}">승인</button>
             <button class="admin_member_tier_upgrade_deny_btn" data-email="\${member.memberEmail}" data-tier-id="\${member.tierVO.tierId}">거절</button>
           </div>
@@ -1307,6 +1359,33 @@
         }
       })
     }
+  })
+
+  // 일반 회원 승급 활동 내역 조회
+  $(document).on('click', '.admin_member_tier_log_btn', function() {
+    let email = $(this).data('email')
+    $.get(`/admin/management/tier/log/\${email}`, function(response) {
+
+      for (let i = 0; i < response.length; i++) {
+        let activity = response[i]
+        let postId = activity.GENERAL_POST_ID
+
+        let tierActivityLogTemplate = `
+          <div class="activity_content">
+            <div><a href="/freeboard/view/\${postId}" target="_blank">\${postId}</a></div>
+            <div>\${activity.TYPE}</>
+          </div>`
+        
+        tierActivityLogTemplateDom = $(tierActivityLogTemplate)
+        $('.member_activity_log_modal').find('.member_activity_log_content').append(tierActivityLogTemplateDom)
+
+        $('.member_activity_log_modal, .member_activity_log_overlay').addClass('active')
+
+        $('.member_activity_log_close_btn, .member_activity_log_overlay').click(function() {
+          $('.member_activity_log_modal, .member_activity_log_overlay').removeClass('active')
+        })
+      }
+    })
   })
 
   // 일반 회원 승급 승인 처리

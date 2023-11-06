@@ -95,12 +95,13 @@
   }
 
   .desc-header > div:first-child {
-    font-size: 14pt;
+    font-size: 12pt;
     border-left: 10px solid crimson;
     padding: 10px;
   }
 
   .desc-header .admin_company_search_wrap .admin_company_member_input,
+  .admin_general_member_input,
   .admin_notice_input,
   .admin_report_input {
     outline: none;
@@ -111,6 +112,7 @@
   } 
 
   .desc-header .admin_company_search_wrap .admin_company_member_search,
+  .admin_general_member_search,
   .admin_notice_search,
   .admin_report_search {
     border: #e07272;
@@ -121,11 +123,34 @@
     margin-left: 10px;
   }
 
+  .desc-header_left {
+    display: flex;
+    align-items: center;
+  }
+
+  .desc-header_left .admin_member_manage_toggle_wrap {
+    margin-left: 10px;
+  }
+
+  .desc-header_left .admin_member_manage_toggle_wrap button {
+    background-color: #ebd9d9;
+    color: #e05454;
+    border: #e07272;
+    padding: 5px;
+    font-size: 10pt;
+  }
+  
+  .desc-header_left .admin_member_manage_toggle_wrap button.selected {
+    color: #eee;
+    background-color: #f12e2e;
+  }
+
   .desc-header .notice_crud {
     display: flex;
   }
 
-  .member_container,
+  .member_container.selected,
+  .tier_management_head.selected,
   .company_container,
   .notice_container,
   .report_container {
@@ -137,22 +162,81 @@
     margin-bottom: 5px;
   }
 
+  .member_container,
+  .tier_management_head {
+    display: none;
+  }
+
+  .personal_modal .profile_group_title, 
   .personal_modal .profile_group {
     display: grid;
-    grid-template-columns: 45px 350px 80px 140px;
+    grid-template-columns: 50px 750px 80px 80px 80px;
     align-items: center;
+    margin-bottom: 10px;
   }
 
   .personal_modal .profile_group_title {
-    display: grid;
-    grid-template-columns: 45px 350px 80px 140px;
-    align-items: center;
     color: #888;
+  }
+
+  .personal_modal .profile_group_title * {
+    text-align: center;
+  }
+
+  .personal_modal .profile_tier_group_title,
+  .personal_modal .profile_tier_group {
+    display: grid;
+    grid-template-columns: 30px 650px 50px 90px 90px 80px 60px 60px;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .personal_modal .profile_tier_group_title {
+    text-align: center;
+  }
+
+  .personal_modal .profile_tier_group_title * {
+    text-align: center;
+  }
+
+  .member_container_body .member_info {
+    margin-left: 15px;
+    font-weight: bold;
+    font-size: 11pt;
+  }
+
+  .member_container_body .tier {
+    font-size: 10pt;
+    text-align: center;
   }
 
   .personal_modal .admin_anchor {
     color: #191919;
     text-decoration: none;
+  }
+
+  .member_container_body .admin_member_warn_btn,
+  .member_container_body .general_member_withdraw_btn {
+    width: 70%;
+    padding: 5px 10px;
+    margin: 0 auto;
+  }
+
+  .member_container_body .general_member_withdraw_btn {
+    background-color: #ccc;
+    color: #eee;
+  }
+
+  .tier_management_body .member_info {
+    font-weight: bold;
+  }
+
+  .tier_management_body .tier_management_body,
+  .tier_management_body .member_tier_score,
+  .tier_management_body .current_tier,
+  .tier_management_body .next_tier {
+    text-align: center;
+    font-size: 10pt;
   }
   
   .company_modal {
@@ -254,17 +338,11 @@
   }
 
   .profile_group > img {
-    margin-right: 15px;
+    margin: 0 10px;
     width: 30px;
     height: 30px;
   }
 
-  .profile_group .tier,
-  .profile_group_title .tier,
-  .profile_group_title .withdraw_txt {
-    margin-left: 20px;
-    text-align: center;
-  }
 
   .report_title,
   .report_list_group {
@@ -493,7 +571,8 @@
     .create_container,
     .notice_view_container,
     .modify_container,
-    .report_view_container {
+    .report_view_container,
+    .member_activity_log_modal {
         visibility: hidden;
         position: fixed;
         top: 50%;
@@ -511,10 +590,16 @@
         transition: 0.5s;
     }
 
+    .member_activity_log_modal {
+      height: 700px;
+      overflow: auto;
+    }
+
     .create_container.active,
     .notice_view_container.active,
     .modify_container.active,
-    .report_view_container.active {
+    .report_view_container.active,
+    .member_activity_log_modal.active {
 			visibility: visible;
 			opacity: 1;
 			transform: translate(-50%, -50%);
@@ -542,7 +627,8 @@
     .notice_view_overlay,
     .notice_create_overlay,
     .notice_modify_overlay,
-    .report_view_overlay  {
+    .report_view_overlay,
+    .member_activity_log_overlay  {
       background-color: #47474754;
       position: fixed;
       width: 100%;
@@ -558,7 +644,8 @@
     .notice_view_overlay.active,
     .notice_create_overlay.active,
     .notice_modify_overlay.active,
-    .report_view_overlay.active {
+    .report_view_overlay.active,
+    .member_activity_log_overlay.active {
       opacity: 1;
       pointer-events: all;
     }
@@ -566,7 +653,8 @@
     .btn-close,
     .notice_btn-close,
     .notice_modify_btn-close,
-    .report_close_btn {
+    .report_close_btn,
+    .member_activity_log_close_btn {
         position: absolute;
         top: 6px;
         right: 10px;
@@ -579,7 +667,8 @@
     .btn-close:hover,
     .notice_btn-close:hover,
     .notice_modify_btn-close:hover,
-    .report_close_btn:hover {
+    .report_close_btn:hover
+    .member_activity_log_close_btn:hover {
         color: #191919;
     }
 
@@ -596,6 +685,33 @@
         padding: 0 15px;
         outline: none;
         color: #333;
+    }
+
+    .member_activity_log_wrap h1 {
+      margin-bottom: 15px;
+    }
+
+    .member_activity_log_head,
+    .activity_content {
+      display: flex;
+      justify-content: space-around;
+      margin-bottom: 10px;
+    }
+
+    .member_activity_log_head div:first-child,
+    .activity_content div:first-child {
+      width: 180px;
+      text-align: center;
+    }
+
+    .member_activity_log_head div:last-child,
+    .activity_content div:last-child {
+      width: 80px;
+      text-align: center;
+    }
+
+    .activity_content a {
+      color: #4052f7;
     }
 
     #noticeContent,
@@ -784,19 +900,41 @@
     <div class="personal_modal_content">
       <div class="desc">
         <div class="desc-header">
-          <div>일반 회원 명단</div>
-          <div class="admin_company_search_wrap">
+          <div class="desc-header_left">
+            <div>일반 회원 명단</div>
+            <div class="admin_member_manage_toggle_wrap">
+              <button class="admin_general_mode selected">일반조회</button>
+              <button class="admin_tier_mode">티어관리</button>
+            </div>
+          </div>
+          <div class="admin_general_member_search_wrap">
             <input class="admin_general_member_input" type="text" placeholder="홍길동"/>
             <button class="admin_general_member_search">검색</button>
           </div>
         </div>
         <button class="btn-close">&times;</button>
         <div class="desc-title">
-          <div class="member_container">
+          <!-- 일반 조회 시 -->
+          <div class="member_container selected">
             <div class="profile_group_title">
-              <span>이미지</span> <div class="member_info" style="text-align: center;">회원 정보</div><div class=tier>티어</div><div class="withdraw_txt">탈퇴</div>
-              <div class="btn_group">
-              </div>
+              <span>이미지</span>
+              <div class="member_info">회원 정보</div>
+              <div class="tier">티어</div>
+              <div class="admin_member_warn_title">경고</div>
+              <div class="admin_member_withdraw_title">탈퇴</div>
+            </div>
+          </div>
+          <!-- 티어 조회 시 -->
+          <div class="tier_management_head">
+            <div class="profile_tier_group_title">
+              <span>번호</span>
+              <div class="member_info">회원 이메일</div>
+              <div class="member_tier_score_title">점수</div>
+              <div class="current_tier_title">현재 티어</div>
+              <div class="next_tier_title">다음 티어</div>
+              <div class="admin_member_tier_log_btn_title">활동내역</div>
+              <div class="admin_member_tier_upgrade_access_btn_title">승인</div>
+              <div class="admin_member_tier_upgrade_deny_btn_title">거절</div>
             </div>
           </div>
         </div>
@@ -804,6 +942,20 @@
       </div>
     </div>
   </div>
+
+  <!-- 회원 티어 승급 활동 내역 조회 모달 -->
+  <div class="member_activity_log_modal">
+    <div class="member_activity_log_close_btn">&times;</div>
+    <div class="member_activity_log_wrap">
+      <h1>멤버 활동 내역 조회</h1>
+      <div class="member_activity_log_head">
+        <div>게시글 번호</div>
+        <div>활동 타입</div>
+      </div>
+      <div class="member_activity_log_content"></div>
+    </div>
+  </div>
+  <div class="member_activity_log_overlay"></div>
 
   <!-- 기업 계정 관리 모달 -->
   <div class="company_modal">
@@ -1077,37 +1229,108 @@
     $('.personal_modal').find('.desc-content').empty()
     $.get('/home/admin/person', function(response) {
       for (let i = 0; i < response.length; i++) {
+        let tier = ''
         let member = response[i]
-        generalMemberTemplate = 
-          `<div class="member_container">
-              <div class="profile_group">
-              <img src="\${member.profilePic}" alt="."><div class="member_info"><a href="/memberinfo/view/\${member.email}" target="_blank" class="admin_anchor">\${member.nickname}(\${member.email})</a></div><div class=tier>\${member.generalMemberVO.tierId}</div>
-              <div class="btn_group">
-                  <button>경고</button>
-                  <button class="general_member_withdraw_btn" id="\${member.email}">탈퇴</button>
-              </div>
-              </div>
-          </div>`
-        generalMemberTemplateDom = $(generalMemberTemplate)
         
-        if (member.nickname.includes(val) || member.email.includes(val)) {
-          $('.personal_modal').find('.desc-content').append(generalMemberTemplateDom)
-        }
+        // 멤버 티어 get
+        $.get(`/admin/member/tier/\${member.email}`, function(tier_response) {
+          tier = tier_response.tierName
+          
+          generalMemberTemplate = 
+            `<div class="member_container_body">
+              <div class="profile_group">
+                <img src="\${member.profilePic}" alt=".">
+                <div class="member_info"><a href="/memberinfo/view/\${member.email}" target="_blank" class="admin_anchor">\${member.nickname}(\${member.email})</a></div>
+                <div class="tier">\${tier}</div>
+                <button class="admin_member_warn_btn">경고</button>
+                <button class="general_member_withdraw_btn" id="\${member.email}">탈퇴</button>
+              </div>
+            </div>`
+          generalMemberTemplateDom = $(generalMemberTemplate)
+          
+          if (member.nickname.includes(val) || member.email.includes(val)) {
+            $('.personal_modal').find('.desc-content').append(generalMemberTemplateDom)
+          }
+        })
       }
     })
   }
   loadGeneralTypeMember()
 
+  // 회원 티어 관리 모드 조회
+  function loadMemberTierManagement(val = '') {
+    $.get('/admin/management/tier', function(response) {
+      $('.personal_modal').find('.desc-content').empty()
+
+      for (let i = 0; i < response.length; i++) {
+        let member = response[i]
+        let tierManagementTemplate = `
+        <div class="tier_management_body">
+          <div class="profile_tier_group">
+            <div class="tier_row_num">\${response.length - i}</div>
+            <div class="member_info"><a href="/memberinfo/view/\${member.memberEmail}" target="_blank" class="admin_anchor">\${member.memberEmail}</a></div>
+            <div class="member_tier_score">\${member.score}</div>
+            <div class="current_tier">\${member.tierVO.tierName}</div>
+            <div class="next_tier">\${member.tierVOTemp.tierNameTemp}</div>
+            <button class="admin_member_tier_log_btn" data-email="\${member.memberEmail}">활동내역</button>
+            <button class="admin_member_tier_upgrade_access_btn" data-email="\${member.memberEmail}" data-tier-id="\${member.tierVO.tierId}">승인</button>
+            <button class="admin_member_tier_upgrade_deny_btn" data-email="\${member.memberEmail}" data-tier-id="\${member.tierVO.tierId}">거절</button>
+          </div>
+        </div>`
+
+        let tierManagementTemplateDom = $(tierManagementTemplate)
+
+        if (member.memberEmail.includes(val)) {
+          $('.personal_modal').find('.desc-content').append(tierManagementTemplateDom)
+        }
+      }
+    })
+  }
+
+  // 일반 회원 관리 모드 변경
+  $('.admin_general_mode').click(function() {
+    $('.admin_general_mode').addClass('selected')
+    $('.member_container').addClass('selected')
+    $('.admin_tier_mode').removeClass('selected')
+    $('.tier_management_head').removeClass('selected')
+    loadGeneralTypeMember()
+  })
+
+  $('.admin_tier_mode').click(function() {
+    $('.admin_tier_mode').addClass('selected')
+    $('.tier_management_head').addClass('selected')
+    $('.admin_general_mode').removeClass('selected')
+    $('.member_container').removeClass('selected')
+    loadMemberTierManagement()
+  })
+
   // 일반 회원 검색
   $('.admin_general_member_search').click(function() {
-    let val = $('.admin_general_member_input').val()
-    loadGeneralTypeMember(val)
+    if ($('.personal_modal').find('.admin_general_mode').hasClass('selected')) {
+      let val = $('.admin_general_member_input').val()
+      loadGeneralTypeMember(val)
+    }
+    else if ($('.personal_modal').find('.admin_tier_mode').hasClass('selected')) {
+      let val = $('.admin_general_member_input').val()
+      loadMemberTierManagement(val)
+    }
   })
 
   $('.admin_general_member_input').keyup(function(e) {
-    if (e.key === 'Enter') {
+    if ($('.personal_modal').find('.admin_general_mode').hasClass('selected') && e.key === 'Enter') {
       let val = $('.admin_general_member_input').val()
       loadGeneralTypeMember(val)
+    }
+    else if ($('.personal_modal').find('.admin_tier_mode').hasClass('selected') && e.key === 'Enter') {
+      let val = $('.admin_general_member_input').val()
+      loadMemberTierManagement(val)
+    }
+  })
+
+  // 일반 회원 경고 조치
+  $(document).on('click', '.admin_member_warn_btn', function() {
+    if (confirm('정말 경고를 주시겠습니까?')) {
+      alert('경고 조치 하였습니다.')
     }
   })
 
@@ -1123,6 +1346,63 @@
           loadGeneralTypeMember()
         }
       })
+    }
+  })
+
+  // 일반 회원 승급 활동 내역 조회
+  $(document).on('click', '.admin_member_tier_log_btn', function() {
+    let email = $(this).data('email')
+    $.get(`/admin/management/tier/log/\${email}`, function(response) {
+
+      for (let i = 0; i < response.length; i++) {
+        let activity = response[i]
+        let postId = activity.GENERAL_POST_ID
+
+        let tierActivityLogTemplate = `
+          <div class="activity_content">
+            <div><a href="/freeboard/view/\${postId}" target="_blank">\${postId}</a></div>
+            <div>\${activity.TYPE}</>
+          </div>`
+        
+        tierActivityLogTemplateDom = $(tierActivityLogTemplate)
+        $('.member_activity_log_modal').find('.member_activity_log_content').append(tierActivityLogTemplateDom)
+
+        $('.member_activity_log_modal, .member_activity_log_overlay').addClass('active')
+
+        $('.member_activity_log_close_btn, .member_activity_log_overlay').click(function() {
+          $('.member_activity_log_modal, .member_activity_log_overlay').removeClass('active')
+        })
+      }
+    })
+  })
+
+  // 일반 회원 승급 승인 처리
+  $(document).on('click', '.admin_member_tier_upgrade_access_btn', function() {
+    let body = {
+      memberEmail: $(this).data('email'),
+      tierId: $(this).data('tier-id'),
+    }
+
+    if (confirm('정말 승인 하시겠습니까?')) {
+      $.post('/admin/management/tier/upgrade', body, function(response) {
+
+        if (response.result === 'success') {
+          alert('승급 처리 하였습니다.')
+          loadMemberTierManagement()
+        }
+        else {
+          alert('처리하지 못했습니다. 왜 일까요?')
+        }
+      })
+    }
+  })
+
+  // 일반 회원 승급 거절 처리
+  $(document).on('click', '.admin_member_tier_upgrade_deny_btn', function() {
+
+    if (confirm('정말 거절 하시겠습니까?')) {
+      alert('거절 처리 하였습니다.')
+      loadMemberTierManagement()
     }
   })
 
@@ -1697,22 +1977,7 @@
   // 달력 포맷
   flatpickr.localize(flatpickr.l10ns.ko);
 
-  $('.dateSelector1').flatpickr({
-      minDate: 'today',
-      local: 'ko'
-  })
-
-  $('.dateSelector2').flatpickr({
-      minDate: 'today',
-      local: 'ko'
-  })
-
-  $('.modify_dateSelector1').flatpickr({
-      minDate: 'today',
-      local: 'ko'
-  })
-
-  $('.modify_dateSelector2').flatpickr({
+  $('.dateSelector1, .dateSelector2, .modify_dateSelector1, .modify_dateSelector2').flatpickr({
       minDate: 'today',
       local: 'ko'
   })
