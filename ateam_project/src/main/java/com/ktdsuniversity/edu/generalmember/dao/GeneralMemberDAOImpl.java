@@ -7,6 +7,7 @@
 package com.ktdsuniversity.edu.generalmember.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
@@ -18,7 +19,6 @@ import com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO;
 import com.ktdsuniversity.edu.education.vo.EducationVO;
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
-import com.ktdsuniversity.edu.techstack.vo.TechstackVO;
 
 
 @Repository
@@ -96,6 +96,14 @@ public class GeneralMemberDAOImpl extends SqlSessionDaoSupport implements Genera
 	@Override
 	public int updateTierDate(GeneralMemberVO generalMemberVO) {
 		return getSqlSession().update("updateTierDate", generalMemberVO);
+	}
+	@Override
+	public List<Map<String, Object>> selectMemberActivityLog(String generalMemberEmail) {
+		return getSqlSession().selectList("selectMemberActivityLog", generalMemberEmail);
+	}
+	@Override
+	public List<GeneralMemberVO> selectTopTenScoreMemberList() {
+		return getSqlSession().selectList("selectTopTenScoreMemberList");
 	}
 
 }

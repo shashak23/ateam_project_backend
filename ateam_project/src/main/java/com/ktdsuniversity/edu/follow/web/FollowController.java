@@ -32,28 +32,15 @@ public class FollowController {
 	@Autowired
 	private FollowService followService;
 	
-	// 팔로워 조회
-	@GetMapping("/member/getfollowers")
-	public Map<String, Object> getAllFollowers(@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
-		FollowListVO followListVO = followService.getAllFollower(memberVO.getEmail());
-		List<FollowVO> followerList = followListVO.getFollowList();
+	// 알수도 있는 사람 추천 조회
+	@GetMapping("/recommend/follower/{email}")
+	public Map<String, Object> getMutualMembers(@PathVariable String email) {
+		FollowListVO followListVO = followService.getMutualMembers(email);
+		List<FollowVO> recommendList = followListVO.getFollowList();
 		
 		Map<String, Object> resultMap = new HashMap<>();
-		resultMap.put("count", followerList.size());
-		resultMap.put("followerList", followerList);
-		
-		return resultMap;
-	}
-	
-	// 팔로잉 조회
-	@GetMapping("/member/getfollowees")
-	public Map<String, Object> getAllFollowees(@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
-		FollowListVO followListVO = followService.getAllFollowee(memberVO.getEmail());
-		List<FollowVO> followeeList = followListVO.getFollowList();
-		
-		Map<String, Object> resultMap = new HashMap<>();
-		resultMap.put("count", followeeList.size());
-		resultMap.put("followeeList", followeeList);
+		resultMap.put("count", recommendList.size());
+		resultMap.put("recommendList", recommendList);
 		
 		return resultMap;
 	}
@@ -95,11 +82,9 @@ public class FollowController {
 		searchFollowVO.setFollowerEmail(followVO.getFollower());
 		searchFollowVO.setFolloweeEmail(followVO.getFollowee());
 		
-		// followService.unFollow(searchFollowVO);
-		
 		Map<String, Object> resultMap = new HashMap<>();
 
-		boolean isSuccess = followService.doFollow(followVO);
+		boolean isSuccess = followService.doFollow(followVO, searchFollowVO);
 		
 		String followId = followService.getFollowStatus(searchFollowVO).getFollowId();
 		
@@ -129,5 +114,32 @@ public class FollowController {
 		
 		return followService.getFollowStatus(searchFollowVO);
 	}
+	
+	// 팔로워 조회
+	/*
+	 * @GetMapping("/member/getfollowers") public Map<String, Object>
+	 * getAllFollowers(@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+	 * FollowListVO followListVO =
+	 * followService.getAllFollower(memberVO.getEmail()); List<FollowVO>
+	 * followerList = followListVO.getFollowList();
+	 * 
+	 * Map<String, Object> resultMap = new HashMap<>(); resultMap.put("count",
+	 * followerList.size()); resultMap.put("followerList", followerList);
+	 * 
+	 * return resultMap; }
+	 * 
+	 * // 팔로잉 조회
+	 * 
+	 * @GetMapping("/member/getfollowees") public Map<String, Object>
+	 * getAllFollowees(@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+	 * FollowListVO followListVO =
+	 * followService.getAllFollowee(memberVO.getEmail()); List<FollowVO>
+	 * followeeList = followListVO.getFollowList();
+	 * 
+	 * Map<String, Object> resultMap = new HashMap<>(); resultMap.put("count",
+	 * followeeList.size()); resultMap.put("followeeList", followeeList);
+	 * 
+	 * return resultMap; }
+	 */
 
 }

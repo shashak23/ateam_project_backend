@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="X-UA-Compatible" content="ie=edge">
+<title>CodeFlask Test Page</title>
+<script src="https://unpkg.com/codeflask/build/codeflask.min.js"></script>
+   	<style>
+    body {
+        font-family: Arial;
+        background-color: black;
+        margin: 0px;
+    }
+    
+    .test {
+        background: #eee;
+        border-radius: 5px 5px 5px 5px;
+    }
+    </style>
+</head>
+<body>
+    <div class="test" id="test">public class Solution {
+    // 메소드명은 반드시 solution 여야합니다.
+    public int solution() {
+        return 0;
+    }
+}</div>
+    <script>
+
+		function setCode(code) {
+			//document.querySelector(".codeflask textarea").value = code;
+			flask.updateCode(code);
+		}
+		
+        function getCode() {
+            return document.querySelector(".codeflask textarea").value;
+        }
+
+	    const flask = new CodeFlask('.test', {
+	        language: 'js',
+	        lineNumbers: true,
+	        areaId: 'thing1',
+	        ariaLabelledby: 'header1',
+	        handleTabs: true
+	    });
+	    flask.addLanguage("java", Prism.languages["java"]);
+	        
+	    window['flask'] = flask;
+	        
+	    const code = flask.getCode()
+	    
+    </script>
+
+</body>
+</html>

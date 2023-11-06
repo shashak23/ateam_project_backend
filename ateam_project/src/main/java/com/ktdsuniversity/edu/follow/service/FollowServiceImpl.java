@@ -4,8 +4,6 @@
  */
 package com.ktdsuniversity.edu.follow.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,7 +21,8 @@ public class FollowServiceImpl implements FollowService {
 	
 	@Transactional
 	@Override
-	public boolean doFollow(FollowVO followVO) {
+	public boolean doFollow(FollowVO followVO, SearchFollowVO searchFollowVO) {
+		followDAO.unFollow(searchFollowVO);
 		return followDAO.doFollow(followVO) > 0;
 	}
 
@@ -57,5 +56,14 @@ public class FollowServiceImpl implements FollowService {
 	public FollowVO getFollowStatus(SearchFollowVO searchFollowVO) {
 		return followDAO.getFollowStatus(searchFollowVO);
 	}
+
+	@Override
+	public FollowListVO getMutualMembers(String email) {
+		FollowListVO followListVO = new FollowListVO();
+		followListVO.setFollowList(followDAO.getMutualMembers(email));
+		return followListVO;
+	}
+	
+	
 
 }

@@ -88,9 +88,6 @@ label {
     outline: none;
 }
 
-.err_password {
-    color: var(--gray);
-}
 
 .personal_info_agree_title {
   display: block;
@@ -110,11 +107,18 @@ form .final_btn {
   text-align: center;
 }
 
-div.errors {
-  background-color: #ff00004a;
+  .email_errors
+, .pw_errors
+, .confirmpw_errors
+, .nickname_errors  
+, .err_password
+, .err_confirm_password {
   opacity: 0.8;
   padding: 10px;
-  color: #333;
+  color: red;
+  font-size: 10pt;
+  padding-left: 105px;
+  
 }
 div.errors:last-child {
   margin-bottom: 15px;
@@ -127,13 +131,7 @@ div.errors:last-child {
 </style>
 </head>
 <body>
-  <form:form method="post">
-	  <div>
-      <form:errors path="email" element="div" cssClass="errors" />
-      <form:errors path="nickname" element="div" cssClass="errors" />
-      <form:errors path="pw" element="div" cssClass="errors" />
-      <form:errors path="confirmPw" element="div" cssClass="errors" />
-    </div>	
+  <form:form modelAttribute="generalMemberVO" method="post">
     <div class="signup_container">
       <div class="signup_btn_wrap">
         <button class="personal_signup select">개인 회원가입</button>
@@ -143,20 +141,24 @@ div.errors:last-child {
         <div class="line">
           <label for="email" class="label">이메일</label>
           <input type="email" name="email" id="email" value="${memberVO.email}" />
+          <form:errors path="email" element="div" cssClass="email_errors" />
         </div>
         <div class="line">
           <label for="pw" class="label">비밀번호</label>
           <input id="pw" type="password" name="pw" value="${memberVO.pw}"/>
-          <br><span class="err_password"></span>
+           <form:errors path="pw" element="div" cssClass="pw_errors" />
+          <span class="err_password"></span>
         </div>
         <div class="line">
           <label for="confirmPw" class="label">비밀번호 확인</label>
           <input id="confirmPw" type="password" name="confirmPw" value="${memberVO.confirmPw}"/>
-          <br><span class="err_confirm_password"></span>
+          <form:errors path="confirmPw" element="div" cssClass="confirmpw_errors" />
+          <span class="err_confirm_password"></span>
         </div>
         <div class="line">
           <label for="nickname" class="label">닉네임</label>
           <input type="text" name="nickname" id="nickname" value="${memberVO.nickname}">
+          <form:errors path="nickname" element="div" cssClass="nickname_errors" />
         </div>
         <div class="line">
           <input type="checkbox" name="agree" id="agree">
@@ -234,25 +236,42 @@ $().ready(function() {
     checkAvailability("#agree", "agree");
   })
   // 비밀번호 확인 입력란의 입력 이벤트를 모니터링
-  $("#confirmPw").on("input", function() {
+   $("#confirmPw").on("input", function() {
       var pw = $("#pw").val();
       var confirmPw = $(this).val();
       var errConfirmPassword = $(".err_confirm_password");
       
-      // 비밀번호 일치 여부 확인
+      
       if (pw === confirmPw) {
-          errConfirmPassword.text(""); // 일치하면 오류 메시지를 지움
+          errConfirmPassword.text(""); 
       } else {
           errConfirmPassword.text("* 비밀번호가 일치하지 않습니다.");
       }
 
       // 비밀번호 길이 확인
-      if (pw.length >= 8 && pw.length <= 10) {
-          $(".err_password").text(""); // 길이가 8에서 10글자 사이면 오류 메시지를 지움
+      if (pw.length >= 5 && pw.length <= 10) {
+          $(".err_password").text(""); 
       } else {
-          $(".err_password").text("* 8~10글자까지만 입력 가능합니다.");
+          $(".err_password").text("* 5~10글자까지만 입력 가능합니다.");
       }
-  });
+  }); 
+	//이메일 클릭하면 이메일 오류 메시지 숨기기
+	  $("#email").click(function() {
+	      $("div.email_errors").hide();
+	  });
+	
+	  // 닉네임 클릭하면 닉네임 오류 메시지 숨기기
+	  $("#nickname").click(function() {
+	      $("div.nickname_errors").hide();
+	  });
+	
+	  // 비밀번호 클릭하면 비밀번호 오류 메시지 숨기기
+	  $("#pw").click(function() {
+	      $("div.pw_errors").hide();
+	  });
+	  $("#confirmPw").click(function() {
+	      $("div.confirmpw_errors").hide();
+	  });
 });
 
   

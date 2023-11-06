@@ -1,5 +1,9 @@
 package com.ktdsuniversity.edu.admin.web;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.ktdsuniversity.edu.admin.service.MailService;
 import com.ktdsuniversity.edu.admin.service.ReportService;
@@ -20,6 +25,8 @@ import com.ktdsuniversity.edu.admin.vo.ReportVO;
 import com.ktdsuniversity.edu.beans.FileHandler;
 import com.ktdsuniversity.edu.companymember.vo.CompanyListVO;
 import com.ktdsuniversity.edu.companymember.vo.CompanyVO;
+import com.ktdsuniversity.edu.generalmember.service.GeneralMemberService;
+import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 
 @Controller
 public class AdminController {
@@ -32,6 +39,9 @@ public class AdminController {
 	
 	@Autowired
 	private TierService tierService;
+	
+	@Autowired
+	private GeneralMemberService generalMemberService;
 	
 	@Autowired
 	private FileHandler fileHandler;
@@ -154,42 +164,85 @@ public class AdminController {
 //				.body(resource);
 	}
 	
+	
 
-	@GetMapping("/admin/report/view/{reportId}")
-	public String viewOneReport(@PathVariable String reportId,
-								Model model,
-								ReportVO reportVO) {
+//	@GetMapping("/admin/report/view/{reportId}")
+//	public String viewOneReport(@PathVariable String reportId,
+//								Model model,
+//								ReportVO reportVO) {
 //		System.out.println(reportVO.getReportDate());
-		reportVO = reportService.getSingleReport(reportId);
-		model.addAttribute("reportVO", reportVO);
-		return "report/reporthistoryview";
-	}
+//		reportVO = reportService.getSingleReport(reportId);
+//		model.addAttribute("reportVO", reportVO);
+//		return "report/reporthistoryview";
+//	}
 	
-	@Transactional
-	@PostMapping("/admin/report/view/{reportId}")
-	public String doCompleteProgressYn(@PathVariable String reportId,
-										@RequestParam String value) {
-		if (value.equals("reportHandlingStatus")) {
-			boolean doCompleteProgressYn = reportService.doCompleteProgressYn(reportId);
-			if (doCompleteProgressYn) {
-				return "redirect:/admin/report/view/" + reportId;		
-			}
-		}
-		
-		return "redirect:/admin/report/view/" + reportId;
-	}
+//	@Transactional
+//	@PostMapping("/admin/report/view/{reportId}")
+//	public String doCompleteProgressYn(@PathVariable String reportId,
+//										@RequestParam String value) {
+//		if (value.equals("reportHandlingStatus")) {
+//			boolean doCompleteProgressYn = reportService.doCompleteProgressYn(reportId);
+//			if (doCompleteProgressYn) {
+//				return "redirect:/admin/report/view/" + reportId;		
+//			}
+//		}
+//		
+//		return "redirect:/admin/report/view/" + reportId;
+//	}
 	
-	//doMemberTierUpgrade
 	@GetMapping("admin/tier")
-	public String viewMemberTierHistory(Model model) {
+	public String viewMemberTierUpgrade(Model model) {
 		AdminTierListVO adminTierListVO = tierService.getTierMemberAllList();
 		model.addAttribute("adminTierListVO", adminTierListVO);
 		return "tier/tierhistory";
 	}
 	
-	@GetMapping("/test/webide")
-	public String webIdeTest() {
-		return "temp/webidetest";
+	@PostMapping("admin/tier")
+	public String updateTierMember(Model model,
+									@RequestParam String memberEmail,
+									@RequestParam String tierId,
+									GeneralMemberVO generalMemberVO) {
+		
+		generalMemberVO.setGeneralMemberEmail(memberEmail);
+		generalMemberVO.setTierId(tierId);
+		tierService.doUpdateTierMember(generalMemberVO);
+		return "redirect:/admin/tier";
 	}
+	
+//	@PostMapping("admin/tier/view")
+//	public ModelAndView viewMemberActivityLogPost(String memberEmail) {
+//		ModelAndView modelAndView = new ModelAndView();
+//		//List<Map<String, Object>> generalMemberListVO = generalMemberService.getSelectMemberActivityLog(memberEmail);
+//		modelAndView.addObject("memberEmail", memberEmail);
+//		//modelAndView.addObject("generalMemberListVO" , generalMemberListVO);
+//		modelAndView.setViewName("tier/tierhistoryview");
+//		return modelAndView;
+//	}
 
+//	@GetMapping("admin/tier/view/{memberEmail}")
+//	public ModelAndView viewMemberActivityLog(@PathVariable String memberEmail) {
+//		ModelAndView modelAndView = new ModelAndView();
+//		List<Map<String, Object>> generalMemberListVO = generalMemberService.getSelectMemberActivityLog(memberEmail);
+////		modelAndView.addObject("memberEmail", memberEmail);
+//		modelAndView.addObject("generalMemberListVO", generalMemberListVO);
+//		modelAndView.setViewName("tier/tierhistoryview");
+//		
+//		return modelAndView;
+//	}
+	
+	@GetMapping("admin/tier/view/{memberEmail}")
+	public String viewOneMemberActivityLog(@PathVariable String memberEmail,
+														Model model) {
+//		List<GeneralMemberVO> generalMemberListVO = generalMemberService.getSelectMemberActivityLog(memberEmail);
+//		model.addAttribute("generalMemberListVO", generalMemberListVO);
+//		return "tier/tierhistoryview";
+		
+		//Map<String, Object> resultMap = new HashMap<>();
+		List<Map<String, Object>> generalMemberListVO = generalMemberService.getSelectMemberActivityLog(memberEmail);
+		//resultMap.put("result", generalMemberListVO);
+		
+		model.addAttribute("generalMemberListVO", generalMemberListVO);
+		return "tier/tierhistoryview";
+	}
+	
 }

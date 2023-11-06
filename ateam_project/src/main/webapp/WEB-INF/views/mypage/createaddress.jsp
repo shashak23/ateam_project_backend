@@ -51,15 +51,30 @@
         }).open();
     }
 </script>
+<script src="/js/lib/jquery-3.7.1.js"></script>
+<script type="text/javascript">
+$().ready(function() {
+	 $("#region_button").click(function() {
+ 	      $(".region_errors").hide();
+ 	  	 });
+});
+</script>
+
+<style type="text/css">
+.region_errors {
+	opacity: 0.8;
+	padding: 10px;
+	color: red;
+	font-size: 10pt;
+}
+</style>
 </head>
 <form:form modelAttribute="generalMemberVO" method="post" action="/memberInfo/modify/create-location">
 	<input type="hidden" name="generalMemberEmail" value="${generalMemberVO.generalMemberEmail }"/>
 <input type="text" id="sample6_postcode" placeholder="우편번호" readonly>
-<input type="button" onclick="sample6_execDaumPostcode()" value="우편번호 찾기" ><br>
+<input type="button" onclick="sample6_execDaumPostcode()" id="region_button" value="우편번호 찾기" ><br>
 <input type="text" id="region" name ="region" placeholder="주소" readonly ><br>
-<div>
-	<form:errors path="region" element="div" cssClass="errors" />
-</div>
+	<form:errors path="region" element="div" cssClass="region_errors" />
 <input type="submit" value="작성" />
 </form:form>
 </body>

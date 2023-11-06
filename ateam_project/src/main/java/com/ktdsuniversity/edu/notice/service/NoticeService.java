@@ -15,6 +15,7 @@ public interface NoticeService {
 	public NoticeListVO getInvalidateList();
 	public NoticeListVO getDeleteList();
 	public NoticeVO getOneNotice(String id);
+	public NoticeVO getRandomNotice();
 	public boolean createNotice(NoticeVO noticeVO);
 	public boolean updateNotice(NoticeVO noticeVO);
 	public boolean deleteNotice(String id);

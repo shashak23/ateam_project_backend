@@ -106,13 +106,15 @@ public class NoticeController {
 	
 	@PostMapping("/notice/modify")
 	public ModelAndView doModifyNotice(@ModelAttribute NoticeVO noticeVO) {
+		XssIgnoreUtil.ignore(noticeVO);
+
 		System.out.println("아이디: " + noticeVO.getPostTitle());
 		
 		ModelAndView mav = new ModelAndView();
 		boolean isSuccess = noticeService.updateNotice(noticeVO);
 		
 		if (isSuccess) {
-			mav.setViewName("redirect:/notice/list");
+			mav.setViewName("redirect:/home/admin");
 			return mav;
 		}
 		else {
@@ -186,5 +188,11 @@ public class NoticeController {
 //		XssIgnoreUtil.ignore(noticeVO);
 		
 		return noticeVO;
+	}
+	
+	@ResponseBody
+	@GetMapping("/notice/random")
+	public NoticeVO getRandomNotice() {
+		return noticeService.getRandomNotice();
 	}
 }

@@ -165,28 +165,73 @@ body {
   margin: 20px 0;
 }
 
-.button_container > button {
-  margin: 0px 20px;
+.button_container > a:first-child {
+  display: block;
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  border: 0px;
-  font-weight: bold;
-}
-
-.button_container > button:first-child {
   background-color: #F7E600;
-  color: #3A1D1D; 
+  position: relative;
+  margin-right: 20px;
 }
 
-.button_container > button:nth-child(2) {
-  background-color: #1EC800;
-  color: #333; 
+.button_container > a:first-child > .kakao_img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background-image: url("https://developers.kakao.com/tool/resource/static/img/button/login/simple/ko/kakao_login_large.png") ;
+  background-size: 300%;
+  background-repeat: no-repeat;
+  background-position: -10px -10px;
+  position: absolute;
+  top: 3px;
+  left: 1px;
 }
 
-.button_container > button:last-child {
-  background-color: #EA4335;
-  color: #333; 
+.button_container > a:nth-child(2) {
+  display: block;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #03c75a;
+  position: relative;
+  margin-right: 20px;
+}
+
+.button_container > a:nth-child(2) > .naver_img {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background-image: url("/images/naverimg.png") ;
+  background-size: 150%;
+  background-repeat: no-repeat;
+  background-position: -10px -10px;
+  position: absolute;
+  top: 6px;
+  left: 6px;
+}
+
+.button_container > a:last-child {
+  display: block;
+  width: 60px;
+  height: 60px;
+  border: 1px solid #8e8e8e;
+  border-radius: 50%;
+  position: relative;
+  margin-right: 20px;
+}
+
+.button_container > a:last-child > .google_img {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-image: url("/images/Google__G__Logo.svg.png") ;
+  background-size: 90%;
+  background-repeat: no-repeat;
+  background-position: 2px 2px;
+  position: absolute;
+  top: 7px;
+  left: 7px;
 }
 
 .signup_container {
@@ -234,6 +279,9 @@ text-align: center;
 color: var(--red);
 
 }
+.button_container a:nth-child(2) >img {
+	width: 63px;
+}
 </style>
 </head>
 <body>
@@ -274,12 +322,19 @@ color: var(--red);
         <div class="line"></div>
       </div>
       <div class="button_container tab_content" id="tab1">
-        <button>
-          <a class="p-2" href="https://kauth.kakao.com/oauth/authorize?client_id=2a9927f831835710fa3d3d37b078389c&redirect_uri=http://localhost:8080/member/kakaoLogin&response_type=code">
-             카카오톡
-        </a></button>
-        <a href="https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=ePAK2QDzEMghBxsqTuce&state=STATE_STRING&redirect_uri=http://localhost:8080/member/naverLogin">네이버</a>
-        <button class="not_btn">구글</button>
+        <a class="p-2" href="https://kauth.kakao.com/oauth/authorize?client_id=2a9927f831835710fa3d3d37b078389c&redirect_uri=http://localhost:8080/member/kakaoLogin&response_type=code">
+          <div class="kakao_img"></div>
+          <!-- <img src="https://developers.kakao.com/tool/resource/static/img/button/login/simple/ko/kakao_login_large.png"> -->
+        </a>
+        <a href="https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=ePAK2QDzEMghBxsqTuce&state=STATE_STRING&redirect_uri=http://localhost:8080/member/naverLogin">
+          <div class="naver_img"></div>
+       		<!-- <img src="../images/naverimg.png"> -->
+        </a>
+        <a href="https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=595210277098-t430mu7sj0n7dkl8ji1usbuke043tgvv.apps.googleusercontent.com&redirect_uri=http://localhost:8080/member/googleLogin&scope=email profile">
+          <div class="google_img"></div>
+        	<!-- <img src="/images/Google__G__Logo.svg.png"> -->
+        	<!-- <img src="../images/naverimg.png"> -->
+        </a>
       </div>
       <div class="message tab_content" id="tab2">
         기업회원으로 가입하시면 다양한<br> 혜택을 이용하실 수 있습니다.

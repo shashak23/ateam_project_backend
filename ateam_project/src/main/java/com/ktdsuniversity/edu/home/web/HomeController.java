@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -211,6 +210,74 @@ public class HomeController {
 		
 		return homeBoardService.getHashtag(postId);
 	}
+	
+	// 자유 게시글 작성
+	@ResponseBody
+	@PostMapping("/home/create/freeboard")
+	public Map<String, Object> createOneFreeboard(@ModelAttribute GeneralPostVO generalPostVO) {
+		XssIgnoreUtil.ignore(generalPostVO);
+		
+		System.out.println("1. " + generalPostVO.getPostWriter());
+		System.out.println("2. " + generalPostVO.getPostTitle());
+		System.out.println("3. " + generalPostVO.getPostContent());
+		
+		Map<String, Object> resultSet = new HashMap<>();
+		boolean isSuccess = homeBoardService.freeboardCreateByMain(generalPostVO);
+		
+		if (isSuccess) {
+			resultSet.put("result", "success");
+			return resultSet;
+		}
+		else {
+			resultSet.put("result", "fail");
+			return resultSet;
+		}
+	}
+	
+	// 질답 게시글 작성
+	@ResponseBody
+	@PostMapping("/home/create/qnaboard")
+	public Map<String, Object> createOneQnaboard(@ModelAttribute GeneralPostVO generalPostVO) {
+		XssIgnoreUtil.ignore(generalPostVO);
+		
+		Map<String, Object> resultSet = new HashMap<>();
+		boolean isSuccess = homeBoardService.qnaboardCreateByMain(generalPostVO);
+		
+		if (isSuccess) {
+			resultSet.put("result", "success");
+			return resultSet;
+		}
+		else {
+			resultSet.put("result", "fail");
+			return resultSet;
+		}
+	}
+	
+	// 신고 상세 조회
+	@ResponseBody
+	@GetMapping("/admin/report/view/{reportId}")
+	public ReportVO getOneReport(@PathVariable String reportId) {
+		return reportService.getSingleReport(reportId);
+	}
+	
+	// 신고 완료 처리
+	@ResponseBody
+	@GetMapping("/admin/report/progress/{reportId}")
+	public Map<String, Object> doCompleteReportProgress(@PathVariable String reportId) {
+		Map<String, Object> resultSet = new HashMap<>();
+		
+		boolean isSuccess = reportService.doCompleteProgressYn(reportId);
+		
+		if (isSuccess) {
+			resultSet.put("result", "success");
+			return resultSet;
+		}
+		else {			
+			resultSet.put("result", "fail");
+			return resultSet;
+		}
+	}
+	
 	
 	@GetMapping("/home/search")
 	public String searchAllBoardList(@ModelAttribute AbstractSearchVO abstractSearchVO, Model model) {

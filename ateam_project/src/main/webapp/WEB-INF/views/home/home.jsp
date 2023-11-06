@@ -7,6 +7,11 @@
 
 
 <jsp:include page="../layout/header.jsp" />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<script src="https://npmcdn.com/flatpickr/dist/flatpickr.min.js"></script>
+<script src="https://npmcdn.com/flatpickr/dist/l10n/ko.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/super-build/ckeditor.js"></script>
 <c:choose>
   <c:when test="${sessionScope._LOGIN_USER_.memberType eq 'ADMIN'}">
     <jsp:include page="./admin_ui.jsp" />
@@ -14,6 +19,12 @@
 </c:choose>
 
 <style>
+  .admin_container {
+    position: fixed;
+    top: 170px;
+    left: 50px;
+  }
+  
   /* 메인 컨텐츠 영역 */
 	.body_container {
 		width: 1140px;
@@ -43,12 +54,14 @@
 	.body_left .home_edit_container .text_area {
 		/* position: sticky; */
 		top: 100px;
-		z-index: 10;
 		width: 670px;
 		height: 80px;
 		border: 1px solid var(--gray);
 		border-radius: 5px;
 		margin-right: 10px;
+    padding: 10px;
+    font-size: var(--font-small);
+    color: var(--gray);
 	}
 
 	.body_left .home_edit_container .edit_btn {
@@ -317,14 +330,290 @@
     box-shadow: 0 0 2px var(--dark-gray);
     cursor: pointer;
   }
+  .recommend_container {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--light-gray);
+    border-radius: 10px;
+  }
+
+  .recommend_container:hover, .member_profile:hover {
+    box-shadow: 0 0 8px var(--gray);
+  }
+
+  .title {
+      font-weight: bold;
+  }
+
+  .member_info_area {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      column-gap: 10px;
+      margin: 10px;
+  }
+/* 
+  .member_info_area {
+    display: flex;
+    justify-content: space-evenly;
+      margin: 10px;
+  } */
+
+  .member_profile{
+      display: flex;
+      flex-direction: column;
+      border: 1px solid var(--light-gray);
+      border-radius: 10px;
+      align-items: center;
+      margin: 5px;
+      padding: 10px;
+  }
+
+  .member_profile > button {
+      width: 120px;
+      color: var(--blue);
+      background-color: var(--light-gray);
+  }
+
+  .member_profile > img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .rand_notice_container {
+    visibility: hidden;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -80%);
+    z-index: 10;
+    box-shadow: 0 0 10px #19191948;
+    border: 1px solid;
+    width: 500px;
+    padding: 30px;
+    opacity: 0;
+    border: none;
+    border-radius: 5px;
+    background-color: #ffffff;
+    transition: 0.5s;
+  }
+
+  .rand_notice_container.active {
+    visibility: visible;
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+
+  .create_container > * {
+			margin-bottom: 10px;
+	}
+
+  .post_title_label,
+	.post_content_label {
+		color: gray;
+		display: block;
+		margin-bottom: 10px;
+		font-size: 10pt;
+	}
+
+  .rand_notice_close_btn {
+    position: absolute;
+    top: 6px;
+    right: 10px;
+    background-color: transparent;
+    font-size: 18px;
+    color: #888;
+    cursor: pointer;
+	}
+
+  .rand_notice_close_btn {
+    color: #191919;
+  }
+
+  .create_title {
+			text-align: center;
+	}
+
+  .title_area,
+  .content_area {
+    margin-bottom: 15px;
+  }
+
+  .post_title_label + div {
+    font-weight: bold;
+  }
+
+  .rand_notice_overlay {
+		background-color: #47474754;
+		position: fixed;
+		width: 100%;
+		height: 100vh;
+		top: 0;
+		left: 0;
+		transition: 0.5s;
+		opacity: 0;
+		pointer-events: none;
+	}
+
+	.rand_notice_overlay.active {
+			opacity: 1;
+			pointer-events: all;
+	}
+
+  .editor_wrap {
+    visibility: hidden;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -80%);
+    z-index: 10;
+    box-shadow: 0 0 10px #19191948;
+    border: 1px solid;
+    width: 1000px;
+    padding: 30px;
+    opacity: 0;
+    border: none;
+    border-radius: 5px;
+    background-color: #ffffff;
+    transition: 0.5s;
+  }
+
+  .editor_wrap.active {
+    visibility: visible;
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+
+  .editor_overlay {
+		background-color: #47474754;
+		position: fixed;
+		width: 100%;
+		height: 100vh;
+		top: 0;
+		left: 0;
+		transition: 0.5s;
+		opacity: 0;
+		pointer-events: none;
+  }
+
+  .editor_overlay.active {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  .editor_close_btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: transparent;
+    border: none;
+    font-size: 18px;
+    color: #888;
+    cursor: pointer;
+  }
+
+  .editor_head {
+    display: flex;
+    justify-content: center;
+  }
+
+  .editor_head {
+    margin-bottom: 15px;
+    margin-top: 15px;
+  }
+
+  #editor_title {
+    margin-left: 10px;
+    width: 830px;
+    height: 30px;
+    outline: none;
+    border: 1px solid var(--gray);
+    padding: 10px;
+  }
+  .editor_body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .editor_content_label {
+    display: block;
+    margin-bottom: 10px;
+    width: 880px;
+  }
+
+  .editor_body .ck.ck-editor {
+    width: 875px;
+  }
+
+  .ck-rounded-corners .ck.ck-editor__main>.ck-editor__editable, .ck.ck-editor__main>.ck-editor__editable.ck-rounded-corners {
+    min-height: 300px;
+  }
+
+  .submit_wrap {
+    display: flex;
+    justify-content: flex-end;
+    width: 908px;
+    margin-top: 15px;
+  }
+
+  .submit_wrap .select_wrap {
+    display: flex;
+    margin-right: 15px;
+  }
+
+  .submit_wrap .select_wrap .free_land_btn,
+  .submit_wrap .select_wrap .qna_land_btn {
+    padding: 5px 10px;
+    background-color: var(--white);
+    color: var(--dark);
+    border: 1px solid var(--light-blue);
+  }
+
+  .submit_wrap .select_wrap .free_land_btn {
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border-top: 1px solid var(--light-blue);
+    border-bottom: 1px solid var(--light-blue);
+    border-left: 1px solid var(--light-blue);
+    border-right: 0;
+  }
+
+  .submit_wrap .select_wrap .qna_land_btn {
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-top: 1px solid var(--light-blue);
+    border-bottom: 1px solid var(--light-blue);
+    border-right: 1px solid var(--light-blue);
+    border-left: 0;
+  }
+
+  .submit_wrap .select_wrap .free_land_btn.selected,
+  .submit_wrap .select_wrap .qna_land_btn.selected {
+    background-color: var(--hashtag-blue);
+  }
+
+  .submit_wrap .submit_btn {
+    padding: 5px 10px;
+    background-color: var(--white);
+    color: var(--dark);
+    border: 1px solid var(--light-blue);
+  }
+
+  .submit_wrap .submit_btn:hover {
+    background-color: var(--hashtag-blue);
+  }
+
+  .submit_wrap .submit_btn:active {
+    background-color: var(--light-blue);
+  }
 </style>
 
   <!-- 메인 컨텐츠 영역 -->
   <section class="body_container">
     <div class="body">
       <div class="body_left">
-        <div class="home_edit_container incomplete">
-          <div class="text_area"></div>
+        <div class="home_edit_container">
+          <div class="text_area">자유롭게 글을 작성하세요.</div>
           <div class="edit_btn">
             <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path d="M471.6 21.7c-21.9-21.9-57.3-21.9-79.2 0L362.3 51.7l97.9 97.9 30.1-30.1c21.9-21.9 21.9-57.3 0-79.2L471.6 21.7zm-299.2 220c-6.1 6.1-10.8 13.6-13.5 21.9l-29.6 88.8c-2.9 8.6-.6 18.1 5.8 24.6s15.9 8.7 24.6 5.8l88.8-29.6c8.2-2.7 15.7-7.4 21.9-13.5L437.7 172.3 339.7 74.3 172.4 241.7zM96 64C43 64 0 107 0 160V416c0 53 43 96 96 96H352c53 0 96-43 96-96V320c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H96z"/></svg>
           </div>
@@ -341,6 +630,32 @@
       </div>
     </div>
   </section>
+
+  <!-- 에디터 생성 -->
+  <div class="editor_container">
+    <div class="editor_wrap">
+      <div class="editor_close_btn">&times;</div>
+      <h1>게시글 작성</h1>
+      <div class="editor_head">
+        <label for="editor_title">제목</label>
+        <input type="text" id="editor_title"></input>
+      </div>
+      <div class="editor_body">
+        <label for="editor_content" class="editor_content_label">내용</label>
+        <textarea id="editor_content"></textarea>
+      </div>
+      <div class="submit_wrap">
+        <div class="select_wrap">
+          <button class="free_land_btn selected">자유</button>
+          <button class="qna_land_btn">질답</button>
+        </div>
+        <button class="submit_btn">작성</button>  
+      </div>
+    </div>
+    <div class="editor_overlay"></div>
+  </div>
+
+  
 
   <jsp:include page="../layout/footer.jsp" />
 </body>
@@ -391,6 +706,7 @@
                            'color': 'white',
                            'box-shadow': '0 0 5px var(--gray)'})
   })
+
   $('.list_company').mouseleave(function() {
     $('.visible').hide()
     $(this).find('a').css({'background-color': 'white',
@@ -406,6 +722,69 @@
     $('.edit_btn').css('background-color', '')
   })
 
+  // 메인 에디터 생성
+  $('.home_edit_container').click(function() {
+
+    $('.editor_wrap, .editor_overlay').addClass('active')
+
+    $('.editor_close_btn, .editor_overlay').click(function() {
+      $('.editor_wrap, .editor_overlay').removeClass('active')
+    })
+
+    $('body').keyup(function(e) {
+      if(e.key === 'Escape') {
+        $('.editor_wrap, .editor_overlay').removeClass('active')
+      }
+    })
+  })
+
+  // 에디터 작성 글 랜딩 장소 선택
+  $('.qna_land_btn').click(function() {
+    $('.free_land_btn').removeClass('selected')
+    $('.qna_land_btn').addClass('selected')
+  })
+  $('.free_land_btn').click(function() {
+    $('.qna_land_btn').removeClass('selected')
+    $('.free_land_btn').addClass('selected')
+  })
+
+  // 게시글 작성 ajax
+  $('.submit_btn').click(function() {
+    let userEmail = `${sessionScope._LOGIN_USER_.email}`
+
+    if (userEmail === '') {
+      alert('로그인을 먼저 진행해주세요.')
+    }
+    else {
+      let body = {
+        'postWriter': `${sessionScope._LOGIN_USER_.email}`,
+        'postTitle': $('#editor_title').val(),
+        'postContent': $('.ck-editor__main').find('p').text(),
+      }
+      if ($('.free_land_btn').hasClass('selected')) {
+        $.post('/home/create/freeboard', body, function(response) {
+          if (response.result === 'success') {
+            alert('자유게시글을 성공적으로 등록했습니다.')
+            location.reload()
+          }
+          else {
+            alert('등록에 실패했습니다.')
+          }
+        })
+      }
+      else {
+        $.post('/home/create/qnaboard', body, function(response) {
+          if (response.result === 'success') {
+            alert('질답게시글을 성공적으로 등록했습니다.')
+            location.reload()
+          }
+          else {
+            alert('등록에 실패했습니다.')
+          }
+        })
+      }
+    }
+  })
   // 게시글 클릭 시 단건 조회 창으로 이동
 
   // 무한 스크롤 컨텐츠
@@ -423,6 +802,8 @@
     let nicknameList
     let nickname
     let email
+    let members
+    let page = 0
 
     // 댓글 개수 가져오기
     $.get('/home/maincontent/commentcnt', function(response_of_comment) {
@@ -437,10 +818,10 @@
     const loadContents = function() {
       $.get('/home/maincontent', function(response) {
         articles = response
-
+        //console.log(articles)
         all_count = response.length
         if (skip === 0) {
-          for (let i = skip; i < skip + 10; i++) {
+          for (let i = skip; i < skip + 5; i++) {
             article = articles[i]
 
             // 게시판의 타입 결정
@@ -519,9 +900,9 @@
               }
             })
             
-//             let followee_email = $('.follow_btn').val()
             // 팔로우 상태 가져오기
             $.get(`/follow/status/\${user_email}/\${article.postWriter}`, function(state) {
+
             	if(state.followYn === 'Y') {
             	templateDom.find('.follow_btn').css({'background-color':'var(--blue)', 'color':'var(--white)'}).addClass('follow_on')
             	templateDom.find('.follow_btn').prepend($(`<input type="hidden" class="followId" value="\${state.followId}"/>`))
@@ -546,19 +927,80 @@
                 }
               }
             })
+
             $('.body_left').append(templateDom)
 
+          }          
+          skip += 5
+
+          let userEmail = `${sessionScope._LOGIN_USER_}`
+
+          if (userEmail != '') {
+            let recommendTemplate = '';
+
+            function loadRecFollower() {
+              $.get(`/recommend/follower/\${user_email}`, function(response) {
+                let recommendList = response.recommendList;
+                console.log(recommendList)
+                const totalMembers = recommendList.length;
+                console.log("총 추천수 :" + totalMembers)
+                console.log("페이지번호 :" + page)
+
+                if (totalMembers > 0) {
+                  recommendTemplate = `
+                    <article class="recommend_container">
+                      <div class="title">
+                          <h4>알 수도 있는 사람</h4>
+                      </div>
+                      <div class="member_info_area"></div>
+                    </article>`
+        
+                  $('.body_left').append(recommendTemplate)
+
+                  if (page < totalMembers ) {
+                    let memberTemplate = '';
+                    for(let i = page; i < page + 3; i++) {
+                      if(i < totalMembers) {
+                        let member = recommendList[i]
+                        console.log(member)
+                        const profilePic = member.memberVO.profilePic;
+                        const nickname = member.memberVO.nickname;
+                        const email = member.memberVO.email;
+                       
+                      memberTemplate += 
+                        `<div class="memberList">
+                            <div class="member_profile">
+                              <div>
+                                <img class="profile_pic" src="\${profilePic}" />
+                              </div>
+                              <div class="nickname">
+                                <p>\${nickname}</p>
+                              </div>
+                              <button class="follow_btn">팔로우
+                                <input type="hidden" class="followerEmail" value="${sessionScope._LOGIN_USER_.email}" />
+                                <input type="hidden" class="followeeEmail" value="\${email}"/>   
+                              </button>
+                            </div>
+                        </div>`
+        
+                      // let memberTemplateDom = $(memberTemplate)
+  
+                      }
+                    } 
+                    $('.member_info_area').append(memberTemplate)
+                    page += 3
+                  } 
+                }    
+              })
+            }
+            loadRecFollower()
           }
-          
-          skip += 10
         }
-
-
 
         $(window).scroll(function() {
           if ($(window).scrollTop() + $(window).height() >= $('body').height() - 200 && !loading) {
             if (skip < all_count) {
-              for (let i = skip; i < skip + 10; i++) {
+              for (let i = skip; i < skip + 5; i++) {
                 if (i < all_count) {
                   article = articles[i]
 
@@ -662,7 +1104,69 @@
                   })
                 }
               }
-              skip += 10
+
+              skip += 5
+
+              let userEmail = `${sessionScope._LOGIN_USER_}`
+
+              if (userEmail != '') {
+                let recommendTemplate = '';
+                function loadRecFollower() {
+                  $.get(`/recommend/follower/\${user_email}`, function(response) {
+                    let recommendList = response.recommendList;
+                    const totalMembers = recommendList.length;
+                    console.log("총 추천수 :" + totalMembers)
+                    console.log("페이지번호 :" + page)
+
+                    if (totalMembers > 0 && totalMembers >= page) {
+                      recommendTemplate = `
+                      <article class="recommend_container">
+                        <div class="title">
+                            <h4>알 수도 있는 사람</h4>
+                        </div>
+                        <div class="member_info_area2"></div>
+                      </article>`
+            
+                      $('.body_left').append(recommendTemplate)
+                  
+                      
+                      if(page < totalMembers) {
+                        let memberTemplate = '';
+                        for(let i = page; i < page + 3; i++) {
+                          if(i < totalMembers) {
+                            let member = recommendList[i]
+                            //console.log(member)
+                            const profilePic = member.memberVO.profilePic;
+                            const nickname = member.memberVO.nickname;
+                            const email = member.memberVO.email;
+                          
+                            memberTemplate = 
+                              `<div class="memberList">
+                                  <div class="member_profile">
+                                    <div>
+                                      <img class="profile_pic" src="\${profilePic}" />
+                                    </div>
+                                    <div class="nickname">
+                                      <p>\${nickname}</p>
+                                    </div>
+                                    <button class="follow_btn">팔로우
+                                      <input type="hidden" class="followerEmail" value="${sessionScope._LOGIN_USER_.email}" />
+                                      <input type="hidden" class="followeeEmail" value="\${email}"/>   
+                                    </button>
+                                  </div>
+                              </div>`
+  
+                              //let memberTemplateDom = $(memberTemplate)
+                          }         
+                        }
+                        $('.member_info_area2').append(memberTemplate)
+                        page += 3
+                      } 
+                    }
+                  })
+                }
+                loadRecFollower()
+              }
             }
           }
         })
@@ -709,41 +1213,44 @@
           }
         })
         // 팔로우 토글
-        $(document).on('click', '.follow_btn', function(e) {
-        	let userEmail = `${sessionScope._LOGIN_USER_}`
-        	if (userEmail === '') {
-        		if(confirm('로그인이 필요한 서비스입니다. 로그인하시겠습니까?') ) {
-        			window.location.href="/member/auth"
-        		}
-        	}
-        	else {
-	       	  let content = {
-	            "follower": `${sessionScope._LOGIN_USER_.email}`,
-	            "followee": $(this).find(".followeeEmail").val(),
-	            "followId": $(e.currentTarget).find('.followId').val()
-	       	  }
-	       	  if ($(e.currentTarget).hasClass('follow_on')) {
-	            $.post('/unfollow/member', content, function(result) {
-	              $(e.currentTarget).removeClass('follow_on')
-	              $(e.currentTarget).css({'background-color':'var(--gray)', 'color':'var(--blue)'})
-	              $('.followId').remove()
-	            })
-	       	  }
-	       	  else {
-	            $.post('/follow/member', content, function(result) {
-
-	              if(result) {
-	                $(e.currentTarget).css({'background-color':'var(--blue)', 'color':'var(--white)'})
-	                $(e.currentTarget).addClass('follow_on')
-	                $('.follow_btn').prepend(`<input type="hidden" class="followId" value="\${result.followId}"/>`)
-	              }
-	              else {
-	                alert('처리하지 못했습니다.')
-	              }
-	            })
-	       	  }
-        	}
-        })
+        //function doFollow() {
+          $(document).on('click', '.follow_btn', function(e) {
+            let userEmail = `${sessionScope._LOGIN_USER_}`
+            if (userEmail === '') {
+              if(confirm('로그인이 필요한 서비스입니다. 로그인하시겠습니까?') ) {
+                window.location.href="/member/auth"
+              }
+            }
+            else {
+               let content = {
+                "follower": `${sessionScope._LOGIN_USER_.email}`,
+                "followee": $(e.currentTarget).find(".followeeEmail").val(),
+                "followId": $(e.currentTarget).find('.followId').val()
+               }
+               if ($(this).hasClass('follow_on')) {
+                $.post('/unfollow/member', content, function(result) {
+                  alert('팔로우를 취소합니다.')
+                  $(e.currentTarget).removeClass('follow_on')
+                  $(e.currentTarget).css({'background-color':'var(--gray)', 'color':'var(--blue)'})
+                  $('.followId').remove()
+                })
+               }
+               else {
+                $.post('/follow/member', content, function(result) {
+                  if(result) {
+                    alert('팔로우 합니다.')
+                    $(e.currentTarget).css({'background-color':'var(--blue)', 'color':'var(--white)'})
+                    $(e.currentTarget).addClass('follow_on')
+                    $('.follow_btn').prepend(`<input type="hidden" class="followId" value="\${result.followId}"/>`)
+                  }
+                  else {
+                    alert('처리하지 못했습니다.')
+                  }
+                })
+               }
+            }
+          })
+        //}
       })
     }
     loadContents()
@@ -798,5 +1305,181 @@
       }
     })
   })
+
+  // 랜덤 공지 생성
+  $.get('/notice/random', function(response) {
+    let randNoticeTemplate = `
+      <div class="rand_notice_container">
+        <div class="rand_notice_close_btn">&times;</div>
+        <h1 class="create_title">공지</h1>
+        <div class="title_area">
+          <label for="postTitle" class="post_title_label">제목</label>
+          <div>\${response.postTitle}</div>
+        </div class=content_area>
+        <label for="noticeContent" class="post_content_label">내용</label>
+        <div class="noticeContent"></div>
+      </div>
+      <div class="rand_notice_overlay"></div>`
+
+    let randNoticeTemplateDom = $(randNoticeTemplate)
+    randNoticeTemplateDom.find('.noticeContent').html(response.noticeContent)
+
+    $('body').append(randNoticeTemplateDom)
+
+
+    $('.rand_notice_container, .rand_notice_overlay').addClass('active')
+
+    $('.rand_notice_close_btn, .rand_notice_overlay').click(function() {
+      $('.rand_notice_container, .rand_notice_overlay').removeClass('active')
+    })
+
+    $('body').keyup(function(e) {
+      if (e.key === 'Escape') {
+        $('.rand_notice_container, .rand_notice_overlay').removeClass('active')
+      }
+    })
+  })
+
+  // 메인 글 작성 ck에디터
+  CKEDITOR.ClassicEditor.create(document.getElementById("editor_content"), {
+    // https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html#extended-toolbar-configuration-format
+    toolbar: {
+      items: [
+        'exportPDF','exportWord', '|',
+        'findAndReplace', 'selectAll', '|',
+        'heading', '|',
+        'bold', 'italic', 'strikethrough', 'underline', 'code', 'subscript', 'superscript', 'removeFormat', '|',
+        'bulletedList', 'numberedList', 'todoList', '|',
+        'outdent', 'indent', '|',
+        'undo', 'redo',
+        '-',
+        'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'highlight', '|',
+        'alignment', '|',
+        'link', 'insertImage', 'blockQuote', 'insertTable', 'mediaEmbed', 'codeBlock', 'htmlEmbed', '|',
+        'specialCharacters', 'horizontalLine', 'pageBreak', '|',
+        'textPartLanguage', '|',
+        'sourceEditing'
+      ],
+      shouldNotGroupWhenFull: true
+    },
+    // Changing the language of the interface requires loading the language file using the <script> tag.
+    // language: 'es',
+    list: {
+      properties: {
+        styles: true,
+        startIndex: true,
+        reversed: true
+      }
+    },
+    // https://ckeditor.com/docs/ckeditor5/latest/features/headings.html#configuration
+    heading: {
+      options: [
+        { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+        { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
+        { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
+        { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
+        { model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' },
+        { model: 'heading5', view: 'h5', title: 'Heading 5', class: 'ck-heading_heading5' },
+        { model: 'heading6', view: 'h6', title: 'Heading 6', class: 'ck-heading_heading6' }
+      ]
+    },
+    // https://ckeditor.com/docs/ckeditor5/latest/features/editor-placeholder.html#using-the-editor-configuration
+    placeholder: '원하는 글을 작성하세요.',
+    // https://ckeditor.com/docs/ckeditor5/latest/features/font.html#configuring-the-font-family-feature
+    fontFamily: {
+      options: [
+        'default',
+        'Arial, Helvetica, sans-serif',
+        'Courier New, Courier, monospace',
+        'Georgia, serif',
+        'Lucida Sans Unicode, Lucida Grande, sans-serif',
+        'Tahoma, Geneva, sans-serif',
+        'Times New Roman, Times, serif',
+        'Trebuchet MS, Helvetica, sans-serif',
+        'Verdana, Geneva, sans-serif'
+      ],
+      supportAllValues: true
+    },
+    // https://ckeditor.com/docs/ckeditor5/latest/features/font.html#configuring-the-font-size-feature
+    fontSize: {
+      options: [ 10, 12, 14, 'default', 18, 20, 22 ],
+      supportAllValues: true
+    },
+    // Be careful with the setting below. It instructs CKEditor to accept ALL HTML markup.
+    // https://ckeditor.com/docs/ckeditor5/latest/features/general-html-support.html#enabling-all-html-features
+    htmlSupport: {
+      allow: [
+        {
+          name: /.*/,
+          attributes: true,
+          classes: true,
+          styles: true
+        }
+      ]
+    },
+    // Be careful with enabling previews
+    // https://ckeditor.com/docs/ckeditor5/latest/features/html-embed.html#content-previews
+    htmlEmbed: {
+      showPreviews: true
+    },
+    // https://ckeditor.com/docs/ckeditor5/latest/features/link.html#custom-link-attributes-decorators
+    link: {
+      decorators: {
+        addTargetToExternalLinks: true,
+        defaultProtocol: 'https://',
+        toggleDownloadable: {
+          mode: 'manual',
+          label: 'Downloadable',
+          attributes: {
+            download: 'file'
+          }
+        }
+      }
+    },
+    // https://ckeditor.com/docs/ckeditor5/latest/features/mentions.html#configuration
+    mention: {
+      feeds: [
+        {
+          marker: '@',
+          feed: [
+            '@apple', '@bears', '@brownie', '@cake', '@cake', '@candy', '@canes', '@chocolate', '@cookie', '@cotton', '@cream',
+            '@cupcake', '@danish', '@donut', '@dragée', '@fruitcake', '@gingerbread', '@gummi', '@ice', '@jelly-o',
+            '@liquorice', '@macaroon', '@marzipan', '@oat', '@pie', '@plum', '@pudding', '@sesame', '@snaps', '@soufflé',
+            '@sugar', '@sweet', '@topping', '@wafer'
+          ],
+          minimumCharacters: 1
+        }
+      ]
+    },
+    // The "super-build" contains more premium features that require additional configuration, disable them below.
+    // Do not turn them on unless you read the documentation and know how to configure them and setup the editor.
+    removePlugins: [
+      // These two are commercial, but you can try them out without registering to a trial.
+      // 'ExportPdf',
+      // 'ExportWord',
+      'CKBox',
+      'CKFinder',
+      'EasyImage',
+      // This sample uses the Base64UploadAdapter to handle image uploads as it requires no configuration.
+      // https://ckeditor.com/docs/ckeditor5/latest/features/images/image-upload/base64-upload-adapter.html
+      // Storing images as Base64 is usually a very bad idea.
+      // Replace it on production website with other solutions:
+      // https://ckeditor.com/docs/ckeditor5/latest/features/images/image-upload/image-upload.html
+      // 'Base64UploadAdapter',
+      'RealTimeCollaborativeComments',
+      'RealTimeCollaborativeTrackChanges',
+      'RealTimeCollaborativeRevisionHistory',
+      'PresenceList',
+      'Comments',
+      'TrackChanges',
+      'TrackChangesData',
+      'RevisionHistory',
+      'Pagination',
+      'WProofreader',
+      // Careful, with the Mathtype plugin CKEditor will not load when loading this sample
+      // from a local file system (file://) - load this site via HTTP server if you enable MathType
+      'MathType'
+    ]
+  });  
 </script>
 </html>

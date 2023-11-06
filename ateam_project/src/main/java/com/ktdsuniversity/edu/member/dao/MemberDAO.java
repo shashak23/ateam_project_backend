@@ -108,12 +108,21 @@ public interface MemberDAO {
 	// 통합검색
 	public List<MemberVO> searchAllMemberByKeyword(AbstractSearchVO abstractSearchVO);
 	
+	/**
+	 * 카카오 로그인
+	 */
 	public int kakaoinsert(HashMap<String, Object> userInfo);
-	
-	public  SocialVO findkakao(HashMap<String, Object> userInfo);
-	
+	/**
+	 * 네이버 로그인
+	 */
 	public int naverinsert(HashMap<String, Object> userInfo);
+	/**
+	 * 구글 로그인
+	 */
+	public int googleinsert(HashMap<String, Object> userInfo);
 	
-	public  SocialVO findnaver(HashMap<String, Object> userInfo);
-	
+	/**
+	 * 소셜 아이디조회
+	 */
+	public  SocialVO findSocial(HashMap<String, Object> userInfo);
 }

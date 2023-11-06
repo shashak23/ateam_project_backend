@@ -4,7 +4,7 @@
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
-    <title>dev Ground</title>
+    <title>devGround</title>
          <link rel="preconnect" href="https://fonts.googleapis.com"> 
          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
         <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet"> 
@@ -25,7 +25,7 @@
             justify-content: center;
             margin: 0 auto;
             margin-right: 15%;
-        }
+            }
 
             .container {
                 display: inline-block;
@@ -40,7 +40,7 @@
             .board_list_box {
                 margin: 0 auto;
                 margin-top: 90px;
-                border-top: 3px solid var(--hashtag-blue);
+                border-top: none;
                 border-bottom:none;
                 border-left: none;
                 border-right: none;
@@ -185,6 +185,10 @@
    .search_menu {
     position: relative;
     top: 22px;
+   }
+   .input_box {
+    position: relative;
+    right: 100px;
    }
 
         </style>
@@ -383,7 +387,7 @@
     disableOnInteraction: false, // 사용자 상호 작용 후에도 자동 전환을 유지할지 여부
   },
 
-  // navigation 속성은 이전/다음 버튼을 추가하는데 사용할 수 있습니다.
+  
   navigation: {
     nextEl: '.swiper-button-next',
     prevEl: '.swiper-button-prev'

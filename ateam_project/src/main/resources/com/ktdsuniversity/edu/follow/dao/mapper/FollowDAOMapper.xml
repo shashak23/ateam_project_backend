@@ -14,6 +14,43 @@
 		</association>
 	</resultMap>
 	
+	<!-- 알 수도 있는 사람 추천 조회 -->
+	<select id="getMutualMembers"
+	        parameterType="string"
+	        resultMap="followVOMap">
+	  WITH FOLLOWERS AS (SELECT DISTINCT MEMBER_ID -- 차은우를 알고 있는 모든 사람.
+                           FROM (SELECT FOLLOWEE AS MEMBER_ID
+                                   FROM FOLLOW 
+                                  WHERE FOLLOWER = #{_parameter} -- 차은우가 팔로우 하는 사람
+                                    AND FOLLOW_YN = 'Y'
+                                  UNION ALL 
+                                 SELECT FOLLOWER
+                                   FROM FOLLOW 
+                                  WHERE FOLLOWEE = #{_parameter}
+                                    AND FOLLOW_YN = 'Y'))
+	  SELECT R.*
+	       , M.EMAIL
+	       , M.NICKNAME
+	       , M.PROFILE_PIC
+	    FROM (SELECT DISTINCT *
+		        FROM (SELECT FOLLOWEE
+				        FROM FOLLOW
+				       WHERE FOLLOWER IN (SELECT MEMBER_ID
+									        FROM FOLLOWERS)
+				         AND FOLLOW_YN = 'Y'
+				       UNION ALL
+				      SELECT FOLLOWER
+				        FROM FOLLOW
+				       WHERE FOLLOWEE IN (SELECT MEMBER_ID
+									        FROM FOLLOWERS)
+				         AND FOLLOW_YN = 'Y')
+			   WHERE FOLLOWEE NOT IN (SELECT MEMBER_ID
+								        FROM FOLLOWERS)
+			     AND FOLLOWEE != #{_parameter}) R
+	   INNER JOIN MEMBER M
+	      ON R.FOLLOWEE = M.EMAIL
+	</select>
+	
 	<!-- 나를 팔로우 하는 사람들 목록 조회 -->
 	<select id="getAllFollower"
 	        parameterType="string"

@@ -7,11 +7,12 @@
 package com.ktdsuniversity.edu.generalmember.service;
 
 import java.util.List;
-
+import java.util.Map;
 
 import com.ktdsuniversity.edu.career.vo.CareerVO;
 import com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO;
 import com.ktdsuniversity.edu.education.vo.EducationVO;
+import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberListVO;
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 import com.ktdsuniversity.edu.techstack.vo.TechstackVO;
@@ -76,5 +77,18 @@ public interface GeneralMemberService {
 	 * 자기소개 삭제
 	 */
 	public boolean deleteSelfIntro(String generalMemberEmail);
+	
+	/**
+	 * 회원의 커뮤니티 활동 내역 조회
+	 * @param generalMemberEmail 커뮤니티 활동을 조회하고자 하는 회원의 이메일
+	 * @return
+	 */
+	public List<Map<String, Object>> getSelectMemberActivityLog(String generalMemberEmail);
+	
+	/**
+	 * 스코어 상위 10위까지의 회원 목록 조회
+	 * @return
+	 */
+	public GeneralMemberListVO getSelectTopTenScoreMemberList();
 	
 }

@@ -171,20 +171,24 @@ public class MemberDAOImpl extends SqlSessionDaoSupport implements MemberDAO{
 	public List<MemberVO> searchAllMemberByKeyword(AbstractSearchVO abstractSearchVO) {
 		return getSqlSession().selectList("searchAllMemberByKeyword", abstractSearchVO);
 	}
+	/**
+	 * 카카오 회원가입
+	 */
 	@Override
 	public int kakaoinsert(HashMap<String, Object> userInfo) {
 		return getSqlSession().insert("kakaoinsert",userInfo);
 	}
-	@Override
-	public SocialVO findkakao(HashMap<String, Object> userInfo) {
-		return getSqlSession().selectOne("findkakao",userInfo);
-	}
+	
 	@Override
 	public int naverinsert(HashMap<String, Object> userInfo) {
 		return getSqlSession().insert("naverinsert",userInfo);
 	}
 	@Override
-	public SocialVO findnaver(HashMap<String, Object> userInfo) {
-		return getSqlSession().selectOne("findnaver",userInfo);
+	public int googleinsert(HashMap<String, Object> userInfo) {
+		return getSqlSession().insert("googleinsert",userInfo);
+	}
+	@Override
+	public SocialVO findSocial(HashMap<String, Object> userInfo) {
+		return getSqlSession().selectOne("findSocial",userInfo);
 	}
 }

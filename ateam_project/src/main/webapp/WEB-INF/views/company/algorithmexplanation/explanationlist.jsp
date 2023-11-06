@@ -60,6 +60,24 @@ $().ready(function() {
 	
 })
 
+$(document).on('click', '.register', function(e) {
+	let userEmail = `${sessionScope._LOGIN_USER_}`
+	let memberType = `${sessionScope._LOGIN_USER_.memberType}`
+	if (userEmail === '') {
+		if(confirm('로그인이 필요한 서비스입니다. 로그인하시겠습니까?') ) {
+			window.location.href="/member/auth"
+		}
+	}
+	if (memberType === 'GENERAL') {
+		alert('기업회원만 이용하실 수 있는 서비스입니다.')
+		window.location.href="/algorithm/explanation/list"
+	}
+	if (memberType === 'COMPANY') {
+		window.location.href="/algorithm/explanation/create"
+	}
+
+})
+
 // 모달창 열고 닫기
 $(document).on('click', '.incomplete', function() {
     $('.modal, .overlay').addClass('modal_active')
@@ -103,6 +121,18 @@ $(document).on('click', '.incomplete', function() {
                            'color': 'var(--blue)',
                            'box-shadow': 'none'})
   })
+
+//   $("#myprofile").click(function() {
+// 			redirectToURL(`/memberinfo/view/${memberVO.email}`);
+// 		});
+
+$("#quit").click(function() {
+	        redirectToURL(`/member/logout`);
+	    });
+
+$('.seeMore').click(function() {
+	redirectToURL(`/algorithm/explanation/detail/CC-20231017-000002`);
+        });
 </script>
 </head>
 <style>
@@ -123,15 +153,12 @@ $(document).on('click', '.incomplete', function() {
 		margin-left: 5px;
 	}
 
-	/* #left_container, #container {
-   margin-bottom: 100px;
-	} */
 	#left_container{
 		display: flex;
 		justify-content: center;
 		width:300px;
 		min-height: 500px;
-		
+		margin-top: 8px;
 	}
 
 	#toolbar{
@@ -148,7 +175,7 @@ $(document).on('click', '.incomplete', function() {
 	}
 
 	#toolbar > #registerArticle > .register{
-		width: 180px;
+		width: 220px;
 		height:35px;
 		margin-top: 9px;
 		color:black;
@@ -180,6 +207,19 @@ $(document).on('click', '.incomplete', function() {
 		font-weight: bold;
 	}
 
+	.image{
+	    position: relative;
+		top: -130px;
+		left: 780px;
+		width: 190px;
+		margin: 0px 0px px 750px;
+		transform: rotate(20deg);
+	}
+
+	.seeMore{
+		margin: 0px 0px 10px 240px;
+	}
+
 	.more{
 		width: 8px;
    		height: 10px;
@@ -202,6 +242,8 @@ $(document).on('click', '.incomplete', function() {
 	}
 
 	.col_item{
+		display: grid;
+		grid-template-rows: 40px 1fr;
 		border-top: 0.0625rem solid rgb(231,231,231);
 		transition: box-shadow 0.3s ease;
 	}
@@ -220,11 +262,21 @@ $(document).on('click', '.incomplete', function() {
 		color: #98A8B9;
 	}
 
+	.type{
+		width: 47px;
+		height: 27px;
+		transition: box-shadow 0.3s ease;
+		border-radius: 4px;
+	}
+
+	.type:hover{
+		border: 2px solid #1E90FF; 
+	}
+
 	.sc_text{
 		padding-left: 6px;
-		height: 40px;
-		width: 1fr;
-        font-size: 12px;
+		height: 27px;
+		font-size: 12px;
 		transition: box-shadow 0.3s ease;
 	}
 
@@ -257,32 +309,6 @@ $(document).on('click', '.incomplete', function() {
 		width:200px;
 	}
 
-	.search_area > #search_form > .type{
-		width:50px;
-		height:40px;
-		transition: box-shadow 0.3s ease;
-		border-radius: 4px;
-	}
-
-	.search_area > #search_form > .type:hover{
-		border: 2px solid #1E90FF; 
-	}
-
-	.search_area > #search_form > #search_bar{
-		width: 180px;
-		height:40px;
-		transition: box-shadow 0.3s ease;
-		padding:6px;	
-	}
-
-	.search_area > #search_form > #search_bar::after{
-		content:"돋보기";
-	}
-
-	.search_area > #search_form > #search_bar:hover{
-		border: 2px solid #1E90FF; 
-	}
-
 	#category_area{
 		display:flex;
 		width: 180px;
@@ -296,49 +322,21 @@ $(document).on('click', '.incomplete', function() {
   		margin-top: 0; 
 	}
 
-	table.table {
-		border-collapse: collapse;
-		margin-top: 30px;
-		width:1000px;
-		margin: 0 auto;
-	}
-
-	table th{
-		background-color: var(--light-gray);
-		border-bottom: 1px solid var(--dark-gray);
-		height:35px;
-		color: var(--dark-gray);
-	}
-
-	table td{
-		border-bottom: 1px solid #D3D3D3;
-		color: var(--dark-gray);
-	}
-	table.table th:last-child, table.table td:last-child {
-		border-right: none;
-	}
-	
-	table.table > tbody td {
-		padding: 10px;
-		color: #333;
-		text-align: center;
-		color: var(--dark-gray);
-	}
-
 	.button_list{
-		display: flex;		
-		height:30px;
+		display: flex;
+		height: 30px;
+		width: 222px;
 		margin-top: 10px;
+		justify-content: space-around;
 	}
 
-	.reset{
-		background-color: var(--light-blue);
-		border: none;
-		width: 70px;
-		height: 30px;
-		border-radius: 5px;
-		cursor: pointer;
-		margin-left: 6px;
+	.search_icon{
+		width: 20px;
+		height: 20px;
+		position: absolute;
+		top: 118px;
+		left: 210px;
+		opacity: 0.4;
 	}
 
 	.btn_st_2{
@@ -351,6 +349,7 @@ $(document).on('click', '.incomplete', function() {
 		margin-left: 6px;
 	}
 
+
 </style>
 <body>
 	<div id="overall">
@@ -358,7 +357,7 @@ $(document).on('click', '.incomplete', function() {
 			<div id="toolbar">
 				<div id="pageName">알고리즘 해설</div>
 				<div id="registerArticle">
-					<button class="register" type="button" onclick="location.href='/algorithm/explanation/create';">글작성</button>
+					<button class="register" type="button" >글작성</button>
 				</div>
 				<div class="search_area">
 					
@@ -366,30 +365,18 @@ $(document).on('click', '.incomplete', function() {
 						method="get"
 						action="/algorithm/explanation/list">
 						<div class="button_list">
-							<!-- 셀렉 박스(타입 정하는 것, 이후에 주석 해제 후 작업) -->
 							<select class="type" name="searchType">
 								<option value="postTitle" ${searchAlgorithmExplanationVO.searchType eq 'postTitle' ? 'selected' : ''}>제목</option>
 								<option value="postContent" ${searchAlgorithmExplanationVO.searchType eq 'postContent' ? 'selected' : ''}>내용</option>
 								<option value="postWriter" ${searchAlgorithmExplanationVO.searchType eq 'postWriter' ? 'selected' : ''}>작성자</option>
 							</select>
 							<input class="sc_text" type="text" placeholder="검색어를 입력해주세요." name="searchKeyword" value="${SearchAlgorithmExplanationVO.searchKeyword}" />
-						<!-- <input type="text" class="sc_text" placeholder="검색어 입력"> -->
-							<!-- <button type="submit" class="btn_st_2">
-								<a href="#" id="click_search">조회</a>
-							</button> -->
-
-							<!-- 초기화 버튼, 이후에 주석 해제 후 작업 -->
-							<!-- <button class="reset">
-								<a href="/algorithm/explanation/list">초기화</a>
-							</button> -->														
-						</div>
-						<!-- <a href="/algorithm/explanation/list" class="gohome">
-							<img src="/images/reset.png" alt="검색초기화" class="reset">
-						</a> -->						
+							<img src="/images/search.svg" alt="search" class="search_icon">									
+						</div>					
 					</form>					
 				</div>				
 			</div>
-	</div>
+		</div>
 	<!-- <div id="container">		
 		<div class="btn-group">
 			<div class="right-align">
@@ -403,35 +390,6 @@ $(document).on('click', '.incomplete', function() {
 				</c:if>
 			</div>
 		</div>
-		<div id="article">
-			<div class="category_name">${algorithmexplanation.memberVO.nickname}</div>
-			<div class="article_name"></div>
-			<div class="article_info">
-				<div class="company"></div>
-				<div class="date"></div>
-				<div class="views"></div>
-			</div>
-		</div>
-		<table class="table">
-			<thead>
-				<colgroup>
-					<col width="10%" />
-					<col width="*" />
-					<col width="10%" />
-					<col width="10%" />
-					<col width="15%" />
-					<col width="10%" />
-				</colgroup>
-				<tr id="table-tr">
-					<th scope="col">번호</th>
-					<th scope="col">제목</th>
-					<th scope="col">카테고리</th>
-					<th scope="col">작성자</th>
-					<th scope="col">작성일</th>
-					<th scope="col">조회수</th>
-				</tr>
-			</thead>
-		
 			<tbody>
 				<c:choose>
 					<c:when test="${not empty algorithmExplanationList.algorithmExplanationList}">
@@ -463,122 +421,94 @@ $(document).on('click', '.incomplete', function() {
 		<div id="pageInfo">
 			<div class="pageTitle">기초를 탄탄히: 알고리즘 해설</div>
 			<div class="pageExplanation">코테 합격은 아무나 하나. 근!본!을 키우자</div>
-
+			<img src="/images/알고리즘 해설.png" alt="알고리즘 해설 이미지" class="image">
 		</div>
 		<div id="algorithmList">
 			
-			<ul>
+			<ul>				
 				<li class="col_item">
-					<div class="algorithmName">그리디
+						<div class="algorithmName">해시</div>
+					
+						<div class="briefing">
+							각 단계에서 최선의 선택을 하는 방식으로 문제를 해결하는 알고리즘입니다. 
+						</div>
+						<a id="detailLink" href="/algorithm/explanation/detail/CC-20231017-000002">
+					<div class="seeMore">보러가기
+						
+						<!-- <a href="/algorithm/explanation/detail/${algorithmexplanationVO.algorithmCategoryId}">보러가자</a> -->
+						<!-- console.log(${algorithmexplanationVO.algorithmCategoryId}); -->
 						<img class="more" src="/images/화살표.png/" alt="more">
+						
 					</div>
-					<div class="briefing">
-						각 단계에서 최선의 선택을 하는 방식으로 문제를 해결하는 알고리즘입니다. 
-					</div>
-					<div class="info">
-						<div class="company"><span class="companyName"></span></div>
-						<div class="date"><span class="postDate"></span></div>
-						<div class="views"><span class="viewCnt"></span></div>
-					</div>
+				</a>
 				</li>
+				
 				<li class="col_item">
-					<div class="algorithmName">구현
-						<img class="more" src="/images/화살표.png/" alt="more">
-					</div>
+					<div class="algorithmName">구현</div>
 					<div class="briefing">
 						어떤 알고리즘을 사용할지, 어떤 자료구조를 활용할지 등을 결정하고 이를 코드로 옮기는 과정을 학습해보세요.
 					</div>
-					<div class="info">
-						<div class="company"></div>
-						<div class="date"></div>
-						<div class="views"></div>
+					<div class="seeMore">보러가기
+						<img class="more" src="/images/화살표.png/" alt="more">
 					</div>
 				</li>
 				<li class="col_item">
-					<div class="algorithmName">DFS/BFS
-						<img class="more" src="/images/화살표.png/" alt="more">
-					</div>
+					<div class="algorithmName">DFS/BFS</div>
 					<div class="briefing">
 						깊이 우선 탐색(DFS)과 너비 우선 탐색(BFS)으로 그래프를 탐색해보세요.	
 					</div>
-					<div class="info">
-						<div class="company"></div>
-						<div class="date"></div>
-						<div class="views"></div>
+					<div class="seeMore">보러가기
+						<img class="more" src="/images/화살표.png/" alt="more">
 					</div>
 				</li>
 				<li class="col_item">
-					<div class="algorithmName">정렬
-						<img class="more" src="/images/화살표.png/" alt="more">
-					</div>
+					<div class="algorithmName">정렬</div>
 					<div class="briefing">데이터를 특정한 기준에 따라 순서대로 나열하는 알고리즘입니다. </div>
-					<div class="info">
-						<div class="company"></div>
-						<div class="date"></div>
-						<div class="views"></div>
+					<div class="seeMore">보러가기
+						<img class="more" src="/images/화살표.png/" alt="more">
 					</div>
 				</li>
 				<li class="col_item">
-					<div class="algorithmName">이진탐색
-						<img class="more" src="/images/화살표.png/" alt="more">
-					</div>
+					<div class="algorithmName">이진탐색</div>
 					<div class="briefing">
 						탐색 범위를 절반씩 줄여가며 배열의 특정한 원소를 찾아가는 방법을 공부해보세요.
 					</div>
-					<div class="info">
-						<div class="company"></div>
-						<div class="date"></div>
-						<div class="views"></div>
+					<div class="seeMore">보러가기
+						<img class="more" src="/images/화살표.png/" alt="more">
 					</div>
 				</li>
 				<li class="col_item">
-					<div class="algorithmName">다이나믹 프로그래밍
-						<img class="more" src="/images/화살표.png/" alt="more">
-					</div>
+					<div class="algorithmName">다이나믹 프로그래밍</div>
 					<div class="briefing">
 						작은 부분 문제들의 해결책으로 전체 문제의 해결책을 구하는 방식으로 동작하는 알고리즘을 얻어 가세요.
 					</div>
-					<div class="info">
-						<div class="company"></div>
-						<div class="date"></div>
-						<div class="views"></div>
+					<div class="seeMore">보러가기
+						<img class="more" src="/images/화살표.png/" alt="more">
 					</div>
 				</li>
 				<li class="col_item">
-					<div class="algorithmName">최단경로
-						<img class="more" src="/images/화살표.png/" alt="more">
-					</div>
+					<div class="algorithmName">최단경로</div>
 					<div class="briefing">
 						그래프에서 두 정점 간의 가장 짧은 경로를 찾는 알고리즘입니다. 
 					</div>
-					<div class="info">
-						<div class="company"></div>
-						<div class="date"></div>
-						<div class="views"></div>
+					<div class="seeMore">보러가기
+						<img class="more" src="/images/화살표.png/" alt="more">
 					</div>
 				</li>
 				<li class="col_item">
-					<div class="algorithmName">그래프 이론
-						<img class="more" src="/images/화살표.png/" alt="more">
-					</div>
+					<div class="algorithmName">그래프 이론</div>
 					<div class="briefing">
 						 그래프는 정점(Vertex)과 간선(Edge)의 집합으로 이루어져 있습니다. 간선들을 연결해볼까요?
 					</div>
-					<div class="info">
-						<div class="company"></div>
-						<div class="date"></div>
-						<div class="views"></div>
+					<div class="seeMore">보러가기
+						<img class="more" src="/images/화살표.png/" alt="more">
 					</div>
 				</li>
 				<li class="col_item">
-					<div class="algorithmName">기타
-						<img class="more" src="/images/화살표.png/" alt="more">
-					</div>
+					<div class="algorithmName">기타</div>
 					<div class="briefing">이외에도 코딩 테스트에 출제되는 알고리즘들을 공부해보세요.</div>
-					<div class="info">
-						<div class="company"></div>
-						<div class="date"></div>
-						<div class="views"></div>
+					<div class="seeMore">보러가기
+						<img class="more" src="/images/화살표.png/" alt="more">
 					</div>
 				</li>
 			</ul>

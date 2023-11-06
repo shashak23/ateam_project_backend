@@ -6,6 +6,8 @@
 <script type="text/javascript" src="/js/lib/jquery-3.7.1.js"></script>
 <script type="text/javascript">
 	$().ready(function() {
+		
+		
 		$.get("/code/알고리즘카테고리", function(response) {
 			var ul = $("<ul></ul>");
 			for (var i = 0; i < response.length; i++) {
@@ -51,7 +53,27 @@
 			}).submit()
 		});
 		
+	
 	})
+	
+	$(document).on('click', '.register', function(e) {
+		let userEmail = `${sessionScope._LOGIN_USER_}`
+		let memberType = `${sessionScope._LOGIN_USER_.memberType}`
+		if (userEmail === '') {
+			if(confirm('로그인이 필요한 서비스입니다. 로그인하시겠습니까?') ) {
+				window.location.href="/member/auth"
+			}
+		}
+		if (memberType === 'GENERAL') {
+			alert('기업회원만 이용하실 수 있는 서비스입니다.')
+			window.location.href="/algorithm/question/list"
+		}
+		if (memberType === 'COMPANY') {
+			window.location.href="/algorithm/question/create"
+		}
+
+	})
+	
 
 	// 모달창 열고 닫기
 	$(document).on('click', '.incomplete', function() {
@@ -66,6 +88,7 @@
       $('.modal, .overlay').removeClass('modal_active')
     }
   })
+  
 
   // 스크롤 버튼, IDE
   let calcScrollValue = () => {
@@ -115,6 +138,7 @@
             "action": "/algorithm/explanation/list"
         }).submit();
     });
+  
 </script>
 </head>
 <style>
@@ -130,11 +154,9 @@
 		justify-content: center;
 		width:300px;
 		padding-right: 30px;
-		
 	}
 
 	#toolbar{
-		width: 300px;
 		position: fixed;
 		margin: 25px 0px 0px 20px;
 		width: 200px;
@@ -175,7 +197,6 @@
 	#container{
 		width: 1000px;
 		margin: 40px 0px 100px 0px;
-		/* margin:0 auto; */
 		display: flex;
 	}
 
@@ -191,6 +212,15 @@
 		height:60px
 	}
 
+	.resetIcon{
+		width: 35px;
+		height: 34px;
+		background-color: transparent;
+		position: absolute;
+		top: 561px;
+		left: 175px;
+	}
+
 	h3{
 		margin-top: 170px;
 	}
@@ -201,10 +231,9 @@
 
 	.table {
 		border-collapse: collapse;
-		
 		font-size: 14px;
 		width:1000px;
-		margin-bottom: 100px;
+		margin: 50px 0px 100px 0px
 	}
 	table.table > thead > tr {
 		background-color: #FFF;
@@ -248,24 +277,6 @@
    		cursor: pointer;
 		/* transition: box-shadow 0.1s ease; */
 	}
-
-	/* #upload:hover{
-		box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); 
-	} */
-
-	/* .search_area > #search-form > #companyName{
-		font-weight: bold;
-		margin-top: 30px;
-		margin-bottom: 5px;
-	} */
-
-	.search_area > #search-form > #search_items > .gohome .reset{	
-		height:40px;
-		width:40px;	
-		vertical-align: middle; 
-  		margin-right: 5px; 
-	}
-
 	.button_list{
 		display: flex;
 		margin-top: 20px;
@@ -273,8 +284,8 @@
 
 	.btn_st_2{
 		position: absolute;
-		left: 155px;
-    	bottom: 15px;
+		left: 125px;
+		bottom: 15px;
 		width: 70px;
 		height: 30px;
 		border-radius: 5px;
@@ -282,21 +293,18 @@
 		margin-left: 5px;
 		border: none;
 		background-color: transparent;
+		opacity: 0.4;
 	}
 
 	.sc_text{
-		/* margin-bottom: 110px; */
 		padding:6px;
+		width: 165px;
 	}
 
-	.reset{
-		background-color: var(--light-blue);
-		border: none;
-		width: 70px;
-		height: 30px;
-		border-radius: 5px;
-		cursor: pointer;
-		margin-left: 5px;
+	.resetLink{
+		width: 30px;
+   		height: 30px;
+		margin-left: 30px;
 	}
 
 	#spaceBottom{
@@ -311,7 +319,7 @@
 			<div id="toolbar">
 				<div id="pageName">코딩테스트</div>
 				<div id="registerArticle">
-					<button class="register" type="button" onclick="location.href='/algorithm/question/create';">글작성</button>
+					<button class="register" type="button" >글작성</button>
 				</div>
 				<div class="search_area">
 					<form id="search-form"
@@ -333,9 +341,6 @@
 							<div><input type="checkbox" name="algorithmTierList" value="Lv.4"/><label for="Lv.4">Lv.4</label></div>
 							<div><input type="checkbox" name="algorithmTierList" value="Lv.5"/><label for="Lv.5">Lv.5</label></div>
 						</div>
-						<!-- <div id="companyName">
-							<label  for="company"></label>
-						</div> -->
 			
 						<div class="button_list">   
 							<!-- <input autocomplete="off" class="sc_text" type="text" placeholder="검색어 입력" name="searchKeyword" list="nicList" />
@@ -346,12 +351,10 @@
 								<img src="/images/search.svg" alt="search">
 								<!-- <a href="#" id="search-btn">조회</a> -->
 							</button>
-							<button class="reset">
-								<a href="/algorithm/question/list">초기화</a>
-							</button>
-							<!-- <button type="submit" class="btn_st_3">
-								<a href="/freeboard/create">등록</a>
-							</button> -->
+								
+								<a href="/algorithm/question/list" class="resetLink">
+									<img class="resetIcon" src="/images/reset.png" alt="reset">
+								</a>									
 						</div>
 						
 			
@@ -373,7 +376,7 @@
 			<div id="spaceBottom"></div>
 		</div>
 		<div id="container">	
-			<div class="btn-group"  style="margin-bottom: 20px;">
+			<%-- <div class="btn-group"  style="margin-bottom: 20px;">
 				<div class="right-align">
 					<!-- 로그인 하지 않았을 때 -->
 					<c:if test="${empty sessionScope._LOGIN_USER_}">
@@ -381,12 +384,12 @@
 					</c:if>
 					<!-- 기업회원에게만 보임  -->
 					<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.memberType eq 'COMPANY'}">
-						<button id="upload">
+						<!-- <button id="upload">
 							<a href="/algorithm/question/create">문제 등록</a>
-						</button> 
+						</button>  -->
 					</c:if>
 				</div>
-			</div>
+			</div> --%>
 
 			<table class="table">
 				<thead>

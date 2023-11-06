@@ -73,4 +73,50 @@
 		 WHERE GP.GENERAL_POST_ID = #{_parameter}
 	</select>
 	
+	<insert id="freeboardCreateByMain"
+			parameterType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
+		INSERT INTO GENERAL_POST (
+			  GENERAL_POST_ID
+			, POST_WRITER
+			, BOARD_ID
+			, POST_TITLE
+			, POST_CONTENT
+			, POST_DATE
+			, LIKE_CNT
+			, VIEW_CNT
+			, DELETE_YN)
+			VALUES (
+			  'GP-' || TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_GENERAL_POST_PK.NEXTVAL, 6, 0)
+			, #{postWriter}
+			, 'CC-20231017-000029' /* 자유게시판 */
+			, #{postTitle}
+			, #{postContent}
+			, SYSDATE
+			, 0
+			, 0
+			, 'N')
+	</insert>
+	<insert id="qnaboardCreateByMain"
+			parameterType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
+		INSERT INTO GENERAL_POST (
+			  GENERAL_POST_ID
+			, POST_WRITER
+			, BOARD_ID
+			, POST_TITLE
+			, POST_CONTENT
+			, POST_DATE
+			, LIKE_CNT
+			, VIEW_CNT
+			, DELETE_YN)
+			VALUES (
+			  'GP-' || TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_GENERAL_POST_PK.NEXTVAL, 6, 0)
+			, #{postWriter}
+			, 'CC-20231017-000030' /* 질답게시판 */
+			, #{postTitle}
+			, #{postContent}
+			, SYSDATE
+			, 0
+			, 0
+			, 'N')
+	</insert>
 </mapper>

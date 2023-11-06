@@ -24,6 +24,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -294,7 +296,7 @@ public class MemberServiceImpl implements MemberService {
 		return memberListVO;
 	}
 
-	/* 토큰 받아오기 */
+	/* KAKAO 토큰 받아오기 */
 	@Override
 	public String getAccessToken(String authorizeCode) {
 		String accessToken = "";
@@ -352,7 +354,7 @@ public class MemberServiceImpl implements MemberService {
 		return accessToken;
 	}
 
-	/* 사용자 정보 가져오기 */
+	/* KAKAO 사용자 정보 가져오기 */
 	@Override
 	public SocialVO getUserInfo(String accessToken) {
 		HashMap<String, Object> userInfo = new HashMap<String, Object>();
@@ -385,15 +387,17 @@ public class MemberServiceImpl implements MemberService {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		SocialVO socialVO = memberDAO.findkakao(userInfo);
-		if (socialVO == null) {
+		SocialVO socialVO = memberDAO.findSocial(userInfo);
+		if (socialVO == null || socialVO.getSocailEmail() == null) {
 			memberDAO.kakaoinsert(userInfo);
-			return memberDAO.findkakao(userInfo);
+			return memberDAO.findSocial(userInfo);
 		} else {
 			return socialVO;
 		}
 	}
-
+	/**
+	 * 카카오 로그아웃
+	 */
 	@Override
 	public void kakaoLogout(String accessToken) {
         String reqURL = "https://kapi.kakao.com/v1/user/logout";
@@ -508,19 +512,114 @@ public class MemberServiceImpl implements MemberService {
 			userInfo.put("nickname", nickname);
 			userInfo.put("email", email);
 			userInfo.put("accessToken", accessToken);
-			System.out.println("ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ"+nickname);
-			System.out.println("ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ"+email);
-			System.out.println("ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ"+accessToken);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		SocialVO socialVO = memberDAO.findnaver(userInfo);
-		if (socialVO == null) {
-			memberDAO.naverinsert(userInfo);
-			return memberDAO.findnaver(userInfo);
+		SocialVO socialVO = memberDAO.findSocial(userInfo);
+		if (socialVO == null || socialVO.getSocailEmail() == null) {
+			memberDAO.kakaoinsert(userInfo);
+			return memberDAO.findSocial(userInfo);
 		} else {
 			return socialVO;
 		}
 	} 
+	/* 구글 토큰 받아오기 */
+	@Override
+	public String getGoogleAccessToken(String authorizeCode) {
+		String accessToken = "";
+		String refreshToken = "";
+		String reqURL = "https://oauth2.googleapis.com/token";
+
+		try {
+			URL url = new URL(reqURL);
+
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			// POST 요청을 위해 기본값이 false인 setDoOutput을 true로
+
+			conn.setRequestMethod("POST");
+			conn.setDoOutput(true);
+			// POST 요청에 필요로 요구하는 파라미터 스트림을 통해 전송
+
+			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
+			StringBuilder sb = new StringBuilder();
+			sb.append("grant_type=authorization_code");
+			sb.append("&client_id=595210277098-t430mu7sj0n7dkl8ji1usbuke043tgvv.apps.googleusercontent.com"); // 본인이 발급받은 key
+			sb.append("&client_secret=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"); // 본인이 발급받은 key
+			sb.append("&code=" + authorizeCode);
+			sb.append("&redirect_uri=http://localhost:8080/member/googleLogin"); // 본인이 설정한 주소
+
+			bw.write(sb.toString());
+			bw.flush();
+
+			// 결과 코드가 200이라면 성공
+			int responseCode = conn.getResponseCode();
+			System.out.println("responseCode : " + responseCode);
+
+			// 요청을 통해 얻은 JSON타입의 Response 메세지 읽어오기
+			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			String line = "";
+			String result = "";
+
+			while ((line = br.readLine()) != null) {
+				result += line;
+			}
+			System.out.println("response body : " + result);
+
+			// Gson 라이브러리에 포함된 클래스로 JSON파싱 객체 생성
+			JsonParser parser = new JsonParser();
+			JsonElement element = parser.parse(result);
+			accessToken = element.getAsJsonObject().get("access_token").getAsString();
+			System.out.println("access_token : " + accessToken);
+
+			br.close();
+			bw.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return accessToken;
+	}
+
+	/* 구글 사용자 정보 가져오기 */
+	@Override
+	public SocialVO getGoogleUserInfo(String accessToken) {
+		HashMap<String, Object> userInfo = new HashMap<String, Object>();
+		String reqURL = "https://www.googleapis.com/userinfo/v2/me";
+		try {
+			URL url = new URL(reqURL);
+			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+			conn.setRequestMethod("GET");
+			conn.setRequestProperty("Authorization", "Bearer " + accessToken);
+			int responseCode = conn.getResponseCode();
+			System.out.println("responseCode : " + responseCode);
+			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+			String line = "";
+			String result = "";
+			while ((line = br.readLine()) != null) {
+				result += line;
+			}
+			System.out.println("response body : " + result);
+			ObjectMapper objectMapper = new ObjectMapper();
+            JsonNode jsonNode = objectMapper.readTree(result.toString());
+			String email = jsonNode.get("email").asText();
+			String nickname = jsonNode.get("name").asText();
+			System.out.println(email);
+			System.out.println(nickname);
+			userInfo.put("nickname", nickname);
+			userInfo.put("email", email);
+			userInfo.put("accessToken", accessToken);
+			System.out.println("ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ"+userInfo.get("email"));
+			System.out.println("ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ"+userInfo.get("nickname"));
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		SocialVO socialVO = memberDAO.findSocial(userInfo);
+		if (socialVO == null || socialVO.getSocailEmail() == null) {
+			memberDAO.googleinsert(userInfo);
+			return memberDAO.findSocial(userInfo);
+		} else {
+			return socialVO;
+		}
+			
+	}
 
 }
