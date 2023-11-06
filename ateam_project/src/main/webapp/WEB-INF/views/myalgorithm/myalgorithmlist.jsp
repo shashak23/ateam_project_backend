@@ -25,13 +25,13 @@
     margin-bottom: 15px;
     cursor: pointer;
     border: 2px;
-}
+    }
 
-.flex_button button:hover {
-	background-color: var(--light-blue);
-  	color: white;
+    .flex_button button:hover {
+        background-color: var(--light-blue);
+        color: white;
 
-}
+    }
 table.table {
 		border-collapse: collapse;
 		
@@ -75,7 +75,7 @@ table.table {
     .search_form {
     margin: 0 auto;
     margin-left: 980px;
-    margin-bottom: -40px;
+    margin-bottom: 10px;
    
     
 }
@@ -90,6 +90,20 @@ table.table {
 #body_controller {
     margin: 0 auto;
     margin-top: -260px;
+}
+.container {
+    border: 1px solid var(--light-gray);
+    border-radius: 5px;
+    margin: 0 auto;
+    margin-bottom: 100px;
+    width: 900px;
+    height: auto;
+}
+h2 {
+    margin: 0 auto;
+    margin-left: 422px;
+    margin-bottom: 30px;
+    font-weight: bold;
 }
 </style>
 </head>
@@ -119,9 +133,10 @@ table.table {
         </div>
     </form>
     <!-- 일단 -->
-    <table class="table">
-        <caption>알고리즘 문제 게시판</caption>
-        <thead>
+    <!-- <table class="table"> -->
+        <!-- <caption>알고리즘 문제 게시판</caption> -->
+        
+        <!-- <thead>
             <colgroup>
                 <col width="10%" />
                 <col width="20%" />
@@ -130,21 +145,21 @@ table.table {
                 <col width="20%" />
             </colgroup>
             <tr id="table-tr">
-                <th scope="col">번호</th>
+                <th scope="col">제목</th>
+                <th scope="col">제출회사</th>
                 <th scope="col">카테고리</th>
-                <th scope="col">난이도</th>
-                <th scope="col">문제 제목</th>
-                <th scope="col">작성자</th>
+                <th scope="col">내용</th>
+               
             </tr>
-        </thead>
-        <tbody>
+        </thead> -->
+        <!-- <tbody>
         <c:choose>
             <c:when test="${not empty algorithmQuestionList.algorithmQuestionList}">
                 <c:forEach items="${algorithmQuestionList.algorithmQuestionList}" var="algorithmquestion" varStatus="index">
                     <tr>
                         <td>${index.index + 1}</td>
-                        <td>${algorithmquestion.commonCodeVO.codeContent}</td>
-                        <td>${algorithmquestion.algorithmTierId}</td>
+                         <td>${algorithmquestion.commonCodeVO.codeContent}</td> 
+                         <td>${algorithmquestion.algorithmTierId}</td>
                         <td style="font-weight: bold;">
                             <a href="/algorithm/question/view/${algorithmquestion.companyAlgorithmQuestionId}">
                                 <c:out value="${algorithmquestion.algorithmTitle}" />
@@ -162,13 +177,16 @@ table.table {
             </c:otherwise>
         </c:choose>
         </tbody>
-    </table>
+    </table> -->
     <!-- 일단 -->
-
+    <h2>내가 푼 문제 ▼</h2>
     <div class="container">
+        
         <c:forEach items="${myAlgorithmList.myAlgorithmList}" var="myAlgo">
+            
             <div class="box">
-                <div style="background-color: var(--blue);">
+               
+                <div style="background-color: var(--light-gray);">
                     <a href="/algorithm/question/view/${myAlgo.algorithmQuestionVO.companyAlgorithmQuestionId}">제목: ${myAlgo.algorithmQuestionVO.algorithmTitle}</a>
                 </div>
                 <div>제출회사: ${myAlgo.companyInfoVO.companyName}</div>
@@ -222,31 +240,27 @@ table.table {
     </div>
 </div>   
     <script>
-        	function redirectToURL(url) {
+		  function redirectToURL(url) {
 	        window.location.href = url;
-	    }
-	    
-		function redirectToURL(url) {
-	        window.location.href = url;
-	    }
+          }
+	        
 	    /* 비밀번호, 닉네임 수정 버튼 */
-        $("#myprofile").click(function() {
-			redirectToURL(`/memberinfo/view/${sessionScope._LOGIN_USER_.email}`);
+	    $("#myprofile").click(function() {
+			redirectToURL("/memberinfo/view/${sessionScope._LOGIN_USER_.email}");
 		});
 	    $("#mypost").click(function() {
 	        redirectToURL(`/member/mypost`);
 	    });
 	    $("#modify_info").click(function() {
-	        redirectToURL(`/member/selectmember/${sessionScope._LOGIN_USER_.email}`);
+	        redirectToURL("/member/selectmember/${sessionScope._LOGIN_USER_.email}");
 	    });
-	    
 		$("#quit").click(function() {
 	        redirectToURL(`/member/logout`);
 	    });
 		$("#solve").click(function(){
 			redirectToURL(`/codingtest/mylist`);
 		});
-
+        
         function movePage(pageNo) {
             $('.pageNo').val(pageNo)
             $('.search_form').attr({
@@ -254,7 +268,7 @@ table.table {
                 'action': '/codingtest/mylist'
             }).submit()
         }
-       
+  
        
          // 미완성된 기능을 알려주는 모달창
          $('.incomplete').click(function() {
@@ -291,22 +305,7 @@ table.table {
          });
         
          
-         function redirectToURL(url) {
- 	        window.location.href = url;
- 	    }
- 	    /* 비밀번호, 닉네임 수정 버튼 */
- 	    $("#myprofile").click(function() {
- 			redirectToURL(`/memberinfo/view/${memberVO.email}`);
- 		});
- 	    $("#mypost").click(function() {
- 	        redirectToURL(`/member/mypost`);
- 	    });
- 	    $("#modify_info").click(function() {
- 	        redirectToURL(`/member/selectmember/${memberVO.email}`);
- 	    });
- 		$("#quit").click(function() {
- 	        redirectToURL(`/member/logout`);
- 	    });
+        
     </script>
      <jsp:include page="../layout/footer.jsp" />
 </body>

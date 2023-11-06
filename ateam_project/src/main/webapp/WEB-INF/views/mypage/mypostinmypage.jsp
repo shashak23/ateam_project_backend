@@ -91,19 +91,21 @@
 </style>
   <!-- 메인 컨텐츠 영역 -->
 <body> 
-	
- 		
-  <div id="container"> 
-	<div class="flex_button">
-		<button id="myprofile">마이페이지</button>
-		<button>북마크</button>
-		<button id="modify_info">정보 수정</button> 
-		<button id="mypost">내가 쓴 게시글</button>
-		<button id="solve">내가 푼 문제</button>
-		<button>탈퇴</button>
-	</div>   
-	
-		<div class="body_container">
+
+
+
+ 		<div class="flex_button">
+				<button id="myprofile">마이페이지</button>
+				<button>북마크</button>
+				<button id="modify_info">정보 수정</button> 
+				<button id="mypost">내가 쓴 게시글</button>
+				<button id="solve">내가 푼 문제</button>
+				<button>탈퇴</button>
+		</div>
+  <div id="container">    
+	<section class="body_container">
+		<div class="body">
+
 			<p></p>
 			<table class="table">
 				<caption>질답게시판</caption>
@@ -331,6 +333,7 @@
 				</c:choose>
 				</tbody>
 			</table> 
+
 		</div>
 	
 	</div>
@@ -341,10 +344,10 @@
 	
   function redirectToURL(url) {
 	        window.location.href = url;
-	    }
+	   }
 	    /* 비밀번호, 닉네임 수정 버튼 */
 	    $("#myprofile").click(function() {
-			redirectToURL(`/memberinfo/view/$${sessionScope._LOGIN_USER_.email}`);
+			redirectToURL(`/memberinfo/view/${sessionScope._LOGIN_USER_.email}`);
 		});
 	    $("#mypost").click(function() {
 	        redirectToURL(`/member/mypost`);
@@ -358,6 +361,7 @@
 		$("#solve").click(function(){
 			redirectToURL(`/codingtest/mylist`);
 		});
+     
   // 모달창 열고 닫기
   $(document).on('click', '.incomplete', function() {
     $('.modal, .overlay').addClass('modal_active')

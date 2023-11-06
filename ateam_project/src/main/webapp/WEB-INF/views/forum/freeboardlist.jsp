@@ -87,8 +87,8 @@
             margin-right: 10px;
             }
             .why_code {
-                width: 380px;
-                height: 280px;
+                width: 300px;
+                height: 250px;
             }
             .sc_text {
                 position: relative;
@@ -217,7 +217,7 @@
             </div>
             <div class="viedo_ver">
                 <a href="https://www.youtube.com/watch?v=iI0s1JtKpy8">
-                    <iframe width="380" height="250" src="https://www.youtube.com/embed/iI0s1JtKpy8" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    <iframe width="300" height="250" src="https://www.youtube.com/embed/iI0s1JtKpy8" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                 </a>
             </div>        
           </aside>

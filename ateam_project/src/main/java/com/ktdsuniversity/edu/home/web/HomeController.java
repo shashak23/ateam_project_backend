@@ -37,6 +37,7 @@ import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
 import com.ktdsuniversity.edu.companyinfo.service.CompanyInfoService;
 import com.ktdsuniversity.edu.companynews.service.CompanyNewsService;
 import com.ktdsuniversity.edu.companynews.vo.CompanyNewsListVO;
+import com.ktdsuniversity.edu.generalmember.service.GeneralMemberService;
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 import com.ktdsuniversity.edu.generalpost.service.GeneralPostService;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostListVO;
@@ -85,6 +86,9 @@ public class HomeController {
 	
 	@Autowired
 	private TierService tierService;
+	
+	@Autowired
+	private GeneralMemberService generalMemberService;
 
 	@Autowired
 	private FileHandler fileHandler;
@@ -323,6 +327,13 @@ public class HomeController {
 			resultSet.put("result", "fail");
 			return resultSet;
 		}
+	}
+	
+	// 티어 승급 활동 내역 조회
+	@ResponseBody
+	@GetMapping("admin/management/tier/log/{memberEmail}")
+	public List<Map<String, Object>> getMemberActivityLog(@PathVariable String memberEmail) {
+		return generalMemberService.getSelectMemberActivityLog(memberEmail);
 	}
 	
 	@GetMapping("/home/search")
