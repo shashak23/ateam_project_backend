@@ -88,7 +88,7 @@
 <body> 
 
  		<div class="flex_button">
-				<button id="myprofile">마이페이지11</button>
+				<button id="myprofile">마이페이지</button>
 				<button>북마크</button>
 				<button id="modify_info">정보 수정</button> 
 				<button id="mypost">내가 쓴 게시글</button>
@@ -187,144 +187,6 @@
 				</c:choose>
 				</tbody>
 			</table>
-			<p></p>
-			<table class="table">
-				<caption>알고리즘 문제 게시판</caption>
-				<thead>
-					<colgroup>
-						<col width="10%" />
-						<col width="20%" />
-						<col width="10%" />
-						<col width="40%" />
-						<col width="20%" />
-					</colgroup>
-					<tr id="table-tr">
-						<th scope="col">번호</th>
-						<th scope="col">카테고리</th>
-						<th scope="col">난이도</th>
-						<th scope="col">문제 제목</th>
-						<th scope="col">작성자</th>
-					</tr>
-				</thead>
-				<tbody>
-				<c:choose>
-					<c:when test="${not empty algorithmQuestionList.algorithmQuestionList}">
-						<c:forEach items="${algorithmQuestionList.algorithmQuestionList}" var="algorithmquestion" varStatus="index">
-							<tr>
-								<td>${index.index + 1}</td>
-								<td>${algorithmquestion.commonCodeVO.codeContent}</td>
-								<td>${algorithmquestion.algorithmTierId}</td>
-								<td style="font-weight: bold;">
-									<a href="/algorithm/question/view/${algorithmquestion.companyAlgorithmQuestionId}">
-										<c:out value="${algorithmquestion.algorithmTitle}" />
-									</a>
-								</td>
-								<td>${algorithmquestion.memberVO.nickname}</td>
-							</tr>
-						</c:forEach>
-					</c:when>
-					<c:otherwise>
-						<tr>
-							<td colspan="5">조회된 게시글이 없습니다.</td>
-						</tr>
-						
-					</c:otherwise>
-				</c:choose>
-				</tbody>
-			</table>
-			<p></p>
-			<table class="table">
-				<caption>알고리즘 해설 게시판</caption>
-				<thead>
-					<colgroup>
-						<col width="10%" />
-						<col width="25%" />
-						<col width="20%" />
-						<col width="20%" />
-						<col width="15%" />
-						<col width="10%" />
-					</colgroup>
-					<tr>
-						<th>번호</th>
-						<th>제목</th>
-						<th>카테고리</th>
-						<th>작성자</th>
-						<th>작성일</th>
-						<th>조회수</th>
-					</tr>
-				</thead>
-				<tbody>
-				<c:choose>
-					<c:when test="${not empty algorithmExplanationList.algorithmExplanationList}">
-						<c:forEach items="${algorithmExplanationList.algorithmExplanationList}" var="algorithmexplanation" varStatus="index">
-							<tr>
-								<td>${index.index + 1}</td>
-								<td style="font-weight: bold;">
-									<a href="/algorithm/explanation/view/${algorithmexplanation.companyAlgorithmExplanationId}">
-										<c:out value="${algorithmexplanation.postTitle}" />
-									</a>
-								</td>
-								<td>${algorithmexplanation.commonCodeVO.codeContent}</td>
-								<td>${algorithmexplanation.memberVO.nickname}</td>
-								<td>${algorithmexplanation.postDate}</td>
-								<td>${algorithmexplanation.viewCnt}</td>
-							</tr>
-						</c:forEach>
-					</c:when>
-					<c:otherwise>
-						<tr>
-							<td colspan="6">조회된 게시글이 없습니다.</td>
-						</tr>
-						
-					</c:otherwise>
-				</c:choose>
-				</tbody>
-			</table>
-			<p></p>
-			<table class="table">
-				<caption>기업 소식 게시판</caption>
-				<thead>
-					<colgroup>
-						<col width="10%" />
-						<col width="45%" />
-						<col width="15%" />
-						<col width="20%" />
-						<col width="10%" />
-					</colgroup>
-					<tr id="table-tr">
-						<th scope="col">번호</th>
-						<th scope="col">제목</th>
-						<th scope="col">작성자</th>
-						<th scope="col">작성일</th>
-						<th scope="col">조회수</th>
-					</tr>
-				</thead>
-				<tbody>
-				<c:choose>
-					<c:when test="${not empty companyNewsList.companyNewsList}">
-						<c:forEach items="${companyNewsList.companyNewsList}" var="companynews" varStatus="index">
-							<tr>
-								<td>${index.index + 1}</td>
-								<td style="font-weight: bold;">
-									<a href="/news/view/${companynews.companyNewsPostId}">
-										<c:out value="${companynews.postTitle}" />
-									</a>
-								</td>
-								<td>${companynews.memberVO.nickname}</td>
-								<td>${companynews.postDate}</td>
-								<td>${companynews.viewCnt}</td>
-							</tr>
-						</c:forEach>
-					</c:when>
-					<c:otherwise>
-						<tr>
-							<td colspan="5">조회된 게시글이 없습니다.</td>
-						</tr>
-						
-					</c:otherwise>
-				</c:choose>
-				</tbody>
-			</table>
 		</div>
 	</section>
   <jsp:include page="../layout/footer.jsp" />
@@ -334,10 +196,10 @@
 	
   function redirectToURL(url) {
 	        window.location.href = url;
-	    }
+	   }
 	    /* 비밀번호, 닉네임 수정 버튼 */
 	    $("#myprofile").click(function() {
-			redirectToURL(`/memberinfo/view/$${sessionScope._LOGIN_USER_.email}`);
+			redirectToURL(`/memberinfo/view/${sessionScope._LOGIN_USER_.email}`);
 		});
 	    $("#mypost").click(function() {
 	        redirectToURL(`/member/mypost`);
@@ -351,6 +213,7 @@
 		$("#solve").click(function(){
 			redirectToURL(`/codingtest/mylist`);
 		});
+     
   // 모달창 열고 닫기
   $(document).on('click', '.incomplete', function() {
     $('.modal, .overlay').addClass('modal_active')
