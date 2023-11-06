@@ -13,7 +13,7 @@
 <html lang="ko">
   <head>
     <meta charset="utf-8" />
-    <title>SnapChat</title>
+    <title>devGround</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta
       name="viewport"
