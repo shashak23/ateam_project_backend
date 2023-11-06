@@ -408,7 +408,6 @@ public class MemberServiceImpl implements MemberService {
             conn.setRequestProperty("Authorization", "Bearer " + accessToken);
 
             int responseCode = conn.getResponseCode();
-            System.out.println("ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋresponseCode : " + responseCode);
 
             BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 
@@ -446,7 +445,7 @@ public class MemberServiceImpl implements MemberService {
 
 			sb.append("&client_id=ePAK2QDzEMghBxsqTuce"); // 본인이 발급받은 key
 			sb.append("&client_secret=Fjfxbj04YU"); // 본인이 발급받은 key
-			sb.append("&redirect_uri=http://localhost:8080/member/naverLogin"); // 본인이 설정한 주소
+			sb.append("&redirect_uri=http://mcjang.iptime.org:8080/member/naverLogin"); // 본인이 설정한 주소
 
 			sb.append("&code=" + authorizeCode);
 			bw.write(sb.toString());
