@@ -9,22 +9,9 @@
 <jsp:include page="../layout/header.jsp" />
 <script src="/js/lib/jquery-3.7.1.js"></script>
 <style>
-    .container {
-        display: flex;
-        width: 920px;
-        flex-wrap: wrap;
-    }
-
-    .box {
-        border: 1px solid #333;
-        width: 400px;
-        height: 200px;
-        overflow: auto;
-        margin: 10px;
-    }
+   
     .flex_button {
-		position: relative;
-		bottom:-29px;
+		
 		margin-top: 100px;
 		display: flex;
 		flex-direction: column;
@@ -47,9 +34,10 @@
 }
 table.table {
 		border-collapse: collapse;
-		margin-top: 30px;
+		
 		width: 900px;
 		margin: 0 auto;
+       margin-bottom: 200px;
 	}
 
 	table th{
@@ -74,11 +62,10 @@ table.table {
 		color: var(--dark-gray);
 	}
     caption {
-        position: relative;
-        bottom: 300px;
 		font-weight: bold;
 		font-size: 20px;
         margin: 0 auto;
+        margin-bottom: 30px;
 		text-align: left;
 	}
     .controller {
@@ -87,19 +74,22 @@ table.table {
     }
     .search_form {
     margin: 0 auto;
-    margin-left: 990px;
-    margin-top: -50px;
+    margin-left: 980px;
+    margin-bottom: -40px;
+   
     
 }
 .search_btn {
+     margin: 0 auto;
      background-color: var(--light-blue);
      border: none;
      border-radius: 5px;
      width: 60px;
-     height: 30px;
-  
-
-     
+     height: 30px;    
+}
+#body_controller {
+    margin: 0 auto;
+    margin-top: -260px;
 }
 </style>
 </head>
@@ -112,6 +102,7 @@ table.table {
         <button>내가 푼 문제</button>
         <button>탈퇴</button>
     </div>
+<div id="body_controller">
     <form action="/codingtest/mylist" class="search_form" method="get">
         <div>
             <select name="searchType">
@@ -229,6 +220,7 @@ table.table {
 		</div>
 
     </div>
+</div>   
     <script>
         $().ready(function() {
             $('#search_btn').click(function() {
@@ -287,5 +279,6 @@ table.table {
              }
          });
     </script>
+     <jsp:include page="../layout/footer.jsp" />
 </body>
 </html>
