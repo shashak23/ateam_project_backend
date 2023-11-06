@@ -20,7 +20,7 @@
 		margin-top: 100px;
 		display: flex;
 		flex-direction: column;
-		
+		margin-left: 120px;
 	}
 	.flex_button button {
 	color: white;	
