@@ -13,7 +13,6 @@ import org.springframework.web.socket.WebSocketSession;
 
 import com.google.gson.Gson;
 import com.ktdsuniversity.edu.follow.dao.FollowDAO;
-import com.ktdsuniversity.edu.member.vo.MemberVO;
 
 public class ChatRoom {
 
@@ -50,30 +49,45 @@ public class ChatRoom {
 	
 	public boolean isAlreadyLogin(String userEmail) {
 		return sessions.entrySet()
-						.stream()
-						.flatMap(entry -> entry.getValue().stream())
-						.filter(user -> user.getUserEmail().equals(userEmail))
-						.count() > 0;
+															.stream()
+															.flatMap(entry -> entry.getValue().stream())
+															.filter(user -> user.getUserEmail().equals(userEmail))
+															.count() > 0;
 	}
 
 	public void enter(WebSocketSession session, Message receiveMessage) {
 		String roomName = receiveMessage.getRoomName();
 		String userName = receiveMessage.getUserName();
 		String userEmail = receiveMessage.getUserEmail();
+		
 		if (!sessions.containsKey(roomName)) {
 			sessions.put(roomName, new ArrayList<>());
 		}
 
 		ChatUser chatUser = new ChatUser(session, userName, userEmail);
-		if (isAlreadyLogin(userEmail)) {
-			List<ChatUser> userList = sessions.get(roomName);
-			for (int i = 0; i < userList.size(); i++) {
-				ChatUser user = userList.get(i);
-				if (user.getUserEmail().equals(userEmail)) {
-					userList.set(i, chatUser);
+		if (isAlreadyLogin(userEmail) && roomName.equals("main")) {
+			sessions.entrySet().forEach(entry -> {
+				List<ChatUser> eachUserList = entry.getValue();
+				for (int i = 0; i < eachUserList.size(); i++) {
+					ChatUser user = eachUserList.get(i);
+					if (user.getUserEmail().equals(userEmail)) {
+						eachUserList.set(i, chatUser);
+					}
 				}
-			}
+			});
 		}
+//		else if (isAlreadyLogin(userEmail) && !roomName.equals("main")) {
+//			sessions.entrySet().forEach(entry -> {
+//				String eachRoomName = entry.getKey();
+//				List<ChatUser> eachUserList = entry.getValue();
+//				for (int i = 0; i < eachUserList.size(); i++) {
+//					ChatUser user = eachUserList.get(i);
+//					if (user.getUserEmail().equals(userEmail)) {
+//						eachUserList.set(i, chatUser);
+//					}
+//				}
+//			});
+//		}
 		else {
 			sessions.get(roomName).add(chatUser);
 		}

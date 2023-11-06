@@ -1399,7 +1399,7 @@
         'bold', 'italic', 'strikethrough', 'underline', 'removeFormat', '|',
         'bulletedList', 'numberedList', 'todoList', '|',
         'outdent', 'indent', '|',
-        'undo', 'redo', 'fontSize', 'alignment'
+        'undo', 'redo', 'fontSize', 'alignment', 'insertImage'
       ],
       shouldNotGroupWhenFull: true
     },
@@ -1738,7 +1738,7 @@
         'bold', 'italic', 'strikethrough', 'underline', 'removeFormat', '|',
         'bulletedList', 'numberedList', 'todoList', '|',
         'outdent', 'indent', '|',
-        'undo', 'redo', 'fontSize', 'alignment'
+        'undo', 'redo', 'fontSize', 'alignment', 'insertImage'
       ],
       shouldNotGroupWhenFull: true
     },

@@ -14,12 +14,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.ktdsuniversity.edu.admin.vo.AdminTierVO;
 import com.ktdsuniversity.edu.admin.vo.ReportVO;
 import com.ktdsuniversity.edu.admin.web.UserReportController;
+import com.ktdsuniversity.edu.tier.TierVO;
 
 @Repository
 public class AdminDAOImpl extends SqlSessionDaoSupport implements AdminDAO {
@@ -107,5 +106,10 @@ public class AdminDAOImpl extends SqlSessionDaoSupport implements AdminDAO {
 	@Override
 	public int tierMemberAllCount() {
 		return getSqlSession().selectOne("tierMemberAllCount");
+	}
+	
+	@Override
+	public TierVO getMemberAndTier(String email) {
+		return getSqlSession().selectOne("getMemberAndTier", email);
 	}
 }

@@ -166,7 +166,10 @@ body {
 }
 
 .button_container > a:first-child {
-  display: block;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 60px;
   height: 60px;
   border-radius: 50%;
@@ -218,7 +221,6 @@ body {
   border: 1px solid #8e8e8e;
   border-radius: 50%;
   position: relative;
-  margin-right: 20px;
 }
 
 .button_container > a:last-child > .google_img {
@@ -322,8 +324,7 @@ color: var(--red);
         <div class="line"></div>
       </div>
       <div class="button_container tab_content" id="tab1">
-        <a class="p-2" href="https://kauth.kakao.com/oauth/authorize?client_id=2a9927f831835710fa3d3d37b078389c&redirect_uri=http://localhost:8080/member/kakaoLogin&response_type=code">
-          <div class="kakao_img"></div>
+  <a class="p-2" href="https://kauth.kakao.com/oauth/authorize?client_id=2a9927f831835710fa3d3d37b078389c&redirect_uri=http://localhost:8080/member/kakaoLogin&response_type=code">          <div class="kakao_img"></div>
           <!-- <img src="https://developers.kakao.com/tool/resource/static/img/button/login/simple/ko/kakao_login_large.png"> -->
         </a>
         <a href="https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=ePAK2QDzEMghBxsqTuce&state=STATE_STRING&redirect_uri=http://localhost:8080/member/naverLogin">

@@ -6,25 +6,103 @@
 <head>
 <meta charset="UTF-8">
 <title>내가 푼 알고리즘 문제</title>
+<jsp:include page="../layout/header.jsp" />
 <script src="/js/lib/jquery-3.7.1.js"></script>
 <style>
-    .container {
-        display: flex;
-        width: 920px;
-        flex-wrap: wrap;
-    }
+   
+    .flex_button {
+		
+		margin-top: 100px;
+		display: flex;
+		flex-direction: column;
+		
+	}
+	.flex_button button {
+	color: white;	
+    background-color: var(--gray);
+    width: 150px;
+    height: 40px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    border: 2px;
+}
 
-    .box {
-        border: 1px solid #333;
-        width: 400px;
-        height: 200px;
-        overflow: auto;
-        margin: 10px;
+.flex_button button:hover {
+	background-color: var(--light-blue);
+  	color: white;
+
+}
+table.table {
+		border-collapse: collapse;
+		
+		width: 900px;
+		margin: 0 auto;
+       margin-bottom: 200px;
+	}
+
+	table th{
+		background-color: var(--light-gray);
+		border-bottom: 1px solid var(--dark-gray);
+		height:35px;
+		color: var(--dark-gray);
+	}
+
+	table td{
+		border-bottom: 1px solid #D3D3D3;
+		color: var(--dark-gray);
+	}
+	table.table th:last-child, table.table td:last-child {
+		border-right: none;
+	}
+	
+	table.table > tbody td {
+		padding: 10px;
+		color: #333;
+		text-align: center;
+		color: var(--dark-gray);
+	}
+    caption {
+		font-weight: bold;
+		font-size: 20px;
+        margin: 0 auto;
+        margin-bottom: 30px;
+		text-align: left;
+	}
+    .controller {
+        margin: 0 auto;
+        margin-left: 300px;
     }
+    .search_form {
+    margin: 0 auto;
+    margin-left: 980px;
+    margin-bottom: -40px;
+   
+    
+}
+.search_btn {
+     margin: 0 auto;
+     background-color: var(--light-blue);
+     border: none;
+     border-radius: 5px;
+     width: 60px;
+     height: 30px;    
+}
+#body_controller {
+    margin: 0 auto;
+    margin-top: -260px;
+}
 </style>
 </head>
 <body>
-    <div>로그인 정보: ${sessionScope._LOGIN_USER_.email}</div>
+    <div class="flex_button">
+        <button id="myprofile">마이페이지</button>
+        <button>북마크</button>
+        <button id="modify_info">정보 수정</button>
+        <button id="mypost">내가 쓴 게시글</button>
+        <button id="solve">내가 푼 문제</button>
+        <button>탈퇴</button>
+    </div>
+<div id="body_controller">
     <form action="/codingtest/mylist" class="search_form" method="get">
         <div>
             <select name="searchType">
@@ -40,6 +118,52 @@
             <button class="search_btn">검색</button>
         </div>
     </form>
+    <!-- 일단 -->
+    <table class="table">
+        <caption>알고리즘 문제 게시판</caption>
+        <thead>
+            <colgroup>
+                <col width="10%" />
+                <col width="20%" />
+                <col width="10%" />
+                <col width="40%" />
+                <col width="20%" />
+            </colgroup>
+            <tr id="table-tr">
+                <th scope="col">번호</th>
+                <th scope="col">카테고리</th>
+                <th scope="col">난이도</th>
+                <th scope="col">문제 제목</th>
+                <th scope="col">작성자</th>
+            </tr>
+        </thead>
+        <tbody>
+        <c:choose>
+            <c:when test="${not empty algorithmQuestionList.algorithmQuestionList}">
+                <c:forEach items="${algorithmQuestionList.algorithmQuestionList}" var="algorithmquestion" varStatus="index">
+                    <tr>
+                        <td>${index.index + 1}</td>
+                        <td>${algorithmquestion.commonCodeVO.codeContent}</td>
+                        <td>${algorithmquestion.algorithmTierId}</td>
+                        <td style="font-weight: bold;">
+                            <a href="/algorithm/question/view/${algorithmquestion.companyAlgorithmQuestionId}">
+                                <c:out value="${algorithmquestion.algorithmTitle}" />
+                            </a>
+                        </td>
+                        <td>${algorithmquestion.memberVO.nickname}</td>
+                    </tr>
+                </c:forEach>
+            </c:when>
+            <c:otherwise>
+                <tr>
+                    <td colspan="5">조회된 게시글이 없습니다.</td>
+                </tr>
+                
+            </c:otherwise>
+        </c:choose>
+        </tbody>
+    </table>
+    <!-- 일단 -->
 
     <div class="container">
         <c:forEach items="${myAlgorithmList.myAlgorithmList}" var="myAlgo">
@@ -96,12 +220,32 @@
 		</div>
 
     </div>
+</div>   
     <script>
-        $().ready(function() {
-            $('#search_btn').click(function() {
-                movePage()
-            })
-        })
+        	function redirectToURL(url) {
+	        window.location.href = url;
+	    }
+	    
+		function redirectToURL(url) {
+	        window.location.href = url;
+	    }
+	    /* 비밀번호, 닉네임 수정 버튼 */
+        $("#myprofile").click(function() {
+			redirectToURL(`/memberinfo/view/${sessionScope._LOGIN_USER_.email}`);
+		});
+	    $("#mypost").click(function() {
+	        redirectToURL(`/member/mypost`);
+	    });
+	    $("#modify_info").click(function() {
+	        redirectToURL(`/member/selectmember/${sessionScope._LOGIN_USER_.email}`);
+	    });
+	    
+		$("#quit").click(function() {
+	        redirectToURL(`/member/logout`);
+	    });
+		$("#solve").click(function(){
+			redirectToURL(`/codingtest/mylist`);
+		});
 
         function movePage(pageNo) {
             $('.pageNo').val(pageNo)
@@ -110,6 +254,60 @@
                 'action': '/codingtest/mylist'
             }).submit()
         }
+       
+       
+         // 미완성된 기능을 알려주는 모달창
+         $('.incomplete').click(function() {
+             $('.modal, .overlay').addClass('modal_active');
+         });
+         $('.overlay').click(function() {
+             $('.modal, .overlay').removeClass('modal_active');
+         });
+     
+         // 스크롤 버튼, IDE
+         let calcScrollValue = () => {
+             let scrollProgress = document.getElementById('progress');
+             let progressValue = document.getElementById('progress-value');
+             let pos = document.documentElement.scrollTop;
+             let calcHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+             let scrollValue = Math.round((pos * 100) / calcHeight);
+     
+             scrollProgress.addEventListener('click', () => {
+                 document.documentElement.scrollTop = 0;
+             });
+         };
+         
+         window.onscroll = calcScrollValue;
+     
+         // 서브 리스트가 있다면? 아래로 떨군다.
+         $('.visible').hide();
+         $('.list_company').mouseover(function() {
+             $('.visible').show();
+             $(this).find('a').css({'background-color': 'var(--blue)', 'color': 'white', 'box-shadow': '0 0 5px var(--gray)'});
+         });
+         $('.list_company').mouseleave(function() {
+             $('.visible').hide();
+             $(this).find('a').css({'background-color': 'white', 'color': 'var(--blue)', 'box-shadow': 'none'});
+         });
+        
+         
+         function redirectToURL(url) {
+ 	        window.location.href = url;
+ 	    }
+ 	    /* 비밀번호, 닉네임 수정 버튼 */
+ 	    $("#myprofile").click(function() {
+ 			redirectToURL(`/memberinfo/view/${memberVO.email}`);
+ 		});
+ 	    $("#mypost").click(function() {
+ 	        redirectToURL(`/member/mypost`);
+ 	    });
+ 	    $("#modify_info").click(function() {
+ 	        redirectToURL(`/member/selectmember/${memberVO.email}`);
+ 	    });
+ 		$("#quit").click(function() {
+ 	        redirectToURL(`/member/logout`);
+ 	    });
     </script>
+     <jsp:include page="../layout/footer.jsp" />
 </body>
 </html>

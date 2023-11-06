@@ -12,9 +12,6 @@
 <!--뷰포트는 화면에 표시되는 웹영역 표시, 모바일 등에서 상호작용 할 수있는지 제어-->
 <meta name="viewport" id="viewport"
 	content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, width=device-width" />
-<!--스타일,폰트 지정-->
-<!--스와이퍼 기능 지정-->
-<!--스타일 입히기-->
 <style>
 /* 수정버튼  */
 .introduce-modify,#edit_button1,#edit_button2,#delete_tech,
@@ -272,22 +269,25 @@ position: absolute;
 
 		
 	    
-	    function redirectToURL(url) {
+		function redirectToURL(url) {
 	        window.location.href = url;
 	    }
 	    /* 비밀번호, 닉네임 수정 버튼 */
 	    $("#myprofile").click(function() {
-			redirectToURL(`/memberinfo/view/${memberVO.email}`);
+			redirectToURL(`/memberinfo/view/$${sessionScope._LOGIN_USER_.email}`);
 		});
 	    $("#mypost").click(function() {
 	        redirectToURL(`/member/mypost`);
 	    });
 	    $("#modify_info").click(function() {
-	        redirectToURL(`/member/selectmember/${memberVO.email}`);
+	        redirectToURL(`/member/selectmember/${sessionScope._LOGIN_USER_.email}`);
 	    });
 		$("#quit").click(function() {
 	        redirectToURL(`/member/logout`);
 	    });
+		$("#solve").click(function(){
+			redirectToURL(`/codingtest/mylist`);
+		});
 
 	    /* 프로필 사진 수정 */ 
 	  	$('.profile-modify').click(function() {
@@ -343,7 +343,6 @@ position: absolute;
 	     $("#delete_tech").click(function() {
 	    	 var email = $(this).data('deleteteach');
 		     var url = '/memberInfo/modify/delete-tech/' + email;
-	       	 window.location.href = url;
 	    });
 	    
 	    /* 기술스택 추가버튼 */
@@ -352,7 +351,7 @@ position: absolute;
 	    });
 	    /* 채팅 */
 	    $(".message_icon").click(function() {
-	    	inviteUser(send, userName, email, "${memberVO.email}");
+	    	inviteUser(send, "${sessionScope._LOGIN_USER_.nickname}", "${sessionScope._LOGIN_USER_.email}", "${memberVO.email}");
 	    });
 	    /* 학력 수정*/
 	    $('.education-modify').click(function() {
@@ -395,15 +394,15 @@ position: absolute;
 	<div id="overall">
 	<div id="container">
 		<div class="flex_button">
-			<c:if
-				test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
+			<!-- <c:if
+				test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}"> -->
 				<button id="myprofile">마이페이지</button>
 				<button>북마크</button>
 				<button id="modify_info">정보 수정</button>
 				<button id="mypost">내가 쓴 게시글</button>
-				<button>내가 푼 문제</button>
+				<button id="solve">내가 푼 문제</button>
 				<button id="quit">탈퇴</button>
-			</c:if>
+			<!-- </c:if> -->
 		</div>
 		<div class="flex_main">
 			
@@ -880,6 +879,14 @@ position: absolute;
 					 $(e.currentTarget).css({'background-color':'var(--blue)', 'color':'var(--white)'})
 					 $(e.currentTarget).addClass('follow_on')
 					 $('.follow_icon').prepend(`<input type="hidden" class="followId" value="\${result.followId}"/>`)
+				   	 send({
+			         	roomName: "main",
+			            sendType: "follow",
+			            userName: "${sessionScope._LOGIN_USER_.nickname}",
+			            userEmail: "${sessionScope._LOGIN_USER_.email}",
+			            message: "${sessionScope._LOGIN_USER_.nickname}님이 팔로우 했습니다.",
+			            to: "${memberVO.email}"
+			        })
 				   }
 				   else {
 					 alert('처리하지 못했습니다.')
