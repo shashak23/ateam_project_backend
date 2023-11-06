@@ -1977,22 +1977,7 @@
   // 달력 포맷
   flatpickr.localize(flatpickr.l10ns.ko);
 
-  $('.dateSelector1').flatpickr({
-      minDate: 'today',
-      local: 'ko'
-  })
-
-  $('.dateSelector2').flatpickr({
-      minDate: 'today',
-      local: 'ko'
-  })
-
-  $('.modify_dateSelector1').flatpickr({
-      minDate: 'today',
-      local: 'ko'
-  })
-
-  $('.modify_dateSelector2').flatpickr({
+  $('.dateSelector1, .dateSelector2, .modify_dateSelector1, .modify_dateSelector2').flatpickr({
       minDate: 'today',
       local: 'ko'
   })
