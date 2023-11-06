@@ -44,8 +44,10 @@ button, input, textarea {
 }
 
 .replies {
+   position: relative;
+   right: 90px;
   width: 800px;
-  margin: 0px 0px 0px 500px;
+  margin: 0px 0px 0px 460px;
 }
 h3 {
    position: relative;
@@ -294,7 +296,7 @@ textarea {
 #btn-controller_1 {
    
    margin: 0 auto;
-   margin-left: 1430px;
+   margin-left: 1300px;
    position: relative;
    top: 120px;
 }
