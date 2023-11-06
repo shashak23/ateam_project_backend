@@ -88,7 +88,7 @@ function connectSocket(userName, userEmail, receiveCallback) {
             		|| content.sendType == "invite" ) {
                 receiveCallback(send, content);
             }
-            else if (content.sendType == "connect") {
+            else if (content.sendType == "connect" || content.sendType == "follow") {
                 AlertBox(content.message);
             }
         }

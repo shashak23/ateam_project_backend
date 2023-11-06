@@ -23,7 +23,7 @@
         	event.preventDefault();
         	var code = $("#ide")[0].contentWindow.getCode();
         	$("#defaultCode").val(code);
-        	
+        	$("#myAnswer").val(code);
         	$("#myAlgorithmVO").submit();
         	
         })     

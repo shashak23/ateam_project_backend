@@ -99,7 +99,7 @@ table.table {
         <button>북마크</button>
         <button id="modify_info">정보 수정</button>
         <button id="mypost">내가 쓴 게시글</button>
-        <button>내가 푼 문제</button>
+        <button id="solve">내가 푼 문제</button>
         <button>탈퇴</button>
     </div>
 <div id="body_controller">
@@ -222,11 +222,30 @@ table.table {
     </div>
 </div>   
     <script>
-        $().ready(function() {
-            $('#search_btn').click(function() {
-                movePage()
-            })
-        })
+        	function redirectToURL(url) {
+	        window.location.href = url;
+	    }
+	    
+		function redirectToURL(url) {
+	        window.location.href = url;
+	    }
+	    /* 비밀번호, 닉네임 수정 버튼 */
+        $("#myprofile").click(function() {
+			redirectToURL(`/memberinfo/view/${sessionScope._LOGIN_USER_.email}`);
+		});
+	    $("#mypost").click(function() {
+	        redirectToURL(`/member/mypost`);
+	    });
+	    $("#modify_info").click(function() {
+	        redirectToURL(`/member/selectmember/${sessionScope._LOGIN_USER_.email}`);
+	    });
+	    
+		$("#quit").click(function() {
+	        redirectToURL(`/member/logout`);
+	    });
+		$("#solve").click(function(){
+			redirectToURL(`/codingtest/mylist`);
+		});
 
         function movePage(pageNo) {
             $('.pageNo').val(pageNo)
@@ -270,14 +289,24 @@ table.table {
              $('.visible').hide();
              $(this).find('a').css({'background-color': 'white', 'color': 'var(--blue)', 'box-shadow': 'none'});
          });
-         var swiper = new Swiper('.swiper-container', {
-             slidesPerView: 1, // 한 번에 보일 슬라이드 개수
-             spaceBetween: 10, // 슬라이드 사이 간격
-             navigation: {
-                 nextEl: '.swiper-button-next', // 다음 버튼의 클래스
-                 prevEl: '.swiper-button-prev'  // 이전 버튼의 클래스
-             }
-         });
+        
+         
+         function redirectToURL(url) {
+ 	        window.location.href = url;
+ 	    }
+ 	    /* 비밀번호, 닉네임 수정 버튼 */
+ 	    $("#myprofile").click(function() {
+ 			redirectToURL(`/memberinfo/view/${memberVO.email}`);
+ 		});
+ 	    $("#mypost").click(function() {
+ 	        redirectToURL(`/member/mypost`);
+ 	    });
+ 	    $("#modify_info").click(function() {
+ 	        redirectToURL(`/member/selectmember/${memberVO.email}`);
+ 	    });
+ 		$("#quit").click(function() {
+ 	        redirectToURL(`/member/logout`);
+ 	    });
     </script>
      <jsp:include page="../layout/footer.jsp" />
 </body>

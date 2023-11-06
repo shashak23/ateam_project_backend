@@ -1,5 +1,7 @@
 package com.ktdsuniversity.edu.companyinfo.web;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,12 +10,18 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.ktdsuniversity.edu.beans.SHA;
+import com.ktdsuniversity.edu.career.vo.CareerVO;
+import com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO;
 import com.ktdsuniversity.edu.companyinfo.service.CompanyInfoService;
 import com.ktdsuniversity.edu.companymember.vo.CompanyVO;
+import com.ktdsuniversity.edu.education.vo.EducationVO;
+import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 
 @Controller
@@ -61,4 +69,11 @@ public class CompanyInfoController {
 		
 		return "redirect:/member/auth";
 		}
+	
+	@GetMapping("/companyinfo/view")
+	public String viewMemberInfo() {
+		return "companyinfo/companyprofile";
+		
+		
+	}
 	}
