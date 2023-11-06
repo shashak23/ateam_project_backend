@@ -143,39 +143,50 @@ updateViewCount();
 		label {
 			padding-left: 10px; 
 			margin-top: 10px;
-			/* margin-left: 30px; */
+			margin-left: 30px;
 		}
 		input, textarea {
 			margin: auto 0;
 			margin-top: 10px;
-			height: 30px;		
+			height: 20px;		
 			width: 500px;
 		}
 		.ck-editor__editable { 
 			height: 350px; 
-			width: 900px;
+			width: 1000px;
 			margin: auto 0;
 		
 		}
 	    .ck-content {
-			font-size: 12px; 	
+			 font-size: 12px; 	
 		}
 	
 	    .hashtag {
 	    	grid-column: 1 / 3;
 	     	margin-top: 460px;
 	    }
-	    
-	    .hashtag > input {
-	     	margin-left: 10000000px;
-	     	margin-right: 1000000px;
-	    }	
-		.seperate-line {
-	      	border: 1px solid #ccc;
-	      	width: 1000px;
-	      	height: 1px;
-	      	margin: 10px 0px 7px 0px;
-	    }
+		#button_1 {
+			position: relative;
+			bottom: 540px;
+			margin: 0 auto;
+			margin-left: 500px;
+			border: none;
+			background-color: var(--light-blue);
+			border-radius: 5px;
+			width: 70px;
+			height: 30px;
+			
+		}
+		#button_2 {
+			position: relative;
+			bottom: 540px;
+			margin: 0 auto;
+			background-color: var(--light-blue);
+			border: none;
+			border-radius: 5px;
+			width: 70px;
+			height: 30px;
+		}
 		
 </style>
 <script type="text/javascript">
@@ -292,14 +303,13 @@ $().ready(function(){
 <body>
 
 	<div id="container">
-		<h1 class="title_name"> 질답게시판의 게시글 작성 </h1>
+		<h1 class="title_name"> 질답 게시판 게시글 작성 </h1>
 		<div class="seperate-line"></div>
-		<form method = "post" id="postForm">
+		<form method = "post" >		
 			<div class = "grid">
 				<label for = "postTitle"> 제목 </label>
-				<input id = "postTitle" type="text" name="postTitle" />
-				
-				<label for = "postContent"> 내용 </label>
+				<input id = "postTitle" type = "text" name="postTitle" />
+				<label for = "postContent"></label>
 				<textarea name="postContent" id="editor"></textarea>
 					<script>
 					CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
@@ -443,6 +453,7 @@ $().ready(function(){
 						]
 					});  
 					</script>
+				
 	<div class = "seperate-line" ></div>
         <div class="hashtag">
 			<label for="hashtag">해시태그</label>
@@ -456,8 +467,8 @@ $().ready(function(){
 		</div>
 	          <div class="btn-group">
 	             <div class="right-align">
-	                 <input type="button" value="추가" onclick="addHashtag()">
-		        	 <input type="button" value="완료" onclick="savePost()">
+	                 <input id="button_1" type="button" value="추가" onclick="addHashtag()">
+		        	 <input id="button_2" type="button" value="완료" onclick="savePost()">
 	             </div>
 	          </div>
           <div id="displayHashtags"></div>
