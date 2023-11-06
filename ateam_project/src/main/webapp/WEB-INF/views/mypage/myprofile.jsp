@@ -264,22 +264,25 @@ position: absolute;
 
 		
 	    
-	    function redirectToURL(url) {
+		function redirectToURL(url) {
 	        window.location.href = url;
 	    }
 	    /* 비밀번호, 닉네임 수정 버튼 */
 	    $("#myprofile").click(function() {
-			redirectToURL(`/memberinfo/view/${memberVO.email}`);
+			redirectToURL(`/memberinfo/view/$${sessionScope._LOGIN_USER_.email}`);
 		});
 	    $("#mypost").click(function() {
 	        redirectToURL(`/member/mypost`);
 	    });
 	    $("#modify_info").click(function() {
-	        redirectToURL(`/member/selectmember/${memberVO.email}`);
+	        redirectToURL(`/member/selectmember/${sessionScope._LOGIN_USER_.email}`);
 	    });
 		$("#quit").click(function() {
 	        redirectToURL(`/member/logout`);
 	    });
+		$("#solve").click(function(){
+			redirectToURL(`/codingtest/mylist`);
+		});
 
 	    /* 프로필 사진 수정 */ 
 	  	$('.profile-modify').click(function() {
@@ -385,15 +388,15 @@ position: absolute;
 	<div id="overall">
 	<div id="container">
 		<div class="flex_button">
-			<c:if
-				test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
+			<!-- <c:if
+				test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}"> -->
 				<button id="myprofile">마이페이지</button>
 				<button>북마크</button>
 				<button id="modify_info">정보 수정</button>
 				<button id="mypost">내가 쓴 게시글</button>
-				<button>내가 푼 문제</button>
+				<button id="solve">내가 푼 문제</button>
 				<button id="quit">탈퇴</button>
-			</c:if>
+			<!-- </c:if> -->
 		</div>
 		<div class="flex_main">
 			
