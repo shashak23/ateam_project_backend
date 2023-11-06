@@ -274,7 +274,7 @@ position: absolute;
 	    }
 	    /* 비밀번호, 닉네임 수정 버튼 */
 	    $("#myprofile").click(function() {
-			redirectToURL(`/memberinfo/view/$${sessionScope._LOGIN_USER_.email}`);
+			redirectToURL(`/memberinfo/view/${sessionScope._LOGIN_USER_.email}`);
 		});
 	    $("#mypost").click(function() {
 	        redirectToURL(`/member/mypost`);
