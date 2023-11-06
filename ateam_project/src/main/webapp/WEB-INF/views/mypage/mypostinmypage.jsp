@@ -4,20 +4,25 @@
 <jsp:include page="../layout/header.jsp" />
 <style>
   /* 메인 컨텐츠 영역 */
-  .body_container {
-    margin: 0 auto;
-    margin-left: 55px; 
-    margin-top: -380px; 
-    margin-bottom: 100px;
 
-   
-}
+	#container{
+		display: flex; 
+		justify-content: center;
+	}
+
 	.flex_button {	
-		margin-top: 100px;
+		margin: 100px 50px 0px 0px;
 		display: flex;
 		flex-direction: column;
 	
 	}
+
+	.body_container{
+		display: flex;
+		flex-direction: column;
+		margin-left: 100px;
+	}
+
 	.flex_button button {
 	  color: white;	
     background-color: var(--gray);
@@ -26,7 +31,7 @@
     margin-bottom: 15px;
     cursor: pointer;
     border: 2px;
-}
+	}
 
 .flex_button button:hover {
 	background-color: var(--light-blue);
@@ -86,18 +91,19 @@
 </style>
   <!-- 메인 컨텐츠 영역 -->
 <body> 
-
- 		<div class="flex_button">
-				<button id="myprofile">마이페이지11</button>
-				<button>북마크</button>
-				<button id="modify_info">정보 수정</button> 
-				<button id="mypost">내가 쓴 게시글</button>
-				<button id="solve">내가 푼 문제</button>
-				<button>탈퇴</button>
-		</div>
-  <div id="container">    
-	<section class="body_container">
-		<div class="body">
+	
+ 		
+  <div id="container"> 
+	<div class="flex_button">
+		<button id="myprofile">마이페이지</button>
+		<button>북마크</button>
+		<button id="modify_info">정보 수정</button> 
+		<button id="mypost">내가 쓴 게시글</button>
+		<button id="solve">내가 푼 문제</button>
+		<button>탈퇴</button>
+	</div>   
+	
+		<div class="body_container">
 			<p></p>
 			<table class="table">
 				<caption>질답게시판</caption>
@@ -281,7 +287,7 @@
 				</tbody>
 			</table>
 			<p></p>
-			<table class="table">
+			 <table class="table">
 				<caption>기업 소식 게시판</caption>
 				<thead>
 					<colgroup>
@@ -324,9 +330,10 @@
 					</c:otherwise>
 				</c:choose>
 				</tbody>
-			</table>
+			</table> 
 		</div>
-	</section>
+	
+	</div>
   <jsp:include page="../layout/footer.jsp" />
 </body>
 
