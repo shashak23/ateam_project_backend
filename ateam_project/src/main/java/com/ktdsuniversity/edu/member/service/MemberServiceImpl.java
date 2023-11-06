@@ -318,7 +318,7 @@ public class MemberServiceImpl implements MemberService {
 			sb.append("grant_type=authorization_code");
 
 			sb.append("&client_id=2a9927f831835710fa3d3d37b078389c"); // 본인이 발급받은 key
-			sb.append("&redirect_uri=http://localhost:8080/member/kakaoLogin"); // 본인이 설정한 주소
+			sb.append("&redirect_uri=http://mcjang.iptime.org:8080/member/kakaoLogin"); // 본인이 설정한 주소
 
 			sb.append("&code=" + authorizeCode);
 			bw.write(sb.toString());
