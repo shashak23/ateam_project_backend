@@ -242,16 +242,17 @@ h2 {
     <script>
 		  function redirectToURL(url) {
 	        window.location.href = url;
+          }
 	        
 	    /* 비밀번호, 닉네임 수정 버튼 */
 	    $("#myprofile").click(function() {
-			redirectToURL(`/memberinfo/view/${sessionScope._LOGIN_USER_.email}`);
+			redirectToURL("/memberinfo/view/${sessionScope._LOGIN_USER_.email}");
 		});
 	    $("#mypost").click(function() {
 	        redirectToURL(`/member/mypost`);
 	    });
 	    $("#modify_info").click(function() {
-	        redirectToURL(`/member/selectmember/${sessionScope._LOGIN_USER_.email}`);
+	        redirectToURL("/member/selectmember/${sessionScope._LOGIN_USER_.email}");
 	    });
 		$("#quit").click(function() {
 	        redirectToURL(`/member/logout`);
@@ -259,7 +260,7 @@ h2 {
 		$("#solve").click(function(){
 			redirectToURL(`/codingtest/mylist`);
 		});
-        }
+        
         function movePage(pageNo) {
             $('.pageNo').val(pageNo)
             $('.search_form').attr({
@@ -304,22 +305,7 @@ h2 {
          });
         
          
-         function redirectToURL(url) {
- 	        window.location.href = url;
- 	    }
- 	    /* 비밀번호, 닉네임 수정 버튼 */
- 	    $("#myprofile").click(function() {
- 			redirectToURL(`/memberinfo/view/${memberVO.email}`);
- 		});
- 	    $("#mypost").click(function() {
- 	        redirectToURL(`/member/mypost`);
- 	    });
- 	    $("#modify_info").click(function() {
- 	        redirectToURL(`/member/selectmember/${memberVO.email}`);
- 	    });
- 		$("#quit").click(function() {
- 	        redirectToURL(`/member/logout`);
- 	    });
+        
     </script>
      <jsp:include page="../layout/footer.jsp" />
 </body>
