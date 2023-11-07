@@ -80,7 +80,7 @@ app:
         kakao:
             access-token:
                 client-id: 2a9927f831835710fa3d3d37b078389c
-                redirect-url: http://localhost.org:8080/member/kakaoLogin
+                redirect-url: http://mcjang.iptime.org:8080/member/kakaoLogin
         naver:
             access-token:
                 client-id: ePAK2QDzEMghBxsqTuce
