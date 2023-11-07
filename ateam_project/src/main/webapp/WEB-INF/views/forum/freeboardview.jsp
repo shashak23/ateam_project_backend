@@ -63,8 +63,8 @@
    
    .replies>.comment-header {
       display: grid;
-      grid-template-columns: 95px 100px 1fr;
-      height: 50px;
+      height: 70px;
+      margin-right: 30px;
    }
    
    .replies>.comment-header>.replies-count {
@@ -76,8 +76,12 @@
       margin-right: 45px;
    }
    .write-comment {
-   position: relative;
-   bottom: 12px;
+      position: relative;
+      right: 110px;
+      margin: 0 auto;
+     
+     
+
    }
 
    
@@ -186,25 +190,21 @@
 
 }
    .main_Container {
-      position: relative;
-      left: 500px;
-      border-radius: 10px;
-      border: 1px solid var(--light-gray);
-      margin-top: 130px;
-      width: 1000px;
+      
+    margin: 0 auto;
+    border-radius: 10px;
+    border: 1px solid var(--light-gray);
+    margin-top: 130px;
+    width: 950px;
+    height: auto;
+
       
    }
-   .button_controller {
+   /* .button_controller {
       position: relative;
       left: 1350px;
       top: 120px;
-   }
-   h1 {
-      position: relative;
-      bottom: 30px;
-      margin-left: 30px;
-      margin-top: 60px;
-   }
+   } */
    .free_Title {
       position: relative;
       top: 25px;
@@ -241,7 +241,7 @@
 
    
    textarea {
-      width: 1000px;
+      width: 950px;
      
    }
    #btn-save-comment {
@@ -276,12 +276,7 @@
    height: 1px;
    margin: 10px 0px 7px 0px;
 }
-.btn_controller {
-   margin: 0 auto;
-   margin-left: 1430px;
-   position: relative;
-   top: 120px;
-}
+
 
    
    </style>
