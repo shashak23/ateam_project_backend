@@ -18,9 +18,13 @@
 	}
 
 	.body_container{
+	    margin: 0 auto;
+		margin-bottom: 100px;
 		display: flex;
 		flex-direction: column;
-		margin-left: 100px;
+		position: relative;
+		bottom:380px;
+		
 	}
 
 	.flex_button button {
@@ -333,9 +337,7 @@
 				</c:choose>
 				</tbody>
 			</table>  -->
-
 		</div>
-	
 	</div>
   <jsp:include page="../layout/footer.jsp" />
 </body>
