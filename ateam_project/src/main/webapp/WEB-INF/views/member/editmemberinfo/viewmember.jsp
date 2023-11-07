@@ -100,7 +100,7 @@ $().ready(function() {
 			<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
 				<div class="flex_button">
 					<button id="myprofile">마이페이지</button>
-					<button>북마크</button>
+					<button id="bookmark">북마크</button>
 					<button id="modify_info">정보 수정</button>
 					<button id="mypost">내가 쓴 게시글</button>
 					<button id="solve">내가 푼 문제</button>
@@ -201,6 +201,10 @@ $().ready(function() {
 	    });
 		$("#solve").click(function(){
 			redirectToURL(`/codingtest/mylist`);
+		});
+		$("#bookmark").click(function(){
+			redirectToURL(`/member/bookmark`);
+			
 		});
         
 </script>
