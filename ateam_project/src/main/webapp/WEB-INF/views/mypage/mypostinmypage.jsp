@@ -196,7 +196,7 @@
 				</tbody>
 			</table>
 			<p></p>
-			<table class="table">
+			<!-- <table class="table">
 				<caption>알고리즘 문제 게시판</caption>
 				<thead>
 					<colgroup>
@@ -332,7 +332,7 @@
 					</c:otherwise>
 				</c:choose>
 				</tbody>
-			</table> 
+			</table>  -->
 
 		</div>
 	
