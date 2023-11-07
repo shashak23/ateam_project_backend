@@ -794,8 +794,7 @@
     let loading = false
     let article, articles
     let boardType
-    let hashtags = []
-    let hashtag_template
+    let hashtagArr = []
     let template
     let comments
     let comment_cnt
@@ -804,6 +803,7 @@
     let email
     let members
     let page = 0
+    let innerCounter
 
     // 댓글 개수 가져오기
     $.get('/home/maincontent/commentcnt', function(response_of_comment) {
@@ -815,11 +815,13 @@
       nicknameList = response_of_nicknames
     })
     
-    const loadContents = function() {
+    function loadContents(hashtagArr = '') {
+      $('.body_left').empty()
+
       $.get('/home/maincontent', function(response) {
         articles = response
-        //console.log(articles)
         all_count = response.length
+
         if (skip === 0) {
           for (let i = skip; i < skip + 5; i++) {
             article = articles[i]
@@ -928,8 +930,19 @@
               }
             })
 
-            $('.body_left').append(templateDom)
 
+            // 해시태그 필터링
+            if (hashtagArr.length === 0) {
+              $('.body_left').append(templateDom)
+            }
+            else {
+              for (let i = 0; i < hashtagArr.length; i++) {
+                if (hashtagArr[i] === templateDom.find('.hashtagList').find('li')) {
+                  $('.body_left').append(templateDom)
+                  break
+                }
+              }
+            }
           }          
           skip += 5
 
@@ -941,10 +954,7 @@
             function loadRecFollower() {
               $.get(`/recommend/follower/\${user_email}`, function(response) {
                 let recommendList = response.recommendList;
-                console.log(recommendList)
                 const totalMembers = recommendList.length;
-                console.log("총 추천수 :" + totalMembers)
-                console.log("페이지번호 :" + page)
 
                 if (totalMembers > 0) {
                   recommendTemplate = `
@@ -962,7 +972,6 @@
                     for(let i = page; i < page + 3; i++) {
                       if(i < totalMembers) {
                         let member = recommendList[i]
-                        console.log(member)
                         const profilePic = member.memberVO.profilePic;
                         const nickname = member.memberVO.nickname;
                         const email = member.memberVO.email;
@@ -1068,39 +1077,45 @@
                       </div>
                     </article>`
 
-                    let templateDom = $(template);
+                  let templateDom = $(template);
 
-                    // 북마크 상태 가져오기
-                    user_email = `${sessionScope._LOGIN_USER_.email}`
+                  // 북마크 상태 가져오기
+                  user_email = `${sessionScope._LOGIN_USER_.email}`
 
-                    $.get(`/bookmark/status/\${user_email}/\${article.generalPostId}`, function(response) {
-                      if (response.bookmarkYn === 'Y') {
-                        templateDom.find('.bookmarkBtn').find('svg').css('fill', 'var(--blue)').addClass('bookmark_on')
-                        templateDom.find('.bookmarkBtn').prepend(`<input type="hidden" class="bookmarkId" value="\${response.bookmarkId}"/>`)
-                      }
-                    })
-
-                   // 팔로우 상태 가져오기
-                   $.get(`/follow/status/\${user_email}/\${email}`, function(state) {
-                     if(state.followYn === 'Y') {
-                       templateDom.find('.follow_btn').css({'background-color':'var(--blue)', 'color':'var(--white)'}).addClass('follow_on')
-                       templateDom.find('.follow_btn').prepend($(`<input type="hidden" class="followId" value="\${state.followId}"/>`))
-                     }
-                   })
-                    
-                    // 게시글 유형이 자유 유형이면 대문짝만한 Q 삭제
-                    if(article.boardId === 'CC-20231017-000029') {
-                      templateDom.find('.big_letter').text('').css('margin-right', '0px')
+                  $.get(`/bookmark/status/\${user_email}/\${article.generalPostId}`, function(response) {
+                    if (response.bookmarkYn === 'Y') {
+                      templateDom.find('.bookmarkBtn').find('svg').css('fill', 'var(--blue)').addClass('bookmark_on')
+                      templateDom.find('.bookmarkBtn').prepend(`<input type="hidden" class="bookmarkId" value="\${response.bookmarkId}"/>`)
                     }
+                  })
 
-                    // 해시태그 표시용 AJAX 호출
-                    $.get(`/home/hashtag/\${article.generalPostId}`, function(response_of_hashtag) {
-                      if (response_of_hashtag.length > 0) {
-                        for (let j = 0; j < response_of_hashtag.length; j++) {
-                          templateDom.find('.hashtagList').append(`<li>\${response_of_hashtag[j].commonCodeVO.codeContent}</li>`)
-                        }
+                  // 팔로우 상태 가져오기
+                  $.get(`/follow/status/\${user_email}/\${email}`, function(state) {
+                    if(state.followYn === 'Y') {
+                      templateDom.find('.follow_btn').css({'background-color':'var(--blue)', 'color':'var(--white)'}).addClass('follow_on')
+                      templateDom.find('.follow_btn').prepend($(`<input type="hidden" class="followId" value="\${state.followId}"/>`))
+                    }
+                  })
+                    
+                  // 게시글 유형이 자유 유형이면 대문짝만한 Q 삭제
+                  if(article.boardId === 'CC-20231017-000029') {
+                    templateDom.find('.big_letter').text('').css('margin-right', '0px')
+                  }
+
+                  // 해시태그 표시용 AJAX 호출
+                  $.get(`/home/hashtag/\${article.generalPostId}`, function(response_of_hashtag) {
+                    if (response_of_hashtag.length > 0) {
+                      for (let j = 0; j < response_of_hashtag.length; j++) {
+                        templateDom.find('.hashtagList').append(`<li>\${response_of_hashtag[j].commonCodeVO.codeContent}</li>`)
                       }
-                      $('.body_left').append(templateDom)
+                    }
+                    
+                    console.log(templateDom.find('.hashtagList').find('li').text())
+                    if (templateDom.find('.hashtagList').find('li').text().includes('MYSQL')) {
+                      console.log('true')
+                    }
+                    $('.body_left').append(templateDom)
+                    
                   })
                 }
               }
@@ -1115,8 +1130,6 @@
                   $.get(`/recommend/follower/\${user_email}`, function(response) {
                     let recommendList = response.recommendList;
                     const totalMembers = recommendList.length;
-                    console.log("총 추천수 :" + totalMembers)
-                    console.log("페이지번호 :" + page)
 
                     if (totalMembers > 0 && totalMembers >= page) {
                       recommendTemplate = `
@@ -1135,7 +1148,6 @@
                         for(let i = page; i < page + 3; i++) {
                           if(i < totalMembers) {
                             let member = recommendList[i]
-                            //console.log(member)
                             const profilePic = member.memberVO.profilePic;
                             const nickname = member.memberVO.nickname;
                             const email = member.memberVO.email;
@@ -1170,24 +1182,27 @@
             }
           }
         })
+      })
+    }
 
-        // 북마크 토글
-        $(document).on('click', '.bookmarkBtn', function(e) {
-       	  let userEmail = `${sessionScope._LOGIN_USER_}`
-            if (userEmail === '') {
-              if(confirm('로그인이 필요한 서비스입니다. 로그인하시겠습니까?') ) {
-                window.location.href="/member/auth"
-              }
-            }
-            else {
-            	
+    loadContents()
+
+    // 북마크 토글
+    $(document).on('click', '.bookmarkBtn', function(e) {
+      let userEmail = `${sessionScope._LOGIN_USER_}`
+        if (userEmail === '') {
+          if(confirm('로그인이 필요한 서비스입니다. 로그인하시겠습니까?') ) {
+            window.location.href="/member/auth"
+          }
+        }
+        else {
           let body = {
           "email": `${sessionScope._LOGIN_USER_.email}`,
           "postId": $(this).find(".postId").val(),
           "boardId": $(this).find(".boardId").val(),
           "bookmarkId": $(e.currentTarget).find('.bookmarkId').val()
           }
-
+  
           if ($(e.currentTarget).find('svg').hasClass('bookmark_on')) {
             $.post('/unbookmark', body, function(result) {
               alert('북마크가 취소되었습니다.')
@@ -1196,112 +1211,126 @@
               $('.bookmarkId').remove()
             })
           }
-          else {
-            $.post('/bookmark/general-post', body, function(result) {
-              if (result) {
-                alert('북마크에 추가되었습니다.')
-                $(e.currentTarget).find('svg').css('fill', 'var(--blue)')
-                $(e.currentTarget).find('svg').addClass('bookmark_on')
-                $('.bookmarkBtn').prepend(`<input type="hidden" class="bookmarkId" value="\${result.bookmarkId}"/>`)
-              }
-              else {
-                alert('처리하지 못했습니다.')
-              }
-            })
-            }
-        	
-          }
-        })
-        // 팔로우 토글
-        //function doFollow() {
-          $(document).on('click', '.follow_btn', function(e) {
-            let userEmail = `${sessionScope._LOGIN_USER_}`
-            if (userEmail === '') {
-              if(confirm('로그인이 필요한 서비스입니다. 로그인하시겠습니까?') ) {
-                window.location.href="/member/auth"
-              }
+        else {
+          $.post('/bookmark/general-post', body, function(result) {
+            if (result) {
+              alert('북마크에 추가되었습니다.')
+              $(e.currentTarget).find('svg').css('fill', 'var(--blue)')
+              $(e.currentTarget).find('svg').addClass('bookmark_on')
+              $('.bookmarkBtn').prepend(`<input type="hidden" class="bookmarkId" value="\${result.bookmarkId}"/>`)
             }
             else {
-               let content = {
-                "follower": `${sessionScope._LOGIN_USER_.email}`,
-                "followee": $(e.currentTarget).find(".followeeEmail").val(),
-                "followId": $(e.currentTarget).find('.followId').val()
-               }
-               if ($(this).hasClass('follow_on')) {
-                $.post('/unfollow/member', content, function(result) {
-                  alert('팔로우를 취소합니다.')
-                  $(e.currentTarget).removeClass('follow_on')
-                  $(e.currentTarget).css({'background-color':'var(--gray)', 'color':'var(--blue)'})
-                  $('.followId').remove()
-                })
-               }
-               else {
-                $.post('/follow/member', content, function(result) {
-                  if(result) {
-                    alert('팔로우 합니다.')
-                    $(e.currentTarget).css({'background-color':'var(--blue)', 'color':'var(--white)'})
-                    $(e.currentTarget).addClass('follow_on')
-                    $('.follow_btn').prepend(`<input type="hidden" class="followId" value="\${result.followId}"/>`)
-                  }
-                  else {
-                    alert('처리하지 못했습니다.')
-                  }
-                })
-               }
+              alert('처리하지 못했습니다.')
             }
           })
-        //}
-      })
-    }
-    loadContents()
-
-    // 랭킹 컨텐츠
-
-    // 월요일마다 갱신함
-    const today = new Date()
-    const currentDay = today.getDay() // (0: 일요일, 1:월요일)
-    const targetDay = 0
-    const daysAfterTargetDay = currentDay - targetDay
-
-    const prevMonday = new Date(today)
-    prevMonday.setDate(today.getDate() - daysAfterTargetDay + 1)
-    
-    const year = prevMonday.getFullYear()
-    const month = String(prevMonday.getMonth() + 1).padStart(2, '0')
-    const day = String(prevMonday.getDate()).padStart(2, '0')
-
-    const formattedMonday = year + '-' + month + '-' + day
-
-    $.get('/home/ranking/\${formattedMonday}', function(response) {
-      let list = response.rankings
-      for (let i = 0; i < 10; i++) {
-
-        if (list[i].boardId === 'CC-20231017-000029') {
-          let ranking_template = `
-            <li class="hot_post">
-            <a href="/freeboard/view/\${list[i].generalPostId}" target="_blank"">\${list[i].postTitle}</a>
-            </li>`
-          let ranking_templateDom = $(ranking_template)
+        }
+      }
+    })
   
-          $('.ranking_list').append(ranking_templateDom)
+    // 팔로우 토글
+    $(document).on('click', '.follow_btn', function(e) {
+      let userEmail = `${sessionScope._LOGIN_USER_}`
+      if (userEmail === '') {
+        if(confirm('로그인이 필요한 서비스입니다. 로그인하시겠습니까?') ) {
+          window.location.href="/member/auth"
+        }
+      }
+      else {
+        let content = {
+        "follower": `${sessionScope._LOGIN_USER_.email}`,
+        "followee": $(e.currentTarget).find(".followeeEmail").val(),
+        "followId": $(e.currentTarget).find('.followId').val()
+        }
+        if ($(this).hasClass('follow_on')) {
+          $.post('/unfollow/member', content, function(result) {
+            alert('팔로우를 취소합니다.')
+            $(e.currentTarget).removeClass('follow_on')
+            $(e.currentTarget).css({'background-color':'var(--gray)', 'color':'var(--blue)'})
+            $('.followId').remove()
+          })
         }
         else {
-          let ranking_template = `
-            <li class="hot_post">
-            <a href="/qnaboard/view/\${list[i].generalPostId}" target="_blank" >\${list[i].postTitle}</a>
-            </li>`
-          let ranking_templateDom = $(ranking_template)
-  
-          $('.ranking_list').append(ranking_templateDom)
+          $.post('/follow/member', content, function(result) {
+            if(result) {
+              alert('팔로우 합니다.')
+              $(e.currentTarget).css({'background-color':'var(--blue)', 'color':'var(--white)'})
+              $(e.currentTarget).addClass('follow_on')
+              $('.follow_btn').prepend(`<input type="hidden" class="followId" value="\${result.followId}"/>`)
+            }
+            else {
+              alert('처리하지 못했습니다.')
+            }
+          })
         }
       }
     })
 
-    // 랭킹 박스 아래에 해시태그 가져오기
-    $.get('/code/해시태그', function(response) {
-      for (let i = 0; i < response.length; i++) {
-        let hash_template = `<button class="hashtag incomplete">#\${response[i].codeContent}</button>`
-        $('.hashtag_wrap').append(hash_template)
+    // 해시태그 선택 필터링  
+    $(document).on('click', '.hashtag', function() {
+      let cutHashtag = $(this).text().replace('#', '')
+
+      if ($(this).hasClass('hashtag_selected')) {
+
+        for (let i = 0; i < hashtagArr.length; i++) {
+          if (hashtagArr[i] === cutHashtag) {
+            hashtagArr.splice(i, 1)
+          }
+        }
+        $(this).removeClass('hashtag_selected')
+      }
+      else {
+        hashtagArr.push(cutHashtag)
+        $(this).addClass('hashtag_selected')
+      }
+      loadContents(hashtagArr)
+    })
+
+  // 랭킹 컨텐츠
+  // 월요일마다 갱신함
+  const today = new Date()
+  const currentDay = today.getDay() // (0: 일요일, 1:월요일)
+  const targetDay = 0
+  const daysAfterTargetDay = currentDay - targetDay
+
+  const prevMonday = new Date(today)
+  prevMonday.setDate(today.getDate() - daysAfterTargetDay + 1)
+  
+  const year = prevMonday.getFullYear()
+  const month = String(prevMonday.getMonth() + 1).padStart(2, '0')
+  const day = String(prevMonday.getDate()).padStart(2, '0')
+
+  const formattedMonday = year + '-' + month + '-' + day
+
+  $.get('/home/ranking/\${formattedMonday}', function(response) {
+    let list = response.rankings
+    for (let i = 0; i < 10; i++) {
+
+      if (list[i].boardId === 'CC-20231017-000029') {
+        let ranking_template = `
+          <li class="hot_post">
+          <a href="/freeboard/view/\${list[i].generalPostId}" target="_blank"">\${list[i].postTitle}</a>
+          </li>`
+        let ranking_templateDom = $(ranking_template)
+
+        $('.ranking_list').append(ranking_templateDom)
+      }
+      else {
+        let ranking_template = `
+          <li class="hot_post">
+          <a href="/qnaboard/view/\${list[i].generalPostId}" target="_blank" >\${list[i].postTitle}</a>
+          </li>`
+        let ranking_templateDom = $(ranking_template)
+
+        $('.ranking_list').append(ranking_templateDom)
+      }
+    }
+  })
+
+  // 랭킹 박스 아래에 해시태그 가져오기
+  $.get('/code/해시태그', function(response) {
+    for (let i = 0; i < response.length; i++) {
+      let hash_template = `<button class="hashtag">#\${response[i].codeContent}</button>`
+      $('.hashtag_wrap').append(hash_template)
       }
     })
   })

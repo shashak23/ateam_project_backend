@@ -1259,11 +1259,15 @@
 
   // 회원 티어 관리 모드 조회
   function loadMemberTierManagement(val = '') {
+    $('.personal_modal').find('.desc-content').html("");
+
     $.get('/admin/management/tier', function(response) {
-      $('.personal_modal').find('.desc-content').empty()
 
       for (let i = 0; i < response.length; i++) {
         let member = response[i]
+
+        console.log(member)
+
         let tierManagementTemplate = `
         <div class="tier_management_body">
           <div class="profile_tier_group">
@@ -1273,8 +1277,8 @@
             <div class="current_tier">\${member.tierVO.tierName}</div>
             <div class="next_tier">\${member.tierVOTemp.tierNameTemp}</div>
             <button class="admin_member_tier_log_btn" data-email="\${member.memberEmail}">활동내역</button>
-            <button class="admin_member_tier_upgrade_access_btn" data-email="\${member.memberEmail}" data-tier-id="\${member.tierVO.tierId}">승인</button>
-            <button class="admin_member_tier_upgrade_deny_btn" data-email="\${member.memberEmail}" data-tier-id="\${member.tierVO.tierId}">거절</button>
+            <button class="admin_member_tier_upgrade_access_btn" data-email="\${member.memberEmail}" data-tier-id="\${member.tierVOTemp.tierIdTemp}">승인</button>
+            <button class="admin_member_tier_upgrade_deny_btn" data-email="\${member.memberEmail}" data-tier-id="\${member.tierVOTemp.tierIdTemp}">거절</button>
           </div>
         </div>`
 
@@ -1392,6 +1396,7 @@
         }
         else {
           alert('처리하지 못했습니다. 왜 일까요?')
+          loadMemberTierManagement()
         }
       })
     }
