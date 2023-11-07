@@ -110,7 +110,7 @@ h2 {
 <body>
     <div class="flex_button">
         <button id="myprofile">마이페이지</button>
-        <button>북마크</button>
+        <button id="bookmark">북마크</button>
         <button id="modify_info">정보 수정</button>
         <button id="mypost">내가 쓴 게시글</button>
         <button id="solve">내가 푼 문제</button>
@@ -251,6 +251,10 @@ h2 {
 	    $("#mypost").click(function() {
 	        redirectToURL(`/member/mypost`);
 	    });
+	    $("#bookmark").click(function(){
+			redirectToURL(`/member/bookmark`);
+			
+		});
 	    $("#modify_info").click(function() {
 	        redirectToURL("/member/selectmember/${sessionScope._LOGIN_USER_.email}");
 	    });
