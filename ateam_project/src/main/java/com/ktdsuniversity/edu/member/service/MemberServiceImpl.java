@@ -58,39 +58,6 @@ public class MemberServiceImpl implements MemberService {
 	private SHA sha;
 	@Autowired
 	private FileHandler fileHandler;
-	
-	@Value("${app.oauth.kakao.access-token.url}")
-	private String kakaoAccessTokenUrl;
-	@Value("${app.oauth.kakao.access-token.client-id}")
-	private String kakaoClientId;
-	@Value("${app.oauth.kakao.access-token.redirect-url}")
-	private String kakaoRedirectUrl;
-	@Value("${app.oauth.kakao.user-info.url}")
-	private String kakaoUserInfoUrl;
-	@Value("${app.oauth.kakao.logout.url}")
-	private String kakaoLogoutUrl;
-	
-	@Value("${app.oauth.naver.access-token.url}")
-	private String naverAccessTokenUrl;
-	@Value("${app.oauth.naver.access-token.client-id}")
-	private String naverClientId;
-	@Value("${app.oauth.naver.access-token.client-secret}")
-	private String naverClientSecret;
-	@Value("${app.oauth.naver.access-token.redirect-url}")
-	private String naverRedirectUrl;
-	@Value("${app.oauth.naver.user-info.url}")
-	private String naverUserInfoUrl;
-	
-	@Value("${app.oauth.google.access-token.url}")
-	private String googleAccessTokenUrl;
-	@Value("${app.oauth.google.access-token.client-id}")
-	private String googleClientId;
-	@Value("${app.oauth.google.access-token.client-secret}")
-	private String googleClientSecret;
-	@Value("${app.oauth.google.access-token.redirect-url}")
-	private String googleRedirectUrl;
-	@Value("${app.oauth.google.user-info.url}")
-	private String googleUserInfoUrl;
 
 	/**
 	 * 회원생성
@@ -328,110 +295,110 @@ public class MemberServiceImpl implements MemberService {
 		return memberListVO;
 	}
 
-	/* KAKAO 토큰 받아오기 */
-	@Override
-	public String getAccessToken(String authorizeCode) {
-		String accessToken = "";
-		String refreshToken = "";
+    /* 토큰 받아오기 */
+    @Override
+    public String getAccessToken(String authorizeCode) {
+        String accessToken = "";
+        String refreshToken = "";
+        String reqURL = "https://kauth.kakao.com/oauth/token";
 
-		try {
-			URL url = new URL(kakaoAccessTokenUrl);
+        try {
+            URL url = new URL(reqURL);
 
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			// POST 요청을 위해 기본값이 false인 setDoOutput을 true로
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            // POST 요청을 위해 기본값이 false인 setDoOutput을 true로
 
-			conn.setRequestMethod("POST");
-			conn.setDoOutput(true);
-			// POST 요청에 필요로 요구하는 파라미터 스트림을 통해 전송
+            conn.setRequestMethod("POST");
+            conn.setDoOutput(true);
+            // POST 요청에 필요로 요구하는 파라미터 스트림을 통해 전송
 
-			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
-			StringBuilder sb = new StringBuilder();
-			sb.append("grant_type=authorization_code");
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
+            StringBuilder sb = new StringBuilder();
+            sb.append("grant_type=authorization_code");
 
-			sb.append("&client_id=" + kakaoClientId); // 본인이 발급받은 key
-			sb.append("&redirect_uri=" + kakaoRedirectUrl); // 본인이 설정한 주소
+            sb.append("&client_id=2a9927f831835710fa3d3d37b078389c"); // 본인이 발급받은 key
+            sb.append("&redirect_uri=http://mcjang.iptime.org:8080/member/kakaoLogin"); // 본인이 설정한 주소
 
-			sb.append("&code=" + authorizeCode);
-			bw.write(sb.toString());
-			bw.flush();
+            sb.append("&code=" + authorizeCode);
+            bw.write(sb.toString());
+            bw.flush();
 
-			// 결과 코드가 200이라면 성공
-			int responseCode = conn.getResponseCode();
-			System.out.println("responseCode : " + responseCode);
+            // 결과 코드가 200이라면 성공
+            int responseCode = conn.getResponseCode();
+            System.out.println("responseCode : " + responseCode);
 
-			// 요청을 통해 얻은 JSON타입의 Response 메세지 읽어오기
-			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-			String line = "";
-			String result = "";
+            // 요청을 통해 얻은 JSON타입의 Response 메세지 읽어오기
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            String line = "";
+            String result = "";
 
-			while ((line = br.readLine()) != null) {
-				result += line;
-			}
-			System.out.println("response body : " + result);
+            while ((line = br.readLine()) != null) {
+                result += line;
+            }
+            System.out.println("response body : " + result);
 
-			// Gson 라이브러리에 포함된 클래스로 JSON파싱 객체 생성
-			JsonParser parser = new JsonParser();
-			JsonElement element = parser.parse(result);
-			accessToken = element.getAsJsonObject().get("access_token").getAsString();
-			refreshToken = element.getAsJsonObject().get("refresh_token").getAsString();
-			System.out.println("access_token : " + accessToken);
-			System.out.println("refresh_token : " + refreshToken);
+            // Gson 라이브러리에 포함된 클래스로 JSON파싱 객체 생성
+            JsonParser parser = new JsonParser();
+            JsonElement element = parser.parse(result);
+            accessToken = element.getAsJsonObject().get("access_token").getAsString();
+            refreshToken = element.getAsJsonObject().get("refresh_token").getAsString();
+            System.out.println("access_token : " + accessToken);
+            System.out.println("refresh_token : " + refreshToken);
 
-			br.close();
-			bw.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return accessToken;
-	}
+            br.close();
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return accessToken;
+    }
 
-	/* KAKAO 사용자 정보 가져오기 */
-	@Override
-	public SocialVO getUserInfo(String accessToken) {
-		HashMap<String, Object> userInfo = new HashMap<String, Object>();
-		try {
-			URL url = new URL(kakaoUserInfoUrl);
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			conn.setRequestMethod("GET");
-			conn.setRequestProperty("Authorization", "Bearer " + accessToken);
-			int responseCode = conn.getResponseCode();
-			System.out.println("responseCode : " + responseCode);
-			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-			String line = "";
-			String result = "";
-			while ((line = br.readLine()) != null) {
-				result += line;
-			}
-			System.out.println("response body : " + result);
-			JsonParser parser = new JsonParser();
-			JsonElement element = parser.parse(result);
-			JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
-			JsonObject kakaoAccount = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
-			String nickname = properties.getAsJsonObject().get("nickname").getAsString();
-			String email = kakaoAccount.getAsJsonObject().get("email").getAsString();
-		
-			
-			userInfo.put("nickname", nickname);
-			userInfo.put("email", email);
-			userInfo.put("accessToken", accessToken);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		SocialVO socialVO = memberDAO.findSocial(userInfo);
+    /* 사용자 정보 가져오기 */
+    @Override
+    public SocialVO getUserInfo(String accessToken) {
+        HashMap<String, Object> userInfo = new HashMap<String, Object>();
+        String reqURL = "https://kapi.kakao.com/v2/user/me";
+        try {
+            URL url = new URL(reqURL);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.setRequestProperty("Authorization", "Bearer " + accessToken);
+            int responseCode = conn.getResponseCode();
+            System.out.println("responseCode : " + responseCode);
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            String line = "";
+            String result = "";
+            while ((line = br.readLine()) != null) {
+                result += line;
+            }
+            System.out.println("response body : " + result);
+            JsonParser parser = new JsonParser();
+            JsonElement element = parser.parse(result);
+            JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
+            JsonObject kakao_account = element.getAsJsonObject().get("kakao_account").getAsJsonObject();
+            String nickname = properties.getAsJsonObject().get("nickname").getAsString();
+            String email = kakao_account.getAsJsonObject().get("email").getAsString();
+            userInfo.put("nickname", nickname);
+            userInfo.put("email", email);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        SocialVO socialVO = memberDAO.findSocial(userInfo);
 		if (socialVO == null || socialVO.getSocailEmail() == null) {
 			memberDAO.kakaoinsert(userInfo);
 			return memberDAO.findSocial(userInfo);
 		} else {
 			return socialVO;
 		}
-	}
+	} 
 	/**
 	 * 카카오 로그아웃
 	 */
-	@Override
-	public void kakaoLogout(String accessToken) {
+    @Override
+    public void kakaoLogout(String accessToken) {
+        String reqURL = "https://kapi.kakao.com/v1/user/logout";
         try {
-            URL url = new URL(kakaoLogoutUrl);
+            URL url = new URL(reqURL);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setRequestMethod("POST");
             conn.setRequestProperty("Authorization", "Bearer " + accessToken);
@@ -452,96 +419,98 @@ public class MemberServiceImpl implements MemberService {
             e.printStackTrace();
         }
     }
-	/* 네이버 토큰 받아오기 */
-	@Override
-	public String getNaverAccessToken(String authorizeCode) {
-		String accessToken = "";
-		String refreshToken = "";
+    /* 네이버 토큰 받아오기 */
+    @Override
+    public String getNaverAccessToken(String authorizeCode) {
+        String accessToken = "";
+        String refreshToken = "";
+        String reqURL = "https://nid.naver.com/oauth2.0/token";
 
-		try {
-			URL url = new URL(naverAccessTokenUrl);
+        try {
+            URL url = new URL(reqURL);
 
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			// POST 요청을 위해 기본값이 false인 setDoOutput을 true로
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            // POST 요청을 위해 기본값이 false인 setDoOutput을 true로
 
-			conn.setRequestMethod("POST");
-			conn.setDoOutput(true);
-			// POST 요청에 필요로 요구하는 파라미터 스트림을 통해 전송
+            conn.setRequestMethod("POST");
+            conn.setDoOutput(true);
+            // POST 요청에 필요로 요구하는 파라미터 스트림을 통해 전송
 
-			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
-			StringBuilder sb = new StringBuilder();
-			sb.append("grant_type=authorization_code");
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
+            StringBuilder sb = new StringBuilder();
+            sb.append("grant_type=authorization_code");
 
-			sb.append("&client_id=" + naverClientId); // 본인이 발급받은 key
-			sb.append("&client_secret=" + naverClientSecret); // 본인이 발급받은 key
-			sb.append("&redirect_uri=" + naverRedirectUrl); // 본인이 설정한 주소
+            sb.append("&client_id=ePAK2QDzEMghBxsqTuce"); // 본인이 발급받은 key
+            sb.append("&client_secret=Fjfxbj04YU"); // 본인이 발급받은 key
+            sb.append("&redirect_uri=http://mcjang.iptime.org:8080/member/naverLogin"); // 본인이 설정한 주소
 
-			sb.append("&code=" + authorizeCode);
-			bw.write(sb.toString());
-			bw.flush();
+            sb.append("&code=" + authorizeCode);
+            bw.write(sb.toString());
+            bw.flush();
 
-			// 결과 코드가 200이라면 성공
-			int responseCode = conn.getResponseCode();
-			System.out.println("responseCode : " + responseCode);
+            // 결과 코드가 200이라면 성공
+            int responseCode = conn.getResponseCode();
+            System.out.println("responseCode : " + responseCode);
 
-			// 요청을 통해 얻은 JSON타입의 Response 메세지 읽어오기
-			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-			String line = "";
-			String result = "";
+            // 요청을 통해 얻은 JSON타입의 Response 메세지 읽어오기
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            String line = "";
+            String result = "";
 
-			while ((line = br.readLine()) != null) {
-				result += line;
-			}
-			System.out.println("response body : " + result);
+            while ((line = br.readLine()) != null) {
+                result += line;
+            }
+            System.out.println("response body : " + result);
 
-			// Gson 라이브러리에 포함된 클래스로 JSON파싱 객체 생성
-			JsonParser parser = new JsonParser();
-			JsonElement element = parser.parse(result);
-			accessToken = element.getAsJsonObject().get("access_token").getAsString();
-			refreshToken = element.getAsJsonObject().get("refresh_token").getAsString();
-			System.out.println("access_token : " + accessToken);
-			System.out.println("refresh_token : " + refreshToken);
+            // Gson 라이브러리에 포함된 클래스로 JSON파싱 객체 생성
+            JsonParser parser = new JsonParser();
+            JsonElement element = parser.parse(result);
+            accessToken = element.getAsJsonObject().get("access_token").getAsString();
+            refreshToken = element.getAsJsonObject().get("refresh_token").getAsString();
+            System.out.println("access_token : " + accessToken);
+            System.out.println("refresh_token : " + refreshToken);
 
-			br.close();
-			bw.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return accessToken;
-	}
+            br.close();
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return accessToken;
+    }
 
-	/* 네이버 사용자 정보 가져오기 */
-	@Override
-	public SocialVO getNavertUserInfo(String accessToken) {
-		HashMap<String, Object> userInfo = new HashMap<String, Object>();
-		try {
-			URL url = new URL(naverUserInfoUrl);
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			conn.setRequestMethod("GET");
-			conn.setRequestProperty("Authorization", "Bearer " + accessToken);
-			int responseCode = conn.getResponseCode();
-			System.out.println("responseCode : " + responseCode);
-			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-			String line = "";
-			String result = "";
-			while ((line = br.readLine()) != null) {
-				result += line;
-			}
-			System.out.println("response body : " + result);
-			JsonParser parser = new JsonParser();
-			JsonElement element = parser.parse(result);
-//			JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
-			JsonObject response = element.getAsJsonObject().get("response").getAsJsonObject();
-			String nickname = response.getAsJsonObject().get("nickname").getAsString();
-			String email = response.getAsJsonObject().get("email").getAsString();
-		
-			
-			userInfo.put("nickname", nickname);
-			userInfo.put("email", email);
-			userInfo.put("accessToken", accessToken);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+    /* 네이버 사용자 정보 가져오기 */
+    @Override
+    public SocialVO getNavertUserInfo(String accessToken) {
+        HashMap<String, Object> userInfo = new HashMap<String, Object>();
+        String reqURL = "https://openapi.naver.com/v1/nid/me";
+        try {
+            URL url = new URL(reqURL);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.setRequestProperty("Authorization", "Bearer " + accessToken);
+            int responseCode = conn.getResponseCode();
+            System.out.println("responseCode : " + responseCode);
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            String line = "";
+            String result = "";
+            while ((line = br.readLine()) != null) {
+                result += line;
+            }
+            System.out.println("response body : " + result);
+            JsonParser parser = new JsonParser();
+            JsonElement element = parser.parse(result);
+//            JsonObject properties = element.getAsJsonObject().get("properties").getAsJsonObject();
+            JsonObject response = element.getAsJsonObject().get("response").getAsJsonObject();
+            String nickname = response.getAsJsonObject().get("nickname").getAsString();
+            String email = response.getAsJsonObject().get("email").getAsString();
+        
+            
+            userInfo.put("nickname", nickname);
+            userInfo.put("email", email);
+            userInfo.put("accessToken", accessToken);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 		SocialVO socialVO = memberDAO.findSocial(userInfo);
 		if (socialVO == null || socialVO.getSocailEmail() == null) {
 			memberDAO.kakaoinsert(userInfo);
@@ -550,101 +519,103 @@ public class MemberServiceImpl implements MemberService {
 			return socialVO;
 		}
 	} 
-	/* 구글 토큰 받아오기 */
-	@Override
-	public String getGoogleAccessToken(String authorizeCode) {
-		String accessToken = "";
-		String refreshToken = "";
+    /* 구글 토큰 받아오기 */
+    @Override
+    public String getGoogleAccessToken(String authorizeCode) {
+        String accessToken = "";
+        String refreshToken = "";
+        String reqURL = "https://oauth2.googleapis.com/token";
 
-		try {
-			URL url = new URL(googleAccessTokenUrl);
+        try {
+            URL url = new URL(reqURL);
 
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			// POST 요청을 위해 기본값이 false인 setDoOutput을 true로
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            // POST 요청을 위해 기본값이 false인 setDoOutput을 true로
 
-			conn.setRequestMethod("POST");
-			conn.setDoOutput(true);
-			// POST 요청에 필요로 요구하는 파라미터 스트림을 통해 전송
+            conn.setRequestMethod("POST");
+            conn.setDoOutput(true);
+            // POST 요청에 필요로 요구하는 파라미터 스트림을 통해 전송
 
-			BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
-			StringBuilder sb = new StringBuilder();
-			sb.append("grant_type=authorization_code");
-			sb.append("&client_id=" + googleClientId); // 본인이 발급받은 key
-			sb.append("&client_secret=" + googleClientSecret); // 본인이 발급받은 key
-			sb.append("&code=" + authorizeCode);
-			sb.append("&redirect_uri=" + googleRedirectUrl); // 본인이 설정한 주소
+            BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
+            StringBuilder sb = new StringBuilder();
+            sb.append("grant_type=authorization_code");
+            sb.append("&client_id=595210277098-t430mu7sj0n7dkl8ji1usbuke043tgvv.apps.googleusercontent.com"); // 본인이 발급받은 key
+            sb.append("&client_secret=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"); // 본인이 발급받은 key
+            sb.append("&code=" + authorizeCode);
+            sb.append("&redirect_uri=http://localhost:8080/member/googleLogin"); // 본인이 설정한 주소
 
-			bw.write(sb.toString());
-			bw.flush();
+            bw.write(sb.toString());
+            bw.flush();
 
-			// 결과 코드가 200이라면 성공
-			int responseCode = conn.getResponseCode();
-			System.out.println("responseCode : " + responseCode);
+            // 결과 코드가 200이라면 성공
+            int responseCode = conn.getResponseCode();
+            System.out.println("responseCode : " + responseCode);
 
-			// 요청을 통해 얻은 JSON타입의 Response 메세지 읽어오기
-			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-			String line = "";
-			String result = "";
+            // 요청을 통해 얻은 JSON타입의 Response 메세지 읽어오기
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            String line = "";
+            String result = "";
 
-			while ((line = br.readLine()) != null) {
-				result += line;
-			}
-			System.out.println("response body : " + result);
+            while ((line = br.readLine()) != null) {
+                result += line;
+            }
+            System.out.println("response body : " + result);
 
-			// Gson 라이브러리에 포함된 클래스로 JSON파싱 객체 생성
-			JsonParser parser = new JsonParser();
-			JsonElement element = parser.parse(result);
-			accessToken = element.getAsJsonObject().get("access_token").getAsString();
-			System.out.println("access_token : " + accessToken);
+            // Gson 라이브러리에 포함된 클래스로 JSON파싱 객체 생성
+            JsonParser parser = new JsonParser();
+            JsonElement element = parser.parse(result);
+            accessToken = element.getAsJsonObject().get("access_token").getAsString();
+            System.out.println("access_token : " + accessToken);
 
-			br.close();
-			bw.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return accessToken;
-	}
+            br.close();
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return accessToken;
+    }
 
-	/* 구글 사용자 정보 가져오기 */
-	@Override
-	public SocialVO getGoogleUserInfo(String accessToken) {
-		HashMap<String, Object> userInfo = new HashMap<String, Object>();
-		try {
-			URL url = new URL(googleUserInfoUrl);
-			HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-			conn.setRequestMethod("GET");
-			conn.setRequestProperty("Authorization", "Bearer " + accessToken);
-			int responseCode = conn.getResponseCode();
-			System.out.println("responseCode : " + responseCode);
-			BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
-			String line = "";
-			String result = "";
-			while ((line = br.readLine()) != null) {
-				result += line;
-			}
-			System.out.println("response body : " + result);
-			ObjectMapper objectMapper = new ObjectMapper();
+    /* 구글 사용자 정보 가져오기 */
+    @Override
+    public SocialVO getGoogleUserInfo(String accessToken) {
+        HashMap<String, Object> userInfo = new HashMap<String, Object>();
+        String reqURL = "https://www.googleapis.com/userinfo/v2/me";
+        try {
+            URL url = new URL(reqURL);
+            HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+            conn.setRequestMethod("GET");
+            conn.setRequestProperty("Authorization", "Bearer " + accessToken);
+            int responseCode = conn.getResponseCode();
+            System.out.println("responseCode : " + responseCode);
+            BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            String line = "";
+            String result = "";
+            while ((line = br.readLine()) != null) {
+                result += line;
+            }
+            System.out.println("response body : " + result);
+            ObjectMapper objectMapper = new ObjectMapper();
             JsonNode jsonNode = objectMapper.readTree(result.toString());
-			String email = jsonNode.get("email").asText();
-			String nickname = jsonNode.get("name").asText();
-			System.out.println(email);
-			System.out.println(nickname);
-			userInfo.put("nickname", nickname);
-			userInfo.put("email", email);
-			userInfo.put("accessToken", accessToken);
-			System.out.println("ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ"+userInfo.get("email"));
-			System.out.println("ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ"+userInfo.get("nickname"));
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		SocialVO socialVO = memberDAO.findSocial(userInfo);
-		if (socialVO == null || socialVO.getSocailEmail() == null) {
-			memberDAO.googleinsert(userInfo);
-			return memberDAO.findSocial(userInfo);
-		} else {
-			return socialVO;
-		}
-			
-	}
+            String email = jsonNode.get("email").asText();
+            String nickname = jsonNode.get("name").asText();
+            System.out.println(email);
+            System.out.println(nickname);
+            userInfo.put("nickname", nickname);
+            userInfo.put("email", email);
+            userInfo.put("accessToken", accessToken);
+            System.out.println("ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ"+userInfo.get("email"));
+            System.out.println("ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ"+userInfo.get("nickname"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        SocialVO socialVO = memberDAO.findSocial(userInfo);
+        if (socialVO == null || socialVO.getSocailEmail() == null) {
+            memberDAO.googleinsert(userInfo);
+            return memberDAO.findSocial(userInfo);
+        } else {
+            return socialVO;
+        }
+            
+    }
 
 }
