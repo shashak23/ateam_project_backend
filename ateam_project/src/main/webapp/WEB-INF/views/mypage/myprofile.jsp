@@ -57,12 +57,12 @@ background-color: var(--gray);
     height: 27px;
 }
 
-#overall{
+#content_wrapper{
 	display: flex;
 	justify-content: center;
 }
 
-#container {
+#content {
   display: flex;
   justify-content: center;
   
@@ -138,7 +138,7 @@ position: absolute;
         cursor: pointer;
     }
 
-    .create_container, .create_container2 {
+    .create_content, .create_content2 {
         visibility: hidden;
         position: fixed;
         top: 50%;
@@ -156,13 +156,13 @@ position: absolute;
         transition: 0.5s;
     }
 
-    .create_container.active, .create_container2.active {
+    .create_content.active, .create_content2.active {
         visibility: visible;
         opacity: 1;
         transform: translate(-50%, -50%);
     }
 
-    .create_container > *, .create_container2 > * {
+    .create_content > *, .create_content2 > * {
         margin-bottom: 10px;
     }
 
@@ -215,29 +215,48 @@ position: absolute;
 	}
 
 	/* 모달 */
-	.signup_modal {
-	 position: fixed;
-	 top: 50%;
-	 left: 50%;
-	 transform: translate(-50%, -50%);
-	 display: flex;
-	 justify-content: center;
-	 align-items: center;
-	 width: 200px;
-	 height: 100px;
-	 background-color: white;
-	 font-weight: bold;
-	 font-size: var(--font-x-big);
-	 box-shadow: 0 0 5px;
-	 z-index: 999;
-	 opacity: 0;
-	 transition: 0.5s;
-	 visibility: hidden;
- }
- .signup_modal.modal_active {
-	 opacity: 1;
-	 visibility: visible;
- }
+	#modalOpenButton, #modalCloseButton {
+  cursor: pointer;
+}
+
+#modalContainer {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+#modalContent {
+  position: absolute;
+  background-color: #ffffff;
+  width: 300px;
+  height: 150px;
+  padding: 15px;
+}
+
+#modalContainer.hidden {
+  display: none;
+}
+#modalContainer {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+#modalContainer.hidden {
+  display: none;
+}
 
 </style>
 <link rel="stylesheet" type="text/css" href="/css/myProfile.css" />
@@ -246,29 +265,6 @@ position: absolute;
 <script type="text/javascript">
 	//신고버튼
 	$().ready(function() {
-	    // "신고" 버튼 클릭 시 모달 열기
-	    $(".report-btn").click(function() {
-	       let reportType = $("#reportUser").val()
-	       console.log(reportType);
-	        $("#report-modal").css({
-	           "visibility": "visible",
-	           "opacity": "1"
-	        });
-	    
-	       // 모달 내부 "취소" 버튼 클릭 시 모달 닫기
-	       $(".close").click(function() {
-	          /* console.log("!") */
-	           $("#report-modal").css({
-	              "visibility": "hidden",
-	              "opacity": "0"
-	           });
-	         });
-
-			
-	    });
-
-		
-	    
 		function redirectToURL(url) {
 	        window.location.href = url;
 	    }
@@ -385,14 +381,23 @@ position: absolute;
 	        var url = '/memberInfo/modify/create-location/' + email;
        		window.location.href = url;
    		 });
+			const modalOpenButton = document.getElementById('modalOpenButton');
+const modalCloseButton = document.getElementById('modalCloseButton');
+const modal = document.getElementById('modalContainer');
 
-		
+modalOpenButton.addEventListener('click', () => {
+  modal.classList.remove('hidden');
+});
+
+modalCloseButton.addEventListener('click', () => {
+  modal.classList.add('hidden');
+});
 	});
 </script>
 </head>
 <body>
-	<div id="overall">
-	<div id="container">
+	<div id="content_wrapper">
+	<div id="content">
 		<div class="flex_button">
 			<!-- <c:if
 				test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}"> -->
@@ -476,7 +481,7 @@ position: absolute;
 			</c:otherwise>
 		</c:choose>
 
-		<!-- 모달 창 -->
+		
 		 <h2>신고 내용</h2>
 		<form name="reportVO" method="post" action="/report/view/5">
 			<div>
@@ -538,16 +543,16 @@ position: absolute;
 		</button>
 	</c:if>
 	</div>
+	<!-- 모달 -->
+	<button id="modalOpenButton">모달창 열기</button>
 
-	<div class="show_pwf">
-		<p></p>
-		<p></p>
-		<button>
-			<h2>프로필</h2>
-		</button>
-		<p></p>
-		<p></p>
+	<div id="modalContainer" class="hidden">
+	  <div id="modalContent">
+		<p>수정화면 입니다.</p>
+		<button id="modalCloseButton">닫기</button>
+	  </div>
 	</div>
+
 	<div id="technology_stack">
 		<h3 class="techstack-font">기술스택</h3>
 		<ul>
@@ -672,13 +677,13 @@ position: absolute;
 		  </ul>
 	    </div>
 	  </div>
-	  <div class="create_container">
+	  <div class="create_content">
 	    <div class="btn-close">&times;</div>
 	    <div class="create_title">팔로워</div>
 	    <div class="follower_list"></div>
 	  </div>
 	  <div class="overlay"></div>
-	  <div class="create_container2">
+	  <div class="create_content2">
 	    <div class="btn-close">&times;</div>
 	    <div class="create_title">팔로잉</div>
 	    <div class="followee_list"></div>
@@ -701,23 +706,23 @@ position: absolute;
     //모달 실행을 위한 문장
     $('.follower').click(function() {
     	var followerEmail = $(this).data('email');
-        $('.create_container, .overlay').addClass('active')
+        $('.create_content, .overlay').addClass('active')
 
 		var url = '/member/getfollowers/' + followerEmail;
 		loadFollower(url);
     })
     $('.btn-close, .overlay').click(function() {
-        $('.create_container, .overlay').removeClass('active')
+        $('.create_content, .overlay').removeClass('active')
     })
     $('.followee').click(function() {
 		var followeeEmail = $(this).data('email');
-        $('.create_container2, .overlay').addClass('active')
+        $('.create_content2, .overlay').addClass('active')
 
 		var url2 = '/member/getfollowees/' + followeeEmail;
 		loadFollowee(url2);
     })
     $('.btn-close, .overlay').click(function() {
-        $('.create_container2, .overlay').removeClass('active')
+        $('.create_content2, .overlay').removeClass('active')
     })
     
 	function loadFollower(url) {
@@ -745,10 +750,10 @@ position: absolute;
 					followerTemplate += followerItem
 				}
 
-				$('.create_container .follower_list').html(followerTemplate);
+				$('.create_content .follower_list').html(followerTemplate);
 			} else {
 				followerTemplate = "팔로워가 없습니다.";
-				$('.create_container .follower_list').html(followerTemplate);
+				$('.create_content .follower_list').html(followerTemplate);
 			}
 		});
 	}
@@ -777,10 +782,10 @@ position: absolute;
 					followeeTemplate += followeeItem
 				}
 
-				$('.create_container2 .followee_list').html(followeeTemplate);
+				$('.create_content2 .followee_list').html(followeeTemplate);
 			} else {
 				followeeTemplate = "팔로우하는 계정이 없습니다.";
-				$('.create_container2 .followee_list').html(followeeTemplate);
+				$('.create_content2 .followee_list').html(followeeTemplate);
 			}
 		});
 	}
@@ -846,8 +851,7 @@ position: absolute;
 		      }
 		    })
 		    $('.follow_chat').prepend(templateDom)
-
-	    
+			
 	  // 팔로우 토글
 	  $(document).on('click', '.follow_icon', function(e) {
 	    let userEmail = `${sessionScope._LOGIN_USER_}`

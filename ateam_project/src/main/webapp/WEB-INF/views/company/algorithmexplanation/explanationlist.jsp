@@ -136,7 +136,7 @@ $('.seeMore').click(function() {
 </script>
 </head>
 <style>
-	#overall{
+	#content_wrapper{
 		display: flex;
 		justify-content: center;
 		margin: 10px 300px 0px 0px;
@@ -153,7 +153,7 @@ $('.seeMore').click(function() {
 		margin-left: 5px;
 	}
 
-	#left_container{
+	#gnb{
 		display: flex;
 		justify-content: center;
 		width:300px;
@@ -189,7 +189,7 @@ $('.seeMore').click(function() {
 		border: 2px solid #1E90FF;
 	}
 
-	#container{
+	#content{
 		width: 1000px;		
 		margin: 40px 0px 100px 0px;
 		display: flex;
@@ -348,12 +348,10 @@ $('.seeMore').click(function() {
 		cursor: pointer;
 		margin-left: 6px;
 	}
-
-
 </style>
 <body>
-	<div id="overall">
-		<div id="left_container">
+	<div id="content_wrapper">
+		<div id="gnb">
 			<div id="toolbar">
 				<div id="pageName">알고리즘 해설</div>
 				<div id="registerArticle">
@@ -377,7 +375,7 @@ $('.seeMore').click(function() {
 				</div>				
 			</div>
 		</div>
-	<!-- <div id="container">		
+	<!-- <div id="content">		
 		<div class="btn-group">
 			<div class="right-align">
 				로그인 하지 않았을 때
@@ -417,14 +415,13 @@ $('.seeMore').click(function() {
 			</tbody>
 		</table>
 	</div> -->
-	<div id="container">
+	<div id="content">
 		<div id="pageInfo">
 			<div class="pageTitle">기초를 탄탄히: 알고리즘 해설</div>
 			<div class="pageExplanation">코테 합격은 아무나 하나. 근!본!을 키우자</div>
 			<img src="/images/알고리즘 해설.png" alt="알고리즘 해설 이미지" class="image">
 		</div>
 		<div id="algorithmList">
-			
 			<ul>				
 				<li class="col_item">
 						<div class="algorithmName">해시</div>
