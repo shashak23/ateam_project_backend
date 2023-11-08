@@ -3,15 +3,51 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <jsp:include page="../layout/header.jsp" />
 <style>
+    .flex_button {	
+		margin: 100px 50px 0px 0px;
+		display: flex;
+		flex-direction: column;
+	
+	}
+
+	.body_container{
+	    margin: 0 auto;
+		margin-bottom: 100px;
+		display: flex;
+		flex-direction: column;
+		position: relative;
+		bottom:380px;
+		
+	}
+
+	.flex_button button {
+	  color: white;	
+    background-color: var(--gray);
+    width: 150px;
+    height: 40px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    border: 2px;
+	}
+
+.flex_button button:hover {
+	background-color: var(--light-blue);
+  	color: white;
+
+}
     .mybookmark_wrap {
         display: flex;
         flex-direction: column;
         padding: 5px;
         margin: 50px 0;
+        margin-bottom: 70px;
     }
 
     .mybookmark_wrap a {
         margin: 0 auto;
+    }
+    .mybookmark_list_head { 
+        
     }
 
     .mybookmark_list,
@@ -33,6 +69,9 @@
 
     .mybookmark_list_head {
         text-align: center;
+        border: none;
+        background-color: var(--light-gray);
+        border-bottom: 1px solid var(--dark-gray);
     }
 
     .mybookmark_list li,
@@ -72,16 +111,34 @@
     .writer {
         text-align: center;
     }
+    .writer_1, .contents_name,.contents_1,.write_day,.like_1,.view_cnt_1 {
+        background-color: var(--light-gray);
+        font-weight: bold;
+       
+    }
+    h3 {
+        margin: 0 auto;
+        margin-left: 390px;
+     
+    }
 </style>
-
+<div class="flex_button">
+    <button id="myprofile">마이페이지</button>
+    <button id="bookmark">북마크</button>
+    <button id="modify_info">정보 수정</button> 
+    <button id="mypost">내가 쓴 게시글</button>
+    <button id="solve">내가 푼 문제</button>
+    <button>탈퇴</button>
+</div>
+<h3>나의 북마크 보기</h3>
 <div class="mybookmark_wrap">
     <ul class="mybookmark_list_head">
-        <li>작성자</li>
-        <li>제목</li>
-        <li>내용</li>
-        <li>작성일</li>
-        <li>좋아요</li>
-        <li>조회수</li>
+        <li class="writer_1">작성자</li>
+        <li class="contents_name">제목</li>
+        <li class="contents_1">내용</li>
+        <li class="write_day">작성일</li>
+        <li class="like_1">좋아요</li>
+        <li class="view_cnt_1">조회수</li>
     </ul>
     <c:forEach items="${bookmarkList}" var="bookmark">
         <c:choose>
@@ -152,6 +209,31 @@
     })
 
     $('p').css('background-color', 'rgba(0, 0, 0, 0)')
+
+    // 플렉스버튼
+    function redirectToURL(url) {
+	        window.location.href = url;
+	   }
+	    /* 비밀번호, 닉네임 수정 버튼 */
+	    $("#myprofile").click(function() {
+			redirectToURL(`/memberinfo/view/${sessionScope._LOGIN_USER_.email}`);
+		});
+	    $("#mypost").click(function() {
+	        redirectToURL(`/member/mypost`);
+	    });
+	    $("#modify_info").click(function() {
+	        redirectToURL(`/member/selectmember/${sessionScope._LOGIN_USER_.email}`);
+	    });
+		$("#quit").click(function() {
+	        redirectToURL(`/member/logout`);
+	    });
+		$("#solve").click(function(){
+			redirectToURL(`/codingtest/mylist`);
+		});
+		$("#bookmark").click(function(){
+			redirectToURL(`/member/bookmark`);
+			
+		});
 
 </script>
 </html>
