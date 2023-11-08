@@ -7,6 +7,7 @@
  */
 package com.ktdsuniversity.edu.generalmember.web;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -22,6 +23,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ktdsuniversity.edu.bookmark.service.BookmarkService;
+import com.ktdsuniversity.edu.bookmark.vo.BookmarkVO;
 import com.ktdsuniversity.edu.career.vo.CareerVO;
 import com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO;
 import com.ktdsuniversity.edu.education.vo.EducationVO;
@@ -30,8 +33,6 @@ import com.ktdsuniversity.edu.generalmember.service.GeneralMemberService;
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 import com.ktdsuniversity.edu.myalgorithm.service.MyAlgorithmService;
-import com.ktdsuniversity.edu.myalgorithm.vo.MyAlgorithmListVO;
-import com.ktdsuniversity.edu.myalgorithm.vo.SearchMyAlgorithmVO;
 import com.ktdsuniversity.edu.util.XssIgnoreUtil;
 
 import jakarta.validation.Valid;
@@ -46,6 +47,9 @@ public class GeneralMemberController {
 	
 	@Autowired
 	private MyAlgorithmService myAlgorithmService;
+	
+	@Autowired
+	private BookmarkService bookmarkService;
 
 	
 	/**
@@ -326,6 +330,14 @@ public class GeneralMemberController {
 	@GetMapping("/member/bookmark")
 	public ModelAndView viewMemberBookmark(@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 		ModelAndView mav = new ModelAndView();
+		List<BookmarkVO> bookmarkList = new ArrayList<>();
+		
+		bookmarkList.addAll(bookmarkService.getFreeboardBookmark(memberVO.getEmail()));
+		bookmarkList.addAll(bookmarkService.getQnaboardBookmark(memberVO.getEmail()));
+		
+		mav.addObject("bookmarkList", bookmarkList);
+		mav.setViewName("mypage/mybookmark");
+		
 		return mav;
 	}
 }
