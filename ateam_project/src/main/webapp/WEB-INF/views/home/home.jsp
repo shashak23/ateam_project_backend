@@ -29,7 +29,7 @@
   	/* 글쓰기 영역 */
 	.home_edit_container {
 		position: sticky;
-    top: 0;
+    top: -10px;
     width: 100%;
     min-width: 1080px;
 		padding: 20px 0 10px 0;
@@ -459,6 +459,7 @@
 		transition: 0.5s;
 		opacity: 0;
 		pointer-events: none;
+    z-index: 2;
 	}
 
 	.rand_notice_overlay.active {
@@ -805,6 +806,7 @@
     let article, articles
     let boardType
     let hashtagArr = []
+    let haveHashtag = []
     let template
     let comments
     let comment_cnt
@@ -825,7 +827,7 @@
       nicknameList = response_of_nicknames
     })
     
-    function loadContents(hashtagArr = '') {
+    function loadContents(hashtagArr = []) {
       $('.body_left').empty()
 
       $.get('/home/maincontent', function(response) {
@@ -935,24 +937,36 @@
             $.get(`/home/hashtag/\${article.generalPostId}`, function(response_of_hashtag) {
               if (response_of_hashtag.length > 0) {
                 for (let j = 0; j < response_of_hashtag.length; j++) {
+                  haveHashtag.push(response_of_hashtag[j].commonCodeVO.codeContent)
                   templateDom.find('.hashtagList').append(`<li>\${response_of_hashtag[j].commonCodeVO.codeContent}</li>`)
                 }
               }
             })
 
+            // console.log('hashtagArr: ', hashtagArr)
+            // console.log('hastagArr.length: ', hashtagArr.length)
+            // console.log('haveHashtag: ', haveHashtag)
+            // console.log('haveHashtag.length: ', haveHashtag.length)
 
             // 해시태그 필터링
             if (hashtagArr.length === 0) {
               $('.body_left').append(templateDom)
             }
             else {
+              let isExist = false
+
               for (let i = 0; i < hashtagArr.length; i++) {
-                if (hashtagArr[i] === templateDom.find('.hashtagList').find('li')) {
-                  $('.body_left').append(templateDom)
-                  break
+                for (let j = 0; j < haveHashtag.length; j++) {
+                  if (isExist === false && hashtagArr[i] === haveHashtag[j]) {
+                    $('.body_left').append(templateDom)
+                    isExist = true
+
+                    break
+                  }
                 }
               }
             }
+            haveHashtag = []
           }          
           skip += 5
 
@@ -1116,17 +1130,36 @@
                   $.get(`/home/hashtag/\${article.generalPostId}`, function(response_of_hashtag) {
                     if (response_of_hashtag.length > 0) {
                       for (let j = 0; j < response_of_hashtag.length; j++) {
+                        haveHashtag.push(response_of_hashtag[j].commonCodeVO.codeContent)
                         templateDom.find('.hashtagList').append(`<li>\${response_of_hashtag[j].commonCodeVO.codeContent}</li>`)
                       }
                     }
-                    
-                    console.log(templateDom.find('.hashtagList').find('li').text())
-                    if (templateDom.find('.hashtagList').find('li').text().includes('MYSQL')) {
-                      console.log('true')
-                    }
-                    $('.body_left').append(templateDom)
-                    
+                    // console.log('hashtagArr: ', hashtagArr)
+                    // console.log('hashtagArr.length: ', hashtagArr.length)
+                    // console.log('haveHashtag: ', haveHashtag)
+                    // console.log('haveHashtag.length: ', haveHashtag.length)
+
                   })
+
+                  // 해시태그 필터링
+                  if (hashtagArr.length === 0) {
+                    $('.body_left').append(templateDom)
+                  }
+                  else {
+                    let isExist = false
+
+                    for (let i = 0; i < hashtagArr.length; i++) {
+                      for (let j = 0; j < haveHashtag.length; j++) {
+                        if (isExist === false && hashtagArr[i] === haveHashtag[j]) {
+                          $('.body_left').append(templateDom)
+                          isExist = true
+
+                          break
+                        }
+                      }
+                    }
+                  }
+                  haveHashtag = []
                 }
               }
 
@@ -1287,10 +1320,12 @@
           }
         }
         $(this).removeClass('hashtag_selected')
+        console.log(hashtagArr)
       }
       else {
         hashtagArr.push(cutHashtag)
         $(this).addClass('hashtag_selected')
+        console.log(hashtagArr)
       }
       loadContents(hashtagArr)
     })
@@ -1347,23 +1382,25 @@
 
   // 랜덤 공지 생성
   $.get('/notice/random', function(response) {
-    let randNoticeTemplate = `
-      <div class="rand_notice_container">
-        <div class="rand_notice_close_btn">&times;</div>
-        <h1 class="create_title">공지</h1>
-        <div class="title_area">
-          <label for="postTitle" class="post_title_label">제목</label>
-          <div>\${response.postTitle}</div>
-        </div class=content_area>
-        <label for="noticeContent" class="post_content_label">내용</label>
-        <div class="noticeContent"></div>
-      </div>
-      <div class="rand_notice_overlay"></div>`
-
-    let randNoticeTemplateDom = $(randNoticeTemplate)
-    randNoticeTemplateDom.find('.noticeContent').html(response.noticeContent)
-
-    $('body').append(randNoticeTemplateDom)
+    if (response.postTitle !== undefined) {
+      let randNoticeTemplate = `
+        <div class="rand_notice_container">
+          <div class="rand_notice_close_btn">&times;</div>
+          <h1 class="create_title">공지</h1>
+          <div class="title_area">
+            <label for="postTitle" class="post_title_label">제목</label>
+            <div>\${response.postTitle}</div>
+          </div class=content_area>
+          <label for="noticeContent" class="post_content_label">내용</label>
+          <div class="noticeContent"></div>
+        </div>
+        <div class="rand_notice_overlay"></div>`
+  
+      let randNoticeTemplateDom = $(randNoticeTemplate)
+      randNoticeTemplateDom.find('.noticeContent').html(response.noticeContent)
+  
+      $('body').append(randNoticeTemplateDom)
+    }
 
 
     $('.rand_notice_container, .rand_notice_overlay').addClass('active')
