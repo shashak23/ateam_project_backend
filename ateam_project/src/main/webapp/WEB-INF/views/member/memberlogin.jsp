@@ -331,7 +331,7 @@ color: var(--red);
           <div class="naver_img"></div>
        		<!-- <img src="../images/naverimg.png"> -->
         </a>
-        <a href="https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=595210277098-t430mu7sj0n7dkl8ji1usbuke043tgvv.apps.googleusercontent.com&redirect_uri=http://localhost:8080/member/googleLogin&scope=email profile">
+        <a href="https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=595210277098-t430mu7sj0n7dkl8ji1usbuke043tgvv.apps.googleusercontent.com&redirect_uri=http://mcjang.iptime.org:8080/member/googleLogin&scope=email profile">
           <div class="google_img"></div>
         	<!-- <img src="/images/Google__G__Logo.svg.png"> -->
         	<!-- <img src="../images/naverimg.png"> -->

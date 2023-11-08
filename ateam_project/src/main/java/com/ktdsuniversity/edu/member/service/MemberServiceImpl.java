@@ -542,7 +542,7 @@ public class MemberServiceImpl implements MemberService {
             sb.append("&client_id=595210277098-t430mu7sj0n7dkl8ji1usbuke043tgvv.apps.googleusercontent.com"); // 본인이 발급받은 key
             sb.append("&client_secret=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"); // 본인이 발급받은 key
             sb.append("&code=" + authorizeCode);
-            sb.append("&redirect_uri=http://localhost:8080/member/googleLogin"); // 본인이 설정한 주소
+            sb.append("&redirect_uri=http://mcjang.iptime.org:8080/member/googleLogin"); // 본인이 설정한 주소
 
             bw.write(sb.toString());
             bw.flush();
