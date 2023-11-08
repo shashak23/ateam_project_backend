@@ -23,7 +23,52 @@
     position: fixed;
     top: 170px;
     left: 50px;
+    z-index: 1;
   }
+
+  	/* 글쓰기 영역 */
+	.home_edit_container {
+		position: sticky;
+    top: 0;
+    width: 100%;
+    min-width: 1080px;
+		padding: 20px 0 10px 0;
+    background-color: var(--white);
+	}
+
+  .home_edit_container .home_edit_wrap {
+    display: flex;
+    width: 1080px;
+    margin: 0 auto;
+		cursor: pointer;
+  }
+
+	.home_edit_container .text_area {
+		width: 990px;
+		height: 80px;
+		border: 1px solid var(--gray);
+		border-radius: 5px;
+		margin-right: 10px;
+    padding: 10px;
+    font-size: var(--font-small);
+    color: var(--gray);
+	}
+
+	.home_edit_container .edit_btn {
+		width: 80px;
+		height: 80px;
+		border: 1px solid;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		border: 1px solid var(--gray);
+		border-radius: 5px;
+		font-size: var(--font-x-big);
+	}
+
+	.home_edit_container .edit_btn svg {
+		fill: var(--dark-gray);
+	}
   
   /* 메인 컨텐츠 영역 */
 	.body_container {
@@ -43,50 +88,13 @@
 		margin-right: 30px;
 	}
 
-	.body_left .home_edit_container {
-		display: flex;
-		padding: 20px;
-		cursor: pointer;
-		margin-bottom: 20px;
-	}
-
-	/* 글쓰기 영역 */
-	.body_left .home_edit_container .text_area {
-		/* position: sticky; */
-		top: 100px;
-		width: 670px;
-		height: 80px;
-		border: 1px solid var(--gray);
-		border-radius: 5px;
-		margin-right: 10px;
-    padding: 10px;
-    font-size: var(--font-small);
-    color: var(--gray);
-	}
-
-	.body_left .home_edit_container .edit_btn {
-		width: 80px;
-		height: 80px;
-		border: 1px solid;
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		border: 1px solid var(--gray);
-		border-radius: 5px;
-		font-size: var(--font-x-big);
-	}
-
-	.body_left .home_edit_container .edit_btn svg {
-		fill: var(--dark-gray);
-	}
-
 	/* 게시글 영역 */
 	.body_left .content_container {
 		width: 100%;
 		border: 1px solid var(--light-gray);
-		margin: 45px 0;
+		margin-bottom: 10px;
 		border-radius: 10px;
-		padding: 24px 36px;
+		padding: 12px 18px;
 	}
 
   .body_left .content_container:hover {
@@ -256,7 +264,6 @@
     align-items: center;
     border: 1px solid var(--gray);
     border-radius: 10px;
-    margin-top: 20px;
   }
 
   .body_right .ranking_wrap h2 {
@@ -609,15 +616,18 @@
 </style>
 
   <!-- 메인 컨텐츠 영역 -->
+  <div class="home_edit_container">
+    <div class="home_edit_wrap">
+      <div class="text_area">자유롭게 글을 작성하세요.</div>
+      <div class="edit_btn">
+        <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path d="M471.6 21.7c-21.9-21.9-57.3-21.9-79.2 0L362.3 51.7l97.9 97.9 30.1-30.1c21.9-21.9 21.9-57.3 0-79.2L471.6 21.7zm-299.2 220c-6.1 6.1-10.8 13.6-13.5 21.9l-29.6 88.8c-2.9 8.6-.6 18.1 5.8 24.6s15.9 8.7 24.6 5.8l88.8-29.6c8.2-2.7 15.7-7.4 21.9-13.5L437.7 172.3 339.7 74.3 172.4 241.7zM96 64C43 64 0 107 0 160V416c0 53 43 96 96 96H352c53 0 96-43 96-96V320c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H96z"/></svg>
+      </div>
+    </div>
+  </div>
+
   <section class="body_container">
     <div class="body">
       <div class="body_left">
-        <div class="home_edit_container">
-          <div class="text_area">자유롭게 글을 작성하세요.</div>
-          <div class="edit_btn">
-            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path d="M471.6 21.7c-21.9-21.9-57.3-21.9-79.2 0L362.3 51.7l97.9 97.9 30.1-30.1c21.9-21.9 21.9-57.3 0-79.2L471.6 21.7zm-299.2 220c-6.1 6.1-10.8 13.6-13.5 21.9l-29.6 88.8c-2.9 8.6-.6 18.1 5.8 24.6s15.9 8.7 24.6 5.8l88.8-29.6c8.2-2.7 15.7-7.4 21.9-13.5L437.7 172.3 339.7 74.3 172.4 241.7zM96 64C43 64 0 107 0 160V416c0 53 43 96 96 96H352c53 0 96-43 96-96V320c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H96z"/></svg>
-          </div>
-        </div>
       </div>
       <div class="body_right">
         <div class="ranking_wrap">
@@ -715,15 +725,15 @@
   })
 
   // 메인 에디터 영역 모달
-  $('.home_edit_container').mouseenter(function() {
+  $('.home_edit_wrap').mouseenter(function() {
     $('.edit_btn').css('background-color', 'var(--gray)')
   })
-  $('.home_edit_container').mouseleave(function() {
+  $('.home_edit_wrap').mouseleave(function() {
     $('.edit_btn').css('background-color', '')
   })
 
   // 메인 에디터 생성
-  $('.home_edit_container').click(function() {
+  $('.home_edit_wrap').click(function() {
 
     $('.editor_wrap, .editor_overlay').addClass('active')
 
