@@ -26,11 +26,12 @@ import com.ktdsuniversity.edu.career.vo.CareerVO;
 import com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO;
 import com.ktdsuniversity.edu.education.vo.EducationVO;
 import com.ktdsuniversity.edu.exceptions.PageNotFoundException;
-import com.ktdsuniversity.edu.follow.service.FollowService;
-import com.ktdsuniversity.edu.follow.vo.FollowListVO;
 import com.ktdsuniversity.edu.generalmember.service.GeneralMemberService;
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
+import com.ktdsuniversity.edu.myalgorithm.service.MyAlgorithmService;
+import com.ktdsuniversity.edu.myalgorithm.vo.MyAlgorithmListVO;
+import com.ktdsuniversity.edu.myalgorithm.vo.SearchMyAlgorithmVO;
 import com.ktdsuniversity.edu.util.XssIgnoreUtil;
 
 import jakarta.validation.Valid;
@@ -42,6 +43,9 @@ public class GeneralMemberController {
 	
 	@Autowired
 	private GeneralMemberService generalMemberService;
+	
+	@Autowired
+	private MyAlgorithmService myAlgorithmService;
 
 	
 	/**
@@ -64,6 +68,7 @@ public class GeneralMemberController {
 		modelAndView.addObject("memberVO", member);
 		modelAndView.addObject("commonCodeList", commonCodeVO);
 		modelAndView.addObject("educationList", educationListVO);
+
 		return modelAndView;
 	}
 	
@@ -315,4 +320,12 @@ public class GeneralMemberController {
 		}
 	}
 	
+	/**
+	 * 북마크 페이지 조회
+	 */
+	@GetMapping("/member/bookmark")
+	public ModelAndView viewMemberBookmark(@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+		ModelAndView mav = new ModelAndView();
+		return mav;
+	}
 }

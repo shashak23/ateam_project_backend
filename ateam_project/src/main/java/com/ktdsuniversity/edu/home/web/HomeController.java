@@ -309,14 +309,14 @@ public class HomeController {
 	
 	// 티어 승급 처리
 	@ResponseBody
-	@PostMapping("admin/management/tier/upgrade")
+	@PostMapping("/admin/management/tier/upgrade")
 	public Map<String, Object> accessMemberTierUpgrade(@RequestParam String memberEmail,
 													   @RequestParam String tierId) {
 		Map<String, Object> resultSet = new HashMap<>();
 		GeneralMemberVO generalMemberVO = new GeneralMemberVO();
 		generalMemberVO.setGeneralMemberEmail(memberEmail);
 		generalMemberVO.setTierId(tierId);
-		
+		System.out.println("두 업데이트 실행중");
 		boolean isSuccess = tierService.doUpdateTierMember(generalMemberVO);
 		
 		if (isSuccess) {

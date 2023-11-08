@@ -110,7 +110,7 @@ h2 {
 <body>
     <div class="flex_button">
         <button id="myprofile">마이페이지</button>
-        <button>북마크</button>
+        <button id="bookmark">북마크</button>
         <button id="modify_info">정보 수정</button>
         <button id="mypost">내가 쓴 게시글</button>
         <button id="solve">내가 푼 문제</button>
@@ -132,11 +132,11 @@ h2 {
             <button class="search_btn">검색</button>
         </div>
     </form>
+</div>     
     <!-- 일단 -->
-    <!-- <table class="table"> -->
-        <!-- <caption>알고리즘 문제 게시판</caption> -->
-        
-        <!-- <thead>
+    <table class="table">
+        <caption>알고리즘 문제 게시판</caption>
+        <thead>
             <colgroup>
                 <col width="10%" />
                 <col width="20%" />
@@ -145,21 +145,23 @@ h2 {
                 <col width="20%" />
             </colgroup>
             <tr id="table-tr">
-                <th scope="col">제목</th>
-                <th scope="col">제출회사</th>
-                <th scope="col">카테고리</th>
-                <th scope="col">내용</th>
-               
+                <th scope="col">제목${myAlgo.algorithmQuestionVO.algorithmTitle}</th>
+                <th scope="col">제출회사${myAlgo.companyInfoVO.companyName}</th>
+                <th scope="col">카테고리${myAlgo.commonCodeVO.codeContent}</th>
+                <th scope="col">내용${myAlgo.algorithmQuestionVO.algorithmContent}</th>
+                <th scope="col">난이도${myAlgo.algorithmQuestionVO.algorithmTierId}</th>             
             </tr>
-        </thead> -->
-        <!-- <tbody>
+        </thead>
+        <tbody>
         <c:choose>
             <c:when test="${not empty algorithmQuestionList.algorithmQuestionList}">
                 <c:forEach items="${algorithmQuestionList.algorithmQuestionList}" var="algorithmquestion" varStatus="index">
                     <tr>
                         <td>${index.index + 1}</td>
-                         <td>${algorithmquestion.commonCodeVO.codeContent}</td> 
-                         <td>${algorithmquestion.algorithmTierId}</td>
+                        <td>${algorithmquestion.commonCodeVO.codeContent}</td>
+                        <td>${algorithmquestion.algorithmTierId}</td>
+                        <td>${myAlgo.algorithmQuestionVO.algorithmContent}</td>
+                        <td>${myAlgo.algorithmQuestionVO.algorithmTierId}</td>
                         <td style="font-weight: bold;">
                             <a href="/algorithm/question/view/${algorithmquestion.companyAlgorithmQuestionId}">
                                 <c:out value="${algorithmquestion.algorithmTitle}" />
@@ -177,10 +179,8 @@ h2 {
             </c:otherwise>
         </c:choose>
         </tbody>
-    </table> -->
-    <!-- 일단 -->
-    <h2>내가 푼 문제 ▼</h2>
-    <div class="container">
+    </table>
+    <!-- <div class="container">
         
         <c:forEach items="${myAlgorithmList.myAlgorithmList}" var="myAlgo">
             
@@ -203,9 +203,9 @@ h2 {
         <div>
 			<div>
 				<ul class="page-nav">
-				    <c:if test="${not empty myAlgorithmList.myAlgorithmList}">
+				    <c:if test="${not empty myAlgorithmList.myAlgorithmList}"> -->
 					    <!-- 이전 페이지 그룹 -->
-					    <c:if test="${searchMyAlgorithmVO.hasPrevGroup}">
+					    <!-- <c:if test="${searchMyAlgorithmVO.hasPrevGroup}">
 					        <li>
 					            <a href="javascript:void(0)" onclick="movePage(0)">처음</a>
 					        </li>
@@ -221,10 +221,10 @@ h2 {
 							<li class="${searchMyAlgorithmVO.pageNo eq p ? 'active': ''}">
 								<a href="javascript:void(0)" onclick="movePage(${p})">${p + 1}</a>
 							</li>
-	                    </c:forEach>
+	                    </c:forEach> -->
 	                    
 	                    <!-- 다음 페이지 그룹 -->
-	                    <c:if test="${searchMyAlgorithmVO.hasNextGroup}">
+	                    <!-- <c:if test="${searchMyAlgorithmVO.hasNextGroup}">
 	                        <li>
 	                            <a href="javascript:void(0)" onclick="movePage(${searchMyAlgorithmVO.nextGroupStartPageNo})">다음</a>
 	                        </li>
@@ -237,8 +237,8 @@ h2 {
 			</div>
 		</div>
 
-    </div>
-</div>   
+    </div> -->
+  
     <script>
 		  function redirectToURL(url) {
 	        window.location.href = url;
@@ -251,6 +251,10 @@ h2 {
 	    $("#mypost").click(function() {
 	        redirectToURL(`/member/mypost`);
 	    });
+	    $("#bookmark").click(function(){
+			redirectToURL(`/member/bookmark`);
+			
+		});
 	    $("#modify_info").click(function() {
 	        redirectToURL("/member/selectmember/${sessionScope._LOGIN_USER_.email}");
 	    });

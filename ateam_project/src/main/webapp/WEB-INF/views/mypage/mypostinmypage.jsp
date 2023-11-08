@@ -18,9 +18,13 @@
 	}
 
 	.body_container{
+	    margin: 0 auto;
+		margin-bottom: 100px;
 		display: flex;
 		flex-direction: column;
-		margin-left: 100px;
+		position: relative;
+		bottom:380px;
+		
 	}
 
 	.flex_button button {
@@ -96,7 +100,7 @@
 
  		<div class="flex_button">
 				<button id="myprofile">마이페이지</button>
-				<button>북마크</button>
+				<button id="bookmark">북마크</button>
 				<button id="modify_info">정보 수정</button> 
 				<button id="mypost">내가 쓴 게시글</button>
 				<button id="solve">내가 푼 문제</button>
@@ -196,7 +200,7 @@
 				</tbody>
 			</table>
 			<p></p>
-			<table class="table">
+			<!-- <table class="table">
 				<caption>알고리즘 문제 게시판</caption>
 				<thead>
 					<colgroup>
@@ -332,10 +336,8 @@
 					</c:otherwise>
 				</c:choose>
 				</tbody>
-			</table> 
-
+			</table>  -->
 		</div>
-	
 	</div>
   <jsp:include page="../layout/footer.jsp" />
 </body>
@@ -360,6 +362,10 @@
 	    });
 		$("#solve").click(function(){
 			redirectToURL(`/codingtest/mylist`);
+		});
+		$("#bookmark").click(function(){
+			redirectToURL(`/member/bookmark`);
+			
 		});
      
   // 모달창 열고 닫기
