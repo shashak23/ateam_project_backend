@@ -1299,6 +1299,14 @@
               $(e.currentTarget).css({'background-color':'var(--blue)', 'color':'var(--white)'})
               $(e.currentTarget).addClass('follow_on')
               $('.follow_btn').prepend(`<input type="hidden" class="followId" value="\${result.followId}"/>`)
+              send({
+	         	roomName: "main",
+	            sendType: "follow",
+	            userName: "${sessionScope._LOGIN_USER_.nickname}",
+	            userEmail: "${sessionScope._LOGIN_USER_.email}",
+	            message: "${sessionScope._LOGIN_USER_.nickname}님이 팔로우 했습니다.",
+	            to: "${memberVO.email}"
+	        })
             }
             else {
               alert('처리하지 못했습니다.')

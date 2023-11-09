@@ -104,7 +104,7 @@ public class FollowController {
 		return resultMap;
 	}
 	
-	// 메인화면 팔로우 조회용
+	// 팔로우 조회용
 	@GetMapping("/follow/status/{followerEmail}/{followeeEmail}")
 	public FollowVO getFollowStatus(@PathVariable String followerEmail
 			                      , @PathVariable String followeeEmail) {
