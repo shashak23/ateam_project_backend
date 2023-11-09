@@ -4,22 +4,21 @@
 package com.ktdsuniversity.edu.common.vo;
 
 public class AbstractSearchVO {
-	
 	private String searchKeyword;
-	
-	private int pageNo;
 
-	public int getPageNo() {
-		return pageNo;
-	}
-	public void setPageNo(int pageNo) {
-		this.pageNo = pageNo;
-	}
+	private int pageNo;
+	
+	
 	public String getSearchKeyword() {
 		return searchKeyword;
 	}
 	public void setSearchKeyword(String searchKeyword) {
 		this.searchKeyword = searchKeyword;
 	}
-
+	public int getPageNo() {
+		return pageNo;
+	}
+	public void setPageNo(int pageNo) {
+		this.pageNo = pageNo;
+	}
 }

@@ -24,9 +24,7 @@ public class SearchMyAlgorithmVO {
 	private int nextGroupStartPageNo;
 	private int prevGroupStartPageNo;
 	
-	
-	
-	
+		
 	public String getEmail() {
 		return email;
 	}

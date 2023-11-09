@@ -94,10 +94,14 @@
         background-color: var(--light-gray);
         border-bottom: 1px solid var(--dark-gray);
         color: var(--dark-gray);       
-    }    
+    }
     .table-header_01 {                        
         width: 50px;
         height: 35px;
+    }
+
+    tbody .hidden {
+        display: none;
     }
     .pratice_01,.pratice_02,.pratice_03,.pratice_04,.practice_title {
         border-bottom: 1px solid var(--gray);
@@ -225,7 +229,6 @@
                     <button class="register" type="button" onclick="location.href='/freeboard/create';">글작성</button>
                 </div>
                 <div class="search_area">
-                   
                     <form id="search-form" method="get" action="/freeboard/list">
                       <div class="button_list">
                         <select class="search_menu" name="searchType">
@@ -234,16 +237,15 @@
                             <option value="postWriter" ${searchForumVO.searchType eq 'postWriter' ? 'selected' : ''}>작성자</option>
                         </select>
                         <input type="text" class="sc_text" placeholder="검색어 입력" name="searchKeyword" value="${searchForumVO.searchKeyword}" />
-                            <div class="button_box">
-                        <button type="submit" class="btn_st_2">
-                            검색
-                        </button>       
-                            </div>                         
+                        <div class="button_box">
+                            <button type="submit" class="btn_st_2">
+                                검색
+                            </button>       
+                        </div>                         
                       </div>               
-                   </form>               
+                   </form>
                 </div>            
-             </div>
-    
+            </div>
         </div>
         <!-- 본문 -->
         <section id="container" class="container">
@@ -274,7 +276,7 @@
                                 </div>
                                 <tbody>
                                     <c:forEach items="${generalPostListVO.generalPostList}" var="freeboard" varStatus="index">
-                                        <tr>                                                
+                                        <tr class="hidden">                                                
                                             <td class="pratice_01">${(index.index + 1) * (searchForumVO.pageNo + 1)}</td>
                                             <td class="practice_title"><!--자유게시판의 내용을 가져와 반복하는 태그 -->
                                             <div class="pratice">
@@ -302,25 +304,25 @@
     document.addEventListener('DOMContentLoaded', function() {
         const viewCountElement = document.getElementById('viewCount');
     
-        const postId = freeboard.generalPostId; // 게시물의 고유 ID (예시로 대입)
+        // const postId = $(freeboard.generalPostId); // 게시물의 고유 ID (예시로 대입)
 
         // 서버로부터 조회수 업데이트 정보를 가져옵니다.
-        function updateViewCount() {
-            fetch(`/updateViewCount?postId=${postId}`, {
-                method: 'GET'
-            })
-            .then(response => response.json())
-            .then(data => {
-                // 업데이트된 조회수를 가져와서 화면에 표시합니다.
-                viewCountElement.textContent = data.viewCount;
-            })
-            .catch(error => {
-                console.error('에러 발생:', error);
-            });
-        }
+        // function updateViewCount() {
+        //     fetch(`/updateViewCount?postId=${postId}`, {
+        //         method: 'GET'
+        //     })
+        //     .then(response => response.json())
+        //     .then(data => {
+        //         // 업데이트된 조회수를 가져와서 화면에 표시합니다.
+        //         viewCountElement.textContent = data.viewCount;
+        //     })
+        //     .catch(error => {
+        //         console.error('에러 발생:', error);
+        //     });
+        // }
 
         // 페이지 로딩 시 초기 조회수 업데이트를 수행합니다.
-        updateViewCount();
+        // updateViewCount();
 
         // 페이지 뷰 시 매번 업데이트하는 대신, 필요한 이벤트(예: 게시물 뷰)에서 호출하세요.
         // updateViewCount();
@@ -389,5 +391,25 @@
             prevEl: '.swiper-button-prev'
         }
     });
+
+    $(window).scroll(function() {
+        console.log("...")
+    })
+
+    let currCount = 0
+    let currMax = currCount + 20
+
+    function loadContent() {
+        for (let i = currCount; i < currCount + 20; i++) {
+            $('table tr.hidden').eq(0).removeClass('hidden')
+        }
+        currCount += 20
+    }
+
+    window.onscroll = function() {
+        if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 250) {
+            loadContent()
+        }
+    }
 </script>
 </html>
