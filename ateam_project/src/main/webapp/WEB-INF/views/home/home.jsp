@@ -73,7 +73,7 @@
   /* 메인 컨텐츠 영역 */
 	.body_container {
 		width: 1140px;
-		padding: 30px;
+		padding: 10px 30px 30px;
 		margin: 0 auto;
 	}
 
@@ -85,7 +85,7 @@
 	/* 왼쪽 */
 	.body_container .body .body_left {
 		width: 800px;
-		margin-right: 30px;
+		margin-right: 10px;
 	}
 
 	/* 게시글 영역 */
@@ -227,10 +227,11 @@
 		-webkit-box-orient: vertical;
 		overflow: hidden;
 		-webkit-line-clamp: 3;
+    margin-bottom: 5px;
+    min-height: 38px;
 	}
 
 	.body_left .content_container .q_content p {
-		margin-bottom: 20px;
 		font-size: var(--font-small);
 		color: var(--dark);
 
@@ -255,14 +256,14 @@
 
 	/* 오른쪽 */
 	.body_container .body .body_right {
-		width: 250px;
+		width: 270px;
 	}
 
   .body_right .ranking_wrap {
     display: flex;
     flex-direction: column;
     align-items: center;
-    border: 1px solid var(--gray);
+    border: 1px solid var(--light-gray);
     border-radius: 10px;
   }
 
@@ -270,8 +271,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 20px 0;
-    border-bottom: 2px solid var(--gray);
+    padding: 10px 0;
+    border-bottom: 1px solid var(--gray);
     width: 100%;
   }
 
@@ -281,7 +282,6 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: 700px;
     margin-bottom: 20px;
   }
 
@@ -300,24 +300,23 @@
   }
 
   .body_right .ranking_wrap ul .hot_post a {
-    width: 250px;
-    height: 100%;
+    width: 270px;
     font-size: var(--font-small);
     color: var(--dark);
     display: block;
-    padding: 0 20px;
+    padding: 15px 20px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    line-height: 70px;
+
   }
 
   .body_right .hashtag_wrap {
     display: flex;
-    width: 250px;
+    width: 270px;
     flex-wrap: wrap;
-    margin-top: 30px;
-    border: 1px solid var(--gray);
+    margin-top: 10px;
+    border: 1px solid var(--light-gray);
     border-radius: 10px;
     padding: 10px;
   }
@@ -342,6 +341,7 @@
     flex-direction: column;
     border: 1px solid var(--light-gray);
     border-radius: 10px;
+    margin: 10px;
   }
 
   .recommend_container:hover, .member_profile:hover {
