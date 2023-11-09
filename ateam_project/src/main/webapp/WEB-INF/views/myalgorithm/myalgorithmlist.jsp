@@ -9,13 +9,12 @@
 <jsp:include page="../layout/header.jsp" />
 <script src="/js/lib/jquery-3.7.1.js"></script>
 <style>
-   
     .flex_button {
 		
 		margin-top: 100px;
 		display: flex;
 		flex-direction: column;
-		
+	
 	}
 	.flex_button button {
 	color: white;	
@@ -26,27 +25,24 @@
     cursor: pointer;
     border: 2px;
     }
-
     .flex_button button:hover {
         background-color: var(--light-blue);
         color: white;
 
     }
-table.table {
+    table.table {
 		border-collapse: collapse;
-		
-		width: 900px;
+		margin-top: 30px;
+		width:auto;
+        height: auto;
 		margin: 0 auto;
-       margin-bottom: 200px;
 	}
-
 	table th{
 		background-color: var(--light-gray);
 		border-bottom: 1px solid var(--dark-gray);
 		height:35px;
 		color: var(--dark-gray);
 	}
-
 	table td{
 		border-bottom: 1px solid #D3D3D3;
 		color: var(--dark-gray);
@@ -54,19 +50,11 @@ table.table {
 	table.table th:last-child, table.table td:last-child {
 		border-right: none;
 	}
-	
 	table.table > tbody td {
 		padding: 10px;
 		color: #333;
 		text-align: center;
 		color: var(--dark-gray);
-	}
-    caption {
-		font-weight: bold;
-		font-size: 20px;
-        margin: 0 auto;
-        margin-bottom: 30px;
-		text-align: left;
 	}
     .controller {
         margin: 0 auto;
@@ -75,9 +63,7 @@ table.table {
     .search_form {
     margin: 0 auto;
     margin-left: 980px;
-    margin-bottom: 10px;
-   
-    
+    margin-bottom: 10px;   
 }
 .search_btn {
      margin: 0 auto;
@@ -99,11 +85,10 @@ table.table {
     width: 900px;
     height: auto;
 }
-h2 {
+h3 {
     margin: 0 auto;
-    margin-left: 422px;
-    margin-bottom: 30px;
-    font-weight: bold;
+    margin-bottom: 50px;
+    margin-left: 415px;
 }
 </style>
 </head>
@@ -134,78 +119,45 @@ h2 {
     </form>
 </div>     
     <!-- 일단 -->
-    <table class="table">
-        <caption>알고리즘 문제 게시판</caption>
-        <thead>
-            <colgroup>
-                <col width="10%" />
-                <col width="20%" />
-                <col width="10%" />
-                <col width="40%" />
-                <col width="20%" />
-            </colgroup>
-            <tr id="table-tr">
-                <th scope="col">제목${myAlgo.algorithmQuestionVO.algorithmTitle}</th>
-                <th scope="col">제출회사${myAlgo.companyInfoVO.companyName}</th>
-                <th scope="col">카테고리${myAlgo.commonCodeVO.codeContent}</th>
-                <th scope="col">내용${myAlgo.algorithmQuestionVO.algorithmContent}</th>
-                <th scope="col">난이도${myAlgo.algorithmQuestionVO.algorithmTierId}</th>             
-            </tr>
-        </thead>
-        <tbody>
-        <c:choose>
-            <c:when test="${not empty algorithmQuestionList.algorithmQuestionList}">
-                <c:forEach items="${algorithmQuestionList.algorithmQuestionList}" var="algorithmquestion" varStatus="index">
+    <h3>내가 푼 문제</h3> 
+     <div class="container">
+       
+        <table class="table">
+            <thead>
+                <tr id="table-tr">
+                    <th>제목</th>
+                    <th>제출회사</th>
+                    <th>카테고리</th>
+                    <th>내용</th>
+                    <th>조회수</th>
+                    <th>난이도</th>
+                    <th>정답여부</th>
+                    <th>제출한 답</th>
+                    <th>삭제</th>
+                </tr>
+            </thead>
+            <tbody>
+                <c:forEach items="${myAlgorithmList.myAlgorithmList}" var="myAlgo">
                     <tr>
-                        <td>${index.index + 1}</td>
-                        <td>${algorithmquestion.commonCodeVO.codeContent}</td>
-                        <td>${algorithmquestion.algorithmTierId}</td>
+                        <td><a href="/algorithm/question/view/${myAlgo.algorithmQuestionVO.companyAlgorithmQuestionId}">${myAlgo.algorithmQuestionVO.algorithmTitle}</a></td>
+                        <td>${myAlgo.companyInfoVO.companyName}</td>
+                        <td>${myAlgo.commonCodeVO.codeContent}</td>
                         <td>${myAlgo.algorithmQuestionVO.algorithmContent}</td>
+                        <td>${myAlgo.algorithmQuestionVO.viewCnt}</td>
                         <td>${myAlgo.algorithmQuestionVO.algorithmTierId}</td>
-                        <td style="font-weight: bold;">
-                            <a href="/algorithm/question/view/${algorithmquestion.companyAlgorithmQuestionId}">
-                                <c:out value="${algorithmquestion.algorithmTitle}" />
-                            </a>
-                        </td>
-                        <td>${algorithmquestion.memberVO.nickname}</td>
+                        <td>${myAlgo.correctAnswerYn}</td>
+                        <td>${myAlgo.myAnswer}</td>
+                        <td><a href="/home/myalgorithm/delete/${myAlgo.myAlgorithmQuestionId}">삭제</a></td>
                     </tr>
                 </c:forEach>
-            </c:when>
-            <c:otherwise>
-                <tr>
-                    <td colspan="5">조회된 게시글이 없습니다.</td>
-                </tr>
-                
-            </c:otherwise>
-        </c:choose>
-        </tbody>
-    </table>
-    <!-- <div class="container">
-        
-        <c:forEach items="${myAlgorithmList.myAlgorithmList}" var="myAlgo">
-            
-            <div class="box">
-               
-                <div style="background-color: var(--light-gray);">
-                    <a href="/algorithm/question/view/${myAlgo.algorithmQuestionVO.companyAlgorithmQuestionId}">제목: ${myAlgo.algorithmQuestionVO.algorithmTitle}</a>
-                </div>
-                <div>제출회사: ${myAlgo.companyInfoVO.companyName}</div>
-                <div>카테고리: ${myAlgo.commonCodeVO.codeContent}</div>
-                <p>내용: ${myAlgo.algorithmQuestionVO.algorithmContent}</p>
-                <p>조회수: ${myAlgo.algorithmQuestionVO.viewCnt}</p>
-                <p>좋아요 수: ${myAlgo.algorithmQuestionVO.likeCnt}</p>
-                <p>난이도: ${myAlgo.algorithmQuestionVO.algorithmTierId}</p>
-                <p>정답여부: ${myAlgo.correctAnswerYn}</p>
-                <p>제출한 답: ${myAlgo.myAnswer}</p>
-            </div>
-            <a href="/home/myalgorithm/delete/${myAlgo.myAlgorithmQuestionId}">삭제</a>
-        </c:forEach>
+            </tbody>
+        </table>
         <div>
 			<div>
 				<ul class="page-nav">
-				    <c:if test="${not empty myAlgorithmList.myAlgorithmList}"> -->
-					    <!-- 이전 페이지 그룹 -->
-					    <!-- <c:if test="${searchMyAlgorithmVO.hasPrevGroup}">
+				    <!-- <c:if test="${not empty myAlgorithmList.myAlgorithmList}"> 
+					    이전 페이지 그룹
+					    <c:if test="${searchMyAlgorithmVO.hasPrevGroup}">
 					        <li>
 					            <a href="javascript:void(0)" onclick="movePage(0)">처음</a>
 					        </li>
@@ -221,23 +173,23 @@ h2 {
 							<li class="${searchMyAlgorithmVO.pageNo eq p ? 'active': ''}">
 								<a href="javascript:void(0)" onclick="movePage(${p})">${p + 1}</a>
 							</li>
-	                    </c:forEach> -->
+	                    </c:forEach>   -->
 	                    
 	                    <!-- 다음 페이지 그룹 -->
-	                    <!-- <c:if test="${searchMyAlgorithmVO.hasNextGroup}">
+	                      <!-- <c:if test="${searchMyAlgorithmVO.hasNextGroup}">
 	                        <li>
 	                            <a href="javascript:void(0)" onclick="movePage(${searchMyAlgorithmVO.nextGroupStartPageNo})">다음</a>
 	                        </li>
 	                        <li>
 	                            <a href="javascript:void(0)" onclick="movePage(${searchMyAlgorithmVO.pageCount-1})">마지막</a>
 	                        </li>
-	                    </c:if>
-                    </c:if>
-				</ul>
+	                    </c:if> -->
+                    <!-- </c:if> -->
+				</ul> 
 			</div>
 		</div>
 
-    </div> -->
+    </div>
   
     <script>
 		  function redirectToURL(url) {
