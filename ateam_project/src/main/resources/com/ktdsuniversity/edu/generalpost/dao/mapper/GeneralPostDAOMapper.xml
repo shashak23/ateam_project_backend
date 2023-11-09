@@ -124,7 +124,7 @@
 		     , GP.BOARD_ID
 		     , GP.POST_TITLE
 		     , GP.POST_CONTENT
-		     , GP.POST_DATE
+		     , TO_CHAR(GP.POST_DATE, 'YYYY-MM-DD') POST_DATE
 		     , GP.LIKE_CNT
 		     , GP.VIEW_CNT
 		     , GP.DELETE_YN
@@ -149,7 +149,7 @@
 		     , GP.BOARD_ID
 		     , GP.POST_TITLE
 		     , GP.POST_CONTENT
-		     , TO_CHAR(POST_DATE, 'YYYY-MM-DD') GP.POST_DATE
+		     , TO_CHAR(GP.POST_DATE, 'YYYY-MM-DD') POST_DATE
 		     , GP.LIKE_CNT
 		     , GP.VIEW_CNT
 		     , GP.DELETE_YN
