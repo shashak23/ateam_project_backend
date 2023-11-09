@@ -120,8 +120,7 @@ h3 {
 </div>     
     <!-- 일단 -->
     <h3>내가 푼 문제</h3> 
-     <div class="container">
-       
+    <div class="container">
         <table class="table">
             <thead>
                 <tr id="table-tr">
@@ -152,8 +151,15 @@ h3 {
                 </c:forEach>
             </tbody>
         </table>
-        <div>
-			<div>
+        <c:choose>
+            <c:when test="${empty myAlgorithmList.myAlgorithmList}">
+                <div>데이터가 없습니다.</div>
+            </c:when>
+            <c:otherwise>
+                <div><!-- 다른 내용이 있으면 여기에 추가 --></div>
+            </c:otherwise>
+        </c:choose>
+    </div>
 				<ul class="page-nav">
 				    <!-- <c:if test="${not empty myAlgorithmList.myAlgorithmList}"> 
 					    이전 페이지 그룹
