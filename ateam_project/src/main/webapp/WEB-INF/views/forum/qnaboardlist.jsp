@@ -9,10 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" id="viewport" content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, width=device-width"/>
     <title>devGround</title>
-   
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <link rel="stylesheet" type="text/css" href="/css/style.css" />
-   
+	   
     <script src="js/lib/jquery-3.7.1.js"></script>
     <jsp:include page="../layout/header.jsp"/>
 <style>
@@ -20,10 +17,10 @@
             	border-collapse: collapse;
             }
             .wrap {
-            display: flex;
-            justify-content: center;
-            margin: 0 auto;
-            margin-right: 15%;
+	            display: flex;
+	            justify-content: center;
+	            margin: 0 auto;
+	            margin-right: 15%;
             }
 
             .container {
@@ -76,7 +73,7 @@
                 border-bottom: 1px solid var(--dark-gray);
                 color: var(--dark-gray);       
             }    
-            .table-header_01 {                        
+            .table-header_01 { 
                 width: 50px;
                 height: 35px;
              }
@@ -99,6 +96,7 @@
             text-align: center;
             font-size: 40px;
             font-weight: bold;
+            
          }
          .hashtag_wrap {
 	        margin: 0 auto;  
@@ -106,6 +104,7 @@
 	        flex-direction: row;
 	        flex-wrap: wrap;
 	        width: 780px;
+	        
 	        }
 	    
 
@@ -241,12 +240,6 @@
     background-color: var(--highlight-color); /* 마우스를 올렸을 때 배경색 변경 */
 }
 
-
-
-
-
-
-
     </style>
 </head>
 <body>
@@ -340,7 +333,7 @@
               <h3 id="like_top">명예의 전당 ▶ </h3>
               <div class="ranking_controller expanded">
                 <div class="view_ranking_wrap_1">
-                    <ul class="ranking_wrap_1">
+                    <ul class="ranking_wrap_1"></ul>
                 </div>
               </div>
 	      </aside>
@@ -383,82 +376,52 @@
         }
       }
     })
+    
    	  // 가운데에 해시태그 리스트 조회해주는 코드 
       $.get('/code/해시태그', function(response) {
         for (let i = 0; i < response.length; i++) {
           let hash_template = `<a href="/qnaboard/list?hashtagId=\${response[i].codeId}" class="hashtag_incomplete">#\${response[i].codeContent}</button>`
           $('.hashtag_wrap').append(hash_template)
         }
-        
-      })   
-      $().ready(function() {
-	  // 'codeContent' 클릭 시 이벤트 처리
-	 /*  $('.hashtag_wrap').click(function() {
-	    $.get('/hashtag/list', function(response) {
-	      if (response.hashtagId != null) {
-	        // 해시태그 목록을 반복하여 처리
-	        response.hashtagListVO.forEach(function(hashtagId) {
-	          console.log(generalPostHashtagVO.hashtagId);
-	        });
-	      } else {
-	        console.log('무언가 잘못됐답니당 ~~~~~~~ ');
-	      }
+      })
+      // vo로 바꾸고 searchVo에서 searchKeyword를 넣고 있어ㅓ
+      // vo안에 변수를 추가해야한다 
+      // 쿼리까지 바꿔야한다 
+      
+      
+	//  랭킹
+	$(document).ready(function() {
+	    // AJAX 요청을 통해 데이터 가져오기
+	    $.get('/home/ranking/\${formattedMonday}', function(response) {
+	        // 데이터를 가져왔을 때 실행되는 콜백 함수
+	        if (response && response.data) {
+	            const rankingData = response.data;
+	
+	            // rankingData를 이용하여 그래프를 생성하고 ranking_wrap_1에 추가
+	            const rankingWrap = $('.ranking_wrap_1');
+	            rankingWrap.empty(); // 기존 내용을 지우고 다시 생성
+				
+	            rankingData.forEach(item => {
+	                const views = item.views;
+	                const postTitle = item.postTitle;
+	
+	                // 그래프 항목 생성
+	                const ranking_template = `
+	                    <li>
+	                        <a href="/qnaboard/view/${item.generalPostId}" target="_blank">${postTitle}</a>
+	                    </li>`;
+	                const ranking_templateDom = $(ranking_template);
+	                ranking_templateDom.css('width', views + 'px');
+	                rankingWrap.append(ranking_templateDom);
+	            });
+	
+	            // 페이지가 로드될 때 랭킹 컨트롤러를 확장 (올라가도록)합니다.
+	            $('.ranking_controller').addClass('expanded');
+	        }
 	    });
-	  }); */
 	});
 
-		// 버튼 클릭 이벤트 핸들러 연결
-		// $('.hashtag_wrap').on('click', '.hashtag_incomplete', redirectToNewPage);
-        // 버튼 클릭 시 페이지 이동 이벤트 핸들러
-		/* function redirectToNewPage() {
-		    // 클릭한 버튼의 hashtagId 값을 가져오기
-		    let hashtagId = $(this).data('hashtagId');
-		
-		    // 새로운 URL 생성
-		    let newURL = `/hashtag/list/${hashtagId}`;
-		
-		    // $.get 방식으로 URL로 이동
-		    $.get(newURL, function(data) {
-		        // 이동한 페이지에서 반환된 데이터(data)에 대한 처리를 여기에 추가
-		        console.log("이동한 페이지에서 받은 데이터:", data);
-		    });
-		}
- */
-
-
-//  랭킹
-$(document).ready(function() {
-    // AJAX 요청을 통해 데이터 가져오기
-    $.get('/home/ranking/\${formattedMonday}', function(response) {
-        // 데이터를 가져왔을 때 실행되는 콜백 함수
-        if (response && response.data) {
-            const rankingData = response.data;
-
-            // rankingData를 이용하여 그래프를 생성하고 ranking_wrap_1에 추가
-            const rankingWrap = $('.ranking_wrap_1');
-            rankingWrap.empty(); // 기존 내용을 지우고 다시 생성
-
-            rankingData.forEach(item => {
-                const views = item.views;
-                const postTitle = item.postTitle;
-
-                // 그래프 항목 생성
-                const ranking_template = `
-                    <li>
-                        <a href="/qnaboard/view/${item.generalPostId}" target="_blank">${postTitle}</a>
-                    </li>`;
-                const ranking_templateDom = $(ranking_template);
-                ranking_templateDom.css('width', views + 'px');
-                rankingWrap.append(ranking_templateDom);
-            });
-
-            // 페이지가 로드될 때 랭킹 컨트롤러를 확장 (올라가도록)합니다.
-            $('.ranking_controller').addClass('expanded');
-        }
-    });
-});
-
-// 명예의 전당
+	// 명예의 전당
     $.get("/qnaboard/topTenMember", function(response) {
             console.log(response)
             for (var i in response.generalMemberList) {
@@ -472,7 +435,7 @@ $(document).ready(function() {
         })
 
 
-//랭킹
+	//랭킹
        const userList = document.getElementById('user-list');
        const tableContainer = document.querySelector('.board_list_ty1');
        const loading = document.getElementById('loading');

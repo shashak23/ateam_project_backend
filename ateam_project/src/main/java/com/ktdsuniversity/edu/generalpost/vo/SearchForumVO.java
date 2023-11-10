@@ -21,6 +21,16 @@ public class SearchForumVO extends AbstractSearchVO {
 	private String searchKeyword;
 
 	private String boardId;
+	
+	private String hashtagId;
+
+	public String getHashtagId() {
+		return hashtagId;
+	}
+
+	public void setHashtagId(String hashtagId) {
+		this.hashtagId = hashtagId;
+	}
 
 	public String getSearchType() {
 		return searchType;

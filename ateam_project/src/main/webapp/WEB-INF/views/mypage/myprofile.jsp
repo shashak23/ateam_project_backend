@@ -244,31 +244,8 @@ position: absolute;
 <!-- 자바스크립트 시작 -->
 <jsp:include page="../layout/header.jsp" />
 <script type="text/javascript">
-	//신고버튼
-	$().ready(function() {
-	    // "신고" 버튼 클릭 시 모달 열기
-	    $(".report-btn").click(function() {
-	       let reportType = $("#reportUser").val()
-	       console.log(reportType);
-	        $("#report-modal").css({
-	           "visibility": "visible",
-	           "opacity": "1"
-	        });
-	    
-	       // 모달 내부 "취소" 버튼 클릭 시 모달 닫기
-	       $(".close").click(function() {
-	          /* console.log("!") */
-	           $("#report-modal").css({
-	              "visibility": "hidden",
-	              "opacity": "0"
-	           });
-	         });
 
-			
-	    });
-
-		
-	    
+$().ready(function() {
 		function redirectToURL(url) {
 	        window.location.href = url;
 	    }
@@ -461,7 +438,7 @@ position: absolute;
 		<img id="arrow" src="/images/아래.png/" alt="arrow">
 	  </div>
 	  <div class="follow_chat">
-		<%-- <c:choose>
+		<c:choose>
 			<c:when
 				test="${not empty sessionScope._LOGIN_USER_.email eq memberVO.email}">
 				<!-- a유저가 로그인한 경우에만 신고 버튼을 표시합니다. -->
@@ -476,45 +453,7 @@ position: absolute;
 			</c:otherwise>
 		</c:choose>
 
-		<!-- 모달 창 -->
-		 <h2>신고 내용</h2>
-		<form name="reportVO" method="post" action="/report/view/5">
-			<div>
-				<label for="reportReason">신고사유${reportVO.reportReason} <select
-					name="reportReason">
-						<option value="6">영리 및 홍보 목적</option>
-						<option value="7">개인정보노출</option>
-						<option value="8">음란성/선정성</option>
-						<option value="9">같은 내용 반복(도배)</option>
-						<option value="10">이용규칙위반</option>
-						<option value="11">기타</option>
-				</select>
-				</label> <label for="reportReasonContent">신고 상세내용 <textarea
-						name="reportReasonContent" id="reportReasonContent">${reportVO.reportReasonContent}</textarea></label>
-
-				<label for="attachedImg">첨부파일${reportVO.attachedImg}</label> <input
-					id="attachedImg" type="file" name="attachedImg" /> <label
-					for="reportTypeId">${reportVO.reportTypeId}</label> <input
-					id="reportTypeId" type="hidden" name="reportTypeId" value="1" />
-
-				<label for="reportMemberEmail">${reportVO.reportMemberEmail}</label>
-				<input id="reportMemberEmail" type="hidden" name="reportMember"
-					value="${reportVO.reportMember}" /> <label
-					for="receivedReportMemberEmail">${reportVO.receivedReportMemberEmail}</label>
-				<input id="receivedReportMemberEmail" type="hidden"
-					name="receivedReportMember" value="${generalPostVO.postWriter}" />
-
-				<label for="reportContentId">${reportVO.reportContentId}</label> <input
-					id="reportContentId" type="hidden" name="reportContentId"
-					value="${generalPostVO.generalPostId}" />
-			</div>
-			<div class="btn-group">
-				<div class="right-align">
-					<input type="submit" value="완료" />
-
-				</div>
-			</div>
-		</form>   --%>
+		
 		<button class="message_icon">✉ 메시지</button>
 	</div>
 	</div>
