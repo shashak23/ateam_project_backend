@@ -427,10 +427,6 @@ position: absolute;
 			redirectToURL(`/member/bookmark`);
 			
 		});
-		$("#bookmark").click(function(){
-			redirectToURL(`/member/bookmark`);
-			
-		});
 
 	    /* 프로필 사진 수정 */ 
 	  	// $('.profile-modify').click(function() {
@@ -1299,7 +1295,6 @@ position: absolute;
         $('.create_content2, .overlay').removeClass('active')
     })
     
-    
 	function loadFollower(url) {
 		$.get(url, function(response) {
 			console.log(response.followerList);
@@ -1367,15 +1362,15 @@ position: absolute;
 	
 	// 스크롤 버튼, IDE
 	let calcScrollValue = () => {
-	let scrollProgress = document.getElementById('progress')
-	let progressValue = document.getElementById('progress-value')
-	let pos = document.documentElement.scrollTop
-	let calcHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight
-	let scrollValue = Math.round((pos * 100) / calcHeight)
-	
-	scrollProgress.addEventListener('click', () => {
-	  document.documentElement.scrollTop = 0
-	})
+		let scrollProgress = document.getElementById('progress')
+		let progressValue = document.getElementById('progress-value')
+		let pos = document.documentElement.scrollTop
+		let calcHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight
+		let scrollValue = Math.round((pos * 100) / calcHeight)
+		
+		scrollProgress.addEventListener('click', () => {
+		document.documentElement.scrollTop = 0
+		})
 	}
 	
 	window.onscroll = calcScrollValue
@@ -1401,31 +1396,32 @@ position: absolute;
 	    console.log(email)
 	  }) */
             
-            template = `
-            <c:if test="${sessionScope._LOGIN_USER_.email != memberVO.email}" >
-  				<button class="follow_icon" data-email="${memberVO.email}">
-  				  <img src="https://cdn-icons-png.flaticon.com/512/907/907873.png" />
-  				  팔로우
-  				  <input type="hidden" class="followerEmail" value="${sessionScope._LOGIN_USER_.email}" />
-  	              <input type="hidden" class="followeeEmail" value="${memberVO.email}" />
-  				</button>
-  			</c:if>`
-  				
-            let templateDom = $(template)
-            
-            // 팔로우 상태 가져오기
-            user_email = `${sessionScope._LOGIN_USER_.email}`
-            email = `${memberVO.email}`
-            console.log(email)
+	template = `
+	<c:if test="${sessionScope._LOGIN_USER_.email != memberVO.email}" >
+		<button class="follow_icon" data-email="${memberVO.email}">
+			<img src="https://cdn-icons-png.flaticon.com/512/907/907873.png" />
+			팔로우
+			<input type="hidden" class="followerEmail" value="${sessionScope._LOGIN_USER_.email}" />
+			<input type="hidden" class="followeeEmail" value="${memberVO.email}" />
+			<input type="hidden" class="followId" />
+			</button>
+	</c:if>`
+		
+	let templateDom = $(template)
+	
+	// 팔로우 상태 가져오기
+	user_email = `${sessionScope._LOGIN_USER_.email}`
+	email = `${memberVO.email}`
+	console.log(email)
 
-		    $.get(`/follow/status/\${user_email}/\${email}`, function(state) {
-		    console.log(state.followYn)
-		      if(state.followYn === 'Y') {
-		        templateDom.css({'background-color':'var(--blue)', 'color':'var(--white)'}).addClass('follow_on')
-		        templateDom.find('.follow_icon').prepend($(`<input type="hidden" class="followId" value="\${state.followId}"/>`))
-		      }
-		    })
-		    $('.follow_chat').prepend(templateDom)
+	$.get(`/follow/status/\${user_email}/\${email}`, function(state) {
+	console.log(state.followYn)
+		if(state.followYn === 'Y') {
+		templateDom.css({'background-color':'var(--blue)', 'color':'var(--white)'}).addClass('follow_on')
+		$('.follow_chat').find('.followId').val(`\${state.followId}`)
+		}
+	})
+	$('.follow_chat').prepend(templateDom)
 			
 	  // 팔로우 토글
 	  $(document).on('click', '.follow_icon', function(e) {
@@ -1447,9 +1443,6 @@ position: absolute;
 			  console.log(e.currentTarget)
 			  if ($(e.currentTarget).hasClass('follow_on')) {
 				$.post('/unfollow/member', content, function(result) {
-				  $(e.currentTarget).removeClass('follow_on')
-				  $(e.currentTarget).css({'background-color':'var(--white)', 'color':'var(--black)'})
-				  $('.followId').remove()
 				  if (result.result === false) {
 					alert('삐') 
 				  }
@@ -1463,9 +1456,12 @@ position: absolute;
 			  else {
 				$.post('/follow/member', content, function(result) {
 				   if(result) {
+					 let template = `<input type="hidden" class="followId" value="\${result.followId}"/>`
+					 let templateDom = $(template)
+
 					 $(e.currentTarget).css({'background-color':'var(--blue)', 'color':'var(--white)'})
 					 $(e.currentTarget).addClass('follow_on')
-					 $('.follow_icon').prepend(`<input type="hidden" class="followId" value="\${result.followId}"/>`)
+					 $('.follow_icon').prepend(templateDom)
 				   	 send({
 			         	roomName: "main",
 			            sendType: "follow",
