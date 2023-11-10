@@ -392,12 +392,7 @@
         }
     });
 
-    $(window).scroll(function() {
-        console.log("...")
-    })
-
     let currCount = 0
-    let currMax = currCount + 20
 
     function loadContent() {
         for (let i = currCount; i < currCount + 20; i++) {
@@ -405,6 +400,8 @@
         }
         currCount += 20
     }
+
+    loadContent()
 
     window.onscroll = function() {
         if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 250) {
