@@ -17,6 +17,11 @@
 			autoMapping="true">
 			<id column="EMAIL" property="email" />
 		</association>
+		<association property="memberVOTemp"
+		             javaType="com.ktdsuniversity.edu.member.vo.MemberVO">
+			<id column="EMAIL" property="emailTemp" />
+			<result column="COMPANY_NICKNAME" property="nicknameTemp" />
+		</association>
 		<association property="algorithmQuestionVO"
 		    javaType="com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionVO"
 		    autoMapping="true">
@@ -43,10 +48,12 @@
 		    ON M.EMAIL = MAQ.GENERAL_MEMBER_EMAIL
 		 INNER JOIN COMPANY_ALGORITHM_QUESTION CAQ
 		    ON CAQ.COMPANY_ALGORITHM_QUESTION_ID = MAQ.COMPANY_ALGORITHM_QUESTION_ID
+		 INNER JOIN MEMBER MC
+		    ON MC.EMAIL = CAQ.ALGORITHM_WRITER
 		 INNER JOIN COMMON_CODE CC
 		    ON CC.CODE_ID = CAQ.MAIN_ALGORITHM_CATEGORY_ID
-		 INNER JOIN COMPANY C
-		    ON C.COMPANY_EMAIL = CAQ.ALGORITHM_WRITER 
+		<!--  INNER JOIN COMPANY C
+		    ON C.COMPANY_EMAIL = CAQ.ALGORITHM_WRITER  -->
 		 WHERE MAQ.GENERAL_MEMBER_EMAIL = #{email}
 		   AND MAQ.DELETE_YN = 'N'
 		<if test='searchKeyword != null and searchKeyword != ""'>
@@ -63,7 +70,7 @@
 		   AND CAQ.ALGORITHM_TIER_ID LIKE '%' || #{searchKeyword} || '%'
 			</if>
 			<if test='searchType=="company_name"'>
-		   AND CAQ.ALGORITHM_WRITER LIKE '%' || #{searchKeyword} || '%'
+		   AND COMPANY_NICKNAME LIKE LIKE '%' || #{searchKeyword} || '%'
 			</if>
 			<if test='searchType=="correctYN"'>
 		   AND MAQ.CORRECT_ANSWER_YN LIKE '%' || #{searchKeyword} || '%'
@@ -87,17 +94,19 @@
              , CAQ.LIKE_CNT 
              , CAQ.ALGORITHM_TIER_ID 
              , CC.CODE_CONTENT
-		     , C.COMPANY_NAME 
+		     , MC.NICKNAME COMPANY_NICKNAME
 		     , M.NICKNAME
 		  FROM MY_ALGORITHM_QUESTION MAQ
 		 INNER JOIN MEMBER M
 		    ON M.EMAIL = MAQ.GENERAL_MEMBER_EMAIL
 		 INNER JOIN COMPANY_ALGORITHM_QUESTION CAQ
 		    ON CAQ.COMPANY_ALGORITHM_QUESTION_ID = MAQ.COMPANY_ALGORITHM_QUESTION_ID
+		 INNER JOIN MEMBER MC
+		    ON MC.EMAIL = CAQ.ALGORITHM_WRITER
 		 INNER JOIN COMMON_CODE CC
 		    ON CC.CODE_ID = CAQ.MAIN_ALGORITHM_CATEGORY_ID
-		 INNER JOIN COMPANY C
-		    ON C.COMPANY_EMAIL = CAQ.ALGORITHM_WRITER 
+		<!--  INNER JOIN COMPANY C
+		    ON C.COMPANY_EMAIL = CAQ.ALGORITHM_WRITER  -->
 		 WHERE MAQ.GENERAL_MEMBER_EMAIL = #{email}
 		   AND MAQ.DELETE_YN = 'N'
 		<if test='searchKeyword != null and searchKeyword != ""'>
@@ -114,7 +123,7 @@
 		   AND CAQ.ALGORITHM_TIER_ID  LIKE '%' || #{searchKeyword} || '%'
 			</if>
 			<if test='searchType=="company_name"'>
-		   AND C.COMPANY_NAME LIKE '%' || #{searchKeyword} || '%'
+		   AND MC.NICKNAME LIKE '%' || #{searchKeyword} || '%'
 			</if>
 			<if test='searchType=="correctYN"'>
 		   AND MAQ.CORRECT_ANSWER_YN LIKE '%' || #{searchKeyword} || '%'
@@ -133,6 +142,7 @@
 		     , MAQ.CORRECT_ANSWER_YN
 		     , MAQ.DELETE_YN
 		     , M.NICKNAME 
+		     , MC.NICKNAME COMPANY_NICKNAME
 		     , CAQ.ALGORITHM_TITLE 
 		     , CAQ.ALGORITHM_WRITER 
 		     , CAQ.ALGORITHM_CONTENT 
@@ -145,10 +155,12 @@
 		    ON M.EMAIL = MAQ.GENERAL_MEMBER_EMAIL
 		 INNER JOIN COMPANY_ALGORITHM_QUESTION CAQ
 		    ON CAQ.COMPANY_ALGORITHM_QUESTION_ID = MAQ.COMPANY_ALGORITHM_QUESTION_ID 
+		 INNER JOIN MEMBER MC
+		    ON MC.EMAIL = CAQ.ALGORITHM_WRITER
 		 INNER JOIN COMMON_CODE CC
 		    ON CC.CODE_ID = CAQ.MAIN_ALGORITHM_CATEGORY_ID 
-		 INNER JOIN COMPANY C
-		    ON C.COMPANY_EMAIL = CAQ.ALGORITHM_WRITER 
+		 <!-- INNER JOIN COMPANY C
+		    ON C.COMPANY_EMAIL = CAQ.ALGORITHM_WRITER  -->
 		 WHERE GENERAL_MEMBER_EMAIL = #{email}
  		   AND MAQ.DELETE_YN = 'N'
 		<if test='searchKeyword != null and searchKeyword != ""'>
@@ -165,7 +177,7 @@
 		   AND CAQ.ALGORITHM_TIER_ID  LIKE '%' || #{searchKeyword} || '%'
 			</if>
 			<if test='searchType=="company_name"'>
-		   AND C.COMPANY_NAME LIKE '%' || #{searchKeyword} || '%'
+		   AND MC.NICKNAME LIKE '%' || #{searchKeyword} || '%'
 			</if>
 			<if test='searchType=="correctYN"'>
 		   AND MAQ.CORRECT_ANSWER_YN LIKE '%' || #{searchKeyword} || '%'

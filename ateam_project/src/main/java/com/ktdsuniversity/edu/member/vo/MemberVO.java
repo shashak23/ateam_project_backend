@@ -55,6 +55,8 @@ public class MemberVO {
 	private List<MyAlgorithmVO> myAlgorithmVO;
 	private GeneralMemberVO generalMemberVO;
 	private CompanyInfoVO companyInfoVO;
+	private String emailTemp;
+	private String nicknameTemp;
 
 	public String getEmail() {
 		return email;
@@ -134,4 +136,17 @@ public class MemberVO {
 	public void setCompanyInfoVO(CompanyInfoVO companyInfoVO) {
 		this.companyInfoVO = companyInfoVO;
 	}
+	public String getEmailTemp() {
+		return emailTemp;
+	}
+	public void setEmailTemp(String emailTemp) {
+		this.emailTemp = emailTemp;
+	}
+	public String getNicknameTemp() {
+		return nicknameTemp;
+	}
+	public void setNicknameTemp(String nicknameTemp) {
+		this.nicknameTemp = nicknameTemp;
+	}
+	
 }

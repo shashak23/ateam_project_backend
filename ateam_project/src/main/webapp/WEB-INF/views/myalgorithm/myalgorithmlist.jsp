@@ -139,7 +139,7 @@ h3 {
                 <c:forEach items="${myAlgorithmList.myAlgorithmList}" var="myAlgo">
                     <tr>
                         <td><a href="/algorithm/question/view/${myAlgo.algorithmQuestionVO.companyAlgorithmQuestionId}">${myAlgo.algorithmQuestionVO.algorithmTitle}</a></td>
-                        <td>${myAlgo.companyInfoVO.companyName}</td>
+                        <td>${myAlgo.memberVOTemp.nicknameTemp}</td>
                         <td>${myAlgo.commonCodeVO.codeContent}</td>
                         <td>${myAlgo.algorithmQuestionVO.algorithmContent}</td>
                         <td>${myAlgo.algorithmQuestionVO.viewCnt}</td>

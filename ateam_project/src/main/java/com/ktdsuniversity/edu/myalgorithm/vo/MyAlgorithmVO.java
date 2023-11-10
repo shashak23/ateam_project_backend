@@ -30,6 +30,7 @@ public class MyAlgorithmVO extends AlgorithmQuestionVO {
 	private AlgorithmQuestionVO algorithmQuestionVO;
 	private CommonCodeVO commonCodeVO;
 	private MemberVO memberVO;
+	private MemberVO memberVOTemp;
 	private CompanyInfoVO companyInfoVO;
 	
 	
@@ -88,6 +89,12 @@ public class MyAlgorithmVO extends AlgorithmQuestionVO {
 	}
 	public void setMemberVO(MemberVO memberVO) {
 		this.memberVO = memberVO;
+	}
+	public MemberVO getMemberVOTemp() {
+		return memberVOTemp;
+	}
+	public void setMemberVOTemp(MemberVO memberVOTemp) {
+		this.memberVOTemp = memberVOTemp;
 	}
 	public CommonCodeVO getCommonCodeVO() {
 		return commonCodeVO;
