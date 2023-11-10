@@ -32,7 +32,7 @@
     top: -10px;
     width: 100%;
     min-width: 1080px;
-		padding: 20px 0 10px 0;
+		padding: 20px 30px 10px 30px;
     background-color: var(--white);
 	}
 
@@ -234,7 +234,10 @@
 	.body_left .content_container .q_content p {
 		font-size: var(--font-small);
 		color: var(--dark);
+	}
 
+  .body_left .content_container .q_content img {
+    max-width: 300px !important;
 	}
 
 	.body_left .content_container .q_content .hashtagList {
@@ -243,7 +246,7 @@
     margin: 10px 0 0;
 	}
 
-	.body_left .content_container .q_content li {
+	.body_left .content_container .q_content .hashtag_each {
 		padding: 3px 10px;
 		margin-right: 20px;
     margin-bottom: 10px;
@@ -359,12 +362,6 @@
       column-gap: 10px;
       margin: 10px;
   }
-/* 
-  .member_info_area {
-    display: flex;
-    justify-content: space-evenly;
-      margin: 10px;
-  } */
 
   .member_profile{
       display: flex;
@@ -964,15 +961,10 @@
               if (response_of_hashtag.length > 0) {
                 for (let j = 0; j < response_of_hashtag.length; j++) {
                   haveHashtag.push(response_of_hashtag[j].commonCodeVO.codeContent)
-                  templateDom.find('.hashtagList').append(`<li>\${response_of_hashtag[j].commonCodeVO.codeContent}</li>`)
+                  templateDom.find('.hashtagList').append(`<li class="hashtag_each">\${response_of_hashtag[j].commonCodeVO.codeContent}</li>`)
                 }
               }
             })
-
-            // console.log('hashtagArr: ', hashtagArr)
-            // console.log('hastagArr.length: ', hashtagArr.length)
-            // console.log('haveHashtag: ', haveHashtag)
-            // console.log('haveHashtag.length: ', haveHashtag.length)
 
             // 해시태그 필터링
             if (hashtagArr.length === 0) {
@@ -1149,6 +1141,10 @@
                       templateDom.find('.follow_btn').prepend($(`<input type="hidden" class="followId" value="\${state.followId}"/>`))
                     }
                   })
+
+                  if (article.postWriter === user_email) {
+                    templateDom.find('.follow_btn').css('visibility', 'hidden')
+                  }
                     
                   // 게시글 유형이 자유 유형이면 대문짝만한 Q 삭제
                   if(article.boardId === 'CC-20231017-000029') {
@@ -1160,14 +1156,9 @@
                     if (response_of_hashtag.length > 0) {
                       for (let j = 0; j < response_of_hashtag.length; j++) {
                         haveHashtag.push(response_of_hashtag[j].commonCodeVO.codeContent)
-                        templateDom.find('.hashtagList').append(`<li>\${response_of_hashtag[j].commonCodeVO.codeContent}</li>`)
+                        templateDom.find('.hashtagList').append(`<li class="hashtag_each">\${response_of_hashtag[j].commonCodeVO.codeContent}</li>`)
                       }
                     }
-                    // console.log('hashtagArr: ', hashtagArr)
-                    // console.log('hashtagArr.length: ', hashtagArr.length)
-                    // console.log('haveHashtag: ', haveHashtag)
-                    // console.log('haveHashtag.length: ', haveHashtag.length)
-
                   })
 
                   // 해시태그 필터링
@@ -1357,12 +1348,10 @@
           }
         }
         $(this).removeClass('hashtag_selected')
-        console.log(hashtagArr)
       }
       else {
         hashtagArr.push(cutHashtag)
         $(this).addClass('hashtag_selected')
-        console.log(hashtagArr)
       }
       loadContents(hashtagArr)
     })

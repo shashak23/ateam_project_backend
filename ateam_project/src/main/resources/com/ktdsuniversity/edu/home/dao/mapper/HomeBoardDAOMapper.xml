@@ -23,7 +23,7 @@
 		     , BOARD_ID
 		     , POST_TITLE
 		     , POST_CONTENT
-		     , POST_DATE
+		     , TO_CHAR(POST_DATE, 'YYYY-MM-DD') POST_DATE
 		     , LIKE_CNT
 		     , VIEW_CNT
 		     , DELETE_YN
@@ -44,7 +44,7 @@
 	
 	<select id="getNicknameList"
 			resultType="com.ktdsuniversity.edu.home.vo.HomeNickNameVO">
-		SELECT M.NICKNAME 
+		SELECT M.NICKNAME
 			 , M.EMAIL 
 		     , GP.GENERAL_POST_ID 
 		  FROM GENERAL_POST GP
