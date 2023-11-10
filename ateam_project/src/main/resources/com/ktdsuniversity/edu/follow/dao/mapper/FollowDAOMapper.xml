@@ -127,5 +127,6 @@
 	  DELETE
 	    FROM FOLLOW
 	   WHERE FOLLOWEE = #{followeeEmail}
+	     AND FOLLOWER = #{followerEmail}
 	</delete>
 </mapper>
