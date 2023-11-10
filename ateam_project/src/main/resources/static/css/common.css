@@ -374,17 +374,17 @@ body > .body_container {
 
 /* Main Contents */
 body > .body_container > .body {
-    
+    grid-column: 2/3;
 }
 
 /* Main Contents 왼쪽 여백*/
 body > .body_container > .body_left_aside {
-    
+    grid-column: 1/2;
 }
 
 /* Main Contents 오른쪽 여백*/
 body > .body_container > .body_right_aside {
-    
+    grid-column: 3/4;
 }
 
 /* Footer  */
