@@ -13,7 +13,9 @@
     <link rel="stylesheet" type="text/css" href="/css/style.css" />
     <script src="js/lib/jquery-3.7.1.js"></script>
     <jsp:include page="../layout/header.jsp"/>
-
+	<!-- 모달 적용해 보기 -->
+	<link rel="stylesheet" href="path/to/sweetmodal/dist/min/jquery.sweet-modal.min.css" />
+	<script src="path/to/sweetmodal/dist/min/jquery.sweet-modal.min.js"></script>
 
 <style>
 

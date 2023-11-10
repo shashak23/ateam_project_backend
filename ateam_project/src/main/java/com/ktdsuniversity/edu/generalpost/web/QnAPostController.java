@@ -61,7 +61,7 @@ public class QnAPostController {
 		log.debug("--1--컨트롤러도착---------------------------"+ hashtagId);
 		if (hashtagId != null && hashtagId.length() > 0) {
 			searchForumVO.setSearchType("hashtagId");
-			searchForumVO.setSearchKeyword(hashtagId);
+			searchForumVO.setHashtagId(hashtagId); // searchType -> hashtagId 변경
 		}
 		
 		searchForumVO.setBoardId("CC-20231017-000030");
