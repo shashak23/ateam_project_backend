@@ -1444,7 +1444,7 @@ position: absolute;
 			  if ($(e.currentTarget).hasClass('follow_on')) {
 				$.post('/unfollow/member', content, function(result) {
 				  if (result.result === false) {
-					alert('삐')
+					alert('삐') 
 				  }
 				  else {
 					$(e.currentTarget).removeClass('follow_on')
