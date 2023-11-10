@@ -4,16 +4,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link rel="stylesheet"
-	href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-	<link rel="stylesheet" type="text/css" href="./companyMyPage.css" />
-	<jsp:include page="../layout/header.jsp" />
-	<script
-		src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-	<script
-		src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-		
-	<script type="text/javascript" src="/js/lib/jquery-3.7.1.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+<link rel="stylesheet" type="text/css" href="./companyMyPage.css" />
+<jsp:include page="../layout/header.jsp" />
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>	
+<script type="text/javascript" src="/js/lib/jquery-3.7.1.js"></script>
 <script type="text/javascript">
 	$().ready(function() {
 		
@@ -31,109 +26,180 @@
 				"action": "/algorithm/question/list"
 			}).submit()
 		});
+	
+			$(document).on('click', '.register', function(e) {
+				let userEmail = `${sessionScope._LOGIN_USER_}`
+				let memberType = `${sessionScope._LOGIN_USER_.memberType}`
+				if (userEmail === '') {
+					if(confirm('로그인이 필요한 서비스입니다. 로그인하시겠습니까?') ) {
+						window.location.href="/member/auth"
+					}
+				}
+				if (memberType === 'GENERAL') {
+					alert('기업회원만 이용하실 수 있는 서비스입니다.')
+					window.location.href="/algorithm/question/list"
+				}
+				if (memberType === 'COMPANY') {
+					window.location.href="/algorithm/question/create"
+				}
 		
-	
-	})
-	
-	$(document).on('click', '.register', function(e) {
-		let userEmail = `${sessionScope._LOGIN_USER_}`
-		let memberType = `${sessionScope._LOGIN_USER_.memberType}`
-		if (userEmail === '') {
-			if(confirm('로그인이 필요한 서비스입니다. 로그인하시겠습니까?') ) {
-				window.location.href="/member/auth"
+			})
+		
+		
+			$(".intro_button").on('click', function() {
+				var currentIntro = $(".list_intro p").text();
+				$("#introTextArea").val(currentIntro);
+				$("#modalContainerIntro").removeClass("hidden");
+			});
+
+			function saveintroChanges() {
+					var newIntro = $("#introTextArea").val();
+					$(".list_intro p").text(newIntro);
+					closeIntroModal();
 			}
-		}
-		if (memberType === 'GENERAL') {
-			alert('기업회원만 이용하실 수 있는 서비스입니다.')
-			window.location.href="/algorithm/question/list"
-		}
-		if (memberType === 'COMPANY') {
-			window.location.href="/algorithm/question/create"
-		}
+		
+			$(".stack_button").click(function() {
+				var currentStack = $(".stackList").text();
+				$("#stackTextArea").val(currentStack);
+					$("#modalContainerStack").removeClass("hidden")
+				 })
 
+			function savestackChanges() {
+			var newStack = $("#stackTextArea").val();
+			$(".stackList").text(newStack);
+			closeStackModal();
+			}
+		
+			$(".task_button").click(function() {
+			var currentTask = $(".taskInfo").text();
+			$("#taskTextArea").val(currentTask);
+			$("#modalContainerTask").removeClass("hidden")
+			})
+			
+			function savetaskChanges() {
+			var newTask = $("#taskTextArea").val();
+			$(".taskInfo").text(newTask);
+			closeTaskModal();
+			}
+
+			$(".location_button").click(function() {
+			var currentLocation = $(".address").text();
+			$("#locationTextArea").val(currentLocation);
+			$("#modalContainerLocation").removeClass("hidden")
+			})
+
+			function savelocationChanges() {
+			var newLocation = $("#locationTextArea").val();
+			$(".address").text(newLocation);
+			closeLocationModal();
+			}
+
+			//닫기 버튼
+			$("#modalCloseIntro").on('click',function(){
+				$("#modalContainerIntro").addClass("hidden");
+			})
+
+			$("#modalCloseStack").on('click',function(){
+				$("#modalContainerStack").addClass("hidden");
+			})
+		
+
+			$("#modalCloseTask").on('click',function(){
+				$("#modalContainerTask").addClass("hidden");
+			})
+		
+
+			$("#modalCloseLocation").on('click',function(){
+				$("#modalContainerLocation").addClass("hidden");
+			})
+
+			//변경 저장
+			$("#saveIntro").on('click',function(){
+				saveintroChanges();
+			})
+
+			$("#saveStack").on('click',function(){
+				savestackChanges();
+			})
+
+			$("#saveTask").on('click',function(){
+				savetaskChanges();
+			})
+
+			$("#saveLocation").on('click',function(){
+				savelocationChanges();
+			})
+		
+		
+		
+		  // 스크롤 버튼, IDE
+		  let calcScrollValue = () => {
+		  let scrollProgress = document.getElementById('progress')
+		  let progressValue = document.getElementById('progress-value')
+		  let pos = document.documentElement.scrollTop
+		  let calcHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight
+		  let scrollValue = Math.round((pos * 100) / calcHeight)
+		
+		  scrollProgress.addEventListener('click', () => {
+			document.documentElement.scrollTop = 0
+		  })
+		  }
+		  
+		  window.onscroll = calcScrollValue
+		
+		  // 서브 리스트가 있다면? 아래로 떨군다.
+		  $('.visible').hide()
+		  $('.list_company').mouseover(function() {
+			$('.visible').show()
+			$(this).find('a').css({'background-color': 'var(--blue)',
+								   'color': 'white',
+								   'box-shadow': '0 0 5px var(--gray)'})
+		  })
+		  $('.list_company').mouseleave(function() {
+			$('.visible').hide()
+			$(this).find('a').css({'background-color': 'white',
+								   'color': 'var(--blue)',
+								   'box-shadow': 'none'})
+		  })
+		
+		  //검색 전후 마진 바텀 적용
+		  $("#search_btn").click(function() {
+				// 검색이 수행되었는지 확인하고 여백을 동적으로 조절합니다.
+				if ($("#search_form input[type='checkbox']:checked").length > 0) {
+					$("#overall").css("margin-bottom", "300px");
+					// $("#container").css("margin-bottom", "100px");
+				} else {
+					// 검색이 수행되지 않았다면 여백을 초기화합니다.
+					$("#left_container").css("margin-bottom", "0");
+					$("#container").css("margin-bottom", "0");
+				}
+		
+				// 폼 제출을 계속 진행합니다.
+				$("#search_form").attr({
+					"method": "get",
+					"action": "/algorithm/explanation/list"
+				}).submit();
+			});
+		
+			function redirectToURL(url) {
+					window.location.href = url;
+				}
+				/* 비밀번호, 닉네임 수정 버튼 */
+				$("#myprofile").click(function() {
+					redirectToURL(`/memberinfo/view/${memberVO.email}`);
+				});
+				$("#mypost").click(function() {
+					redirectToURL(`/member/mypost`);
+				});
+				$("#modify_info").click(function() {
+					redirectToURL(`/member/selectmember/${memberVO.email}`);
+				});
+				$("#quit").click(function() {
+					redirectToURL(`/member/logout`);
+				});
+		
+			
 	})
-	
-
-	// 모달창 열고 닫기
-	$(document).on('click', '.incomplete', function() {
-    $('.modal, .overlay').addClass('modal_active')
-  })
-  $(document).on('click', '.overlay', function() {
-    $('.modal, .overlay').removeClass('modal_active')
-  })
-
-  $(document).on('keyup', function(e) {
-    if (e.key === 'Escape') {
-      $('.modal, .overlay').removeClass('modal_active')
-    }
-  })
-  
-
-  // 스크롤 버튼, IDE
-  let calcScrollValue = () => {
-  let scrollProgress = document.getElementById('progress')
-  let progressValue = document.getElementById('progress-value')
-  let pos = document.documentElement.scrollTop
-  let calcHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight
-  let scrollValue = Math.round((pos * 100) / calcHeight)
-
-  scrollProgress.addEventListener('click', () => {
-    document.documentElement.scrollTop = 0
-  })
-  }
-  
-  window.onscroll = calcScrollValue
-
-  // 서브 리스트가 있다면? 아래로 떨군다.
-  $('.visible').hide()
-  $('.list_company').mouseover(function() {
-    $('.visible').show()
-    $(this).find('a').css({'background-color': 'var(--blue)',
-                           'color': 'white',
-                           'box-shadow': '0 0 5px var(--gray)'})
-  })
-  $('.list_company').mouseleave(function() {
-    $('.visible').hide()
-    $(this).find('a').css({'background-color': 'white',
-                           'color': 'var(--blue)',
-                           'box-shadow': 'none'})
-  })
-
-  //검색 전후 마진 바텀 적용
-  $("#search_btn").click(function() {
-        // 검색이 수행되었는지 확인하고 여백을 동적으로 조절합니다.
-        if ($("#search_form input[type='checkbox']:checked").length > 0) {
-            $("#overall").css("margin-bottom", "300px");
-            // $("#container").css("margin-bottom", "100px");
-        } else {
-            // 검색이 수행되지 않았다면 여백을 초기화합니다.
-            $("#left_container").css("margin-bottom", "0");
-            $("#container").css("margin-bottom", "0");
-        }
-
-        // 폼 제출을 계속 진행합니다.
-        $("#search_form").attr({
-            "method": "get",
-            "action": "/algorithm/explanation/list"
-        }).submit();
-    });
-
-	function redirectToURL(url) {
-	        window.location.href = url;
-	    }
-	    /* 비밀번호, 닉네임 수정 버튼 */
-	    $("#myprofile").click(function() {
-			redirectToURL(`/memberinfo/view/${memberVO.email}`);
-		});
-		$("#mypost").click(function() {
-	        redirectToURL(`/member/mypost`);
-	    });
-	    $("#modify_info").click(function() {
-	        redirectToURL(`/member/selectmember/${memberVO.email}`);
-	    });
-		$("#quit").click(function() {
-	        redirectToURL(`/member/logout`);
-	    });
 </script>
 </head>
 <style>
@@ -295,13 +361,13 @@
             padding-left: 10px;
             margin: 0;
         }
-         #edit_button2,#edit_button3,#edit_button4, #edit_button5 {
-            cursor: pointer;
-            background: none;
-            border: none;
-            padding: 0;
-            margin: 0;
-        }
+#edit_button2,#edit_button3,#edit_button4, #edit_button5 {
+cursor: pointer;
+background: none;
+border: none;
+padding: 0;
+margin: 0;
+}
 
 
 #technology_stack ul
@@ -329,7 +395,12 @@
   margin-right: 10px;
 }
 
-#technology_stack ul>li>button 
+.task_button{
+	width: 40px;
+	height: 30px;
+}
+
+/* #technology_stack ul>li>button 
 ,#career_stack ul>li>button 
 ,#address_stack ul>li>button {
   background-color:#75c2f6;
@@ -338,13 +409,15 @@
   border-radius: 20px;
   padding: 5px 15px;
   cursor: pointer;
-}
+} */
 
 .common{
-	display: grid;
+	/* display: grid;
 	grid-template-columns: 150px 50px 1fr;
 	padding: 0px;
-	grid-template-rows: 50px;
+	grid-template-rows: 50px; */
+	display: flex;
+	flex-direction: column;
 }
 #fix_button{
 	margin-top: 13px;
@@ -374,36 +447,126 @@
 	font-weight: bold;
 	padding: 5px;
 }
+
+#modalContainerIntro {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+#modalContainerStack {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+#modalContainerTask {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+
+#modalContainerLocation {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+#modalContentIntro {
+  position: absolute;
+  background-color: #ffffff;
+  width: 500px;
+  height: 300px;
+  padding: 15px;
+}
+
+#modalContentStack {
+  position: absolute;
+  background-color: #ffffff;
+  width: 500px;
+  height: 300px;
+  padding: 15px;
+}
+
+#modalContentTask {
+  position: absolute;
+  background-color: #ffffff;
+  width: 500px;
+  height: 300px;
+  padding: 15px;
+}
+
+#modalContentLocation {
+  position: absolute;
+  background-color: #ffffff;
+  width: 500px;
+  height: 300px;
+  padding: 15px;
+}
+
+#modalContainerIntro.hidden {
+  display: none;
+}
+
+#modalContainerStack.hidden {
+  display: none;
+}
+
+#modalContainerTask.hidden {
+  display: none;
+}
+
+#modalContainerLocation.hidden {
+  display: none;
+}
 </style>
 
 <body>
-
-	<!-- 헤더를 넣어야함 -->
-	
-		<!-- 메인 -------------------------------------------------------------------------------- -->
 		<div id="overall">
 		<div id="container">
 			<div class="flex_button">
 				<c:if
 				test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
 				<a href="/companyinfo/view">
-				<button id="myprofile">마이프로필</button>
-			</a>
+					<button id="myprofile">마이프로필</button>
+				</a>
 				<a href="/companyinfo/modify">
-				<button id="modify_info">정보 수정</button>
-			</a>
-				<a href="/member/mypost">
-				<button id="mypost">내가 쓴 게시글</button>
+					<button id="modify_info">정보 수정</button>
+				</a>
+				<a href="/companyinfo/mypost">
+					<button id="mypost">내가 쓴 게시글</button>
 				</a>
 				<a href="/member/logout">
-				<button id="quit">탈퇴</button>
-			</a>
+					<button id="quit">탈퇴</button>
+				</a>
 			</c:if>
 			</div>
 			<div class="flex_main">
-				<!-- <div class="leave">
-					<button class="leave_button" type="submit">탈퇴</button>
-				</div> -->
 				<div class="profile">
 							<img src="https://cdn.thelec.kr/news/photo/202307/22027_19495_4334.jpg" />
 					<div>
@@ -412,20 +575,25 @@
 								<li class="list_name">
 									<h2>kt ds</h2>
 								</li>
-										<li class="list_intro"><p>kt는 국내 최대 통신사이자 디지털 플랫폼 기업으로 ICT, 금융사업, 위성방송서비스사업, 기타사업 등을 영위하고 있다.<br> 무선통신, 초고속인터넷, IPTV 등 핵심사업에서의 지속적인 성장뿐만 아니라<br> IDC, 클라우드, AI/DX 등 B2B 성장사업에서도 성과를 창출하였다.</p>
-											<!-- <button class="submit_btn">수정</button>								
-											 -->
-										</li>
+								<li class="list_intro"><p>kt는 국내 최대 통신사이자 디지털 플랫폼 기업으로 ICT, 금융사업, 위성방송서비스사업, 기타사업 등을 영위하고 있다.<br> 무선통신, 초고속인터넷, IPTV 등 핵심사업에서의 지속적인 성장뿐만 아니라<br> IDC, 클라우드, AI/DX 등 B2B 성장사업에서도 성과를 창출하였다.</p>
+									<button class="intro_button">수정</button>
+									<div id="modalContainerIntro" class="hidden">
+										<div id="modalContentIntro">
+											<!-- <span class="close" onclick="closeIntroModal()">&times;</span> -->
+											<textarea id="introTextArea"></textarea>
+											<button id="saveIntro">변경 저장</button>
+											<!-- <button onclick="saveIntroChanges()">변경 저장</button> -->											
+											<button id="modalCloseIntro">닫기</button>
+										</div>
+									</div>
+								</li>
 							</ul>
 						</div>
 					</div>
 				</div>
 				<div class="show_pwf">
 					<p></p>
-					<p></p>
-					<!-- <button>
-						<h2>기업 정보</h2>
-					</button> -->
+					<p></p>				
 					<p></p>
 					<p></p>
 				</div>
@@ -433,7 +601,7 @@
 					<div class="common">
 						<ul>
 							<li><p class="info">기술스택</p></li>
-							<!-- <li><button id="fix_button">수정</button></li> -->
+							
 							<p></p>
 						</ul>
 					</div>
@@ -446,33 +614,51 @@
 								</ul>
 								<span></span>
 								</li>
+								<button class="stack_button">수정</button>
+								<div id="modalContainerStack" class="hidden">
+									<div id="modalContentStack">
+										<span class="close" onclick="closeLocationModal()">&times;</span>
+										<textarea id="stackTextArea"></textarea>
+										<button id="saveStack">변경 저장</button>
+										<button id="modalCloseStack">닫기</button>
+									</div>
+								</div>
 				</div>
 				<div id="career_stack">
 					<div class="common">
 						<ul>
-							<p class="info">업무 소개</p>
-							<!-- <li><button id="fix_button">수정</button></li> -->
+							<div class="info">업무 소개</div>
+							<div class="taskInfo">이런일 저런일 합니다.</div>
+							<button class="task_button">수정</button>
+								<div id="modalContainerTask" class="hidden">
+									<div id="modalContentTask">
+										<span class="close" onclick="closeTaskModal()">&times;</span>
+										<textarea id="taskTextArea"></textarea>
+										<button id="saveTask">변경 저장</button>
+										<button id="modalCloseTask">닫기</button>
+									</div>
+								</div>
 							<p></p>
 						</ul>
 					</div>
-					<p class="career">
-						<ul>
-							<li> Gazebo 환경 구성 및 테스트</li>
-							<li> 제품 및 솔루션에 필요한 전자/전기 장치 구성 및 테스트</li>
-							<li> 그외 제품 개발에 필요한 SW 개발 및 테스트</li>
-							<li> 스마트팜에서 자동화 솔루션(제품) 테스트</li>
-						</ul>
-
-					</p>
+					
 				</div>
 				<div id="address_stack">
 					<div class="common">
 						<ul>
-							<li>
+							
 								<p class="info">오시는 길</p>
-								<p class="location">서울 서초구 효령로 176</p>
-							</li>
-							<!-- <li><button id="fix_button">수정</button></li> -->
+								<p class="address">서울 서초구 효령로 176</p>
+								<button class="location_button">수정</button>
+								<div id="modalContainerLocation" class="hidden">
+									<div id="modalContentLocation">
+										<span class="close" onclick="closeLocationModal()">&times;</span>
+										<textarea id="locationTextArea"></textarea>
+										<button id="saveLocation">변경 저장</button>
+										<button id="modalCloseLocation">닫기</button>
+									</div>
+								</div>
+								
 							<p></p>
 						</ul>
 					</div>

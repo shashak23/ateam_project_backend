@@ -10,9 +10,7 @@
 		justify-content: center;
 	}
 	#container{
-		width: 1100px;
 		display: flex; 
-		flex-direction: column;
 		justify-content: center;
 	}
 
@@ -50,6 +48,7 @@
 		border-collapse: collapse;
 		margin-top: 30px;
 		width: 900px;
+		margin: 0 auto;
 	}
 
 	table th{
@@ -99,106 +98,18 @@
 <body> 
 
 <div id="content_wrapper">
-	<div class="flex_button">
-			<button id="myprofile">마이페이지</button>
-			<button id="bookmark">북마크</button>
-			<button id="modify_info">정보 수정</button> 
-			<button id="mypost">내가 쓴 게시글</button>
-			<button id="solve">내가 푼 문제</button>
-			<button>탈퇴</button>
-	</div>
+ 		<div class="flex_button">
+				<button id="myprofile">마이페이지</button>			
+				<button id="modify_info">정보 수정</button> 
+				<button id="mypost">내가 쓴 게시글</button>
+				<button>탈퇴</button>
+		</div>
   <div id="container">    
-			<p></p>
+	<section class="body_container">
+		<div class="body">
+
+		
 			<table class="table">
-				<caption>질답게시판</caption>
-				<thead>
-					<colgroup>
-						<col width="10%" />
-						<col width="45%" />
-						<col width="15%" />
-						<col width="20%" />
-						<col width="10%" />
-					</colgroup>
-					<tr id="table-tr">
-						<th scope="col">번호</th>
-						<th scope="col">제목</th>
-						<th scope="col">작성자</th>
-						<th scope="col">작성일</th>
-						<th scope="col">조회수</th>
-					</tr>
-				</thead>
-				<tbody>
-				<c:choose>
-					<c:when test="${not empty qnaPostList}">
-						<c:forEach items="${qnaPostList}" var="qnaboard" varStatus="index">
-							<tr>
-								<td>${index.index + 1}</td>
-								<td style="font-weight: bold;">
-									<a href="/qnaboard/view/${qnaboard.generalPostId}">
-										<c:out value="${qnaboard.postTitle}" />
-									</a>
-								</td>
-								<td>${qnaboard.memberVO.nickname}</td>
-								<td>${qnaboard.postDate}</td>
-								<td>${qnaboard.viewCnt}</td>
-							</tr>
-						</c:forEach>
-					</c:when>
-					<c:otherwise>
-						<tr>
-							<td colspan="5">조회된 게시글이 없습니다.</td>
-						</tr>
-						
-					</c:otherwise>
-				</c:choose>
-				</tbody>
-			</table>
-			<p></p>
-			<table class="table">
-				<thead>
-					<caption>자유게시판</caption>
-					<colgroup>
-						<col width="10%" />
-						<col width="45%" />
-						<col width="15%" />
-						<col width="20%" />
-						<col width="10%" />
-					</colgroup>
-					<tr id="table-tr">
-						<th scope="col">번호</th>
-						<th scope="col">제목</th>
-						<th scope="col">작성자</th>
-						<th scope="col">작성일</th>
-						<th scope="col">조회수</th>
-					</tr>
-				</thead>
-				<tbody>
-				<c:choose>
-					<c:when test="${not empty freePostList}">
-						<c:forEach items="${freePostList}" var="freeboard" varStatus="index">
-							<tr>
-								<td>${index.index + 1}</td>
-								<td style="font-weight: bold;">
-									<a href="/freeboard/view/${freeboard.generalPostId}">
-										<c:out value="${freeboard.postTitle}" />
-									</a>
-								</td>
-								<td>${freeboard.memberVO.nickname}</td>
-								<td>${freeboard.postDate}</td>
-								<td>${freeboard.viewCnt}</td>
-							</tr>
-						</c:forEach>
-					</c:when>
-					<c:otherwise>
-						<tr>
-							<td colspan="5">조회된 게시글이 없습니다.</td>
-						</tr>
-					</c:otherwise>
-				</c:choose>
-				</tbody>
-			</table>
-			<p></p>
-			<!-- <table class="table">
 				<caption>알고리즘 문제 게시판</caption>
 				<thead>
 					<colgroup>
@@ -290,52 +201,9 @@
 				</c:choose>
 				</tbody>
 			</table>
-			<p></p>
-			 <table class="table">
-				<caption>기업 소식 게시판</caption>
-				<thead>
-					<colgroup>
-						<col width="10%" />
-						<col width="45%" />
-						<col width="15%" />
-						<col width="20%" />
-						<col width="10%" />
-					</colgroup>
-					<tr id="table-tr">
-						<th scope="col">번호</th>
-						<th scope="col">제목</th>
-						<th scope="col">작성자</th>
-						<th scope="col">작성일</th>
-						<th scope="col">조회수</th>
-					</tr>
-				</thead>
-				<tbody>
-				<c:choose>
-					<c:when test="${not empty companyNewsList.companyNewsList}">
-						<c:forEach items="${companyNewsList.companyNewsList}" var="companynews" varStatus="index">
-							<tr>
-								<td>${index.index + 1}</td>
-								<td style="font-weight: bold;">
-									<a href="/news/view/${companynews.companyNewsPostId}">
-										<c:out value="${companynews.postTitle}" />
-									</a>
-								</td>
-								<td>${companynews.memberVO.nickname}</td>
-								<td>${companynews.postDate}</td>
-								<td>${companynews.viewCnt}</td>
-							</tr>
-						</c:forEach>
-					</c:when>
-					<c:otherwise>
-						<tr>
-							<td colspan="5">조회된 게시글이 없습니다.</td>
-						</tr>
-						
-					</c:otherwise>
-				</c:choose>
-				</tbody>
-			</table>  -->
-	</div>
+			
+			</div>
+		</div>
 	</div>
   <jsp:include page="../layout/footer.jsp" />
 </body>
@@ -347,24 +215,17 @@
 	   }
 	    /* 비밀번호, 닉네임 수정 버튼 */
 	    $("#myprofile").click(function() {
-			redirectToURL(`/memberinfo/view/${sessionScope._LOGIN_USER_.email}`);
+			redirectToURL(`/companyinfo/view`);	/* /${sessionScope._LOGIN_USER_.email}*/ 
 		});
-	    $("#mypost").click(function() {
-	        redirectToURL(`/member/mypost`);
-	    });
+	  /*   $("#mypost").click(function() {
+	        redirectToURL(`/companyinfo/companymypostinmypage`);
+	    }); */
 	    $("#modify_info").click(function() {
-	        redirectToURL(`/member/selectmember/${sessionScope._LOGIN_USER_.email}`);
+	        redirectToURL(`/companyinfo/modify`);	/* /${sessionScope._LOGIN_USER_.email} */
 	    });
 		$("#quit").click(function() {
 	        redirectToURL(`/member/logout`);
 	    });
-		$("#solve").click(function(){
-			redirectToURL(`/codingtest/mylist`);
-		});
-		$("#bookmark").click(function(){
-			redirectToURL(`/member/bookmark`);
-			
-		});
      
   // 모달창 열고 닫기
   $(document).on('click', '.incomplete', function() {

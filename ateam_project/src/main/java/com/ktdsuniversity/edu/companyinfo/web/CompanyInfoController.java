@@ -72,8 +72,11 @@ public class CompanyInfoController {
 	
 	@GetMapping("/companyinfo/view")
 	public String viewMemberInfo() {
-		return "companyinfo/companyprofile";
-		
-		
-	}
+		return "companyinfo/companyprofile";	
+		}
+	
+	@GetMapping("/companyinfo/mypost")
+	public String viewmypost() {
+		return "companyinfo/companymypostinmypage";	
+		}
 	}
