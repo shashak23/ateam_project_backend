@@ -237,9 +237,10 @@
 
 	}
 
-	.body_left .content_container .q_content ul {
+	.body_left .content_container .q_content .hashtagList {
 		display: flex;
     flex-wrap: wrap;
+    margin: 10px 0 0;
 	}
 
 	.body_left .content_container .q_content li {
@@ -817,6 +818,28 @@
     let page = 0
     let innerCounter
 
+    const pokemonUrl = [
+      '/images/꼬부기.png',
+      '/images/날쌩마.png',
+      '/images/딱구리.png',
+      '/images/이상해씨.png',
+      '/images/파라스.png',
+      '/images/파이리.png',
+      '/images/피카츄.png',
+      '/images/갸라도스.png',
+      '/images/고라파덕.png',
+      '/images/구구.png',
+      '/images/근육몬.png',
+      '/images/라플레시아.png',
+      '/images/망나뇽.png',
+      '/images/버터플.png',
+      '/images/썬더.png',
+      '/images/파이어.png',
+      '/images/프리져.png',
+    ]
+    
+    
+
     // 댓글 개수 가져오기
     $.get('/home/maincontent/commentcnt', function(response_of_comment) {
       comments = response_of_comment
@@ -859,11 +882,14 @@
               }
             }
 
+            let randomNumber = Math.floor(Math.random() * pokemonUrl.length)
+            let pokemon = pokemonUrl[randomNumber]
+
             template = `
               <article class="content_container">
                 <div class="writer_info_area">
                   <div class="flex_left">
-                    <img src="/images/꼬부기.png" alt="꼬부기" />
+                    <img src="\${pokemon}" />
                     <div>
                       <div class="writer_name">
                         <a href="/memberinfo/view/\${email}">\${nickname}</a>
@@ -1057,11 +1083,14 @@
                     }
                   }
 
+                  let randomNumber = Math.floor(Math.random() * pokemonUrl.length)
+                  let pokemon = pokemonUrl[randomNumber]
+
                   template = `
                     <article class="content_container">
                       <div class="writer_info_area">
                         <div class="flex_left">
-                          <img class="incomplete" src="/images/꼬부기.png" alt="꼬부기" />
+                          <img src="\${pokemon}" />
                           <div>
                             <div class="writer_name">
                             	<a href="/memberinfo/view/\${email}">\${nickname}</a>

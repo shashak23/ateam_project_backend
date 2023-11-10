@@ -1526,6 +1526,8 @@
   // 공지 사항 목록 조회
   function loadAdminNoticeList(val = '') {
     $.get('/admin/noticelist', function(response) {
+      $('.notice_modal').find('.desc-content').empty()
+      
       for (let i = 0; i < response.length; i++) {
         let notice = response[i]
 
@@ -1747,6 +1749,7 @@
       $.get(`/notice/delete/\${noticeId}`, function(response) {
         if (response.result === 'success') {
           alert('삭제를 완료했습니다.')
+          loadAdminNoticeList()
         }
         else {
           alert('삭제에 실패했습니다.')
