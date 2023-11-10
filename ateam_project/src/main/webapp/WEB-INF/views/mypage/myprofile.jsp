@@ -1450,6 +1450,14 @@ position: absolute;
 				  $(e.currentTarget).removeClass('follow_on')
 				  $(e.currentTarget).css({'background-color':'var(--white)', 'color':'var(--black)'})
 				  $('.followId').remove()
+				  if (result.result === false) {
+					alert('삐') 
+				  }
+				  else {
+					$(e.currentTarget).removeClass('follow_on')
+					$(e.currentTarget).css({'background-color':'var(--white)', 'color':'var(--black)'})
+					$('.followId').remove()
+				  }
 				})
 			  }
 			  else {
