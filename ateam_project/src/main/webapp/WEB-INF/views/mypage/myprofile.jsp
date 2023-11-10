@@ -511,7 +511,7 @@ position: absolute;
 
 		//  $(".introduce-modify").load("/memberInfo/my-introduction/{generalMemberEmail}");
 
-
+ 
 		 $("#edit_button1").click(function() {
 			$("#modalContainerSNS").removeClass("hidden")
 		 })
