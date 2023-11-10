@@ -396,10 +396,10 @@ position: absolute;
 
 </style>
 <link rel="stylesheet" type="text/css" href="/css/myProfile.css" />
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <!-- 자바스크립트 시작 -->
 <jsp:include page="../layout/header.jsp" />
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
 	//신고버튼
 	$().ready(function() {
@@ -540,247 +540,20 @@ position: absolute;
 			$("#modalContainerAddress").removeClass("hidden")
 		 })
 
-		//  $(".region_create").load("/memberinfo/addressview/{generalMemberEmail}");
+		
 
-		// const modalContainerCareer = document.getElementById('modalContainerCareer');
-		// const modalCloseButtonCareer = document.getElementById('modalCloseButtonCareer');
+		// const modalCloseButton = document.getElementById('modalCloseButton');
+		// const modalTech = document.getElementById('modalContainerTech');
+		// const modalCareer = document.getElementById('modalContainerCareer');
+		// const modalEducation = document.getElementById('modalContainerEducation');
 
-		const modalCloseButton = document.getElementById('modalCloseButton');
-		const modalTech = document.getElementById('modalContainerTech');
-		const modalCareer = document.getElementById('modalContainerCareer');
-		const modalEducation = document.getElementById('modalContainerEducation');
+		
+	});
 
-		// modalCloseButton.addEventListener('click', () => {
-		// modalTech.classList.add('hidden');
-		// });
+	
+    
 
-		// modalCloseButton.addEventListener('click', () => {
-		// modalCareer.classList.add('hidden');
-		// });
-
-		// modalCloseButton.addEventListener('click', () => {
-		// modalEducation.classList.add('hidden');
-		// });
-			});
-
-		//자기소개
-		   // 페이지가 로드된 후 실행될 JavaScript 코드
-		   var selfIntroTextarea = $("#selfIntro");
-            var selfIntroValue = selfIntroTextarea.val();
-            
-            // 공백 제거 함수
-            function removeSpaces(inputText) {
-                return inputText.replace(/\s/g, '');
-            }
-            
-            // 초기 텍스트 설정
-            selfIntroTextarea.val(removeSpaces(selfIntroValue));
-		//기술스택jsp
-		$.get("/code/해시태그", function(response) {
-			for (var i = 0; i < response.length; i++) {
-				var code = response[i]
-				var label = $("<label for='"+code.codeId+"'>"+code.codeContent+"</label>");
-				var checkbox = $("<input type='checkbox' id='"+code.codeId+"' name='hashtagList' value='"+code.codeId+"' />");
-				$("#techstack_category").append(checkbox);
-				$("#techstack_category").append(label);
-			}
-			$.get("/techstack/category/${sessionScope._LOGIN_USER_.email}", function(techstackResponse) {
-				console.log(techstackResponse)
-				
-				for (var i = 0; i < techstackResponse.length; i++) {
-					var code = techstackResponse[i]
-					$("input[name=hashtagList][value="+code.hashtagId+"]").prop("checked", true);
-				}
-			});
-		});
-		$("form").submit(function(event) {
-            var checkedCount = $("input[name='hashtagList']:checked").length;
-            if (checkedCount < 1) {
-                alert("적어도 하나 이상의 항목을 선택하세요.");
-                event.preventDefault();
-            }
-        });
-
-		//경력
-		$.datepicker.regional['ko'] = {
-            closeText: '닫기',
-            prevText: '이전달',
-            nextText: '다음달',
-            currentText: '오늘',
-            monthNames: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-            monthNamesShort: ['1', '2', '3', '4', '5', '6', '7', '8', '9', '10', '11', '12'],
-            dayNames: ['일', '월', '화', '수', '목', '금', '토'],
-            dayNamesShort: ['일', '월', '화', '수', '목', '금', '토'],
-            dayNamesMin: ['일', '월', '화', '수', '목', '금', '토'],
-            weekHeader: '주',
-            dateFormat: 'yy-mm-dd',
-            firstDay: 0,
-            isRTL: false,
-            showMonthAfterYear: true,
-            yearSuffix: '년'
-        };
-        $.datepicker.setDefaults($.datepicker.regional['ko']);
-        
-        // DatePicker를 사용할 input 필드에 클래스 추가
-        $(".date-picker").datepicker({
-            changeYear: true,
-            showButtonPanel: true,
-            yearRange: "1900:+0",
-            dateFormat: "yy-mm-dd"
-        });
-        
-        // 팝업 창을 생성할 버튼 클릭 시 동작
-        $("#openPopupButton").click(function() {
-            $("#popup").dialog({
-                width: 400,
-                modal: true
-            });
-        });
-        
-        // 입력한 입사일과 퇴사일을 비교하여 이전 날짜인지 확인
-        $("#hireDate, #resignDate").change(function() {
-            var hireDate = $("#hireDate").datepicker("getDate");
-            var resignDate = $("#resignDate").datepicker("getDate");
-            
-            if (hireDate && resignDate && hireDate > resignDate) {
-                alert("입사일이 퇴사일보다 이전일 수 없습니다.");
-                // 입사일을 초기화 또는 수정할 수 있도록 처리
-                $("#hireDate").val("");
-            }
-        });
-
-		//학력
-		const universityApiUrl = `https://www.career.go.kr/cnet/openapi/getOpenApi?apiKey=8a2e49c8c985107112055a268b321623&svcType=api&svcCode=SCHOOL&contentType=json&gubun=univ_list&perPage=10000`;
-        const departmentApiUrl = `https://www.career.go.kr/cnet/openapi/getOpenApi?apiKey=8a2e49c8c985107112055a268b321623&svcType=api&svcCode=MAJOR&contentType=json&gubun=high_list&perPage=9999`;
-        let universities = [];
-        let departments = [];
-
-        // API를 호출하여 대학교 정보 가져오기
-        $.ajax({
-            url: universityApiUrl,
-            dataType: 'json',
-            success: function(data) {
-                universities = data.dataSearch.content;
-
-                // 중복된 대학교 이름 필터링
-                const uniqueUniversities = [...new Set(universities.map(university => university.schoolName))];
-
-                // 검색창에서 텍스트 입력 시 대학교 검색 결과 업데이트
-                $('#search-university-input').on('input', function() {
-                    const searchText = $(this).val().toLowerCase();
-                    const searchResults = uniqueUniversities.filter(universityName => universityName.toLowerCase().includes(searchText));
-                    // 대학교 검색 결과를 화면에 표시
-                    displayUniversitySearchResults(searchResults);
-                });
-            }
-        });
-
-       // API를 호출하여 학과 정보 가져오기
-        $.ajax({
-            url: departmentApiUrl,
-            dataType: 'json',
-            success: function(data) {
-                departments = data.dataSearch.content;
-                // 학과 검색창에서 텍스트 입력 시 학과 검색 결과 업데이트
-                $('#search-department-input').on('input', function() {
-                    const searchText = $(this).val().toLowerCase();
-                    const searchResults = departments.filter(department => department.facilName.toLowerCase().includes(searchText));
-                    // 학과 검색 결과를 화면에 표시
-                    displayDepartmentSearchResults(searchResults);
-                });
-            },
-        });
-
-        // 대학교 검색 결과를 표시하는 함수
-        function displayUniversitySearchResults(results) {
-            const searchResultsContainer = $('#search-university-results');
-            searchResultsContainer.empty();
-            results.forEach(result => {
-            	searchResultsContainer.append(`<p class='result-item university' data-name='\${result}'>\${result}</p>`);
-            });
-
-            // 대학교 검색 결과 항목을 클릭했을 때 해당 대학이 검색 창에 나타남
-            $('.result-item.university').click(function() {
-                const selectedUniversityName = $(this).data('name');
-                $('#search-university-input').val(selectedUniversityName);
-                searchResultsContainer.empty();
-            });
-        }
-
-      // 학과 검색 결과를 표시하는 함수
-        function displayDepartmentSearchResults(results) {
-            const searchResultsContainer = $('#search-department-results');
-            searchResultsContainer.empty();
-            results.forEach(result => {
-                const facilNameArray = result.facilName.split(', '); // 쉼표로 구분된 항목을 배열로 분리
-                facilNameArray.forEach(facil => {
-                    searchResultsContainer.append(`<p class="result-item department" data-name="\${facil}">\${facil}</p>`);
-                });
-            });
-            
-            // 학과 검색 결과 항목을 클릭했을 때 선택한 학과를 검색 창에 설정
-            $('.result-item.department').click(function() {
-                const selectedDepartment = $(this).data('name');
-                $('#search-department-input').val(selectedDepartment);
-                searchResultsContainer.empty();
-            });
-        }
-  	 
-      $("#search-university-input").click(function() {
-  	      $(".school_errors").hide();
-  	  });
-  	
-  	  $("#search-department-input").click(function() {
-  	      $(".department_errors").hide();
-  	  });
-
-	  //주소
-	  function sample6_execDaumPostcode() {
-        new daum.Postcode({
-            oncomplete: function(data) {
-                // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-
-                // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-                // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-                var addr = ''; // 주소 변수
-                var extraAddr = ''; // 참고항목 변수
-
-                //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-                    addr = data.roadAddress;
-                } else { // 사용자가 지번 주소를 선택했을 경우(J)
-                    addr = data.jibunAddress;
-                }
-
-                // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
-                if(data.userSelectedType === 'R'){
-                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
-                        extraAddr += data.bname;
-                    }
-                    // 건물명이 있고, 공동주택일 경우 추가한다.
-                    if(data.buildingName !== '' && data.apartment === 'Y'){
-                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-                    }
-                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-                    if(extraAddr !== ''){
-                        extraAddr = ' (' + extraAddr + ')';
-                    }
-                    // 조합된 참고항목을 해당 필드에 넣는다.
-                
-                }
-                // 우편번호와 주소 정보를 해당 필드에 넣는다.
-                document.getElementById('sample6_postcode').value = data.zonecode;
-                document.getElementById("region").value = addr;
-                // 커서를 상세주소 필드로 이동한다.
-            }
-        }).open();
-    }
-
-	$("#region_button").click(function() {
- 	      $(".region_errors").hide();
- 	  	 });
+	
 </script>
 </head>
 <body>
