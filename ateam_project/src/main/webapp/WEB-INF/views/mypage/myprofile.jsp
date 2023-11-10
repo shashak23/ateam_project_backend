@@ -265,6 +265,10 @@ $().ready(function() {
 		$("#solve").click(function(){
 			redirectToURL(`/codingtest/mylist`);
 		});
+		$("#bookmark").click(function(){
+			redirectToURL(`/member/bookmark`);
+			
+		});
 
 	    /* 프로필 사진 수정 */ 
 	  	$('.profile-modify').click(function() {
@@ -374,7 +378,7 @@ $().ready(function() {
 			<!-- <c:if
 				test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}"> -->
 				<button id="myprofile">마이페이지</button>
-				<button>북마크</button>
+				<button id="bookmark">북마크</button>
 				<button id="modify_info">정보 수정</button>
 				<button id="mypost">내가 쓴 게시글</button>
 				<button id="solve">내가 푼 문제</button>
@@ -658,6 +662,7 @@ $().ready(function() {
     $('.btn-close, .overlay').click(function() {
         $('.create_container2, .overlay').removeClass('active')
     })
+    
     
 	function loadFollower(url) {
 		$.get(url, function(response) {
