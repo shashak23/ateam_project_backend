@@ -427,6 +427,10 @@ position: absolute;
 			redirectToURL(`/member/bookmark`);
 			
 		});
+		$("#bookmark").click(function(){
+			redirectToURL(`/member/bookmark`);
+			
+		});
 
 	    /* 프로필 사진 수정 */ 
 	  	// $('.profile-modify').click(function() {
@@ -1294,6 +1298,7 @@ position: absolute;
     $('.btn-close, .overlay').click(function() {
         $('.create_content2, .overlay').removeClass('active')
     })
+    
     
 	function loadFollower(url) {
 		$.get(url, function(response) {
