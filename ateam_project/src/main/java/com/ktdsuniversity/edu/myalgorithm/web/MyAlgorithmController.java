@@ -91,8 +91,7 @@ public class MyAlgorithmController {
 			
 			return "company/algorithmquestion/questionview";
 //		}
-	}
-	
+	}	
 	@GetMapping("/home/myalgorithm/delete/{myAlgorithmQuestionId}")
 	public String doDeleteMyAlgorithm(@PathVariable String myAlgorithmQuestionId) {
 		
@@ -102,6 +101,5 @@ public class MyAlgorithmController {
 		
 		return "redirect:/codingtest/mylist";
 	}
-	
 	
 }

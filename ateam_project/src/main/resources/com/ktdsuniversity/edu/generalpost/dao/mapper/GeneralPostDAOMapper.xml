@@ -124,7 +124,7 @@
 		     , GP.BOARD_ID
 		     , GP.POST_TITLE
 		     , GP.POST_CONTENT
-		     , GP.POST_DATE
+		     , TO_CHAR(GP.POST_DATE, 'YYYY-MM-DD') POST_DATE
 		     , GP.LIKE_CNT
 		     , GP.VIEW_CNT
 		     , GP.DELETE_YN
@@ -149,16 +149,18 @@
 		     , GP.BOARD_ID
 		     , GP.POST_TITLE
 		     , GP.POST_CONTENT
-		     , GP.POST_DATE
+		     , TO_CHAR(GP.POST_DATE, 'YYYY-MM-DD') POST_DATE
 		     , GP.LIKE_CNT
 		     , GP.VIEW_CNT
 		     , GP.DELETE_YN
 		     , M.NICKNAME
+		     , GPH.*
 		  FROM GENERAL_POST GP
 		 INNER JOIN MEMBER M
 		    ON M.EMAIL = GP.POST_WRITER
+		 INNER JOIN GENERAL_POST_HASHTAG
+		    ON GPH.GENERAL_POST_ID = GP.GENERAL_POST_ID
 		 WHERE DELETE_YN = 'N'
-		   /*AND BOARD_ID = 'CC-20231017-000029'*/
 		   AND BOARD_ID = #{_parameter}
 		 ORDER BY POST_DATE DESC
 	</select>
@@ -303,6 +305,7 @@
 		   AND GP.POST_WRITER = #{postWriter}
 		 ORDER BY POST_DATE DESC  
 	</select>
+	
 	<select id="searchAllBoardByKeyword"
 	        parameterType="com.ktdsuniversity.edu.generalpost.vo.SearchForumVO"
 	        resultMap="GeneralPostDAOMap">
@@ -321,9 +324,15 @@
 		    ON M.EMAIL = GP.POST_WRITER
 		 WHERE GP.DELETE_YN = 'N'
 		<if test='searchKeyword != null and searchKeyword != ""'>
-		   AND (GP.POST_TITLE LIKE '%' || #{searchKeyword} || '%'
-		    OR GP.POST_CONTENT LIKE '%' || #{searchKeyword} || '%'
-		    OR M.NICKNAME LIKE '%' || #{searchKeyword} || '%')
+			<if test='searchType == "postTitle"'>
+		   AND GP.POST_TITLE LIKE '%' || #{searchKeyword} || '%'
+			</if>
+			<if test='searchType == "postContent"'>
+		   AND GP.POST_CONTENT LIKE '%' || #{searchKeyword} || '%'
+			</if>
+			<if test='searchType == "postWriter"'>
+		   AND M.NICKNAME LIKE '%' || #{searchKeyword} || '%'
+			</if>
 		</if>
 		 ORDER BY POST_DATE DESC
 	</select>
@@ -381,39 +390,39 @@
 	<select id="searchAllPost"
 	        parameterType="com.ktdsuniversity.edu.generalpost.vo.SearchForumVO"
 	        resultMap="GeneralPostDAOMap">
-	        SELECT GP.POST_WRITER
-	             , GP.GENERAL_POST_ID
-	        	 , GP.POST_TITLE
-	             , GP.POST_CONTENT
-	             , TO_CHAR(GP.POST_DATE, 'YYYY-MM-DD HH24:MI') POST_DATE
-	             , GP.VIEW_CNT
-	             , GP.LIKE_CNT
-	             , GP.DELETE_YN
-	             , M.NICKNAME
-	             , GP.BOARD_ID
-	          FROM GENERAL_POST GP
-	         INNER JOIN MEMBER M
-	            ON M.EMAIL = GP.POST_WRITER
-	         <if test='searchType == "hashtagId"'>
-	         INNER JOIN GENERAL_POST_HASHTAG GPH
-	            ON GP.GENERAL_POST_ID = GPH.GENERAL_POST_ID
-	         </if>
-	         WHERE GP.DELETE_YN = 'N'
-	           AND GP.BOARD_ID = #{boardId}
-	         <if test='searchKeyword != null and searchKeyword != ""'>
-			  <if test='searchType == "postTitle"'>
-			   AND GP.POST_TITLE LIKE '%' || #{searchKeyword} || '%'
-			  </if>
-			  <if test='searchType == "postContent"'>
-			   AND GP.POST_CONTENT LIKE '%' || #{searchKeyword} || '%'
-			  </if>
-			  <if test='searchType == "postWriter"'>
-			   AND M.NICKNAME LIKE '%' || #{searchKeyword} || '%'
-			  </if>
-			  <if test='searchType == "hashtagId"'>
-			   AND GPH.HASHTAG_ID = #{searchKeyword}
-			  </if>
+        SELECT GP.POST_WRITER
+             , GP.GENERAL_POST_ID
+        	 , GP.POST_TITLE
+             , GP.POST_CONTENT
+             , TO_CHAR(GP.POST_DATE, 'YYYY-MM-DD') POST_DATE
+             , GP.VIEW_CNT
+             , GP.LIKE_CNT
+             , GP.DELETE_YN
+             , M.NICKNAME
+             , GP.BOARD_ID
+          FROM GENERAL_POST GP
+         INNER JOIN MEMBER M
+            ON M.EMAIL = GP.POST_WRITER
+		<if test='searchType == "hashtagId"'>
+         INNER JOIN GENERAL_POST_HASHTAG GPH
+            ON GP.GENERAL_POST_ID = GPH.GENERAL_POST_ID
+	    </if>
+         WHERE GP.DELETE_YN = 'N'
+           AND GP.BOARD_ID = #{boardId}
+        <if test='searchKeyword != null and searchKeyword != ""'>
+			<if test='searchType == "postTitle"'>
+		   AND GP.POST_TITLE LIKE '%' || #{searchKeyword} || '%'
 			</if>
-			  ORDER BY GP.POST_DATE DESC
+			<if test='searchType == "postContent"'>
+		   AND GP.POST_CONTENT LIKE '%' || #{searchKeyword} || '%'
+			</if>
+			<if test='searchType == "postWriter"'>
+		   AND M.NICKNAME LIKE '%' || #{searchKeyword} || '%'
+			</if>
+			<if test='searchType == "hashtagId"'>
+		   AND GPH.HASHTAG_ID = #{searchKeyword}
+			</if>
+		</if>
+		  ORDER BY GP.POST_DATE DESC
 	</select>
 </mapper>

@@ -84,10 +84,15 @@
 	<select id="getFreeboardBookmark"
 			parameterType="com.ktdsuniversity.edu.bookmark.vo.BookmarkSearchVO"
 			resultMap="BookmarkDAOMap">
-		SELECT GP.GENERAL_POST_ID 
+		SELECT GP.GENERAL_POST_ID
+			 , GP.POST_WRITER
+			 , GP.POST_TITLE 
+			 , GP.POST_CONTENT
+			 , GP.BOARD_ID
 			 , B.BOOKMARK_YN 
 			 , B.BOOKMARK_ID 
 			 , M.EMAIL 
+			 , M.NICKNAME
 		  FROM GENERAL_POST GP
 		 INNER JOIN BOOKMARK B
 		    ON GP.GENERAL_POST_ID  = B.POST_ID 
@@ -102,10 +107,15 @@
 	<select id="getQnaboardBookmark"
 			parameterType="com.ktdsuniversity.edu.bookmark.vo.BookmarkSearchVO"
 			resultMap="BookmarkDAOMap">
-		SELECT GP.GENERAL_POST_ID 
+		SELECT GP.GENERAL_POST_ID
+			 , GP.POST_WRITER
+			 , GP.POST_TITLE 
+			 , GP.POST_CONTENT
+			 , GP.BOARD_ID
 			 , B.BOOKMARK_YN 
 			 , B.BOOKMARK_ID 
 			 , M.EMAIL 
+			 , M.NICKNAME 
 		  FROM GENERAL_POST GP
 		 INNER JOIN BOOKMARK B
 		    ON GP.GENERAL_POST_ID  = B.POST_ID 
@@ -146,4 +156,6 @@
 		 WHERE GENERAL_MEMBER_EMAIL = #{email}
 		   AND POST_ID = #{generalPostId}
 	</delete>
+	
+	<!-- 마이페이지 북마크 조회 -->
 </mapper>

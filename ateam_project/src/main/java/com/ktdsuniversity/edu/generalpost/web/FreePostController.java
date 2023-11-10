@@ -11,13 +11,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -26,7 +24,6 @@ import com.ktdsuniversity.edu.generalpost.vo.GeneralPostListVO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
 import com.ktdsuniversity.edu.generalpost.vo.SearchForumVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
-import com.ktdsuniversity.edu.util.XssIgnore;
 import com.ktdsuniversity.edu.util.XssIgnoreUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -67,7 +64,6 @@ public class FreePostController {
 										, BindingResult bindingResult
 										, HttpServletRequest request
 										, @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
-
 		System.out.println("일반회원용 게시글ID: " + generalPostVO.getGeneralPostId());
 		System.out.println("게시글 작성자ID: " + generalPostVO.getPostWriter());
 		System.out.println("게시판ID: " + generalPostVO.getBoardId());
@@ -121,6 +117,8 @@ public class FreePostController {
 	// 수정 페이지 이동
 	@GetMapping("/freeboard/update/{generalPostId}")
 	public ModelAndView viewUpdatePage(@PathVariable String generalPostId) {
+
+		
 		// 요런식으로다가 서비스에서 -> DB에서 게시글 ID로 게시글 가져오는 쿼리 실행
 		GeneralPostVO generalPostVO = generalPostService.getOneBoard(generalPostId);
 		XssIgnoreUtil.ignore(generalPostVO); 

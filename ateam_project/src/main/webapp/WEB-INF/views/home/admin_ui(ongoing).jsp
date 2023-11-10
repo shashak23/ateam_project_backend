@@ -422,6 +422,7 @@
     opacity: 0;
     visibility: hidden;
     pointer-events: none;
+    z-index: 2;
   }
 
   .admin_overlay.active {
@@ -780,7 +781,7 @@
         margin-top: 30px;
     }
 
-    .submit_btn,
+    .notice_submit_btn,
     .modify_submit_btn {
         background-color: #e9f3ff;
         border: 0px;
@@ -1048,7 +1049,7 @@
                 name="releaseEndDate"/>
       </div>
       <div class="submit_btn_wrap">
-        <input type="submit" value="생성" class="submit_btn"/>
+        <input type="submit" value="생성" class="notice_submit_btn"/>
       </div>
     </div>
   </form:form>
@@ -2054,8 +2055,8 @@
   });
 
 // 유효성 체크
-$('.submit_btn').addClass('inactive')
-$('.submit_btn').prop('disabled', true)
+$('.notice_submit_btn').addClass('inactive')
+$('.notice_submit_btn').prop('disabled', true)
 let today = new Date()
 let year = today.getFullYear()
 let month = today.getMonth() + 1
@@ -2075,19 +2076,19 @@ $('#postTitle').change(function() {
         const titleError = $('<div class="errors title_message">제목을 입력해주세요.</div>')
         $('.title_message').remove()
         $('#postTitle').after(titleError)
-        $('.submit_btn').addClass('inactive')
-        $('.submit_btn').prop('disabled', true)
+        $('.notice_submit_btn').addClass('inactive')
+        $('.notice_submit_btn').prop('disabled', true)
     }
     else if (end_date < formattedToday || 
              end_date < start_date) {
         $('.title_message').remove()
-        $('.submit_btn').addClass('inactive')
-        $('.submit_btn').prop('disabled', true)
+        $('.notice_submit_btn').addClass('inactive')
+        $('.notice_submit_btn').prop('disabled', true)
     }
     else {
         $('.title_message').remove()
-        $('.submit_btn').prop('disabled', false)
-        $('.submit_btn').removeClass('inactive')
+        $('.notice_submit_btn').prop('disabled', false)
+        $('.notice_submit_btn').removeClass('inactive')
     } 
 })
 $('#end-date').change(function() { 
@@ -2098,13 +2099,13 @@ $('#end-date').change(function() {
         const dateError = $('<div class="errors date_message">날짜 형식이 잘못되었습니다.</div>')
         $('.date_message').remove()
         $('.date_wrap').after(dateError)
-        $('.submit_btn').addClass('inactive')
-        $('.submit_btn').prop('disabled', true)
+        $('.notice_submit_btn').addClass('inactive')
+        $('.notice_submit_btn').prop('disabled', true)
     }
     else if ($('#postTitle').val().trim() === '') {
         $('.date_message').remove()
-        $('.submit_btn').addClass('inactive')
-        $('.submit_btn').prop('disabled', true)
+        $('.notice_submit_btn').addClass('inactive')
+        $('.notice_submit_btn').prop('disabled', true)
     }
     else {
         $('.date_message').remove()

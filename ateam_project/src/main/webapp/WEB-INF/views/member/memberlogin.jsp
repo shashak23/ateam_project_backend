@@ -327,11 +327,11 @@ color: var(--red);
   <a class="p-2" href="https://kauth.kakao.com/oauth/authorize?client_id=2a9927f831835710fa3d3d37b078389c&redirect_uri=http://mcjang.iptime.org:8080/member/kakaoLogin&response_type=code">          <div class="kakao_img"></div>
           <!-- <img src="https://developers.kakao.com/tool/resource/static/img/button/login/simple/ko/kakao_login_large.png"> -->
         </a>
-        <a href="https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=ePAK2QDzEMghBxsqTuce&state=STATE_STRING&redirect_uri=http://localhost:8080/member/naverLogin">
+        <a href="https://nid.naver.com/oauth2.0/authorize?response_type=code&client_id=ePAK2QDzEMghBxsqTuce&state=STATE_STRING&redirect_uri=http://mcjang.iptime.org:8080/member/naverLogin">
           <div class="naver_img"></div>
        		<!-- <img src="../images/naverimg.png"> -->
         </a>
-        <a href="https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=595210277098-t430mu7sj0n7dkl8ji1usbuke043tgvv.apps.googleusercontent.com&redirect_uri=http://localhost:8080/member/googleLogin&scope=email profile">
+        <a href="https://accounts.google.com/o/oauth2/v2/auth?response_type=code&client_id=595210277098-t430mu7sj0n7dkl8ji1usbuke043tgvv.apps.googleusercontent.com&redirect_uri=http://mcjang.iptime.org:8080/member/googleLogin&scope=email profile">
           <div class="google_img"></div>
         	<!-- <img src="/images/Google__G__Logo.svg.png"> -->
         	<!-- <img src="../images/naverimg.png"> -->

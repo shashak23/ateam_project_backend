@@ -98,7 +98,7 @@
 		 INNER JOIN MEMBER M
 		    ON M.EMAIL = GP.POST_WRITER
 		 WHERE GP.BOARD_ID = 'CC-20231017-000029'
-		 <if test='searchKeyword != null and searchKeyword != ""'>
+		<if test='searchKeyword != null and searchKeyword != ""'>
 			<if test='searchType=="subject"'>
 		   AND GP.POST_TITLE LIKE '%' || #{searchKeyword} || '%'
 			</if>
@@ -106,7 +106,7 @@
 		   AND GP.POST_CONTENT LIKE '%' || #{searchKeyword} || '%'
 			</if>
 		</if>
-		 <include refid="common.pagination_footer" />
+		<include refid="common.pagination_footer" />
 	</select>
 	
 	<select id="SearchQnaBoardRest"

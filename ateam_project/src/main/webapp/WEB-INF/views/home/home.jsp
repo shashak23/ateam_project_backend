@@ -23,38 +23,28 @@
     position: fixed;
     top: 170px;
     left: 50px;
+    z-index: 1;
   }
-  
-  /* 메인 컨텐츠 영역 */
-	.body_container {
-		width: 1140px;
-		padding: 30px;
-		margin: 0 auto;
+
+  	/* 글쓰기 영역 */
+	.home_edit_container {
+		position: sticky;
+    top: -10px;
+    width: 100%;
+    min-width: 1080px;
+		padding: 20px 0 10px 0;
+    background-color: var(--white);
 	}
 
-	.body_container .body {
-		display: flex;
-		justify-content: space-between;
-	}
-
-	/* 왼쪽 */
-	.body_container .body .body_left {
-		width: 800px;
-		margin-right: 30px;
-	}
-
-	.body_left .home_edit_container {
-		display: flex;
-		padding: 20px;
+  .home_edit_container .home_edit_wrap {
+    display: flex;
+    width: 1080px;
+    margin: 0 auto;
 		cursor: pointer;
-		margin-bottom: 20px;
-	}
+  }
 
-	/* 글쓰기 영역 */
-	.body_left .home_edit_container .text_area {
-		/* position: sticky; */
-		top: 100px;
-		width: 670px;
+	.home_edit_container .text_area {
+		width: 990px;
 		height: 80px;
 		border: 1px solid var(--gray);
 		border-radius: 5px;
@@ -64,7 +54,7 @@
     color: var(--gray);
 	}
 
-	.body_left .home_edit_container .edit_btn {
+	.home_edit_container .edit_btn {
 		width: 80px;
 		height: 80px;
 		border: 1px solid;
@@ -76,17 +66,35 @@
 		font-size: var(--font-x-big);
 	}
 
-	.body_left .home_edit_container .edit_btn svg {
+	.home_edit_container .edit_btn svg {
 		fill: var(--dark-gray);
+	}
+  
+  /* 메인 컨텐츠 영역 */
+	.body_container {
+		width: 1140px;
+		padding: 10px 30px 30px;
+		margin: 0 auto;
+	}
+
+	.body_container .body {
+		display: flex;
+		justify-content: space-between;
+	}
+
+	/* 왼쪽 */
+	.body_container .body .body_left {
+		width: 800px;
+		margin-right: 10px;
 	}
 
 	/* 게시글 영역 */
 	.body_left .content_container {
 		width: 100%;
 		border: 1px solid var(--light-gray);
-		margin: 45px 0;
+		margin-bottom: 10px;
 		border-radius: 10px;
-		padding: 24px 36px;
+		padding: 12px 18px;
 	}
 
   .body_left .content_container:hover {
@@ -219,18 +227,20 @@
 		-webkit-box-orient: vertical;
 		overflow: hidden;
 		-webkit-line-clamp: 3;
+    margin-bottom: 5px;
+    min-height: 38px;
 	}
 
 	.body_left .content_container .q_content p {
-		margin-bottom: 20px;
 		font-size: var(--font-small);
 		color: var(--dark);
 
 	}
 
-	.body_left .content_container .q_content ul {
+	.body_left .content_container .q_content .hashtagList {
 		display: flex;
     flex-wrap: wrap;
+    margin: 10px 0 0;
 	}
 
 	.body_left .content_container .q_content li {
@@ -247,24 +257,23 @@
 
 	/* 오른쪽 */
 	.body_container .body .body_right {
-		width: 250px;
+		width: 270px;
 	}
 
   .body_right .ranking_wrap {
     display: flex;
     flex-direction: column;
     align-items: center;
-    border: 1px solid var(--gray);
+    border: 1px solid var(--light-gray);
     border-radius: 10px;
-    margin-top: 20px;
   }
 
   .body_right .ranking_wrap h2 {
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 20px 0;
-    border-bottom: 2px solid var(--gray);
+    padding: 10px 0;
+    border-bottom: 1px solid var(--gray);
     width: 100%;
   }
 
@@ -274,7 +283,6 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    height: 700px;
     margin-bottom: 20px;
   }
 
@@ -293,24 +301,23 @@
   }
 
   .body_right .ranking_wrap ul .hot_post a {
-    width: 250px;
-    height: 100%;
+    width: 270px;
     font-size: var(--font-small);
     color: var(--dark);
     display: block;
-    padding: 0 20px;
+    padding: 15px 20px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    line-height: 70px;
+
   }
 
   .body_right .hashtag_wrap {
     display: flex;
-    width: 250px;
+    width: 270px;
     flex-wrap: wrap;
-    margin-top: 30px;
-    border: 1px solid var(--gray);
+    margin-top: 10px;
+    border: 1px solid var(--light-gray);
     border-radius: 10px;
     padding: 10px;
   }
@@ -335,6 +342,7 @@
     flex-direction: column;
     border: 1px solid var(--light-gray);
     border-radius: 10px;
+    margin: 10px;
   }
 
   .recommend_container:hover, .member_profile:hover {
@@ -452,6 +460,7 @@
 		transition: 0.5s;
 		opacity: 0;
 		pointer-events: none;
+    z-index: 2;
 	}
 
 	.rand_notice_overlay.active {
@@ -609,15 +618,18 @@
 </style>
 
   <!-- 메인 컨텐츠 영역 -->
+  <div class="home_edit_container">
+    <div class="home_edit_wrap">
+      <div class="text_area">자유롭게 글을 작성하세요.</div>
+      <div class="edit_btn">
+        <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path d="M471.6 21.7c-21.9-21.9-57.3-21.9-79.2 0L362.3 51.7l97.9 97.9 30.1-30.1c21.9-21.9 21.9-57.3 0-79.2L471.6 21.7zm-299.2 220c-6.1 6.1-10.8 13.6-13.5 21.9l-29.6 88.8c-2.9 8.6-.6 18.1 5.8 24.6s15.9 8.7 24.6 5.8l88.8-29.6c8.2-2.7 15.7-7.4 21.9-13.5L437.7 172.3 339.7 74.3 172.4 241.7zM96 64C43 64 0 107 0 160V416c0 53 43 96 96 96H352c53 0 96-43 96-96V320c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H96z"/></svg>
+      </div>
+    </div>
+  </div>
+
   <section class="body_container">
     <div class="body">
       <div class="body_left">
-        <div class="home_edit_container">
-          <div class="text_area">자유롭게 글을 작성하세요.</div>
-          <div class="edit_btn">
-            <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path d="M471.6 21.7c-21.9-21.9-57.3-21.9-79.2 0L362.3 51.7l97.9 97.9 30.1-30.1c21.9-21.9 21.9-57.3 0-79.2L471.6 21.7zm-299.2 220c-6.1 6.1-10.8 13.6-13.5 21.9l-29.6 88.8c-2.9 8.6-.6 18.1 5.8 24.6s15.9 8.7 24.6 5.8l88.8-29.6c8.2-2.7 15.7-7.4 21.9-13.5L437.7 172.3 339.7 74.3 172.4 241.7zM96 64C43 64 0 107 0 160V416c0 53 43 96 96 96H352c53 0 96-43 96-96V320c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H96z"/></svg>
-          </div>
-        </div>
       </div>
       <div class="body_right">
         <div class="ranking_wrap">
@@ -685,15 +697,15 @@
 
   // 스크롤 버튼, IDE
   let calcScrollValue = () => {
-  let scrollProgress = document.getElementById('progress')
-  let progressValue = document.getElementById('progress-value')
-  let pos = document.documentElement.scrollTop
-  let calcHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight
-  let scrollValue = Math.round((pos * 100) / calcHeight)
+    let scrollProgress = document.getElementById('progress')
+    let progressValue = document.getElementById('progress-value')
+    let pos = document.documentElement.scrollTop
+    let calcHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight
+    let scrollValue = Math.round((pos * 100) / calcHeight)
 
-  scrollProgress.addEventListener('click', () => {
-    document.documentElement.scrollTop = 0
-  })
+    scrollProgress.addEventListener('click', () => {
+      document.documentElement.scrollTop = 0
+    })
   }
   
   window.onscroll = calcScrollValue
@@ -715,15 +727,15 @@
   })
 
   // 메인 에디터 영역 모달
-  $('.home_edit_container').mouseenter(function() {
+  $('.home_edit_wrap').mouseenter(function() {
     $('.edit_btn').css('background-color', 'var(--gray)')
   })
-  $('.home_edit_container').mouseleave(function() {
+  $('.home_edit_wrap').mouseleave(function() {
     $('.edit_btn').css('background-color', '')
   })
 
   // 메인 에디터 생성
-  $('.home_edit_container').click(function() {
+  $('.home_edit_wrap').click(function() {
 
     $('.editor_wrap, .editor_overlay').addClass('active')
 
@@ -795,6 +807,7 @@
     let article, articles
     let boardType
     let hashtagArr = []
+    let haveHashtag = []
     let template
     let comments
     let comment_cnt
@@ -804,6 +817,28 @@
     let members
     let page = 0
     let innerCounter
+
+    const pokemonUrl = [
+      '/images/꼬부기.png',
+      '/images/날쌩마.png',
+      '/images/딱구리.png',
+      '/images/이상해씨.png',
+      '/images/파라스.png',
+      '/images/파이리.png',
+      '/images/피카츄.png',
+      '/images/갸라도스.png',
+      '/images/고라파덕.png',
+      '/images/구구.png',
+      '/images/근육몬.png',
+      '/images/라플레시아.png',
+      '/images/망나뇽.png',
+      '/images/버터플.png',
+      '/images/썬더.png',
+      '/images/파이어.png',
+      '/images/프리져.png',
+    ]
+    
+    
 
     // 댓글 개수 가져오기
     $.get('/home/maincontent/commentcnt', function(response_of_comment) {
@@ -815,7 +850,7 @@
       nicknameList = response_of_nicknames
     })
     
-    function loadContents(hashtagArr = '') {
+    function loadContents(hashtagArr = []) {
       $('.body_left').empty()
 
       $.get('/home/maincontent', function(response) {
@@ -847,11 +882,14 @@
               }
             }
 
+            let randomNumber = Math.floor(Math.random() * pokemonUrl.length)
+            let pokemon = pokemonUrl[randomNumber]
+
             template = `
               <article class="content_container">
                 <div class="writer_info_area">
                   <div class="flex_left">
-                    <img src="/images/꼬부기.png" alt="꼬부기" />
+                    <img src="\${pokemon}" />
                     <div>
                       <div class="writer_name">
                         <a href="/memberinfo/view/\${email}">\${nickname}</a>
@@ -925,24 +963,36 @@
             $.get(`/home/hashtag/\${article.generalPostId}`, function(response_of_hashtag) {
               if (response_of_hashtag.length > 0) {
                 for (let j = 0; j < response_of_hashtag.length; j++) {
+                  haveHashtag.push(response_of_hashtag[j].commonCodeVO.codeContent)
                   templateDom.find('.hashtagList').append(`<li>\${response_of_hashtag[j].commonCodeVO.codeContent}</li>`)
                 }
               }
             })
 
+            // console.log('hashtagArr: ', hashtagArr)
+            // console.log('hastagArr.length: ', hashtagArr.length)
+            // console.log('haveHashtag: ', haveHashtag)
+            // console.log('haveHashtag.length: ', haveHashtag.length)
 
             // 해시태그 필터링
             if (hashtagArr.length === 0) {
               $('.body_left').append(templateDom)
             }
             else {
+              let isExist = false
+
               for (let i = 0; i < hashtagArr.length; i++) {
-                if (hashtagArr[i] === templateDom.find('.hashtagList').find('li')) {
-                  $('.body_left').append(templateDom)
-                  break
+                for (let j = 0; j < haveHashtag.length; j++) {
+                  if (isExist === false && hashtagArr[i] === haveHashtag[j]) {
+                    $('.body_left').append(templateDom)
+                    isExist = true
+
+                    break
+                  }
                 }
               }
             }
+            haveHashtag = []
           }          
           skip += 5
 
@@ -1033,11 +1083,14 @@
                     }
                   }
 
+                  let randomNumber = Math.floor(Math.random() * pokemonUrl.length)
+                  let pokemon = pokemonUrl[randomNumber]
+
                   template = `
                     <article class="content_container">
                       <div class="writer_info_area">
                         <div class="flex_left">
-                          <img class="incomplete" src="/images/꼬부기.png" alt="꼬부기" />
+                          <img src="\${pokemon}" />
                           <div>
                             <div class="writer_name">
                             	<a href="/memberinfo/view/\${email}">\${nickname}</a>
@@ -1106,17 +1159,36 @@
                   $.get(`/home/hashtag/\${article.generalPostId}`, function(response_of_hashtag) {
                     if (response_of_hashtag.length > 0) {
                       for (let j = 0; j < response_of_hashtag.length; j++) {
+                        haveHashtag.push(response_of_hashtag[j].commonCodeVO.codeContent)
                         templateDom.find('.hashtagList').append(`<li>\${response_of_hashtag[j].commonCodeVO.codeContent}</li>`)
                       }
                     }
-                    
-                    console.log(templateDom.find('.hashtagList').find('li').text())
-                    if (templateDom.find('.hashtagList').find('li').text().includes('MYSQL')) {
-                      console.log('true')
-                    }
-                    $('.body_left').append(templateDom)
-                    
+                    // console.log('hashtagArr: ', hashtagArr)
+                    // console.log('hashtagArr.length: ', hashtagArr.length)
+                    // console.log('haveHashtag: ', haveHashtag)
+                    // console.log('haveHashtag.length: ', haveHashtag.length)
+
                   })
+
+                  // 해시태그 필터링
+                  if (hashtagArr.length === 0) {
+                    $('.body_left').append(templateDom)
+                  }
+                  else {
+                    let isExist = false
+
+                    for (let i = 0; i < hashtagArr.length; i++) {
+                      for (let j = 0; j < haveHashtag.length; j++) {
+                        if (isExist === false && hashtagArr[i] === haveHashtag[j]) {
+                          $('.body_left').append(templateDom)
+                          isExist = true
+
+                          break
+                        }
+                      }
+                    }
+                  }
+                  haveHashtag = []
                 }
               }
 
@@ -1256,6 +1328,14 @@
               $(e.currentTarget).css({'background-color':'var(--blue)', 'color':'var(--white)'})
               $(e.currentTarget).addClass('follow_on')
               $('.follow_btn').prepend(`<input type="hidden" class="followId" value="\${result.followId}"/>`)
+              send({
+	         	roomName: "main",
+	            sendType: "follow",
+	            userName: "${sessionScope._LOGIN_USER_.nickname}",
+	            userEmail: "${sessionScope._LOGIN_USER_.email}",
+	            message: "${sessionScope._LOGIN_USER_.nickname}님이 팔로우 했습니다.",
+	            to: "${memberVO.email}"
+	        })
             }
             else {
               alert('처리하지 못했습니다.')
@@ -1277,10 +1357,12 @@
           }
         }
         $(this).removeClass('hashtag_selected')
+        console.log(hashtagArr)
       }
       else {
         hashtagArr.push(cutHashtag)
         $(this).addClass('hashtag_selected')
+        console.log(hashtagArr)
       }
       loadContents(hashtagArr)
     })
@@ -1337,23 +1419,25 @@
 
   // 랜덤 공지 생성
   $.get('/notice/random', function(response) {
-    let randNoticeTemplate = `
-      <div class="rand_notice_container">
-        <div class="rand_notice_close_btn">&times;</div>
-        <h1 class="create_title">공지</h1>
-        <div class="title_area">
-          <label for="postTitle" class="post_title_label">제목</label>
-          <div>\${response.postTitle}</div>
-        </div class=content_area>
-        <label for="noticeContent" class="post_content_label">내용</label>
-        <div class="noticeContent"></div>
-      </div>
-      <div class="rand_notice_overlay"></div>`
-
-    let randNoticeTemplateDom = $(randNoticeTemplate)
-    randNoticeTemplateDom.find('.noticeContent').html(response.noticeContent)
-
-    $('body').append(randNoticeTemplateDom)
+    if (response.postTitle !== undefined) {
+      let randNoticeTemplate = `
+        <div class="rand_notice_container">
+          <div class="rand_notice_close_btn">&times;</div>
+          <h1 class="create_title">공지</h1>
+          <div class="title_area">
+            <label for="postTitle" class="post_title_label">제목</label>
+            <div>\${response.postTitle}</div>
+          </div class=content_area>
+          <label for="noticeContent" class="post_content_label">내용</label>
+          <div class="noticeContent"></div>
+        </div>
+        <div class="rand_notice_overlay"></div>`
+  
+      let randNoticeTemplateDom = $(randNoticeTemplate)
+      randNoticeTemplateDom.find('.noticeContent').html(response.noticeContent)
+  
+      $('body').append(randNoticeTemplateDom)
+    }
 
 
     $('.rand_notice_container, .rand_notice_overlay').addClass('active')

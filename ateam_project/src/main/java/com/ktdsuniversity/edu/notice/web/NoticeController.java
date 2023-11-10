@@ -83,7 +83,7 @@ public class NoticeController {
 		System.out.println();
 		
 		if (isSuccess) {
-			mav.setViewName("redirect:/home/admin");
+			mav.setViewName("redirect:/devground/home");
 			return mav;
 		}
 		else {
@@ -114,7 +114,7 @@ public class NoticeController {
 		boolean isSuccess = noticeService.updateNotice(noticeVO);
 		
 		if (isSuccess) {
-			mav.setViewName("redirect:/home/admin");
+			mav.setViewName("redirect:/devground/home");
 			return mav;
 		}
 		else {
