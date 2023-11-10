@@ -4,11 +4,18 @@
 package com.ktdsuniversity.edu.common.vo;
 
 public class AbstractSearchVO {
+	private String searchType;
 	private String searchKeyword;
 
 	private int pageNo;
 	
 	
+	public String getSearchType() {
+		return searchType;
+	}
+	public void setSearchType(String searchType) {
+		this.searchType = searchType;
+	}
 	public String getSearchKeyword() {
 		return searchKeyword;
 	}
