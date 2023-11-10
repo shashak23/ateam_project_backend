@@ -34,10 +34,10 @@
           FROM GENERAL_POST GP
          INNER JOIN MEMBER M
             ON M.EMAIL = GP.POST_WRITER
-         <if test='searchType == "hashtagId"'>
+         <if test='hashtagId != null and hashtagId != ""'>
          INNER JOIN GENERAL_POST_HASHTAG GPH
             ON GP.GENERAL_POST_ID = GPH.GENERAL_POST_ID
-         </if>
+	    </if>
          WHERE GP.DELETE_YN = 'N'
            AND GP.BOARD_ID = #{boardId}
          <if test='searchKeyword != null and searchKeyword != ""'>
@@ -53,6 +53,9 @@
 		  <if test='searchType == "hashtagId"'>
 		   AND GPH.HASHTAG_ID = #{searchKeyword}
 		  </if>
+		</if>
+		<if test='hashtagId != null and hashtagId != ""'>
+		   AND GPH.HASHTAG_ID = #{hashtagId}
 		</if>
 	</select>
 	
@@ -403,7 +406,7 @@
           FROM GENERAL_POST GP
          INNER JOIN MEMBER M
             ON M.EMAIL = GP.POST_WRITER
-		<if test='searchType == "hashtagId"'>
+		<if test='hashtagId != null and hashtagId != ""'>
          INNER JOIN GENERAL_POST_HASHTAG GPH
             ON GP.GENERAL_POST_ID = GPH.GENERAL_POST_ID
 	    </if>
@@ -419,9 +422,9 @@
 			<if test='searchType == "postWriter"'>
 		   AND M.NICKNAME LIKE '%' || #{searchKeyword} || '%'
 			</if>
-			<if test='searchType == "hashtagId"'>
-		   AND GPH.HASHTAG_ID = #{searchKeyword}
-			</if>
+		</if>
+		<if test='hashtagId != null and hashtagId != ""'>
+		   AND GPH.HASHTAG_ID = #{hashtagId}
 		</if>
 		  ORDER BY GP.POST_DATE DESC
 	</select>
