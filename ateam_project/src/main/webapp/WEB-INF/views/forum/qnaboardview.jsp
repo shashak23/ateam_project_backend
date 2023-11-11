@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri ="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,16 +9,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" id="viewport" content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, width=device-width"/>
     <title>devGround</title>
-   <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <link rel="stylesheet" type="text/css" href="/css/style.css" />
-    <script src="js/lib/jquery-3.7.1.js"></script>
+    <script src="../js/lib/jquery-3.7.1.js"></script> 
+    <link rel="stylesheet" href="/css/style.css" />
     <jsp:include page="../layout/header.jsp"/>
-	<!-- 모달 적용해 보기 -->
-	<link rel="stylesheet" href="path/to/sweetmodal/dist/min/jquery.sweet-modal.min.css" />
-	<script src="path/to/sweetmodal/dist/min/jquery.sweet-modal.min.js"></script>
-
-<style>
+<style type= "text/css">
 
 a:link, a:hover, a:visited, a:active {
    color: #333;
@@ -302,12 +299,10 @@ textarea {
    position: relative;
    top: 120px;
 }
-
-
-
 </style>
-<script type="text/javascript" src="/js/lib/jquery-3.7.1.js"></script>
-<script type="text/javascript">
+<script>
+	$.sweetModal('This is an alert.');
+
     $(document).ready(function() {
             var loadReplies = function() {
                 // 댓글 목록 삭제.
@@ -467,8 +462,6 @@ textarea {
           $("#txt-comment").data("generalCommentId", replyId)
           }
 
-
-          $().ready(function() {
           // "신고" 버튼 클릭 시 모달 열기
           $(".report-btn").click(function() {
              let reportType = $("#reportQnABoard").val()
@@ -484,45 +477,50 @@ textarea {
           console.log($("jsp:param[name='reportType']"))
 
          
-           // "좋아요" 버튼 클릭 시 이벤트 발생
-           $("#like-btn").click(function () {
-               // 클라이언트에서 AJAX 요청 생성
-               $.ajax({
-                   method: "POST",
-                   url: "/qnaboard/like",
-                   data: { 
-                       "generalPostId": "${generalPostVO.generalPostId}",
-                       "likeCnt": ${generalPostVO.likeCnt}
-                     },
-                   success: function(response) {
-                       /* $("likeModal").hide(); */
-                       alert("좋아요가 눌렸습니다!!!!!!!!!!!!");
-                     },
-                   error: function(error){
-                       /* $("#likeModal").hide(); */
-                       alert("오류가 발생했습니다~~~~~~~~~~~~");
-                     }
-               })
-           });
-      
-      });
-   
+      // "좋아요" 버튼 클릭 시 이벤트 발생
+      $("#like-btn").click(function () {
+          // 클라이언트에서 AJAX 요청 생성
+          $.ajax({
+              method: "POST",
+              url: "/qnaboard/like",
+              data: { 
+                  "generalPostId": "${generalPostVO.generalPostId}",
+                  "likeCnt": ${generalPostVO.likeCnt}
+                },
+              success: function(response) {
+                  /* $("likeModal").hide(); */
+                  alert("좋아요가 눌렸습니다!!!!!!!!!!!!");
+                },
+              error: function(error){
+                  /* $("#likeModal").hide(); */
+                  alert("오류가 발생했습니다~~~~~~~~~~~~");
+                }
+          })
+      });   
    });
+    
+
 </script>
 </head>
 <body>
-   <div id="btn-controller_1">					
-		<a id="update-link" onclick="location.href='/qnaboard/update/${generalPostId}'">수정</a>
-		<a id="delete-link" onclick="location.href='/qnaboard/delete/${generalPostId}'">삭제</a>
+   <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq generalPostVO.postWriter}">					
+   <div class="btn_controller">
+       <div class="right-align">
+           <div class="update_btn">
+               <div class="btn">
+                   <a href="/qnaboard/update/${generalPostVO.generalPostId}">수정</a>
+                   <a href="/qnaboard/delete/${generalPostVO.generalPostId}">삭제</a>
+               </div>
+           </div>
+       </div>
    </div>
+</c:if>
 <div class="main_container">
-	<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq generalPostVO.postWriter}">  
-	</c:if>
    <p class="qna_Title">질답게시판 > </p>
    <label for="postTitle"></label>
          <div id="title_Name">${generalPostVO.postTitle}</div>
    <!-- 목록보기 -->
-  
+   <button id="button-id-list" onclick="window.location.href='/qnaboard/list'">목록</button>
    <div id="move_button">
    <!-- 좋아요 기능 -->
    <button id="like-btn">좋아요</button>
@@ -603,13 +601,11 @@ textarea {
       <div class="comment-header">
          <h3>댓글</h3>
       </div>
-      <button id="button-id-list" onclick="window.location.href='/qnaboard/list'">목록</button>
       <div class="write-comment">
             <textarea id="txt-comment" placeholder="의견을 입력하세요" maxlength="500"></textarea>
             <button id="btn-save-comment" type="submit">등록</button>
-      </div>
             <!-- 신고 버튼은 조회할때 사용<button id="btn-report-comment">신고</button> -->
-         
+      </div>
         <div class="comment-items"></div>
          
        <!-- 댓글 신고 모달 창 -->
@@ -652,14 +648,12 @@ textarea {
                      <div class="btn-group">
                         <div class="right-align">
                            <input type="submit" value="완료" />
-            
                         </div>
                      </div>      
                   </form>
                </div>
             </div> 
-   </div>  
-
+   		</div>  
         <jsp:include page="../layout/footer.jsp" />
         <script>
          // 미완성된 기능을 알려주는 모달창
@@ -704,8 +698,5 @@ textarea {
              }
          });
      </script>
-   
-
-
 </body>
 </html>

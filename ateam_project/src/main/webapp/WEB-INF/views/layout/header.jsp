@@ -15,6 +15,10 @@
 	<!-- <link rel="stylesheet" href="/css/style.css"> -->
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 	<script src="/js/lib/jquery-3.7.1.js"></script>
+	
+	<link rel="stylesheet" href="../css/jquery.sweet-modal.min.css" />
+	<script src="../js/lib/jquery.sweet-modal.min.js"></script>
+	
     <script src="/js/Modal.js"></script>
     <script src="/js/Alert.js"></script>
 	<c:if test="${not empty sessionScope._LOGIN_USER_}">
