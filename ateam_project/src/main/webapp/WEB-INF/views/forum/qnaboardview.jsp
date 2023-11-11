@@ -301,8 +301,49 @@ textarea {
 }
 </style>
 <script>
-	$.sweetModal('This is an alert.');
-
+/* 질답게시글 신고 모달 */
+$(document).on('click', '#reportQnABoard', function() {
+	$.sweetModal({
+		title: '신고 내용',
+		content: `
+	    <form name="reportVO" method="post" action="/report/view/3"><div>
+		<label for="reportReason" >신고사유${reportVO.reportReason}
+			<select name="reportReason">
+				<option value="CC-20231018-000200">영리목적/홍보성</option>
+				<option value="CC-20231018-000201">개인정보 노출</option>
+				<option value="CC-20231018-000202">음란성/선정성</option>
+				<option value="CC-20231018-000203">같은 내용 반복(도배)</option>
+				<option value="CC-20231018-000204">이용규칙위반</option>
+				<option value="CC-20231018-000205">기타</option>
+			</select>
+		</label>
+	
+	        <label for = "reportReasonContent">신고 상세내용
+	        <textarea name="reportReasonContent" id="reportReasonContent">${reportVO.reportReasonContent}</textarea></label>
+	     	
+	        <label for="attachedImg">첨부파일${reportVO.attachedImg}</label>
+	        <input id="attachedImg" type="file" name="attachedImg"/>
+	        
+	        <label for="reportTypeId">${reportVO.reportTypeId}</label>
+	        <input id="reportTypeId" type="hidden" name="reportTypeId" value="1"/>
+	        
+	        <label for="reportMemberEmail">${reportVO.reportMemberEmail}</label>
+	        <input id="reportMemberEmail" type="hidden" name="reportMember" value="${reportVO.reportMember}"/>
+	     
+	        <label for="receivedReportMemberEmail">${reportVO.receivedReportMemberEmail}</label>
+	        <input id="receivedReportMemberEmail" type="hidden" name="receivedReportMember" value="${generalPostVO.postWriter}"/>
+	     
+	        <label for="reportContentId">${reportVO.reportContentId}</label>
+	        <input id="reportContentId" type="hidden" name="reportContentId" value="${generalPostVO.generalPostId}"/>
+	     </div>
+	     <div class="btn-group">
+	        <div class="right-align">
+	           <input type="submit" value="완료" />
+	        </div>
+	     </div>
+	     </form>`
+	});
+});
     $(document).ready(function() {
             var loadReplies = function() {
                 // 댓글 목록 삭제.
@@ -463,7 +504,7 @@ textarea {
           }
 
           // "신고" 버튼 클릭 시 모달 열기
-          $(".report-btn").click(function() {
+           $(".report-btn").click(function() {
              let reportType = $("#reportQnABoard").val()
              console.log(reportType);
               $("#report-modal").css("display", "block");
@@ -524,56 +565,10 @@ textarea {
    <div id="move_button">
    <!-- 좋아요 기능 -->
    <button id="like-btn">좋아요</button>
-   <!-- 신고 기능 -->
+   <!-- 신고 버튼 -->
    <button id="reportQnABoard" value="3" class="report-btn">신고</button>
    </div>
-      <!-- 모달 창 -->
-         <div id="report-modal" class="report-modal">
-             <div class="report-modal-content">
-                 <span class="close" id="cancel-modal">취소</span>
-                    <!-- 모달 내용 추가 -->
-                  <h2>신고 내용</h2>
-                  <form name="reportVO" method="post" action="/report/view/3" enctype="multipart/form-data">
-                     <div>
-                        <label for="reportReason" >신고사유${reportVO.reportReason}
-                           <select name="reportReason">
-                              <option value="CC-20231018-000200">영리 및 홍보 목적</option>
-                              <option value="CC-20231018-000201">개인정보노출</option>
-                              <option value="CC-20231018-000202">음란성/선정성</option>
-                              <option value="CC-20231018-000203">같은 내용 반복(도배)</option>
-                              <option value="CC-20231018-000204">이용규칙위반</option>
-                              <option value="CC-20231018-000205">기타</option>
-                           </select>
-                        </label>
-               
-                        <label for = "reportReasonContent">신고 상세내용
-                        <textarea name="reportReasonContent" id="reportReasonContent">${reportVO.reportReasonContent}</textarea></label>
-                     
-                        <label for="attachedImg">첨부파일${reportVO.attachedImg}</label>
-                        <input id="attachedImg" type="file" name="attachedImg"/>
-                        
-                        <label for="reportTypeId">${reportVO.reportTypeId}</label>
-                        <input id="reportTypeId" type="hidden" name="reportTypeId" value="3"/>
-                        
-                        <label for="reportMemberEmail">${reportVO.reportMemberEmail}</label>
-                        <input id="reportMemberEmail" type="hidden" name="reportMember" value="${reportVO.reportMember}"/>
-                     
-                        <label for="receivedReportMemberEmail">${reportVO.receivedReportMemberEmail}</label>
-                        <input id="receivedReportMemberEmail" type="hidden" name="receivedReportMember" value="${generalPostVO.postWriter}"/>
-                     
-                        <label for="reportContentId">${reportVO.reportContentId}</label>
-                        <input id="reportContentId" type="hidden" name="reportContentId" value="${generalPostVO.generalPostId}"/>
-                     </div>
-                     <div class="btn-group">
-                        <div class="right-align">
-                           <input type="submit" value="완료" />
-            
-                        </div>
-                     </div>      
-                  </form>
-               </div>
-            </div>
-
+   
    <form name="generalPostVO" method="post">
       <div class="grid">
        

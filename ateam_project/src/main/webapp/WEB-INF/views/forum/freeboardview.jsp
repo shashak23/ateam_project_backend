@@ -14,7 +14,6 @@
     <script src="../js/lib/jquery-3.7.1.js"></script> 
     <link rel="stylesheet" href="/css/style.css" />
     <jsp:include page="../layout/header.jsp"/>
-
 <style type="text/css">
 
    a:link, a:hover, a:visited, a:active {
@@ -203,7 +202,7 @@
    }
    .button_controller {
       position: relative;
-      left: 1350px;
+      left: 1250px;
       top: 120px;
    } 
    .free_Title {
@@ -277,14 +276,51 @@
    height: 1px;
    margin: 10px 0px 7px 0px;
 }
-
-
-   
 </style>
 <script>
-
-$.sweetModal('This is an alert.');
-
+/* 자유게시글 신고 모달 */
+$(document).on('click', '#reportFreeBoard', function() {
+	$.sweetModal({
+		title: '신고 내용',
+		content: `
+	    <form name="reportVO" method="post" action="/report/view/1"><div>
+		<label for="reportReason" >신고사유${reportVO.reportReason}
+			<select name="reportReason">
+				<option value="CC-20231018-000200">영리목적/홍보성</option>
+				<option value="CC-20231018-000201">개인정보 노출</option>
+				<option value="CC-20231018-000202">음란성/선정성</option>
+				<option value="CC-20231018-000203">같은 내용 반복(도배)</option>
+				<option value="CC-20231018-000204">이용규칙위반</option>
+				<option value="CC-20231018-000205">기타</option>
+			</select>
+		</label>
+	
+	        <label for = "reportReasonContent">신고 상세내용
+	        <textarea name="reportReasonContent" id="reportReasonContent">${reportVO.reportReasonContent}</textarea></label>
+	     	
+	        <label for="attachedImg">첨부파일${reportVO.attachedImg}</label>
+	        <input id="attachedImg" type="file" name="attachedImg"/>
+	        
+	        <label for="reportTypeId">${reportVO.reportTypeId}</label>
+	        <input id="reportTypeId" type="hidden" name="reportTypeId" value="1"/>
+	        
+	        <label for="reportMemberEmail">${reportVO.reportMemberEmail}</label>
+	        <input id="reportMemberEmail" type="hidden" name="reportMember" value="${reportVO.reportMember}"/>
+	     
+	        <label for="receivedReportMemberEmail">${reportVO.receivedReportMemberEmail}</label>
+	        <input id="receivedReportMemberEmail" type="hidden" name="receivedReportMember" value="${generalPostVO.postWriter}"/>
+	     
+	        <label for="reportContentId">${reportVO.reportContentId}</label>
+	        <input id="reportContentId" type="hidden" name="reportContentId" value="${generalPostVO.generalPostId}"/>
+	     </div>
+	     <div class="btn-group">
+	        <div class="right-align">
+	           <input type="submit" value="완료" />
+	        </div>
+	     </div>
+	     </form>`
+	});
+});
     $(document).ready(function() {
             var loadReplies = function() {
                 // 댓글 목록 삭제.
@@ -488,8 +524,8 @@ $.sweetModal('This is an alert.');
 </script>
 </head>
 <body>
-    <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq generalPostVO.postWriter}">					
-   <div class="btn_controller">
+   <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq generalPostVO.postWriter}">					
+   <div class="button_controller">
        <div class="right-align">
            <div class="update_btn">
                <div class="btn">
@@ -512,7 +548,7 @@ $.sweetModal('This is an alert.');
    <!-- 신고 기능 -->
    <button id="reportFreeBoard" value="1" class="report-btn">신고</button>
    </div>
-      <!-- 모달 창 -->
+      <%-- <!-- 모달 창 -->
          <div id="report-modal" class="report-modal">
              <div class="report-modal-content">
                  <span class="close" id="cancel-modal">취소</span>
@@ -533,7 +569,7 @@ $.sweetModal('This is an alert.');
                
                         <label for = "reportReasonContent">신고 상세내용
                         <textarea name="reportReasonContent" id="reportReasonContent">${reportVO.reportReasonContent}</textarea></label>
-                     
+                     	
                         <label for="attachedImg">첨부파일${reportVO.attachedImg}</label>
                         <input id="attachedImg" type="file" name="attachedImg"/>
                         
@@ -558,7 +594,7 @@ $.sweetModal('This is an alert.');
                   </form>
                </div>
             </div>
-
+ --%>
    <form name="generalPostVO" method="post">
       <div class="grid">
                
