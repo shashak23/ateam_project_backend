@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib prefix="form" uri ="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,12 +9,13 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" id="viewport" content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, width=device-width"/>
     <title>devGround</title>
-   <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <link rel="stylesheet" type="text/css" href="/css/style.css" />
+    <script src="../js/lib/jquery-3.7.1.js"></script> 
+    <link rel="stylesheet" href="/css/style.css" />
     <jsp:include page="../layout/header.jsp"/>
 
-<style>
+<style type="text/css">
 
    a:link, a:hover, a:visited, a:active {
       color: #333;
@@ -200,11 +201,11 @@
 
       
    }
-   /* .button_controller {
+   .button_controller {
       position: relative;
       left: 1350px;
       top: 120px;
-   } */
+   } 
    .free_Title {
       position: relative;
       top: 25px;
@@ -279,15 +280,17 @@
 
 
    
-   </style>
-<script type="text/javascript" src="/js/lib/jquery-3.7.1.js"></script>
-<script type="text/javascript">
+</style>
+<script>
+
+$.sweetModal('This is an alert.');
+
     $(document).ready(function() {
             var loadReplies = function() {
                 // 댓글 목록 삭제.
                 $(".comment-items").html("");
 
-                
+                // 댓글 조회.
                 $.get("/qnaboard/view/comment/${generalPostId}", function(response) {               
                     // 댓글 목록을 response에서 받아와서 처리하는 부분
                     var replies = response.comments;
@@ -444,7 +447,6 @@
           }
 
 
-       $().ready(function() {
        // "신고" 버튼 클릭 시 모달 열기
        $(".report-btn").click(function() {
           let reportType = $("#reportFreeBoard").val()
@@ -465,7 +467,7 @@
             // 클라이언트에서 AJAX 요청 생성
             $.ajax({
                 method: "POST",
-                url: "/qnaboard/like",
+                url: "/freeboard/like",
                 data: { 
                     "generalPostId": "${generalPostVO.generalPostId}",
                     "likeCnt": ${generalPostVO.likeCnt}
@@ -481,20 +483,24 @@
             })
         });
    
-   });
-
 });
-        
+
 </script>
 </head>
 <body>
+    <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq generalPostVO.postWriter}">					
    <div class="btn_controller">
-   <a href="/freeboard/update/${generalPostVO.generalPostId}">수정</a>
-	<a href="/freeboard/delete/${generalPostVO.generalPostId}">삭제</a>
+       <div class="right-align">
+           <div class="update_btn">
+               <div class="btn">
+                   <a href="/qnaboard/update/${generalPostVO.generalPostId}">수정</a>
+                   <a href="/qnaboard/delete/${generalPostVO.generalPostId}">삭제</a>
+               </div>
+           </div>
+       </div>
    </div>
-<div class="main_Container">
-<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq generalPostVO.postWriter}">               
 </c:if>
+<div class="main_Container">
    <p class="free_Title">자유게시판 ></p>
    <label for="postTitle"></label>
    <div id="title_Name">${generalPostVO.postTitle}</div>
@@ -634,7 +640,6 @@
                      <div class="btn-group">
                         <div class="right-align">
                            <input type="submit" value="완료" />
-            
                         </div>
                      </div>      
                   </form>
