@@ -16,6 +16,7 @@ import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
 import com.ktdsuniversity.edu.home.vo.HomeBoardVO;
 import com.ktdsuniversity.edu.home.vo.HomeNickNameVO;
 import com.ktdsuniversity.edu.home.vo.HomecommentCntVO;
+import com.ktdsuniversity.edu.member.vo.MemberVO;
 
 @Repository
 public class HomeBoardDAOImpl extends SqlSessionDaoSupport implements HomeBoardDAO {
@@ -44,9 +45,15 @@ public class HomeBoardDAOImpl extends SqlSessionDaoSupport implements HomeBoardD
 	public List<GeneralPostVO> getWeeklyRanking(String date) {
 		return getSqlSession().selectList("getWeeklyRanking", date);
 	}
+	
 	@Override
 	public List<HomeBoardVO> getHashtag(String postId) {
 		return getSqlSession().selectList("getHashtag", postId);
+	}
+	
+	@Override
+	public MemberVO getMemberProfilePic(String email) {
+		return getSqlSession().selectOne("getMemberProfilePic", email);
 	}
 
 	@Override

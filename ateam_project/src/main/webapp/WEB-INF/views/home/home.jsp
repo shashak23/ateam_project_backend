@@ -663,12 +663,8 @@
     </div>
     <div class="editor_overlay"></div>
   </div>
-
-  
-
   <jsp:include page="../layout/footer.jsp" />
 </body>
-
 <script>
   // 미완성된 기능을 알려주는 모달창
   // $('.incomplete').click(function() {
@@ -812,6 +808,7 @@
     let nickname
     let email
     let members
+    let profilePic
     let page = 0
     let innerCounter
 
@@ -879,9 +876,13 @@
               }
             }
 
+            $.get(`/home/profilepic/\${article.postWriter}`, function(profileResponse) {
+              console.log(profilePic = profileResponse.profilePic)
+            })
+
             let randomNumber = Math.floor(Math.random() * pokemonUrl.length)
             let pokemon = pokemonUrl[randomNumber]
-
+            // <img src="/member/file/download/\${email}" alt="\${pokemon}"/>
             template = `
               <article class="content_container">
                 <div class="writer_info_area">
@@ -1078,6 +1079,7 @@
                   let randomNumber = Math.floor(Math.random() * pokemonUrl.length)
                   let pokemon = pokemonUrl[randomNumber]
 
+                  // <img src="/member/file/download/\${email}" alt="\${pokemon}" />
                   template = `
                     <article class="content_container">
                       <div class="writer_info_area">
