@@ -137,7 +137,6 @@
         <li class="contents_name">제목</li>
         <li class="contents_1">내용</li>
         <li class="write_day">작성일</li>
-        <li class="like_1">좋아요</li>
         <li class="view_cnt_1">조회수</li>
     </ul>
     <c:forEach items="${bookmarkList}" var="bookmark">
@@ -154,7 +153,6 @@
             <li class="bookmark_title">${bookmark.generalPostVO.postTitle}</li>
             <li class="bookmark_content">${bookmark.generalPostVO.postContent}</li>
             <li>${bookmark.generalPostVO.postDate}</li>
-            <li class="like_cnt">${bookmark.generalPostVO.likeCnt}</li>
             <li class="view_cnt">${bookmark.generalPostVO.viewCnt}</li>
         </ul></a>
     </c:forEach>
