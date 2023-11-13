@@ -80,7 +80,8 @@
 		});
     });
 </script>
-	<link rel="stylesheet" href="/css/style.css">
+	<!-- <link rel="stylesheet" href="/css/style.css">  -->
+	<link rel="stylesheet" href="/css/common.css">
 </head>
 <body>
   <div class="header_container">
