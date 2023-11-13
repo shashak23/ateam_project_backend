@@ -513,6 +513,7 @@
   
   .editor_body {
     display: flex;
+    align-items: center;
     flex-direction: column;
   }
 
@@ -624,7 +625,7 @@
         <label for="editor_title">제목</label>
         <input type="text" id="editor_title"></input>
       </div>
-      <div class="editor_body align-center">
+      <div class="editor_body">
         <label for="editor_content" class="editor_content_label">내용</label>
         <textarea id="editor_content"></textarea>
       </div>
