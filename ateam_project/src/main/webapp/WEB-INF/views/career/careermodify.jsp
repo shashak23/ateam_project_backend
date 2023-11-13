@@ -96,6 +96,7 @@
             value="${careerVO.resignDate }">
         </div>
         <input type="submit" value="수정">
+        <button class="modalCloseCareer">닫기</button>
         <a href="/memberInfo/modify/delete-career/${careerVO.careerId}">삭제</a>
     </form:form>
 </body>

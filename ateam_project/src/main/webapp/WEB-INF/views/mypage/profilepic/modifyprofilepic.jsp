@@ -72,6 +72,7 @@ body {
 		<button>
 			<a href="/memberInfo/modify/delete-profile-pic/${memberVO.email}">삭제</a>
 		</button>
+		<button id="modalCloseProfile">닫기</button>
 	</form>
 </body>
 </html>

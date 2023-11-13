@@ -579,7 +579,6 @@ margin: 0;
 									<button class="intro_button">수정</button>
 									<div id="modalContainerIntro" class="hidden">
 										<div id="modalContentIntro">
-											<!-- <span class="close" onclick="closeIntroModal()">&times;</span> -->
 											<textarea id="introTextArea"></textarea>
 											<button id="saveIntro">변경 저장</button>
 											<!-- <button onclick="saveIntroChanges()">변경 저장</button> -->											

@@ -94,6 +94,10 @@
   	  $("#search-department-input").click(function() {
   	      $(".department_errors").hide();
   	  });
+  	  
+  	$(".modalCloseEducation").on('click',function(){
+		$("#modalContainerEducation").addClass("hidden");
+	})
     });
      
     </script>
@@ -137,6 +141,7 @@
 	        <option value="박사">박사</option>
 	    </select>
 	    <input type="submit" value="저장"/>
+	    <button class="modalCloseEducation">닫기</button>
 	</form:form>
 </body>
 </html>

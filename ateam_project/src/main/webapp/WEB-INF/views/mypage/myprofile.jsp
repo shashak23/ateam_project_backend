@@ -215,7 +215,7 @@ position: absolute;
 	}
 
 	/* 모달 */
-	#edit_button2, #modalCloseButton, .addCareer {
+#edit_button2, #modalCloseButton, .addCareer {
   cursor: pointer;
 }
 
@@ -231,7 +231,7 @@ position: absolute;
   background: rgba(0, 0, 0, 0.5);
 }
 
-/* #modalContainerIntroduction {
+#modalContainerIntroduction {
   width: 100%;
   height: 100%;
   position: fixed;
@@ -241,7 +241,7 @@ position: absolute;
   justify-content: center;
   align-items: center;
   background: rgba(0, 0, 0, 0.5);
-} */
+}
 
 #modalContainerSNS {
   width: 100%;
@@ -305,19 +305,19 @@ position: absolute;
 
 #modalContentProfile {
   position: absolute;
-  background-color: #ffffff;
+  /* background-color: #ffffff; */
   width: 500px;
   height: 200px;
   padding: 15px;
 }
 
-/* #modalContentIntroduction {
+#modalContentIntroduction {
   position: absolute;
   background-color: #ffffff;
   width: 500px;
   height: 200px;
   padding: 15px;
-} */
+}
 
 #modalContentSNS {
   position: absolute;
@@ -363,9 +363,9 @@ position: absolute;
   display: none;
 }
 
-/* #modalContainerIntroduction.hidden {
+#modalContainerIntroduction.hidden {
   display: none;
-} */
+}
 
 #modalContainerSNS.hidden {
   display: none;
@@ -398,8 +398,7 @@ position: absolute;
 <link rel="stylesheet" type="text/css" href="/css/myProfile.css" />
 <!-- 자바스크립트 시작 -->
 <jsp:include page="../layout/header.jsp" />
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript" src="/js/lib/jquery-3.7.1.js"></script>
 <script type="text/javascript">
 	//신고버튼
 	$().ready(function() {
@@ -489,11 +488,11 @@ position: absolute;
 	    // });
 
 	    /* 주소 수정*/
-	    $('.region_modify').click(function() {
-	        var email = $(this).data('region');
-	        var url = '/memberInfo/modify/update-location/' + email;
-	        window.location.href = url;
-    	});
+	    // $('.region_modify').click(function() {
+	    //     var email = $(this).data('region');
+	    //     var url = '/memberInfo/modify/update-location/' + email;
+	    //     window.location.href = url;
+    	// });
 	    /* 주소 추가 */ 
 	  	// $('.region_create').click(function() {
 	    //     var email = $(this).data('region-id');
@@ -502,54 +501,103 @@ position: absolute;
    		//  });
 
 		 $(".profile-modify").click(function() {
+			var email = $(this).data('pic-id');
 			$("#modalContainerProfile").removeClass("hidden")
+			$('#modalContentProfile').load('/memberInfo/modify/modify-profile-pic/' + email)
+			
+	         
 		 })
 
-		 $(".introduce-modify").click(function() {
-			$("#modalContainerIntroduction").removeClass("hidden")
-		 })
+		function openIntro(){
+			$('#modalContainer .modalContent').load("'/memberInfo/modify/update-introduction/' + email");
+			$('#modalContainerIntroduction').removeClass('hidden');
+		}
 
-		//  $(".introduce-modify").load("/memberInfo/my-introduction/{generalMemberEmail}");
+		$(".introduce-modify").on('click',function(){
+			openIntro();
+		})
 
- 
 		 $("#edit_button1").click(function() {
 			$("#modalContainerSNS").removeClass("hidden")
 		 })
 
-		//  $("#edit_button1").load("/memberinfo/viewsns/{generalMemberEmail}");
-		
 		 $("#edit_button2").click(function() {
-			$("#modalContainerTech").removeClass("hidden")
-		 })
+			$("#modalContainerTech").removeClass("hidden");
+			$('#modalContentTech').load("/memberInfo/modify/update-tech/{email}");
+         });
 
-		//  $("#edit_button2").load("/memberinfo/viewsns/{generalMemberEmail}");
+		 
+
+		 $("#insert_techstack").click(function() {
+			$("#modalContainerTech").removeClass("hidden");
+			$('#modalContentTech').load("/memberInfo/modify/create-tech-stack");
+         });
+
+		 $("#addEducationButton").click(function() {
+			var educationId = $(this).data('education-id');
+			$("#modalContainerEducation").removeClass("hidden");
+			$('#modalContentEducation').load("/memberInfo/modify/create-education");
+		 });
+		 
+
+		 $(".education-modify").click(function() {
+			var educationId = $(this).data('education-id');
+			$("#modalContainerEducation").removeClass("hidden");
+			$('#modalContentEducation').load("/memberInfo/modify/update-education/"+educationId);
+		 });
 
 		 $(".addCareer").click(function() {
-			$("#modalContainerCareer").removeClass("hidden")
+			$("#modalContainerCareer").removeClass("hidden");
+			$('#modalContentCareer').load("/memberInfo/modify/create-career");
+			console.log("modalCloseCareer 클릭됨");
+		 });
+
+		 $(".career-modify").click(function() {
+			var careerId = $(this).data('career');
+			$("#modalContainerCareer").removeClass("hidden");
+			$('#modalContentCareer').load("/memberInfo/modify/update-career/"+careerId);
+			console.log("modalCloseCareer 클릭됨");
+		 });
+		
+
+		 $(".region_modify").click(function(){
+			$("#modalContainerAddress").removeClass("hidden")
 		 })
-
-		//  $(".addCareer").load("/memberinfo/viewsns/{generalMemberEmail}");
-
-		 $(".addEducationButton").click(function(){
-			$("#modalContainerEducation").removeClass("hidden")
-		 })
-
-		//  $(".addEducationButton").load("/memberinfo/viewsns/{generalMemberEmail}");
 
 		 $(".region_create").click(function(){
 			$("#modalContainerAddress").removeClass("hidden")
 		 })
 
-		
+		 $("#modalCloseProfile").on('click',function(){
+				$("#modalContainerProfile").addClass("hidden");
+			})
 
-		// const modalCloseButton = document.getElementById('modalCloseButton');
-		// const modalTech = document.getElementById('modalContainerTech');
-		// const modalCareer = document.getElementById('modalContainerCareer');
-		// const modalEducation = document.getElementById('modalContainerEducation');
+			$("#modalCloseIntro").on('click',function(){
+				$("#modalContainerIntro").addClass("hidden");
+			})
 
-		
+			$("#modalCloseSNS").on('click',function(){
+				$("#modalContainerSNS").addClass("hidden");
+			})
+
+			$("#modalCloseTech").on('click',function(){
+				$("#modalContainerTech").addClass("hidden");
+			})
+
+			// $(".modalCloseEducation").on('click',function(){
+			// 	$("#modalContainerEducation").addClass("hidden");
+			// })	jsp파일에 직접 닫기 버튼을 넣었습니다.
+
+			$(".modalCloseCareer").on('click',function(){
+				$("#modalContainerCareer").addClass("hidden");
+			})
+
+			$("#modalCloseAddress").on('click',function(){
+				$("#modalContainerAddress").addClass("hidden");
+			})
+
 	});
-
+	
 	
     
 
@@ -587,20 +635,9 @@ position: absolute;
 				<button data-pic-id="${sessionScope._LOGIN_USER_.email }" class="profile-modify">
 				수정
 				</button>
+				
 				<div id="modalContainerProfile" class="hidden">
-					<div id="modalContentProfile">
-						<form method="post" action="/memberInfo/modify/update-profile-pic" enctype="multipart/form-data">
-							<input type="hidden" name="email" value="${sessionScope._LOGIN_USER_.email}" />
-							<div class="profile-container">
-								<h1>프로필 사진</h1>
-								<img src="${memberVO.profilePic}" alt="프로필 사진" class="profile-image" id="profile-image">
-								<div class="file-input">
-									<input type="file" id="profilePic" name="profilePic" />
-								</div>
-							</div>
-								<input type="submit" value="수정" />
-						</form>
-						<button id="modalCloseButton">닫기</button>
+					<div id="modalContentProfile">			
 					</div>
 				</div>
 		 </c:if>
@@ -615,20 +652,12 @@ position: absolute;
 						<c:when test="${not empty generalMemberVO.selfIntro}">
 							<li class="list_intro">${generalMemberVO.selfIntro}<c:if
 									test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
-									<button data-introduce-id="${sessionScope._LOGIN_USER_.email }" class="introduce-modify">수정</button>
-									<!-- <div id="modalContainerIntroduction" class="hidden">
-										<div id="modalContenIntroduction">
-											<form method="post" action="/memberInfo/modify/update-introduction">
-												<input type="hidden" name="generalMemberEmail" value="${sessionScope._LOGIN_USER_.email}"/>
-												<label>자기소개 </label>
-												  <textarea name="selfIntro" id="selfIntro" placeholder="간단한 문구를 입력해 주세요 😊" style="height: 50px">
-												  ${generalMemberVO.selfIntro}
-												  </textarea>
-												<input type="submit" value="수정" />
-												</form>
-											<button id="modalCloseButton">닫기</button>
-										</div>
-									</div> -->
+									<button data-introduce-id="${sessionScope._LOGIN_USER_.email}" class="introduce-modify">수정</button>
+									<div id="modalContainerIntroduction" class="hidden">
+										<div id="modalContenIntroduction">		
+											<jsp:include page="modifyintroduce.jsp" />																		
+										</div>									
+									</div>							
 								</c:if>
 							</li>
 						</c:when>
@@ -636,9 +665,8 @@ position: absolute;
 							<li class="list_intro"><c:if
 									test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
 									<button data-introduce-id="${sessionScope._LOGIN_USER_.email }" class="introduce-create">
-									자기소개 추가하기
-									</button>
-									
+										자기소개 추가하기
+									</button>		
 								</c:if></li>
 						</c:otherwise>
 					</c:choose>
@@ -670,7 +698,6 @@ position: absolute;
 			</c:otherwise>
 		</c:choose>
 
-		
 		 <h2>신고 내용</h2>
 		<form name="reportVO" method="post" action="/report/view/5">
 			<div>
@@ -732,17 +759,9 @@ position: absolute;
 			</button>
 			<div id="modalContainerSNS" class="hidden">
 				<div id="modalContentSNS">
-					<form method="post" action="/memberInfo/modify/update-sns-link">
-						<input type="hidden" name="generalMemberEmail" value="${sessionScope._LOGIN_USER_.email}"/>
-						<label>Github 주소</label>
-						<input type="text" id="githubUrl" name="githubUrl" value="${generalMemberVO.githubUrl}" placeholder="Github Url">
-						<label>이메일 주소</label>
-						<input type="email" id="additionalEmail" name="additionalEmail" value="${generalMemberVO.additionalEmail}" placeholder="Email Url">
-						<label>Blog 주소</label>
-						<input type="text" id="blogUrl" name="blogUrl" value="${generalMemberVO.blogUrl}" placeholder="Blog Url">
-						<input type="submit" value="수정" />
-					</form>
+					<jsp:include page="modifysns.jsp" />
 				</div>
+				<button id="modalCloseSNS">닫기</button>
 			</div>			
 		</c:if>
 	</div>
@@ -757,20 +776,17 @@ position: absolute;
 					</c:forEach>
 					<c:if
 						test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
-						<button data-teach="${sessionScope._LOGIN_USER_.email }" id="edit_button2">수정</button>
+						
+							<button data-teach="${sessionScope._LOGIN_USER_.email }" id="edit_button2">수정</button>
 							<div id="modalContainerTech" class="hidden">
 								<div id="modalContentTech">
-									<form method="post" action="/memberInfo/modify/update-tech">
-										<input type="hidden" name="email" value="${sessionScope._LOGIN_USER_.email}" />
-										<h3>기술스택 수정</h3>
-											<label class="label" for="hashtagId"></label>
-											<div id="techstack_category"></div>
-										<input type="submit" value="수정">
-											<button id="modalCloseButton">닫기</button>
-									</form>	
+									
+									<button id="deleteTech">삭제</button>
+									
 								</div>
 							</div>
-						<button data-deleteteach="${sessionScope._LOGIN_USER_.email }" id="delete_tech">삭제</button>
+						<!-- <button data-deleteteach="${sessionScope._LOGIN_USER_.email }" id="delete_tech">삭제</button> -->
+						
 					</c:if>
 				</c:when>
 				<c:otherwise>
@@ -779,11 +795,18 @@ position: absolute;
 							<button id="insert_techstack">
 								<img id="add" src="/images/작성.png/" alt="추가하기">
 							</button>
+							<div id="modalContainerTech" class="hidden">
+								<div id="modalContentTech">
+									
+									
+								</div>
+							</div>
 						</c:if></li>
 				</c:otherwise>
 			</c:choose>
 		</ul>
 	</div>
+	
 	<div class="education">
 		<h3 class="education-font">학력</h3>
 		<ul>
@@ -795,78 +818,28 @@ position: absolute;
 							<c:if
 								test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
 								<button data-education-id="${education.educationId}" class="education-modify">수정</button>
-								<!-- <div id="modalContainerEducation" class="hidden">
+								<div id="modalContainerEducation" class="hidden">
 									<div id="modalContentEducation">
-										<form:form modelAttribute="educationVO" method ="post">
-											<h2>대학교 및 학과 검색</h2>
 										
-											<div id="university-section">
-												<h3>대학교 검색</h3>
-												<input type="text" id="search-university-input" name="schoolName" placeholder="대학교 검색">
-												<form:errors path="schoolName" element="div" cssClass="school_errors" />
-												<div id="search-university-results">
-													
-												</div>
-											</div>
-										
-											<div id="department-section">
-												<h3>학과 검색</h3>
-												<input type="text" id="search-department-input" name="schoolDepartment" placeholder="학과 검색">
-												<form:errors path="schoolDepartment" element="div" cssClass="department_errors" />
-												<div id="search-department-results">
-													
-												</div>
-											</div>
-											<select id="degree" name="degrees" required>
-												<option value="" disabled selected hidden>선택하세요</option>
-												<option value="석사">석사</option>
-												<option value="학사">학사</option>
-												<option value="박사">박사</option>
-											</select>
-											<input type="submit" value="저장"/>
-										</form:form>
+											
+										<button id="modalCloseEducation">닫기</button>
 									</div>
-								</div> -->
+								</div>
 							</c:if>
 						</li>						
 					</c:forEach>
 					<c:if
 						test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
 						<button id="addEducationButton">
-							<img id="add" src="/images/작성.png/" alt="추가하기">
+							추가하기
 						</button>	
-						<!-- <div id="modalContainerEducation" class="hidden">
+						<div id="modalContainerEducation" class="hidden">
 							<div id="modalContentEducation">
-								<form:form modelAttribute="educationVO" method ="post">
-									<h2>대학교 및 학과 검색</h2>
 								
-									<div id="university-section">
-										<h3>대학교 검색</h3>
-										<input type="text" id="search-university-input" name="schoolName" placeholder="대학교 검색">
-										<form:errors path="schoolName" element="div" cssClass="school_errors" />
-										<div id="search-university-results">
-											
-										</div>
-									</div>
-								
-									<div id="department-section">
-										<h3>학과 검색</h3>
-										<input type="text" id="search-department-input" name="schoolDepartment" placeholder="학과 검색">
-										<form:errors path="schoolDepartment" element="div" cssClass="department_errors" />
-										<div id="search-department-results">
-											
-										</div>
-									</div>
-									<select id="degree" name="degrees" required>
-										<option value="" disabled selected hidden>선택하세요</option>
-										<option value="석사">석사</option>
-										<option value="학사">학사</option>
-										<option value="박사">박사</option>
-									</select>
-									<input type="submit" value="저장"/>
-								</form:form>
+									
+								<button class="modalCloseEducation">닫기</button>
 							</div>
-						</div>			 -->
+						</div>
 					</c:if>
 				</c:when>
 				<c:otherwise>
@@ -875,43 +848,19 @@ position: absolute;
 						<button id="addEducationButton">
 							<img id="add" src="/images/작성.png/" alt="추가하기">
 						</button>
+						<div id="modalContainerEducation" class="hidden">
+							<div id="modalContentEducation">
+								
+									
+								<button class="modalCloseEducation">닫기</button>
+							</div>
+						</div>
 					</c:if></li>
 				</c:otherwise>
-			</c:choose>		
-			<div id="modalContainerEducation" class="hidden">
-				<div id="modalContentEducation">
-					<form:form modelAttribute="educationVO" method ="post">
-						<h2>대학교 및 학과 검색</h2>
-					
-						<div id="university-section">
-							<h3>대학교 검색</h3>
-							<input type="text" id="search-university-input" name="schoolName" placeholder="대학교 검색">
-							<form:errors path="schoolName" element="div" cssClass="school_errors" />
-							<div id="search-university-results">
-								
-							</div>
-						</div>
-					
-						<div id="department-section">
-							<h3>학과 검색</h3>
-							<input type="text" id="search-department-input" name="schoolDepartment" placeholder="학과 검색">
-							<form:errors path="schoolDepartment" element="div" cssClass="department_errors" />
-							<div id="search-department-results">
-							
-							</div>
-						</div>
-						<select id="degree" name="degrees" required>
-							<option value="" disabled selected hidden>선택하세요</option>
-							<option value="석사">석사</option>
-							<option value="학사">학사</option>
-							<option value="박사">박사</option>
-						</select>
-						<input type="submit" value="저장"/>
-					</form:form>
-				</div>
-			</div>
+			</c:choose>			
 		</ul>
 	</div>
+	
 	<div class="career">
 		<h3 class="career-font">경력</h3>
 		<ul>
@@ -922,72 +871,47 @@ position: absolute;
 						<li class="career_list_year">${career.hireDate}~
 							${career.resignDate} <c:if
 								test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
-								<!-- <button data-career="${career.careerId}" class="career-modify">수정</button> -->
-										
+								<button data-career="${career.careerId}" class="career-modify">수정</button>
+								<div id="modalContainerCareer" class="hidden">
+									<div id="modalContentCareer">
+														
+										<button class="modalCloseCareer">닫기</button>
+									</div>
+								</div>
 							</c:if>
 						</li>
 					</c:forEach>
 					<c:if
 						test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
-						<button class="addCareer">
-							<img id="add" src="/images/작성.png/" alt="추가하기">
+						<button class="addCareer" data-career="${career.careerId}">
+							추가하기
 						</button>
-						    <form method="post">
-								<div>
-									<label for="previousCompanyName">근무 회사명:</label>
-									<input type="text" id="previousCompanyName" name="previousCompanyName" required>
-								</div>
-								<div>
-									<label for="jobTitle">직무명:</label>
-									<input type="text" id="jobTitle" name="jobTitle" required>
-								</div>
-								<div>
-									<label for="hireDate">입사일:</label>
-									<input type="text" id="hireDate" name="hireDate" class="date-picker" placeholder="YYYY-MM-DD" required>
-								</div>
-								<div>
-									<label for="resignDate">퇴사일:</label>
-									<input type="text" id="resignDate" name="resignDate" class="date-picker" placeholder="YYYY-MM-DD">
-								</div>
-								<input type="submit" value="저장">
-							</form>
+						<div id="modalContainerCareer" class="hidden">
+							<div id="modalContentCareer">
+												
+								
+							</div>
+						</div>
 					</c:if>
 				</c:when>
 				<c:otherwise>
 					<li><c:if
 							test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
 							<button class="addCareer">
-								<img id="add" src="/images/작성.png/" alt="추가하기">
-							</button>						
-						</c:if></li>
+								추가하기
+							</button>	
+							<div id="modalContainerCareer" class="hidden">
+								<div id="modalContentCareer">
+											
+									
+								</div>
+							</div>
+						</c:if>
+					</li>
 				</c:otherwise>
 
 			</c:choose>
-			<div id="modalContainerCareer" class="hidden">
-				<div id="modalContentCareer">
-					<form method="post">
-						<div>
-							<label for="previousCompanyName">근무 회사명:</label>
-							<input type="text" id="previousCompanyName" name="previousCompanyName" required>
-						</div>
-						<div>
-							<label for="jobTitle">직무명:</label>
-							<input type="text" id="jobTitle" name="jobTitle" required>
-						</div>
-						<div>
-							<label for="hireDate">입사일:</label>
-							<input type="text" id="hireDate" name="hireDate" class="date-picker" placeholder="YYYY-MM-DD" required>
-						</div>
-						<div>
-							<label for="resignDate">퇴사일:</label>
-							<input type="text" id="resignDate" name="resignDate" class="date-picker" placeholder="YYYY-MM-DD">
-						</div>
-						<input type="submit" value="저장">
-					</form>
-					
-					<button id="modalCloseButton">닫기</button>
-				</div>
-			</div>
+			
 		</ul>
 	</div>
 	<div class="region">
@@ -1001,6 +925,13 @@ position: absolute;
 						<button data-region="${sessionScope._LOGIN_USER_.email }" class="region_modify"> 
 						수정
 						</button>
+						<div id="modalContainerAddress" class="hidden">
+							<div id="modalContentAddress">
+								<jsp:include page="modifyaddress.jsp" />
+								
+								<button id="modalCloseAddress">닫기</button>
+							</div>
+						</div>
 					</c:if>
 				</c:when>
 				<c:otherwise>
@@ -1011,15 +942,9 @@ position: absolute;
 						</button>
 						<div id="modalContainerAddress" class="hidden">
 							<div id="modalContentAddress">
-								<form:form modelAttribute="generalMemberVO" method="post" action="/memberInfo/modify/create-location">
-									<input type="hidden" name="generalMemberEmail" value="${generalMemberVO.generalMemberEmail }"/>
-									<input type="text" id="sample6_postcode" placeholder="우편번호" readonly>
-									<input type="button" onclick="sample6_execDaumPostcode()" id="region_button" value="우편번호 찾기" ><br>
-									<input type="text" id="region" name ="region" placeholder="주소" readonly ><br>
-										<form:errors path="region" element="div" cssClass="region_errors" />
-									<input type="submit" value="작성" />
-								</form:form>
-								<button id="modalCloseButton">닫기</button>
+								<jsp:include page="modifyaddress.jsp" />
+								
+								<button id="modalCloseAddress">닫기</button>
 							</div>
 						</div>
 						</c:if></li>
