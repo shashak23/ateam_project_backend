@@ -753,6 +753,7 @@
           }
           else {
             alert('등록에 실패했습니다.')
+            console.log(body)
           }
         })
       }
@@ -1412,6 +1413,50 @@
 
     $('.rand_notice_container, .rand_notice_overlay').addClass('active')
 
+    // 공지를 이리저리 옮겨보자
+    $('.rand_notice_container').mousedown(function(e) {
+      let noticeOffset = $(this).offset()
+      $(this).data('select', 'true')
+
+      $(this).data('x', e.pageX)
+      $(this).data('y', e.pageY)
+      $(this).css("transform", "unset")
+      $(this).css("transition", "0s")
+
+      $(this).css({
+          left: noticeOffset.left + 'px',
+          top: noticeOffset.top + 'px' 
+        })
+    })
+    .mousemove(function(e) {
+      if ($(this).data('select') === 'true') {
+
+        let prevX = $(this).data('x')
+        let prevY = $(this).data('y')
+
+        let x = e.pageX - prevX
+        let y = e.pageY - prevY
+        
+        let noticeOffset = $(this).offset()
+        
+        x += noticeOffset.left
+        y += noticeOffset.top
+        console.log("after", x, y)
+
+        $(this).css({
+          left: x + 'px',
+          top: y + 'px' 
+        })
+
+        $(this).data('x', e.pageX)
+        $(this).data('y', e.pageY)
+      }
+    })
+    .mouseup(function() {
+      $(this).data('select', 'false')
+    })
+
+
     $('.rand_notice_close_btn, .rand_notice_overlay').click(function() {
       $('.rand_notice_container, .rand_notice_overlay').removeClass('active')
     })
@@ -1421,6 +1466,7 @@
         $('.rand_notice_container, .rand_notice_overlay').removeClass('active')
       }
     })
+
   })
 
   // 메인 글 작성 ck에디터
