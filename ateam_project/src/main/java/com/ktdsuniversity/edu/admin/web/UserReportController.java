@@ -9,11 +9,14 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.ktdsuniversity.edu.admin.service.ReportService;
 import com.ktdsuniversity.edu.admin.vo.ReportVO;
+import com.ktdsuniversity.edu.generalpost.vo.GeneralCommentVO;
+import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
 import com.ktdsuniversity.edu.generalpost.web.FreePostController;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 
@@ -35,12 +38,18 @@ public class UserReportController {
 							           , HttpServletRequest request
 							           , Model model
 							           , @SessionAttribute("_LOGIN_USER_") MemberVO memberVO
-							           , @PathVariable String reportTypeId) {
+							           , @PathVariable String reportTypeId
+							           , @RequestParam(required = false) MemberVO receivedReportMemberVO
+							           , @RequestParam(required = false) GeneralCommentVO generalCommentVO) {
 		log.debug("--1--컨트롤러-도착-------------------------------------");
 		//System.out.println("신고고유번호: " + reportVO.getReportId());
 		ModelAndView view = new ModelAndView();
 		reportVO.setReportMember(memberVO.getEmail());
-
+		// 월요일에 확인해 보자
+		//reportVO.setCommentWriter(reportTypeId);
+		//reportVO.setReceivedReportMember(generalCommentVO.getCommentWriter());
+		//reportVO.setReceivedReportMember(generalCommentVO.getCommentWriter());
+		
 		if (bindingResult.hasErrors()) {
 			view.addObject("reportVO", reportVO);
 			view.setViewName("home/home");
@@ -58,12 +67,16 @@ public class UserReportController {
 		if (reportTypeId != null) {
 		    if (reportTypeId.equals("1")) {
 		        reportVO.setReportTypeId("CC-20231018-000097");
+		        reportVO.setReceivedReportMember(memberVO.getEmail());
 		    } else if (reportTypeId.equals("2")) {
 		        reportVO.setReportTypeId("CC-20231018-000102");
+		        //reportVO.setReceivedReportMember(generalCommentVO.getCommentWriter());
 		    } else if (reportTypeId.equals("3")) {
 		        reportVO.setReportTypeId("CC-20231018-000101");
+		        reportVO.setReceivedReportMember(memberVO.getEmail());
 		    } else if (reportTypeId.equals("4")) {
-		        reportVO.setReportTypeId("CC-20231018-000103");
+		    	reportVO.setReportTypeId("CC-20231018-000103");
+		    	//reportVO.setReceivedReportMember(generalCommentVO.getCommentWriter());
 		    } else {
 		    	reportVO.setReportTypeId("CC-20231018-000104");
 		    }
@@ -72,6 +85,7 @@ public class UserReportController {
 		}
 		log.debug("신고 유형 구분: " + reportTypeId);
 		log.debug("신고자: " + reportVO.getReportMember());
+		log.debug("신고 받은 사람: " + reportVO.getReceivedReportMember());
 		
 		boolean isSuccess = reportService.createReport(reportVO);
 		if(isSuccess) {

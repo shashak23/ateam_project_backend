@@ -119,4 +119,13 @@
 			, 0
 			, 'N')
 	</insert>
+	<select id="getMemberProfilePic"
+			parameterType="string"
+			resultType="com.ktdsuniversity.edu.member.vo.MemberVO">
+		SELECT EMAIL 
+		     , PROFILE_PIC 
+		     , NICKNAME 
+		  FROM MEMBER
+		 WHERE EMAIL = #{parameter}
+	</select>
 </mapper>

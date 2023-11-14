@@ -19,6 +19,9 @@
 </c:choose>
 
 <style>
+  .ml10 {
+    margin-left: 10px;
+  }
   .admin_container {
     position: fixed;
     top: 170px;
@@ -37,7 +40,6 @@
 	}
 
   .home_edit_container .home_edit_wrap {
-    display: flex;
     width: 1080px;
     margin: 0 auto;
 		cursor: pointer;
@@ -50,7 +52,6 @@
 		border-radius: 5px;
 		margin-right: 10px;
     padding: 10px;
-    font-size: var(--font-small);
     color: var(--gray);
 	}
 
@@ -63,7 +64,6 @@
 		align-items: center;
 		border: 1px solid var(--gray);
 		border-radius: 5px;
-		font-size: var(--font-x-big);
 	}
 
 	.home_edit_container .edit_btn svg {
@@ -72,14 +72,11 @@
   
   /* 메인 컨텐츠 영역 */
 	.body_container {
-		width: 1140px;
 		padding: 10px 30px 30px;
-		margin: 0 auto;
 	}
 
 	.body_container .body {
 		display: flex;
-		justify-content: space-between;
 	}
 
 	/* 왼쪽 */
@@ -131,13 +128,11 @@
 		border-radius: 10px;
 		margin-left: 20px;
 		padding: 0 3px;
-		font-size: var(--font-x-small);
 		color: var(--blue);
 		cursor: pointer;
 	}
 
 	.body_left .content_container .writer_info_area .flex_left .posting_date {
-		font-size: var(--font-small);
 		color: #ccc;
 	}
 
@@ -186,7 +181,6 @@
 	}
 
 	.body_left .content_container .q_title > .big_letter {
-		font-size: var(--font-x-big);
 		font-weight: bold;
 		margin-right: 8px;
 		color: var(--deep-blue);
@@ -198,7 +192,6 @@
 	}
 
 	.body_left .content_container .q_title > div .title {
-		font-size: var(--big);
 		margin-right: 10px;
 		color: var(--deep-dark);
 	}
@@ -232,7 +225,6 @@
 	}
 
 	.body_left .content_container .q_content p {
-		font-size: var(--font-small);
 		color: var(--dark);
 	}
 
@@ -253,7 +245,6 @@
 		border-radius: 50px;
 		background-color: var(--hashtag-blue);
 		color: var(--blue);
-		font-size: var(--font-x-small);
     cursor: default;
 	}
 
@@ -266,14 +257,12 @@
   .body_right .ranking_wrap {
     display: flex;
     flex-direction: column;
-    align-items: center;
     border: 1px solid var(--light-gray);
     border-radius: 10px;
   }
 
   .body_right .ranking_wrap h2 {
     display: flex;
-    align-items: center;
     justify-content: center;
     padding: 10px 0;
     border-bottom: 1px solid var(--gray);
@@ -283,7 +272,6 @@
   .body_right .ranking_wrap ul {
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
     width: 100%;
     margin-bottom: 20px;
@@ -291,7 +279,6 @@
 
   .body_right .ranking_wrap ul .hot_post {
     flex: 1;
-    font-size: var(--font-medium);
     width: 100%;
     border-bottom: 1px solid var(--light-gray);
     transition: all 0.1s;
@@ -305,14 +292,12 @@
 
   .body_right .ranking_wrap ul .hot_post a {
     width: 270px;
-    font-size: var(--font-small);
     color: var(--dark);
     display: block;
     padding: 15px 20px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-
   }
 
   .body_right .hashtag_wrap {
@@ -332,14 +317,13 @@
     padding: 3px 8px;
     border-radius: 20px;
     border: none;
-    font-size: var(--font-x-small);
-    text-align: center;
   }
 
   .body_right .hashtag_wrap .hashtag:hover {
     box-shadow: 0 0 2px var(--dark-gray);
     cursor: pointer;
   }
+
   .recommend_container {
     display: flex;
     flex-direction: column;
@@ -353,22 +337,20 @@
   }
 
   .title {
-      font-weight: bold;
+    font-weight: bold;
   }
 
   .member_info_area {
-      display: grid;
       grid-template-columns: 1fr 1fr 1fr;
       column-gap: 10px;
       margin: 10px;
   }
 
-  .member_profile{
+  .member_profile {
       display: flex;
       flex-direction: column;
       border: 1px solid var(--light-gray);
       border-radius: 10px;
-      align-items: center;
       margin: 5px;
       padding: 10px;
   }
@@ -417,7 +399,6 @@
 		color: gray;
 		display: block;
 		margin-bottom: 10px;
-		font-size: 10pt;
 	}
 
   .rand_notice_close_btn {
@@ -425,7 +406,6 @@
     top: 6px;
     right: 10px;
     background-color: transparent;
-    font-size: 18px;
     color: #888;
     cursor: pointer;
 	}
@@ -433,10 +413,6 @@
   .rand_notice_close_btn {
     color: #191919;
   }
-
-  .create_title {
-			text-align: center;
-	}
 
   .title_area,
   .content_area {
@@ -512,7 +488,6 @@
     right: 10px;
     background-color: transparent;
     border: none;
-    font-size: 18px;
     color: #888;
     cursor: pointer;
   }
@@ -535,10 +510,11 @@
     border: 1px solid var(--gray);
     padding: 10px;
   }
+  
   .editor_body {
     display: flex;
-    flex-direction: column;
     align-items: center;
+    flex-direction: column;
   }
 
   .editor_content_label {
@@ -616,9 +592,9 @@
 
   <!-- 메인 컨텐츠 영역 -->
   <div class="home_edit_container">
-    <div class="home_edit_wrap">
-      <div class="text_area">자유롭게 글을 작성하세요.</div>
-      <div class="edit_btn">
+    <div class="home_edit_wrap flex">
+      <div class="text_area small">자유롭게 글을 작성하세요.</div>
+      <div class="edit_btn x-large">
         <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><path d="M471.6 21.7c-21.9-21.9-57.3-21.9-79.2 0L362.3 51.7l97.9 97.9 30.1-30.1c21.9-21.9 21.9-57.3 0-79.2L471.6 21.7zm-299.2 220c-6.1 6.1-10.8 13.6-13.5 21.9l-29.6 88.8c-2.9 8.6-.6 18.1 5.8 24.6s15.9 8.7 24.6 5.8l88.8-29.6c8.2-2.7 15.7-7.4 21.9-13.5L437.7 172.3 339.7 74.3 172.4 241.7zM96 64C43 64 0 107 0 160V416c0 53 43 96 96 96H352c53 0 96-43 96-96V320c0-17.7-14.3-32-32-32s-32 14.3-32 32v96c0 17.7-14.3 32-32 32H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h96c17.7 0 32-14.3 32-32s-14.3-32-32-32H96z"/></svg>
       </div>
     </div>
@@ -630,7 +606,7 @@
       </div>
       <div class="body_right">
         <div class="ranking_wrap">
-          <h2>주간랭킹</h2>
+          <h2 class="align-center">주간랭킹</h2>
           <ul class="ranking_list">
           </ul>
         </div>
@@ -643,7 +619,7 @@
   <!-- 에디터 생성 -->
   <div class="editor_container">
     <div class="editor_wrap">
-      <div class="editor_close_btn">&times;</div>
+      <div class="editor_close_btn large">&times;</div>
       <h1>게시글 작성</h1>
       <div class="editor_head">
         <label for="editor_title">제목</label>
@@ -663,12 +639,8 @@
     </div>
     <div class="editor_overlay"></div>
   </div>
-
-  
-
   <jsp:include page="../layout/footer.jsp" />
 </body>
-
 <script>
   // 미완성된 기능을 알려주는 모달창
   // $('.incomplete').click(function() {
@@ -731,6 +703,8 @@
     $('.edit_btn').css('background-color', '')
   })
 
+  let editorContent
+
   // 메인 에디터 생성
   $('.home_edit_wrap').click(function() {
 
@@ -768,8 +742,9 @@
       let body = {
         'postWriter': `${sessionScope._LOGIN_USER_.email}`,
         'postTitle': $('#editor_title').val(),
-        'postContent': $('.ck-editor__main').find('p').text(),
+        'postContent': getDataFromTheEditor(),
       }
+
       if ($('.free_land_btn').hasClass('selected')) {
         $.post('/home/create/freeboard', body, function(response) {
           if (response.result === 'success') {
@@ -778,6 +753,7 @@
           }
           else {
             alert('등록에 실패했습니다.')
+            console.log(body)
           }
         })
       }
@@ -812,6 +788,7 @@
     let nickname
     let email
     let members
+    let profilePic
     let page = 0
     let innerCounter
 
@@ -879,9 +856,13 @@
               }
             }
 
+            $.get(`/home/profilepic/\${article.postWriter}`, function(profileResponse) {
+              console.log(profilePic = profileResponse.profilePic)
+            })
+
             let randomNumber = Math.floor(Math.random() * pokemonUrl.length)
             let pokemon = pokemonUrl[randomNumber]
-
+            // <img src="/member/file/download/\${email}" alt="\${pokemon}"/>
             template = `
               <article class="content_container">
                 <div class="writer_info_area">
@@ -890,12 +871,12 @@
                     <div>
                       <div class="writer_name">
                         <a href="/memberinfo/view/\${email}">\${nickname}</a>
-                        <button class="follow_btn">follow
+                        <button class="follow_btn small">follow
                           <input type="hidden" class="followerEmail" value="${sessionScope._LOGIN_USER_.email}" />
                           <input type="hidden" class="followeeEmail" value="\${email}" />
                         </button>
                       </div>
-                      <div class="posting_date">\${article.postDate}</div>
+                      <div class="posting_date small">\${article.postDate}</div>
                     </div>
                   </div>
                   <div class="flex_right">
@@ -909,10 +890,10 @@
                   </div>
                 </div>
                 <div class="q_title">
-                  <span class="big_letter">Q</span>
+                  <span class="big_letter x-large">Q</span>
                   <div>  
                     <a href="/\${boardType}/view/\${article.generalPostId}" target="_blank">
-                      <span class="title">\${article.postTitle}</span>
+                      <span class="title large">\${article.postTitle}</span>
                     </a>
                     <span class="comment_number">[\${comment_cnt}]</span>
                     <span><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M323.8 34.8c-38.2-10.9-78.1 11.2-89 49.4l-5.7 20c-3.7 13-10.4 25-19.5 35l-51.3 56.4c-8.9 9.8-8.2 25 1.6 33.9s25 8.2 33.9-1.6l51.3-56.4c14.1-15.5 24.4-34 30.1-54.1l5.7-20c3.6-12.7 16.9-20.1 29.7-16.5s20.1 16.9 16.5 29.7l-5.7 20c-5.7 19.9-14.7 38.7-26.6 55.5c-5.2 7.3-5.8 16.9-1.7 24.9s12.3 13 21.3 13L448 224c8.8 0 16 7.2 16 16c0 6.8-4.3 12.7-10.4 15c-7.4 2.8-13 9-14.9 16.7s.1 15.8 5.3 21.7c2.5 2.8 4 6.5 4 10.6c0 7.8-5.6 14.3-13 15.7c-8.2 1.6-15.1 7.3-18 15.1s-1.6 16.7 3.6 23.3c2.1 2.7 3.4 6.1 3.4 9.9c0 6.7-4.2 12.6-10.2 14.9c-11.5 4.5-17.7 16.9-14.4 28.8c.4 1.3 .6 2.8 .6 4.3c0 8.8-7.2 16-16 16H286.5c-12.6 0-25-3.7-35.5-10.7l-61.7-41.1c-11-7.4-25.9-4.4-33.3 6.7s-4.4 25.9 6.7 33.3l61.7 41.1c18.4 12.3 40 18.8 62.1 18.8H384c34.7 0 62.9-27.6 64-62c14.6-11.7 24-29.7 24-50c0-4.5-.5-8.8-1.3-13c15.4-11.7 25.3-30.2 25.3-51c0-6.5-1-12.8-2.8-18.7C504.8 273.7 512 257.7 512 240c0-35.3-28.6-64-64-64l-92.3 0c4.7-10.4 8.7-21.2 11.8-32.2l5.7-20c10.9-38.2-11.2-78.1-49.4-89zM32 192c-17.7 0-32 14.3-32 32V448c0 17.7 14.3 32 32 32H96c17.7 0 32-14.3 32-32V224c0-17.7-14.3-32-32-32H32z"/></svg></span>
@@ -961,7 +942,7 @@
               if (response_of_hashtag.length > 0) {
                 for (let j = 0; j < response_of_hashtag.length; j++) {
                   haveHashtag.push(response_of_hashtag[j].commonCodeVO.codeContent)
-                  templateDom.find('.hashtagList').append(`<li class="hashtag_each">\${response_of_hashtag[j].commonCodeVO.codeContent}</li>`)
+                  templateDom.find('.hashtagList').append(`<li class="hashtag_each x-small">\${response_of_hashtag[j].commonCodeVO.codeContent}</li>`)
                 }
               }
             })
@@ -1004,7 +985,7 @@
                       <div class="title">
                           <h4>알 수도 있는 사람</h4>
                       </div>
-                      <div class="member_info_area"></div>
+                      <div class="member_info_area grid"></div>
                     </article>`
         
                   $('.body_left').append(recommendTemplate)
@@ -1020,7 +1001,7 @@
                        
                       memberTemplate += 
                         `<div class="memberList">
-                            <div class="member_profile">
+                            <div class="member_profile align-center">
                               <div>
                                 <img class="profile_pic" src="\${profilePic}" />
                               </div>
@@ -1078,6 +1059,7 @@
                   let randomNumber = Math.floor(Math.random() * pokemonUrl.length)
                   let pokemon = pokemonUrl[randomNumber]
 
+                  // <img src="/member/file/download/\${email}" alt="\${pokemon}" />
                   template = `
                     <article class="content_container">
                       <div class="writer_info_area">
@@ -1086,12 +1068,12 @@
                           <div>
                             <div class="writer_name">
                             	<a href="/memberinfo/view/\${email}">\${nickname}</a>
-                            	<button class="follow_btn">follow
+                            	<button class="follow_btn small">follow
                             	  <input type="hidden" class="followerEmail" value="${sessionScope._LOGIN_USER_.email}" />
                             	  <input type="hidden" class="followeeEmail" value="\${email}" />
                             	</button>
                             </div>
-                            <div class="posting_date">\${article.postDate}</div>
+                            <div class="posting_date small">\${article.postDate}</div>
                           </div>
                         </div>
                         <div class="flex_right">
@@ -1105,10 +1087,10 @@
                         </div>
                       </div>
                       <div class="q_title">
-                        <span class="big_letter">Q</span>
+                        <span class="big_letter x-large">Q</span>
                         <div>
                           <a href="/\${boardType}/view/\${article.generalPostId}" target="_blank"">
-                            <span class="title">\${article.postTitle}</span>
+                            <span class="title large">\${article.postTitle}</span>
                           </a>
                           <span class="comment_number">[\${comment_cnt}]</span>
                           <span><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M323.8 34.8c-38.2-10.9-78.1 11.2-89 49.4l-5.7 20c-3.7 13-10.4 25-19.5 35l-51.3 56.4c-8.9 9.8-8.2 25 1.6 33.9s25 8.2 33.9-1.6l51.3-56.4c14.1-15.5 24.4-34 30.1-54.1l5.7-20c3.6-12.7 16.9-20.1 29.7-16.5s20.1 16.9 16.5 29.7l-5.7 20c-5.7 19.9-14.7 38.7-26.6 55.5c-5.2 7.3-5.8 16.9-1.7 24.9s12.3 13 21.3 13L448 224c8.8 0 16 7.2 16 16c0 6.8-4.3 12.7-10.4 15c-7.4 2.8-13 9-14.9 16.7s.1 15.8 5.3 21.7c2.5 2.8 4 6.5 4 10.6c0 7.8-5.6 14.3-13 15.7c-8.2 1.6-15.1 7.3-18 15.1s-1.6 16.7 3.6 23.3c2.1 2.7 3.4 6.1 3.4 9.9c0 6.7-4.2 12.6-10.2 14.9c-11.5 4.5-17.7 16.9-14.4 28.8c.4 1.3 .6 2.8 .6 4.3c0 8.8-7.2 16-16 16H286.5c-12.6 0-25-3.7-35.5-10.7l-61.7-41.1c-11-7.4-25.9-4.4-33.3 6.7s-4.4 25.9 6.7 33.3l61.7 41.1c18.4 12.3 40 18.8 62.1 18.8H384c34.7 0 62.9-27.6 64-62c14.6-11.7 24-29.7 24-50c0-4.5-.5-8.8-1.3-13c15.4-11.7 25.3-30.2 25.3-51c0-6.5-1-12.8-2.8-18.7C504.8 273.7 512 257.7 512 240c0-35.3-28.6-64-64-64l-92.3 0c4.7-10.4 8.7-21.2 11.8-32.2l5.7-20c10.9-38.2-11.2-78.1-49.4-89zM32 192c-17.7 0-32 14.3-32 32V448c0 17.7 14.3 32 32 32H96c17.7 0 32-14.3 32-32V224c0-17.7-14.3-32-32-32H32z"/></svg></span>
@@ -1156,7 +1138,7 @@
                     if (response_of_hashtag.length > 0) {
                       for (let j = 0; j < response_of_hashtag.length; j++) {
                         haveHashtag.push(response_of_hashtag[j].commonCodeVO.codeContent)
-                        templateDom.find('.hashtagList').append(`<li class="hashtag_each">\${response_of_hashtag[j].commonCodeVO.codeContent}</li>`)
+                        templateDom.find('.hashtagList').append(`<li class="hashtag_each x-small">\${response_of_hashtag[j].commonCodeVO.codeContent}</li>`)
                       }
                     }
                   })
@@ -1379,7 +1361,7 @@
       if (list[i].boardId === 'CC-20231017-000029') {
         let ranking_template = `
           <li class="hot_post">
-          <a href="/freeboard/view/\${list[i].generalPostId}" target="_blank"">\${list[i].postTitle}</a>
+          <a href="/freeboard/view/\${list[i].generalPostId}" target="_blank" class="small">\${list[i].postTitle}</a>
           </li>`
         let ranking_templateDom = $(ranking_template)
 
@@ -1388,7 +1370,7 @@
       else {
         let ranking_template = `
           <li class="hot_post">
-          <a href="/qnaboard/view/\${list[i].generalPostId}" target="_blank" >\${list[i].postTitle}</a>
+          <a href="/qnaboard/view/\${list[i].generalPostId}" target="_blank" class="small">\${list[i].postTitle}</a>
           </li>`
         let ranking_templateDom = $(ranking_template)
 
@@ -1400,7 +1382,7 @@
   // 랭킹 박스 아래에 해시태그 가져오기
   $.get('/code/해시태그', function(response) {
     for (let i = 0; i < response.length; i++) {
-      let hash_template = `<button class="hashtag">#\${response[i].codeContent}</button>`
+      let hash_template = `<button class="hashtag align-center x-small">#\${response[i].codeContent}</button>`
       $('.hashtag_wrap').append(hash_template)
       }
     })
@@ -1411,13 +1393,13 @@
     if (response.postTitle !== undefined) {
       let randNoticeTemplate = `
         <div class="rand_notice_container">
-          <div class="rand_notice_close_btn">&times;</div>
-          <h1 class="create_title">공지</h1>
+          <div class="rand_notice_close_btn x-large">&times;</div>
+          <h1 class="align-center">공지</h1>
           <div class="title_area">
-            <label for="postTitle" class="post_title_label">제목</label>
+            <label for="postTitle" class="post_title_label small">제목</label>
             <div>\${response.postTitle}</div>
           </div class=content_area>
-          <label for="noticeContent" class="post_content_label">내용</label>
+          <label for="noticeContent" class="post_content_label small">내용</label>
           <div class="noticeContent"></div>
         </div>
         <div class="rand_notice_overlay"></div>`
@@ -1431,6 +1413,50 @@
 
     $('.rand_notice_container, .rand_notice_overlay').addClass('active')
 
+    // 공지를 이리저리 옮겨보자
+    $('.rand_notice_container').mousedown(function(e) {
+      let noticeOffset = $(this).offset()
+      $(this).data('select', 'true')
+
+      $(this).data('x', e.pageX)
+      $(this).data('y', e.pageY)
+      $(this).css("transform", "unset")
+      $(this).css("transition", "0s")
+
+      $(this).css({
+          left: noticeOffset.left + 'px',
+          top: noticeOffset.top + 'px' 
+        })
+    })
+    .mousemove(function(e) {
+      if ($(this).data('select') === 'true') {
+
+        let prevX = $(this).data('x')
+        let prevY = $(this).data('y')
+
+        let x = e.pageX - prevX
+        let y = e.pageY - prevY
+        
+        let noticeOffset = $(this).offset()
+        
+        x += noticeOffset.left
+        y += noticeOffset.top
+        console.log("after", x, y)
+
+        $(this).css({
+          left: x + 'px',
+          top: y + 'px' 
+        })
+
+        $(this).data('x', e.pageX)
+        $(this).data('y', e.pageY)
+      }
+    })
+    .mouseup(function() {
+      $(this).data('select', 'false')
+    })
+
+
     $('.rand_notice_close_btn, .rand_notice_overlay').click(function() {
       $('.rand_notice_container, .rand_notice_overlay').removeClass('active')
     })
@@ -1440,6 +1466,7 @@
         $('.rand_notice_container, .rand_notice_overlay').removeClass('active')
       }
     })
+
   })
 
   // 메인 글 작성 ck에디터
@@ -1582,6 +1609,13 @@
       // from a local file system (file://) - load this site via HTTP server if you enable MathType
       'MathType'
     ]
-  });  
+  })
+  .then(editor_content => {
+    editorContent = editor_content
+  })
+
+  function getDataFromTheEditor() {
+    return editorContent.getData()
+  }
 </script>
 </html>

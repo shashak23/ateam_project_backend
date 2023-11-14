@@ -9,7 +9,7 @@
     <title>devGround</title>
          <link rel="preconnect" href="https://fonts.googleapis.com"> 
          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
-        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet"> 
+         <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet"> 
          <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" /> 
          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
          <script src="/js/lib/jquery-3.7.1.js"></script> 
@@ -266,10 +266,11 @@ $().ready(function(){
     function savePost() {
         $("#postForm").submit();
     }
+    
+
 </script>
 </head>
 <body>
-
 	<div class="body_container">
 		<div class="body_left_aside"></div>
 
@@ -303,7 +304,6 @@ $().ready(function(){
 
   <script>
 	CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
-		// https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html#extended-toolbar-configuration-format
 		toolbar: {
 			items: [
 				'exportPDF','exportWord', '|',
@@ -442,6 +442,7 @@ $().ready(function(){
 			'MathType'
 		]
 	});  
-	</script>        
+	</script> 
+    
 </body>
 </html>

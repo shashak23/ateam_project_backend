@@ -13,7 +13,7 @@ public interface GeneralCommentDAO {
 
 	public List<GeneralCommentVO> getAllComments(String generalPostId);
 	public GeneralCommentVO getOneComment(String generalCommentId);
-	public int createNewComment(String gemeralPostId,GeneralCommentVO generalCommentVO);
+	public int createNewComment(String generalPostId,GeneralCommentVO generalCommentVO);
 	public int doUpdateComment(GeneralCommentVO generalCommentVO);
 	public int deleteOneComment(String generalCommentId);
 	public int likeOneComment(String generalCommentId);

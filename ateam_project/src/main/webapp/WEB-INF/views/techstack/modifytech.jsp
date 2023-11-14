@@ -43,6 +43,7 @@
 		    <label class="label" for="hashtagId">알고리즘 카테고리</label>
 		    <div id="techstack_category"></div>
         <input type="submit" value="수정">
+        <button class="modalCloseTech">닫기</button>
     </form>
 </body>
 </html>

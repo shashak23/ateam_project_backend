@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<%@ taglib prefix="form" uri ="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" id="viewport" content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, width=device-width"/>
     <title>devGround</title>
-   <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" type="text/css" href="/css/common.css" />
     <jsp:include page="../layout/header.jsp"/>
@@ -149,10 +149,6 @@
    border-color: #333;
    border:1px solid lightgrey;
    }
-   
-
-
-
 
    button, input, textarea {
       padding: 10px;
@@ -264,7 +260,6 @@
       position: relative;
       right: 3px;
    }
-   
 
    #move_button {
       margin: 0 auto;
@@ -297,7 +292,7 @@
     justify-content: space-between;
 }
    
-   </style>
+</style>
 <script type="text/javascript" src="/js/lib/jquery-3.7.1.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
@@ -305,14 +300,13 @@
                 // 댓글 목록 삭제.
                 $(".comment-items").html("");
 
-                
-                $.get("/qnaboard/view/comment/${generalPostId}", function(response) {               
+                // 댓글 조회.
+                $.get("/freeboard/view/comment/${generalPostId}", function(response) {               
                     // 댓글 목록을 response에서 받아와서 처리하는 부분
                     var replies = response.comments;
                     for (var i = 0; i < replies.length; i++) {
                         var comment = replies[i];
                         var member = replies[i].memberVO;
-                        
                         var commentTemplate =
                             `<div class="comment" data-comment-id="\${comment.generalCommentId}" style="padding-left: \${(comment.level - 1) * 40}px">
                               <ul class="writer_info">
@@ -322,7 +316,6 @@
                                  <li>|</li>
                                  <li class="recommend-count">추천수 \${comment.likeCnt}</li>
                               </ul>
-
                                 <pre class="content">\${comment.commentContent}</pre>
                                 \${comment.commentWriter == "${sessionScope._LOGIN_USER_.email}" ?
                                 	    `<div>
@@ -346,56 +339,8 @@
                         $(".comment-items").append(commentDom);
                     }
                 })// $.get
-        } // loadReplies
-         loadReplies()
-         // 신고버튼 클릭
-         $(".report-comment").click(reportComment);
-         var reportComment = function(event) {
-         // 모달을 표시합니다.
-         $("#report-window").css("display", "block");
-         console.log($(this).val())
-         }
-         // 모달 내부 "취소" 버튼 클릭 시 모달 닫기
-         $("#cancel-window").click(function() {
-            $("#report-window").css("display", "none");
-         });
+               loadReplies()
 
-
-        // 등록버튼 클릭
-         $("#btn-save-comment").click(function(event) {
-            event.preventDefault();
-            var comment = $("#txt-comment").val().trim()
-            var mode = $("#txt-comment").data("mode")
-            var target = $("#txt-comment").data("target")
-            // 댓글 내용을 입력했다면 등록을 진행한다.
-            if (comment!= "") {
-                // Ajax 요청을 위한 데이터를 생성한다.
-                var body = { "commentContent": comment }
-                // 등록 URL을 생성한다.
-                var url = `/qnaboard/comment/write/${generalPostId}`;
-                // 대댓글일 경우 부모댓글 ID를 데이터에 넣어준다.
-                if (mode == "re-comment") {
-                    body.parentcommentId = target
-                }
-                // 댓글 수정일 경우 URL을 변경한다.
-                if (mode == "update") {
-                    url = `/qnaboard/comment/update/\${target}`;
-                }
-                // 등록을 진행한다.
-                $.post(url, body, function(response) {
-                    // 댓글 등록 및 수정의 결과를 받아온다
-                    var result = response.result
-                    // 댓글 등록 및 수정이 성공했다면 댓글을 다시 조회해온다.
-                    if (result) {
-                        loadReplies()
-                        $("#txt-comment").val("")
-                        $("#txt-comment").removeData("mode")
-                        $("#txt-comment").removeData("target")
-                    }
-                }); //$.post
-            }
-        });
-        
       function deleteComment(event) {
           // 클릭된 삭제 버튼 요소를 참조합니다.
           var deleteButton = $(this);
@@ -416,7 +361,6 @@
               });
           }
       }
-
 
       function recommendComment(event) {
           // 클릭된 추천 버튼 요소를 참조합니다.
@@ -461,7 +405,6 @@
           }
 
 
-       $().ready(function() {
        // "신고" 버튼 클릭 시 모달 열기
        $(".report-btn").click(function() {
           let reportType = $("#reportFreeBoard").val()
@@ -498,10 +441,8 @@
             })
         });
    
-   });
-
 });
-        
+
 </script>
 </head>
 <body>
@@ -666,8 +607,71 @@
                      </div>
                   </div> 
    
-  
-   
+
+   <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq generalPostVO.postWriter}">					
+   <div class="button_controller">
+       <div class="right-align">
+           <div class="update_btn">
+               <div class="btn">
+                   <a href="/qnaboard/update/${generalPostVO.generalPostId}">수정</a>
+                   <a href="/qnaboard/delete/${generalPostVO.generalPostId}">삭제</a>
+               </div>
+           </div>
+       </div>
+   </div>
+</c:if>
+
+
+            <!-- 신고 버튼은 조회할때 사용<button id="btn-report-comment">신고</button> -->
+      </div>
+        <div class="comment-items"></div>
+         
+       <!-- 댓글 신고 모달 창 -->
+         <div id="report-window" class="report-window">
+             <div class="report-window-content">
+                 <span class="close" id="cancel-window">취소</span>
+                    <!-- 모달 내용 추가 -->
+                  <h2>신고 내용</h2>
+                  <form name="reportVO" method="post" action="/report/view/2">
+                     <div>
+                        <label for="reportReason" >신고사유${reportVO.reportReason}
+                           <select name="reportReason">
+                              <option value="CC-20231018-000200">영리 및 홍보 목적</option>
+                              <option value="CC-20231018-000201">개인정보노출</option>
+                              <option value="CC-20231018-000202">음란성/선정성</option>
+                              <option value="CC-20231018-000203">같은 내용 반복(도배)</option>
+                              <option value="CC-20231018-000204">이용규칙위반</option>
+                              <option value="CC-20231018-000205">기타</option>
+                           </select>
+                        </label>
+               
+                        <label for = "reportReasonContent">신고 상세내용
+                        <textarea name="reportReasonContent" id="reportReasonContent">${reportVO.reportReasonContent}</textarea></label>
+                     
+                        <label for="attachedImg">첨부파일${reportVO.attachedImg}</label>
+                        <input id="attachedImg" type="file" name="attachedImg"/>
+                        
+                        <label for="reportTypeId">${reportVO.reportTypeId}</label>
+                        <input id="reportTypeId" type="hidden" name="reportTypeId" value="4"/>
+                        
+                        <label for="reportMember">${reportVO.reportMember}</label>
+                        <input id="reportMember" type="hidden" name="reportMember" value="${sessionScope._LOGIN_USER_.email}"/>
+                     
+                        <label for="receivedReportMember">${reportVO.receivedReportMember}</label>
+                        <input id="receivedReportMember" type="hidden" name="receivedReportMember" value="${generalCommentVO.postWriter}"/>
+                     
+                        <label for="reportContentId">${reportVO.reportContentId}</label>
+                        <input id="reportContentId" type="hidden" name="reportContentId" value="${reportVO.reportContentId}"/>
+                     </div>
+                     <div class="btn-group">
+                        <div class="right-align">
+                           <input type="submit" value="완료" />
+                        </div>
+                     </div>      
+                  </form>
+               </div>
+            </div> 
+   </div>  
    <jsp:include page="../layout/footer.jsp" />
    <script>
          // 미완성된 기능을 알려주는 모달창

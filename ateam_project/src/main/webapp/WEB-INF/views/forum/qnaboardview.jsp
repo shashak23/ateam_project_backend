@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
    pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri ="http://www.springframework.org/tags/form"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +9,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" id="viewport" content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, width=device-width"/>
     <title>devGround</title>
-   <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
     <link rel="stylesheet" type="text/css" href="/css/common.css" />
     <script src="js/lib/jquery-3.7.1.js"></script>
@@ -349,7 +350,7 @@ a:link, a:hover, a:visited, a:active {
                                  <li>|</li>
                                  <li class="recommend-count">추천수 \${comment.likeCnt}</li>
                               </ul>  
-                              
+            
                                 <pre class="content">\${comment.commentContent}</pre>
                                 \${comment.email == "${sessionScope._LOGIN_USER_.email}" ?
                                 	    `<div>
@@ -375,13 +376,26 @@ a:link, a:hover, a:visited, a:active {
                 })// $.get
         } // loadReplies
       loadReplies()
-   // 신고버튼 클릭
+   	  // 신고버튼 클릭
       $(".report-comment").click(reportComment);
-      	var reportComment = function(event) {
+      var reportComment = function(event) {
+    	  // 댓글 내용
+    	  var content = $(this).closest(".comment").find(".content").text()
+    	  // 댓글 작성자
+    	  var writer = $(this).closest(".comment").data("comment-writer-email");
+    	  // 댓글의 고유 번호
+    	  var id = $(this).closest(".comment").data("comment-id");
+    	  
+    	  	// 필요한 값들을 찾으라고 일일히 지정해줘야 합니다
+	        // $("#report-window").find("#reportReasonContent").val(content)
+	        $("#report-window").find("#receivedReportMember").val(writer)
+	        $("#report-window").find("#reportContentId").val(id)
+	        
 	        // 모달을 표시합니다.
 	        $("#report-window").css("display", "block");
 	        console.log($(this).val())
-      	}
+      };
+        
 		    // 모달 내부 "취소" 버튼 클릭 시 모달 닫기
 		    $("#cancel-window").click(function() {
 		        $("#report-window").css("display", "none");
@@ -486,10 +500,8 @@ a:link, a:hover, a:visited, a:active {
           $("#txt-comment").data("generalCommentId", replyId)
           }
 
-
-          $().ready(function() {
           // "신고" 버튼 클릭 시 모달 열기
-          $(".report-btn").click(function() {
+           $(".report-btn").click(function() {
              let reportType = $("#reportQnABoard").val()
              console.log(reportType);
               $("#report-modal").css("display", "block");
@@ -503,34 +515,32 @@ a:link, a:hover, a:visited, a:active {
           console.log($("jsp:param[name='reportType']"))
 
          
-           // "좋아요" 버튼 클릭 시 이벤트 발생
-           $("#like-btn").click(function () {
-               // 클라이언트에서 AJAX 요청 생성
-               $.ajax({
-                   method: "POST",
-                   url: "/qnaboard/like",
-                   data: { 
-                       "generalPostId": "${generalPostVO.generalPostId}",
-                       "likeCnt": ${generalPostVO.likeCnt}
-                     },
-                   success: function(response) {
-                       /* $("likeModal").hide(); */
-                       alert("좋아요가 눌렸습니다!!!!!!!!!!!!");
-                     },
-                   error: function(error){
-                       /* $("#likeModal").hide(); */
-                       alert("오류가 발생했습니다~~~~~~~~~~~~");
-                     }
-               })
-           });
-      
-      });
-   
+      // "좋아요" 버튼 클릭 시 이벤트 발생
+      $("#like-btn").click(function () {
+          // 클라이언트에서 AJAX 요청 생성
+          $.ajax({
+              method: "POST",
+              url: "/qnaboard/like",
+              data: { 
+                  "generalPostId": "${generalPostVO.generalPostId}",
+                  "likeCnt": ${generalPostVO.likeCnt}
+                },
+              success: function(response) {
+                  /* $("likeModal").hide(); */
+                  alert("좋아요가 눌렸습니다!!!!!!!!!!!!");
+                },
+              error: function(error){
+                  /* $("#likeModal").hide(); */
+                  alert("오류가 발생했습니다~~~~~~~~~~~~");
+                }
+          })
+      });   
    });
+    
+
 </script>
 </head>
 <body>
-
    <div class="body_container">
          <div class="body_left_aside"></div>
 
@@ -641,9 +651,6 @@ a:link, a:hover, a:visited, a:active {
 
         <div class="body_right_aside"></div>
    </div>
-
-
-
          
        <!-- 댓글 신고 모달 창 -->
          <div id="report-window" class="report-window">
@@ -742,8 +749,5 @@ a:link, a:hover, a:visited, a:active {
              }
          });
      </script>
-   
-
-
 </body>
 </html>

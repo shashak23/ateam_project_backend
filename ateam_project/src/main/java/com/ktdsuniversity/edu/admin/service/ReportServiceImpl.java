@@ -1,22 +1,20 @@
 package com.ktdsuniversity.edu.admin.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import com.ktdsuniversity.edu.admin.dao.AdminDAO;
 import com.ktdsuniversity.edu.admin.vo.ReportListVO;
 import com.ktdsuniversity.edu.admin.vo.ReportVO;
-
-import jakarta.mail.internet.MimeMessage;
+import com.ktdsuniversity.edu.generalpost.dao.GeneralCommentDAO;
 
 @Service
 public class ReportServiceImpl implements ReportService{
 
 	@Autowired
 	private AdminDAO reportDAO;
+	
+	private GeneralCommentDAO generalCommentDAO;
 
 	@Override
 	public ReportListVO getAllReport() {
@@ -80,12 +78,8 @@ public class ReportServiceImpl implements ReportService{
 	@Override
 	public boolean createReport(ReportVO reportVO) {
 		int boardCount = reportDAO.createReport(reportVO);
+		
 		return boardCount > 0;
 	}
-
-//	@Override
-//	public void reportUser(String reporterUserId, String reportedUserId) {
-//		
-//	}
 
 }

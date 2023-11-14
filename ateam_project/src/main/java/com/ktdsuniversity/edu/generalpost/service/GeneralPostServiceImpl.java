@@ -57,7 +57,7 @@ private Logger log = LoggerFactory.getLogger(FreePostController.class);
 	
 	@Override
 	public boolean createNewBoard(GeneralPostVO generalPostVO) {
-		log.debug("2-----서비스---------------------------");		
+//		log.debug("2-----서비스---------------------------");		
 		int boardCount = generalPostDAO.createNewBoard(generalPostVO);
 		List<HashtagVO> hashtagList = generalPostVO.getHashtagListVO();
 		for (HashtagVO hashtagVO : hashtagList) {
@@ -70,7 +70,7 @@ private Logger log = LoggerFactory.getLogger(FreePostController.class);
 	
 	@Override
 	public boolean createNewFreeBoard(GeneralPostVO generalPostVO) {
-		log.debug("2-----서비스---------------------------");		
+//		log.debug("2-----서비스---------------------------");		
 		int boardCount = generalPostDAO.createNewBoard(generalPostVO);
 		
 		return boardCount > 0;

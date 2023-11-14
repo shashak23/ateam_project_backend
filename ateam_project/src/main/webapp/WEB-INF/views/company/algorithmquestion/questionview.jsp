@@ -5,6 +5,7 @@
 <jsp:include page="../../layout/header.jsp"></jsp:include>
 <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/super-build/ckeditor.js"></script>
 <script type="text/javascript" src="/js/lib/jquery-3.7.1.js"></script>
+<link rel="stylesheet" type="text/css" href="/css/common.css" />
 <script type="text/javascript">
     $().ready(function() {
     	$("#ide")[0].contentWindow.onload = function() {
@@ -357,8 +358,7 @@
                 <div>${algorithmQuestionVO.algorithmContent}</div>
           
             <div class="flex">
-            <button class="btn btn-primary">제한사항</button>
-                                
+                <button class="btn btn-primary">제한사항</button>                   
                 <form:form modelAttribute="myAlgorithmVO" method="post" action="/algorithm/question/view/${companyAlgorithmQuestionId}">	
                     <div>
                         <form:errors path="myAnswer" element="div" cssClass="errors" />
@@ -368,20 +368,20 @@
                     <textarea name="myAnswer" id="myAnswer" style="display:none;"></textarea>
                 </form:form>
                 <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.memberType eq 'GENERAL'}">
-                <div id="result">
-                    <label for="showResult">실행 결과</label>
-                </div>
-                <div id="show_result"></div>
-                <c:forEach var="resultItem" items="${result}" varStatus="resultStatus">
-                    <ul>
-                        <li>테스트 ${resultStatus.index + 1} > ${resultItem}</li>
-                        <c:forEach var="codeResultItem" items="${codeResultList}" varStatus="codeResultStatus">
-                            <c:if test="${codeResultStatus.index eq resultStatus.index * 2}">
-                                <c:out value="(${codeResultItem})" />
-                            </c:if>
-                        </c:forEach>
-                    </ul>
-                </c:forEach>
+                    <div id="result">
+                        <label for="showResult">실행 결과</label>
+                    </div>
+                    <div id="show_result"></div>
+                    <c:forEach var="resultItem" items="${result}" varStatus="resultStatus">
+                        <ul>
+                            <li>테스트 ${resultStatus.index + 1} > ${resultItem}</li>
+                            <c:forEach var="codeResultItem" items="${codeResultList}" varStatus="codeResultStatus">
+                                <c:if test="${codeResultStatus.index eq resultStatus.index * 2}">
+                                    <c:out value="(${codeResultItem})" />
+                                </c:if>
+                            </c:forEach>
+                        </ul>
+                    </c:forEach>
 				</c:if>
                   <!-- 일반회원이 로그인 했을 시 -->
                   <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.memberType eq 'GENERAL'}">
@@ -393,21 +393,19 @@
                 <div id="checkAnswer">${popupMessage}</div>
             </div>
         
-        <div class="grid">
-            
+        <div class="grid">     
             <div class="btn-group">
-                    <div class="right-align">
-                        <!-- 로그인 하지 않았을 때 -->
-                        <c:if test="${empty sessionScope._LOGIN_USER_}">
-                            <a href="/member/auth">로그인하기</a>
-                        </c:if>
-                        <!-- 해당 게시글을 작성한 기업회원이 로그인 했을 시 -->
-                        <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq algorithmQuestionVO.algorithmWriter}">
-                            <a href="/algorithm/question/update/${algorithmQuestionVO.companyAlgorithmQuestionId}">수정</a>
-                            <a href="/algorithm/question/delete/${algorithmQuestionVO.companyAlgorithmQuestionId}">삭제</a>
-                        </c:if>
-                        
-                    </div>
+                <div class="right-align">
+                    <!-- 로그인 하지 않았을 때 -->
+                    <c:if test="${empty sessionScope._LOGIN_USER_}">
+                        <a href="/member/auth">로그인하기</a>
+                    </c:if>
+                    <!-- 해당 게시글을 작성한 기업회원이 로그인 했을 시 -->
+                    <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq algorithmQuestionVO.algorithmWriter}">
+                        <a href="/algorithm/question/update/${algorithmQuestionVO.companyAlgorithmQuestionId}">수정</a>
+                        <a href="/algorithm/question/delete/${algorithmQuestionVO.companyAlgorithmQuestionId}">삭제</a>
+                    </c:if>              
+                </div>
             </div>
         </div>
         

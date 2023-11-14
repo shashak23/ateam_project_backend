@@ -57,6 +57,7 @@
     	  $("#hireDate").click(function() {
     	      $(".hireDate_errors").hide();
     	  });
+    	  
     });
 </script>
 <style type="text/css">
@@ -92,6 +93,7 @@
             <input type="date" id="resignDate" name="resignDate" class="date-picker" placeholder="YYYY-MM-DD" >
         </div>
         <input type="submit" value="저장">
+        <button id="modalCloseCareer">닫기</button>
     </form:form>
 </body>
 </html>

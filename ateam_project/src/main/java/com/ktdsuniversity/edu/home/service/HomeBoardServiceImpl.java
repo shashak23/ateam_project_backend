@@ -15,6 +15,7 @@ import com.ktdsuniversity.edu.home.dao.HomeBoardDAO;
 import com.ktdsuniversity.edu.home.vo.HomeBoardVO;
 import com.ktdsuniversity.edu.home.vo.HomeNickNameVO;
 import com.ktdsuniversity.edu.home.vo.HomecommentCntVO;
+import com.ktdsuniversity.edu.member.vo.MemberVO;
 
 @Service
 public class HomeBoardServiceImpl implements HomeBoardService {
@@ -45,6 +46,11 @@ public class HomeBoardServiceImpl implements HomeBoardService {
 	@Override
 	public List<HomeBoardVO> getHashtag(String postId) {
 		return homeBoardDAO.getHashtag(postId);
+	}
+	
+	@Override
+	public MemberVO getMemberProfilePic(String email) {
+		return homeBoardDAO.getMemberProfilePic(email);
 	}
 
 	@Override

@@ -5,6 +5,7 @@
 <jsp:include page="../../layout/header.jsp"></jsp:include>
 <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/super-build/ckeditor.js"></script>
 <script type="text/javascript" src="/js/lib/jquery-3.7.1.js"></script>
+<link rel="stylesheet" type="text/css" href="/css/common.css" />
 <script src="/js/Table.js"></script>
 <script type="text/javascript">
 	$().ready(function() {
@@ -378,16 +379,28 @@
 </script>
 </head>
 <style>
+    body > .body_container > .body {
+    grid-column: 2/3;
+}
+
+/* Main Contents 왼쪽 여백*/
+body > .body_container > .body_left_aside {
+    grid-column: 1/2;
+}
+
+/* Main Contents 오른쪽 여백*/
+body > .body_container > .body_right_aside {
+    grid-column: 3/4;
+}
 	#ide {
 		width: 100%;
 		height: 100%;
 		border: 1px solid #c4c4c4;
 	}
-	
-	
+
     .checkbox-space {
     margin-right: 5px;
-}
+    }
     .ck-editor__editable { 
         height: 300px; 
     }
@@ -481,14 +494,7 @@
         border-radius: 5px;
         cursor: pointer;
         margin-right:20px;
-        /* transition: box-shadow 0.3s ease; */
     }
-    
-    /* #add-row:hover,
-    #add-col:hover{
-        
-        border: 2px solid #1E90FF; 
-    } */
 
     #submit-btn{
         background-color: var(--light-blue);
@@ -498,66 +504,65 @@
         border-radius: 5px;
         cursor: pointer;
         margin-bottom: 30px;
-        /* transition: box-shadow 0.1s ease; */
     }
-
-    /* #submit-btn:hover{
-        border: 2px solid #1E90FF;  
-    } */
 </style>
 <body>
-	<div id="container">
-	<form:form modelAttribute="algorithmQuestionVO" method="post">
-		<div>
-			<form:errors path="algorithmCategoryIdList" element="div" cssClass="errors"/>
-			<form:errors path="algorithmTierId" element="div" cssClass="errors"/>
-			<form:errors path="algorithmTitle" element="div" cssClass="errors"/>
-			<form:errors path="algorithmContent" element="div" cssClass="errors"/>
-			<form:errors path="algorithmSolution" element="div" cssClass="errors"/>
-		</div>
-	
-		<div class="grid">
-		    <label class="label" for="algorithmCategoryId">알고리즘 카테고리</label>
-		    <div id="algorithm_category"></div>
-			
-            <label class="label" for="algorithmTierId">난이도</label>
-		    <select id="algorithmTier" name="algorithmTierId" >
-                <option value="">선택하세요 ( 난이도최하: 1 / 난이도최상: 5 )</option>
-                <option value="Lv.1">Lv.1</option>
-                <option value="Lv.2">Lv.2</option>
-                <option value="Lv.3">Lv.3</option>
-                <option value="Lv.4">Lv.4</option>
-                <option value="Lv.5">Lv.5</option>
-            </select>
-		    
-            <input id="algorithmTitle" type="text" name="algorithmTitle" placeholder="제목을 입력해 주세요."
-                   value="${algorithmQuestionVO.algorithmTitle}" />
-            
-            <label class="label" for="algorithmContent">문제내용</label>
-            <textarea name="algorithmContent" id="algorithmContent"></textarea>
-            
-            <label class="label" for="ide">기본 제공 코드</label>
-            <iframe src="/html/webide.html" name="ide" id="ide"></iframe>
-            <textarea id="defaultCode" name="defaultCode" style="display: none;"></textarea>
-            
-            <label class="label" for="algorithmSolution">제한사항</label>
-            <textarea name="algorithmSolution" id="algorithmSolution"></textarea>
-            
-			<label id="testData">테스트 데이터</label>
-		    <div id="table-div"></div>
-            <div id="add-button">
-                <button id="add-row">행 추가</button>
-                <button id="add-col">열 추가</button>
+	<div class="body_container">
+        <div class="body_left_aside"></div>
+            <div class="body">
+                <form:form modelAttribute="algorithmQuestionVO" method="post">
+                    <div>
+                        <form:errors path="algorithmCategoryIdList" element="div" cssClass="errors"/>
+                        <form:errors path="algorithmTierId" element="div" cssClass="errors"/>
+                        <form:errors path="algorithmTitle" element="div" cssClass="errors"/>
+                        <form:errors path="algorithmContent" element="div" cssClass="errors"/>
+                        <form:errors path="algorithmSolution" element="div" cssClass="errors"/>
+                    </div>
+                
+                    <div class="grid">
+                        <label class="label" for="algorithmCategoryId">알고리즘 카테고리</label>
+                        <div id="algorithm_category"></div>
+                        
+                        <label class="label" for="algorithmTierId">난이도</label>
+                        <select id="algorithmTier" name="algorithmTierId" >
+                            <option value="">선택하세요 ( 난이도최하: 1 / 난이도최상: 5 )</option>
+                            <option value="Lv.1">Lv.1</option>
+                            <option value="Lv.2">Lv.2</option>
+                            <option value="Lv.3">Lv.3</option>
+                            <option value="Lv.4">Lv.4</option>
+                            <option value="Lv.5">Lv.5</option>
+                        </select>
+                        
+                        <input id="algorithmTitle" type="text" name="algorithmTitle" placeholder="제목을 입력해 주세요."
+                            value="${algorithmQuestionVO.algorithmTitle}" />
+                        
+                        <label class="label" for="algorithmContent">문제내용</label>
+                        <textarea name="algorithmContent" id="algorithmContent"></textarea>
+                        
+                        <label class="label" for="ide">기본 제공 코드</label>
+                        <iframe src="/html/webide.html" name="ide" id="ide"></iframe>
+                        <textarea id="defaultCode" name="defaultCode" style="display: none;"></textarea>
+                        
+                        <label class="label" for="algorithmSolution">제한사항</label>
+                        <textarea name="algorithmSolution" id="algorithmSolution"></textarea>
+                        
+                        <label id="testData">테스트 데이터</label>
+                        <div id="table-div"></div>
+                        <div id="add-button">
+                            <button id="add-row">행 추가</button>
+                            <button id="add-col">열 추가</button>
+                        </div>
+                        <input type="hidden" name="content" id="answerJson"/>
+                        <div class="btn-group">
+                            <div class="right-align">
+                                <button id="submit-btn">등록</button>
+                            </div>
+                        </div>
+                    </div>
+                </form:form>
             </div>
-            <input type="hidden" name="content" id="answerJson"/>
-            <div class="btn-group">
-                <div class="right-align">
-                    <button id="submit-btn">등록</button>
-                </div>
-            </div>
-        </div>
-	</form:form>
-</div>
+        <div class="body_right_aside"></div>
+    </div>
     <jsp:include page="../../layout/footer.jsp"></jsp:include>
 </body>
 </html>

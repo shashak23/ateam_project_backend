@@ -136,6 +136,7 @@
   margin-top: 70px;
   border-bottom: 0.0625rem solid rgb(231,231,231);
   display: flex;
+  flex-direction: column;
 }
 
 #technology_stack ul {
@@ -152,10 +153,12 @@
 .education{
   border-bottom: 0.0625rem solid rgb(231,231,231);
   display: flex;
+  flex-direction: column;
 }
 .career{
   border-bottom: 0.0625rem solid rgb(231,231,231);
   display: flex;
+  flex-direction: column;
 }
 .education>ul,
 .career>ul,

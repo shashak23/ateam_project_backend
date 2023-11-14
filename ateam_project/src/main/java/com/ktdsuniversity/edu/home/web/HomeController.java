@@ -160,17 +160,31 @@ public class HomeController {
 		return generalList;
 	}
 	
+	/**
+	 * 메인 화면 게시글 조회
+	 * @return 질답 게시글, 자유 게시글
+	 */
 	@ResponseBody
 	@GetMapping("/home/maincontent/commentcnt")
 	public List<HomecommentCntVO> getAllGeneralCommentCnt() {
 		return homeBoardService.getAllGeneralCommentCnt();
 	}
+	
+	/**
+	 * 게시글 작성자 조회
+	 * @return 게시글 작성자의 닉네임
+	 */
 	@ResponseBody
 	@GetMapping("/home/maincontent/nickname")
 	public List<HomeNickNameVO> getNicknameList() {
 		return homeBoardService.getNicknameList();
 	}
 	
+	/**
+	 * 매주 월요일 기준 일주일 간의 조회수가 많은 순서로 정렬된 게시글 조회
+	 * @param date 매주 월요일의 날짜
+	 * @return 일주일 간에 조회수 top 10 게시글
+	 */
 	@ResponseBody
 	@GetMapping("/home/ranking/{date}")
 	public Map<String, Object> getWeeklyRanking(@PathVariable String date) {
@@ -179,6 +193,12 @@ public class HomeController {
 		RankingList.addAll(homeBoardService.getWeeklyRanking(date));
 		resultMap.put("rankings", RankingList);
 		return resultMap;
+	}
+	
+	@ResponseBody
+	@GetMapping("/home/profilepic/{email}")
+	public MemberVO getMemberProfilePic(@PathVariable String email) {
+		return homeBoardService.getMemberProfilePic(email);
 	}
 	
 	// 일반 회원 목록들을 가져오는 API
@@ -229,10 +249,6 @@ public class HomeController {
 	@PostMapping("/home/create/freeboard")
 	public Map<String, Object> createOneFreeboard(@ModelAttribute GeneralPostVO generalPostVO) {
 		XssIgnoreUtil.ignore(generalPostVO);
-		
-		System.out.println("1. " + generalPostVO.getPostWriter());
-		System.out.println("2. " + generalPostVO.getPostTitle());
-		System.out.println("3. " + generalPostVO.getPostContent());
 		
 		Map<String, Object> resultSet = new HashMap<>();
 		boolean isSuccess = homeBoardService.freeboardCreateByMain(generalPostVO);
