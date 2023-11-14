@@ -358,6 +358,7 @@ $(document).on('click', '#reportQnABoard', function() {
                         var commentTemplate =
                             `<div class="comment"
                                data-comment-id="\${comment.generalCommentId}"
+                               data-comment-writer-email="\${comment.commentWriter}"
                                 style="padding-left: \${(comment.level - 1) * 40}px">
                                 <div class="author">\${comment.generalMemberVO.nickname}</div>
                                 <div class="recommend-count">추천수: \${comment.likeCnt}</div>
@@ -392,13 +393,26 @@ $(document).on('click', '#reportQnABoard', function() {
                 })// $.get
         } // loadReplies
       loadReplies()
-   // 신고버튼 클릭
+   	  // 신고버튼 클릭
       $(".report-comment").click(reportComment);
-      	var reportComment = function(event) {
+      var reportComment = function(event) {
+    	  // 댓글 내용
+    	  var content = $(this).closest(".comment").find(".content").text()
+    	  // 댓글 작성자
+    	  var writer = $(this).closest(".comment").data("comment-writer-email");
+    	  // 댓글의 고유 번호
+    	  var id = $(this).closest(".comment").data("comment-id");
+    	  
+    	  	// 필요한 값들을 찾으라고 일일히 지정해줘야 합니다
+	        // $("#report-window").find("#reportReasonContent").val(content)
+	        $("#report-window").find("#receivedReportMember").val(writer)
+	        $("#report-window").find("#reportContentId").val(id)
+	        
 	        // 모달을 표시합니다.
 	        $("#report-window").css("display", "block");
 	        console.log($(this).val())
-      	}
+      };
+        
 		    // 모달 내부 "취소" 버튼 클릭 시 모달 닫기
 		    $("#cancel-window").click(function() {
 		        $("#report-window").css("display", "none");
@@ -631,14 +645,14 @@ $(document).on('click', '#reportQnABoard', function() {
                         <label for="reportTypeId">${reportVO.reportTypeId}</label>
                         <input id="reportTypeId" type="hidden" name="reportTypeId" value="4"/>
                         
-                        <label for="reportMemberEmail">${reportVO.reportMemberEmail}</label>
-                        <input id="reportMemberEmail" type="hidden" name="reportMember" value="${reportVO.reportMember}"/>
+                        <label for="reportMember">${reportVO.reportMember}</label>
+                        <input id="reportMember" type="hidden" name="reportMember" value="${sessionScope._LOGIN_USER_.email}"/>
                      
-                        <label for="receivedReportMemberEmail">${reportVO.receivedReportMemberEmail}</label>
-                        <input id="receivedReportMemberEmail" type="hidden" name="receivedReportMember" value="${generalPostVO.postWriter}"/>
+                        <label for="receivedReportMember">${reportVO.receivedReportMember}</label>
+                        <input id="receivedReportMember" type="hidden" name="receivedReportMember" value="${generalCommentVO.postWriter}"/>
                      
                         <label for="reportContentId">${reportVO.reportContentId}</label>
-                        <input id="reportContentId" type="hidden" name="reportContentId" value="${generalPostVO.generalPostId}"/>
+                        <input id="reportContentId" type="hidden" name="reportContentId" value="${reportVO.reportContentId}"/>
                      </div>
                      <div class="btn-group">
                         <div class="right-align">

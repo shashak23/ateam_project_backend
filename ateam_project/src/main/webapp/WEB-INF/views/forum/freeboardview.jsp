@@ -333,10 +333,10 @@ $(document).on('click', '#reportFreeBoard', function() {
                     for (var i = 0; i < replies.length; i++) {
                         var comment = replies[i];
                         var member = replies[i].memberVO;
-                        
                         var commentTemplate =
                             `<div class="comment"
                                data-comment-id="\${comment.generalCommentId}"
+                               data-comment-writer-email="\${comment.commentWriter}"
                                 style="padding-left: \${(comment.level - 1) * 40}px">
                                 <div class="author">\${comment.generalMemberVO.nickname}</div>
                                 <div class="recommend-count">추천수: \${comment.likeCnt}</div>
@@ -373,11 +373,23 @@ $(document).on('click', '#reportFreeBoard', function() {
       loadReplies()
         // 신고버튼 클릭
       $(".report-comment").click(reportComment);
-         var reportComment = function(event) {
-           // 모달을 표시합니다.
-           $("#report-window").css("display", "block");
-           console.log($(this).val())
-         }
+      var reportComment = function(event) {
+    	  // 댓글 내용
+    	  var content = $(this).closest(".comment").find(".content").text()
+    	  // 댓글 작성자
+    	  var writer = $(this).closest(".comment").data("comment-writer-email");
+    	  // 댓글의 고유 번호
+    	  var id = $(this).closest(".comment").data("comment-id");
+    	  
+    	  	// 필요한 값들을 찾으라고 일일히 지정해줘야 합니다
+	        // $("#report-window").find("#reportReasonContent").val(content)
+	        $("#report-window").find("#receivedReportMember").val(writer)
+	        $("#report-window").find("#reportContentId").val(id)
+	        
+	        // 모달을 표시합니다.
+	        $("#report-window").css("display", "block");
+	        console.log($(this).val())
+      };
           // 모달 내부 "취소" 버튼 클릭 시 모달 닫기
           $("#cancel-window").click(function() {
               $("#report-window").css("display", "none");
@@ -548,53 +560,6 @@ $(document).on('click', '#reportFreeBoard', function() {
    <!-- 신고 기능 -->
    <button id="reportFreeBoard" value="1" class="report-btn">신고</button>
    </div>
-      <%-- <!-- 모달 창 -->
-         <div id="report-modal" class="report-modal">
-             <div class="report-modal-content">
-                 <span class="close" id="cancel-modal">취소</span>
-                    <!-- 모달 내용 추가 -->
-                  <h2>신고 내용</h2>
-                  <form name="reportVO" method="post" action="/report/view/1">
-                     <div>
-                        <label for="reportReason" >신고사유${reportVO.reportReason}
-                           <select name="reportReason">
-                              <option value="CC-20231018-000200">영리 및 홍보 목적</option>
-                              <option value="CC-20231018-000201">개인정보노출</option>
-                              <option value="CC-20231018-000202">음란성/선정성</option>
-                              <option value="CC-20231018-000203">같은 내용 반복(도배)</option>
-                              <option value="CC-20231018-000204">이용규칙위반</option>
-                              <option value="CC-20231018-000205">기타</option>
-                           </select>
-                        </label>
-               
-                        <label for = "reportReasonContent">신고 상세내용
-                        <textarea name="reportReasonContent" id="reportReasonContent">${reportVO.reportReasonContent}</textarea></label>
-                     	
-                        <label for="attachedImg">첨부파일${reportVO.attachedImg}</label>
-                        <input id="attachedImg" type="file" name="attachedImg"/>
-                        
-                        <label for="reportTypeId">${reportVO.reportTypeId}</label>
-                        <input id="reportTypeId" type="hidden" name="reportTypeId" value="1"/>
-                        
-                        <label for="reportMemberEmail">${reportVO.reportMemberEmail}</label>
-                        <input id="reportMemberEmail" type="hidden" name="reportMember" value="${reportVO.reportMember}"/>
-                     
-                        <label for="receivedReportMemberEmail">${reportVO.receivedReportMemberEmail}</label>
-                        <input id="receivedReportMemberEmail" type="hidden" name="receivedReportMember" value="${generalPostVO.postWriter}"/>
-                     
-                        <label for="reportContentId">${reportVO.reportContentId}</label>
-                        <input id="reportContentId" type="hidden" name="reportContentId" value="${generalPostVO.generalPostId}"/>
-                     </div>
-                     <div class="btn-group">
-                        <div class="right-align">
-                           <input type="submit" value="완료" />
-            
-                        </div>
-                     </div>      
-                  </form>
-               </div>
-            </div>
- --%>
    <form name="generalPostVO" method="post">
       <div class="grid">
                
@@ -612,16 +577,6 @@ $(document).on('click', '#reportFreeBoard', function() {
          <!-- <div class="postContent_Controller"> -->
          <div class="postContent_controller_1">${generalPostVO.postContent}</div>
          
-         
-         <%-- <!-- </div> -->
-         <div class="btn-group">
-            <div class="right-align">
-                   <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq generalPostVO.postWriter}">
-                  
-               </c:if>
-            </div>
-         </div> --%>
-      
    </form>
 </div>   
   
@@ -664,14 +619,14 @@ $(document).on('click', '#reportFreeBoard', function() {
                         <label for="reportTypeId">${reportVO.reportTypeId}</label>
                         <input id="reportTypeId" type="hidden" name="reportTypeId" value="4"/>
                         
-                        <label for="reportMemberEmail">${reportVO.reportMemberEmail}</label>
-                        <input id="reportMemberEmail" type="hidden" name="reportMember" value="${reportVO.reportMember}"/>
+                        <label for="reportMember">${reportVO.reportMember}</label>
+                        <input id="reportMember" type="hidden" name="reportMember" value="${sessionScope._LOGIN_USER_.email}"/>
                      
-                        <label for="receivedReportMemberEmail">${reportVO.receivedReportMemberEmail}</label>
-                        <input id="receivedReportMemberEmail" type="hidden" name="receivedReportMember" value="${generalPostVO.postWriter}"/>
+                        <label for="receivedReportMember">${reportVO.receivedReportMember}</label>
+                        <input id="receivedReportMember" type="hidden" name="receivedReportMember" value="${generalCommentVO.postWriter}"/>
                      
                         <label for="reportContentId">${reportVO.reportContentId}</label>
-                        <input id="reportContentId" type="hidden" name="reportContentId" value="${generalPostVO.generalPostId}"/>
+                        <input id="reportContentId" type="hidden" name="reportContentId" value="${reportVO.reportContentId}"/>
                      </div>
                      <div class="btn-group">
                         <div class="right-align">
