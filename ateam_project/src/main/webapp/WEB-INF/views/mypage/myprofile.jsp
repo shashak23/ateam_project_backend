@@ -12,7 +12,219 @@
 <!--뷰포트는 화면에 표시되는 웹영역 표시, 모바일 등에서 상호작용 할 수있는지 제어-->
 <meta name="viewport" id="viewport"
 	content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, width=device-width" />
+<link rel="stylesheet" type="text/css" href="/css/common.css" />
 <style>
+@charset "utf-8";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap');/*글꼴을 가져오는 페이지*/
+
+.flex_button {
+  display: flex;
+  flex-direction: column;
+  margin-right: 120px;
+  
+}
+.flex_button button {
+	background-color:var(--gray);
+  width: 150px;
+  height: 40px;
+  margin-bottom: 15px;
+  cursor: pointer;
+  border: 2px;
+}
+
+.flex_button button:hover {
+  background-color: var(--light-blue);
+  color: white;
+}
+
+.flex_button button:first-child {
+  margin-top: 51px;
+}
+
+.follow_chat {
+  text-align: right;
+}
+.follow_icon{
+  background-color: white;
+  cursor: pointer;
+  height: 30px;
+}
+.follow_icon>img ,.message_icon>img{
+  width: 15px;
+}
+.message_icon{
+ width:200px;
+		height: 30px;
+		background-color:  rgb(231,231,231);
+		justify-content: center;
+		border-radius: 5px;
+		display: flex;
+   		padding: 5px;
+   		border: none;
+    	font-weight: bold;
+    	cursor: pointer;
+}
+
+
+.profile {
+  display: grid;
+  grid-template-columns: 170px 20px 1fr;
+  margin: 20px;
+}
+
+.profile img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+}
+
+.follow>p {
+  padding-bottom: 5px;
+}
+
+.introduction_list {
+	margin-top: 62px;
+  padding: 0px;
+  list-style: none;
+  grid-gap: 20px;
+  width: 1200px;
+}
+
+.follow a {
+  text-decoration: none;
+  color: #000;
+}
+.follow a:first-child{
+  margin-left: 50px;
+}
+
+.related_link img {
+  width: 30px;
+  margin-right:7px;
+}
+
+.related_link a {
+  text-decoration: none;
+  color: #333;
+  margin-right: 10px;
+
+}
+
+.show_pwf {
+  display: grid;
+  grid-template-columns: 1fr 250px 250px 250px 1fr;
+}
+
+.show_pwf button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  padding-top: 30px;
+  text-decoration: none;
+  color: #575555;
+  position: relative;
+}
+
+.show_pwf button>h2 {
+  margin-bottom: 0px;
+}
+
+.show_pwf button:hover::after {
+  content: "";
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background-color: orange;
+  transform: scaleX(0.55);
+}
+
+#technology_stack {
+  margin-top: 70px;
+  border-bottom: 0.0625rem solid rgb(231,231,231);
+  display: flex;
+  flex-direction: column;
+  width: 940px;
+}
+
+#technology_stack ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  margin-bottom: 40px;
+}
+
+#technology_stack li {
+  margin-right: 10px;
+}
+
+.education{
+  border-bottom: 0.0625rem solid rgb(231,231,231);
+  display: flex;
+  flex-direction: column;
+  width: 940px;
+}
+.career{
+  border-bottom: 0.0625rem solid rgb(231,231,231);
+  display: flex;
+  flex-direction: column;
+  width: 940px;
+}
+.education>ul,
+.career>ul,
+.region>ul {
+  padding: 0px;
+  margin-bottom: 40px;
+}
+
+.education>ul>li 
+,.region>ul>li{
+  list-style: none;
+  margin-bottom: 10px;
+}
+
+.career>ul>li {
+  list-style: none;
+}
+
+.career_list_year {
+  font-size: 10pt;
+  margin-bottom: 15px;
+}
+
+/*신고 모달*/
+.report-modal {
+	visibility: hidden;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* 모달 내용 스타일 */
+.report-modal-content {
+    position: relative;
+    padding: 20px;
+    width: 60%;
+    background-color: #fff;
+    border-radius: 5px;
+}
+
+/* 모달 닫기 버튼 스타일 */
+.close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+    color: #888;
+}
+
 /* 수정버튼  */
 .introduce-modify,#edit_button1,#edit_button2,#delete_tech,
 .education-modify,.career-modify,.region_modify
@@ -69,16 +281,10 @@ background-color: var(--gray);
 }
 /* 추가하기 */
  #insert_techstack, #addEducationButton,.addCareer,.region_create{
-	/* background-color: var(--gray);
-    border: none;
-    color: var(--white);
-    border-radius: 10px;
-    cursor: pointer;
-    text-align: center; */
 	background-color: none;
 	border: none;
-   margin-top: 15px;
-   cursor: pointer;
+    margin-top: 15px;
+    cursor: pointer;
 } 
 
 .follow{
@@ -393,9 +599,29 @@ position: absolute;
 	margin: 5px 0px 10px 0px ;
 	border-radius: 6px;
 }
+.profile {
+  display: grid;
+  grid-template-columns: 170px 20px 1fr;
+  margin: 20px;
+}
 
+.profile img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+}
+.related_link img {
+  width: 30px;
+  margin-right:7px;
+}
+
+.related_link a {
+  text-decoration: none;
+  color: #333;
+  margin-right: 10px;
+
+}
 </style>
-<link rel="stylesheet" type="text/css" href="/css/myProfile.css" />
 <!-- 자바스크립트 시작 -->
 <jsp:include page="../layout/header.jsp" />
 <script type="text/javascript" src="/js/lib/jquery-3.7.1.js"></script>
@@ -427,85 +653,16 @@ position: absolute;
 			
 		});
 
-	    /* 프로필 사진 수정 */ 
-	  	// $('.profile-modify').click(function() {
-	    //     var email = $(this).data('pic-id');
-	    //     var url = '/memberInfo/modify/modify-profile-pic/' + email;
-       	// 	window.location.href = url;
-   		//  });
-	    /* 자기소개 수정*/
-	  	// $('.introduce-modify').click(function() {
-	    //     var email = $(this).data('introduce-id');
-	    //     var url = '/memberInfo/modify/update-introduction/' + email;
-       	// 	window.location.href = url;
-   		//  });
-	    // /* 자기소개 추가 */
-	    // $(".introduce-create").click(function() {
-	    // 	 var email = $(this).data('introduce-id');
-		//      var url = '/memberInfo/modify/update-introduction/' + email;
-	    //    	 window.location.href = url;
-	    // });
-	    /* git, email, blog 새창으로 열기 */
-	    // $("#githubIcon").click(function() {
-        // 	 var githubUrl = "${generalMemberVO.githubUrl}";
-        // 	 if (githubUrl) {
-        // 		 window.open(githubUrl, "_blank");
-        // 		 }
-    	// });
-    	// $("#emailIcon").click(function() {
-        // 	 var emailUrl = "${generalMemberVO.additionalEmail}";
-        // 	 if (emailUrl) {
-        //     	window.open(emailUrl, "_blank");
-        // 		}
-    	// });
-    	// $("#blogIcon").click(function() {
-        // 	 var blogUrl = "${generalMemberVO.blogUrl}";
-        // 	 if (blogUrl) {
-        //         window.open(blogUrl, "_blank");
-        // 		}
-   		// });
-		
-	    //  /* git,email,blog 수정버튼 */
-	 	//  $("#edit_button1").click(function() {
-	    // 	 var email = $(this).data('sns');
-		//      var url = '/memberInfo/modify/update-sns-link/' + email;
-	    //    	 window.location.href = url;
-	    // });
-
 	    /* 채팅 */
 	    $(".message_icon").click(function() {
 	    	inviteUser(send, "${sessionScope._LOGIN_USER_.nickname}", "${sessionScope._LOGIN_USER_.email}", "${memberVO.email}");
 	    });
-	    /* 학력 수정*/
-	    // $('.education-modify').click(function() {
-	    //     var educationId = $(this).data('education-id');
-	    //     var url = '/memberInfo/modify/update-education/' + educationId;
-	    //     window.location.href = url;
-    	// });
-	    // /* 학력 추가 */
-	    // $('#addEducationButton').click(function() {
-	    //     window.location.href = '/memberInfo/modify/create-education';
-	    // });
-
-	    /* 주소 수정*/
-	    // $('.region_modify').click(function() {
-	    //     var email = $(this).data('region');
-	    //     var url = '/memberInfo/modify/update-location/' + email;
-	    //     window.location.href = url;
-    	// });
-	    /* 주소 추가 */ 
-	  	// $('.region_create').click(function() {
-	    //     var email = $(this).data('region-id');
-	    //     var url = '/memberInfo/modify/create-location/' + email;
-       	// 	window.location.href = url;
-   		//  });
 
 		 $(".profile-modify").click(function() {
 			var email = $(this).data('pic-id');
 			$("#modalContainerProfile").removeClass("hidden")
 			$('#modalContentProfile').load('/memberInfo/modify/modify-profile-pic/' + email)
 			
-	         
 		 })
 
 		function openIntro(){
@@ -516,18 +673,13 @@ position: absolute;
 		$(".introduce-modify").on('click',function(){
 			openIntro();
 		})
-
 		 $("#edit_button1").click(function() {
 			$("#modalContainerSNS").removeClass("hidden")
 		 })
-
 		 $("#edit_button2").click(function() {
 			$("#modalContainerTech").removeClass("hidden");
 			$('#modalContentTech').load("/memberInfo/modify/update-tech/{email}");
          });
-
-		 
-
 		 $("#insert_techstack").click(function() {
 			$("#modalContainerTech").removeClass("hidden");
 			$('#modalContentTech').load("/memberInfo/modify/create-tech-stack");
@@ -538,8 +690,6 @@ position: absolute;
 			$("#modalContainerEducation").removeClass("hidden");
 			$('#modalContentEducation').load("/memberInfo/modify/create-education");
 		 });
-		 
-
 		 $(".education-modify").click(function() {
 			var educationId = $(this).data('education-id');
 			$("#modalContainerEducation").removeClass("hidden");
@@ -584,10 +734,7 @@ position: absolute;
 				$("#modalContainerTech").addClass("hidden");
 			})
 
-			// $(".modalCloseEducation").on('click',function(){
-			// 	$("#modalContainerEducation").addClass("hidden");
-			// })	jsp파일에 직접 닫기 버튼을 넣었습니다.
-
+	
 			$(".modalCloseCareer").on('click',function(){
 				$("#modalContainerCareer").addClass("hidden");
 			})
@@ -597,17 +744,11 @@ position: absolute;
 			})
 
 	});
-	
-	
-    
-
-	
 </script>
 </head>
 <body>
-	<div id="content_wrapper">
-	<div id="content">
-		<div class="flex_button">
+	<div class="body_container">
+		<div class="body_left_aside">
 			<!-- <c:if
 				test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}"> -->
 				<button id="myprofile">마이페이지</button>
@@ -618,7 +759,8 @@ position: absolute;
 				<button id="quit">탈퇴</button>
 			<!-- </c:if> -->
 		</div>
-		<div class="flex_main">	
+	<div class="body">
+	<div class="flex_main">	
 	<div class="profile">
 	<div class="profile-fix">
 		<c:choose>
@@ -966,7 +1108,6 @@ position: absolute;
 	  </div>
 	  <div class="overlay"></div>
     </div>
-</div>
 </div>
 <jsp:include page="../layout/footer.jsp" />
 </body>
