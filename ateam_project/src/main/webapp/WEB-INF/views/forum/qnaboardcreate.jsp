@@ -13,15 +13,13 @@
          <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" /> 
          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
          <script src="/js/lib/jquery-3.7.1.js"></script> 
-         <link rel="stylesheet" href="/css/style.css"> 
+         <link rel="stylesheet" type="text/css" href="/css/common.css" />
         <jsp:include page="../layout/header.jsp"/>
 <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/super-build/ckeditor.js"></script>
 <script>
-   document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function() {
 const viewCountElement = document.getElementById('viewCount');
-
 const postId = freeboard.generalPostId; // 게시물의 고유 ID (예시로 대입)
-
 // 서버로부터 조회수 업데이트 정보를 가져옵니다.
 function updateViewCount() {
    fetch(`/updateViewCount?postId=${postId}`, {
@@ -88,104 +86,77 @@ updateViewCount();
 <link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
 
 <style type= "text/css">
-	
-
-		#container{
-			width: 800px;
-			margin: 0 auto;
-			margin-left: 20%;
-			
-		}
-
-	    .seperate-line {
-	       border: 1px solid #ccc;
-	 	   margin: 10px 0px 7px 0px;
-		   width: 1079px;
-		   grid-column: 1/3;
-   		}
-
 		.title_name {
-			margin-top: 50px;
-			margin-left: 2px;
-			margin-bottom: 30px;
+			font-size: 22px;
+			margin: 9px 0 6px 0;
+			padding-bottom: 16px;
+			border-bottom: 1px solid #EEE;
 		}
-		
-		div.grid {
-			display: grid;
-			grid-template-columns: 80px 1fr;
-			grid-template-rows: 50px 28px 10px 50px 10px 320px 1fr;
-			row-gap: 10px;
+		.hashtag,
+		#write_area {
+			display: flex;
+			flex-direction: column;
+			align-items: baseline;
+			margin-bottom: 10px;
 		}
 
-		div.grid > div.btn-group {
-			display: grid;
-			grid-column: 1 / 3;
-			margin-top: 500px;
+		#write_area > label {
+			width: 6%;
+			font-weight: bold;
+			margin: 20px 0 6px 0;
 		}
-		.right-align {
-			margin: 0 auto;
-			margin-top: 450px;
-		}
-		.right-align >.btn_controller,.btn_controller_1 {
-			margin-left: 850px;
-			background-color: var(--hashtag-blue);
+		#write_area > input {
+			width: 100%;
+			height: 32px;
+			border: 1px solid #A2A2A2;
 			border-radius: 5px;
-			border: none;
-			width: 60px; 
-			height: 30px;
-			
-		}
-		.right-align >.btn_controller_1 {
-			position: relative;
-			left: 70px;
-			bottom: 40px;
-		}
-		label {
-			padding-left: 10px; 
-			margin-top: 10px;
-			margin-left: 30px;
-		}
-		input, textarea {
-			margin: auto 0;
-			margin-top: 10px;
-			height: 20px;		
-			width: 500px;
 		}
 		.ck-editor__editable { 
 			height: 350px; 
-			width: 1000px;
 			margin: auto 0;
-		
 		}
 	    .ck-content {
 			 font-size: 12px; 	
 		}
-	
+		#bottom_area {
+			display: grid;
+			grid-template-columns: 80% 20%;
+		}
+		.hashtag > #input_area {
+			display: flex;
+		}
+		.hashtag > label {
+			width: auto;
+			font-weight: bold;
+			margin: 20px 0 6px 0;
+		}
 		#button_1 {
-			margin: 0 auto;
-			border: none;
-			background-color: var(--light-blue);
+			width: 44px;
 			border-radius: 5px;
-			width: 70px;
-			height: 30px;
-			
+			border: 1px solid #EEE;
+			background-color: transparent;
+			color: #666;
+			margin-left: 5px;
+			cursor: pointer;
 		}
 		#button_2 {
-			margin: 0 auto;
-			background-color: var(--light-blue);
+			justify-self: end;
+			width: 120px;
+			height: 40px;
+			background-color: var(--blue);
+			color: #EAEAEA;
+			font-weight: bold;
+			font-size: 16px;
 			border: none;
 			border-radius: 5px;
-			width: 70px;
-			height: 30px;
+			cursor: pointer;
 		}
-		#postTitle{
-			height: 26px;
+		.remove_btn {
+			cursor: pointer;
+			border: none;
+			background-color: transparent;
+			margin-right: 12px;
 		}
-		.hashtag{
-			margin-left: 38px;
-			width: 1046px;
-		}
-		
 </style>
 <script type="text/javascript">
 
@@ -230,9 +201,7 @@ $().ready(function(){
     function addHashtag() {
         const hashtagInput = document.getElementById("hashtagInput");
         const hashtag = hashtagInput.value;
-		
-        
-        
+		console.log(hashtag)
         if (hashtag.trim() !== "") {
 	        const addedHashTag = JSON.parse(hashtag);
         	
@@ -267,7 +236,8 @@ $().ready(function(){
 
            	
             const removeButton = document.createElement("button");
-            removeButton.textContent = "X";
+            removeButton.textContent = "❌";
+			removeButton.classList.add("remove_btn")
             removeButton.addEventListener("click", function () {
                 removeHashtag(hashtag);
             });
@@ -294,34 +264,43 @@ $().ready(function(){
 
     // 저장 버튼 클릭 이벤트 핸들러
     function savePost() {
-        $("#button_2").submit();
+        $("#postForm").submit();
     }
 </script>
 </head>
 <body>
 
-	<div id="container">
-		<h1 class="title_name"> 질답 게시판 게시글 작성 </h1>
-		<div class="seperate-line"></div>
-		<form method = "post" >		
-			<div class = "grid">
-				<label for = "postTitle"> 제목 </label>
-				<input id = "postTitle" type = "text" name="postTitle" />
-				<label for = "postContent"></label>
-				<textarea name="postContent" id="editor"></textarea>
-				
-        </div>
-		<div class="hashtag">
-			<label for="hashtag">해시태그</label>
-			<input type="hidden" id="hashtagInput" name='hashtag' placeholder="#해시태그" value="${generalPostHashtagVO.hashtagId}">
-			<input type="hidden" id="general_post_hashtag_id" value="${generalPostHashtagVO.generalPostHashtagId}"/>
-			<input type="hidden" id="general_post_id" value="${generalPostHashtagVO.generalPostId}"/>
-			<input id="button_1" type="button" value="추가" onclick="addHashtag()">
-			<input id="button_2" type="submit" value="완료" onclick="savePost()">
-			<div id="displayHashtags"></div>
+	<div class="body_container">
+		<div class="body_left_aside"></div>
+
+		<div class="body">
+			<h3 class="title_name"> 질답 게시판 게시글 작성 </h3>
+			<form method = "post" >
+				<div id="write_area">
+					<label for="postTitle">제목</label>
+					<input id="postTitle" type="text" name="postTitle" placeholder=" 제목을 입력하세요" />
+					<label for="postContent">내용</label>
+					<textarea name="postContent" id="editor"></textarea>
+				</div>
+			<div id="bottom_area">
+			<div class="hashtag">
+				<label for="hashtag">해시태그</label>
+				<div id="displayHashtags"></div>
+				<div id="input_area">
+					<input type="hidden" id="hashtagInput" name='hashtag' placeholder="#해시태그" value="${generalPostHashtagVO.hashtagId}">
+					<input type="hidden" id="general_post_hashtag_id" value="${generalPostHashtagVO.generalPostHashtagId}"/>
+					<input type="hidden" id="general_post_id" value="${generalPostHashtagVO.generalPostId}"/>
+					<input id="button_1" type="button" value="추가" onclick="addHashtag()">
+				</div>
+			</div>
+				<input id="button_2" type="submit" value="저장" onclick="savePost()">
+			</div>
+			</form>
 		</div>
-    </form>
-  </div> 
+
+        <div class="body_right_aside"></div>
+   </div>
+
   <script>
 	CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
 		// https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html#extended-toolbar-configuration-format
@@ -366,7 +345,7 @@ $().ready(function(){
 			]
 		},
 		// https://ckeditor.com/docs/ckeditor5/latest/features/editor-placeholder.html#using-the-editor-configuration
-		placeholder: 'Welcome to CKEditor 5!',
+		placeholder: '본문 내용을 입력하세요',
 		// https://ckeditor.com/docs/ckeditor5/latest/features/font.html#configuring-the-font-family-feature
 		fontFamily: {
 			options: [

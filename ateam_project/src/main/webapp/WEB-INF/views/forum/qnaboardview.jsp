@@ -10,7 +10,7 @@
     <title>devGround</title>
    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <link rel="stylesheet" type="text/css" href="/css/style.css" />
+    <link rel="stylesheet" type="text/css" href="/css/common.css" />
     <script src="js/lib/jquery-3.7.1.js"></script>
     <jsp:include page="../layout/header.jsp"/>
 	<!-- 모달 적용해 보기 -->
@@ -18,164 +18,301 @@
 	<script src="path/to/sweetmodal/dist/min/jquery.sweet-modal.min.js"></script>
 
 <style>
-
 a:link, a:hover, a:visited, a:active {
-   color: #333;
-   text-decoration: none;
-}
+      color: #333;
+      text-decoration: none;
+   }
 
-.grid {
-   margin: 0 auto;
-   display: grid;
-   grid-template-columns: 80px 1fr;
-   grid-template-rows: 28px 28px 28px 28px 28px 320px 1fr;
-   margin-left: 15px;
-   border-top: 1px solid var(--light-gray);
-}
+   /* 본문 영역 */
+   .main_content {
+      border-radius: 10px;
+      border: 1px solid var(--light-gray);
+      margin-top: 40px;
+   }
+   #titleArea {
+      padding: 30px;
+   }
+   .post_category {
+      color: var(--blue);
+      font-weight: bold;
+   }
+   .post_title {
+      font-size: 24px;
+      font-weight: bold;
+      color: #333;
+      margin-top: 8px;
+      margin-bottom: 8px;
+   }
+   .writer_info {
+      display: flex;
+   }
+   .writer_info li {
+      font-size: 14px;
+      margin-right: 10px;
+   }
+   .post_content {
+      padding: 30px;
+   }
+   .space_between {
+      margin: 30px 0 20px 20px;
+   }
+   .btn_controller {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-end;
+   }
+   #like-btn,
+   #reportQnABoard  {
+      margin-left: 5px;
+      background-color: transparent;
+      border: 1px solid #EEE;
+      width: 90px;
+      border-radius: 5px;
+      cursor: pointer;
+   }
 
-.grid .right-align {
-   text-align: right;
-}
+   /* 댓글 영역 */
+   .write-comment {
+      display: flex;
+      flex-direction: column;
+      justify-self: flex-end;
+   }
+   .write-comment textarea {
+      width: 100%;
+   }
+   #btn-save-comment {
+      width: 80px;
+      height: 40px;
+      background-color: var(--blue);
+      border: 0;
+      border-radius: 3px;
+      color: #EEE;
+      font-weight: bold;
+      font-size: 14px;
+      margin-top: 10px;
+   }
+   .comment{
+      display: flex;
+      flex-direction: column;
+      border-bottom: 1px solid var(--light-gray);
+      margin-top: 20px;
+   }
+   .comment-writer {
+      font-weight: bold;
+   }
+   .recommend-comment,
+   .update-comment,
+   .delete-comment,
+   .report-comment {
+      border: none;
+      border-radius: 10px;
+      color: #333;
+      background-color:transparent;
+      cursor: pointer;
+   }
+   .content {
+      margin: 10px 0 5px 0;
+      font-size: 18px;
+   }
 
-label {
-   padding-left: 10px;
-}
+   #hashtag_area {
+      padding-left: 30px;
+   }
+   .btn_hashtag{
+      padding: 6px 9px 6px 9px;
+      width: auto;
+      height: auto;
+      font-size: 12px;
+      font-weight: bold;
+      color: #555;
+      background-color: transparent;
+      border: 1px solid #EEE;
+      border-radius: 12px;
+   }
 
-button, input, textarea {
-   padding: 10px;
-}
+   .recommend-comment,
+   .report-comment {
+      background-color: transparent;
+   }
 
-.replies {
-   position: relative;
-   right: 90px;
-  width: 800px;
-  margin: 0px 0px 0px 460px;
-}
-h3 {
-   position: relative;
-   top: 10px;
-}
-
-
-
-.replies>.comment-header {
-   display: grid;
-   grid-template-columns: 95px 100px 1fr;
-   height: 50px;
-}
-
-.replies>.comment-header>.replies-count {
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   font-size: medium;
-   font-weight: 800;
-   margin-right: 45px;
-}
-
-.replies>.comment-header>.str-count {
-   display: flex;
-   justify-content: center;
-   align-items: center;
-   font-size: small;
-   font-weight: 300;
+   .replies>.comment-header {
+      margin: 30px 0 20px 10px;
+   }
    
-   padding-left: 530px;
-}
-.write-comment {
-   position: relative;
-   bottom: 12px;
-}
+   .replies>.comment-header>.replies-count {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: medium;
+      font-weight: 800;
+      margin-right: 45px;
+   }
+   
+   .replies>.comment-header>.str-count {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: small;
+      font-weight: 300;
+      padding-left: 530px;
+   }
+   
+   .replies>.write-comment>textarea {
+      height: 150px;
+      resize: none;
+       border-color: lightgray;
+   }
+   
+   .replies> .comment-option{
+   border-color: #333;
+   border:1px solid lightgrey;
+   }
+   
 
-.replies>.write-comment {
-   display: grid;
-   grid-template-rows: 1fr;
-   column-gap: 10px;
-   align-items: center;
-    
-}
+   /* button 가로 정렬 */
+   .btn_controller {
+      display: flex;
+      flex-direction: row;
+   }
+   /* 가로 양 끝 정렬 */
+   .space_between {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+   }
 
-.replies>.write-comment>textarea {
-   height: 150px;
-   resize: none;
-    border-color: lightgray;
-}
+   button, input, textarea {
+      padding: 10px;
+   }
+   button {
+      text-align: center;
+   }
+   .btn-group {
+      position: absolute;
+      top: -30px;
+      right: 0;
+      display: grid;
+      grid-column: 1/3;
+      z-index: 999;
+   }
 
-.replies> .comment-option{
-border-color: #333;
-border:1px solid lightgrey;
-}
+   /* 모달 */
+   .report-modal {
+       display: none; /* 초기에 모달 숨김 */
+       position: fixed;
+       top: 0;
+       left: 0;
+       width: 100%;
+       height: 100%;
+       background-color: rgba(0, 0, 0, 0.7); /* 반투명 배경 */
+       z-index: 1;
+   }
+   .modal_content {
+      display: flex;
+      flex-direction: column;
+      margin-top: 30px;
+   }
+   .modal_content_element {
+      display: flex;
+      margin-bottom: 10px;
+   }
+   .modal_content_element > label {
+      width: 20%;
+   }
+   select[name=reportReason],
+   textarea[name=reportReasonContent],
+   input[name=attachedImg] {
+      width: 60%;
+   }
+   select[name=reportReason] {
+      height: 30px;
+   }
+   textarea[name=reportReasonContent] {
+      height: 80px;
+   }
+   .submit_area {
+      justify-content: flex-end;
+   }
+   .submit_area > input[type=submit] {
+      width: 80px;
+      height: 40px;
+      border: 1px solid #EEE;
+      border-radius: 5px;
+      background-color: var(--blue);
+      color: #EEE;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+   }
+   /* 모달 내용 스타일 */
+   .report-modal-content {
+       position: relative;
+       margin: 15% auto;
+       padding: 40px;
+       width: 50%;
+       background-color: #fff;
+       border-radius: 5px;
+   }
+   /* 댓글 모달 내용 스타일 */
+   .report-window-content {
+       position: relative;
+       margin: 15% auto;
+       padding: 20px;
+       width: 50%;
+       background-color: #fff;
+       border-radius: 5px;
+   }
+   .report-window {
+       display: none; 
+       position: fixed;
+       top: 0;
+       left: 0;
+       width: 100%;
+       height: 100%;
+       background-color: rgba(0, 0, 0, 0.7); 
+       z-index: 1;
+   }
+   /* 모달 닫기 버튼 스타일 */
+   #cancel-window,
+   .close {
+      font-size: 14px;
+      cursor: pointer;
+      color: #888;
+      width: 80px;
+      text-align: center;
+      border: 1px solid #eee;
+      height: 40px;
+      line-height: 40px;
+      border-radius: 5px;
+   }
+  
+
+   #reportFreeBoard {
+      position: relative;
+      right: 3px;
+   }
+   
+
+   #move_button {
+      margin: 0 auto;
+      margin-top: 10px;
+      margin-left: 20px;
+   }
+
+   .postContent_controller_1 {
+    text-align: left; /* 텍스트 가운데 정렬 */
+    margin-left: 60px;
+    margin-right: 60px;
+    margin-bottom: 300px;
+   }
+
+   #btn {
+      margin: 0 auto;
+      margin-right: 10px;
+   }
 
 
-pre.content {
-   margin: 0px;
-}
 
-.report-modal {
-    display: none; /* 초기에 모달 숨김 */
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7); /* 반투명 배경 */
-    z-index: 1;
-}
-
-/* 모달 내용 스타일 */
-.report-modal-content {
-    position: relative;
-    margin: 15% auto;
-    padding: 20px;
-    width: 60%;
-    background-color: #fff;
-    border-radius: 5px;
-}
-/* 댓글 모달 내용 스타일 */
-.report-window-content {
-    position: relative;
-    margin: 15% auto;
-    padding: 20px;
-    width: 60%;
-    background-color: #fff;
-    border-radius: 5px;
-}
-.report-window {
-    display: none; 
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7); 
-    z-index: 1;
-}
-/* 모달 닫기 버튼 스타일 */
-.close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 20px;
-    cursor: pointer;
-    color: #888;
-}
-#reportQnABoard {
-   background-color: var(--hashtag-blue);
-   border: none;
-   width: 70px;
-   height: 30px;
-   border-radius: 5px;
-   cursor: pointer;
-}
-#like-btn {
-   background-color: var(--hashtag-blue);
-   border: none;
-   width: 70px;
-   height: 30px;
-   border-radius: 5px;
-   cursor: pointer;
-
-}
 #button-id-list {
    position: relative;
    left:930px; 
@@ -188,124 +325,8 @@ pre.content {
    cursor: pointer;
 
 }
-.main_container {
-      margin: 0 auto;
-      margin-right: 21%;
-      border-radius: 10px;
-      border: 1px solid var(--light-gray);
-      margin-top: 130px;
-      width: 1000px;
-      height:auto;
-     
-      
-   }
-   #move_button {
-      margin-bottom: 10px;
-      position: relative;
-      left: 30px;
-   
-   }
-   .btn_controller {
-   margin: 0 auto;
-   margin-left: 1430px;
-   position: relative;
-   top: 120px;
-}
-
-
-h1 {
-   position: relative;
-   bottom: 30px;
-   margin-left: 30px;
-   margin-top: 60px;
-}
-.qna_Title {
-   position: relative;
-   top: 25px;
-   left:30px;
-   color: var(--blue);
-}
-.content_Controller {
-   border-bottom: 1px solid var(--light-gray);
-}
-#title_Name {
- position: relative;
- left: 29px;
-}
-.postContent_Controller {
-   letter-spacing: 1px;
-   position: relative;
-   bottom: 300px;
-   text-align: justify; 
-}
-.postContent_controller_1 {
-   position:relative;
-   bottom: 330px;
-   margin-left: 50px;
-   margin-right: 50px;
-   
-}
-.update_btn {
-   position: absolute;
-   top: -30px;
-   right: 0;
-   margin-top: 500px;
-   margin-right: 250px;
-}
-
-textarea {
-   width: 1000px;
-  
-}
-#btn-save-comment {
-   position: relative;
-   bottom: -10px;
-   border: none;
-   background-color:var(--hashtag-blue) ;
-   cursor: pointer;
-   width: 70px;
-   height: 30px;
-   left: 855px;
-   border-radius: 5px;
-}
-.comment{
-   display: flex;
-   flex-direction: column;
-}
-.recommend-comment,
-.update-comment,
-.delete-comment,
-.report-comment {
-   border: none;
-   color: var(--white);
-   border-radius: 10px;
-   background-color:var(--light-blue);
-   margin-left: 5px;
-   cursor: pointer;
-}
-.separate-line {
-   border: 1px solid #ccc;
-   width: 1000px;
-   height: 1px;
-   margin: 10px 0px 7px 0px;
-}
-#btn-group {
-  
-   margin: 0 auto;
-   margin-right: 10px;
-
-}
-#btn-controller_1 {
-   
-   margin: 0 auto;
-   margin-left: 1300px;
-   position: relative;
-   top: 120px;
-}
-
-
-
 </style>
+
 <script type="text/javascript" src="/js/lib/jquery-3.7.1.js"></script>
 <script type="text/javascript">
     $(document).ready(function() {
@@ -320,17 +341,15 @@ textarea {
                     for (var i = 0; i < replies.length; i++) {
                         var comment = replies[i];
                         var commentTemplate =
-                            `<div class="comment"
-                               data-comment-id="\${comment.generalCommentId}"
-                                style="padding-left: \${(comment.level - 1) * 40}px">
-                                <div class="author">\${comment.generalMemberVO.nickname}</div>
-                                <div class="recommend-count">추천수: \${comment.likeCnt}</div>
-                                <div class="datetime">
-                                    <span class="crtdt">등록일: \${comment.postDate}</span>
-                                    \${comment.mdfyDt != comment.crtDt ? 
-                                        `<span class="mdfydt">(수정: \${comment.postDate})</span>`
-                                        : ""}
-                                </div>
+                            `<div class="comment" data-comment-id="\${comment.generalCommentId}" style="padding-left: \${(comment.level - 1) * 40}px">
+                              <ul class="writer_info">
+                                 <li>작성자 <span class="comment-writer">\${comment.generalMemberVO.nickname}</span></li>
+                                 <li>|</li>
+                                 <li>등록일 \${comment.postDate}</li>
+                                 <li>|</li>
+                                 <li class="recommend-count">추천수 \${comment.likeCnt}</li>
+                              </ul>  
+                              
                                 <pre class="content">\${comment.commentContent}</pre>
                                 \${comment.email == "${sessionScope._LOGIN_USER_.email}" ?
                                 	    `<div>
@@ -438,7 +457,7 @@ textarea {
               if (response.result) {
                   // 추천이 성공적으로 처리되면 추천 수를 업데이트합니다.
                   var likeOneComment = commentDom.find(".recommend-count");
-                  var currentCount = parseInt(likeOneComment.text().split(":")[1].trim());
+                  var currentCount = parseInt(likeOneComment.text().split(" ")[1].trim());
                   console.log(currentCount)
                   likeOneComment.text("추천수: " + (currentCount + 1));
                   alert("댓글이 추천되었습니다.");
@@ -511,116 +530,130 @@ textarea {
 </script>
 </head>
 <body>
-   <div id="btn-controller_1">					
-		<a id="update-link" onclick="location.href='/qnaboard/update/${generalPostId}'">수정</a>
-		<a id="delete-link" onclick="location.href='/qnaboard/delete/${generalPostId}'">삭제</a>
-   </div>
-<div class="main_container">
-	<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq generalPostVO.postWriter}">  
-	</c:if>
-   <p class="qna_Title">질답게시판 > </p>
-   <label for="postTitle"></label>
-         <div id="title_Name">${generalPostVO.postTitle}</div>
-   <!-- 목록보기 -->
-  
-   <div id="move_button">
-   <!-- 좋아요 기능 -->
-   <button id="like-btn">좋아요</button>
-   <!-- 신고 기능 -->
-   <button id="reportQnABoard" value="3" class="report-btn">신고</button>
-   </div>
-      <!-- 모달 창 -->
-         <div id="report-modal" class="report-modal">
-             <div class="report-modal-content">
-                 <span class="close" id="cancel-modal">취소</span>
-                    <!-- 모달 내용 추가 -->
-                  <h2>신고 내용</h2>
-                  <form name="reportVO" method="post" action="/report/view/3" enctype="multipart/form-data">
-                     <div>
-                        <label for="reportReason" >신고사유${reportVO.reportReason}
-                           <select name="reportReason">
-                              <option value="CC-20231018-000200">영리 및 홍보 목적</option>
-                              <option value="CC-20231018-000201">개인정보노출</option>
-                              <option value="CC-20231018-000202">음란성/선정성</option>
-                              <option value="CC-20231018-000203">같은 내용 반복(도배)</option>
-                              <option value="CC-20231018-000204">이용규칙위반</option>
-                              <option value="CC-20231018-000205">기타</option>
-                           </select>
-                        </label>
-               
-                        <label for = "reportReasonContent">신고 상세내용
-                        <textarea name="reportReasonContent" id="reportReasonContent">${reportVO.reportReasonContent}</textarea></label>
-                     
-                        <label for="attachedImg">첨부파일${reportVO.attachedImg}</label>
-                        <input id="attachedImg" type="file" name="attachedImg"/>
-                        
-                        <label for="reportTypeId">${reportVO.reportTypeId}</label>
-                        <input id="reportTypeId" type="hidden" name="reportTypeId" value="3"/>
-                        
-                        <label for="reportMemberEmail">${reportVO.reportMemberEmail}</label>
-                        <input id="reportMemberEmail" type="hidden" name="reportMember" value="${reportVO.reportMember}"/>
-                     
-                        <label for="receivedReportMemberEmail">${reportVO.receivedReportMemberEmail}</label>
-                        <input id="receivedReportMemberEmail" type="hidden" name="receivedReportMember" value="${generalPostVO.postWriter}"/>
-                     
-                        <label for="reportContentId">${reportVO.reportContentId}</label>
-                        <input id="reportContentId" type="hidden" name="reportContentId" value="${generalPostVO.generalPostId}"/>
-                     </div>
-                     <div class="btn-group">
-                        <div class="right-align">
-                           <input type="submit" value="완료" />
-            
-                        </div>
-                     </div>      
+
+   <div class="body_container">
+         <div class="body_left_aside"></div>
+
+         <div class="body">
+            <div class="main_content">
+               <div id="titleArea">
+                  <form name="generalPostVO" method="post">
+                  <a href="/qnaboard/list"><p class="post_category">질답게시판 ></p></a>
+                  <div class="post_title">${generalPostVO.postTitle}</div>
+                  <ul class="writer_info">
+                     <li>작성자 <a href="/memberinfo/view/${generalPostVO.postWriter}">${generalPostVO.memberVO.nickname}</a></li>
+                     <li>|</li>
+                     <li>작성일 ${generalPostVO.postDate}</li>
+                     <li>|</li>
+                     <li>조회수 ${generalPostVO.viewCnt}</li>
+                  </ul>
                   </form>
+               </div>
+               <div class="post_content">${generalPostVO.postContent}</div>
+               <div id="hashtag_area">
+                  <c:forEach var="hashtag" items="${generalPostVO.hashtagListVO}">
+                     <button class="btn_hashtag"># 
+                     <c:out value="${hashtag.commonCodeVO.codeContent}" />
+                     </button>
+                  </c:forEach>
+               </div>
+               <div class="space_between">
+                  <div class="btn_controller">
+                     <button id="like-btn">좋아요👍</button>
+                     <button id="reportQnABoard" value="3" class="report-btn">신고📌</button>
+                  </div>
+                  <div class="btn_controller">
+                     <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq generalPostVO.postWriter}">
+                        <a href="/qnaboard/update/${generalPostId}">수정</a>
+                        <a href="/qnaboard/delete/${generalPostId}">삭제</a>
+                     </c:if>
+                  </div>
                </div>
             </div>
 
-   <form name="generalPostVO" method="post">
-      <div class="grid">
-       
-         
-         <label for="postWriter">닉네임</label>
-         <a href="/memberinfo/view/${generalPostVO.postWriter}">${generalPostVO.memberVO.nickname}</a>
+            <div class="replies">
+               <div class="comment-header">
+                  <h3>댓글</h3>
+               </div>
+               <div class="write-comment">
+                  <textarea id="txt-comment" placeholder="의견을 입력하세요" maxlength="500"></textarea>
+                  <div class="btn_controller">
+                     <button id="btn-save-comment" type="submit">등록</button>
+                  </div>
+                  <!-- 신고 버튼은 조회할때 사용<button id="btn-report-comment">신고</button> -->
+               </div>
+               <div class="comment-items"></div>
+            </div> 
 
-         <label for="viewCnt">조회수</label>
-         <div>${generalPostVO.viewCnt}</div>
 
-         <label for="postDate">등록일</label>
-         <div>${generalPostVO.postDate}</div>
-         
-         <label for="hashtag">해시태그</label>
-		 <c:forEach var="hashtag" items="${generalPostVO.hashtagListVO}">
-		 	<c:out value="${hashtag.commonCodeVO.codeContent}" />
-		 </c:forEach>
-      </div>
-      
-         <label for="postContent"></label>
-         <div class="postContent_controller_1">${generalPostVO.postContent}</div>        
-   </form>
-</div>   
-   <div class="replies">
-      <div class="comment-header">
-         <h3>댓글</h3>
-      </div>
-      <button id="button-id-list" onclick="window.location.href='/qnaboard/list'">목록</button>
-      <div class="write-comment">
-            <textarea id="txt-comment" placeholder="의견을 입력하세요" maxlength="500"></textarea>
-            <button id="btn-save-comment" type="submit">등록</button>
-      </div>
-            <!-- 신고 버튼은 조회할때 사용<button id="btn-report-comment">신고</button> -->
-         
-        <div class="comment-items"></div>
+
+            <!-- 모달 창 -->
+         <div id="report-modal" class="report-modal">
+            <div class="report-modal-content">
+                 <!-- 모달 내용 추가 -->
+                 <h2>신고 내용</h2>
+                 <form name="reportVO" method="post" action="/report/view/3" enctype="multipart/form-data">
+                    <div class="modal_content">
+                       <div class="modal_content_element">
+                          <label for="reportReason" >신고사유${reportVO.reportReason}</label>
+                          <select name="reportReason">
+                             <option value="CC-20231018-000200">영리 및 홍보 목적</option>
+                             <option value="CC-20231018-000201">개인정보노출</option>
+                             <option value="CC-20231018-000202">음란성/선정성</option>
+                             <option value="CC-20231018-000203">같은 내용 반복(도배)</option>
+                             <option value="CC-20231018-000204">이용규칙위반</option>
+                             <option value="CC-20231018-000205">기타</option>
+                          </select>
+                       </div>
+                       <div class="modal_content_element">
+                          <label for = "reportReasonContent">신고 상세내용</label>
+                          <textarea name="reportReasonContent" id="reportReasonContent">${reportVO.reportReasonContent}</textarea>
+                       </div>
+                       <div class="modal_content_element">
+                          <label for="attachedImg">첨부파일${reportVO.attachedImg}</label>
+                          <input id="attachedImg" type="file" name="attachedImg"/>
+                       </div>
+                       <div class="modal_content_element">
+                          <label for="reportTypeId">${reportVO.reportTypeId}</label>
+                          <input id="reportTypeId" type="hidden" name="reportTypeId" value="4"/>
+                       </div>
+                       <div class="modal_content_element">
+                          <label for="reportMemberEmail">${reportVO.reportMemberEmail}</label>
+                          <input id="reportMemberEmail" type="hidden" name="reportMember" value="${reportVO.reportMember}"/>
+                       </div>
+                       <div class="modal_content_element">
+                          <label for="receivedReportMemberEmail">${reportVO.receivedReportMemberEmail}</label>
+                          <input id="receivedReportMemberEmail" type="hidden" name="receivedReportMember" value="${generalPostVO.postWriter}"/>
+                       </div>
+                       <div class="modal_content_element">
+                          <label for="reportContentId">${reportVO.reportContentId}</label>
+                          <input id="reportContentId" type="hidden" name="reportContentId" value="${generalPostVO.generalPostId}"/>
+                       </div>
+                       <div class="modal_content_element submit_area btn_controller">
+                          <input type="submit" value="완료" />
+                          <span class="close">취소</span>
+                       </div>
+                    </div>      
+                 </form>
+              </div>
+           </div>
+         </div>
+
+        <div class="body_right_aside"></div>
+   </div>
+
+
+
          
        <!-- 댓글 신고 모달 창 -->
          <div id="report-window" class="report-window">
              <div class="report-window-content">
-                 <span class="close" id="cancel-window">취소</span>
                     <!-- 모달 내용 추가 -->
                   <h2>신고 내용</h2>
                   <form name="reportVO" method="post" action="/report/view/4">
-                     <div>
-                        <label for="reportReason" >신고사유${reportVO.reportReason}
+                     <div class="modal_content">
+                        <div class="modal_content_element">
+                           <label for="reportReason" >신고사유${reportVO.reportReason}</label>
                            <select name="reportReason">
                               <option value="CC-20231018-000200">영리 및 홍보 목적</option>
                               <option value="CC-20231018-000201">개인정보노출</option>
@@ -629,36 +662,41 @@ textarea {
                               <option value="CC-20231018-000204">이용규칙위반</option>
                               <option value="CC-20231018-000205">기타</option>
                            </select>
-                        </label>
-               
-                        <label for = "reportReasonContent">신고 상세내용
-                        <textarea name="reportReasonContent" id="reportReasonContent">${reportVO.reportReasonContent}</textarea></label>
-                     
-                        <label for="attachedImg">첨부파일${reportVO.attachedImg}</label>
-                        <input id="attachedImg" type="file" name="attachedImg"/>
-                        
-                        <label for="reportTypeId">${reportVO.reportTypeId}</label>
-                        <input id="reportTypeId" type="hidden" name="reportTypeId" value="4"/>
-                        
-                        <label for="reportMemberEmail">${reportVO.reportMemberEmail}</label>
-                        <input id="reportMemberEmail" type="hidden" name="reportMember" value="${reportVO.reportMember}"/>
-                     
-                        <label for="receivedReportMemberEmail">${reportVO.receivedReportMemberEmail}</label>
-                        <input id="receivedReportMemberEmail" type="hidden" name="receivedReportMember" value="${generalPostVO.postWriter}"/>
-                     
-                        <label for="reportContentId">${reportVO.reportContentId}</label>
-                        <input id="reportContentId" type="hidden" name="reportContentId" value="${generalPostVO.generalPostId}"/>
-                     </div>
-                     <div class="btn-group">
-                        <div class="right-align">
-                           <input type="submit" value="완료" />
-            
                         </div>
-                     </div>      
+                        <div class="modal_content_element">
+                           <label for = "reportReasonContent">신고 상세내용</label>
+                           <textarea name="reportReasonContent" id="reportReasonContent">${reportVO.reportReasonContent}</textarea>
+                        </div>
+                        <div class="modal_content_element">
+                           <label for="attachedImg">첨부파일${reportVO.attachedImg}</label>
+                           <input id="attachedImg" type="file" name="attachedImg"/>
+                        </div>
+                        <div class="modal_content_element">
+                           <label for="reportTypeId">${reportVO.reportTypeId}</label>
+                           <input id="reportTypeId" type="hidden" name="reportTypeId" value="4"/>
+                        </div>
+                        <div class="modal_content_element">
+                           <label for="reportMemberEmail">${reportVO.reportMemberEmail}</label>
+                           <input id="reportMemberEmail" type="hidden" name="reportMember" value="${reportVO.reportMember}"/>
+                        </div>
+                        <div class="modal_content_element">
+                           <label for="receivedReportMemberEmail">${reportVO.receivedReportMemberEmail}</label>
+                           <input id="receivedReportMemberEmail" type="hidden" name="receivedReportMember" value="${generalPostVO.postWriter}"/>
+                        </div>
+                        <div class="modal_content_element">
+                           <label for="reportContentId">${reportVO.reportContentId}</label>
+                           <input id="reportContentId" type="hidden" name="reportContentId" value="${generalPostVO.generalPostId}"/>
+                        </div>
+                        <div class="modal_content_element submit_area btn_controller">
+                           <input type="submit" value="완료" />
+                           <span class="close" id="cancel-window">취소</span>
+                        </div>
+                     </div>     
                   </form>
                </div>
             </div> 
-   </div>  
+         </div>  
+
 
         <jsp:include page="../layout/footer.jsp" />
         <script>
