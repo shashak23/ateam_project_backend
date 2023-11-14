@@ -15,11 +15,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ktdsuniversity.edu.algorithmexplanation.service.AlgorithmExplanationService;
+import com.ktdsuniversity.edu.algorithmexplanation.vo.AlgorithmExplanationListVO;
+import com.ktdsuniversity.edu.algorithmquestion.service.AlgorithmQuestionService;
+import com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionListVO;
 import com.ktdsuniversity.edu.beans.SHA;
 import com.ktdsuniversity.edu.career.vo.CareerVO;
+import com.ktdsuniversity.edu.common.vo.AbstractCompanyPostVO;
 import com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO;
 import com.ktdsuniversity.edu.companyinfo.service.CompanyInfoService;
 import com.ktdsuniversity.edu.companymember.vo.CompanyVO;
+import com.ktdsuniversity.edu.companynews.service.CompanyNewsService;
+import com.ktdsuniversity.edu.companynews.vo.CompanyNewsListVO;
 import com.ktdsuniversity.edu.education.vo.EducationVO;
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
@@ -29,6 +36,16 @@ public class CompanyInfoController {
 	
 	private Logger logger = LoggerFactory.getLogger(CompanyInfoController.class);
 
+	
+	@Autowired
+	private AlgorithmExplanationService algorithmExplanationService;
+	
+	@Autowired
+	private AlgorithmQuestionService algorithmQuestionService;
+	
+	@Autowired
+	private CompanyNewsService companyNewsService;
+	
 	@Autowired
 	private SHA sha;
 	@Autowired
@@ -76,7 +93,19 @@ public class CompanyInfoController {
 		}
 	
 	@GetMapping("/companyinfo/mypost")
-	public String viewmypost() {
+	public String viewmypost(@ModelAttribute AbstractCompanyPostVO abstractCompanyPostVO
+            , Model model
+            , @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+		abstractCompanyPostVO.setPostWriter(memberVO.getEmail());
+		abstractCompanyPostVO.setAlgorithmWriter(memberVO.getEmail());
+		
+		AlgorithmExplanationListVO algorithmExplanationListVO = algorithmExplanationService.getCompanyMyPost(abstractCompanyPostVO);
+		AlgorithmQuestionListVO algorithmQuestionListVO = algorithmQuestionService.getCompanyMyPost(abstractCompanyPostVO);
+		CompanyNewsListVO companyNewsListVO = companyNewsService.getCompanyMyPost(abstractCompanyPostVO);
+		
+		model.addAttribute("companyNewsList", companyNewsListVO);
+		model.addAttribute("algorithmQuestionList", algorithmQuestionListVO);
+		model.addAttribute("algorithmExplanationList", algorithmExplanationListVO);
 		return "companyinfo/companymypostinmypage";	
 		}
 	}

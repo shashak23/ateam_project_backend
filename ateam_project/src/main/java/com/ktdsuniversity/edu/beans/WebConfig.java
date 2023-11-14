@@ -84,6 +84,7 @@ public class WebConfig implements WebMvcConfigurer, WebSocketConfigurer  {
 	      checkSessionExcludePatterns.add("/memberinfo/view/**");
 	      checkSessionExcludePatterns.add("/html/**");
 	      checkSessionExcludePatterns.add("/notice/random");
+	      checkSessionExcludePatterns.add("/companyinfo/mypost");
 
 		
 		registry.addInterceptor(new CheckSessionInterceptor())
