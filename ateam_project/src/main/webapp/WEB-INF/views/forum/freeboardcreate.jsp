@@ -82,7 +82,6 @@ updateViewCount();
                      'color': 'var(--blue)',
                      'box-shadow': 'none'})
    })
-   	$.sweetModal('This is an alert.');
 
 </script>
 <style type= "text/css">
