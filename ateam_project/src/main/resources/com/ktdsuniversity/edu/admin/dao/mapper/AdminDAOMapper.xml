@@ -339,6 +339,10 @@
 	<!-- 게시글, 댓글, 유저 신고 -->
 	<insert id="createReport"
 		parameterType="com.ktdsuniversity.edu.admin.vo.ReportVO">
+	<selectKey keyProperty="reportId" resultType="string" order="BEFORE">
+		SELECT 'RP-' || TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_REPORT_PK.NEXTVAL, 6, '0')
+		  FROM DUAL
+	</selectKey>
 	INSERT INTO REPORT
 	       (REPORT_ID
 		 , REPORT_MEMBER
@@ -350,7 +354,7 @@
 		 , REPORT_REASON_CONTENT
 		 , ATTACHED_IMG
 		 , PROGRESS_YN)
-	 VALUES ('RP-' || TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_REPORT_PK.NEXTVAL, 6, '0')
+	 VALUES (#{reportId}
 	      , #{reportMember}
 		  , #{reportTypeId}
 		  , #{receivedReportMember}

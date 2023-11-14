@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.ktdsuniversity.edu.admin.vo.ReportVO;
 import com.ktdsuniversity.edu.generalmember.service.GeneralMemberService;
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberListVO;
 import com.ktdsuniversity.edu.generalpost.service.GeneralPostService;
@@ -37,6 +38,7 @@ import com.ktdsuniversity.edu.member.vo.MemberVO;
 import com.ktdsuniversity.edu.util.XssIgnoreUtil;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 @Controller
@@ -61,7 +63,7 @@ public class QnAPostController {
 		log.debug("--1--컨트롤러도착---------------------------"+ hashtagId);
 		if (hashtagId != null && hashtagId.length() > 0) {
 			searchForumVO.setSearchType("hashtagId");
-			searchForumVO.setHashtagId(hashtagId); // searchType -> hashtagId 변경
+			searchForumVO.setHashtagId(hashtagId); // searchType -> setHashtagId 변경
 		}
 		
 		searchForumVO.setBoardId("CC-20231017-000030");
@@ -143,16 +145,16 @@ public class QnAPostController {
 	// 단건 조회
 	@GetMapping("/qnaboard/view/{generalPostId}")
 	public ModelAndView qnaBoardSingle(@PathVariable String generalPostId) {
-		ModelAndView view = new ModelAndView();
-		GeneralPostVO generalPostVO = generalPostService.getOneBoard(generalPostId);
-		//XssIgnoreUtil.ignore(generalPostVO); // 들어오는 파라미터한테만 해야해요
+	    ModelAndView view = new ModelAndView();
+	    GeneralPostVO generalPostVO = generalPostService.getOneBoard(generalPostId);
 
-		log.debug("--1------컨트롤러---------------------------");
-		log.debug("글번호 : " + generalPostVO.getBoardId());
-		view.setViewName("forum/qnaboardview");
-		view.addObject("generalPostVO", generalPostVO);
-		return view;
+	    log.debug("--1------컨트롤러---------------------------");
+	    log.debug("글번호 : " + generalPostVO.getBoardId());
+	    view.setViewName("forum/qnaboardview");
+	    view.addObject("generalPostVO", generalPostVO);
+	    return view;
 	}
+
 	
 	// 수정페이지 이동
 	@GetMapping("/qnaboard/update/{generalPostId}")
