@@ -354,9 +354,11 @@ $('.seeMore').click(function() {
 		<div id="gnb">
 			<div id="toolbar">
 				<div id="pageName">알고리즘 해설</div>
-				<div id="registerArticle">
+				<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.memberType eq 'COMPANY'}">
+					<div id="registerArticle">
 					<button class="register" type="button" >글작성</button>
 				</div>
+				</c:if>
 				<div class="search_area">
 					
 					<form id="search_form"

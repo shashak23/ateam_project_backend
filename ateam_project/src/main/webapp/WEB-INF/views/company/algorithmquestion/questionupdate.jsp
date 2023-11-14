@@ -4,6 +4,7 @@
 <jsp:include page="../../layout/header.jsp"></jsp:include>
 <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/super-build/ckeditor.js"></script>
 <script type="text/javascript" src="/js/lib/jquery-3.7.1.js"></script>
+<link rel="stylesheet" type="text/css" href="/css/common.css" />
 <script src="/js/Table.js"></script>
 <script type="text/javascript">
 	$().ready(function() {
@@ -468,8 +469,7 @@
         	let json = table.toJson($, "#grid")
         	$("#answerJson").val(JSON.stringify(json));
         	$("#algorithmQuestionVO").submit();
-        })
-        
+        })    
 		// 이전에 선택한 select option 불러오기
         $("select[name=algorithmTierId]").val("${algorithmQuestionVO.algorithmTierId}")
         
