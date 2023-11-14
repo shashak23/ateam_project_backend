@@ -1,95 +1,21 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <!DOCTYPE html>
-<html>
+<html lang="ko-KR">
 <head>
-<meta charset="UTF-8">
-<title>내가 푼 알고리즘 문제</title>
-<jsp:include page="../layout/header.jsp" />
-<script src="/js/lib/jquery-3.7.1.js"></script>
-<style>
-    .flex_button {
-		
-		margin-top: 100px;
-		display: flex;
-		flex-direction: column;
-	
-	}
-	.flex_button button {
-	color: white;	
-    background-color: var(--gray);
-    width: 150px;
-    height: 40px;
-    margin-bottom: 15px;
-    cursor: pointer;
-    border: 2px;
-    }
-    .flex_button button:hover {
-        background-color: var(--light-blue);
-        color: white;
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>내가 푼 알고리즘 문제</title>
+    <jsp:include page="../layout/header.jsp" />
+    <script src="/js/lib/jquery-3.7.1.js"></script>
+    <link rel="stylesheet" type="text/css" href="/css/common.css" />
 
-    }
-    table.table {
-		border-collapse: collapse;
-		margin-top: 30px;
-		width:auto;
-        height: auto;
-		margin: 0 auto;
-	}
-	table th{
-		background-color: var(--light-gray);
-		border-bottom: 1px solid var(--dark-gray);
-		height:35px;
-		color: var(--dark-gray);
-	}
-	table td{
-		border-bottom: 1px solid #D3D3D3;
-		color: var(--dark-gray);
-	}
-	table.table th:last-child, table.table td:last-child {
-		border-right: none;
-	}
-	table.table > tbody td {
-		padding: 10px;
-		color: #333;
-		text-align: center;
-		color: var(--dark-gray);
-	}
-    .controller {
-        margin: 0 auto;
-        margin-left: 300px;
-    }
-    .search_form {
-    margin: 0 auto;
-    margin-left: 980px;
-    margin-bottom: 10px;   
+</head>
+<style>
+    *:lang(ko-KR) {
+    font-family: 'Noto Sans KR', sans-serif;
 }
-.search_btn {
-     margin: 0 auto;
-     background-color: var(--light-blue);
-     border: none;
-     border-radius: 5px;
-     width: 60px;
-     height: 30px;    
-}
-#body_controller {
-    margin: 0 auto;
-    margin-top: -260px;
-}
-.container {
-    border: 1px solid var(--light-gray);
-    border-radius: 5px;
-    margin: 0 auto;
-    margin-bottom: 100px;
-    width: 900px;
-    height: auto;
-}
-h3 {
-    margin: 0 auto;
-    margin-bottom: 50px;
-    margin-left: 415px;
-}
+
 </style>
 </head>
 <body>
@@ -119,9 +45,9 @@ h3 {
     </form>
 </div>     
     <!-- 일단 -->
-    <h3>내가 푼 문제</h3> 
     <div class="container">
-        <table class="table">
+        <table class="grid"> <!-- 클래스 이름을 'grid'로 변경했습니다 -->
+            <caption>내가 푼 문제</caption> 
             <thead>
                 <tr id="table-tr">
                     <th>제목</th>
@@ -151,6 +77,7 @@ h3 {
                 </c:forEach>
             </tbody>
         </table>
+    </div>
         <c:choose>
             <c:when test="${empty myAlgorithmList.myAlgorithmList}">
                 <div>데이터가 없습니다.</div>
@@ -159,39 +86,7 @@ h3 {
                 <div><!-- 다른 내용이 있으면 여기에 추가 --></div>
             </c:otherwise>
         </c:choose>
-    </div>
-				<ul class="page-nav">
-				    <!-- <c:if test="${not empty myAlgorithmList.myAlgorithmList}"> 
-					    이전 페이지 그룹
-					    <c:if test="${searchMyAlgorithmVO.hasPrevGroup}">
-					        <li>
-					            <a href="javascript:void(0)" onclick="movePage(0)">처음</a>
-					        </li>
-					        <li>
-					            <a href="javascript:void(0)" onclick="movePage(${searchMyAlgorithmVO.prevGroupStartPageNo})">이전</a>
-					        </li>
-					    </c:if>
-					    
-	                    <c:forEach begin="${searchMyAlgorithmVO.groupStartPageNo}"
-	                               end="${searchMyAlgorithmVO.groupEndPageNo}"
-	                               step="1"
-	                               var="p">
-							<li class="${searchMyAlgorithmVO.pageNo eq p ? 'active': ''}">
-								<a href="javascript:void(0)" onclick="movePage(${p})">${p + 1}</a>
-							</li>
-	                    </c:forEach>   -->
-	                    
-	                    <!-- 다음 페이지 그룹 -->
-	                      <!-- <c:if test="${searchMyAlgorithmVO.hasNextGroup}">
-	                        <li>
-	                            <a href="javascript:void(0)" onclick="movePage(${searchMyAlgorithmVO.nextGroupStartPageNo})">다음</a>
-	                        </li>
-	                        <li>
-	                            <a href="javascript:void(0)" onclick="movePage(${searchMyAlgorithmVO.pageCount-1})">마지막</a>
-	                        </li>
-	                    </c:if> -->
-                    <!-- </c:if> -->
-				</ul> 
+    </div> 
 			</div>
 		</div>
 
