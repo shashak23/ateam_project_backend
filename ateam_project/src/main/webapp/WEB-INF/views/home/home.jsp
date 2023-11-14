@@ -703,6 +703,8 @@
     $('.edit_btn').css('background-color', '')
   })
 
+  let editorContent
+
   // 메인 에디터 생성
   $('.home_edit_wrap').click(function() {
 
@@ -740,8 +742,9 @@
       let body = {
         'postWriter': `${sessionScope._LOGIN_USER_.email}`,
         'postTitle': $('#editor_title').val(),
-        'postContent': $('.ck-editor__main').find('p').text(),
+        'postContent': getDataFromTheEditor(),
       }
+
       if ($('.free_land_btn').hasClass('selected')) {
         $.post('/home/create/freeboard', body, function(response) {
           if (response.result === 'success') {
@@ -1560,6 +1563,13 @@
       // from a local file system (file://) - load this site via HTTP server if you enable MathType
       'MathType'
     ]
-  });  
+  })
+  .then(editor_content => {
+    editorContent = editor_content
+  })
+
+  function getDataFromTheEditor() {
+    return editorContent.getData()
+  }
 </script>
 </html>
