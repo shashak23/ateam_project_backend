@@ -250,10 +250,6 @@ public class HomeController {
 	public Map<String, Object> createOneFreeboard(@ModelAttribute GeneralPostVO generalPostVO) {
 		XssIgnoreUtil.ignore(generalPostVO);
 		
-		System.out.println("1. " + generalPostVO.getPostWriter());
-		System.out.println("2. " + generalPostVO.getPostTitle());
-		System.out.println("3. " + generalPostVO.getPostContent());
-		
 		Map<String, Object> resultSet = new HashMap<>();
 		boolean isSuccess = homeBoardService.freeboardCreateByMain(generalPostVO);
 		
