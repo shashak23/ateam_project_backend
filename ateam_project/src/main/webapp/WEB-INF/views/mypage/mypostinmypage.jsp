@@ -47,13 +47,10 @@
 	table td{
 		border-bottom: 1px solid #D3D3D3;
 		color: var(--dark-gray);
+		text-align: center;
 	}
 	table.table th:last-child, table.table td:last-child {
 		border-right: none;
-	}
-	
-	table.table > tbody td {
-		text-align: center;
 	}
 </style>
 <body> 
@@ -67,98 +64,95 @@
 			<button id="solve">내가 푼 문제</button>
 			<button>탈퇴</button>
 	</div>
-  <div id="container">    
-			<p></p>
-			<table class="grid">
-				<caption>질답게시판</caption>
-				<thead>
-					<colgroup>
-						<col width="10%" />
-						<col width="45%" />
-						<col width="15%" />
-						<col width="20%" />
-						<col width="10%" />
-					</colgroup>
-					<tr>
-						<th scope="col">번호</th>
-						<th scope="col">제목</th>
-						<th scope="col">작성자</th>
-						<th scope="col">작성일</th>
-						<th scope="col">조회수</th>
-					</tr>
-				</thead>
-				<tbody>
-				<c:choose>
-					<c:when test="${not empty qnaPostList}">
-						<c:forEach items="${qnaPostList}" var="qnaboard" varStatus="index">
-							<tr>
-								<td>${index.index + 1}</td>
-								<td>
-									<a href="/qnaboard/view/${qnaboard.generalPostId}">
-										<c:out value="${qnaboard.postTitle}" />
-									</a>
-								</td>
-								<td>${qnaboard.memberVO.nickname}</td>
-								<td>${qnaboard.postDate}</td>
-								<td>${qnaboard.viewCnt}</td>
-							</tr>
-						</c:forEach>
-					</c:when>
-					<c:otherwise>
+  <div id="container">   
+		<table class="grid">
+			<caption>질답게시판</caption>
+			<thead>
+				<colgroup>
+					<col width="10%" />
+					<col width="45%" />
+					<col width="15%" />
+					<col width="20%" />
+					<col width="10%" />
+				</colgroup>
+				<tr>
+					<th scope="col">번호</th>
+					<th scope="col">제목</th>
+					<th scope="col">작성자</th>
+					<th scope="col">작성일</th>
+					<th scope="col">조회수</th>
+				</tr>
+			</thead>
+			<tbody>
+			<c:choose>
+				<c:when test="${not empty qnaPostList}">
+					<c:forEach items="${qnaPostList}" var="qnaboard" varStatus="index">
 						<tr>
-							<td colspan="5">조회된 게시글이 없습니다.</td>
+							<td>${index.index + 1}</td>
+							<td>
+								<a href="/qnaboard/view/${qnaboard.generalPostId}">
+									<c:out value="${qnaboard.postTitle}" />
+								</a>
+							</td>
+							<td>${qnaboard.memberVO.nickname}</td>
+							<td>${qnaboard.postDate}</td>
+							<td>${qnaboard.viewCnt}</td>
 						</tr>
-						
-					</c:otherwise>
-				</c:choose>
-				</tbody>
-			</table>
-			<p></p>
-			<table class="grid">
-				<thead>
-					<caption>자유게시판</caption>
-					<colgroup>
-						<col width="10%" />
-						<col width="45%" />
-						<col width="15%" />
-						<col width="20%" />
-						<col width="10%" />
-					</colgroup>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
 					<tr>
-						<th scope="col">번호</th>
-						<th scope="col">제목</th>
-						<th scope="col">작성자</th>
-						<th scope="col">작성일</th>
-						<th scope="col">조회수</th>
+						<td colspan="5">조회된 게시글이 없습니다.</td>
 					</tr>
-				</thead>
-				<tbody>
-				<c:choose>
-					<c:when test="${not empty freePostList}">
-						<c:forEach items="${freePostList}" var="freeboard" varStatus="index">
-							<tr>
-								<td>${index.index + 1}</td>
-								<td>
-									<a href="/freeboard/view/${freeboard.generalPostId}">
-										<c:out value="${freeboard.postTitle}" />
-									</a>
-								</td>
-								<td>${freeboard.memberVO.nickname}</td>
-								<td>${freeboard.postDate}</td>
-								<td>${freeboard.viewCnt}</td>
-							</tr>
-						</c:forEach>
-					</c:when>
-					<c:otherwise>
+					
+				</c:otherwise>
+			</c:choose>
+			</tbody>
+		</table>
+		<table class="grid">
+			<caption>자유게시판</caption>
+			<thead>
+				<colgroup>
+					<col width="10%" />
+					<col width="45%" />
+					<col width="15%" />
+					<col width="20%" />
+					<col width="10%" />
+				</colgroup>
+				<tr>
+					<th scope="col">번호</th>
+					<th scope="col">제목</th>
+					<th scope="col">작성자</th>
+					<th scope="col">작성일</th>
+					<th scope="col">조회수</th>
+				</tr>
+			</thead>
+			<tbody>
+			<c:choose>
+				<c:when test="${not empty freePostList}">
+					<c:forEach items="${freePostList}" var="freeboard" varStatus="index">
 						<tr>
-							<td colspan="5">조회된 게시글이 없습니다.</td>
+							<td>${index.index + 1}</td>
+							<td>
+								<a href="/freeboard/view/${freeboard.generalPostId}">
+									<c:out value="${freeboard.postTitle}" />
+								</a>
+							</td>
+							<td>${freeboard.memberVO.nickname}</td>
+							<td>${freeboard.postDate}</td>
+							<td>${freeboard.viewCnt}</td>
 						</tr>
-					</c:otherwise>
-				</c:choose>
-				</tbody>
-			</table>
-			<p></p>
-	</div>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<tr>
+						<td colspan="5">조회된 게시글이 없습니다.</td>
+					</tr>
+				</c:otherwise>
+			</c:choose>
+			</tbody>
+		</table>
+		</div>
 	</div>
   <jsp:include page="../layout/footer.jsp" />
 </body>

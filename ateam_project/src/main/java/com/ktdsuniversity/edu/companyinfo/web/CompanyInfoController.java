@@ -94,8 +94,8 @@ public class CompanyInfoController {
 	
 	@GetMapping("/companyinfo/mypost")
 	public String viewmypost(@ModelAttribute AbstractCompanyPostVO abstractCompanyPostVO
-            , Model model
-            , @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
+            			   , Model model
+            			   , @SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 		abstractCompanyPostVO.setPostWriter(memberVO.getEmail());
 		abstractCompanyPostVO.setAlgorithmWriter(memberVO.getEmail());
 		
