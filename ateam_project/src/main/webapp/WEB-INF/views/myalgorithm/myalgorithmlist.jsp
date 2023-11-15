@@ -60,9 +60,10 @@
 	table.table > tbody td {
 		text-align: center;
 	}
-    /* colgroup col:first-child {
-            width: 5%; 
-        } */
+    table {
+        text-align: center;
+    }
+ 
        
 
     
@@ -102,8 +103,8 @@
                         <col width="40%" />
                         <col width="10%" />
                         <col width="20%" />
-                        <col width="20%" />
-                        <col width="20%" />
+                        <col width="10%" />
+                        <col width="10%" />
                     </colgroup>
                     <tr>
                         <th scope="col">제목</th>
