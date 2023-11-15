@@ -42,6 +42,16 @@ public class AlgorithmExplanationServiceImpl implements AlgorithmExplanationServ
 		return algorithmExplanationListVO;
 	}
 
+	@Override
+	public AlgorithmExplanationListVO getAlgorithmExplanationByCategory(String algorithmCategoryId) {
+		AlgorithmExplanationListVO algorithmExplanationListVO = new AlgorithmExplanationListVO();
+		algorithmExplanationListVO.setAlgorithmExplanationCnt(algorithmExplanationDAO.getAlgorithmExplanationCount(algorithmCategoryId));
+		algorithmExplanationListVO.setAlgorithmExplanationList(algorithmExplanationDAO.getAlgorithmExplanationByCategory(algorithmCategoryId));
+		return algorithmExplanationListVO;
+	}
+
+
+
 	@Transactional
 	@Override
 	public boolean createNewAlgorithmExplanation(AlgorithmExplanationVO algorithmExplanationVO) {

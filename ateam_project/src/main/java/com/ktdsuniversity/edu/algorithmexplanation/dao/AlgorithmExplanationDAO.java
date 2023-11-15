@@ -21,6 +21,10 @@ public interface AlgorithmExplanationDAO {
 	
 	public List<AlgorithmExplanationVO> getAllAlgorithmExplanation();
 	
+	public int getAlgorithmExplanationCount(String algorithmCategoryId);
+	
+	public List<AlgorithmExplanationVO> getAlgorithmExplanationByCategory(String algorithmCategoryId);
+	
 	public List<AlgorithmExplanationVO> searchAllAlgorithmExplanation(SearchAlgorithmExplanationVO searchAlgorithmExplanationVO);
 	
 	public int createNewAlgorithmExplanation (AlgorithmExplanationVO algorithmExplanationVO);

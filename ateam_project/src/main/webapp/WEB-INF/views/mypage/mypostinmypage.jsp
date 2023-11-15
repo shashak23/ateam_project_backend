@@ -186,5 +186,31 @@
                            'color': 'var(--blue)',
                            'box-shadow': 'none'})
   })
+  
+  $('p').css('background-color', 'rgba(0, 0, 0, 0)')
+
+    // 플렉스버튼
+    function redirectToURL(url) {
+        window.location.href = url;
+    }
+    /* 비밀번호, 닉네임 수정 버튼 */
+    $("#myprofile").click(function() {
+        redirectToURL(`/memberinfo/view/${sessionScope._LOGIN_USER_.email}`);
+    });
+    $("#mypost").click(function() {
+        redirectToURL(`/member/mypost`);
+    });
+    $("#modify_info").click(function() {
+        redirectToURL(`/member/selectmember/${sessionScope._LOGIN_USER_.email}`);
+    });
+    $("#quit").click(function() {
+        redirectToURL(`/member/logout`);
+    });
+    $("#solve").click(function(){
+        redirectToURL(`/codingtest/mylist`);
+    });
+    $("#bookmark").click(function(){
+        redirectToURL(`/member/bookmark`);
+    });
 </script>
 </html>

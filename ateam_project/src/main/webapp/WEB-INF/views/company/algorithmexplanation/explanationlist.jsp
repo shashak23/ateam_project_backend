@@ -130,9 +130,9 @@ $("#quit").click(function() {
 	        redirectToURL(`/member/logout`);
 	    });
 
-$('.seeMore').click(function() {
+/* $('.seeMore').click(function() {
 	redirectToURL(`/algorithm/explanation/detail/CC-20231017-000002`);
-        });
+        }); */
 </script>
 </head>
 <style>
@@ -426,12 +426,12 @@ $('.seeMore').click(function() {
 		<div id="algorithmList">
 			<ul>				
 				<li class="col_item">
-						<div class="algorithmName">해시</div>
+						<div class="algorithmName">그리디</div>
 					
 						<div class="briefing">
 							각 단계에서 최선의 선택을 하는 방식으로 문제를 해결하는 알고리즘입니다. 
 						</div>
-						<a id="detailLink" href="/algorithm/explanation/detail/CC-20231017-000002">
+						<a id="detailLink" href="/algorithm/explanation/detail/CC-20231017-000001">
 					<div class="seeMore">보러가기
 						
 						<!-- <a href="/algorithm/explanation/detail/${algorithmexplanationVO.algorithmCategoryId}">보러가자</a> -->
@@ -447,68 +447,84 @@ $('.seeMore').click(function() {
 					<div class="briefing">
 						어떤 알고리즘을 사용할지, 어떤 자료구조를 활용할지 등을 결정하고 이를 코드로 옮기는 과정을 학습해보세요.
 					</div>
+					<a id="detailLink" href="/algorithm/explanation/detail/CC-20231017-000002">
 					<div class="seeMore">보러가기
 						<img class="more" src="/images/화살표.png/" alt="more">
 					</div>
+					</a>
 				</li>
 				<li class="col_item">
 					<div class="algorithmName">DFS/BFS</div>
 					<div class="briefing">
 						깊이 우선 탐색(DFS)과 너비 우선 탐색(BFS)으로 그래프를 탐색해보세요.	
 					</div>
+					<a id="detailLink" href="/algorithm/explanation/detail/CC-20231017-000003">
 					<div class="seeMore">보러가기
 						<img class="more" src="/images/화살표.png/" alt="more">
 					</div>
+					</a>
 				</li>
 				<li class="col_item">
 					<div class="algorithmName">정렬</div>
 					<div class="briefing">데이터를 특정한 기준에 따라 순서대로 나열하는 알고리즘입니다. </div>
+					<a id="detailLink" href="/algorithm/explanation/detail/CC-20231017-000004">
 					<div class="seeMore">보러가기
 						<img class="more" src="/images/화살표.png/" alt="more">
 					</div>
+					</a>
 				</li>
 				<li class="col_item">
 					<div class="algorithmName">이진탐색</div>
 					<div class="briefing">
 						탐색 범위를 절반씩 줄여가며 배열의 특정한 원소를 찾아가는 방법을 공부해보세요.
 					</div>
+					<a id="detailLink" href="/algorithm/explanation/detail/CC-20231017-000005">
 					<div class="seeMore">보러가기
 						<img class="more" src="/images/화살표.png/" alt="more">
 					</div>
+					</a>
 				</li>
 				<li class="col_item">
 					<div class="algorithmName">다이나믹 프로그래밍</div>
 					<div class="briefing">
 						작은 부분 문제들의 해결책으로 전체 문제의 해결책을 구하는 방식으로 동작하는 알고리즘을 얻어 가세요.
 					</div>
+					<a id="detailLink" href="/algorithm/explanation/detail/CC-20231017-000006">
 					<div class="seeMore">보러가기
 						<img class="more" src="/images/화살표.png/" alt="more">
 					</div>
+					</a>
 				</li>
 				<li class="col_item">
 					<div class="algorithmName">최단경로</div>
 					<div class="briefing">
 						그래프에서 두 정점 간의 가장 짧은 경로를 찾는 알고리즘입니다. 
 					</div>
+					<a id="detailLink" href="/algorithm/explanation/detail/CC-20231017-000007">
 					<div class="seeMore">보러가기
 						<img class="more" src="/images/화살표.png/" alt="more">
 					</div>
+					</a>
 				</li>
 				<li class="col_item">
 					<div class="algorithmName">그래프 이론</div>
 					<div class="briefing">
 						 그래프는 정점(Vertex)과 간선(Edge)의 집합으로 이루어져 있습니다. 간선들을 연결해볼까요?
 					</div>
+					<a id="detailLink" href="/algorithm/explanation/detail/CC-20231017-000008">
 					<div class="seeMore">보러가기
 						<img class="more" src="/images/화살표.png/" alt="more">
 					</div>
+					</a>
 				</li>
 				<li class="col_item">
 					<div class="algorithmName">기타</div>
 					<div class="briefing">이외에도 코딩 테스트에 출제되는 알고리즘들을 공부해보세요.</div>
+					<a id="detailLink" href="/algorithm/explanation/detail/CC-20231017-000009">
 					<div class="seeMore">보러가기
 						<img class="more" src="/images/화살표.png/" alt="more">
 					</div>
+					</a>
 				</li>
 			</ul>
 		</div>

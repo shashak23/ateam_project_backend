@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="c" uri="jakarta.tags.core"%>
+<%@ page import="com.ktdsuniversity.edu.algorithmexplanation.vo.AlgorithmExplanationVO" %>
 <jsp:include page="../../layout/header.jsp"></jsp:include>
 <script type="text/javascript" src="/js/lib/jquery-3.7.1.js"></script>
 <script type="text/javascript">
@@ -131,15 +132,33 @@
     <div id="container">
         <div id="header">
             <div id="algorithmName">
-                <div class="title">해시</div>   
-                <div class="info">게시글 수</div>
+            <c:choose>
+			    <c:when test="${not empty algorithmExplanationList.algorithmExplanationList}">
+			        <div class="title">${algorithmExplanationList.algorithmExplanationList[0].commonCodeVO.codeContent}</div>
+			    </c:when>
+			</c:choose>
             </div>   
             <div id="tip">Key-value쌍으로 데이터를 빠르게 찾아보세요.</div>
         </div>
         <div id="pointLine"></div>
         <!-- 여기까지 해당 카테고리 상단 내용 -->
         <ul id="list">
-            <li>
+        	<c:choose>
+        		<c:when test="${not empty algorithmExplanationList.algorithmExplanationList}">
+        			<c:forEach items="${algorithmExplanationList.algorithmExplanationList}" var="algorithmquestion">
+	        			<li>
+		        			<div id="postList">
+		        				<a class="postTitle" href="/algorithm/explanation/view/${algorithmquestion.companyAlgorithmExplanationId}">
+			        				<c:out value="${algorithmquestion.postTitle}" />    				
+		        				</a>
+		        			</div>
+		        			<div class="postWriter">${algorithmquestion.memberVO.nickname}</div>
+		        			<div class="postInfo">${algorithmquestion.viewCnt} views</div>
+	        			</li>
+	        		</c:forEach>
+        		</c:when>
+        	</c:choose>
+            <!-- <li>
                 <div id="postList">
                     <a href="/algorithm/explanation/view/AE-20231029-000131">
                     <div class="postTitle">최단 경로를 찾는 알고리즘</div>
@@ -147,28 +166,7 @@
                     <div class="postWriter">페이타랩</div>
                     <div class="postInfo">31 views</div>
                 </div>
-            </li>
-            <li>
-                <div id="postList">
-                    <div class="postTitle">최단 경로를 찾는 알고리즘</div>
-                    <div class="postWriter">페이타랩</div>
-                    <div class="postInfo">31 views</div>
-                </div>
-            </li>
-            <li>
-                <div id="postList">
-                    <div class="postTitle">최단 경로를 찾는 알고리즘</div>
-                    <div class="postWriter">페이타랩</div>
-                    <div class="postInfo">31 views</div>
-                </div>
-            </li>
-            <li>
-                <div id="postList">
-                    <div class="postTitle">최단 경로를 찾는 알고리즘</div>
-                    <div class="postWriter">페이타랩</div>
-                    <div class="postInfo">31 views</div>
-                </div>
-            </li>
+            </li> -->
         </ul>
         
         

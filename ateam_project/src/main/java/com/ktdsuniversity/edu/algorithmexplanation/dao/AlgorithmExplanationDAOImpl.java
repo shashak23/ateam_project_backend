@@ -37,7 +37,17 @@ public class AlgorithmExplanationDAOImpl extends SqlSessionDaoSupport implements
 	public List<AlgorithmExplanationVO> getAllAlgorithmExplanation() {
 		return getSqlSession().selectList("getAllAlgorithmExplanation");
 	}
-	
+
+	@Override
+	public int getAlgorithmExplanationCount(String algorithmCategoryId) {
+		return getSqlSession().selectOne("getAlgorithmExplanationCount", algorithmCategoryId);
+	}
+
+	@Override
+	public List<AlgorithmExplanationVO> getAlgorithmExplanationByCategory(String algorithmCategoryId) {
+		return getSqlSession().selectList("getAlgorithmExplanationByCategory", algorithmCategoryId);
+	}
+
 	@Override
 	public List<AlgorithmExplanationVO> searchAllAlgorithmExplanation(
 			SearchAlgorithmExplanationVO searchAlgorithmExplanationVO) {
