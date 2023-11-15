@@ -109,8 +109,8 @@
                                         </a>
                                     </c:otherwise>
                                 </c:choose>
-                            <td class="writer">${bookmark.memberVO.nickname}</td>
                             </td>
+                            <td class="writer">${bookmark.memberVO.nickname}</td>
                             <td class="write_day">${bookmark.generalPostVO.postDate}</td>
                             <td class="view_cnt">${bookmark.generalPostVO.viewCnt}</td>
                         </tr>
