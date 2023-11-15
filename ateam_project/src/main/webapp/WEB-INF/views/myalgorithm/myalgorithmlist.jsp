@@ -9,12 +9,9 @@
     <jsp:include page="../layout/header.jsp" />
     <script src="/js/lib/jquery-3.7.1.js"></script>
     <link rel="stylesheet" type="text/css" href="/css/common.css" />
-
 </head>
 <style>
-    *:lang(ko-KR) {
-    font-family: 'Noto Sans KR', sans-serif;
-}
+    
 
 </style>
 </head>
@@ -27,7 +24,7 @@
         <button id="solve">내가 푼 문제</button>
         <button>탈퇴</button>
     </div>
-<div id="body_controller">
+<div class="body_container">
     <form action="/codingtest/mylist" class="search_form" method="get">
         <div>
             <select name="searchType">
@@ -40,13 +37,13 @@
             </select>
             <input type="text" name="searchKeyword" value="${searchMyAlgorithmVO.searchKeyword}"/>
             <input type="hidden" name="pageNo" class="pageNo" value="0"/>
-            <button class="search_btn">검색</button>
+            <button class="btn">검색</button>
         </div>
     </form>
 </div>     
     <!-- 일단 -->
     <div class="container">
-        <table class="grid"> <!-- 클래스 이름을 'grid'로 변경했습니다 -->
+        <table class="grid">
             <caption>내가 푼 문제</caption> 
             <thead>
                 <tr id="table-tr">
@@ -159,10 +156,7 @@
          $('.list_company').mouseleave(function() {
              $('.visible').hide();
              $(this).find('a').css({'background-color': 'white', 'color': 'var(--blue)', 'box-shadow': 'none'});
-         });
-        
-         
-        
+         });      
     </script>
      <jsp:include page="../layout/footer.jsp" />
 </body>
