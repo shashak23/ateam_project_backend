@@ -10,12 +10,6 @@
     <jsp:include page="../layout/header.jsp" />
     <link rel="stylesheet" type="text/css" href="/css/common.css" />
     <style>
-	#container{
-		width: 1100px;
-		display: flex; 
-		flex-direction: column;
-		justify-content: center;
-	}
 /* 
 	.flex_button {	
 		margin: 100px 50px 0px 0px;
@@ -38,30 +32,12 @@
   	color: white;
 	} */
 
-	table th{
-		background-color: var(--light-gray);
-		height:35px;
-		color: var(--dark-gray);
-	}
-
-	table td{
-		border-bottom: 1px solid #D3D3D3;
-		color: var(--dark-gray);
-	}
-	table.table th:last-child, table.table td:last-child {
-		border-right: none;
-	}
-	
-	table.table > tbody td {
-		text-align: center;
-	}
     </style>
 </head>
 <body>
 <div class="body_container"> 
     
-    <div class="body_left_aside"></div> 
-    <div class="body">    
+    <div class="body_left_aside">
         <div class="flex_button">
             <button id="myprofile">마이페이지</button>
             <button id="bookmark">북마크</button>
@@ -69,19 +45,12 @@
             <button id="mypost">내가 쓴 게시글</button>
             <button id="solve">내가 푼 문제</button>
             <button>탈퇴</button>
-        </div>     
-
-        <div class="mybookmark_wrap">
+        </div>
+    </div>      
+    <div class="body">    
             <table class="grid">
                 <caption>나의 북마크 보기</caption>
                 <thead>
-					<colgroup>
-                        <col width="10%" />
-						<col width="25%" />
-						<col width="15%" />
-						<col width="25%" />
-						<col width="10%" />
-                </colgroup>
                 <tr>
                         <th scope="col">번호</th>
                         <th scope="col">제목</th>
@@ -115,7 +84,6 @@
                     </c:forEach>
                 </tbody>
             </table>
-        </div>
     </div>
     <div class="body_right_aside"></div>
 </div>  

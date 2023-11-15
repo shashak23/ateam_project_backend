@@ -11,16 +11,7 @@
     <link rel="stylesheet" type="text/css" href="/css/common.css" />
     <style>
     
-	#content_wrapper{
-		display: flex;
-		justify-content: center;
-	}
-	#container{
-		width: 1100px;
-		display: flex; 
-		flex-direction: column;
-		justify-content: center;
-	}
+
 
 	/* .flex_button {	
 		margin: 100px 50px 0px 0px;
@@ -42,70 +33,38 @@
 	background-color: var(--light-blue);
   	color: white;
 	} */
-
-	table th{
-		background-color: var(--light-gray);
-		height:35px;
-		color: var(--dark-gray);
-	}
-
-	table td{
-		border-bottom: 1px solid #D3D3D3;
-		color: var(--dark-gray);
-	}
-	table.table th:last-child, table.table td:last-child {
-		border-right: none;
-	}
-	
-	table.table > tbody td {
-		text-align: center;
-	}
-    table {
-        text-align: center;
-    }
  
-       
-
-    
     </style>
 </head>
 <body>
-    <div id="content_wrapper">
-        <!-- <div class="flex_button">
+<div class="body_container">
+    <div class="body_left_aside">
+        <div class="flex_button">
             <button id="myprofile">마이페이지</button>
             <button id="bookmark">북마크</button>
             <button id="modify_info">정보 수정</button>
             <button id="mypost">내가 쓴 게시글</button>
             <button id="solve">내가 푼 문제</button>
             <button>탈퇴</button>
-        </div> -->
+        </div>
+    </div>     
         <div class="body_container">
             <form action="/codingtest/mylist" class="search_form" method="get">
-                <!-- <div>
+                <div>
                     <select name="searchType">
                         <option value="subject" ${searchMyAlgorithmVO.searchType eq 'subject' ? 'selected' : ''}>제목</option>
                     </select>
                     <input type="text" name="searchKeyword" value="${searchMyAlgorithmVO.searchKeyword}"/>
                     <input type="hidden" name="pageNo" class="pageNo" value="0"/>
                     <button class="btn">검색</button>
-                </div> -->
+                </div>
             </form>
         </div>  
         <!-- 테이블 및 데이터 출력 부분 -->
-        <div id="container">
+        <div class="body">
             <table class="grid">
                 <caption>내가 푼 문제</caption> 
                 <thead>
-					<colgroup>
-                        <col width="5%" />
-                        <col width="10%" />
-                        <col width="10%" />
-                        <col width="40%" />
-                        <col width="10%" />
-                        <col width="20%" />
-                        <col width="10%" />
-                        <col width="10%" />
-                    </colgroup>
                     <tr>
                         <th scope="col">제목</th>
                         <th scope="col">제출회사</th>
@@ -114,7 +73,6 @@
                         <th scope="col">조회수</th>
                         <th scope="col">난이도</th>
                         <th scope="col">정답여부</th>
-                        <th scope="col">삭제</th>
                     </tr>
 				</thead>
                 <tbody>
@@ -127,7 +85,6 @@
                             <td>${myAlgo.algorithmQuestionVO.viewCnt}</td>
                             <td>${myAlgo.algorithmQuestionVO.algorithmTierId}</td>
                             <td>${myAlgo.correctAnswerYn}</td>
-                            <td><a href="/home/myalgorithm/delete/${myAlgo.myAlgorithmQuestionId}">삭제</a></td>
                         </tr>
                     </c:forEach>
                 </tbody>
@@ -142,6 +99,7 @@
                 </c:otherwise>
             </c:choose>
         </div>
+        <div class="body_right_aside"></div>
     </div>
     <jsp:include page="../layout/footer.jsp" />
     <script>
