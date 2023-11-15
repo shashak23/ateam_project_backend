@@ -60,6 +60,12 @@
 	table.table > tbody td {
 		text-align: center;
 	}
+    /* colgroup col:first-child {
+            width: 5%; 
+        } */
+       
+
+    
     </style>
 </head>
 <body>
