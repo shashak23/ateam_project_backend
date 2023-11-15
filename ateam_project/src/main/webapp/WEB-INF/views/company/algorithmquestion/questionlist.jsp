@@ -141,6 +141,15 @@
 </script>
 </head>
 <style>
+	  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style: none;
+    text-decoration: none;
+    color: var(--dark);
+}
+
 	body > .body_container {
     width: 100%;
     display: grid;
@@ -160,7 +169,7 @@
 	}
 
 	#toolbar{
-		position: fixed;
+		
 		margin: 25px 0px 0px 20px;
 		width: 200px;
 		padding: 15px;
@@ -219,9 +228,7 @@
 		width: 35px;
 		height: 34px;
 		background-color: transparent;
-		position: absolute;
-		top: 561px;
-		left: 175px;
+		
 	}
 
 	h3{
@@ -232,6 +239,7 @@
 		text-decoration: none;
 	}
 
+	/* common css */
 	table {
     border-collapse: collapse;
 }
@@ -339,12 +347,9 @@ table.grid > tbody > tr > td {
 		<div class="body_left_aside">
 			<div id="toolbar">
 				<div id="pageName">코딩테스트</div>
-				<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.memberType eq 'COMPANY'}">
 					<div id="registerArticle">
 						<button class="register" type="button" >글작성</button>
-					</div>
-					</c:if>
-				
+					</div>		
 				<div class="search_area">
 					<form id="search-form"
 						method="get"

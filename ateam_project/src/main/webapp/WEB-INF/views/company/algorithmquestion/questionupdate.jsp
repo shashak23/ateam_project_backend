@@ -528,12 +528,39 @@
         font-size: 12px; 
     }
 
-    #container{
+    * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style: none;
+    text-decoration: none;
+    color: var(--dark);
+}
+
+    body > .body_container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1080px 1fr;
+}
+
+
+    body > .body_container > .body {
+    grid-column: 2/3;
+    }
+  
+    body > .body_container > .body_left_aside {
+        grid-column: 1/2;
+    }
+
+    body > .body_container > .body_right_aside {
+        grid-column: 3/4;
+    }
+
+    /* #container{
         width:800px;
-        /* height: 1000px;  */
         margin: 0 auto;
         margin-top: 40px;
-    }
+    } */
 
     div.grid {
         display: grid;
@@ -620,52 +647,54 @@
 
 </style>
 <body>
-	<div id="container">
-	<form:form modelAttribute="algorithmQuestionVO" method="post"
-	           action="/algorithm/question/update">
-	    <input type="hidden" name="companyAlgorithmQuestionId" value="${algorithmQuestionVO.companyAlgorithmQuestionId}" />
-		<div class="grid">
-		    <label class="label" for="algorithmCategoryIdList">알고리즘 카테고리</label>
-		    <div id="algorithm_category"></div>
-		    
-            
-            <label class="label" for="algorithmTierId">난이도</label>
-		    <select id="algorithmTierId" name="algorithmTierId" required="required">
-                <option value="">선택하세요 (난이도최하:1 / 난이도최상:5)</option>
-                <option value="Lv.1">Lv.1</option>
-                <option value="Lv.2">Lv.2</option>
-                <option value="Lv.3">Lv.3</option>
-                <option value="Lv.4">Lv.4</option>
-                <option value="Lv.5">Lv.5</option>
-            </select>
-		    
-            <input id="algorithmTitle" type="text" name="algorithmTitle"
-                   value="${algorithmQuestionVO.algorithmTitle}" />
-            
-            <label class="label" for="algorithmContent">문제내용</label>
-            <textarea name="algorithmContent" id="algorithmContent">${algorithmQuestionVO.algorithmContent}</textarea>
-            
-            <label class="label" for="algorithmSolution">제한사항</label>
-            <textarea name="algorithmSolution" id="algorithmSolution">${algorithmQuestionVO.algorithmSolution}</textarea>
-            
-            <label class="label" for="defaultCode">기본 제공 코드</label>
-            <textarea id="defaultCode" name="defaultCode" >${algorithmQuestionVO.defaultCode}</textarea>
-            
-            <label id="testData">테스트 데이터</label>
-		    <div id="table-div"></div>
-            <div id="add-btn">
-                <button id="add-row">행 추가</button>
-                <button id="add-col">열 추가</button>
-            </div>
-            <input type="hidden" name="content" id="answerJson"/>
-            <div class="btn-group">
-                <div class="right-align">
-                    <button id="submit-btn">저장</button>
+	<div class="body_container">
+        <div class="body_left_aside"></div>
+        <div class="body">
+            <form:form modelAttribute="algorithmQuestionVO" method="post"
+                        action="/algorithm/question/update">
+                <input type="hidden" name="companyAlgorithmQuestionId" value="${algorithmQuestionVO.companyAlgorithmQuestionId}" />
+                <div class="grid">
+                    <label class="label" for="algorithmCategoryIdList">알고리즘 카테고리</label>
+                    <div id="algorithm_category"></div>    
+                    <label class="label" for="algorithmTierId">난이도</label>
+                    <select id="algorithmTierId" name="algorithmTierId" required="required">
+                        <option value="">선택하세요 (난이도최하:1 / 난이도최상:5)</option>
+                        <option value="Lv.1">Lv.1</option>
+                        <option value="Lv.2">Lv.2</option>
+                        <option value="Lv.3">Lv.3</option>
+                        <option value="Lv.4">Lv.4</option>
+                        <option value="Lv.5">Lv.5</option>
+                    </select>
+                    
+                    <input id="algorithmTitle" type="text" name="algorithmTitle"
+                        value="${algorithmQuestionVO.algorithmTitle}" />
+                    
+                    <label class="label" for="algorithmContent">문제내용</label>
+                    <textarea name="algorithmContent" id="algorithmContent">${algorithmQuestionVO.algorithmContent}</textarea>
+                    
+                    <label class="label" for="algorithmSolution">제한사항</label>
+                    <textarea name="algorithmSolution" id="algorithmSolution">${algorithmQuestionVO.algorithmSolution}</textarea>
+                    
+                    <label class="label" for="defaultCode">기본 제공 코드</label>
+                    <textarea id="defaultCode" name="defaultCode" >${algorithmQuestionVO.defaultCode}</textarea>
+                    
+                    <label id="testData">테스트 데이터</label>
+                    <div id="table-div"></div>
+                    <div id="add-btn">
+                        <button id="add-row">행 추가</button>
+                        <button id="add-col">열 추가</button>
+                    </div>
+                    <input type="hidden" name="content" id="answerJson"/>
+                    <div class="btn-group">
+                        <div class="right-align">
+                            <button id="submit-btn">저장</button>
+                        </div>
+                    </div>
                 </div>
-            </div>
+            </form:form>
         </div>
-	</form:form>
-</div>
-<jsp:include page="../../layout/footer.jsp"></jsp:include>
+        <div class="body_right_aside"></div>
+    </div>
+    <jsp:include page="../../layout/footer.jsp"></jsp:include>
 </body>
 </html>
