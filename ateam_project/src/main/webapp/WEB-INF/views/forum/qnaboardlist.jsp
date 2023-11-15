@@ -5,157 +5,92 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" id="viewport" content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, width=device-width"/>
-    <title>devGround</title>
-	   
-    <script src="js/lib/jquery-3.7.1.js"></script>
-    <jsp:include page="../layout/header.jsp"/>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" id="viewport" content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, width=device-width"/>
+<title>devGround</title>
+<script src="js/lib/jquery-3.7.1.js"></script>
+<jsp:include page="../layout/header.jsp"/>
+<link rel="stylesheet" type="text/css" href="/css/common.css" />
 <style>
-            table {
-            	border-collapse: collapse;
-            }
-            .wrap {
-	            display: flex;
-	            justify-content: center;
-	            margin: 0 auto;
-	            margin-right: 15%;
-            }
-
-            .container {
-                display: inline-block;
-                width: 980px;
-                margin: 0 auto;     
-            }
-            .button_list {
-                margin:  0 auto;
-                margin-bottom: 15px;
-                
-            }
-            .board_list_box {
-                position: relative;
-                bottom: 400px;
-                margin: 0 auto;
-                margin-left: 25%;
-                margin-top: 90px;
-                border-top:none;
-                border-bottom:none;
-                border-left: none;
-                border-right: none;
-            }
-
-            .btn_st_2 {
-                position: relative;
-                left: 65px;
-                margin: 0 auto;    
-                margin-right: 30px;          
-                background-color: var(--hashtag-blue);
-                border-radius: 5px;
-                border: none;
-                width: 60px; 
-                height: 30px;
-            }
-            .btn_write_1 {
-                position: relative;
-                left: 900px;
-                margin-top: 30px;
-                background-color: var(--hashtag-blue);
-                color: white;
-                border-radius: 5px;
-                border: none;
-                width: 70px; 
-                height: 30px;
-                margin-bottom: 50px;
-            }
-            #button_list_1 tr th {
-                background-color: var(--light-gray);
-                border-bottom: 1px solid var(--dark-gray);
-                color: var(--dark-gray);       
-            }    
-            .table-header_01 { 
-                width: 50px;
-                height: 35px;
-             }
-             .pratice_01,.pratice_02,.pratice_03,.pratice_04 {
-                border-bottom: 1px solid var(--gray);
-                text-align: center;
-                color: var(--dark-gray);
-             }
-             .pratice {
-                margin-top: 42px;
-                border-bottom: 1px solid var(--gray);
-             }
-             .text_controller {
-                position: relative;
-                bottom: 20px;
-             }
-         #hashtag {
-            margin: 0 auto;
-            margin-top: 50px;
-            text-align: center;
-            font-size: 40px;
-            font-weight: bold;
-            
-         }
-         .hashtag_wrap {
-	        margin: 0 auto;  
-	        display: flex;
-	        flex-direction: row;
-	        flex-wrap: wrap;
-	        width: 780px;
-	        
-	        }
-	    
-
+   /* 본문 */
+   .board_list_box {
+       position: relative;
+       bottom: 400px;
+       margin: 0 auto;
+       margin-top: 490px;
+       margin-left: 50px;
+       border-top:none;
+       border-bottom:none;
+       border-left: none;
+       border-right: none;
+   }
    
-        .hashtag_incomplete {
-           /* background-color: yellow;  */
-           text-align: center;
-           font-size: 20px;
-           margin: 0 auto;
-           margin-left: 10px;
-           margin-top: 30px;
-           width: 85px;
-           height: 35px;
-           border-radius: 10px;
-           border: none;
-           cursor: pointer;
-           text-decoration: underline;
-           
-        }
-        .hashtag_incomplete:hover {
-           background-color: var(--blue);
-        }
-
-        .list_search {
-           text-align: right;
-        }
-
-	    #hot_post a {
-		    color: black; 
-		    margin: 0 auto;
-		    
-		    line-height: 3; 
-		}
-		
-		.my-aside {
-			position: fixed;
-			right: 0;
-			top: 220px;
-			width: 250px;
-			
-		}
-		
-		
+   #button_list_1 tr th {
+       background-color: var(--light-gray);
+       border-bottom: 1px solid var(--dark-gray);
+       color: var(--dark-gray);       
+   }    
+   .table-header_01 { 
+       width: 50px;
+       height: 35px;
+    }
+    .pratice_01,.pratice_02,.pratice_03,.pratice_04 {
+       border-bottom: 1px solid var(--gray);
+       text-align: center;
+       color: var(--dark-gray);
+    }
+    .pratice {
+       margin-top: 30px;
+       border-bottom: 1px solid var(--gray);
+    }
+    .text_controller {
+       position: relative;
+       bottom: 20px;
+    }
+    /* 해시태그 */
+     #hashtag {
+        margin: 0 auto;
+        margin-top: 30px;
+        text-align: center;
+        font-size: 40px;
+        font-weight: bold;
         
-            /* 추가css */
-            #left_container{
+     }
+     .hashtag_wrap {
+	      margin: 0 auto;  
+	      display: flex;
+	      flex-direction: row;
+	      flex-wrap: wrap;
+	      width: 780px;
+     
+     }
+    .hashtag_incomplete {
+       text-align: center;
+       font-size: 20px;
+       margin: 0 auto;
+       margin-left: 10px;
+       margin-top: 30px;
+       width: 85px;
+       height: 35px;
+       border-radius: 10px;
+       border: none;
+       cursor: pointer;
+       text-decoration: underline;
+       
+    }
+    .hashtag_incomplete:hover {
+       background-color: var(--blue);
+    }
+    
+    /* 글작성 버튼 */
+    #left_container {
       display: flex;
       justify-content: center;
       width:300px;
       min-height: 500px;
-      margin-top: 8px;
+      margin-top: 42px;
+
    }
 
    #toolbar{
@@ -167,16 +102,13 @@
       align-items: center; 
    }
 
-   #toolbar > #registerArticle{
-      width:180px;   
-   }
 
    #toolbar > #registerArticle > .register{
       width: 220px;
       height:35px;
       margin-top: 9px;
       color:black;
-      background-color: var(--hashtag-blue);
+      background-color: #26577C;
       border-radius: 6px;
       border:none;
       transition: box-shadow 0.1s ease;
@@ -186,61 +118,87 @@
       border: 2px solid #1E90FF;
    }
    #pageName {
-    font-size: 30px;
-    font-weight: bold;
+	    font-size: 30px;
+	    font-weight: bold;
+	    font-color: #white;
    }
    .search_menu {
-    position: relative;
-    top: 22px;
+	    position: relative;
+	    top: 22px;
    }
    .button_box {
-    margin: 0 auto;
-    margin-left: 160px;
-    margin-top: 10px;
-    background-color: var(--hashtag-blue);
-    border-radius: 5px;
-    border: none;
-    width: 60px; 
-    height: 30px;
+	    margin: 0 auto;
+	    margin-left: 160px;
+	    margin-top: 10px;
+	    background-color: #26577C;
+	    border-radius: 5px;
+	    border: none;
+	    width: 60px; 
+    	height: 30px;
    }
    .sc_text {
-    margin: 0 auto;
-    margin-left: 68px;
-    width: 150px;
-   }.ranking_controller {
-    border: 1px solid var(--light-gray);
-    border-radius: 8px;
-    margin-right: 40px;
-   
+	    margin: 0 auto;
+	    margin-left: 68px;
+	    width: 150px;
    }
-   /* 그래프 */
-   .ranking_controller.expanded {
-    overflow: hidden;
-    height: 0;
-    transition: height 1s;
-}
-
-.ranking_controller.expanded.expanded {
-    height: 200px; /* 원하는 높이로 설정하세요. */
-    transition: height 1s;
-}
-
-.ranking_wrap_1 {
-    list-style: none;
-    padding: 0;
-}
-
-.ranking_wrap_1 li {
-    background-color: var(--default-color); /* 기본 배경색 */
-    margin-bottom: 5px;
-    transition: width 0.5s;
-}
-
-.ranking_wrap_1 li:hover {
-    background-color: var(--highlight-color); /* 마우스를 올렸을 때 배경색 변경 */
-}
-
-    </style>
+    /* 랭킹박스 */
+	.my-aside {
+		display: flex;
+		flex-direction: column;
+	    justify-content: center;
+	    width: 100%;
+	    margin-bottom: 20px;
+		margin-top: 90px;
+		
+	}
+   .ranking_controller , .ranking_controller_expanded{
+   		display: flex;
+	    border: 1px solid var(--light-gray);
+	    border-radius: 10px;
+	    margin-right: 40px;
+   		flex-direction: column;
+    	border: 1px solid var(--light-gray);
+   }
+   .ranking_controller .viewCnt {
+   		display: flex;
+	    justify-content: center;
+	    padding: 10px 0;
+	    border-bottom: 1px solid var(--gray);
+	    width: 100%;
+   }
+   
+   .ranking_controller .ranking_wrap {
+   		display: flex;
+	    flex-direction: column;
+	    justify-content: center;
+	    width: 100%;
+	    margin-bottom: 20px;
+   }
+   
+   .ranking_controller .ranking_wrap ul .hot_post {
+	    flex: 1;
+	    width: 100%;
+	    border-bottom: 1px solid var(--light-gray);
+	    transition: all 0.1s;
+	    color: var(--dark);
+	    cursor: pointer;
+  }
+  
+  .ranking_controller .ranking_wrap ul .hot_post:hover {
+    	background-color: var(--hashtag-blue);
+  }
+  
+  .body_right .ranking_wrap ul .hot_post a {
+	    width: 270px;
+	    color: var(--dark);
+	    display: block;
+	    padding: 15px 20px;
+	    overflow: hidden;
+	    text-overflow: ellipsis;
+	    white-space: nowrap;
+  }
+  
+</style>
 </head>
 <body>
     <nav>
@@ -249,33 +207,34 @@
             <div class="hashtag_wrap"></div>
         </div> 
     </nav>
-    <div id="left_container">
-        <div id="toolbar">
-            <div id="pageName">질문게시판</div>
-            <div id="registerArticle">
-                <button class="register" type="button" onclick="location.href='/qnaboard/create';">글작성</button>
-            </div>
-            <div class="search_area">
-               
-                <form id="search-form" method="get" action="/qnaboard/list">
-                  <div class="button_list">
-                    <select class="search_menu" name="searchType">
-                        <option value="postTitle" ${searchForumVO.searchType eq 'postTitle' ? 'selected' : ''}>제목</option>
-                        <option value="postContent" ${searchForumVO.searchType eq 'postContent' ? 'selected' : ''}>내용</option>
-                        <option value="postWriter" ${searchForumVO.searchType eq 'postWriter' ? 'selected' : ''}>작성자</option>
-                    </select>
-                    <input class="sc_text" type="text"  placeholder="검색어 입력" name="searchKeyword" value="${searchForumVO.searchKeyword}" />                    
-                            <button class="button_box" type="submit" class="btn_st_2">
-                                검색
-                            </button>                               
-                  </div>               
-               </form>               
-            </div>            
-         </div>
-    </div>
-   
- 
-    <div class="controll_all">
+    <div class="body_container">
+	    <div class="body_left_aside">
+		    <div id="left_container">
+		        <div id="toolbar">
+		            <div id="pageName"></div>
+		            <div id="registerArticle">
+		                <button class="register" type="button" onclick="location.href='/qnaboard/create';">글작성</button>
+		            </div>
+		            <div class="search_area">
+		               
+		                <form id="search-form" method="get" action="/qnaboard/list">
+		                  <div class="button_list">
+		                    <select class="search_menu" name="searchType">
+		                        <option value="postTitle" ${searchForumVO.searchType eq 'postTitle' ? 'selected' : ''}>제목</option>
+		                        <option value="postContent" ${searchForumVO.searchType eq 'postContent' ? 'selected' : ''}>내용</option>
+		                        <option value="postWriter" ${searchForumVO.searchType eq 'postWriter' ? 'selected' : ''}>작성자</option>
+		                    </select>
+		                    <input class="sc_text" type="text"  placeholder="검색어 입력" name="searchKeyword" value="${searchForumVO.searchKeyword}" />                    
+		                        <button class="button_box" type="submit" class="btn_st_2">
+		                            검색
+		                        </button>                               
+		                  </div>               
+		               </form>               
+		            </div>            
+		         </div>
+		    </div>
+	    </div>
+    <div class="body">
         <main class="contents">
             <!-- 게시판 리스트 -->
             <div id="container_controller">
@@ -321,22 +280,21 @@
                 </form>
             </div>
         </main>
-        <aside class="my-aside">
-	          <!-- 조회수순 랭킹 -->
-	          <h3 id="viewCnt">주간 질답 랭킹 ▶ </h3>
-              <div class="ranking_controller">
-	          <div class="view_ranking_wrap"></div>         
-	           <div class= "ranking_list">
-	              <ul class="ranking_wrap"></ul>
-	          </div> 
-             </div>
-              <h3 id="like_top">명예의 전당 ▶ </h3>
-              <div class="ranking_controller expanded">
-                <div class="view_ranking_wrap_1">
-                    <ul class="ranking_wrap_1"></ul>
-                </div>
-              </div>
-	      </aside>
+    </div>
+        <div class="body_right_aside">
+	        <div class="my-aside">
+	        	  <!-- 명예의 전당 -->
+	              <div class="ranking_controller">
+		            <h3 class="viewCnt">명예의 전당 </h3>
+	                  <ul class="ranking_wrap_1"></ul>
+	              </div>
+		          <!-- 조회수순 랭킹 -->
+	              <div class="ranking_controller">
+		          	<h3 class="viewCnt">주간 질답 랭킹 </h3>
+		              <ul class="ranking_wrap"></ul>
+	             </div>
+		      </div>
+	      </div>
     </div>
    <jsp:include page="../layout/footer.jsp" />
    <script src="./js/jquery-1.11.3.min.js"></script>

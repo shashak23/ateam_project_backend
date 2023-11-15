@@ -3,142 +3,104 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <title>devGround</title>
-        <script src="/js/lib/jquery-3.7.1.js"></script> 
-         <link rel="stylesheet" href="/css/style.css"> 
-         <script src="./js/swiper.min.js"></script>
-         <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-         <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-        <jsp:include page="../layout/header.jsp"/>
-        <style>
-            table {
-            	border-collapse: collapse;
-            }
-            .wrap {
-            display: flex;
-            justify-content: center;
-            margin: 0 auto;
-            margin-right: 15%;
-            }
+<meta charset="UTF-8">
+<title>devGround</title>
+<script src="/js/lib/jquery-3.7.1.js"></script> 
+<link rel="stylesheet" href="/css/style.css"> 
+<script src="./js/swiper.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+<script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+<jsp:include page="../layout/header.jsp"/>
+<style>
+	/* 본문 */
+   .wrap {
+	   display: flex;
+	   justify-content: center;
+	   margin: 0 auto;
+	   
+   }
 
-            .container {
-                display: inline-block;
-                width: 980px;
-                margin: 0 auto;     
-            }
-            .button_list {
-                margin:  0 auto;
-                margin-bottom: 15px;
-                
-            }
-            .board_list_box {
-                margin: 0 auto;
-                margin-top: 90px;
-                border-top: none;
-                border-bottom:none;
-                border-left: none;
-                border-right: none;
-            }
+   .container {
+       display: inline-block;
+       width: 980px;
+       margin: 0 auto;     
+   }
+   
+   .board_list_box {
+       margin: 0 auto;
+       margin-top: 90px;
+       margin-left: 250px;
+       border-top: none;
+       border-bottom:none;
+       border-left: none;
+       border-right: none;
+   }
+   .viedo_ver {
+	   position: absolute;
+	   top: 0;
+	   right: 10px; 
+	   margin: 0 auto;
+	   margin-top: 700px;
+	   margin-right: 10px;
 
-            .btn_st_2 {
-                position: relative;
-                left: 65px;
-                margin: 0 auto;    
-                margin-right: 30px;          
-                background-color: var(--hashtag-blue);
-                border-radius: 5px;
-                border: none;
-                width: 60px; 
-                height: 30px;
-            }
-            .btn_write_1 {
-                position: relative;
-                left: 900px;
-                margin-top: 30px;
-                background-color: var(--hashtag-blue);
-                color: white;
-                border-radius: 5px;
-                border: none;
-                width: 70px; 
-                height: 30px;
-                margin-bottom: 50px;
-            }
-            .viedo_ver {
-            position: absolute;
-            top: 0;
-            right: 10px; 
-            margin: 0 auto;
-            margin-top: 700px;
-            margin-right: 10px;
+   }
+   .advertising {
+	   position: absolute;
+	   top: 0;
+	   right: 10px; 
+	   margin: 0 auto;
+	   margin-top: 1000px;
+	   margin-right: 10px;
+   }
+   .why_code {
+       width: 300px;
+       height: 250px;
+   }
 
-            }
-            .advertising {
-            position: absolute;
-            top: 0;
-            right: 10px; 
-            margin: 0 auto;
-            margin-top: 1000px;
-            margin-right: 10px;
-            }
-            .why_code {
-                width: 300px;
-                height: 250px;
-            }
-            .sc_text {
-                position: relative;
-                left: 70px;
-                margin: 0 auto;
-                margin-right: 20px;
-                width: 150px;
-            }
+   #button_list_1 tr th {
+       background-color: var(--light-gray);
+       border-bottom: 1px solid var(--dark-gray);
+       color: var(--dark-gray);       
+   }    
+   .table-header_01 {                        
+       width: 50px;
+       height: 35px;
+    }
+    .pratice_01,.pratice_02,.pratice_03,.pratice_04 {
+       border-bottom: 1px solid var(--gray);
+       text-align: center;
+       color: var(--dark-gray);
+    }
+    .pratice {
+       margin-top: 42px;
+       border-bottom: 1px solid var(--gray);
+    }
+    .text_controller {
+       position: relative;
+       bottom: 20px;
+    }
+    /*swiper제어*/
+   .swiper-slide img {
+   
+   
+       position: relative;
+	   max-width: 100%;
+	   height: auto;
+	   overflow: hidden;
+   }
 
-            #button_list_1 tr th {
-                background-color: var(--light-gray);
-                border-bottom: 1px solid var(--dark-gray);
-                color: var(--dark-gray);       
-            }    
-            .table-header_01 {                        
-                width: 50px;
-                height: 35px;
-             }
-             .pratice_01,.pratice_02,.pratice_03,.pratice_04 {
-                border-bottom: 1px solid var(--gray);
-                text-align: center;
-                color: var(--dark-gray);
-             }
-             .pratice {
-                margin-top: 42px;
-                border-bottom: 1px solid var(--gray);
-             }
-             .text_controller {
-                position: relative;
-                bottom: 20px;
-             }
-             /*swiper제어*/
-       
-            .swiper-slide img {
-                position: relative;
-            max-width: 100%;
-            height: auto;
-            overflow: hidden; /* 이미지가 부모 컨테이너를 벗어나지 않도록 함 */
-            }
-
-            .swiper-button-prev,
-            .swiper-button-next {
-                margin-top: -100px;
-            }
-            .button_box {
-                position: relative;
-                left: 95px;
-                margin: 0 auto;
-                margin-top: 5px;
-              
-            }
-         
-
-            /* 추가css */
-            #left_container{
+   .swiper-button-prev,
+   .swiper-button-next {
+       margin-top: -100px;
+   }
+   .button_box {
+       position: relative;
+       left: 95px;
+       margin: 0 auto;
+       margin-top: 5px;
+   }
+   /* 글작성 css */
+   #left_container{
       display: flex;
       justify-content: center;
       width:300px;
@@ -152,7 +114,8 @@
       margin: 25px 0px 0px 20px;
       width: 200px;
       padding: 15px;
-      align-items: center; 
+      align-items: center;
+      margin-top: 60px;
    }
 
    #toolbar > #registerArticle{
@@ -181,12 +144,32 @@
     position: relative;
     top: 22px;
    }
+   
+   .btn_st_2 {
+       position: relative;
+       left: 65px;
+       margin: 0 auto;    
+       margin-right: 30px;          
+       background-color: var(--hashtag-blue);
+       border-radius: 5px;
+       border: none;
+       width: 60px; 
+       height: 30px;
+   }
+   
    .input_box {
     position: relative;
     right: 100px;
    }
+   .sc_text {
+       position: relative;
+       left: 70px;
+       margin: 0 auto;
+       margin-right: 20px;
+       width: 150px;
+   }
 
-        </style>
+</style>
 </head>
 <body>
     <div class="swiper-container">
@@ -204,23 +187,13 @@
           <div class="swiper-button-prev"></div>
           <div class="swiper-button-next"></div>
     </div>
-          <aside>
-             <div class="advertising">
-	              <a href="https://blog.naver.com/roborang/221827208404">
-	              <img class="why_code" src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMDAyMjZfOTcg%2FMDAxNTgyNzAzOTk2MzQ1.bsJ-QZhJSxCCLwgYAk4ibsKrPqHNk-7SlEYEowKsf6Ug.MReP1pZZeA_b7SBVMUbJUspOftiFOZ-_rvBxkWVktmIg.PNG.roborang%2F%25C4%25DA%25B5%25F9%25B1%25B3%25C0%25B0_%25BF%25D6_%25C7%25D8%25BE%25DF_%25C7%25D2%25B1%25EE%25BF%25E4.png&type=sc960_832">
-	              </a> 
-            </div>
-            <div class="viedo_ver">
-                <a href="https://www.youtube.com/watch?v=iI0s1JtKpy8">
-                    <iframe width="300" height="250" src="https://www.youtube.com/embed/iI0s1JtKpy8" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-                </a>
-            </div>        
-          </aside>
+    
+	<div class="body_container">
     <div id="wrap" class="wrap">
         <!-- 좌측 툴바 -->
         <div id="left_container">
             <div id="toolbar">
-                <div id="pageName">자유게시판</div>
+                <div id="pageName"></div>
                 <div id="registerArticle">
                     <button class="register" type="button" onclick="location.href='/freeboard/create';">글작성</button>
                 </div>
@@ -235,15 +208,14 @@
                         </select>
                         <input type="text" class="sc_text" placeholder="검색어 입력" name="searchKeyword" value="${searchForumVO.searchKeyword}" />
                             <div class="button_box">
-                        <button type="submit" class="btn_st_2">
-                            검색
-                        </button>       
+		                        <button type="submit" class="btn_st_2">
+		                            검색
+		                        </button>       
                             </div>                         
                       </div>               
                    </form>               
                 </div>            
              </div>
-    
         </div>
         <!-- 본문 -->
         <section id="container" class="container">
@@ -296,8 +268,20 @@
                             </div>                       
                         </fieldset>
                     </form>
+    		 <div class="body_right_aside">
+	             <div class="advertising">
+		              <a href="https://blog.naver.com/roborang/221827208404">
+		              <img class="why_code" src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMDAyMjZfOTcg%2FMDAxNTgyNzAzOTk2MzQ1.bsJ-QZhJSxCCLwgYAk4ibsKrPqHNk-7SlEYEowKsf6Ug.MReP1pZZeA_b7SBVMUbJUspOftiFOZ-_rvBxkWVktmIg.PNG.roborang%2F%25C4%25DA%25B5%25F9%25B1%25B3%25C0%25B0_%25BF%25D6_%25C7%25D8%25BE%25DF_%25C7%25D2%25B1%25EE%25BF%25E4.png&type=sc960_832">
+		              </a> 
+	            </div>
+	            <div class="viedo_ver">
+	                <a href="https://www.youtube.com/watch?v=iI0s1JtKpy8">
+	                    <iframe width="300" height="250" src="https://www.youtube.com/embed/iI0s1JtKpy8" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+	                </a>
+	            </div>        
+	          </div>
     		</div> 
-        
+        </div>
     <jsp:include page="../layout/footer.jsp" />
 </body>
     <script>
