@@ -76,6 +76,35 @@
 </script>
 </head>
 <style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style: none;
+    text-decoration: none;
+    color: var(--dark);
+}
+
+body > .body_container {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1080px 1fr;
+}
+
+/* Main Contents */
+body > .body_container > .body {
+    grid-column: 2/3;
+}
+
+/* Main Contents 왼쪽 여백*/
+body > .body_container > .body_left_aside {
+    grid-column: 1/2;
+}
+
+/* Main Contents 오른쪽 여백*/
+body > .body_container > .body_right_aside {
+    grid-column: 3/4;
+}
 
 	#ide {
 		width: 100%;
@@ -335,89 +364,92 @@
     
 </style>
 <body>
-    
-	<div id="container">
-            <div id="line"></div>
-            <div id="question_info">              
-                <label for="algorithmWriter"></label>
-                <div>${algorithmQuestionVO.memberVO.nickname}</div>
+    <div class="body_left_aside"></div>
+	    <div class="body_container">
+            <div class="body">
+                <div id="line"></div>
+                <div id="question_info">              
+                    <label for="algorithmWriter"></label>
+                    <div>${algorithmQuestionVO.memberVO.nickname}</div>
 
-                <label for="algorithmTierId"></label>
-                <div>${algorithmQuestionVO.algorithmTierId}</div>
-                
-                <label for="algorithmCategoryId"></label>
-                <div>${algorithmQuestionVO.commonCodeVO.codeContent}</div>
-            </div>
-           
-            <div id="algorithm_Title">
-                <label for="algorithmTitle"></label>
-                <div>${algorithmQuestionVO.algorithmTitle}</div>
-            </div>
+                    <label for="algorithmTierId"></label>
+                    <div>${algorithmQuestionVO.algorithmTierId}</div>
+                    
+                    <label for="algorithmCategoryId"></label>
+                    <div>${algorithmQuestionVO.commonCodeVO.codeContent}</div>
+                </div>
+            
+                <div id="algorithm_Title">
+                    <label for="algorithmTitle"></label>
+                    <div>${algorithmQuestionVO.algorithmTitle}</div>
+                </div>
 
-                <label id="algorithmContent" for="algorithmContent"></label>
-                <div>${algorithmQuestionVO.algorithmContent}</div>
-          
-            <div class="flex">
-                <button class="btn btn-primary">제한사항</button>                   
-                <form:form modelAttribute="myAlgorithmVO" method="post" action="/algorithm/question/view/${companyAlgorithmQuestionId}">	
-                    <div>
-                        <form:errors path="myAnswer" element="div" cssClass="errors" />
-                    </div>
-                    <label for="myAnswer"></label> <!-- 웹IDE 테이블에 신규생성? -->
-                    <iframe src="/html/webide.html" name="ide" id="ide"></iframe>
-                    <textarea name="myAnswer" id="myAnswer" style="display:none;"></textarea>
-                </form:form>
-                <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.memberType eq 'GENERAL'}">
-                    <div id="result">
-                        <label for="showResult">실행 결과</label>
-                    </div>
-                    <div id="show_result"></div>
-                    <c:forEach var="resultItem" items="${result}" varStatus="resultStatus">
-                        <ul>
-                            <li>테스트 ${resultStatus.index + 1} > ${resultItem}</li>
-                            <c:forEach var="codeResultItem" items="${codeResultList}" varStatus="codeResultStatus">
-                                <c:if test="${codeResultStatus.index eq resultStatus.index * 2}">
-                                    <c:out value="(${codeResultItem})" />
-                                </c:if>
-                            </c:forEach>
-                        </ul>
-                    </c:forEach>
-				</c:if>
-                  <!-- 일반회원이 로그인 했을 시 -->
-                  <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.memberType eq 'GENERAL'}">
-                    <div id="buttonList">
-                        <button id="explanationLink" type="button" onclick="location.href='/algorithm/explanation/list';">알고리즘 해설 보러가기</button>  
-                        <button id="submit-btn" >제출 후 채점하기</button>
-                    </div>
-                  </c:if>
-                <div id="checkAnswer">${popupMessage}</div>
-            </div>
-        
-        <div class="grid">     
-            <div class="btn-group">
-                <div class="right-align">
-                    <!-- 로그인 하지 않았을 때 -->
-                    <c:if test="${empty sessionScope._LOGIN_USER_}">
-                        <a href="/member/auth">로그인하기</a>
+                    <label id="algorithmContent" for="algorithmContent"></label>
+                    <div>${algorithmQuestionVO.algorithmContent}</div>
+            
+                <div class="flex">
+                    <button class="btn btn-primary">제한사항</button>                   
+                    <form:form modelAttribute="myAlgorithmVO" method="post" action="/algorithm/question/view/${companyAlgorithmQuestionId}">	
+                        <div>
+                            <form:errors path="myAnswer" element="div" cssClass="errors" />
+                        </div>
+                        <label for="myAnswer"></label> <!-- 웹IDE 테이블에 신규생성? -->
+                        <iframe src="/html/webide.html" name="ide" id="ide"></iframe>
+                        <textarea name="myAnswer" id="myAnswer" style="display:none;"></textarea>
+                    </form:form>
+                    <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.memberType eq 'GENERAL'}">
+                        <div id="result">
+                            <label for="showResult">실행 결과</label>
+                        </div>
+                        <div id="show_result"></div>
+                        <c:forEach var="resultItem" items="${result}" varStatus="resultStatus">
+                            <ul>
+                                <li>테스트 ${resultStatus.index + 1} > ${resultItem}</li>
+                                <c:forEach var="codeResultItem" items="${codeResultList}" varStatus="codeResultStatus">
+                                    <c:if test="${codeResultStatus.index eq resultStatus.index * 2}">
+                                        <c:out value="(${codeResultItem})" />
+                                    </c:if>
+                                </c:forEach>
+                            </ul>
+                        </c:forEach>
                     </c:if>
-                    <!-- 해당 게시글을 작성한 기업회원이 로그인 했을 시 -->
-                    <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq algorithmQuestionVO.algorithmWriter}">
-                        <a href="/algorithm/question/update/${algorithmQuestionVO.companyAlgorithmQuestionId}">수정</a>
-                        <a href="/algorithm/question/delete/${algorithmQuestionVO.companyAlgorithmQuestionId}">삭제</a>
-                    </c:if>              
+                    <!-- 일반회원이 로그인 했을 시 -->
+                    <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.memberType eq 'GENERAL'}">
+                        <div id="buttonList">
+                            <button id="explanationLink" type="button" onclick="location.href='/algorithm/explanation/list';">알고리즘 해설 보러가기</button>  
+                            <button id="submit-btn" >제출 후 채점하기</button>
+                        </div>
+                    </c:if>
+                    <div id="checkAnswer">${popupMessage}</div>
+                </div>
+            
+            <div class="grid">     
+                <div class="btn-group">
+                    <div class="right-align">
+                        <!-- 로그인 하지 않았을 때 -->
+                        <!-- <c:if test="${empty sessionScope._LOGIN_USER_}">
+                            <a href="/member/auth">로그인하기</a>
+                        </c:if> -->
+                        <!-- 해당 게시글을 작성한 기업회원이 로그인 했을 시 -->
+                        <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq algorithmQuestionVO.algorithmWriter}">
+                            <a href="/algorithm/question/update/${algorithmQuestionVO.companyAlgorithmQuestionId}">수정</a>
+                            <a href="/algorithm/question/delete/${algorithmQuestionVO.companyAlgorithmQuestionId}">삭제</a>
+                        </c:if>              
+                    </div>
                 </div>
             </div>
-        </div>
-        
-        <div class="create_container">
-            <div class="btn-close">&times;</div>
-            <h1 class="create_title">제한 사항</h1>
-            <div>
-                ${algorithmQuestionVO.algorithmSolution}
+            
+            <div class="create_container">
+                <div class="btn-close">&times;</div>
+                <h1 class="create_title">제한 사항</h1>
+                <div>
+                    ${algorithmQuestionVO.algorithmSolution}
+                </div>
             </div>
+            <div class="overlay"></div>
         </div>
-        <div class="overlay"></div>
     </div>
+    <div class="body_right_aside"></div>
 <jsp:include page="../../layout/footer.jsp"></jsp:include>
 </body>
 </html>

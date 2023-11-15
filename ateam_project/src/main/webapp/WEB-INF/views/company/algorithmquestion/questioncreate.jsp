@@ -379,6 +379,15 @@
 </script>
 </head>
 <style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    list-style: none;
+    text-decoration: none;
+    color: var(--dark);
+}
+
     body > .body_container > .body {
     grid-column: 2/3;
 }
