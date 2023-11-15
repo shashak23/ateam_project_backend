@@ -92,6 +92,13 @@ a:link, a:hover, a:visited, a:active {
       font-size: 14px;
       margin-top: 10px;
    }
+   .comment-items {
+      border: 1px solid #EAEAEA;
+      border-radius: 12px;
+      padding: 16px;
+      margin-top: 16px;
+      margin-bottom: 20px;
+   }
    .comment{
       display: flex;
       flex-direction: column;
@@ -312,8 +319,6 @@ a:link, a:hover, a:visited, a:active {
       margin-right: 10px;
    }
 
-
-
 #button-id-list {
    position: relative;
    left:930px; 
@@ -337,64 +342,61 @@ a:link, a:hover, a:visited, a:active {
 
                 // 댓글 조회.
                 $.get("/qnaboard/view/comment/${generalPostId}", function(response) {               
-                    // 댓글 목록을 response에서 받아와서 처리하는 부분
-                    var replies = response.comments;
-                    for (var i = 0; i < replies.length; i++) {
+                     // 댓글 목록을 response에서 받아와서 처리하는 부분
+                     var replies = response.comments;
+                     if (replies.length < 1) {
+                        $(".comment-items").css("display", "none")
+                     }
+                     for (var i = 0; i < replies.length; i++) {
                         var comment = replies[i];
+                        var member = replies[i].memberVO;
                         var commentTemplate =
-                            `<div class="comment" data-comment-id="\${comment.generalCommentId}" style="padding-left: \${(comment.level - 1) * 40}px">
-                              <ul class="writer_info">
-                                 <li>작성자 <span class="comment-writer">\${comment.generalMemberVO.nickname}</span></li>
-                                 <li>|</li>
-                                 <li>등록일 \${comment.postDate}</li>
-                                 <li>|</li>
-                                 <li class="recommend-count">추천수 \${comment.likeCnt}</li>
-                              </ul>  
-            
-                                <pre class="content">\${comment.commentContent}</pre>
-                                \${comment.email == "${sessionScope._LOGIN_USER_.email}" ?
-                                	    `<div>
-                                	        <button class="recommend-comment">좋아요</button>
-                                	        <button class="update-comment">수정</button>
-                                	        <button class="delete-comment">삭제</button>
-                                	    </div>`
-                                	    :
-                                	    `<div>
-                                	        <button class="recommend-comment">좋아요</button>
-                                	        <button class="report-comment" value="2">신고</button>
-                                	        <div class="separate-line"></div>
-                                	    </div>`}
-                            </div>`;
+                              `<div class="comment" data-comment-id="\${comment.generalCommentId}" data-comment-writer="\${comment.commentWriter}"
+                                    style="padding-left: \${(comment.level - 1) * 40}px">
+                                    <ul class="writer_info">
+                                       <li>작성자 <span class="comment-writer">\${comment.generalMemberVO.nickname}</span></li>
+                                       <li>|</li>
+                                       <li>등록일 \${comment.postDate}</li>
+                                       <li>|</li>
+                                       <li class="recommend-count">추천수 \${comment.likeCnt}</li>
+                                    </ul>
+                                    <pre class="content">\${comment.commentContent}</pre>
+                                    \${comment.commentWriter == "${sessionScope._LOGIN_USER_.email}" ?
+                                       `<div>
+                                          <button class="recommend-comment">좋아요</button>
+                                          <button class="update-comment">수정</button>
+                                          <button class="delete-comment">삭제</button>
+                                       </div>`
+                                       :
+                                       `<div>
+                                          <button class="recommend-comment">좋아요</button>
+                                          <button class="report-comment" value="2">신고</button>
+                                          <div class="separate-line"></div>
+                                       </div>`}
+                              </div>`
                         var commentDom = $(commentTemplate);
-                  commentDom.find(".delete-comment").click(deleteComment);
-                  // 추천 버튼 클릭 이벤트 핸들러를 등록합니다.
-                  commentDom.find(".recommend-comment").click(recommendComment);
-                  commentDom.find(".update-comment").click(updateComment);
-                  commentDom.find(".report-comment").click(reportComment);
+                        commentDom.find(".delete-comment").click(deleteComment);
+                        // 추천 버튼 클릭 이벤트 핸들러를 등록합니다.
+                        commentDom.find(".recommend-comment").click(recommendComment);
+                        commentDom.find(".update-comment").click(updateComment);
+                        commentDom.find(".report-comment").click(reportComment);
                         $(".comment-items").append(commentDom);
-                    }
+                     } //for
                 })// $.get
         } // loadReplies
       loadReplies()
+
+
    	  // 신고버튼 클릭
       $(".report-comment").click(reportComment);
       var reportComment = function(event) {
-    	  // 댓글 내용
-    	  var content = $(this).closest(".comment").find(".content").text()
-    	  // 댓글 작성자
-    	  var writer = $(this).closest(".comment").data("comment-writer-email");
-    	  // 댓글의 고유 번호
-    	  var id = $(this).closest(".comment").data("comment-id");
-    	  
-    	  	// 필요한 값들을 찾으라고 일일히 지정해줘야 합니다
-	        // $("#report-window").find("#reportReasonContent").val(content)
-	        $("#report-window").find("#receivedReportMember").val(writer)
-	        $("#report-window").find("#reportContentId").val(id)
-	        
-	        // 모달을 표시합니다.
-	        $("#report-window").css("display", "block");
-	        console.log($(this).val())
-      };
+         console.log()
+         console.log($(this).parent().find())
+         // 모달을 표시합니다.
+      $(".report-window").css("display", "block");
+         $(".report-window").find("#reportContentId").val($(this).parent().parent().data("comment-id"))
+         $(".report-window").find("#receivedReportMemberEmail").val($(this).parent().parent().data("comment-writer"))
+      }
         
 		    // 모달 내부 "취소" 버튼 클릭 시 모달 닫기
 		    $("#cancel-window").click(function() {
@@ -570,7 +572,9 @@ a:link, a:hover, a:visited, a:active {
                <div class="space_between">
                   <div class="btn_controller">
                      <button id="like-btn">좋아요👍</button>
-                     <button id="reportQnABoard" value="3" class="report-btn">신고📌</button>
+                     <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email ne generalPostVO.postWriter}">
+                        <button id="reportQnABoard" value="3" class="report-btn">신고📌</button>
+                     </c:if>
                   </div>
                   <div class="btn_controller">
                      <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq generalPostVO.postWriter}">

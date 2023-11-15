@@ -19,19 +19,5 @@
 
   <!-- 스크롤 버튼, IDE 영역 -->
   <div id="progress">
-    <span id="progress_value">&#x1F815;</span>
+    <span id="progress_value"></span>
   </div>
-
-  <!-- 모달창 영역입니다. -->
-<div class="modal">
-  준비중입니다.
-</div>
-<div class="signup_modal">
-  <div>
-    기업으로 가입
-  </div>
-  <div>
-    개인으로 가입
-  </div>
-</div>
-<div class="overlay"></div>
