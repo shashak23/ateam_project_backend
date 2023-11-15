@@ -10,11 +10,60 @@
     <jsp:include page="../layout/header.jsp" />
     <link rel="stylesheet" type="text/css" href="/css/common.css" />
     <style>
-        /* 여기에 필요한 스타일 추가 */
+        	#content_wrapper{
+		display: flex;
+		justify-content: center;
+	}
+	#container{
+		width: 1100px;
+		display: flex; 
+		flex-direction: column;
+		justify-content: center;
+	}
+/* 
+	.flex_button {	
+		margin: 100px 50px 0px 0px;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.flex_button button {
+	  color: white;	
+    background-color: var(--gray);
+    width: 150px;
+    height: 40px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    border: 2px;
+	}
+
+	.flex_button button:hover {
+	background-color: var(--light-blue);
+  	color: white;
+	} */
+
+	table th{
+		background-color: var(--light-gray);
+		height:35px;
+		color: var(--dark-gray);
+	}
+
+	table td{
+		border-bottom: 1px solid #D3D3D3;
+		color: var(--dark-gray);
+	}
+	table.table th:last-child, table.table td:last-child {
+		border-right: none;
+	}
+	
+	table.table > tbody td {
+		text-align: center;
+	}
     </style>
 </head>
 <body>
-    <div class="body_container">
+<div id="content_wrapper">  
+    <div id="container">
         <div class="flex_button">
             <button id="myprofile">마이페이지</button>
             <button id="bookmark">북마크</button>
@@ -28,14 +77,21 @@
             <table class="grid">
                 <caption>나의 북마크 보기</caption>
                 <thead>
-                    <tr>
-                    	<th>번호</th>
-                        <th class="contents_name">제목</th>
-                        <th class="writer_1">작성자</th>
-                        <th class="write_day">작성일</th>
-                        <th class="view_cnt_1">조회수</th>
-                    </tr>
-                </thead>
+					<colgroup>
+                        <col width="10%" />
+						<col width="25%" />
+						<col width="15%" />
+						<col width="25%" />
+						<col width="10%" />
+                </colgroup>
+                <tr>
+                        <th scope="col">번호</th>
+                        <th scope="col">제목</th>
+                        <th scope="col">작성자</th>
+                        <th scope="col">작성일</th>
+                        <th scope="col">조회수</th>
+                </tr>
+				</thead>
                 <tbody>
                     <c:forEach items="${bookmarkList}" var="bookmark" varStatus="index">
                         <tr>
@@ -63,6 +119,7 @@
             </table>
         </div>
     </div>
+</div>  
     <jsp:include page="../layout/footer.jsp" />
 </body>
 <script>
