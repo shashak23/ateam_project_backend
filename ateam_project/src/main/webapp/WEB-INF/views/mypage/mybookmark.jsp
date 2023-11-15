@@ -10,10 +10,6 @@
     <jsp:include page="../layout/header.jsp" />
     <link rel="stylesheet" type="text/css" href="/css/common.css" />
     <style>
-        	#content_wrapper{
-		display: flex;
-		justify-content: center;
-	}
 	#container{
 		width: 1100px;
 		display: flex; 
@@ -62,8 +58,10 @@
     </style>
 </head>
 <body>
-<div id="content_wrapper">  
-    <div id="container">
+<div class="body_container"> 
+    
+    <div class="body_left_aside"></div> 
+    <div class="body">    
         <div class="flex_button">
             <button id="myprofile">마이페이지</button>
             <button id="bookmark">북마크</button>
@@ -71,7 +69,7 @@
             <button id="mypost">내가 쓴 게시글</button>
             <button id="solve">내가 푼 문제</button>
             <button>탈퇴</button>
-        </div>  
+        </div>     
 
         <div class="mybookmark_wrap">
             <table class="grid">
@@ -119,6 +117,7 @@
             </table>
         </div>
     </div>
+    <div class="body_right_aside"></div>
 </div>  
     <jsp:include page="../layout/footer.jsp" />
 </body>
