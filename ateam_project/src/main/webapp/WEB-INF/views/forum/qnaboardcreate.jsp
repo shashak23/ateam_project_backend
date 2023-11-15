@@ -7,13 +7,13 @@
 <head>
    <meta charset="UTF-8">
     <title>devGround</title>
-         <link rel="preconnect" href="https://fonts.googleapis.com"> 
-         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
-         <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet"> 
-         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" /> 
-         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-         <script src="/js/lib/jquery-3.7.1.js"></script> 
-         <link rel="stylesheet" type="text/css" href="/css/common.css" />
+        <link rel="preconnect" href="https://fonts.googleapis.com"> 
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet"> 
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" /> 
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <script src="/js/lib/jquery-3.7.1.js"></script> 
+        <link rel="stylesheet" type="text/css" href="/css/common.css" />
         <jsp:include page="../layout/header.jsp"/>
 <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/super-build/ckeditor.js"></script>
 <script>
@@ -86,77 +86,77 @@ updateViewCount();
 <link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
 
 <style type= "text/css">
-		.title_name {
-			font-size: 22px;
-			margin: 9px 0 6px 0;
-			padding-bottom: 16px;
-			border-bottom: 1px solid #EEE;
-		}
-		.hashtag,
-		#write_area {
-			display: flex;
-			flex-direction: column;
-			align-items: baseline;
-			margin-bottom: 10px;
-		}
+	.title_name {
+		font-size: 22px;
+		margin: 9px 0 6px 0;
+		padding-bottom: 16px;
+		border-bottom: 1px solid #EEE;
+	}
+	.hashtag,
+	#write_area {
+		display: flex;
+		flex-direction: column;
+		align-items: baseline;
+		margin-bottom: 10px;
+	}
 
-		#write_area > label {
-			width: 6%;
-			font-weight: bold;
-			margin: 20px 0 6px 0;
-		}
-		#write_area > input {
-			width: 100%;
-			height: 32px;
-			border: 1px solid #A2A2A2;
-			border-radius: 5px;
-		}
-		.ck-editor__editable { 
-			height: 350px; 
-			margin: auto 0;
-		}
-	    .ck-content {
-			 font-size: 12px; 	
-		}
-		#bottom_area {
-			display: grid;
-			grid-template-columns: 80% 20%;
-		}
-		.hashtag > #input_area {
-			display: flex;
-		}
-		.hashtag > label {
-			width: auto;
-			font-weight: bold;
-			margin: 20px 0 6px 0;
-		}
-		#button_1 {
-			width: 44px;
-			border-radius: 5px;
-			border: 1px solid #EEE;
-			background-color: transparent;
-			color: #666;
-			margin-left: 5px;
-			cursor: pointer;
-		}
-		#button_2 {
-			justify-self: end;
-			width: 120px;
-			height: 40px;
-			background-color: var(--blue);
-			color: #EAEAEA;
-			font-weight: bold;
-			font-size: 16px;
-			border: none;
-			border-radius: 5px;
-			cursor: pointer;
-		}
-		.remove_btn {
-			cursor: pointer;
-			border: none;
-			background-color: transparent;
-			margin-right: 12px;
-		}
+	#write_area > label {
+		width: 6%;
+		font-weight: bold;
+		margin: 20px 0 6px 0;
+	}
+	#write_area > input {
+		width: 100%;
+		height: 32px;
+		border: 1px solid #A2A2A2;
+		border-radius: 5px;
+	}
+	.ck-editor__editable { 
+		height: 350px; 
+		margin: auto 0;
+	}
+	.ck-content {
+			font-size: 12px; 	
+	}
+	#bottom_area {
+		display: grid;
+		grid-template-columns: 80% 20%;
+	}
+	.hashtag > #input_area {
+		display: flex;
+	}
+	.hashtag > label {
+		width: auto;
+		font-weight: bold;
+		margin: 20px 0 6px 0;
+	}
+	#button_1 {
+		width: 44px;
+		border-radius: 5px;
+		border: 1px solid #EEE;
+		background-color: transparent;
+		color: #666;
+		margin-left: 5px;
+		cursor: pointer;
+	}
+	#button_2 {
+		justify-self: end;
+		width: 120px;
+		height: 40px;
+		background-color: var(--blue);
+		color: #EAEAEA;
+		font-weight: bold;
+		font-size: 16px;
+		border: none;
+		border-radius: 5px;
+		cursor: pointer;
+	}
+	.remove_btn {
+		cursor: pointer;
+		border: none;
+		background-color: transparent;
+		margin-right: 12px;
+	}
 </style>
 <script type="text/javascript">
 
@@ -275,8 +275,8 @@ $().ready(function(){
 		<div class="body_left_aside"></div>
 
 		<div class="body">
-			<h3 class="title_name"> 질답 게시판 게시글 작성 </h3>
-			<form method = "post" >
+			<h3 class="title_name"> 질문답변 게시판 게시글 작성 </h3>
+			<form method="post" >
 				<div id="write_area">
 					<label for="postTitle">제목</label>
 					<input id="postTitle" type="text" name="postTitle" placeholder=" 제목을 입력하세요" />
@@ -284,17 +284,17 @@ $().ready(function(){
 					<textarea name="postContent" id="editor"></textarea>
 				</div>
 			<div id="bottom_area">
-			<div class="hashtag">
-				<label for="hashtag">해시태그</label>
-				<div id="displayHashtags"></div>
-				<div id="input_area">
-					<input type="hidden" id="hashtagInput" name='hashtag' placeholder="#해시태그" value="${generalPostHashtagVO.hashtagId}">
-					<input type="hidden" id="general_post_hashtag_id" value="${generalPostHashtagVO.generalPostHashtagId}"/>
-					<input type="hidden" id="general_post_id" value="${generalPostHashtagVO.generalPostId}"/>
-					<input id="button_1" type="button" value="추가" onclick="addHashtag()">
+				<div class="hashtag">
+					<label for="hashtag">해시태그</label>
+					<div id="displayHashtags"></div>
+					<div id="input_area">
+						<input type="hidden" id="hashtagInput" name='hashtag' placeholder="#해시태그" value="${generalPostHashtagVO.hashtagId}">
+						<input type="hidden" id="general_post_hashtag_id" value="${generalPostHashtagVO.generalPostHashtagId}"/>
+						<input type="hidden" id="general_post_id" value="${generalPostHashtagVO.generalPostId}"/>
+						<input id="button_1" type="button" value="추가" onclick="addHashtag()">
+					</div>
 				</div>
-			</div>
-				<input id="button_2" type="submit" value="저장" onclick="savePost()">
+			<input id="button_2" type="submit" value="저장" onclick="savePost()">
 			</div>
 			</form>
 		</div>
