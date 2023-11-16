@@ -286,19 +286,19 @@ $().ready(function(){
 					<label for="postContent">내용</label>
 					<textarea name="postContent" id="editor"></textarea>
 				</div>
-			<div id="bottom_area">
-				<div class="hashtag">
-					<label for="hashtag">해시태그</label>
-					<div id="displayHashtags"></div>
-					<div id="input_area">
-						<input type="hidden" id="hashtagInput" name='hashtag' placeholder="#해시태그" value="${generalPostHashtagVO.hashtagId}">
-						<input type="hidden" id="general_post_hashtag_id" value="${generalPostHashtagVO.generalPostHashtagId}"/>
-						<input type="hidden" id="general_post_id" value="${generalPostHashtagVO.generalPostId}"/>
-						<input id="button_1" type="button" value="추가" onclick="addHashtag()">
+				<div id="bottom_area">
+					<div class="hashtag">
+						<label for="hashtag">해시태그</label>
+						<div id="displayHashtags"></div>
+						<div id="input_area">
+							<input type="hidden" id="hashtagInput" name='hashtag' placeholder="#해시태그" value="${generalPostHashtagVO.hashtagId}">
+							<input type="hidden" id="general_post_hashtag_id" value="${generalPostHashtagVO.generalPostHashtagId}"/>
+							<input type="hidden" id="general_post_id" value="${generalPostHashtagVO.generalPostId}"/>
+							<input id="button_1" type="button" value="추가" onclick="addHashtag()">
+						</div>
 					</div>
+					<input id="button_2" type="submit" value="저장" onclick="savePost()">
 				</div>
-			<input id="button_2" type="submit" value="저장" onclick="savePost()">
-			</div>
 			</form>
 		</div>
 

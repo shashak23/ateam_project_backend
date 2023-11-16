@@ -554,6 +554,9 @@ $().ready(function() {
                   </div>
                   <!-- 신고 버튼은 조회할때 사용<button id="btn-report-comment">신고</button> -->
                </div>
+               <div class="comment-header">
+                  <h3>댓글 목록</h3>
+               </div>
                <div class="comment-items"></div>
             </div>  
 
@@ -562,10 +565,6 @@ $().ready(function() {
         <div class="body_right_aside"></div>
    </div>
    
-   <!-- 정체가 머임? -->
-   <div id="move_button"></div>
-
-
       <!-- 모달 창 -->
          <div id="report-modal" class="report-modal">
              <div class="report-modal-content">

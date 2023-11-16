@@ -7,13 +7,13 @@
 <head>
    <meta charset="UTF-8">
     <title>devGround</title>
-         <link rel="preconnect" href="https://fonts.googleapis.com"> 
-         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+        <link rel="preconnect" href="https://fonts.googleapis.com"> 
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
         <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet"> 
-         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" /> 
-         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-         <script src="/js/lib/jquery-3.7.1.js"></script> 
-         <link rel="stylesheet" href="/css/style.css"> 
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" /> 
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <script src="/js/lib/jquery-3.7.1.js"></script> 
+        <link rel="stylesheet" type="text/css" href="/css/common.css" />
         <jsp:include page="../layout/header.jsp"/>
 <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/super-build/ckeditor.js"></script>
 <script>
@@ -161,7 +161,7 @@ $().ready(function(){
 
            	
             const removeButton = document.createElement("button");
-            removeButton.textContent = "X";
+            removeButton.textContent = "❌";
             removeButton.addEventListener("click", function () {
                 removeHashtag(hashtag);
             });
@@ -196,265 +196,262 @@ $().ready(function(){
 <link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
 
 <style type= "text/css">
-		#container{
-			width: 800px;
-			margin: 0 auto;
-			margin-left: 20%;
-			
-		}
+	.title_name {
+		font-size: 22px;
+		margin: 9px 0 6px 0;
+		padding-bottom: 16px;
+		border-bottom: 1px solid #EEE;
+	}
+	.hashtag,
+	#write_area {
+		display: flex;
+		flex-direction: column;
+		align-items: baseline;
+		margin-bottom: 10px;
+	}
 
-	  .seperate-line {
-      border: 1px solid #ccc;
- 	  margin: 10px 0px 7px 0px;
-	  width: 1079px;
-   		}
-
-		.title_name {
-			margin-top: 50px;
-			margin-left: 2px;
-			margin-bottom: 30px;
-		}
-		div.grid {
-			display: grid;
-			grid-template-columns: 80px 1fr;
-			grid-template-rows: 50px 28px 50px 320px 1fr;
-			row-gap: 10px;
-		}
-
-		div.grid > div.btn-group {
-			display: grid;
-			grid-column: 1 / 3;
-		}
-
-		div.grid div.right-align {
-			text-align: right;
-		}
-
-		label {
-			padding-left: 10px; 
-			margin-top: 10px;
-			/* margin-left: 30px; */
-		}
-		input, textarea {
-			margin: auto 0;
-			margin-top: 10px;
-			height: 30px;		
-			width: 500px;
-		}
-		.ck-editor__editable { 
-			height: 350px; 
-			width: 900px;
-			margin: auto 0;
-		
-		}
-	    .ck-content {
-			 font-size: 12px; 	
-		}
-	
-	    .hashtag {
-		  margin: 0 auto;
-		  margin-top: 450px;
-		  
-		  margin-left: 70px;
-	     
-	    }	
-	    .btn-group {
-	    	margin-top: 420px;
-	    }
-		
-		.btn_controller, .btn_controller_1 {
-			position: relative;
-			bottom:50px;
-			margin: auto 0;
-			margin-top: 70px;
-		    margin-bottom: 60px;
-			border: none;
-			cursor: pointer;
-			width: 70px;
-			height: 30px;
-			background-color: var(--light-blue);
-			border-radius: 5px;
-
-		}	
-
-		
+	#write_area > label {
+		width: 6%;
+		font-weight: bold;
+		margin: 20px 0 6px 0;
+	}
+	#write_area > input {
+		width: 100%;
+		height: 32px;
+		border: 1px solid #A2A2A2;
+		border-radius: 5px;
+	}
+	.ck-editor__editable { 
+		height: 350px; 
+		margin: auto 0;
+	}
+	.ck-content {
+			font-size: 12px; 	
+	}
+	#bottom_area {
+		display: grid;
+		grid-template-columns: 80% 20%;
+	}
+	.hashtag > #input_area {
+		display: flex;
+	}
+	.hashtag > label {
+		width: auto;
+		font-weight: bold;
+		margin: 20px 0 6px 0;
+	}
+	#button_1 {
+		width: 44px;
+		border-radius: 5px;
+		border: 1px solid #EEE;
+		background-color: transparent;
+		color: #666;
+		margin-left: 5px;
+		cursor: pointer;
+	}
+	#button_2 {
+		justify-self: end;
+		width: 120px;
+		height: 40px;
+		background-color: var(--blue);
+		color: #EAEAEA;
+		font-weight: bold;
+		font-size: 16px;
+		border: none;
+		border-radius: 5px;
+		cursor: pointer;
+	}
+	.remove_btn {
+		cursor: pointer;
+		border: none;
+		background-color: transparent;
+		margin-right: 12px;
+	}
+	#displayHashtags {
+		margin-bottom: 10px;
+	}
 	</style>
 	
 </head>
 <body>
-
- <div id="container">
-	<h1 class="title_name">질답 게시글 수정</h1>
-	<div class="seperate-line"></div>
-	<form method="post" id="postForm" action="/qnaboard/update">
-		<input type="hidden" name="generalPostId" value="${generalPostVO.generalPostId}"/>
-		<div class="grid">
-			<label for="postTitle">제목</label>
-			<input id="postTitle" type="text" name="postTitle" value="${generalPostVO.postTitle}"/>
-			
-			<label for="postContent"></label>
-			<textarea name="postContent" id="editor" >${generalPostVO.postContent}</textarea>
-				<script>
-		    	CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
-	                // https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html#extended-toolbar-configuration-format
-	                toolbar: {
-	                    items: [
-	                        'exportPDF','exportWord', '|',
-	                        'findAndReplace', 'selectAll', '|',
-	                        'heading', '|',
-	                        'bold', 'italic', 'strikethrough', 'underline', 'code', 'subscript', 'superscript', 'removeFormat', '|',
-	                        'bulletedList', 'numberedList', 'todoList', '|',
-	                        'outdent', 'indent', '|',
-	                        'undo', 'redo',
-	                        '-',
-	                        'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'highlight', '|',
-	                        'alignment', '|',
-	                        'link', 'insertImage', 'blockQuote', 'insertTable', 'mediaEmbed', 'codeBlock', 'htmlEmbed', '|',
-	                        'specialCharacters', 'horizontalLine', 'pageBreak', '|',
-	                        'textPartLanguage', '|',
-	                        'sourceEditing'
-	                    ],
-	                    shouldNotGroupWhenFull: true
-	                },
-	                // Changing the language of the interface requires loading the language file using the <script> tag.
-	                // language: 'es',
-	                list: {
-	                    properties: {
-	                        styles: true,
-	                        startIndex: true,
-	                        reversed: true
-	                    }
-	                },
-	                // https://ckeditor.com/docs/ckeditor5/latest/features/headings.html#configuration
-	                heading: {
-	                    options: [
-	                        { model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
-	                        { model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
-	                        { model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
-	                        { model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
-	                        { model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' },
-	                        { model: 'heading5', view: 'h5', title: 'Heading 5', class: 'ck-heading_heading5' },
-	                        { model: 'heading6', view: 'h6', title: 'Heading 6', class: 'ck-heading_heading6' }
-	                    ]
-	                },
-	                // https://ckeditor.com/docs/ckeditor5/latest/features/editor-placeholder.html#using-the-editor-configuration
-	                placeholder: 'Welcome to CKEditor 5!',
-	                // https://ckeditor.com/docs/ckeditor5/latest/features/font.html#configuring-the-font-family-feature
-	                fontFamily: {
-	                    options: [
-	                        'default',
-	                        'Arial, Helvetica, sans-serif',
-	                        'Courier New, Courier, monospace',
-	                        'Georgia, serif',
-	                        'Lucida Sans Unicode, Lucida Grande, sans-serif',
-	                        'Tahoma, Geneva, sans-serif',
-	                        'Times New Roman, Times, serif',
-	                        'Trebuchet MS, Helvetica, sans-serif',
-	                        'Verdana, Geneva, sans-serif'
-	                    ],
-	                    supportAllValues: true
-	                },
-	                // https://ckeditor.com/docs/ckeditor5/latest/features/font.html#configuring-the-font-size-feature
-	                fontSize: {
-	                    options: [ 10, 12, 14, 'default', 18, 20, 22 ],
-	                    supportAllValues: true
-	                },
-	                // Be careful with the setting below. It instructs CKEditor to accept ALL HTML markup.
-	                // https://ckeditor.com/docs/ckeditor5/latest/features/general-html-support.html#enabling-all-html-features
-	                htmlSupport: {
-	                    allow: [
-	                        {
-	                            name: /.*/,
-	                            attributes: true,
-	                            classes: true,
-	                            styles: true
-	                        }
-	                    ]
-	                },
-	                // Be careful with enabling previews
-	                // https://ckeditor.com/docs/ckeditor5/latest/features/html-embed.html#content-previews
-	                htmlEmbed: {
-	                    showPreviews: true
-	                },
-	                // https://ckeditor.com/docs/ckeditor5/latest/features/link.html#custom-link-attributes-decorators
-	                link: {
-	                    decorators: {
-	                        addTargetToExternalLinks: true,
-	                        defaultProtocol: 'https://',
-	                        toggleDownloadable: {
-	                            mode: 'manual',
-	                            label: 'Downloadable',
-	                            attributes: {
-	                                download: 'file'
-	                            }
-	                        }
-	                    }
-	                },
-	                // https://ckeditor.com/docs/ckeditor5/latest/features/mentions.html#configuration
-	                mention: {
-	                    feeds: [
-	                        {
-	                            marker: '@',
-	                            feed: [
-	                                '@apple', '@bears', '@brownie', '@cake', '@cake', '@candy', '@canes', '@chocolate', '@cookie', '@cotton', '@cream',
-	                                '@cupcake', '@danish', '@donut', '@dragée', '@fruitcake', '@gingerbread', '@gummi', '@ice', '@jelly-o',
-	                                '@liquorice', '@macaroon', '@marzipan', '@oat', '@pie', '@plum', '@pudding', '@sesame', '@snaps', '@soufflé',
-	                                '@sugar', '@sweet', '@topping', '@wafer'
-	                            ],
-	                            minimumCharacters: 1
-	                        }
-	                    ]
-	                },
-	                // The "super-build" contains more premium features that require additional configuration, disable them below.
-	                // Do not turn them on unless you read the documentation and know how to configure them and setup the editor.
-	                removePlugins: [
-	                    // These two are commercial, but you can try them out without registering to a trial.
-	                    // 'ExportPdf',
-	                    // 'ExportWord',
-	                    'CKBox',
-	                    'CKFinder',
-	                    'EasyImage',
-	                    // This sample uses the Base64UploadAdapter to handle image uploads as it requires no configuration.
-	                    // https://ckeditor.com/docs/ckeditor5/latest/features/images/image-upload/base64-upload-adapter.html
-	                    // Storing images as Base64 is usually a very bad idea.
-	                    // Replace it on production website with other solutions:
-	                    // https://ckeditor.com/docs/ckeditor5/latest/features/images/image-upload/image-upload.html
-	                    // 'Base64UploadAdapter',
-	                    'RealTimeCollaborativeComments',
-	                    'RealTimeCollaborativeTrackChanges',
-	                    'RealTimeCollaborativeRevisionHistory',
-	                    'PresenceList',
-	                    'Comments',
-	                    'TrackChanges',
-	                    'TrackChangesData',
-	                    'RevisionHistory',
-	                    'Pagination',
-	                    'WProofreader',
-	                    // Careful, with the Mathtype plugin CKEditor will not load when loading this sample
-	                    // from a local file system (file://) - load this site via HTTP server if you enable MathType
-	                    'MathType'
-	                ]
-	            });  
-		        </script>
-		 <div class="hashtag">
-		 <label for="hashtag"></label>
-   			<input type="hidden" id="hashtagInput" name='hashtag' placeholder="#해시태그" value="${generalPostHashtagVO.hashtagId}">
-   	
-   			<label for="general_post_hashtag_id"></label>
-   			<input type="hidden" id="general_post_hashtag_id" value="${generalPostHashtagVO.generalPostHashtagId}"/>
-   		
-   			<label for="general_post_id"></label>
-   			<input type="hidden" id="general_post_id" value="${generalPostHashtagVO.generalPostId}"/>
-		  </div>
-				<div class="btn-group">
-					<div class="right-align">
-	                 	<input class="btn_controller" type="button" value="추가" onclick="addHashtag()">
-						<input class="btn_controller_1" type="button" value="저장" onclick="savePost()"/>
+	<div class="body_container">
+		<div class="body_left_aside"></div>
+		
+		<div class="body">
+			<h3 class="title_name">질문답변 게시판 게시글 수정</h3>
+				<form method="post" id="postForm" action="/qnaboard/update">
+					<input type="hidden" name="generalPostId" value="${generalPostVO.generalPostId}"/>
+					<div id="write_area">
+						<label for="postTitle">제목</label>
+						<input id="postTitle" type="text" name="postTitle" value="${generalPostVO.postTitle}"/>
+						<label for="postContent">내용</label>
+						<textarea name="postContent" id="editor" >${generalPostVO.postContent}</textarea>
 					</div>
-				</div>
-			<div id="displayHashtags"></div>
+					<div id="bottom_area">
+						<div class="hashtag">
+							<label for="hashtag">해시태그</label>
+							<div id="displayHashtags"></div>
+							<div id="input_area">
+								<input type="hidden" id="hashtagInput" name='hashtag' placeholder="#해시태그" value="${generalPostHashtagVO.hashtagId}">
+								<label for="general_post_hashtag_id"></label>
+								<input type="hidden" id="general_post_hashtag_id" value="${generalPostHashtagVO.generalPostHashtagId}"/>						  
+								<label for="general_post_id"></label>
+								<input type="hidden" id="general_post_id" value="${generalPostHashtagVO.generalPostId}"/>
+								<input id="button_1" type="button" value="추가" onclick="addHashtag()">
+							</div>
+						</div>
+							<input id="button_2" type="submit" value="저장" onclick="savePost()"/>
+						</div>	
+					</div>
+				</form>
 		</div>
-	</form>
-</div>	
+
+		<div class="body_right_aside"></div>
+	</div>
+
+ 
+	<script>
+		CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
+			// https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html#extended-toolbar-configuration-format
+			toolbar: {
+				items: [
+					'exportPDF','exportWord', '|',
+					'findAndReplace', 'selectAll', '|',
+					'heading', '|',
+					'bold', 'italic', 'strikethrough', 'underline', 'code', 'subscript', 'superscript', 'removeFormat', '|',
+					'bulletedList', 'numberedList', 'todoList', '|',
+					'outdent', 'indent', '|',
+					'undo', 'redo',
+					'-',
+					'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'highlight', '|',
+					'alignment', '|',
+					'link', 'insertImage', 'blockQuote', 'insertTable', 'mediaEmbed', 'codeBlock', 'htmlEmbed', '|',
+					'specialCharacters', 'horizontalLine', 'pageBreak', '|',
+					'textPartLanguage', '|',
+					'sourceEditing'
+				],
+				shouldNotGroupWhenFull: true
+			},
+			// Changing the language of the interface requires loading the language file using the <script> tag.
+			// language: 'es',
+			list: {
+				properties: {
+					styles: true,
+					startIndex: true,
+					reversed: true
+				}
+			},
+			// https://ckeditor.com/docs/ckeditor5/latest/features/headings.html#configuration
+			heading: {
+				options: [
+					{ model: 'paragraph', title: 'Paragraph', class: 'ck-heading_paragraph' },
+					{ model: 'heading1', view: 'h1', title: 'Heading 1', class: 'ck-heading_heading1' },
+					{ model: 'heading2', view: 'h2', title: 'Heading 2', class: 'ck-heading_heading2' },
+					{ model: 'heading3', view: 'h3', title: 'Heading 3', class: 'ck-heading_heading3' },
+					{ model: 'heading4', view: 'h4', title: 'Heading 4', class: 'ck-heading_heading4' },
+					{ model: 'heading5', view: 'h5', title: 'Heading 5', class: 'ck-heading_heading5' },
+					{ model: 'heading6', view: 'h6', title: 'Heading 6', class: 'ck-heading_heading6' }
+				]
+			},
+			// https://ckeditor.com/docs/ckeditor5/latest/features/editor-placeholder.html#using-the-editor-configuration
+			placeholder: 'Welcome to CKEditor 5!',
+			// https://ckeditor.com/docs/ckeditor5/latest/features/font.html#configuring-the-font-family-feature
+			fontFamily: {
+				options: [
+					'default',
+					'Arial, Helvetica, sans-serif',
+					'Courier New, Courier, monospace',
+					'Georgia, serif',
+					'Lucida Sans Unicode, Lucida Grande, sans-serif',
+					'Tahoma, Geneva, sans-serif',
+					'Times New Roman, Times, serif',
+					'Trebuchet MS, Helvetica, sans-serif',
+					'Verdana, Geneva, sans-serif'
+				],
+				supportAllValues: true
+			},
+			// https://ckeditor.com/docs/ckeditor5/latest/features/font.html#configuring-the-font-size-feature
+			fontSize: {
+				options: [ 10, 12, 14, 'default', 18, 20, 22 ],
+				supportAllValues: true
+			},
+			// Be careful with the setting below. It instructs CKEditor to accept ALL HTML markup.
+			// https://ckeditor.com/docs/ckeditor5/latest/features/general-html-support.html#enabling-all-html-features
+			htmlSupport: {
+				allow: [
+					{
+						name: /.*/,
+						attributes: true,
+						classes: true,
+						styles: true
+					}
+				]
+			},
+			// Be careful with enabling previews
+			// https://ckeditor.com/docs/ckeditor5/latest/features/html-embed.html#content-previews
+			htmlEmbed: {
+				showPreviews: true
+			},
+			// https://ckeditor.com/docs/ckeditor5/latest/features/link.html#custom-link-attributes-decorators
+			link: {
+				decorators: {
+					addTargetToExternalLinks: true,
+					defaultProtocol: 'https://',
+					toggleDownloadable: {
+						mode: 'manual',
+						label: 'Downloadable',
+						attributes: {
+							download: 'file'
+						}
+					}
+				}
+			},
+			// https://ckeditor.com/docs/ckeditor5/latest/features/mentions.html#configuration
+			mention: {
+				feeds: [
+					{
+						marker: '@',
+						feed: [
+							'@apple', '@bears', '@brownie', '@cake', '@cake', '@candy', '@canes', '@chocolate', '@cookie', '@cotton', '@cream',
+							'@cupcake', '@danish', '@donut', '@dragée', '@fruitcake', '@gingerbread', '@gummi', '@ice', '@jelly-o',
+							'@liquorice', '@macaroon', '@marzipan', '@oat', '@pie', '@plum', '@pudding', '@sesame', '@snaps', '@soufflé',
+							'@sugar', '@sweet', '@topping', '@wafer'
+						],
+						minimumCharacters: 1
+					}
+				]
+			},
+			// The "super-build" contains more premium features that require additional configuration, disable them below.
+			// Do not turn them on unless you read the documentation and know how to configure them and setup the editor.
+			removePlugins: [
+				// These two are commercial, but you can try them out without registering to a trial.
+				// 'ExportPdf',
+				// 'ExportWord',
+				'CKBox',
+				'CKFinder',
+				'EasyImage',
+				// This sample uses the Base64UploadAdapter to handle image uploads as it requires no configuration.
+				// https://ckeditor.com/docs/ckeditor5/latest/features/images/image-upload/base64-upload-adapter.html
+				// Storing images as Base64 is usually a very bad idea.
+				// Replace it on production website with other solutions:
+				// https://ckeditor.com/docs/ckeditor5/latest/features/images/image-upload/image-upload.html
+				// 'Base64UploadAdapter',
+				'RealTimeCollaborativeComments',
+				'RealTimeCollaborativeTrackChanges',
+				'RealTimeCollaborativeRevisionHistory',
+				'PresenceList',
+				'Comments',
+				'TrackChanges',
+				'TrackChangesData',
+				'RevisionHistory',
+				'Pagination',
+				'WProofreader',
+				// Careful, with the Mathtype plugin CKEditor will not load when loading this sample
+				// from a local file system (file://) - load this site via HTTP server if you enable MathType
+				'MathType'
+			]
+		});  
+		</script>
+
 </body>
 </html>
