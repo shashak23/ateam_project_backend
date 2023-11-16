@@ -9,6 +9,7 @@ public class AbstractSearchVO {
 
 	private int pageNo;
 	
+	private String hashtagId;
 	
 	public String getSearchType() {
 		return searchType;
@@ -27,5 +28,11 @@ public class AbstractSearchVO {
 	}
 	public void setPageNo(int pageNo) {
 		this.pageNo = pageNo;
+	}
+	public String getHashtagId() {
+		return hashtagId;
+	}
+	public void setHashtagId(String hashtagId) {
+		this.hashtagId = hashtagId;
 	}
 }

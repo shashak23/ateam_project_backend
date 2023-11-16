@@ -49,9 +49,6 @@
 		color: var(--dark-gray);
 		text-align: center;
 	}
-	table.table th:last-child, table.table td:last-child {
-		border-right: none;
-	}
 </style>
 <body> 
 

@@ -22,12 +22,7 @@
 		display: flex;
 		flex-direction: column;
 	}
-	.body_container{
-	    margin: 0 auto;
-		margin-bottom: 100px;
-		display: flex;
-		flex-direction: column;	
-	}
+
 	.flex_button button {
 	  color: white;	
     background-color: var(--gray);
@@ -53,9 +48,6 @@
 		color: var(--dark-gray);
 		text-align: center;
 	}
-	table.table th:last-child, table.table td:last-child {
-		border-right: none;
-	}
 </style>
 <body> 
 <div id="content_wrapper">
@@ -63,7 +55,7 @@
 		<button id="myprofile">마이페이지</button>			
 		<button id="modify_info">정보 수정</button> 
 		<button id="mypost">내가 쓴 게시글</button>
-		<button>탈퇴</button>
+		<button id="quit">탈퇴</button>
 	</div>
 	<div id="container">
 		<table class="grid">
@@ -189,5 +181,22 @@
                            'color': 'var(--blue)',
                            'box-shadow': 'none'})
   })
+  
+  function redirectToURL(url) {
+	window.location.href = url;
+  }
+  /* 비밀번호, 닉네임 수정 버튼 */
+  $("#myprofile").click(function() {
+	redirectToURL(`/companyinfo/view`);
+  });
+  $("#mypost").click(function() {
+	redirectToURL(`/companyinfo/mypost`);
+  });
+  $("#modify_info").click(function() {
+	redirectToURL(`/companyinfo/modify`);
+  });
+  $("#quit").click(function() {
+	redirectToURL(`/member/logout`);
+  });
 </script>
 </html>
