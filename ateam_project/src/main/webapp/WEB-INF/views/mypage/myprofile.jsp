@@ -72,7 +72,8 @@
   margin: 20px;
 }
 
-.profile img {
+#profile-img,
+#nomal-img {
   width: 150px;
   height: 150px;
   border-radius: 50%;
@@ -156,7 +157,15 @@
 }
 
 #technology_stack li {
-  margin-right: 10px;
+    margin-right: 10px;
+    font-size: 10pt;
+    height: 29px;
+}
+.techList{
+	background-color: rgb(243 243 243);
+    border-radius: 5px;
+    color: gray;
+    padding: 5px;
 }
 
 .education{
@@ -228,15 +237,17 @@
 /* 수정버튼  */
 .introduce-modify,#edit_button1,#edit_button2,#delete_tech,
 .education-modify,.career-modify,.region_modify
-,.profile-modify{
-	background-color: var(--gray);
-	border: none;
-    color: var(--white);
-    border-radius: 10px;
-    cursor: pointer;
-    text-align: center;
-    width: 36px;
-    height: 26px;
+,.profile-modify
+,#edit-sns{
+	background-color: white;
+    border: none;
+}
+.education-modify>img ,
+.career-modify>img,
+.region_modify>img,
+.introduce-modify>img,
+#edit-sns{
+	width: 20px;
 }
 .introduce-modify:hover
 ,#edit_button1:hover
@@ -252,7 +263,7 @@
 ,.region_create:hover
 ,.profile-modify:hover{
   /* background-color: var(--light-blue); */
-  color: white;
+  color: gray;
 }
 
 #delete_tech{
@@ -280,11 +291,16 @@ background-color: var(--gray);
   
 }
 /* 추가하기 */
- #insert_techstack, #addEducationButton,.addCareer,.region_create{
-	background-color: none;
-	border: none;
-    margin-top: 15px;
-    cursor: pointer;
+ #insert_techstack, #addEducationButton,.addCareer,.region_create,#edit_button2{
+	cursor: pointer;
+    border: 1px solid #dcdcdc;
+    border-radius: 5px;
+    background-color: #ffffff;
+    color: black;
+    width: 60px;
+    height: 21px;
+    font-size: 8pt;
+    margin-top: 5px;
 } 
 
 .follow{
@@ -605,14 +621,11 @@ position: absolute;
   margin: 20px;
 }
 
-.profile img {
+#profile-img,
+#nomal-img {
   width: 150px;
   height: 150px;
   border-radius: 50%;
-}
-.related_link img {
-  width: 30px;
-  margin-right:7px;
 }
 
 .related_link a {
@@ -766,10 +779,10 @@ position: absolute;
 		<c:choose>
 			<c:when
 				test="${memberVO.profilePic eq 'https://w7.pngwing.com/pngs/384/868/png-transparent-person-profile-avatar-user-basic-ui-icon.png'}">
-				<img src="${memberVO.profilePic}" />
+				<img id ="nomal-img" src="${memberVO.profilePic}" />
 			</c:when>
 			<c:otherwise>
-				<img src="/member/file/download/${memberVO.email}" />
+				<img id="profile-img" src="/member/file/download/${memberVO.email}" />
 			</c:otherwise>
 		</c:choose>
 		<c:if
@@ -794,7 +807,7 @@ position: absolute;
 						<c:when test="${not empty generalMemberVO.selfIntro}">
 							<li class="list_intro">${generalMemberVO.selfIntro}<c:if
 									test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
-									<button data-introduce-id="${sessionScope._LOGIN_USER_.email}" class="introduce-modify">수정</button>
+									<button data-introduce-id="${sessionScope._LOGIN_USER_.email}" class="introduce-modify"><img src="/images/edit.png"></button>
 									<div id="modalContainerIntroduction" class="hidden">
 										<div id="modalContenIntroduction">		
 											<jsp:include page="modifyintroduce.jsp" />																		
@@ -819,10 +832,8 @@ position: absolute;
 	</div>
 	<div class="follow">
 	  <div class="follower" data-email="${memberVO.email}">팔로워
-		<img id="arrow" src="/images/아래.png/" alt="arrow">
 	  </div>
 	  <div class="followee" data-email="${memberVO.email}">팔로잉
-		<img id="arrow" src="/images/아래.png/" alt="arrow">
 	  </div>
 	  <div class="follow_chat">
 		<%-- <c:choose>
@@ -897,7 +908,7 @@ position: absolute;
 		<c:if
 		test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
 			<button data-sns="${sessionScope._LOGIN_USER_.email }" id="edit_button1"> 
-				수정
+				<img id="edit-sns" src="/images/edit.png">
 			</button>
 			<div id="modalContainerSNS" class="hidden">
 				<div id="modalContentSNS">
@@ -914,12 +925,12 @@ position: absolute;
 			<c:choose>
 				<c:when test="${not empty commonCodeList}">
 					<c:forEach items="${commonCodeList}" var="commonCode">
-						<li>#${commonCode.codeContent}</li>
+						<li class="techList">${commonCode.codeContent}</li>
 					</c:forEach>
 					<c:if
 						test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
 						
-							<button data-teach="${sessionScope._LOGIN_USER_.email }" id="edit_button2">수정</button>
+							<button data-teach="${sessionScope._LOGIN_USER_.email }" id="edit_button2">+ 추가하기</button>
 							<div id="modalContainerTech" class="hidden">
 								<div id="modalContentTech">
 									
@@ -952,6 +963,7 @@ position: absolute;
 	<div class="education">
 		<h3 class="education-font">학력</h3>
 		<ul>
+		
 			<c:choose>
 				<c:when test="${not empty educationList}">
 					<c:forEach items="${educationList}" var="education">
@@ -959,11 +971,11 @@ position: absolute;
 							${education.degrees } 
 							<c:if
 								test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
-								<button data-education-id="${education.educationId}" class="education-modify">수정</button>
+								<button data-education-id="${education.educationId}" class="education-modify">
+								<img src="/images/edit.png">
+								</button>
 								<div id="modalContainerEducation" class="hidden">
 									<div id="modalContentEducation">
-										
-											
 										<button id="modalCloseEducation">닫기</button>
 									</div>
 								</div>
@@ -973,7 +985,7 @@ position: absolute;
 					<c:if
 						test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
 						<button id="addEducationButton">
-							추가하기
+							+ 추가하기
 						</button>	
 						<div id="modalContainerEducation" class="hidden">
 							<div id="modalContentEducation">
@@ -988,7 +1000,7 @@ position: absolute;
 					<li><c:if
 						test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
 						<button id="addEducationButton">
-							<img id="add" src="/images/작성.png/" alt="추가하기">
+							+ 추가하기
 						</button>
 						<div id="modalContainerEducation" class="hidden">
 							<div id="modalContentEducation">
@@ -1013,7 +1025,7 @@ position: absolute;
 						<li class="career_list_year">${career.hireDate}~
 							${career.resignDate} <c:if
 								test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
-								<button data-career="${career.careerId}" class="career-modify">수정</button>
+								<button data-career="${career.careerId}" class="career-modify"><img src="/images/edit.png"></button>
 								<div id="modalContainerCareer" class="hidden">
 									<div id="modalContentCareer">
 														
@@ -1026,7 +1038,7 @@ position: absolute;
 					<c:if
 						test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
 						<button class="addCareer" data-career="${career.careerId}">
-							추가하기
+							+ 추가하기
 						</button>
 						<div id="modalContainerCareer" class="hidden">
 							<div id="modalContentCareer">
@@ -1061,11 +1073,10 @@ position: absolute;
 		<ul>
 			<c:choose>
 				<c:when test="${not empty generalMemberVO.region}">
-					<li>${generalMemberVO.region}</li>
-					<c:if
-						test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
+					<li>${generalMemberVO.region}
+					<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
 						<button data-region="${sessionScope._LOGIN_USER_.email }" class="region_modify"> 
-						수정
+						<img src="/images/edit.png">
 						</button>
 						<div id="modalContainerAddress" class="hidden">
 							<div id="modalContentAddress">
@@ -1075,12 +1086,13 @@ position: absolute;
 							</div>
 						</div>
 					</c:if>
+					</li>
 				</c:when>
 				<c:otherwise>
 					<li>
 					<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
 						<button data-region-id="${sessionScope._LOGIN_USER_.email }" class="region_create"> 
-							추가하기
+							+ 추가하기
 						</button>
 						<div id="modalContainerAddress" class="hidden">
 							<div id="modalContentAddress">
