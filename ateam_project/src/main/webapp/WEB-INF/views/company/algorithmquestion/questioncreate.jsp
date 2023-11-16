@@ -427,6 +427,7 @@ body > .body_container > .body_right_aside {
         display: grid;
         grid-template-columns: 1fr;
         grid-template-rows: 60px 40px 60px 40px 60px 60px 1fr 60px 1fr;
+        margin: 40px 0 100px 0;
     }
 
     div.grid > div.btn-group {
@@ -486,6 +487,10 @@ body > .body_container > .body_right_aside {
         margin-bottom: 15px;
     }
 
+    #conditions{
+        /* display: flex; */
+    }
+
     #testData{
         font-weight: bold;
     }
@@ -494,17 +499,10 @@ body > .body_container > .body_right_aside {
         display: flex;   
     }
 
-    #add-row,
     #add-col{
-        background-color: var(--light-blue);
-        border: none;
-        width: 70px;
-        height: 30px;
-        border-radius: 5px;
-        cursor: pointer;
-        margin-right:20px;
+       margin-left: 10px;
     }
-
+    /*
     #submit-btn{
         background-color: var(--light-blue);
         border: none;
@@ -513,6 +511,13 @@ body > .body_container > .body_right_aside {
         border-radius: 5px;
         cursor: pointer;
         margin-bottom: 30px;
+    } */
+    button{
+        border: none;
+        padding: 5px;
+        border-radius: 5px;
+        cursor: pointer;
+        background-color: lightgray;
     }
 </style>
 <body>
@@ -555,8 +560,10 @@ body > .body_container > .body_right_aside {
                         <label class="label" for="algorithmSolution">제한사항</label>
                         <textarea name="algorithmSolution" id="algorithmSolution"></textarea>
                         
-                        <label id="testData">테스트 데이터</label>
-                        <div id="table-div"></div>
+                       
+                            <label id="testData">테스트 데이터</label>
+                            <div id="table-div"></div>
+                       
                         <div id="add-button">
                             <button id="add-row">행 추가</button>
                             <button id="add-col">열 추가</button>

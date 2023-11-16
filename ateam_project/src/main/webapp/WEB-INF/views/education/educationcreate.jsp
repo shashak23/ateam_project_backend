@@ -113,7 +113,7 @@
     </style>
 </head>
 <body>
-	<form:form modelAttribute="educationVO" method ="post">
+	<form:form modelAttribute="educationVO" method ="post" action="/memberInfo/modify/create-education">
         
 	    <h2>대학교 및 학과 검색</h2>
 	
