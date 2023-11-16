@@ -59,46 +59,47 @@
                     <button class="btn">검색</button>
                 </div>
             </form>
+            <div class="body">
+                <table class="grid">
+                    <caption>내가 푼 문제</caption> 
+                    <thead>
+                        <tr>
+                            <th scope="col">제목</th>
+                            <th scope="col">제출회사</th>
+                            <th scope="col">카테고리</th>
+                            <th scope="col">내용</th>
+                            <th scope="col">조회수</th>
+                            <th scope="col">난이도</th>
+                            <th scope="col">정답여부</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach items="${myAlgorithmList.myAlgorithmList}" var="myAlgo">
+                            <tr>
+                                <td><a href="/algorithm/question/view/${myAlgo.algorithmQuestionVO.companyAlgorithmQuestionId}">${myAlgo.algorithmQuestionVO.algorithmTitle}</a></td>
+                                <td>${myAlgo.memberVOTemp.nicknameTemp}</td>
+                                <td>${myAlgo.commonCodeVO.codeContent}</td>
+                                <td>${myAlgo.algorithmQuestionVO.algorithmContent}</td>
+                                <td>${myAlgo.algorithmQuestionVO.viewCnt}</td>
+                                <td>${myAlgo.algorithmQuestionVO.algorithmTierId}</td>
+                                <td>${myAlgo.correctAnswerYn}</td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+                <!-- 데이터가 없을 때의 처리 -->
+                <c:choose>
+                    <c:when test="${empty myAlgorithmList.myAlgorithmList}">
+                        <div>데이터가 없습니다.</div>
+                    </c:when>
+                    <c:otherwise>
+                        <div><!-- 다른 내용이 있으면 여기에 추가 --></div>
+                    </c:otherwise>
+                </c:choose>
+            </div>
         </div>  
         <!-- 테이블 및 데이터 출력 부분 -->
-        <div class="body">
-            <table class="grid">
-                <caption>내가 푼 문제</caption> 
-                <thead>
-                    <tr>
-                        <th scope="col">제목</th>
-                        <th scope="col">제출회사</th>
-                        <th scope="col">카테고리</th>
-                        <th scope="col">내용</th>
-                        <th scope="col">조회수</th>
-                        <th scope="col">난이도</th>
-                        <th scope="col">정답여부</th>
-                    </tr>
-				</thead>
-                <tbody>
-                    <c:forEach items="${myAlgorithmList.myAlgorithmList}" var="myAlgo">
-                        <tr>
-                            <td><a href="/algorithm/question/view/${myAlgo.algorithmQuestionVO.companyAlgorithmQuestionId}">${myAlgo.algorithmQuestionVO.algorithmTitle}</a></td>
-                            <td>${myAlgo.memberVOTemp.nicknameTemp}</td>
-                            <td>${myAlgo.commonCodeVO.codeContent}</td>
-                            <td>${myAlgo.algorithmQuestionVO.algorithmContent}</td>
-                            <td>${myAlgo.algorithmQuestionVO.viewCnt}</td>
-                            <td>${myAlgo.algorithmQuestionVO.algorithmTierId}</td>
-                            <td>${myAlgo.correctAnswerYn}</td>
-                        </tr>
-                    </c:forEach>
-                </tbody>
-            </table>
-            <!-- 데이터가 없을 때의 처리 -->
-            <c:choose>
-                <c:when test="${empty myAlgorithmList.myAlgorithmList}">
-                    <div>데이터가 없습니다.</div>
-                </c:when>
-                <c:otherwise>
-                    <div><!-- 다른 내용이 있으면 여기에 추가 --></div>
-                </c:otherwise>
-            </c:choose>
-        </div>
+       
         <div class="body_right_aside"></div>
     </div>
     <jsp:include page="../layout/footer.jsp" />

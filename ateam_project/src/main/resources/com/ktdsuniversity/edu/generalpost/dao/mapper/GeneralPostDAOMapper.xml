@@ -325,6 +325,10 @@
 		  FROM GENERAL_POST GP
 		 INNER JOIN MEMBER M
 		    ON M.EMAIL = GP.POST_WRITER
+		<if test='hashtagId != null and hashtagId != ""'>
+         INNER JOIN GENERAL_POST_HASHTAG GPH
+            ON GP.GENERAL_POST_ID = GPH.GENERAL_POST_ID
+	    </if>
 		 WHERE GP.DELETE_YN = 'N'
 		<if test='searchKeyword != null and searchKeyword != ""'>
 			<if test='searchType == "postTitle"'>
@@ -336,7 +340,13 @@
 			<if test='searchType == "postWriter"'>
 		   AND M.NICKNAME LIKE '%' || #{searchKeyword} || '%'
 			</if>
+			<if test='searchType == "hashtagId"'>
+		   AND GPH.HASHTAG_ID = #{searchKeyword}
+		    </if>
 		</if>
+		 <if test='hashtagId != null and hashtagId != ""'>
+		   AND GPH.HASHTAG_ID = #{hashtagId}
+		 </if>
 		 ORDER BY POST_DATE DESC
 	</select>
 

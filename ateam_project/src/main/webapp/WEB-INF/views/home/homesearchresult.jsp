@@ -2,29 +2,10 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <jsp:include page="../layout/header.jsp" />
+<link rel="stylesheet" type="text/css" href="/css/common.css" />
 <style>
-  /* 메인 컨텐츠 영역 */
-	.body_container {
-		width: 1140px;
-		padding: 30px;
-		margin: 0 auto;
-	}
-
-	/* .body_container .body {
-		display: flex;
-		justify-content: space-between;
-	} */
-	
-	table.table {
-		border-collapse: collapse;
-		margin-top: 30px;
-		width: 900px;
-		margin: 0 auto;
-	}
-
 	table th{
 		background-color: var(--light-gray);
-		border-bottom: 1px solid var(--dark-gray);
 		height:35px;
 		color: var(--dark-gray);
 	}
@@ -32,28 +13,12 @@
 	table td{
 		border-bottom: 1px solid #D3D3D3;
 		color: var(--dark-gray);
-	}
-	table.table th:last-child, table.table td:last-child {
-		border-right: none;
+		text-align: center;
 	}
 	
-	table.table > tbody td {
-		padding: 10px;
-		color: #333;
-		text-align: center;
-		color: var(--dark-gray);
-	}
-	caption {
-		font-weight: bold;
-		font-size: 20px;
-		margin-bottom: 10px;
-		margin-top: 10px;
-		text-align: left;
-	}
 	div.member {
 		display: flex;
 		flex-direction: column;
-		padding-left: 90px;
 		justify-content: space-around;
 	}
 	div.member div.flex {
@@ -63,6 +28,11 @@
 		font-weight: bold;
 		font-size: 20px;
 		margin-bottom: 5px;
+		margin-right: 10px;
+	}
+	div.member div.flex img {
+		width: 50px;
+		height: 50px;
 	}
 </style>
   <!-- 메인 컨텐츠 영역 -->
@@ -70,11 +40,11 @@
     <div class="body">
     	<div class="member">
     		<div class="flex">
-		      <div class="member_type">People</div>
+				<div class="member_type">People</div>
 				<c:choose>
 					<c:when test="${not empty generalMemberList}">
 						<c:forEach items="${generalMemberList}" var="generalmember">
-							<img style="width: 50px; height: 50px;" src="${generalmember.profilePic}" />
+							<img src="${generalmember.profilePic}" />
 							<a href="/memberinfo/view/${generalmember.email}">
 								<c:out value="${generalmember.nickname}" />
 							</a>
@@ -90,8 +60,10 @@
 				<c:choose>
 					<c:when test="${not empty companyMemberList}">
 						<c:forEach items="${companyMemberList}" var="company">
-							<img style="width: 50px; height: 50px;" src="${company.profilePic}" />
-							${company.nickname}
+							<img src="${company.profilePic}" />
+							<a href="/companyinfo/view">
+								<c:out value="${company.nickname}" />
+							</a>
 						</c:forEach>
 					</c:when>
 					<c:otherwise>
@@ -101,7 +73,7 @@
 			</div>
     	</div>
 		<p></p>
-		<table class="table">
+		<table class="grid">
 			<caption>질답게시판</caption>
 			<thead>
 				<colgroup>
@@ -111,7 +83,7 @@
 					<col width="20%" />
 					<col width="10%" />
 				</colgroup>
-				<tr id="table-tr">
+				<tr>
 					<th scope="col">번호</th>
 					<th scope="col">제목</th>
 					<th scope="col">작성자</th>
@@ -125,7 +97,7 @@
 					<c:forEach items="${qnaPostList}" var="qnaboard" varStatus="index">
 						<tr>
 							<td>${index.index + 1}</td>
-							<td style="font-weight: bold;">
+							<td>
 								<a href="/qnaboard/view/${qnaboard.generalPostId}">
 									<c:out value="${qnaboard.postTitle}" />
 								</a>
@@ -146,7 +118,7 @@
 			</tbody>
 		</table>
 		<p></p>
-		<table class="table">
+		<table class="grid">
 			<thead>
 				<caption>자유게시판</caption>
 				<colgroup>
@@ -156,7 +128,7 @@
 					<col width="20%" />
 					<col width="10%" />
 				</colgroup>
-				<tr id="table-tr">
+				<tr>
 					<th scope="col">번호</th>
 					<th scope="col">제목</th>
 					<th scope="col">작성자</th>
@@ -170,7 +142,7 @@
 					<c:forEach items="${freePostList}" var="freeboard" varStatus="index">
 						<tr>
 							<td>${index.index + 1}</td>
-							<td style="font-weight: bold;">
+							<td>
 								<a href="/freeboard/view/${freeboard.generalPostId}">
 									<c:out value="${freeboard.postTitle}" />
 								</a>
@@ -189,8 +161,7 @@
 			</c:choose>
 			</tbody>
 		</table>
-		<p></p>
-		<table class="table">
+		<table class="grid">
 			<caption>알고리즘 문제 게시판</caption>
 			<thead>
 				<colgroup>
@@ -200,7 +171,7 @@
 					<col width="40%" />
 					<col width="20%" />
 				</colgroup>
-				<tr id="table-tr">
+				<tr>
 					<th scope="col">번호</th>
 					<th scope="col">카테고리</th>
 					<th scope="col">난이도</th>
@@ -216,7 +187,7 @@
 							<td>${index.index + 1}</td>
 							<td>${algorithmquestion.commonCodeVO.codeContent}</td>
 							<td>${algorithmquestion.algorithmTierId}</td>
-							<td style="font-weight: bold;">
+							<td>
 								<a href="/algorithm/question/view/${algorithmquestion.companyAlgorithmQuestionId}">
 									<c:out value="${algorithmquestion.algorithmTitle}" />
 								</a>
@@ -235,7 +206,7 @@
 			</tbody>
 		</table>
 		<p></p>
-		<table class="table">
+		<table class="grid">
 			<caption>알고리즘 해설 게시판</caption>
 			<thead>
 				<colgroup>
@@ -261,7 +232,7 @@
 					<c:forEach items="${algorithmExplanationList.algorithmExplanationList}" var="algorithmexplanation" varStatus="index">
 						<tr>
 							<td>${index.index + 1}</td>
-							<td style="font-weight: bold;">
+							<td>
 								<a href="/algorithm/explanation/view/${algorithmexplanation.companyAlgorithmExplanationId}">
 									<c:out value="${algorithmexplanation.postTitle}" />
 								</a>
@@ -276,51 +247,6 @@
 				<c:otherwise>
 					<tr>
 						<td colspan="6">조회된 게시글이 없습니다.</td>
-					</tr>
-					
-				</c:otherwise>
-			</c:choose>
-			</tbody>
-		</table>
-		<p></p>
-		<table class="table">
-			<caption>기업 소식 게시판</caption>
-			<thead>
-				<colgroup>
-					<col width="10%" />
-					<col width="45%" />
-					<col width="15%" />
-					<col width="20%" />
-					<col width="10%" />
-				</colgroup>
-				<tr id="table-tr">
-					<th scope="col">번호</th>
-					<th scope="col">제목</th>
-					<th scope="col">작성자</th>
-					<th scope="col">작성일</th>
-					<th scope="col">조회수</th>
-				</tr>
-			</thead>
-			<tbody>
-			<c:choose>
-				<c:when test="${not empty companyNewsList.companyNewsList}">
-					<c:forEach items="${companyNewsList.companyNewsList}" var="companynews" varStatus="index">
-						<tr>
-							<td>${index.index + 1}</td>
-							<td style="font-weight: bold;">
-								<a href="/news/view/${companynews.companyNewsPostId}">
-									<c:out value="${companynews.postTitle}" />
-								</a>
-							</td>
-							<td>${companynews.memberVO.nickname}</td>
-							<td>${companynews.postDate}</td>
-							<td>${companynews.viewCnt}</td>
-						</tr>
-					</c:forEach>
-				</c:when>
-				<c:otherwise>
-					<tr>
-						<td colspan="5">조회된 게시글이 없습니다.</td>
 					</tr>
 					
 				</c:otherwise>
