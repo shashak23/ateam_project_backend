@@ -19,7 +19,6 @@
 	div.member {
 		display: flex;
 		flex-direction: column;
-		padding-left: 90px;
 		justify-content: space-around;
 	}
 	div.member div.flex {
@@ -29,6 +28,11 @@
 		font-weight: bold;
 		font-size: 20px;
 		margin-bottom: 5px;
+		margin-right: 10px;
+	}
+	div.member div.flex img {
+		width: 50px;
+		height: 50px;
 	}
 </style>
   <!-- 메인 컨텐츠 영역 -->
@@ -36,11 +40,11 @@
     <div class="body">
     	<div class="member">
     		<div class="flex">
-		      <div class="member_type">People</div>
+				<div class="member_type">People</div>
 				<c:choose>
 					<c:when test="${not empty generalMemberList}">
 						<c:forEach items="${generalMemberList}" var="generalmember">
-							<img style="width: 50px; height: 50px;" src="${generalmember.profilePic}" />
+							<img src="${generalmember.profilePic}" />
 							<a href="/memberinfo/view/${generalmember.email}">
 								<c:out value="${generalmember.nickname}" />
 							</a>
@@ -56,7 +60,7 @@
 				<c:choose>
 					<c:when test="${not empty companyMemberList}">
 						<c:forEach items="${companyMemberList}" var="company">
-							<img style="width: 50px; height: 50px;" src="${company.profilePic}" />
+							<img src="${company.profilePic}" />
 							<a href="/companyinfo/view">
 								<c:out value="${company.nickname}" />
 							</a>
@@ -93,7 +97,7 @@
 					<c:forEach items="${qnaPostList}" var="qnaboard" varStatus="index">
 						<tr>
 							<td>${index.index + 1}</td>
-							<td style="font-weight: bold;">
+							<td>
 								<a href="/qnaboard/view/${qnaboard.generalPostId}">
 									<c:out value="${qnaboard.postTitle}" />
 								</a>
@@ -138,7 +142,7 @@
 					<c:forEach items="${freePostList}" var="freeboard" varStatus="index">
 						<tr>
 							<td>${index.index + 1}</td>
-							<td style="font-weight: bold;">
+							<td>
 								<a href="/freeboard/view/${freeboard.generalPostId}">
 									<c:out value="${freeboard.postTitle}" />
 								</a>
@@ -183,7 +187,7 @@
 							<td>${index.index + 1}</td>
 							<td>${algorithmquestion.commonCodeVO.codeContent}</td>
 							<td>${algorithmquestion.algorithmTierId}</td>
-							<td style="font-weight: bold;">
+							<td>
 								<a href="/algorithm/question/view/${algorithmquestion.companyAlgorithmQuestionId}">
 									<c:out value="${algorithmquestion.algorithmTitle}" />
 								</a>
@@ -228,7 +232,7 @@
 					<c:forEach items="${algorithmExplanationList.algorithmExplanationList}" var="algorithmexplanation" varStatus="index">
 						<tr>
 							<td>${index.index + 1}</td>
-							<td style="font-weight: bold;">
+							<td>
 								<a href="/algorithm/explanation/view/${algorithmexplanation.companyAlgorithmExplanationId}">
 									<c:out value="${algorithmexplanation.postTitle}" />
 								</a>
