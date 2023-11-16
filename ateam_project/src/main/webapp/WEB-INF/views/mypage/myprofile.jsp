@@ -49,11 +49,8 @@
   cursor: pointer;
   height: 30px;
 }
-.follow_icon>img ,.message_icon>img{
-  width: 15px;
-}
 .message_icon{
- width:200px;
+		width: 70px;
 		height: 30px;
 		background-color:  rgb(231,231,231);
 		justify-content: center;
@@ -246,8 +243,12 @@
 .career-modify>img,
 .region_modify>img,
 .introduce-modify>img,
-#edit-sns{
+#edit-sns,
+#edit-profilepic{
 	width: 20px;
+}
+#edit-profilepic{
+    margin-right: 12px;
 }
 .introduce-modify:hover
 ,#edit_button1:hover
@@ -262,22 +263,21 @@
 ,.addCareer:hover
 ,.region_create:hover
 ,.profile-modify:hover{
-  /* background-color: var(--light-blue); */
   color: gray;
+  cursor: pointer;
 }
 
 #delete_tech{
 	margin-left: 10px;
 }
 .introduce-create{
-background-color: var(--gray);
-	border: none;
-    color: var(--white);
-    border-radius: 10px;
-    cursor: pointer;
-    text-align: center;
-    width: 118px;
-    height: 27px;
+    border: 1px solid #dcdcdc;
+    border-radius: 5px;
+    background-color: #ffffff;
+    width: 103px;
+    height: 23px;
+    font-size: 8pt;
+    margin-top: 5px;
 }
 
 #content_wrapper{
@@ -407,27 +407,26 @@ position: absolute;
     }
 
 	.follow {
-		display: flex;
-   		justify-content: space-evenly;
+		display: grid;
+		grid-template-columns: 50px 30px 50px 30px 1fr 70px 70px;
 		border-bottom: 1px solid #333;
 		font-weight: bold;
-		margin-right: 140px;
+		width: 940px;
 	}
 
 	.follow div {
-		margin-right: 7px;
 		cursor: pointer;
 	}
 
 	.follower,
 	.followee{
-		width:200px;
+		/* width:200px;
 		height: 30px;
 		background-color:  rgb(231,231,231);
 		justify-content: center;
 		border-radius: 5px;
 		display: flex;
-   		padding: 5px;
+   		padding: 5px; */
 	}
 
 	#arrow{
@@ -788,7 +787,7 @@ position: absolute;
 		<c:if
 				test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
 				<button data-pic-id="${sessionScope._LOGIN_USER_.email }" class="profile-modify">
-				수정
+				<img id="edit-profilepic" src="/images/edit.png">
 				</button>
 				
 				<div id="modalContainerProfile" class="hidden">
@@ -820,7 +819,7 @@ position: absolute;
 							<li class="list_intro"><c:if
 									test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
 									<button data-introduce-id="${sessionScope._LOGIN_USER_.email }" class="introduce-create">
-										자기소개 추가하기
+										+ 자기소개 추가하기
 									</button>		
 								</c:if></li>
 						</c:otherwise>
@@ -831,10 +830,12 @@ position: absolute;
 		</div>
 	</div>
 	<div class="follow">
-	  <div class="follower" data-email="${memberVO.email}">팔로워
-	  </div>
-	  <div class="followee" data-email="${memberVO.email}">팔로잉
-	  </div>
+	  <div class="follower" data-email="${memberVO.email}">팔로워</div>
+	  <p>0</p>
+	  <div class="followee" data-email="${memberVO.email}">팔로잉</div>
+	  <p>0</p>
+	  <div></div>
+	  <button>팔로우</button>
 	  <div class="follow_chat">
 		<%-- <c:choose>
 			<c:when
