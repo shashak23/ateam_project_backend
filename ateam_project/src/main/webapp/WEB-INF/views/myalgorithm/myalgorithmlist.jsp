@@ -10,9 +10,6 @@
     <script src="/js/lib/jquery-3.7.1.js"></script>
     <link rel="stylesheet" type="text/css" href="/css/common.css" />
     <style>
-    
-
-
 	/* .flex_button {	
 		margin: 100px 50px 0px 0px;
 		display: flex;
@@ -33,7 +30,6 @@
 	background-color: var(--light-blue);
   	color: white;
 	} */
- 
     </style>
 </head>
 <body>
@@ -87,7 +83,6 @@
                         </c:forEach>
                     </tbody>
                 </table>
-                <!-- 데이터가 없을 때의 처리 -->
                 <c:choose>
                     <c:when test="${empty myAlgorithmList.myAlgorithmList}">
                         <div>데이터가 없습니다.</div>
@@ -98,8 +93,6 @@
                 </c:choose>
             </div>
         </div>  
-        <!-- 테이블 및 데이터 출력 부분 -->
-       
         <div class="body_right_aside"></div>
     </div>
     <jsp:include page="../layout/footer.jsp" />

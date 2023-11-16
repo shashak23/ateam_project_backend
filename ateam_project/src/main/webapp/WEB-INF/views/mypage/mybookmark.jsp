@@ -36,7 +36,6 @@
 </head>
 <body>
 <div class="body_container"> 
-    
     <div class="body_left_aside">
         <div class="flex_button">
             <button id="myprofile">마이페이지</button>
@@ -48,17 +47,17 @@
         </div>
     </div>      
     <div class="body">    
-            <table class="grid">
-                <caption>나의 북마크 보기</caption>
-                <thead>
+        <table class="grid">
+            <caption>나의 북마크 보기</caption>
+            <thead>
                 <tr>
-                        <th scope="col">번호</th>
-                        <th scope="col">제목</th>
-                        <th scope="col">작성자</th>
-                        <th scope="col">작성일</th>
-                        <th scope="col">조회수</th>
+                    <th scope="col">번호</th>
+                    <th scope="col">제목</th>
+                    <th scope="col">작성자</th>
+                    <th scope="col">작성일</th>
+                    <th scope="col">조회수</th>
                 </tr>
-				</thead>
+            </thead>
                 <tbody>
                     <c:forEach items="${bookmarkList}" var="bookmark" varStatus="index">
                         <tr>
@@ -83,7 +82,7 @@
                         </tr>
                     </c:forEach>
                 </tbody>
-            </table>
+        </table>
     </div>
     <div class="body_right_aside"></div>
 </div>  
