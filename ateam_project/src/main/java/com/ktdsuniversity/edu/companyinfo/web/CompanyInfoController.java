@@ -106,6 +106,6 @@ public class CompanyInfoController {
 		model.addAttribute("companyNewsList", companyNewsListVO);
 		model.addAttribute("algorithmQuestionList", algorithmQuestionListVO);
 		model.addAttribute("algorithmExplanationList", algorithmExplanationListVO);
-		return "companyinfo/companymypostinmypage";	
+		return "companyinfo/companymypost";	
 		}
 	}

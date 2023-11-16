@@ -249,7 +249,7 @@ public class QnAPostController {
 		
 		model.addAttribute("qnaPostList", qnaPostList);
 		model.addAttribute("freePostList", freePostList);
-		return "mypage/mypostinmypage";
+		return "mypage/mypost";
 	}
 	
 	// 좋아요 기능
