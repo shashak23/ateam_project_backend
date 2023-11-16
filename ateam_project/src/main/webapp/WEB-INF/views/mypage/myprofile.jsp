@@ -1042,7 +1042,6 @@ position: absolute;
 						</button>
 						<div id="modalContainerCareer" class="hidden">
 							<div id="modalContentCareer">
-												
 								
 							</div>
 						</div>

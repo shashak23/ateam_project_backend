@@ -775,7 +775,6 @@
           }
           else {
             alert('등록에 실패했습니다.')
-            console.log(body)
           }
         })
       }
@@ -811,7 +810,6 @@
     let nickname
     let email
     let members
-    let profilePic
     let innerCounter
 
 
@@ -854,19 +852,15 @@
                 email = nicknameList[j].email
               }
             }
-            
-            // $.get(`/home/profilepic/\${article.postWriter}`, function(profileResponse) {
-            //   console.log(profilePic = profileResponse.profilePic)
-            // })
 
             let pokemon = getPokemonUrl()
+            let profilePic
 
-            // <img src="/member/file/download/\${email}" alt="\${pokemon}"/>
             template = `
               <article class="content_container">
                 <div class="writer_info_area">
                   <div class="flex_left">
-                    <img src="\${pokemon}" />
+                    <img src="/member/file/download/\${email}" onerror="this.src='\${pokemon}';" alt="\${pokemon}"/>
                     <div>
                       <div class="writer_name">
                         <a href="/memberinfo/view/\${email}">\${nickname}</a>
@@ -932,7 +926,6 @@
             if (article.postWriter === user_email) {
               templateDom.find('.follow_btn').css('visibility', 'hidden')
             }
-            
 
             // 게시글 유형이 자유 유형이면 대문짝만한 Q 삭제
             if(article.boardId === 'CC-20231017-000029') {
@@ -1183,7 +1176,6 @@
         
         x += noticeOffset.left
         y += noticeOffset.top
-        console.log("after", x, y)
 
         $(this).css({
           left: x + 'px',
@@ -1394,7 +1386,6 @@
     $.get(`/recommend/follower/\${user_email}`, function(response) {
       let recommendList = response.recommendList;
       const totalMembers = recommendList.length;
-      console.log(response)
 
       if (totalMembers > page) {
         recommendTemplate = `
