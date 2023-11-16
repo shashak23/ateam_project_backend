@@ -157,6 +157,9 @@ updateViewCount();
 		background-color: transparent;
 		margin-right: 12px;
 	}
+	#displayHashtags {
+		margin-bottom: 10px;
+	}
 </style>
 <script type="text/javascript">
 
