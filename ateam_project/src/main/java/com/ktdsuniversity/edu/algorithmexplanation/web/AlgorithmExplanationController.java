@@ -1,6 +1,7 @@
 /**
  * 작성자: 장보늬
  * 작성일자: 2023-10-15
+ * 수정자: 장보늬(2023-11-15)
  * 내용: 알고리즘해설 게시판의 요청과 응답을 처리합니다.
  **/
 package com.ktdsuniversity.edu.algorithmexplanation.web;
@@ -44,6 +45,20 @@ public class AlgorithmExplanationController {
 		model.addAttribute("searchAlgorithmExplanationVO", searchAlgorithmExplanationVO);
 		model.addAttribute("algorithmCategoryId",algorithmExplanationVO);	//남현욱 추가
 		return "company/algorithmexplanation/explanationlist";
+	}
+	
+	/**
+	 * 남현욱 추가
+	 */
+	@GetMapping("/algorithm/explanation/detail/{algorithmCategoryId}")
+	public String viewAlgorithmExplanationDetail(@PathVariable String algorithmCategoryId
+			                                   , @ModelAttribute SearchAlgorithmExplanationVO searchAlgorithmExplanationVO
+											   , @ModelAttribute AlgorithmExplanationVO algorithmExplanationVO
+											   , Model model) {
+		AlgorithmExplanationListVO algorithmExplanationListVO = algorithmExplanationService.getAlgorithmExplanationByCategory(algorithmCategoryId);
+		model.addAttribute("algorithmExplanationList", algorithmExplanationListVO);
+		logger.debug("algorithmCategoryId: " + algorithmCategoryId);
+		return "company/algorithmexplanation/explanationdetail";
 	}
 	
 	@GetMapping("/algorithm/explanation/view/{companyAlgorithmExplanationId}")
@@ -146,15 +161,4 @@ public class AlgorithmExplanationController {
 		
 	}
 	
-	/**
-	 * 남현욱 추가
-	 */
-	@GetMapping("/algorithm/explanation/detail/{algorithmCategoryId}")
-	public String viewAlgorithmExplanationDetail(@PathVariable String algorithmCategoryId
-											   , Model model) {
-		SearchAlgorithmExplanationVO searchAlgorithmExplanationVO = new SearchAlgorithmExplanationVO();
-		AlgorithmExplanationListVO algorithmExplanationListVO = algorithmExplanationService.getAllAlgorithmExplanation(searchAlgorithmExplanationVO);
-		model.addAttribute("algorithmExplanationList", algorithmExplanationListVO);
-		return "company/algorithmexplanation/explanationdetail";
-	}
 }

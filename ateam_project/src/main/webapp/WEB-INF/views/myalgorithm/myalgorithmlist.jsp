@@ -9,86 +9,100 @@
     <jsp:include page="../layout/header.jsp" />
     <script src="/js/lib/jquery-3.7.1.js"></script>
     <link rel="stylesheet" type="text/css" href="/css/common.css" />
-</head>
-<style>
+    <style>
     
 
-</style>
+
+	/* .flex_button {	
+		margin: 100px 50px 0px 0px;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.flex_button button {
+	  color: white;	
+    background-color: var(--gray);
+    width: 150px;
+    height: 40px;
+    margin-bottom: 15px;
+    cursor: pointer;
+    border: 2px;
+	}
+
+	.flex_button button:hover {
+	background-color: var(--light-blue);
+  	color: white;
+	} */
+ 
+    </style>
 </head>
 <body>
-    <div class="flex_button">
-        <button id="myprofile">마이페이지</button>
-        <button id="bookmark">북마크</button>
-        <button id="modify_info">정보 수정</button>
-        <button id="mypost">내가 쓴 게시글</button>
-        <button id="solve">내가 푼 문제</button>
-        <button>탈퇴</button>
-    </div>
 <div class="body_container">
-    <form action="/codingtest/mylist" class="search_form" method="get">
-        <div>
-            <select name="searchType">
-				<option value="subject" ${searchMyAlgorithmVO.searchType eq 'subject' ? 'selected' : ''}>제목</option>
-                <option value="content" ${searchMyAlgorithmVO.searchType eq 'content' ? 'selected' : ''}>내용</option>
-                <option value="category" ${searchMyAlgorithmVO.searchType eq 'category' ? 'selected' : ''}>카테고리</option>
-                <option value="tier" ${searchMyAlgorithmVO.searchType eq 'tier' ? 'selected' : ''}>티어</option>
-                <option value="company_name" ${searchMyAlgorithmVO.searchType eq 'company_name' ? 'selected' : ''}>기업명</option>
-                <option value="correctYN" ${searchMyAlgorithmVO.searchType eq 'correctYN' ? 'selected' : ''}>정답여부별</option>
-            </select>
-            <input type="text" name="searchKeyword" value="${searchMyAlgorithmVO.searchKeyword}"/>
-            <input type="hidden" name="pageNo" class="pageNo" value="0"/>
-            <button class="btn">검색</button>
+    <div class="body_left_aside">
+        <div class="flex_button">
+            <button id="myprofile">마이페이지</button>
+            <button id="bookmark">북마크</button>
+            <button id="modify_info">정보 수정</button>
+            <button id="mypost">내가 쓴 게시글</button>
+            <button id="solve">내가 푼 문제</button>
+            <button>탈퇴</button>
         </div>
-    </form>
-</div>     
-    <!-- 일단 -->
-    <div class="container">
-        <table class="grid">
-            <caption>내가 푼 문제</caption> 
-            <thead>
-                <tr id="table-tr">
-                    <th>제목</th>
-                    <th>제출회사</th>
-                    <th>카테고리</th>
-                    <th>내용</th>
-                    <th>조회수</th>
-                    <th>난이도</th>
-                    <th>정답여부</th>
-                    <th>제출한 답</th>
-                    <th>삭제</th>
-                </tr>
-            </thead>
-            <tbody>
-                <c:forEach items="${myAlgorithmList.myAlgorithmList}" var="myAlgo">
-                    <tr>
-                        <td><a href="/algorithm/question/view/${myAlgo.algorithmQuestionVO.companyAlgorithmQuestionId}">${myAlgo.algorithmQuestionVO.algorithmTitle}</a></td>
-                        <td>${myAlgo.memberVOTemp.nicknameTemp}</td>
-                        <td>${myAlgo.commonCodeVO.codeContent}</td>
-                        <td>${myAlgo.algorithmQuestionVO.algorithmContent}</td>
-                        <td>${myAlgo.algorithmQuestionVO.viewCnt}</td>
-                        <td>${myAlgo.algorithmQuestionVO.algorithmTierId}</td>
-                        <td>${myAlgo.correctAnswerYn}</td>
-                        <td>${myAlgo.myAnswer}</td>
-                        <td><a href="/home/myalgorithm/delete/${myAlgo.myAlgorithmQuestionId}">삭제</a></td>
-                    </tr>
-                </c:forEach>
-            </tbody>
-        </table>
+    </div>     
+        <div class="body_container">
+            <form action="/codingtest/mylist" class="search_form" method="get">
+                <div>
+                    <select name="searchType">
+                        <option value="subject" ${searchMyAlgorithmVO.searchType eq 'subject' ? 'selected' : ''}>제목</option>
+                    </select>
+                    <input type="text" name="searchKeyword" value="${searchMyAlgorithmVO.searchKeyword}"/>
+                    <input type="hidden" name="pageNo" class="pageNo" value="0"/>
+                    <button class="btn">검색</button>
+                </div>
+            </form>
+            <div class="body">
+                <table class="grid">
+                    <caption>내가 푼 문제</caption> 
+                    <thead>
+                        <tr>
+                            <th scope="col">제목</th>
+                            <th scope="col">제출회사</th>
+                            <th scope="col">카테고리</th>
+                            <th scope="col">내용</th>
+                            <th scope="col">조회수</th>
+                            <th scope="col">난이도</th>
+                            <th scope="col">정답여부</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach items="${myAlgorithmList.myAlgorithmList}" var="myAlgo">
+                            <tr>
+                                <td><a href="/algorithm/question/view/${myAlgo.algorithmQuestionVO.companyAlgorithmQuestionId}">${myAlgo.algorithmQuestionVO.algorithmTitle}</a></td>
+                                <td>${myAlgo.memberVOTemp.nicknameTemp}</td>
+                                <td>${myAlgo.commonCodeVO.codeContent}</td>
+                                <td>${myAlgo.algorithmQuestionVO.algorithmContent}</td>
+                                <td>${myAlgo.algorithmQuestionVO.viewCnt}</td>
+                                <td>${myAlgo.algorithmQuestionVO.algorithmTierId}</td>
+                                <td>${myAlgo.correctAnswerYn}</td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+                <!-- 데이터가 없을 때의 처리 -->
+                <c:choose>
+                    <c:when test="${empty myAlgorithmList.myAlgorithmList}">
+                        <div>데이터가 없습니다.</div>
+                    </c:when>
+                    <c:otherwise>
+                        <div><!-- 다른 내용이 있으면 여기에 추가 --></div>
+                    </c:otherwise>
+                </c:choose>
+            </div>
+        </div>  
+        <!-- 테이블 및 데이터 출력 부분 -->
+       
+        <div class="body_right_aside"></div>
     </div>
-        <c:choose>
-            <c:when test="${empty myAlgorithmList.myAlgorithmList}">
-                <div>데이터가 없습니다.</div>
-            </c:when>
-            <c:otherwise>
-                <div><!-- 다른 내용이 있으면 여기에 추가 --></div>
-            </c:otherwise>
-        </c:choose>
-    </div> 
-			</div>
-		</div>
-
-    </div>
-  
+    <jsp:include page="../layout/footer.jsp" />
     <script>
 		  function redirectToURL(url) {
 	        window.location.href = url;
@@ -122,8 +136,7 @@
                 'action': '/codingtest/mylist'
             }).submit()
         }
-  
-       
+
          // 미완성된 기능을 알려주는 모달창
          $('.incomplete').click(function() {
              $('.modal, .overlay').addClass('modal_active');
@@ -158,6 +171,5 @@
              $(this).find('a').css({'background-color': 'white', 'color': 'var(--blue)', 'box-shadow': 'none'});
          });      
     </script>
-     <jsp:include page="../layout/footer.jsp" />
 </body>
 </html>

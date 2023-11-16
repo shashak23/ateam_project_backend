@@ -16,6 +16,8 @@ import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
 public interface AlgorithmExplanationService {
 	
     public AlgorithmExplanationListVO getAllAlgorithmExplanation(SearchAlgorithmExplanationVO searchAlgorithmExplanationVO);
+    
+    public AlgorithmExplanationListVO getAlgorithmExplanationByCategory(String algorithmCategoryId);
 	
 	public boolean createNewAlgorithmExplanation (AlgorithmExplanationVO algorithmExplanationVO);
 	

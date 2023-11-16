@@ -7,14 +7,9 @@
 <head>
    <meta charset="UTF-8">
     <title>devGround</title>
-         <!--<link rel="preconnect" href="https://fonts.googleapis.com"> 
-         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
-         <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet"> 
-         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" /> 
-         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />-->
-         <script src="/js/lib/jquery-3.7.1.js"></script> 
-         <link rel="stylesheet" href="/css/style.css"> 
-         <jsp:include page="../layout/header.jsp"/>
+        <script src="/js/lib/jquery-3.7.1.js"></script> 
+        <link rel="stylesheet" type="text/css" href="/css/common.css" />
+        <jsp:include page="../layout/header.jsp"/>
 <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/super-build/ckeditor.js"></script>
 <script>
 
@@ -85,92 +80,102 @@ updateViewCount();
 
 </script>
 <style type= "text/css">
-		#container{
-			width: 800px;
-			margin: 0 auto;
-			margin-left: 20%;
-			
-		}
+	.title_name {
+		font-size: 22px;
+		margin: 9px 0 6px 0;
+		padding-bottom: 16px;
+		border-bottom: 1px solid #EEE;
+	}
+	.hashtag,
+	#write_area {
+		display: flex;
+		flex-direction: column;
+		align-items: baseline;
+		margin-bottom: 10px;
+	}
 
-	  .seperate-line {
-      border: 1px solid #ccc;
- 	  margin: 10px 0px 7px 0px;
-	  width: 1079px;
-   		}
-
-		.title_name {
-			margin-top: 50px;
-			margin-left: 2px;
-			margin-bottom: 30px;
-		}
-		div.grid {
-			display: grid;
-			grid-template-columns: 80px 1fr;
-			grid-template-rows: 50px 28px 50px 320px 1fr;
-			row-gap: 10px;
-		}
-
-		div.grid > div.btn-group {
-			display: grid;
-			grid-column: 1 / 3;
-		}
-
-		div.grid div.right-align {
-			text-align: right;
-		}
-
-		label {
-			padding-left: 10px; 
-			margin-top: 10px;
-			/* margin-left: 30px; */
-		}
-		input, textarea {
-			margin: auto 0;
-			margin-top: 10px;
-			height: 30px;		
-			width: 500px;
-		}
-		.ck-editor__editable { 
-			height: 350px; 
-			width: 900px;
-			margin: auto 0;
-		
-		}
-	    .ck-content {
-			 font-size: 12px; 	
-		}
-	
-	    #hashtag {
-	      margin-top: 5px;
-	    }	
-	    .btn-group {
-	    	margin-top: 420px;
-	    }
-		#save_button {
-			margin: auto 0;
-			margin-top: 70px;
-			margin-right: 1px;
-			border: none;
-			cursor: pointer;
-			width: 70px;
-			height: 30px;
-			background-color: var(--light-blue);
-			border-radius: 5px;
-		}	
-		
+	#write_area > label {
+		width: 6%;
+		font-weight: bold;
+		margin: 20px 0 6px 0;
+	}
+	#write_area > input {
+		width: 100%;
+		height: 32px;
+		border: 1px solid #A2A2A2;
+		border-radius: 5px;
+	}
+	.ck-editor__editable { 
+		height: 350px; 
+		margin: auto 0;
+	}
+	.ck-content {
+			font-size: 12px; 	
+	}
+	#bottom_area {
+		display: grid;
+		grid-template-columns: 80% 20%;
+	}
+	.hashtag > #input_area {
+		display: flex;
+	}
+	.hashtag > label {
+		width: auto;
+		font-weight: bold;
+		margin: 20px 0 6px 0;
+	}
+	#button_1 {
+		width: 44px;
+		border-radius: 5px;
+		border: 1px solid #EEE;
+		background-color: transparent;
+		color: #666;
+		margin-left: 5px;
+		cursor: pointer;
+	}
+	#button_2 {
+		justify-self: end;
+		width: 120px;
+		height: 40px;
+		background-color: var(--blue);
+		color: #EAEAEA;
+		font-weight: bold;
+		font-size: 16px;
+		border: none;
+		border-radius: 5px;
+		cursor: pointer;
+	}
+	.remove_btn {
+		cursor: pointer;
+		border: none;
+		background-color: transparent;
+		margin-right: 12px;
+	}
 	</style>
 </head>
 <body>
-	
-<div id="container">
-		<h1 class="title_name"> 자유게시판 게시글 작성 </h1>
-		<div class="seperate-line"></div>
-		<form method = "post" >		
-			<div class = "grid">
-				<label for = "postTitle"> 제목 </label>
-				<input id = "postTitle" type = "text" name="postTitle" />
-				<label for = "postContent"></label>
-				<textarea name="postContent" id="editor"></textarea>
+	<div class="body_container">
+		<div class="body_left_aside"></div>
+		
+		<div class="body">
+			<h3 class="title_name">자유 게시판 게시글 작성</h3>
+			<form method="post" >		
+				<div id="write_area">
+					<label for="postTitle">제목</label>
+					<input id="postTitle" type = "text" name="postTitle" placeholder=" 제목을 입력하세요" />
+					<label for="postContent">내용</label>
+					<textarea name="postContent" id="editor"></textarea>
+				</div>
+			<div id="bottom_area">
+				<div class="hashtag"></div>
+				<input id="button_2" type="submit" value="저장" />
+			</div>
+			</form>
+		</div>	
+					
+		<div class="body_right_aside"></div>
+	</div>						
+					
 					<script>
 					CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
 						// https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html#extended-toolbar-configuration-format
@@ -215,7 +220,7 @@ updateViewCount();
 							]
 						},
 						// https://ckeditor.com/docs/ckeditor5/latest/features/editor-placeholder.html#using-the-editor-configuration
-						placeholder: 'Welcome to CKEditor 5!',
+						placeholder: '본문 내용을 입력하세요',
 						// https://ckeditor.com/docs/ckeditor5/latest/features/font.html#configuring-the-font-family-feature
 						fontFamily: {
 							options: [
@@ -313,13 +318,5 @@ updateViewCount();
 						]
 					});  
 </script>
-			<div class = "btn-group">
-				<div class="right-align">
-					<input id="save_button" type="submit" value="저장" />
-				</div>
-			</div>
-		</div>
-	</form>
-</div>	
 </body>
 </html>

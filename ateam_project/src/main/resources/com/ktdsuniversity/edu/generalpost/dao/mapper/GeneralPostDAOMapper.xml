@@ -327,15 +327,9 @@
 		    ON M.EMAIL = GP.POST_WRITER
 		 WHERE GP.DELETE_YN = 'N'
 		<if test='searchKeyword != null and searchKeyword != ""'>
-			<if test='searchType == "postTitle"'>
-		   AND GP.POST_TITLE LIKE '%' || #{searchKeyword} || '%'
-			</if>
-			<if test='searchType == "postContent"'>
-		   AND GP.POST_CONTENT LIKE '%' || #{searchKeyword} || '%'
-			</if>
-			<if test='searchType == "postWriter"'>
-		   AND M.NICKNAME LIKE '%' || #{searchKeyword} || '%'
-			</if>
+		   AND (GP.POST_TITLE LIKE '%' || #{searchKeyword} || '%'
+		    OR GP.POST_CONTENT LIKE '%' || #{searchKeyword} || '%'
+		    OR M.NICKNAME LIKE '%' || #{searchKeyword} || '%')
 		</if>
 		 ORDER BY POST_DATE DESC
 	</select>
