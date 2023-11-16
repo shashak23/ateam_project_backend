@@ -62,18 +62,22 @@
 			<caption>알고리즘 문제 게시판</caption>
 			<thead>
 				<colgroup>
+					<col width="5%" />
 					<col width="10%" />
-					<col width="20%" />
 					<col width="10%" />
-					<col width="40%" />
+					<col width="30%" />
 					<col width="20%" />
+					<col width="15%" />
+					<col width="10%" />
 				</colgroup>
 				<tr>
 					<th scope="col">번호</th>
 					<th scope="col">카테고리</th>
 					<th scope="col">난이도</th>
-					<th scope="col">문제 제목</th>
+					<th scope="col">제목</th>
 					<th scope="col">작성자</th>
+					<th scope="col">작성일</th>
+					<th scope="col">조회수</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -90,6 +94,8 @@
 								</a>
 							</td>
 							<td>${algorithmquestion.memberVO.nickname}</td>
+							<td>${algorithmquestion.postDate}</td>
+							<td>${algorithmquestion.viewCnt}</td>
 						</tr>
 					</c:forEach>
 				</c:when>
@@ -105,17 +111,17 @@
 			<caption>알고리즘 해설 게시판</caption>
 			<thead>
 				<colgroup>
-					<col width="10%" />
-					<col width="25%" />
+					<col width="5%" />
 					<col width="20%" />
+					<col width="30%" />
 					<col width="20%" />
 					<col width="15%" />
 					<col width="10%" />
 				</colgroup>
 				<tr>
 					<th>번호</th>
-					<th>제목</th>
 					<th>카테고리</th>
+					<th>제목</th>
 					<th>작성자</th>
 					<th>작성일</th>
 					<th>조회수</th>
@@ -127,12 +133,12 @@
 					<c:forEach items="${algorithmExplanationList.algorithmExplanationList}" var="algorithmexplanation" varStatus="index">
 						<tr>
 							<td>${index.index + 1}</td>
+							<td>${algorithmexplanation.commonCodeVO.codeContent}</td>
 							<td>
 								<a href="/algorithm/explanation/view/${algorithmexplanation.companyAlgorithmExplanationId}">
 									<c:out value="${algorithmexplanation.postTitle}" />
 								</a>
 							</td>
-							<td>${algorithmexplanation.commonCodeVO.codeContent}</td>
 							<td>${algorithmexplanation.memberVO.nickname}</td>
 							<td>${algorithmexplanation.postDate}</td>
 							<td>${algorithmexplanation.viewCnt}</td>
