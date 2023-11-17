@@ -94,14 +94,8 @@
         <ul>
           <li><a href="/qnaboard/list">질답게시판</a></li>
           <li><a href="/freeboard/list">자유게시판</a></li>
-          <li class="list_company"><a href="#" class="incomplete">기업게시판</a>
-            <ul class="company_sublist visible">
-              <li><a href="#" class="incomplete">채용게시판</a></li>
-              <li><a href="/algorithm/question/list">문제게시판</a></li>
-              <li><a href="/algorithm/explanation/list">해설게시판</a></li>
-            </ul>
-          </li>
-          <li><a href="#" class="incomplete">팀게시판</a></li>
+		  <li><a href="/algorithm/question/list">알고리즘 문제 게시판</a></li>
+		  <li><a href="/algorithm/explanation/list">알고리즘 해설 게시판</a></li>
         </ul>
       </nav>
       <c:choose>

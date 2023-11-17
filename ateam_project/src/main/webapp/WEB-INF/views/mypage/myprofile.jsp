@@ -645,6 +645,7 @@ position: absolute;
 <jsp:include page="../layout/header.jsp" />
 <script type="text/javascript" src="/js/lib/jquery-3.7.1.js"></script>
 <script type="text/javascript">
+
 	//신고버튼
 	$().ready(function() {
 		function redirectToURL(url) {
@@ -848,9 +849,9 @@ position: absolute;
 	<div class="follow">
 	  <div></div>
 	  <div class="follower" data-email="${memberVO.email}">팔로워</div>
-	  <div>0</div>
+	  <div class="follower_count"></div>
 	  <div class="followee" data-email="${memberVO.email}">팔로잉</div>
-	  <div>0</div>
+	  <div class="followee_count"></div>
 	  <div></div>
 	  <div class="follow_chat"></div>
 	  <div></div>
@@ -916,7 +917,7 @@ position: absolute;
 	<div class="related_link">
 		<div id="SNS">
 			<img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="Icon 1" id="githubIcon">
-s		</div>
+		</div>
 		<div id="SNS">
         <img src="https://w7.pngwing.com/pngs/863/247/png-transparent-email-computer-icons-email-miscellaneous-angle-text.png" alt="Icon 2" id="emailIcon"> 
 		</div>
@@ -1140,92 +1141,119 @@ s		</div>
 <jsp:include page="../layout/footer.jsp" />
 </body>
 <script>
+	$().ready(function() {
+		var currentUrl = window.location.href;
+		
+		var startIndex = currentUrl.indexOf("/memberinfo/view/") + "/memberinfo/view/".length;
+		var endIndex = currentUrl.length;
+		
+		var extractedEmail = currentUrl.substring(startIndex, endIndex);
+		/* var initialFollowerEmail = isValidEmail(extractedEmail) ? extractedEmail : ""; */
+		
+		var initialUrl = '/member/getfollowers/' + extractedEmail;
+		var initialUrl2 = '/member/getfollowees/' + extractedEmail;
+		
+		/* function isValidEmail(email) {
+			var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+	        return emailRegex.test(email);
+	    } */
+		
+		function updateFollowerCount(count) {
+			console.log('Follower Count:', count);
+			$('.follower_count')[0].innerText = count;
+		}
+		function updateFolloweeCount(count) {
+			console.log('Followee Count:', count);
+			$('.followee_count')[0].innerText = count;
+		}
+		loadFollower(initialUrl);
+		loadFollowee(initialUrl2);
+		
+		function loadFollower(url) {
+			$.get(url, function(response) {
+				console.log(response.followerList);
+				let followerTemplate = '';
+	
+				if (response && response.followerList && response.followerList.length > 0) {
+					const followerList = response.followerList;
+	
+					for (let i = 0; i < followerList.length; i++) {
+						let account = followerList[i];
+						console.log(account);
+	
+						const profilePic = account.memberVO.profilePic;
+						const followerEmail = account.follower;
+						const nickname = account.memberVO.nickname;
+	
+						const followerItem =
+							`<div>
+								<img style="width: 50px; height: 50px;" src="\${profilePic}" />
+								<a class="anchor" href="/memberinfo/view/\${followerEmail}">\${nickname}</a>
+							</div>`;
+						console.log(followerItem)
+						followerTemplate += followerItem
+					}
+	
+					updateFollowerCount(response.count);
+					$('.create_content .follower_list').html(followerTemplate);
+				} else {
+					followerTemplate = "팔로워가 없습니다.";
+					$('.create_content .follower_list').html(followerTemplate);
+					updateFollowerCount(0);
+				}
+			});
+		}
+		function loadFollowee(url) {
+			$.get(url, function(response) {
+				console.log(response.followeeList);
+				let followeeTemplate = '';
+
+				if (response && response.followeeList && response.followeeList.length > 0) {
+					const followeeList = response.followeeList;
+
+					for (let i = 0; i < followeeList.length; i++) {
+						let account = followeeList[i];
+						console.log(account);
+
+						const profilePic = account.memberVO.profilePic;
+						const followeeEmail = account.followee;
+						const nickname = account.memberVO.nickname;
+
+						const followeeItem =
+							`<div>
+								<img style="width: 50px; height: 50px;" src="\${profilePic}" />
+								<a class="anchor" href="/memberinfo/view/\${followeeEmail}">\${nickname}</a>
+							</div>`;
+						console.log(followeeItem)
+						followeeTemplate += followeeItem
+					}
+					updateFolloweeCount(response.count);
+					$('.create_content2 .followee_list').html(followeeTemplate);
+				} else {
+					followeeTemplate = "팔로우하는 계정이 없습니다.";
+					$('.create_content2 .followee_list').html(followeeTemplate);
+					updateFolloweeCount(0);
+				}
+			});
+		}
+	})
+
     //모달 실행을 위한 문장
     $('.follower').click(function() {
-    	var followerEmail = $(this).data('email');
         $('.create_content, .overlay').addClass('active')
-
-		var url = '/member/getfollowers/' + followerEmail;
-		loadFollower(url);
     })
     $('.btn-close, .overlay').click(function() {
         $('.create_content, .overlay').removeClass('active')
     })
     $('.followee').click(function() {
-		var followeeEmail = $(this).data('email');
         $('.create_content2, .overlay').addClass('active')
-
-		var url2 = '/member/getfollowees/' + followeeEmail;
-		loadFollowee(url2);
     })
     $('.btn-close, .overlay').click(function() {
         $('.create_content2, .overlay').removeClass('active')
     })
     
-	function loadFollower(url) {
-		$.get(url, function(response) {
-			console.log(response.followerList);
-			let followerTemplate = '';
-
-			if (response && response.followerList && response.followerList.length > 0) {
-				const followerList = response.followerList;
-
-				for (let i = 0; i < followerList.length; i++) {
-					let account = followerList[i];
-					console.log(account);
-
-					const profilePic = account.memberVO.profilePic;
-					const followerEmail = account.follower;
-					const nickname = account.memberVO.nickname;
-
-					const followerItem =
-						`<div>
-							<img style="width: 50px; height: 50px;" src="\${profilePic}" />
-							<a class="anchor" href="/memberinfo/view/\${followerEmail}">\${nickname}</a>
-						</div>`;
-					console.log(followerItem)
-					followerTemplate += followerItem
-				}
-
-				$('.create_content .follower_list').html(followerTemplate);
-			} else {
-				followerTemplate = "팔로워가 없습니다.";
-				$('.create_content .follower_list').html(followerTemplate);
-			}
-		});
-	}
-	function loadFollowee(url2) {
-		$.get(url2, function(response2) {
-			console.log(response2.followeeList);
-			let followeeTemplate = '';
-
-			if (response2 && response2.followeeList && response2.followeeList.length > 0) {
-				const followeeList = response2.followeeList;
-
-				for (let i = 0; i < followeeList.length; i++) {
-					let account = followeeList[i];
-					console.log(account);
-
-					const profilePic = account.memberVO.profilePic;
-					const followeeEmail = account.followee;
-					const nickname = account.memberVO.nickname;
-
-					const followeeItem =
-						`<div>
-							<img style="width: 50px; height: 50px;" src="\${profilePic}" />
-							<a class="anchor" href="/memberinfo/view/\${followeeEmail}">\${nickname}</a>
-						</div>`;
-					console.log(followeeItem)
-					followeeTemplate += followeeItem
-				}
-
-				$('.create_content2 .followee_list').html(followeeTemplate);
-			} else {
-				followeeTemplate = "팔로우하는 계정이 없습니다.";
-				$('.create_content2 .followee_list').html(followeeTemplate);
-			}
-		});
-	}
+	
+	
 	
 	// 스크롤 버튼, IDE
 	let calcScrollValue = () => {
