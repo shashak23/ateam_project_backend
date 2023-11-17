@@ -2,11 +2,13 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 <jsp:include page="../../layout/header.jsp"></jsp:include>
 <script type="text/javascript" src="/js/lib/jquery-3.7.1.js"></script>
 <link rel="stylesheet" type="text/css" href="/css/common.css" />
 <script type="text/javascript">
 	$().ready(function() {
+
 		$.get("/code/알고리즘카테고리", function(response) {
 			var ul = $("<ul></ul>");
 			for (var i = 0; i < response.length; i++) {
@@ -401,8 +403,35 @@
 										<c:out value="${algorithmquestion.algorithmTitle}" />
 									</a>
 								</td>
-								<td>${algorithmquestion.algorithmContent}</td>			
-								<td>정답률</td>
+								<td>${algorithmquestion.algorithmContent}</td>
+								<td>
+									${algorithmquestion.correctPercentage}
+								<%-- <c:set var="loop" value="true"/>
+								<c:forEach items="${algorithmQuestionList.percentageList}" var="percentage" varStatus="status">
+									<c:if test="${loop}">
+										<c:set var="percentageList" value="${algorithmQuestionList.percentageList}" />
+										<c:choose>
+											<c:when test="${fn:length(percentageList) - 1 == status.index and algorithmquestion.companyAlgorithmQuestionId != percentage.companyAlgorithmQuestionId}">
+												0%
+											</c:when>
+											<c:otherwise>
+												<c:if test="${algorithmquestion.companyAlgorithmQuestionId == percentage.companyAlgorithmQuestionId}">
+													<c:choose>
+												        <c:when test="${not empty percentage.correctPercentage and percentage.correctPercentage != ''}">
+												            ${percentage.correctPercentage}%
+												            <c:set var="loop" value="false"/>
+												        </c:when>
+												        <c:otherwise>
+												            0%
+												            <c:set var="loop" value="false"/>
+												        </c:otherwise>
+												    </c:choose>
+												</c:if>									
+											</c:otherwise>
+										</c:choose>
+									</c:if>
+								</c:forEach> --%>
+								</td>
 							</tr>
 						</c:forEach>
 					</c:when>

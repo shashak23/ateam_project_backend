@@ -20,6 +20,7 @@ import com.ktdsuniversity.edu.algorithmanswer.dao.AlgorithmAnswerDAO;
 import com.ktdsuniversity.edu.algorithmquestion.dao.AlgorithmQuestionDAO;
 import com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionListVO;
 import com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionVO;
+import com.ktdsuniversity.edu.algorithmquestion.vo.PercentageVO;
 import com.ktdsuniversity.edu.algorithmquestion.vo.SearchAlgorithmQuestionVO;
 import com.ktdsuniversity.edu.common.vo.AbstractCompanyPostVO;
 import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
@@ -40,6 +41,10 @@ public class AlgorithmQuestionServiceImpl implements AlgorithmQuestionService {
 		
 		AlgorithmQuestionListVO algorithmQuestionListVO = new AlgorithmQuestionListVO();
 		algorithmQuestionListVO.setAlgorithmQuestionCnt(algorithmQuestionDAO.getAlgorithmQuestionAllCount(searchAlgorithmQuestionVO));
+		List<PercentageVO> percentageList = algorithmQuestionDAO.getPercentage();
+		
+		algorithmQuestionListVO.setPercentageList(percentageList);
+		
 		if(searchAlgorithmQuestionVO == null) {
 			algorithmQuestionListVO.setAlgorithmQuestionList(algorithmQuestionDAO.getAllAlgorithmQuestion());
 		}

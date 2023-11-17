@@ -45,6 +45,7 @@ public class AlgorithmQuestionController {
 		AlgorithmQuestionListVO algorithmQuestionListVO = algorithmQuestionService.getAllAlgorithmQuestion(searchAlgorithmQuestionVO);
 		model.addAttribute("algorithmQuestionList", algorithmQuestionListVO);
 		model.addAttribute("searchAlgorithmQuestionVO", searchAlgorithmQuestionVO);
+		
 		return "company/algorithmquestion/questionlist";
 	}
 	

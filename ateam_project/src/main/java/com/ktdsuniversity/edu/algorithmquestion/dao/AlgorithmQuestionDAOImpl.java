@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionVO;
+import com.ktdsuniversity.edu.algorithmquestion.vo.PercentageVO;
 import com.ktdsuniversity.edu.algorithmquestion.vo.SearchAlgorithmQuestionVO;
 import com.ktdsuniversity.edu.common.vo.AbstractCompanyPostVO;
 import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
@@ -35,6 +36,11 @@ public class AlgorithmQuestionDAOImpl extends SqlSessionDaoSupport implements Al
 	@Override
 	public List<AlgorithmQuestionVO> getAllAlgorithmQuestion() {
 		return getSqlSession().selectList("getAllAlgorithmQuestion");
+	}
+	
+	@Override
+	public List<PercentageVO> getPercentage() {
+		return getSqlSession().selectList("getPercentage");
 	}
 
 	@Override

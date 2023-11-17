@@ -45,15 +45,17 @@ public class AlgorithmQuestionVO extends AlgorithmAnswerVO {
 	@XssIgnore
 	@NotBlank(message = "문제풀이내용을 입력해주세요.")
 	private String algorithmSolution;
-	
+
 	@XssIgnore
 	@NotBlank(message = "기본제공 템플릿을 입력해주세요")
 	private String defaultCode;
-	
+
 	private String postDate;
 	private int viewCnt;
 	private int likeCnt;
 	private String deleteYn;
+
+	private String correctPercentage;
 
 	/**
 	 * 게시글을 작성한 회원의 정보
@@ -200,6 +202,14 @@ public class AlgorithmQuestionVO extends AlgorithmAnswerVO {
 
 	public void setDefaultCode(String defaultCode) {
 		this.defaultCode = defaultCode;
+	}
+
+	public String getCorrectPercentage() {
+		return correctPercentage;
+	}
+
+	public void setCorrectPercentage(String correctPercentage) {
+		this.correctPercentage = correctPercentage;
 	}
 
 }
