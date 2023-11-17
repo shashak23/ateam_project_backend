@@ -596,6 +596,9 @@ a:link, a:hover, a:visited, a:active {
                   </div>
                   <!-- 신고 버튼은 조회할때 사용<button id="btn-report-comment">신고</button> -->
                </div>
+               <div class="comment-header">
+                  <h3>댓글 목록</h3>
+               </div>
                <div class="comment-items"></div>
             </div> 
 

@@ -169,8 +169,7 @@
 	}
 
 	#toolbar{
-		
-		margin: 25px 0px 0px 20px;
+		margin: 25px auto 0;
 		width: 200px;
 		padding: 15px;
 		align-items: center; 	
@@ -241,31 +240,34 @@
 
 	/* common css */
 	table {
-    border-collapse: collapse;
-}
+		border-collapse: collapse;
+		margin: 40px 0 100px 0;
+	}
 
-table > caption {
-    font-weight: bold;
-    font-size: 20px;
-    margin-bottom: 10px;
-    margin-top: 10px;
-    text-align: left;
-}
+	table > caption {
+		font-weight: bold;
+		font-size: 20px;
+		margin-bottom: 10px;
+		margin-top: 10px;
+		text-align: left;
+	}
 
-table.grid tr {
-    border-bottom: 1px solid var(--dark-gray);
-}
+	table.grid > thead > tr {
+		border-bottom: 1px solid var(--dark-gray);
+	}
 
-table.grid > thead > tr > th {
-    background-color: var(--light-gray);
-    color: var(--dark-gray);
-    padding: 10px 0;
-}
+	.grid th {
+		background-color: var(--light-gray);
+		color: var(--dark-gray);
+		padding: 10px 0;
+		
+	}
 
-table.grid > tbody > tr > td {
-    padding: 10px 0;
-    color: var(--dark-gray);
-}
+	table.grid > tbody > tr > td {
+		padding: 10px 0;
+		color: var(--dark-gray);
+		text-align: center;
+	}
 
 	/* .table {
 		border-collapse: collapse;
@@ -404,9 +406,9 @@ table.grid > tbody > tr > td {
 			<div class="btn-group"  style="margin-bottom: 20px;">
 				<div class="right-align">
 					<!-- 로그인 하지 않았을 때 -->
-					<c:if test="${empty sessionScope._LOGIN_USER_}">
+					<!-- <c:if test="${empty sessionScope._LOGIN_USER_}">
 						<a href="/member/auth">로그인하기</a>
-					</c:if>
+					</c:if> -->
 					<!-- 기업회원에게만 보임  -->
 					<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.memberType eq 'COMPANY'}">
 						<!-- <button id="upload">

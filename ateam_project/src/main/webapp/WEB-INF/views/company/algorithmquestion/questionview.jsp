@@ -94,6 +94,7 @@ body > .body_container {
 /* Main Contents */
 body > .body_container > .body {
     grid-column: 2/3;
+    margin: 40px 0 100px 0
 }
 
 /* Main Contents 왼쪽 여백*/
@@ -128,17 +129,10 @@ body > .body_container > .body_right_aside {
 		font-size: 17px;
 	}
 
-    #container{
-        width:1000px;
-        margin: 0 auto;
-        margin-top: 40px;
-    }
-
     #question_info{
-    display: flex;
-    margin-bottom: 10px;    
+        display: flex;
+        margin-bottom: 10px;    
     }
-
     
     #line{
         border: 2px solid #333;
@@ -152,15 +146,24 @@ body > .body_container > .body_right_aside {
 	div.flex {
 		display: flex;
 		flex-direction: column;
-		width: 1000px;
+		/* width: 1000px; */
 	}
-	div.grid > div.btn-group {
+
+    .flex > .conditions{
+        margin: 20px 0 20px 0;
+    }
+	/* div.grid > div.btn-group {
 		display: grid;
 		grid-column: 1/ 3;
 	}
 	div.grid div.right-align {
 		text-align: right;
-	}
+	} */
+    .btn-group{
+        margin-top: 20px;
+        text-align: right;  
+    }
+
 	label {
 		padding-left: 10px;
 	}
@@ -357,9 +360,11 @@ body > .body_container > .body_right_aside {
         width:1000px;   
         border: 1px solid var(--dark-gray);      
     }
-    .btn-group {
-    	margin-top: 10px;
-    	margin-bottom: 10px;
+    button {
+    border: none;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
     }
     
 </style>
@@ -385,10 +390,15 @@ body > .body_container > .body_right_aside {
                 </div>
 
                     <label id="algorithmContent" for="algorithmContent"></label>
-                    <div>${algorithmQuestionVO.algorithmContent}</div>
+                    <div class="">${algorithmQuestionVO.algorithmContent}</div>
             
                 <div class="flex">
-                    <button class="btn btn-primary">제한사항</button>                   
+                    <div class="conditions">
+                        <h4>제한사항</h4>
+                        <div>
+                            ${algorithmQuestionVO.algorithmSolution}
+                        </div>
+                    </div>                   
                     <form:form modelAttribute="myAlgorithmVO" method="post" action="/algorithm/question/view/${companyAlgorithmQuestionId}">	
                         <div>
                             <form:errors path="myAnswer" element="div" cssClass="errors" />
@@ -422,33 +432,18 @@ body > .body_container > .body_right_aside {
                     </c:if>
                     <div id="checkAnswer">${popupMessage}</div>
                 </div>
-            
-            <div class="grid">     
-                <div class="btn-group">
-                    <div class="right-align">
-                        <!-- 로그인 하지 않았을 때 -->
-                        <!-- <c:if test="${empty sessionScope._LOGIN_USER_}">
-                            <a href="/member/auth">로그인하기</a>
-                        </c:if> -->
-                        <!-- 해당 게시글을 작성한 기업회원이 로그인 했을 시 -->
-                        <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq algorithmQuestionVO.algorithmWriter}">
-                            <a href="/algorithm/question/update/${algorithmQuestionVO.companyAlgorithmQuestionId}">수정</a>
-                            <a href="/algorithm/question/delete/${algorithmQuestionVO.companyAlgorithmQuestionId}">삭제</a>
-                        </c:if>              
-                    </div>
+                <div class="btn-group">                  
+                    <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq algorithmQuestionVO.algorithmWriter}">
+                        <a href="/algorithm/question/update/${algorithmQuestionVO.companyAlgorithmQuestionId}">
+                            <button class="revise">수정</button>
+                        </a>
+                        <a href="/algorithm/question/delete/${algorithmQuestionVO.companyAlgorithmQuestionId}">
+                            <button class="delete">삭제</button>
+                        </a>
+                    </c:if>                               
                 </div>
             </div>
-            
-            <div class="create_container">
-                <div class="btn-close">&times;</div>
-                <h1 class="create_title">제한 사항</h1>
-                <div>
-                    ${algorithmQuestionVO.algorithmSolution}
-                </div>
-            </div>
-            <div class="overlay"></div>
         </div>
-    </div>
     <div class="body_right_aside"></div>
 <jsp:include page="../../layout/footer.jsp"></jsp:include>
 </body>

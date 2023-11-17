@@ -546,6 +546,7 @@
 
     body > .body_container > .body {
     grid-column: 2/3;
+    margin: 40px 0 100px 0;
     }
   
     body > .body_container > .body_left_aside {
@@ -556,11 +557,9 @@
         grid-column: 3/4;
     }
 
-    /* #container{
-        width:800px;
-        margin: 0 auto;
-        margin-top: 40px;
-    } */
+   #algorithmTitle{
+    padding: 8px;
+   }
 
     div.grid {
         display: grid;
@@ -603,48 +602,23 @@
         width: 280px;
     }
 
-    #add-row,
-    #add-col{
-        width:80px;
-		height:40px;		
-		border:none;
-		border-radius: 10px;
-		cursor: pointer;
-        margin-right:20px;
-        transition: box-shadow 0.3s ease;
-    }
-
     #add-row {
         margin-right: 10px; 
-    }
-    
-    #add-row:hover,
-    #add-col:hover{  
-        border: 2px solid #1E90FF; 
     }
 
     #testData{
         font-weight: bold;
     }
 
-    #submit-btn{
-        width:80px;
-		height:40px;		
-		border:none;
-		border-radius: 10px;
-		cursor: pointer;
-        margin-bottom: 30px;
-		transition: box-shadow 0.1s ease;
-    }
 
-    #submit-btn:hover{
-        border: 2px solid #1E90FF; 
+    button{
+        border: none;
+        padding: 5px;
+        border-radius: 5px;
+        cursor: pointer;
+        width:60px;
+		height:35px;
     }
-
-    #add-btn{
-        display: flex;   
-    }
-
 </style>
 <body>
 	<div class="body_container">

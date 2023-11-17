@@ -29,7 +29,26 @@
     z-index: 1;
   }
 
-  	/* 글쓰기 영역 */
+  /* 로딩 */
+  .loading {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    border: 6px solid var(--gray);
+    border-top: 6px solid var(--light-blue);
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    animation: spin 1s linear infinite;
+  }
+
+  @keyframes spin {
+    0% {transform: translate(-50%, -50%) rotate(0deg);}
+    100% {transform: translate(-50%, -50%) rotate(360deg);}
+  }
+
+  /* 글쓰기 영역 */
 	.home_edit_container {
 		position: sticky;
     top: -10px;
@@ -164,9 +183,6 @@
 		width: 24px;
 		height: 24px;
 		padding: 2px;
-		fill: var(--dark);
-		border: 1px solid var(--gray);
-		border-radius: 50%;
 		cursor: pointer;
 	}
   
@@ -255,6 +271,8 @@
 	}
 
   .body_right .ranking_wrap {
+    position: sticky;
+    top: 100px;
     display: flex;
     flex-direction: column;
     border: 1px solid var(--light-gray);
@@ -298,30 +316,6 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-  }
-
-  .body_right .hashtag_wrap {
-    display: flex;
-    width: 270px;
-    flex-wrap: wrap;
-    margin-top: 10px;
-    border: 1px solid var(--light-gray);
-    border-radius: 10px;
-    padding: 10px;
-  }
-
-  .body_right .hashtag_wrap .hashtag {
-    background-color: var(--gray);
-    color: var(--dark-gray);
-    margin: 5px;
-    padding: 3px 8px;
-    border-radius: 20px;
-    border: none;
-  }
-
-  .body_right .hashtag_wrap .hashtag:hover {
-    box-shadow: 0 0 2px var(--dark-gray);
-    cursor: pointer;
   }
 
   .recommend_container {
@@ -619,7 +613,7 @@
     background-color: var(--light-blue);
   }
 </style>
-
+  <div class="loading"></div>
   <!-- 메인 컨텐츠 영역 -->
   <div class="home_edit_container">
     <div class="home_edit_wrap flex">
@@ -639,8 +633,6 @@
           <h2 class="align-center">주간랭킹</h2>
           <ul class="ranking_list">
           </ul>
-        </div>
-        <div class="hashtag_wrap">
         </div>
       </div>
     </div>
@@ -783,7 +775,6 @@
           }
           else {
             alert('등록에 실패했습니다.')
-            console.log(body)
           }
         })
       }
@@ -819,7 +810,6 @@
     let nickname
     let email
     let members
-    let profilePic
     let innerCounter
 
 
@@ -862,19 +852,15 @@
                 email = nicknameList[j].email
               }
             }
-            
-            // $.get(`/home/profilepic/\${article.postWriter}`, function(profileResponse) {
-            //   console.log(profilePic = profileResponse.profilePic)
-            // })
 
             let pokemon = getPokemonUrl()
+            let profilePic
 
-            // <img src="/member/file/download/\${email}" alt="\${pokemon}"/>
             template = `
               <article class="content_container">
                 <div class="writer_info_area">
                   <div class="flex_left">
-                    <img src="\${pokemon}" />
+                    <img src="/member/file/download/\${email}" onerror="this.src='\${pokemon}';" alt="\${pokemon}"/>
                     <div>
                       <div class="writer_name">
                         <a href="/memberinfo/view/\${email}">\${nickname}</a>
@@ -892,7 +878,10 @@
                         <input type="hidden" class="postId" value="\${article.generalPostId}"/>
                         <input type="hidden" class="boardId" value="\${article.boardId}" />
                         <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><style>svg{fill:(--blue)}</style><path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/></svg></button>
-                      <svg class="incomplete" xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 128 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M64 360a56 56 0 1 0 0 112 56 56 0 1 0 0-112zm0-160a56 56 0 1 0 0 112 56 56 0 1 0 0-112zM120 96A56 56 0 1 0 8 96a56 56 0 1 0 112 0z"/></svg>
+                        <svg width="36" height="31" viewBox="0 0 36 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+                          <rect y="24" width="36" height="7" rx="3" fill="#5E69F5"/>
+                          <path fill-rule="evenodd" clip-rule="evenodd" d="M11 21H32L29.4906 3.43431C29.2091 1.46372 27.5214 0 25.5308 0H10.4692C8.47858 0 6.7909 1.46372 6.50938 3.43431L4 21H8L9.83237 6.82325C9.92824 6.08155 10.5598 5.52632 11.3077 5.52632C12.205 5.52632 12.8981 6.31473 12.7831 7.20463L11 21Z" fill="#5E69F5"/>
+                        </svg>
                     </div>
                   </div>
                 </div>
@@ -937,7 +926,6 @@
             if (article.postWriter === user_email) {
               templateDom.find('.follow_btn').css('visibility', 'hidden')
             }
-            
 
             // 게시글 유형이 자유 유형이면 대문짝만한 Q 삭제
             if(article.boardId === 'CC-20231017-000029') {
@@ -953,8 +941,7 @@
                 }
               }
             })
-
-            // 해시태그 필터링
+            // 해시태그 필터 결과
             if (hashtagArr.length === 0) {
               $('.body_left').append(templateDom)
             }
@@ -980,35 +967,33 @@
 
     loadContents(skip)
     skip += 5
+
+
     $(window).scroll(function() {
-      if ($(window).scrollTop() + $(window).height() >= $('body').height() - 200) {
-        console.log('전', loading)
-        if (loading === false) {
-          loading = true
-          console.log('후',loading)
-          if (loading) {
-            setTimeout(function() {
-              console.log('로딩 폴스로 바꾸는 중')
-              loading = false
-            }, 100)
-          }
-        
-          let userEmail = `${sessionScope._LOGIN_USER_}`
-  
-          // 알 수도 있는 사람 호출
-          if (userEmail != '' && !$('.body_left article:last-child').hasClass('recommend_container')) {
-            console.log('???')
-            loadRecFollower(page)
-          }
-          // 그리고 게시글 다시 호출
-          loadContents(skip)
-          console.log(page)
-          console.log(loading)
-          skip += 5
+      if ($(window).scrollTop() + $(window).height() >= $('body').height() - 200 && !loading) {
+        $('.loading').css('display', 'block')
+        loading = true
+        skip += 5
+
+        // 그리고 게시글 다시 호출
+        loadContents(skip)
+
+        let userEmail = `${sessionScope._LOGIN_USER_}`
+        // 알 수도 있는 사람 호출
+        if (userEmail != '' && !$('.body_left article:last-child').hasClass('recommend_container')) {
+          loadRecFollower(page)
           page += 3
         }
       }
     })
+
+    setInterval(() => {
+      if ($('.body_left').children('.content_container').length === skip) {
+        loading = false
+        $('.loading').css('display', 'none')
+      }
+    }, 10);
+
 
     // 북마크 토글
     $(document).on('click', '.bookmarkBtn', function(e) {
@@ -1096,72 +1081,44 @@
       }
     })
 
-    // 해시태그 선택 필터링  
-    $(document).on('click', '.hashtag', function() {
-      let cutHashtag = $(this).text().replace('#', '')
+    // 랭킹 컨텐츠
+    // 월요일마다 갱신함
+    const today = new Date()
+    const currentDay = today.getDay() // (0: 일요일, 1:월요일)
+    const targetDay = 0
+    const daysAfterTargetDay = currentDay - targetDay
 
-      if ($(this).hasClass('hashtag_selected')) {
+    const prevMonday = new Date(today)
+    prevMonday.setDate(today.getDate() - daysAfterTargetDay + 1)
+    
+    const year = prevMonday.getFullYear()
+    const month = String(prevMonday.getMonth() + 1).padStart(2, '0')
+    const day = String(prevMonday.getDate()).padStart(2, '0')
 
-        for (let i = 0; i < hashtagArr.length; i++) {
-          if (hashtagArr[i] === cutHashtag) {
-            hashtagArr.splice(i, 1)
-          }
+    const formattedMonday = year + '-' + month + '-' + day
+
+    $.get('/home/ranking/\${formattedMonday}', function(response) {
+      let list = response.rankings
+      for (let i = 0; i < 10; i++) {
+
+        if (list[i].boardId === 'CC-20231017-000029') {
+          let ranking_template = `
+            <li class="hot_post">
+            <a href="/freeboard/view/\${list[i].generalPostId}" target="_blank" class="small">\${list[i].postTitle}</a>
+            </li>`
+          let ranking_templateDom = $(ranking_template)
+
+          $('.ranking_list').append(ranking_templateDom)
         }
-        $(this).removeClass('hashtag_selected')
-      }
-      else {
-        hashtagArr.push(cutHashtag)
-        $(this).addClass('hashtag_selected')
-      }
-      loadContents(hashtagArr)
-    })
+        else {
+          let ranking_template = `
+            <li class="hot_post">
+            <a href="/qnaboard/view/\${list[i].generalPostId}" target="_blank" class="small">\${list[i].postTitle}</a>
+            </li>`
+          let ranking_templateDom = $(ranking_template)
 
-  // 랭킹 컨텐츠
-  // 월요일마다 갱신함
-  const today = new Date()
-  const currentDay = today.getDay() // (0: 일요일, 1:월요일)
-  const targetDay = 0
-  const daysAfterTargetDay = currentDay - targetDay
-
-  const prevMonday = new Date(today)
-  prevMonday.setDate(today.getDate() - daysAfterTargetDay + 1)
-  
-  const year = prevMonday.getFullYear()
-  const month = String(prevMonday.getMonth() + 1).padStart(2, '0')
-  const day = String(prevMonday.getDate()).padStart(2, '0')
-
-  const formattedMonday = year + '-' + month + '-' + day
-
-  $.get('/home/ranking/\${formattedMonday}', function(response) {
-    let list = response.rankings
-    for (let i = 0; i < 10; i++) {
-
-      if (list[i].boardId === 'CC-20231017-000029') {
-        let ranking_template = `
-          <li class="hot_post">
-          <a href="/freeboard/view/\${list[i].generalPostId}" target="_blank" class="small">\${list[i].postTitle}</a>
-          </li>`
-        let ranking_templateDom = $(ranking_template)
-
-        $('.ranking_list').append(ranking_templateDom)
-      }
-      else {
-        let ranking_template = `
-          <li class="hot_post">
-          <a href="/qnaboard/view/\${list[i].generalPostId}" target="_blank" class="small">\${list[i].postTitle}</a>
-          </li>`
-        let ranking_templateDom = $(ranking_template)
-
-        $('.ranking_list').append(ranking_templateDom)
-      }
-    }
-  })
-
-  // 랭킹 박스 아래에 해시태그 가져오기
-  $.get('/code/해시태그', function(response) {
-    for (let i = 0; i < response.length; i++) {
-      let hash_template = `<button class="hashtag align-center x-small">#\${response[i].codeContent}</button>`
-      $('.hashtag_wrap').append(hash_template)
+          $('.ranking_list').append(ranking_templateDom)
+        }
       }
     })
   })
@@ -1219,7 +1176,6 @@
         
         x += noticeOffset.left
         y += noticeOffset.top
-        console.log("after", x, y)
 
         $(this).css({
           left: x + 'px',
@@ -1430,22 +1386,24 @@
     $.get(`/recommend/follower/\${user_email}`, function(response) {
       let recommendList = response.recommendList;
       const totalMembers = recommendList.length;
-      console.log(response)
 
       if (totalMembers > page) {
         recommendTemplate = `
           <article class="recommend_container">
             <div class="title">
-                <h4>알 수도 있는 사람</h4>
+              <h4>알 수도 있는 사람</h4>
             </div>
             <div class="member_info_area grid"></div>
           </article>`
 
-        $('.body_left').append(recommendTemplate)
+        let recommendTemplateDom = $(recommendTemplate)
+        
+        $('.body_left').append(recommendTemplateDom)
 
         if (page < totalMembers ) {
-          let memberTemplate = '';
           for(let i = page; i < page + 3; i++) {
+            let memberTemplate = '';
+
             if(i < totalMembers) {
               let member = recommendList[i]
               let profilePic = member.memberVO.profilePic;
@@ -1472,11 +1430,11 @@
                     </div>
                 </div>`
 
-              // let memberTemplateDom = $(memberTemplate)
+              let memberTemplateDom = $(memberTemplate)
 
+              recommendTemplateDom.find('.member_info_area').append(memberTemplateDom)
             }
           } 
-          $('.member_info_area').append(memberTemplate)
         } 
       }    
     })

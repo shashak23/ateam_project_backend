@@ -86,7 +86,7 @@ updateViewCount();
 		padding-bottom: 16px;
 		border-bottom: 1px solid #EEE;
 	}
-	.hashtag,
+	.temp,
 	#write_area {
 		display: flex;
 		flex-direction: column;
@@ -115,14 +115,6 @@ updateViewCount();
 	#bottom_area {
 		display: grid;
 		grid-template-columns: 80% 20%;
-	}
-	.hashtag > #input_area {
-		display: flex;
-	}
-	.hashtag > label {
-		width: auto;
-		font-weight: bold;
-		margin: 20px 0 6px 0;
 	}
 	#button_1 {
 		width: 44px;
@@ -167,7 +159,7 @@ updateViewCount();
 					<textarea name="postContent" id="editor"></textarea>
 				</div>
 			<div id="bottom_area">
-				<div class="hashtag"></div>
+				<div class="temp"></div>
 				<input id="button_2" type="submit" value="저장" />
 			</div>
 			</form>

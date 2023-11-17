@@ -32,7 +32,6 @@
     cursor: pointer;
     border: 2px;
 	}
-
 	.flex_button button:hover {
 	background-color: var(--light-blue);
   	color: white;
@@ -43,7 +42,7 @@
 		height:35px;
 		color: var(--dark-gray);
 	}
-
+	
 	table td{
 		border-bottom: 1px solid #D3D3D3;
 		color: var(--dark-gray);
@@ -51,29 +50,30 @@
 	}
 </style>
 <body> 
-
 <div id="content_wrapper">
 	<div class="flex_button">
-			<button id="myprofile">마이페이지</button>
-			<button id="bookmark">북마크</button>
-			<button id="modify_info">정보 수정</button> 
-			<button id="mypost">내가 쓴 게시글</button>
-			<button id="solve">내가 푼 문제</button>
-			<button>탈퇴</button>
+		<button id="myprofile">마이페이지</button>			
+		<button id="modify_info">정보 수정</button> 
+		<button id="mypost">내가 쓴 게시글</button>
+		<button id="quit">탈퇴</button>
 	</div>
-  <div id="container">   
+	<div id="container">
 		<table class="grid">
-			<caption>질답게시판</caption>
+			<caption>알고리즘 문제 게시판</caption>
 			<thead>
 				<colgroup>
+					<col width="5%" />
 					<col width="10%" />
-					<col width="45%" />
-					<col width="15%" />
+					<col width="10%" />
+					<col width="30%" />
 					<col width="20%" />
+					<col width="15%" />
 					<col width="10%" />
 				</colgroup>
 				<tr>
 					<th scope="col">번호</th>
+					<th scope="col">카테고리</th>
+					<th scope="col">난이도</th>
 					<th scope="col">제목</th>
 					<th scope="col">작성자</th>
 					<th scope="col">작성일</th>
@@ -82,62 +82,20 @@
 			</thead>
 			<tbody>
 			<c:choose>
-				<c:when test="${not empty qnaPostList}">
-					<c:forEach items="${qnaPostList}" var="qnaboard" varStatus="index">
+				<c:when test="${not empty algorithmQuestionList.algorithmQuestionList}">
+					<c:forEach items="${algorithmQuestionList.algorithmQuestionList}" var="algorithmquestion" varStatus="index">
 						<tr>
 							<td>${index.index + 1}</td>
+							<td>${algorithmquestion.commonCodeVO.codeContent}</td>
+							<td>${algorithmquestion.algorithmTierId}</td>
 							<td>
-								<a href="/qnaboard/view/${qnaboard.generalPostId}">
-									<c:out value="${qnaboard.postTitle}" />
+								<a href="/algorithm/question/view/${algorithmquestion.companyAlgorithmQuestionId}">
+									<c:out value="${algorithmquestion.algorithmTitle}" />
 								</a>
 							</td>
-							<td>${qnaboard.memberVO.nickname}</td>
-							<td>${qnaboard.postDate}</td>
-							<td>${qnaboard.viewCnt}</td>
-						</tr>
-					</c:forEach>
-				</c:when>
-				<c:otherwise>
-					<tr>
-						<td colspan="5">조회된 게시글이 없습니다.</td>
-					</tr>
-					
-				</c:otherwise>
-			</c:choose>
-			</tbody>
-		</table>
-		<table class="grid">
-			<caption>자유게시판</caption>
-			<thead>
-				<colgroup>
-					<col width="10%" />
-					<col width="45%" />
-					<col width="15%" />
-					<col width="20%" />
-					<col width="10%" />
-				</colgroup>
-				<tr>
-					<th scope="col">번호</th>
-					<th scope="col">제목</th>
-					<th scope="col">작성자</th>
-					<th scope="col">작성일</th>
-					<th scope="col">조회수</th>
-				</tr>
-			</thead>
-			<tbody>
-			<c:choose>
-				<c:when test="${not empty freePostList}">
-					<c:forEach items="${freePostList}" var="freeboard" varStatus="index">
-						<tr>
-							<td>${index.index + 1}</td>
-							<td>
-								<a href="/freeboard/view/${freeboard.generalPostId}">
-									<c:out value="${freeboard.postTitle}" />
-								</a>
-							</td>
-							<td>${freeboard.memberVO.nickname}</td>
-							<td>${freeboard.postDate}</td>
-							<td>${freeboard.viewCnt}</td>
+							<td>${algorithmquestion.memberVO.nickname}</td>
+							<td>${algorithmquestion.postDate}</td>
+							<td>${algorithmquestion.viewCnt}</td>
 						</tr>
 					</c:forEach>
 				</c:when>
@@ -149,11 +107,57 @@
 			</c:choose>
 			</tbody>
 		</table>
-		</div>
+		<table class="grid">
+			<caption>알고리즘 해설 게시판</caption>
+			<thead>
+				<colgroup>
+					<col width="5%" />
+					<col width="20%" />
+					<col width="30%" />
+					<col width="20%" />
+					<col width="15%" />
+					<col width="10%" />
+				</colgroup>
+				<tr>
+					<th>번호</th>
+					<th>카테고리</th>
+					<th>제목</th>
+					<th>작성자</th>
+					<th>작성일</th>
+					<th>조회수</th>
+				</tr>
+			</thead>
+			<tbody>
+			<c:choose>
+				<c:when test="${not empty algorithmExplanationList.algorithmExplanationList}">
+					<c:forEach items="${algorithmExplanationList.algorithmExplanationList}" var="algorithmexplanation" varStatus="index">
+						<tr>
+							<td>${index.index + 1}</td>
+							<td>${algorithmexplanation.commonCodeVO.codeContent}</td>
+							<td>
+								<a href="/algorithm/explanation/view/${algorithmexplanation.companyAlgorithmExplanationId}">
+									<c:out value="${algorithmexplanation.postTitle}" />
+								</a>
+							</td>
+							<td>${algorithmexplanation.memberVO.nickname}</td>
+							<td>${algorithmexplanation.postDate}</td>
+							<td>${algorithmexplanation.viewCnt}</td>
+						</tr>
+					</c:forEach>
+				</c:when>
+				<c:otherwise>
+					<tr>
+						<td colspan="6">조회된 게시글이 없습니다.</td>
+					</tr>
+				</c:otherwise>
+			</c:choose>
+			</tbody>
+		</table>
 	</div>
-  <jsp:include page="../layout/footer.jsp" />
+</div>
+<jsp:include page="../layout/footer.jsp" />
 </body>
-<script>  
+<script>
   // 스크롤 버튼, IDE
   let calcScrollValue = () => {
   let scrollProgress = document.getElementById('progress')
@@ -184,30 +188,21 @@
                            'box-shadow': 'none'})
   })
   
-  $('p').css('background-color', 'rgba(0, 0, 0, 0)')
-
-    // 플렉스버튼
-    function redirectToURL(url) {
-        window.location.href = url;
-    }
-    /* 비밀번호, 닉네임 수정 버튼 */
-    $("#myprofile").click(function() {
-        redirectToURL(`/memberinfo/view/${sessionScope._LOGIN_USER_.email}`);
-    });
-    $("#mypost").click(function() {
-        redirectToURL(`/member/mypost`);
-    });
-    $("#modify_info").click(function() {
-        redirectToURL(`/member/selectmember/${sessionScope._LOGIN_USER_.email}`);
-    });
-    $("#quit").click(function() {
-        redirectToURL(`/member/logout`);
-    });
-    $("#solve").click(function(){
-        redirectToURL(`/codingtest/mylist`);
-    });
-    $("#bookmark").click(function(){
-        redirectToURL(`/member/bookmark`);
-    });
+  function redirectToURL(url) {
+	window.location.href = url;
+  }
+  /* 비밀번호, 닉네임 수정 버튼 */
+  $("#myprofile").click(function() {
+	redirectToURL(`/companyinfo/view`);
+  });
+  $("#mypost").click(function() {
+	redirectToURL(`/companyinfo/mypost`);
+  });
+  $("#modify_info").click(function() {
+	redirectToURL(`/companyinfo/modify`);
+  });
+  $("#quit").click(function() {
+	redirectToURL(`/member/logout`);
+  });
 </script>
 </html>
