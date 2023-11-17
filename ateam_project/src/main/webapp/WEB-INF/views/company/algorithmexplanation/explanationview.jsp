@@ -53,12 +53,27 @@ $(document).on('click', '.incomplete', function() {
 		
 	}
 
-	#container{
-		display:flex;
-		flex-direction: column;
-		width:1080px;
-		margin: 0 auto;
-		margin-top: 100px;
+	body > .body_container {
+    width: 100%;
+    min-height: 75vh;
+    display: grid;
+    grid-template-columns: 1fr 1080px 1fr;
+	}
+
+	/* Main Contents */
+	body > .body_container > .body {
+		grid-column: 2/3;
+		margin: 40px 0 100px 0;
+	}
+
+	/* Main Contents 왼쪽 여백*/
+	body > .body_container > .body_left_aside {
+		grid-column: 1/2;
+	}
+
+	/* Main Contents 오른쪽 여백*/
+	body > .body_container > .body_right_aside {
+		grid-column: 3/4;
 	}
 
 	#postTitle{
@@ -79,26 +94,7 @@ $(document).on('click', '.incomplete', function() {
 		margin: 0px 10px 0px 10px;
 		
 	}
-	div.btn-group{
-		margin-left: 895px;
-	}
 	
-	div.btn-group > #revise,
-	div.btn-group > #delete {
-		width:80px;
-		height:40px;		
-		border:none;
-		border-radius: 10px;
-		cursor: pointer;
-		margin: 20px 0px 40px 10px;
-		transition: box-shadow 0.1s ease;
-	}
-
-	div.btn-group > #revise:hover,
-	div.btn-group > #delete:hover{
-		box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); 
-	}
-
 	div.right-align {
 		text-align: right;
 	}
@@ -118,73 +114,83 @@ $(document).on('click', '.incomplete', function() {
 	}
 
 	#contents{
-		margin-top: 120px;
+		margin-top: 100px;
 		border-radius: 5px;
-		border: 1px solid;
+		/* border: 1px solid; */
+		background-color: #fafafa;
 	}
 
 	#contents > #contents_text{
 		margin:20px;
 	}
 
-	#back{
-		width:80px;
-		height:40px;		
-		border:none;
-		border-radius: 10px;
+	button{
+		border: none;
+		padding: 5px;
+		border-radius: 5px;
 		cursor: pointer;
-		margin: 20px 0px 40px 10px;
-		transition: box-shadow 0.1s ease;
-		margin: 15px 0px 30px 1000px;
+		width: 70px;
+		height: 30px;
 	}
 
-	#back:hover{
-		box-shadow: 0 0 5px rgba(0, 0, 0, 0.3); 
+	button#back {
+		position: relative;
+		left: 1000px;
+		top: 10px;
+	}
+
+	.btn-group {
+		position: relative;
+		top: -19px;
+		left: 820px;
+	}
+
+	button#revise {
+		margin-right: 15px;
 	}
 </style>
 </head>
 <body>
-	<div id="container">
-		<div id="category">
-			<label for="algorithmCategoryId"></label>
-			<div>${algorithmExplanationVO.commonCodeVO.codeContent}</div>
-		</div>
-		<div id="postTitle">${algorithmExplanationVO.postTitle}</div>
-		<div id="info">
-			<label for="algorithmWriter"></label>
-			<div>${algorithmExplanationVO.memberVO.nickname}</div>
-			<div class="space">|</div>
-			<label for="postDate"></label>
-			<div>${algorithmExplanationVO.postDate}</div>
-			<div class="space">|</div>
-			<div>${algorithmExplanationVO.viewCnt}</div>
-			<label for="viewCnt">views</label>
-		</div>
-
-		<div id="contents">
-			<div id="contents_text">${algorithmExplanationVO.postContent}</div>
-		</div>
-		<button id="back" onclick="location.href='/algorithm/explanation/list';">목록</button>
-			<!-- <a href="/algorithm/question/list" id="back">목록</a> -->
-		
-
-			<div class="btn-group">
-				<!-- 로그인 하지 않았을 때 -->
-				<c:if test="${empty sessionScope._LOGIN_USER_}">
-					<a href="/member/auth">로그인하기</a>
-				</c:if>
-				<!-- 해당 게시글을 작성한 기업회원이 로그인 했을 시 -->
-				<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq algorithmExplanationVO.postWriter}">
-					<button id="revise">
-						<a href="/algorithm/explanation/update/${algorithmExplanationVO.companyAlgorithmExplanationId}">수정</a>
-					</button>
-					<button id="delete">
-						<a href="/algorithm/explanation/delete/${algorithmExplanationVO.companyAlgorithmExplanationId}">삭제</a>
-					</button>					
-				</c:if>
+	<div class="body_left_aside"></div>
+	<div class="body_container">
+		<div class="body">
+			<div id="category">
+				<label for="algorithmCategoryId"></label>
+				<div>${algorithmExplanationVO.commonCodeVO.codeContent}</div>
 			</div>
-		</div>
+			<div id="postTitle">${algorithmExplanationVO.postTitle}</div>
+			<div id="info">
+				<label for="algorithmWriter"></label>
+				<div>${algorithmExplanationVO.memberVO.nickname}</div>
+				<div class="space">|</div>
+				<label for="postDate"></label>
+				<div>${algorithmExplanationVO.postDate}</div>
+				<div class="space">|</div>
+				<div>${algorithmExplanationVO.viewCnt}</div>
+				<label for="viewCnt">views</label>
+			</div>
+
+			<div id="contents">
+				<div id="contents_text">${algorithmExplanationVO.postContent}</div>
+			</div>
+			<button id="back" onclick="location.href='/algorithm/explanation/list';">목록</button>
+				<!-- <a href="/algorithm/question/list" id="back">목록</a> -->
+			
+
+				<div class="btn-group">
+					<!-- 해당 게시글을 작성한 기업회원이 로그인 했을 시 -->
+					<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq algorithmExplanationVO.postWriter}">
+						<button id="revise">
+							<a href="/algorithm/explanation/update/${algorithmExplanationVO.companyAlgorithmExplanationId}">수정</a>
+						</button>
+						<button id="delete">
+							<a href="/algorithm/explanation/delete/${algorithmExplanationVO.companyAlgorithmExplanationId}">삭제</a>
+						</button>					
+					</c:if>
+				</div>
+			</div>
 	</div>
+	<div class="body_right_aside"></div>
 	<jsp:include page="../../layout/footer.jsp"></jsp:include>
 </body>
 </html>

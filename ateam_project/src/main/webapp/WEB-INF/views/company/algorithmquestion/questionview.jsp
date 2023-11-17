@@ -146,19 +146,12 @@ body > .body_container > .body_right_aside {
 	div.flex {
 		display: flex;
 		flex-direction: column;
-		/* width: 1000px; */
 	}
 
     .flex > .conditions{
         margin: 20px 0 20px 0;
     }
-	/* div.grid > div.btn-group {
-		display: grid;
-		grid-column: 1/ 3;
-	}
-	div.grid div.right-align {
-		text-align: right;
-	} */
+
     .btn-group{
         margin-top: 20px;
         text-align: right;  
@@ -326,7 +319,8 @@ body > .body_container > .body_right_aside {
 
     #buttonList{
         display: flex;
-        margin: 20px 0px 100px 585px ;
+        justify-content: right;
+        margin-top: 20px;
     }
 
     #submit-btn{
@@ -356,8 +350,7 @@ body > .body_container > .body_right_aside {
         margin-bottom: 15px;
     }
 
-    #show_result{
-        width:1000px;   
+    #show_result{  
         border: 1px solid var(--dark-gray);      
     }
     button {

@@ -269,36 +269,6 @@
 		text-align: center;
 	}
 
-	/* .table {
-		border-collapse: collapse;
-		font-size: 14px;
-		width:1000px;
-		margin: 50px 0px 100px 0px
-	}
-	table.table > thead > tr {
-		background-color: #FFF;
-	}
-	.table th {
-    padding: 10px;
-    background-color: var(--light-gray);
-    border-bottom: 1px solid var(--dark-gray);
-    height: 35px;
-    color: var(--dark-gray);
-    font-weight: bold; 
-}
-	 tbody td {
-		border-bottom: 1px solid var(--dark-gray);
-		color: var(--dark-gray);
-	}
-
-	table.table > tbody td {
-		padding: 10px;
-		color: #333;
-		text-align: center;
-		color: var(--dark-gray);
-		border-bottom: 1px solid var(--dark-gray);
-	} */
-
 	#upload{
 		width: 70px;
    		height: 30px;		
@@ -306,7 +276,6 @@
 		border-radius: 5px;
 		background-color: var(--light-blue);
    		cursor: pointer;
-		/* transition: box-shadow 0.1s ease; */
 	}
 	.button_list{
 		display: flex;
@@ -314,9 +283,9 @@
 	}
 
 	.btn_st_2{
-		position: absolute;
-		left: 125px;
-		bottom: 15px;
+		position: relative;
+		left: -33px;
+		bottom: -5px;
 		width: 70px;
 		height: 30px;
 		border-radius: 5px;
@@ -333,9 +302,11 @@
 	}
 
 	.resetLink{
+		position: relative;
+    	left: -38px;
 		width: 30px;
    		height: 30px;
-		margin-left: 30px;
+		
 	}
 
 	#spaceBottom{
@@ -371,32 +342,15 @@
 							<div><input type="checkbox" name="algorithmTierList" value="Lv.4"/><label for="Lv.4">Lv.4</label></div>
 							<div><input type="checkbox" name="algorithmTierList" value="Lv.5"/><label for="Lv.5">Lv.5</label></div>
 						</div>
-						<div class="button_list">   
-							<!-- <input autocomplete="off" class="sc_text" type="text" placeholder="검색어 입력" name="searchKeyword" list="nicList" />
-							<datalist id="nicList"></datalist>
-							<button type="submit" id="click_search" class="btn_st_2">조회</button> -->
+						<div class="button_list">   							
 							<input class="sc_text" type="text" placeholder="기업명을 입력하세요." name="searchKeyword" value="${SearchAlgorithmQuestionVO.searchKeyword}" />
 							<button type="submit" class="btn_st_2">
-								<img src="/images/search.svg" alt="search">
-								<!-- <a href="#" id="search-btn">조회</a> -->
+								<img src="/images/search.svg" alt="search">								
 							</button>				
 								<a href="/algorithm/question/list" class="resetLink">
 									<img class="resetIcon" src="/images/reset.png" alt="reset">
 								</a>									
 						</div>
-
-						<!-- 주석 처리 풀고 추후 수정 -->
-						<!-- <div id="search_items">
-							<input autocomplete="off" type="text" name="searchKeyword" list="nicList" />
-							<datalist id="nicList"></datalist>
-							<button id="search-btn">검색</button>
-							<a href="/algorithm/question/list" class="gohome">
-								<img src="/images/reset.png" alt="검색초기화" class="reset">
-							</a>
-						</div> -->
-						<!-- <div>
-							<button id="search-btn">적용</button>	
-						</div> -->
 					</form>
 				</div>
 			</div>
@@ -404,12 +358,7 @@
 		</div>
 		<div class="body">	
 			<div class="btn-group"  style="margin-bottom: 20px;">
-				<div class="right-align">
-					<!-- 로그인 하지 않았을 때 -->
-					<!-- <c:if test="${empty sessionScope._LOGIN_USER_}">
-						<a href="/member/auth">로그인하기</a>
-					</c:if> -->
-					<!-- 기업회원에게만 보임  -->
+				<div class="right-align">					
 					<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.memberType eq 'COMPANY'}">
 						<!-- <button id="upload">
 							<a href="/algorithm/question/create">문제 등록</a>

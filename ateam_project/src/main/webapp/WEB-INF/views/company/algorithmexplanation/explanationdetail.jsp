@@ -7,20 +7,7 @@
 <script type="text/javascript" src="/js/lib/jquery-3.7.1.js"></script>
 <script type="text/javascript">
 	$().ready(function() {
-		
-		$.get("/code/알고리즘카테고리", function(response) {
-			for (var i = 0; i < response.length; i++) {
-				var code = response[i]
-				var option = $("<option value='" +code.codeId+"'>"+code.codeContent+"</option>");
-				$("#algorithm_category").append(option);
-			}
-		// 이전에 선택한 select option 불러오기
-        $("select[name=algorithmCategoryId]").val("${algorithmExplanationVO.commonCodeVO.codeId}")
-		});
-	    
-	    $("").keyup(function() {
-	    	$.get("/")
-	    })
+	
 	})
 
     // 모달창 열고 닫기
@@ -138,7 +125,22 @@
 			    </c:when>
 			</c:choose>
             </div>   
-            <div id="tip">Key-value쌍으로 데이터를 빠르게 찾아보세요.</div>
+
+            <div id="tip">
+                <c:choose>
+                    <c:when test="${categoryId eq 1}">
+                        Key-value쌍으로 데이터를 빠르게 찾아보세요. (첫 번째 카테고리 팁)
+                    </c:when>
+                    <c:when test="${categoryId eq 2}">
+                        다른 팁이 필요한 경우 여기에 표시하세요. (두 번째 카테고리 팁)
+                    </c:when>
+                    <!-- 필요에 따라 다른 categoryId에 대한 case를 추가하세요. -->
+            
+                    <c:otherwise>
+                        기본 팁을 표시하세요.
+                    </c:otherwise>
+                </c:choose>
+            </div>
         </div>
         <div id="pointLine"></div>
         <!-- 여기까지 해당 카테고리 상단 내용 -->
@@ -158,18 +160,7 @@
 	        		</c:forEach>
         		</c:when>
         	</c:choose>
-            <!-- <li>
-                <div id="postList">
-                    <a href="/algorithm/explanation/view/AE-20231029-000131">
-                    <div class="postTitle">최단 경로를 찾는 알고리즘</div>
-                   </a>
-                    <div class="postWriter">페이타랩</div>
-                    <div class="postInfo">31 views</div>
-                </div>
-            </li> -->
         </ul>
-        
-        
     </div>
     <jsp:include page="../../layout/footer.jsp"></jsp:include>
 </body>

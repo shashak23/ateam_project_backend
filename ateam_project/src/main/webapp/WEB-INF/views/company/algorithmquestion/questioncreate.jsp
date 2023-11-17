@@ -502,16 +502,7 @@ body > .body_container > .body_right_aside {
     #add-col{
        margin-left: 10px;
     }
-    /*
-    #submit-btn{
-        background-color: var(--light-blue);
-        border: none;
-        width: 70px;
-        height: 30px;
-        border-radius: 5px;
-        cursor: pointer;
-        margin-bottom: 30px;
-    } */
+
     button{
         border: none;
         padding: 5px;

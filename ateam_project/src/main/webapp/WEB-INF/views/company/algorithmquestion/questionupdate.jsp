@@ -610,7 +610,6 @@
         font-weight: bold;
     }
 
-
     button{
         border: none;
         padding: 5px;
@@ -619,6 +618,10 @@
         width:60px;
 		height:35px;
     }
+
+    input[type="text"] {
+    
+}
 </style>
 <body>
 	<div class="body_container">
