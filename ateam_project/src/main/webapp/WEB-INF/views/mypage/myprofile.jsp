@@ -916,7 +916,7 @@ position: absolute;
 	<div class="related_link">
 		<div id="SNS">
 			<img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="Icon 1" id="githubIcon">
-s		</div>
+		</div>
 		<div id="SNS">
         <img src="https://w7.pngwing.com/pngs/863/247/png-transparent-email-computer-icons-email-miscellaneous-angle-text.png" alt="Icon 2" id="emailIcon"> 
 		</div>
