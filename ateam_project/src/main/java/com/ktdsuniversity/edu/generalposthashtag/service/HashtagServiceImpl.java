@@ -39,4 +39,9 @@ public class HashtagServiceImpl implements HashtagService{
 		return hashtagDAO.getHashtagList(postId);
 	}
 
+
+	@Override
+	public List<HashtagVO> getHastagListByGeneralPostId(String postId) {
+		return hashtagDAO.getHastagListByGeneralPostId(postId);
+	}
 }

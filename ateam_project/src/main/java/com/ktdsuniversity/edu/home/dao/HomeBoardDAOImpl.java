@@ -62,7 +62,8 @@ public class HomeBoardDAOImpl extends SqlSessionDaoSupport implements HomeBoardD
 	}
 
 	@Override
-	public int qnaboardCreateByMain(GeneralPostVO generalPostVO) {
-		return getSqlSession().insert("qnaboardCreateByMain", generalPostVO);
+	public GeneralPostVO qnaboardCreateByMain(GeneralPostVO generalPostVO) {
+		getSqlSession().insert("qnaboardCreateByMain", generalPostVO);
+		return generalPostVO;
 	}
 }

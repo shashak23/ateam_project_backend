@@ -15,5 +15,6 @@ public interface HashtagService {
 	
 	public List<HashtagVO> getHashtagList(String postId);
 
+	public List<HashtagVO> getHastagListByGeneralPostId(String postId);
 	
 }

@@ -16,5 +16,5 @@ public interface HomeBoardDAO {
 	public List<HomeBoardVO> getHashtag(String postId);
 	public MemberVO getMemberProfilePic(String email);
 	public int freeboardCreateByMain(GeneralPostVO generalPostVO);
-	public int qnaboardCreateByMain(GeneralPostVO generalPostVO);
+	public GeneralPostVO qnaboardCreateByMain(GeneralPostVO generalPostVO);
 }

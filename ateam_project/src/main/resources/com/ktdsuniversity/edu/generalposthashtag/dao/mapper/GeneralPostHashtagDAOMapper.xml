@@ -6,6 +6,17 @@
 
 <mapper namespace="com.ktdsuniversity.edu.generalposthashtag.dao.HashtagDAO" >
 
+	<resultMap type="com.ktdsuniversity.edu.generalposthashtag.vo.HashtagVO"
+			   id="hashtagMap"
+			   autoMapping="true">
+		<id column="GENERAL_POST_HASHTAG_ID" property="generalPostHashtagId"/>
+		<association property="commonCodeVO"
+		    javaType="com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO"
+		    autoMapping="true">
+		    <id column="CODE_ID" property="codeId" />
+		</association>
+	</resultMap>
+
 <insert id="createPostHashtag"
         parameterType="com.ktdsuniversity.edu.generalposthashtag.vo.HashtagVO">
 	INSERT INTO GENERAL_POST_HASHTAG
@@ -53,5 +64,27 @@
 		    ON CC.CODE_ID = GPH.HASHTAG_ID 
 		 WHERE GP.GENERAL_POST_ID = #{_parameter}
 </select>
+
+<select id="getHastagListByGeneralPostId"
+		parameterType="string"
+		resultMap="hashtagMap">
+		SELECT CC.CODE_CONTENT 
+			 , CC.CODE_ID
+			 , GP.GENERAL_POST_ID
+		  FROM GENERAL_POST GP
+		 INNER JOIN GENERAL_POST_HASHTAG GPH
+		    ON GP.GENERAL_POST_ID = GPH.GENERAL_POST_ID 
+		 INNER JOIN COMMON_CODE CC
+		    ON CC.CODE_ID = GPH.HASHTAG_ID 
+		 WHERE GP.GENERAL_POST_ID = #{_parameter}
+</select>
+
+<delete id="deleteHashtagsOnGeneralPost"
+		parameterType="string">
+		DELETE
+		  FROM GENERAL_POST_HASHTAG
+		 WHERE GENERAL_POST_ID = #{_parameter}
+
+</delete>
 
 </mapper>

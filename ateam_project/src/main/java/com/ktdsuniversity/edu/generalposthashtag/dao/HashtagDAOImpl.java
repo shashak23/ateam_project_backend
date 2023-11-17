@@ -31,7 +31,7 @@ public class HashtagDAOImpl extends SqlSessionDaoSupport
 
 	@Override
 	public List<HashtagVO> getHashtagList(String postId) {
-		return getSqlSession().selectList("getHastagList");
+		return getSqlSession().selectList("getHastagList", postId);
 	}
 
 	@Override
@@ -39,5 +39,14 @@ public class HashtagDAOImpl extends SqlSessionDaoSupport
 		return getSqlSession().selectOne("getHashtagCnt");
 	}
 
+	@Override
+	public List<HashtagVO> getHastagListByGeneralPostId(String postId) {
+		return getSqlSession().selectList("getHastagListByGeneralPostId", postId);
+	}
+	
+	@Override
+	public int deleteHashtagsOnGeneralPost(String postId) {
+		return getSqlSession().delete("deleteHashtagsOnGeneralPost", postId);
+	}
 
 }

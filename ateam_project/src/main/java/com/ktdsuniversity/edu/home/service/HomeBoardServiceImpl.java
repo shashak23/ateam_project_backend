@@ -9,8 +9,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.ktdsuniversity.edu.generalpost.dao.GeneralPostHashtagDAO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
+import com.ktdsuniversity.edu.generalposthashtag.vo.HashtagVO;
 import com.ktdsuniversity.edu.home.dao.HomeBoardDAO;
 import com.ktdsuniversity.edu.home.vo.HomeBoardVO;
 import com.ktdsuniversity.edu.home.vo.HomeNickNameVO;
@@ -21,7 +24,8 @@ import com.ktdsuniversity.edu.member.vo.MemberVO;
 public class HomeBoardServiceImpl implements HomeBoardService {
 	@Autowired
 	private HomeBoardDAO homeBoardDAO;
-	
+	@Autowired
+	private GeneralPostHashtagDAO generalPostHashtagDAO;
 	
 	@Override
 	public List<GeneralPostVO> getAllGeneralPost() {
@@ -58,8 +62,19 @@ public class HomeBoardServiceImpl implements HomeBoardService {
 		return homeBoardDAO.freeboardCreateByMain(generalPostVO) > 0;
 	}
 
+	@Transactional
 	@Override
 	public boolean qnaboardCreateByMain(GeneralPostVO generalPostVO) {
-		return homeBoardDAO.qnaboardCreateByMain(generalPostVO) > 0;
+		int tagCount = 0;
+		List<HashtagVO> hashtagList = generalPostVO.getHashtagListVO();
+		GeneralPostVO post = homeBoardDAO.qnaboardCreateByMain(generalPostVO);
+		if (post == null) {
+			return false;
+		}
+		for (HashtagVO hashtagVO : hashtagList) {
+			hashtagVO.setGeneralPostId(post.getGeneralPostId());
+			tagCount += generalPostHashtagDAO.createPostHashtag(hashtagVO);
+		}
+		return tagCount == hashtagList.size();
 	}
 }

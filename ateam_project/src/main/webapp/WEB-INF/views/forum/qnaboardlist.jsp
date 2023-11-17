@@ -122,7 +122,7 @@
    #pageName {
 	    font-size: 30px;
 	    font-weight: bold;
-	    font-color: #white;
+	    color: white;
    }
    .search_menu {
 	    position: relative;
@@ -204,7 +204,7 @@
 	    text-overflow: ellipsis;
 	    white-space: nowrap;
   }  
-  
+
 </style>
 </head>
 <body>
@@ -384,7 +384,6 @@
 		
 	 // 명예의 전당
 	    $.get("/qnaboard/topTenMember", function(response) {
-		    console.log(response);
 		    for (var i in response.generalMemberList) {
 		        let listDOM = $("<ul></ul>");
 		        let userEmailDOM = $("<li></li>");

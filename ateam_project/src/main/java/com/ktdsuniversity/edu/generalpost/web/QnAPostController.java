@@ -69,6 +69,7 @@ public class QnAPostController {
 		searchForumVO.setBoardId("CC-20231017-000030");
 		
 		GeneralPostListVO generalPostListVO = generalPostService.getAllBoard(searchForumVO);
+		
 		ModelAndView view = new ModelAndView();
 		view.setViewName("forum/qnaboardlist");
 		view.addObject("generalPostListVO", generalPostListVO);
