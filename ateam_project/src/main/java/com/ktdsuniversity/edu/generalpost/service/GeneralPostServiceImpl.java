@@ -23,6 +23,7 @@ import com.ktdsuniversity.edu.generalpost.vo.GeneralPostListVO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
 import com.ktdsuniversity.edu.generalpost.vo.SearchForumVO;
 import com.ktdsuniversity.edu.generalpost.web.FreePostController;
+import com.ktdsuniversity.edu.generalposthashtag.dao.HashtagDAO;
 import com.ktdsuniversity.edu.generalposthashtag.vo.HashtagVO;
 
 @Service
@@ -36,6 +37,9 @@ private Logger log = LoggerFactory.getLogger(FreePostController.class);
 	
 	@Autowired
 	private GeneralPostHashtagDAO generalPostHashtagDAO;
+	
+	@Autowired
+	private HashtagDAO hashtagDAO;
 	
 	
 	@Override
@@ -88,6 +92,14 @@ private Logger log = LoggerFactory.getLogger(FreePostController.class);
 	@Override
 	public boolean updateOneBoard(GeneralPostVO generalPostVO) {
 		int updateCount = generalPostDAO.updateOneBoard(generalPostVO);
+		if (updateCount >0) {
+			hashtagDAO.deleteHashtagsOnGeneralPost(generalPostVO.getGeneralPostId());
+		}
+		List<HashtagVO> hashtagList = generalPostVO.getHashtagListVO();
+		for (HashtagVO hashtagVO : hashtagList) {
+			hashtagVO.setGeneralPostId(generalPostVO.getGeneralPostId());
+			updateCount += generalPostHashtagDAO.createPostHashtag(hashtagVO);
+		}
 		return updateCount > 0;
 	}
 

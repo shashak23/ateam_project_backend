@@ -98,6 +98,13 @@
 	</insert>
 	<insert id="qnaboardCreateByMain"
 			parameterType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
+			
+		<selectKey keyProperty="generalPostId"
+				   resultType="string"
+				   order="BEFORE">
+			SELECT ( 'GP-' || TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_GENERAL_POST_PK.NEXTVAL, 6, 0) )
+			  FROM DUAL
+		</selectKey> 
 		INSERT INTO GENERAL_POST (
 			  GENERAL_POST_ID
 			, POST_WRITER
@@ -109,7 +116,7 @@
 			, VIEW_CNT
 			, DELETE_YN)
 			VALUES (
-			  'GP-' || TO_CHAR(SYSDATE, 'YYYYMMDD') || '-' || LPAD(SEQ_GENERAL_POST_PK.NEXTVAL, 6, 0)
+			  #{generalPostId}
 			, #{postWriter}
 			, 'CC-20231017-000030' /* 질답게시판 */
 			, #{postTitle}
