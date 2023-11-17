@@ -13,6 +13,8 @@
 <meta name="viewport" id="viewport"
 	content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, width=device-width" />
 <link rel="stylesheet" type="text/css" href="/css/common.css" />
+<script src="/js/lib/jquery-3.7.1.js"></script>
+<jsp:include page="../layout/header.jsp" />
 <style>
 @charset "utf-8";
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap');/*글꼴을 가져오는 페이지*/
@@ -205,37 +207,6 @@
   margin-bottom: 15px;
 }
 
-/*신고 모달*/
-.report-modal {
-	visibility: hidden;
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-/* 모달 내용 스타일 */
-.report-modal-content {
-    position: relative;
-    padding: 20px;
-    width: 60%;
-    background-color: #fff;
-    border-radius: 5px;
-}
-
-/* 모달 닫기 버튼 스타일 */
-.close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 20px;
-    cursor: pointer;
-    color: #888;
-}
 
 /* 수정버튼  */
 .introduce-modify,#edit_button1,#edit_button2,#delete_tech,
@@ -631,7 +602,7 @@ position: absolute;
   margin-right: 10px;
 
 }
-#report{
+#reportUser{
 	width: 70px;
     position: absolute;
     height: 30px;
@@ -642,8 +613,8 @@ position: absolute;
 }
 </style>
 <!-- 자바스크립트 시작 -->
-<jsp:include page="../layout/header.jsp" />
-<script type="text/javascript" src="/js/lib/jquery-3.7.1.js"></script>
+<%-- <jsp:include page="../layout/header.jsp" />
+<script src="/js/lib/jquery-3.7.1.js"></script> --%>
 <script type="text/javascript">
 	//신고버튼
 	$().ready(function() {
@@ -770,6 +741,48 @@ position: absolute;
 			})
 
 	});
+	
+$(document).on('click', '#reportUser', function() {
+	$.sweetModal({
+		title: '신고 내용',
+		content: `
+	    <form name="reportVO" method="post" action="/report/view/5">
+			<div class="grid" style="grid-template-columns: 150px 1fr; grid-template-rows: 30px 100px 30px; row-gap: 10px;">
+			<label for="reportReason" >신고사유${reportVO.reportReason}</label>
+				<select name="reportReason">
+					<option value="CC-20231018-000200">영리목적/홍보성</option>
+					<option value="CC-20231018-000201">개인정보 노출</option>
+					<option value="CC-20231018-000202">음란성/선정성</option>
+					<option value="CC-20231018-000203">같은 내용 반복(도배)</option>
+					<option value="CC-20231018-000204">이용규칙위반</option>
+					<option value="CC-20231018-000205">기타</option>
+				</select>
+		
+		        <label for = "reportReasonContent">신고 상세내용</label>
+		        <textarea name="reportReasonContent" id="reportReasonContent">${reportVO.reportReasonContent}</textarea>
+		     	
+		        <label for="attachedImg">첨부파일${reportVO.attachedImg}</label>
+		        <input id="attachedImg" type="file" name="attachedImg"/>
+		        
+		        <label for="reportTypeId">${reportVO.reportTypeId}</label>
+		        <input id="reportTypeId" type="hidden" name="reportTypeId" value="5"/>
+		        
+		        <label for="reportMemberEmail">${reportVO.reportMemberEmail}</label>
+		        <input id="reportMemberEmail" type="hidden" name="reportMember" value="${sessionScope._LOGIN_USER_.email}"/>
+		     
+		        <label for="receivedReportMemberEmail">${reportVO.receivedReportMemberEmail}</label>
+		        <input id="receivedReportMemberEmail" type="hidden" name="receivedReportMember" value="${memberVO.email}"/>
+		     
+		        <label for="reportContentId">${reportVO.reportContentId}</label>
+		        <input id="reportContentId" type="hidden" name="reportContentId" value="${memberVO.email}"/>
+		     </div>
+		        <div class="modal_content_element submit_area btn_controller">
+		           <input type="submit" value="완료" />
+		        </div>
+		     
+	     </form>`
+	});
+});
 </script>
 </head>
 <body>
@@ -843,7 +856,9 @@ position: absolute;
 						</c:otherwise>
 					</c:choose>
 				</ul>
-				<button id="report">신고</button>
+				<c:if test="${sessionScope._LOGIN_USER_.email != memberVO.email}" >
+					<button id="reportUser">신고</button>
+				</c:if>
 	</div>
 	<div class="follow">
 	  <div></div>
@@ -923,11 +938,9 @@ position: absolute;
 			</c:choose>
 		</ul>
 	</div>
-	
 	<div class="education">
 		<h3 class="education-font">학력</h3>
 		<ul>
-		
 			<c:choose>
 				<c:when test="${not empty educationList}">
 					<c:forEach items="${educationList}" var="education">
@@ -978,7 +991,6 @@ position: absolute;
 			</c:choose>			
 		</ul>
 	</div>
-	
 	<div class="career">
 		<h3 class="career-font">경력</h3>
 		<ul>
@@ -1086,59 +1098,18 @@ position: absolute;
     </div>
 <jsp:include page="../layout/footer.jsp" />
 <div>
-<c:choose>
-			<c:when
-				test="${not empty sessionScope._LOGIN_USER_.email eq memberVO.email}">
-				<!-- a유저가 로그인한 경우에만 신고 버튼을 표시합니다. -->
-				<form action="/reportUser" method="post">
-					<input type="hidden" id="reportUser"
-						value="${empty sessionScope._LOGIN_USER}">
-					<button type="submit" class="report-btn" value="5">신고</button>
-				</form>
-			</c:when>
-			<c:otherwise>
-				<!-- a유저가 로그인하지 않은 경우에는 신고 버튼을 표시하지 않습니다. -->
-			</c:otherwise>
-		</c:choose>
-
-		 <h2>신고 내용</h2>
-		<form name="reportVO" method="post" action="/report/view/5">
-			<div>
-				<label for="reportReason">신고사유${reportVO.reportReason} <select
-					name="reportReason">
-						<option value="6">영리 및 홍보 목적</option>
-						<option value="7">개인정보노출</option>
-						<option value="8">음란성/선정성</option>
-						<option value="9">같은 내용 반복(도배)</option>
-						<option value="10">이용규칙위반</option>
-						<option value="11">기타</option>
-				</select>
-				</label> <label for="reportReasonContent">신고 상세내용 <textarea
-						name="reportReasonContent" id="reportReasonContent">${reportVO.reportReasonContent}</textarea></label>
-
-				<label for="attachedImg">첨부파일${reportVO.attachedImg}</label> <input
-					id="attachedImg" type="file" name="attachedImg" /> <label
-					for="reportTypeId">${reportVO.reportTypeId}</label> <input
-					id="reportTypeId" type="hidden" name="reportTypeId" value="1" />
-
-				<label for="reportMemberEmail">${reportVO.reportMemberEmail}</label>
-				<input id="reportMemberEmail" type="hidden" name="reportMember"
-					value="${reportVO.reportMember}" /> <label
-					for="receivedReportMemberEmail">${reportVO.receivedReportMemberEmail}</label>
-				<input id="receivedReportMemberEmail" type="hidden"
-					name="receivedReportMember" value="${generalPostVO.postWriter}" />
-
-				<label for="reportContentId">${reportVO.reportContentId}</label> <input
-					id="reportContentId" type="hidden" name="reportContentId"
-					value="${generalPostVO.generalPostId}" />
-			</div>
-			<div class="btn-group">
-				<div class="right-align">
-					<input type="submit" value="완료" />
-
-				</div>
-			</div>
-		</form> 
+	<%-- <c:choose>
+		<c:when test="${not empty sessionScope._LOGIN_USER_.email eq memberVO.email}">
+			<!-- a유저가 로그인한 경우에만 신고 버튼을 표시합니다. -->
+			<form action="/report/view/5" method="post">
+				<input type="hidden" id="reportUser" value="${empty sessionScope._LOGIN_USER}">
+				<button type="submit" id="reportUser" value="5">신고</button>
+			</form>
+		</c:when>
+		<c:otherwise>
+			<!-- a유저가 로그인하지 않은 경우에는 신고 버튼을 표시하지 않습니다. -->
+		</c:otherwise>
+	</c:choose> --%>
 </div>
 </body>
 <script>

@@ -46,7 +46,7 @@ private Logger log = LoggerFactory.getLogger(FreePostController.class);
 		if(searchForumVO != null) {
 			generalPostListVO.setGeneralPostList( generalPostDAO.getAllBoard(searchForumVO.getBoardId()));
 		} else {
-			// 근데 사실 얘는 안쓰이는 애에요 - 확인중 
+
 			generalPostListVO.setGeneralPostList( generalPostDAO.searchAllPost(searchForumVO));
 		}
 		return generalPostListVO;

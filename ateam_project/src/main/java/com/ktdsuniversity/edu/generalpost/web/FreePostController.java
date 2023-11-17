@@ -44,7 +44,6 @@ public class FreePostController {
 		searchForumVO.setBoardId("CC-20231017-000029");
 		GeneralPostListVO generalPostListVO = generalPostService.getAllBoard(searchForumVO);
 		ModelAndView view = new ModelAndView();
-		
 		view.setViewName("forum/freeboardlist");
 		view.addObject("generalPostListVO", generalPostListVO);
 		view.addObject("searchForumVO", searchForumVO);
