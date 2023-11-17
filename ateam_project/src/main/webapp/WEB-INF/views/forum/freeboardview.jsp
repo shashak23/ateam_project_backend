@@ -300,8 +300,50 @@
 }
    
 </style>
-<script type="text/javascript" src="/js/lib/jquery-3.7.1.js"></script>
 <script type="text/javascript">
+$(document).on('click', '#reportFreeBoard', function() {
+	$.sweetModal({
+		title: '신고 내용',
+		content: `
+	    <form name="reportVO" method="post" action="/report/view/1">
+			<div class="grid" style="grid-template-columns: 150px 1fr; grid-template-rows: 30px 100px 30px; row-gap: 10px;">
+			<label for="reportReason" >신고사유${reportVO.reportReason}</label>
+				<select name="reportReason">
+					<option value="CC-20231018-000200">영리목적/홍보성</option>
+					<option value="CC-20231018-000201">개인정보 노출</option>
+					<option value="CC-20231018-000202">음란성/선정성</option>
+					<option value="CC-20231018-000203">같은 내용 반복(도배)</option>
+					<option value="CC-20231018-000204">이용규칙위반</option>
+					<option value="CC-20231018-000205">기타</option>
+				</select>
+		
+		        <label for = "reportReasonContent">신고 상세내용</label>
+		        <textarea name="reportReasonContent" id="reportReasonContent">${reportVO.reportReasonContent}</textarea>
+		     	
+		        <label for="attachedImg">첨부파일${reportVO.attachedImg}</label>
+		        <input id="attachedImg" type="file" name="attachedImg"/>
+		        
+		        <label for="reportTypeId">${reportVO.reportTypeId}</label>
+		        <input id="reportTypeId" type="hidden" name="reportTypeId" value="1"/>
+		        
+		        <label for="reportMemberEmail">${reportVO.reportMemberEmail}</label>
+		        <input id="reportMemberEmail" type="hidden" name="reportMember" value="${sessionScope._LOGIN_USER_.email}"/>
+		     
+		        <label for="receivedReportMemberEmail">${reportVO.receivedReportMemberEmail}</label>
+		        <input id="receivedReportMemberEmail" type="hidden" name="receivedReportMember" value="${generalPostVO.postWriter}"/>
+		     
+		        <label for="reportContentId">${reportVO.reportContentId}</label>
+		        <input id="reportContentId" type="hidden" name="reportContentId" value="${generalPostVO.generalPostId}"/>
+		     </div>
+		     
+		        <div class="align-right">
+		           <input type="submit" value="완료" />
+		        </div>
+		     
+	     </form>`
+	});
+});
+
 $().ready(function() {
    
       var loadReplies = function() {
@@ -564,58 +606,6 @@ $().ready(function() {
 
         <div class="body_right_aside"></div>
    </div>
-   
-      <!-- 모달 창 -->
-         <div id="report-modal" class="report-modal">
-             <div class="report-modal-content">
-                    <!-- 모달 내용 추가 -->
-                  <h2>신고 내용</h2>
-                  <form name="reportVO" method="post" action="/report/view/1">
-                     <div class="modal_content">
-                        <div class="modal_content_element">
-                           <label for="reportReason" >신고사유${reportVO.reportReason}</label>
-                           <select name="reportReason">
-                              <option value="CC-20231018-000200">영리 및 홍보 목적</option>
-                              <option value="CC-20231018-000201">개인정보노출</option>
-                              <option value="CC-20231018-000202">음란성/선정성</option>
-                              <option value="CC-20231018-000203">같은 내용 반복(도배)</option>
-                              <option value="CC-20231018-000204">이용규칙위반</option>
-                              <option value="CC-20231018-000205">기타</option>
-                           </select>
-                        </div>
-                        <div class="modal_content_element">
-                           <label for = "reportReasonContent">신고 상세내용</label>
-                           <textarea name="reportReasonContent" id="reportReasonContent">${reportVO.reportReasonContent}</textarea>
-                        </div>
-                        <div class="modal_content_element">
-                           <label for="attachedImg">첨부파일${reportVO.attachedImg}</label>
-                           <input id="attachedImg" type="file" name="attachedImg"/>
-                        </div>
-                        <div class="modal_content_element">
-                           <label for="reportTypeId">${reportVO.reportTypeId}</label>
-                           <input id="reportTypeId" type="hidden" name="reportTypeId" value="4"/>
-                        </div>
-                        <div class="modal_content_element">
-                           <label for="reportMemberEmail">${reportVO.reportMemberEmail}</label>
-                           <input id="reportMemberEmail" type="hidden" name="reportMember" value="${reportVO.reportMember}"/>
-                        </div>
-                        <div class="modal_content_element">
-                           <label for="receivedReportMemberEmail">${reportVO.receivedReportMemberEmail}</label>
-                           <input id="receivedReportMemberEmail" type="hidden" name="receivedReportMember" value="${generalPostVO.postWriter}"/>
-                        </div>
-                        <div class="modal_content_element">
-                           <label for="reportContentId">${reportVO.reportContentId}</label>
-                           <input id="reportContentId" type="hidden" name="reportContentId" value="${generalPostVO.generalPostId}"/>
-                        </div>
-                        <div class="modal_content_element submit_area btn_controller">
-                           <input type="submit" value="완료" />
-                           <span class="close">취소</span>
-                        </div>
-                     </div>
-                  </form>
-               </div>
-            </div>
-      
             <!-- <div class="postContent_Controller"> -->
                <!-- 댓글 신고 모달 창 -->
                <div class="report-window">

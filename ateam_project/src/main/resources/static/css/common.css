@@ -141,10 +141,10 @@ table.grid > tbody > tr > td {
 */
 div.grid {
     display: grid;
-    grid-template-columns: attr(data-grid-col);
-    grid-template-rows: attr(data-grid-row);
-    column-gap: attr(data-col-gap);
-    row-gap: attr(data-row-gap);
+}
+
+div.grid input[type=file] {
+	padding: 0px;
 }
 
 /* Bookmark */
@@ -433,3 +433,5 @@ body > .footer {
      border-top: 1px solid var(--blue);
      padding: 10px 0 0 0;
  }
+ 
+ 

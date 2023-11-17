@@ -39,7 +39,6 @@ public class UserReportController {
 							           , Model model
 							           , @SessionAttribute("_LOGIN_USER_") MemberVO memberVO
 							           , @PathVariable String reportTypeId
-							           , @RequestParam(required = false) MemberVO receivedReportMemberVO
 							           , @RequestParam(required = false) GeneralCommentVO generalCommentVO) {
 		log.debug("--1--컨트롤러-도착-------------------------------------");
 		//System.out.println("신고고유번호: " + reportVO.getReportId());
@@ -67,13 +66,11 @@ public class UserReportController {
 		if (reportTypeId != null) {
 		    if (reportTypeId.equals("1")) {
 		        reportVO.setReportTypeId("CC-20231018-000097");
-		        reportVO.setReceivedReportMember(memberVO.getEmail());
 		    } else if (reportTypeId.equals("2")) {
 		        reportVO.setReportTypeId("CC-20231018-000102");
 		        //reportVO.setReceivedReportMember(generalCommentVO.getCommentWriter());
 		    } else if (reportTypeId.equals("3")) {
 		        reportVO.setReportTypeId("CC-20231018-000101");
-		        reportVO.setReceivedReportMember(memberVO.getEmail());
 		    } else if (reportTypeId.equals("4")) {
 		    	reportVO.setReportTypeId("CC-20231018-000103");
 		    	//reportVO.setReceivedReportMember(generalCommentVO.getCommentWriter());
