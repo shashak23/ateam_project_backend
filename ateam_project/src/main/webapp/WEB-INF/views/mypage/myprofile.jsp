@@ -848,9 +848,9 @@ position: absolute;
 	</div>
 	<div class="follow">
 	  <div></div>
-	  <div class="follower" data-email="${memberVO.email}">팔로워</div>
+	  <div class="follower">팔로워</div>
 	  <div class="follower_count"></div>
-	  <div class="followee" data-email="${memberVO.email}">팔로잉</div>
+	  <div class="followee">팔로잉</div>
 	  <div class="followee_count"></div>
 	  <div></div>
 	  <div class="follow_chat"></div>
