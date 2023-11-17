@@ -390,7 +390,8 @@
     height: 50px;
   }
 
-  .rand_notice_container {
+  .rand_notice_container,
+  .report_container {
     visibility: hidden;
     position: fixed;
     top: 50%;
@@ -408,14 +409,86 @@
     transition: 0.5s;
   }
 
-  .rand_notice_container.active {
+  .rand_notice_container.active,
+  .report_container.active {
     visibility: visible;
     opacity: 1;
     transform: translate(-50%, -50%);
   }
 
-  .create_container > * {
-			margin-bottom: 10px;
+  .report_container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .report_container label {
+    width: 100px;
+    font-size: var(--font-small);
+  }
+
+  .report_container h2 {
+    margin-bottom: 20px;
+  }
+
+  .report_option_wrap select {
+    border: 1px solid var(--light-gray);
+  }
+  
+  .report_option_wrap,
+  .report_attached_wrap {
+    display: flex;
+    align-items: center;
+  }
+
+  .report_detail_wrap {
+    display: flex;
+    align-items: flex-start;
+  }
+
+  .report_detail_wrap #report_detail {
+    width: 250px;
+    height: 140px;
+    resize: none;
+    outline: none;
+    border: 1px solid var(--light-gray);
+    padding: 5px;
+  }
+
+  .report_attached_wrap #report_attached {
+    display: none;
+  }
+
+  .report_attached_wrap .report_attached_text {
+    width: 250px;
+    border: 1px solid var(--light-gray);
+    outline: none;
+    padding: 5px;
+    cursor: default;
+  }
+
+  .report_submit_wrap {
+    display: flex;
+    justify-content: flex-end;
+  }
+
+  .report_submit_wrap input {
+    padding: 5px 10px;
+    background-color: var(--blue);
+    color: var(--white);
+    margin-left: 10px;
+    border: 0;
+  }
+
+  .report_submit_wrap .report_cancel_btn {
+    background-color: var(--light-gray);
+    border: var(--gray);
+    color: var(--dark-gray);
+  }
+
+  .create_container > *,
+  .report_container div {
+		margin-bottom: 10px;
 	}
 
   .post_title_label,
@@ -425,17 +498,15 @@
 		margin-bottom: 10px;
 	}
 
-  .rand_notice_close_btn {
+  .rand_notice_close_btn,
+  .report_close_btn {
+    color: #191919;
     position: absolute;
     top: 6px;
     right: 10px;
     background-color: transparent;
     color: #888;
     cursor: pointer;
-	}
-
-  .rand_notice_close_btn {
-    color: #191919;
   }
 
   .title_area,
@@ -447,7 +518,8 @@
     font-weight: bold;
   }
 
-  .rand_notice_overlay {
+  .rand_notice_overlay,
+  .report_overlay {
 		background-color: #47474754;
 		position: fixed;
 		width: 100%;
@@ -460,7 +532,8 @@
     z-index: 2;
 	}
 
-	.rand_notice_overlay.active {
+	.rand_notice_overlay.active,
+  .report_overlay.active {
 			opacity: 1;
 			pointer-events: all;
 	}
@@ -612,6 +685,10 @@
   .submit_wrap .submit_btn:active {
     background-color: var(--light-blue);
   }
+
+  /* 신고 관련 css */
+  
+  
 </style>
   <div class="loading"></div>
   <!-- 메인 컨텐츠 영역 -->
@@ -878,9 +955,9 @@
                         <input type="hidden" class="postId" value="\${article.generalPostId}"/>
                         <input type="hidden" class="boardId" value="\${article.boardId}" />
                         <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><style>svg{fill:(--blue)}</style><path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/></svg></button>
-                        <svg width="36" height="31" viewBox="0 0 36 31" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <rect y="24" width="36" height="7" rx="3" fill="#5E69F5"/>
-                          <path fill-rule="evenodd" clip-rule="evenodd" d="M11 21H32L29.4906 3.43431C29.2091 1.46372 27.5214 0 25.5308 0H10.4692C8.47858 0 6.7909 1.46372 6.50938 3.43431L4 21H8L9.83237 6.82325C9.92824 6.08155 10.5598 5.52632 11.3077 5.52632C12.205 5.52632 12.8981 6.31473 12.7831 7.20463L11 21Z" fill="#5E69F5"/>
+                        <svg class="report_btn" width="36" height="31" viewBox="0 0 36 31" fill=None xmlns="http://www.w3.org/2000/svg" data-post-id="\${article.boardId}" data-writer-email="\${email}">
+                          <rect y="24" width="36" height="7" rx="3" fill="#FF6550"/>
+                          <path fill-rule="evenodd" clip-rule="evenodd" d="M11 21H32L29.4906 3.43431C29.2091 1.46372 27.5214 0 25.5308 0H10.4692C8.47858 0 6.7909 1.46372 6.50938 3.43431L4 21H8L9.83237 6.82325C9.92824 6.08155 10.5598 5.52632 11.3077 5.52632C12.205 5.52632 12.8981 6.31473 12.7831 7.20463L11 21Z" fill="#FF6550"/>
                         </svg>
                     </div>
                   </div>
@@ -1200,8 +1277,100 @@
         $('.rand_notice_container, .rand_notice_overlay').removeClass('active')
       }
     })
-
   })
+
+  // 신고 기능
+  $(document).on('click','.report_btn' , function() {
+    let userEmail = `${sessionScope._LOGIN_USER_}`
+    if (userEmail === '') {
+      if (confirm('로그인이 필요한 서비스입니다. 로그인 하시겠습니까?')) {
+        window.location.href="/member/auth"
+      }
+    }
+
+    // 게시판 신고 유형 선택
+    // 자게면 1, 질답게면 3
+    let articleId = $(this).data('post-id')
+    let writerEmail = $(this).data('writer-email')
+    let reportType = 1
+
+    if (articleId.slice(-2) === '30') {
+      reportType = 3
+    }
+
+    let reportTemplate = `
+      <div class="report_container">
+        <div class="report_close_btn x-large">&times;</div>
+        <h2 class="xx-large">신고</h2>
+        <form name="reportVO" method="post" action="/report/view/\${reportType}"
+          <input id="reportMemberEmail" type="hidden" name="reportMember" value="\${userEmail}"/>
+          <input id="receivedReportMemberEmail" type="hidden" name="receivedReportMember" value="\${writerEmail}"/>
+          <input id="reportContentId" type="hidden" name="reportContentId" value="\${articleId}"/>
+          <div class="report_option_wrap">
+            <label for="report-option">신고 사유</label>
+            <select name="reportReason" id="report-option">
+              <option value="CC-20231018-000200">영리 및 홍보 목적</option>
+              <option value="CC-20231018-000201">개인정보노출</option>
+              <option value="CC-20231018-000202">음란성/선정성</option>
+              <option value="CC-20231018-000203">같은 내용 반복(도배)</option>
+              <option value="CC-20231018-000204">이용규칙위반</option>
+              <option value="CC-20231018-000205">기타</option>
+            </select>
+          </div>
+          <div class="report_detail_wrap">
+            <label for="report_detail">신고 상세내용</label>
+            <textarea name="reportReasonContent" id="report_detail"></textarea>
+          </div>
+          <div class="report_attached_wrap">
+            <label for="report_attached">첨부파일</label>
+            <input id="report_attached" type="file" name="attachedImg"/>
+            <input class="report_attached_text" type="text" readonly/>
+          </div>
+          <div class="report_submit_wrap">
+            <input type="submit" value="완료"/>
+            <input type="button" class="report_cancel_btn" value="취소"/>
+          </div>
+        </form>
+      </div>
+      <div class="report_overlay"></div>`
+    
+    let reportTemplateDom = $(reportTemplate)
+
+    $('body').append(reportTemplateDom)
+    $('.report_container, .report_overlay').addClass('active')
+
+    $('.report_attached_text').click(function() {
+      $('#report_attached').trigger('click')
+    })
+
+    $('#report_attached').change(function() {
+      let selectedFilePath = $(this).val()
+      let parts = selectedFilePath.split('\\')
+      let selectedFile = parts[parts.length-1]
+      console.log(selectedFile)
+      $('.report_attached_text').val(selectedFile)
+    })
+    
+    
+    // 신고 닫기
+    $('.report_close_btn, .report_overlay, .report_cancel_btn').click(function() {
+      $('.report_container, .report_overlay').removeClass('active')
+      setTimeout(() => {
+        reportTemplateDom.remove()
+      }, 1000);
+    })
+    $('body').keyup(function(e) {
+      if (e.key === 'Escape') {
+        $('.report_container, .report_overlay').removeClass('active')
+        setTimeout(() => {
+        reportTemplateDom.remove()
+      }, 1000);
+      }
+    })
+  })
+
+
+
 
   // 메인 글 작성 ck에디터
   CKEDITOR.ClassicEditor.create(document.getElementById("editor_content"), {
