@@ -365,7 +365,7 @@ $(document).on('click', '#reportQnABoard', function() {
 		        <label for="reportContentId">${reportVO.reportContentId}</label>
 		        <input id="reportContentId" type="hidden" name="reportContentId" value="${generalPostVO.generalPostId}"/>
 		     </div>
-		        <div class="align-right">
+		        <div class="modal_content_element submit_area btn_controller">
 		           <input type="submit" value="완료" />
 		        </div>
 		     
@@ -406,7 +406,7 @@ $(document).on('click', '#reportQnABoard', function() {
                                 	    :
                                 	    `<div>
                                 	        <button class="recommend-comment">좋아요</button>
-                                	        <button class="report-comment" value="2">신고</button>
+                                	        <button class="report-comment" value="4">신고</button>
                                 	        <div class="separate-line"></div>
                                 	    </div>`}
                             </div>`;
@@ -421,6 +421,7 @@ $(document).on('click', '#reportQnABoard', function() {
                 })// $.get
         } // loadReplies
       loadReplies()
+        
    	  // 신고버튼 클릭
       $(".report-comment").click(reportComment);
       var reportComment = function(event) {
@@ -430,18 +431,43 @@ $(document).on('click', '#reportQnABoard', function() {
     	  var id = $(this).closest(".comment").data("comment-id");
     	  
     	  	// 필요한 값들을 찾으라고 일일히 지정해줘야 합니다
-	        $("#report-window").find("#receivedReportMember").val(writer)
-	        $("#report-window").find("#reportContentId").val(id)
+	        $(this).find("#receivedReportMember").val(writer)
+	        $(this).find("#reportContentId").val(id)
 	        
-	        // 모달을 표시합니다.
-	        $("#report-window").css("display", "block");
-	        console.log($(this).val())
+	        $.sweetModal({
+			        title: '신고 내용',
+			        content: `
+			            <form name="reportVO" method="post" action="/report/view/4">
+			                <div class="grid" style="grid-template-columns: 150px 1fr; grid-template-rows: 30px 100px 30px; row-gap: 10px;">
+			                    <label for="reportReason">신고사유</label>
+			                    <select name="reportReason">
+			                        <option value="CC-20231018-000200">영리목적/홍보성</option>
+			                        <option value="CC-20231018-000201">개인정보 노출</option>
+			                        <option value="CC-20231018-000202">음란성/선정성</option>
+			                        <option value="CC-20231018-000203">같은 내용 반복(도배)</option>
+			                        <option value="CC-20231018-000204">이용규칙위반</option>
+			                        <option value="CC-20231018-000205">기타</option>
+			                    </select>
+			
+			                    <label for="reportReasonContent">신고 상세내용</label>
+			                    <textarea name="reportReasonContent" id="reportReasonContent"></textarea>
+			
+			                    <label for="attachedImg">첨부파일</label>
+			                    <input id="attachedImg" type="file" name="attachedImg"/>
+			
+			                    <input id="reportTypeId" type="hidden" name="reportTypeId" value="4"/>
+			                    <input id="reportMemberEmail" type="hidden" name="reportMember" value="${sessionScope._LOGIN_USER_.email}"/>
+			                    <input id="receivedReportMemberEmail" type="hidden" name="receivedReportMember" value="${generalPostVO.postWriter}"/>
+			                    <input id="reportContentId" type="hidden" name="reportContentId" value="${generalPostVO.generalPostId}"/>
+			                </div>
+			                <div class="modal_content_element submit_area btn_controller">
+			                    <input type="submit" value="완료" />
+			                </div>
+			            </form>
+			        `
+    		});
+
       };
-        
-		    // 모달 내부 "취소" 버튼 클릭 시 모달 닫기
-		    $("#cancel-window").click(function() {
-		        $("#report-window").css("display", "none");
-		    });
         // 등록버튼 클릭
         $("#btn-save-comment").click(function(event) {
 
@@ -542,21 +568,8 @@ $(document).on('click', '#reportQnABoard', function() {
           $("#txt-comment").data("generalCommentId", replyId)
           }
 
-          // "신고" 버튼 클릭 시 모달 열기
-           $(".report-btn").click(function() {
-             let reportType = $("#reportQnABoard").val()
-             console.log(reportType);
-              $("#report-modal").css("display", "block");
-          
-             // 모달 내부 "취소" 버튼 클릭 시 모달 닫기
-             $(".close").click(function() {
-                console.log(1)
-                 $("#report-modal").css("display", "none");
-               });
-          });
-          console.log($("jsp:param[name='reportType']"))
-
-         
+	// 신고 너 빠지라고 했다 
+	
       // "좋아요" 버튼 클릭 시 이벤트 발생
       $("#like-btn").click(function () {
           // 클라이언트에서 AJAX 요청 생성

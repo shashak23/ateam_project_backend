@@ -41,13 +41,8 @@ public class UserReportController {
 							           , @PathVariable String reportTypeId
 							           , @RequestParam(required = false) GeneralCommentVO generalCommentVO) {
 		log.debug("--1--컨트롤러-도착-------------------------------------");
-		//System.out.println("신고고유번호: " + reportVO.getReportId());
 		ModelAndView view = new ModelAndView();
 		reportVO.setReportMember(memberVO.getEmail());
-		// 월요일에 확인해 보자
-		//reportVO.setCommentWriter(reportTypeId);
-		//reportVO.setReceivedReportMember(generalCommentVO.getCommentWriter());
-		//reportVO.setReceivedReportMember(generalCommentVO.getCommentWriter());
 		
 		if (bindingResult.hasErrors()) {
 			view.addObject("reportVO", reportVO);
@@ -68,12 +63,10 @@ public class UserReportController {
 		        reportVO.setReportTypeId("CC-20231018-000097");
 		    } else if (reportTypeId.equals("2")) {
 		        reportVO.setReportTypeId("CC-20231018-000102");
-		        //reportVO.setReceivedReportMember(generalCommentVO.getCommentWriter());
 		    } else if (reportTypeId.equals("3")) {
 		        reportVO.setReportTypeId("CC-20231018-000101");
 		    } else if (reportTypeId.equals("4")) {
 		    	reportVO.setReportTypeId("CC-20231018-000103");
-		    	//reportVO.setReceivedReportMember(generalCommentVO.getCommentWriter());
 		    } else {
 		    	reportVO.setReportTypeId("CC-20231018-000104");
 		    }
@@ -86,7 +79,7 @@ public class UserReportController {
 		
 		boolean isSuccess = reportService.createReport(reportVO);
 		if(isSuccess) {
-			view.setViewName("redirect:/qnaboard/list");
+			view.setViewName("redirect:/devground/home");
 		} else {
 			view.addObject("reportVO", reportVO);
 			view.setViewName("report/reporthistoryview");

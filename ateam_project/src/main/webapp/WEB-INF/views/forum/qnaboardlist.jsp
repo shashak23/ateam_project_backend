@@ -408,13 +408,7 @@
 		});
 	});
 
-	
-
-
-
-
-
-	//랭킹
+   //랭킹
        const userList = document.getElementById('user-list');
        const tableContainer = document.querySelector('.board_list_ty1');
        const loading = document.getElementById('loading');

@@ -252,7 +252,7 @@
                                                 <td><!--자유게시판의 내용을 가져와 반복하는 태그 -->
                                                 <div class="pratice">
                                                 <a class="text_controller" href="/freeboard/view/${freeboard.generalPostId}">
-                                                        <!-- ${freeboard.postTitle} -->
+                                                    <!-- ${freeboard.postTitle} -->
                                                     <span class="comment_count"></span>
                                                         ${freeboard.postTitle}
                                                 </a>
