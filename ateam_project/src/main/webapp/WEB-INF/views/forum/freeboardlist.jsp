@@ -218,6 +218,7 @@
              </div>
         </div>
         <!-- 본문 -->
+        <div class="body">
         <section id="container" class="container">
             <main class="contents">         
                     <!-- 게시판 리스트 -->
@@ -268,6 +269,9 @@
                             </div>                       
                         </fieldset>
                     </form>
+                 </main>
+                 </section>
+                 </div>
     		 <div class="body_right_aside">
 	             <div class="advertising">
 		              <a href="https://blog.naver.com/roborang/221827208404">

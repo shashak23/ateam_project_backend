@@ -45,38 +45,34 @@
   text-align: right;
 }
 .follow_icon{
-	height: 30px;
-    border: none;
-    border-radius: 5px;
-	cursor: pointer;
-	width: 70px;
+  background-color: white;
+  cursor: pointer;
+  height: 30px;
 }
 .follow_icon>img ,.message_icon>img{
   width: 15px;
 }
 .message_icon{
-	width: 70px;
-	height: 30px;
-	background-color:  rgb(231,231,231);
-	justify-content: center;
-	border-radius: 5px;
-	display: flex;
-	padding: 5px;
-	border: none;
-	font-weight: bold;
-	cursor: pointer;
+ width:200px;
+ height: 30px;
+ background-color:  rgb(231,231,231);
+ justify-content: center;
+ border-radius: 5px;
+ display: flex;
+ padding: 5px;
+ border: none;
+ font-weight: bold;
+ cursor: pointer;
 }
 
 
 .profile {
-  position: relative;
   display: grid;
   grid-template-columns: 170px 20px 1fr;
   margin: 20px;
 }
 
-#profile-img,
-#nomal-img {
+.profile img {
   width: 150px;
   height: 150px;
   border-radius: 50%;
@@ -87,7 +83,7 @@
 }
 
 .introduction_list {
-	margin-top: 62px;
+  margin-top: 62px;
   padding: 0px;
   list-style: none;
   grid-gap: 20px;
@@ -160,15 +156,7 @@
 }
 
 #technology_stack li {
-    margin-right: 10px;
-    font-size: 10pt;
-    height: 29px;
-}
-.techList{
-	background-color: rgb(243 243 243);
-    border-radius: 5px;
-    color: gray;
-    padding: 5px;
+  margin-right: 10px;
 }
 
 .education{
@@ -240,22 +228,15 @@
 /* 수정버튼  */
 .introduce-modify,#edit_button1,#edit_button2,#delete_tech,
 .education-modify,.career-modify,.region_modify
-,.profile-modify
-,#edit-sns{
-	background-color: white;
-    border: none;
-}
-.education-modify>img ,
-.career-modify>img,
-.region_modify>img,
-.introduce-modify>img,
-#edit-sns,
-#edit-profilepic{
-	width: 20px;
-	opacity: 53%
-}
-#edit-profilepic{
-    margin-right: 12px;
+,.profile-modify{
+	background-color: var(--gray);
+	border: none;
+    color: var(--white);
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: center;
+    width: 36px;
+    height: 26px;
 }
 .introduce-modify:hover
 ,#edit_button1:hover
@@ -270,21 +251,22 @@
 ,.addCareer:hover
 ,.region_create:hover
 ,.profile-modify:hover{
-  color: gray;
-  cursor: pointer;
+  /* background-color: var(--light-blue); */
+  color: white;
 }
 
 #delete_tech{
 	margin-left: 10px;
 }
 .introduce-create{
-    border: 1px solid #dcdcdc;
-    border-radius: 5px;
-    background-color: #ffffff;
-    width: 103px;
-    height: 23px;
-    font-size: 8pt;
-    margin-top: 5px;
+background-color: var(--gray);
+	border: none;
+    color: var(--white);
+    border-radius: 10px;
+    cursor: pointer;
+    text-align: center;
+    width: 118px;
+    height: 27px;
 }
 
 #content_wrapper{
@@ -298,16 +280,11 @@
   
 }
 /* 추가하기 */
- #insert_techstack, #addEducationButton,.addCareer,.region_create,#edit_button2{
-	cursor: pointer;
-    border: 1px solid #dcdcdc;
-    border-radius: 5px;
-    background-color: #ffffff;
-    color: black;
-    width: 60px;
-    height: 21px;
-    font-size: 8pt;
-    margin-top: 5px;
+ #insert_techstack, #addEducationButton,.addCareer,.region_create{
+	background-color: none;
+	border: none;
+    margin-top: 15px;
+    cursor: pointer;
 } 
 
 .follow{
@@ -351,7 +328,7 @@
 }
 .profile-modify{
 position: absolute;
-    top: 84%;
+    top: 6%;
     left: 83%;
     transform: translate(-50%, -50%);
 }
@@ -414,19 +391,29 @@ position: absolute;
     }
 
 	.follow {
-		display: grid;
-		grid-template-columns: 27px 50px 30px 50px 30px 1fr 70px 10px 70px;
+		display: flex;
+   		justify-content: space-evenly;
 		border-bottom: 1px solid #333;
 		font-weight: bold;
-		width: 940px;
-		padding-bottom: 10px;
-		align-items: center;
+		margin-right: 140px;
 	}
 
 	.follow div {
+		margin-right: 7px;
 		cursor: pointer;
 	}
-	
+
+	.follower,
+	.followee{
+		width:200px;
+		height: 30px;
+		background-color:  rgb(231,231,231);
+		justify-content: center;
+		border-radius: 5px;
+		display: flex;
+   		padding: 5px;
+	}
+
 	#arrow{
 		width: 8px;
 		height: 8px;
@@ -618,11 +605,14 @@ position: absolute;
   margin: 20px;
 }
 
-#profile-img,
-#nomal-img {
+.profile img {
   width: 150px;
   height: 150px;
   border-radius: 50%;
+}
+.related_link img {
+  width: 30px;
+  margin-right:7px;
 }
 
 .related_link a {
@@ -631,21 +621,11 @@ position: absolute;
   margin-right: 10px;
 
 }
-#report{
-	width: 70px;
-    position: absolute;
-    height: 30px;
-    top: 12%;
-    left: 85%;
-    transform: translate(-50%, -50%);
-	cursor: pointer;
-}
 </style>
 <!-- 자바스크립트 시작 -->
 <jsp:include page="../layout/header.jsp" />
 <script type="text/javascript" src="/js/lib/jquery-3.7.1.js"></script>
 <script type="text/javascript">
-
 	//신고버튼
 	$().ready(function() {
 		function redirectToURL(url) {
@@ -692,14 +672,7 @@ position: absolute;
 
 		$(".introduce-modify").on('click',function(){
 			openIntro();
-			
 		})
-		
-		$(".introduce-create").on('click',function(){
-			openIntro();
-			
-		})
-		
 		 $("#edit_button1").click(function() {
 			$("#modalContainerSNS").removeClass("hidden")
 		 })
@@ -752,7 +725,7 @@ position: absolute;
 			$("#modalCloseIntro").on('click',function(){
 				$("#modalContainerIntro").addClass("hidden");
 			})
-		    
+
 			$("#modalCloseSNS").on('click',function(){
 				$("#modalContainerSNS").addClass("hidden");
 			})
@@ -789,28 +762,30 @@ position: absolute;
 	<div class="body">
 	<div class="flex_main">	
 	<div class="profile">
-		<div class="profile-fix">
-			<c:choose>
-				<c:when
-					test="${memberVO.profilePic eq 'https://w7.pngwing.com/pngs/384/868/png-transparent-person-profile-avatar-user-basic-ui-icon.png'}">
-					<img id ="nomal-img" src="${memberVO.profilePic}" />
-				</c:when>
-				<c:otherwise>
-					<img id="profile-img" src="/member/file/download/${memberVO.email}" />
-				</c:otherwise>
-			</c:choose>
-			<c:if
-					test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
-					<button data-pic-id="${sessionScope._LOGIN_USER_.email }" class="profile-modify">
-					<img id="edit-profilepic" src="/images/edit.png">
-					</button>
-					
-					<div id="modalContainerProfile" class="hidden">
-						<div id="modalContentProfile">			
-						</div>
+	<div class="profile-fix">
+		<c:choose>
+			<c:when
+				test="${memberVO.profilePic eq 'https://w7.pngwing.com/pngs/384/868/png-transparent-person-profile-avatar-user-basic-ui-icon.png'}">
+				<img src="${memberVO.profilePic}" />
+			</c:when>
+			<c:otherwise>
+				<img src="/member/file/download/${memberVO.email}" />
+			</c:otherwise>
+		</c:choose>
+		<c:if
+				test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
+				<button data-pic-id="${sessionScope._LOGIN_USER_.email }" class="profile-modify">
+				수정
+				</button>
+				
+				<div id="modalContainerProfile" class="hidden">
+					<div id="modalContentProfile">			
 					</div>
-			</c:if>
-		</div>
+				</div>
+		 </c:if>
+	</div>
+		<div>
+			<div>
 				<ul class="introduction_list">
 					<li class="list_name">
 						<h2>${memberVO.nickname}</h2>
@@ -819,7 +794,7 @@ position: absolute;
 						<c:when test="${not empty generalMemberVO.selfIntro}">
 							<li class="list_intro">${generalMemberVO.selfIntro}<c:if
 									test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
-									<button data-introduce-id="${sessionScope._LOGIN_USER_.email}" class="introduce-modify"><img src="/images/edit.png"></button>
+									<button data-introduce-id="${sessionScope._LOGIN_USER_.email}" class="introduce-modify">수정</button>
 									<div id="modalContainerIntroduction" class="hidden">
 										<div id="modalContenIntroduction">		
 											<jsp:include page="modifyintroduce.jsp" />																		
@@ -832,30 +807,24 @@ position: absolute;
 							<li class="list_intro"><c:if
 									test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
 									<button data-introduce-id="${sessionScope._LOGIN_USER_.email }" class="introduce-create">
-										+ 자기소개 추가하기
-									</button>	
-									    
-                                    <div id="modalContainerIntroduction" class="hidden">
-                                        <div id="modalContenIntroduction">        
-                                            <jsp:include page="modifyintroduce.jsp" />                                                                        
-                                        </div>                                    
-                                    </div>    	
+										자기소개 추가하기
+									</button>		
 								</c:if></li>
 						</c:otherwise>
 					</c:choose>
 				</ul>
-				<button id="report">신고</button>
+			</div>
+			
+		</div>
 	</div>
 	<div class="follow">
-	  <div></div>
-	  <div class="follower">팔로워</div>
-	  <div class="follower_count"></div>
-	  <div class="followee">팔로잉</div>
-	  <div class="followee_count"></div>
-	  <div></div>
-	  <div class="follow_chat"></div>
-	  <div></div>
-	  
+	  <div class="follower" data-email="${memberVO.email}">팔로워
+		<img id="arrow" src="/images/아래.png/" alt="arrow">
+	  </div>
+	  <div class="followee" data-email="${memberVO.email}">팔로잉
+		<img id="arrow" src="/images/아래.png/" alt="arrow">
+	  </div>
+	  <div class="follow_chat">
 		<%-- <c:choose>
 			<c:when
 				test="${not empty sessionScope._LOGIN_USER_.email eq memberVO.email}">
@@ -909,25 +878,26 @@ position: absolute;
 				</div>
 			</div>
 		</form>   --%>
-		<c:if test="${sessionScope._LOGIN_USER_.email != memberVO.email}" >
 		<button class="message_icon">✉ 메시지</button>
-		</c:if>
 	</div>
 	</div>
 	<div class="related_link">
 		<div id="SNS">
 			<img src="https://cdn-icons-png.flaticon.com/512/25/25231.png" alt="Icon 1" id="githubIcon">
+			<!-- <div>${generalMemberVO.githubUrl}</div> -->
 		</div>
 		<div id="SNS">
         <img src="https://w7.pngwing.com/pngs/863/247/png-transparent-email-computer-icons-email-miscellaneous-angle-text.png" alt="Icon 2" id="emailIcon"> 
+		<!-- <div>${generalMemberVO.additionalEmail}</div> -->
 		</div>
 		<div id="SNS">
         <img src="https://i.pinimg.com/originals/f8/0b/dd/f80bdd79a51358da6ee41a0fda520394.png" alt="Icon 3" id="blogIcon">
+		<!-- <div>${generalMemberVO.blogUrl}</div> -->
 		</div>
 		<c:if
 		test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
 			<button data-sns="${sessionScope._LOGIN_USER_.email }" id="edit_button1"> 
-				<img id="edit-sns" src="/images/edit.png">
+				수정
 			</button>
 			<div id="modalContainerSNS" class="hidden">
 				<div id="modalContentSNS">
@@ -944,12 +914,12 @@ position: absolute;
 			<c:choose>
 				<c:when test="${not empty commonCodeList}">
 					<c:forEach items="${commonCodeList}" var="commonCode">
-						<li class="techList">${commonCode.codeContent}</li>
+						<li>#${commonCode.codeContent}</li>
 					</c:forEach>
 					<c:if
 						test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
 						
-							<button data-teach="${sessionScope._LOGIN_USER_.email }" id="edit_button2">+ 추가하기</button>
+							<button data-teach="${sessionScope._LOGIN_USER_.email }" id="edit_button2">수정</button>
 							<div id="modalContainerTech" class="hidden">
 								<div id="modalContentTech">
 									
@@ -957,6 +927,7 @@ position: absolute;
 									
 								</div>
 							</div>
+						<!-- <button data-deleteteach="${sessionScope._LOGIN_USER_.email }" id="delete_tech">삭제</button> -->
 						
 					</c:if>
 				</c:when>
@@ -981,7 +952,6 @@ position: absolute;
 	<div class="education">
 		<h3 class="education-font">학력</h3>
 		<ul>
-		
 			<c:choose>
 				<c:when test="${not empty educationList}">
 					<c:forEach items="${educationList}" var="education">
@@ -989,11 +959,11 @@ position: absolute;
 							${education.degrees } 
 							<c:if
 								test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
-								<button data-education-id="${education.educationId}" class="education-modify">
-								<img src="/images/edit.png">
-								</button>
+								<button data-education-id="${education.educationId}" class="education-modify">수정</button>
 								<div id="modalContainerEducation" class="hidden">
 									<div id="modalContentEducation">
+										
+											
 										<button id="modalCloseEducation">닫기</button>
 									</div>
 								</div>
@@ -1003,7 +973,7 @@ position: absolute;
 					<c:if
 						test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
 						<button id="addEducationButton">
-							+ 추가하기
+							추가하기
 						</button>	
 						<div id="modalContainerEducation" class="hidden">
 							<div id="modalContentEducation">
@@ -1018,7 +988,7 @@ position: absolute;
 					<li><c:if
 						test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
 						<button id="addEducationButton">
-							+ 추가하기
+							<img id="add" src="/images/작성.png/" alt="추가하기">
 						</button>
 						<div id="modalContainerEducation" class="hidden">
 							<div id="modalContentEducation">
@@ -1043,7 +1013,7 @@ position: absolute;
 						<li class="career_list_year">${career.hireDate}~
 							${career.resignDate} <c:if
 								test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
-								<button data-career="${career.careerId}" class="career-modify"><img src="/images/edit.png"></button>
+								<button data-career="${career.careerId}" class="career-modify">수정</button>
 								<div id="modalContainerCareer" class="hidden">
 									<div id="modalContentCareer">
 														
@@ -1056,7 +1026,7 @@ position: absolute;
 					<c:if
 						test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
 						<button class="addCareer" data-career="${career.careerId}">
-							+ 추가하기
+							추가하기
 						</button>
 						<div id="modalContainerCareer" class="hidden">
 							<div id="modalContentCareer">
@@ -1091,10 +1061,11 @@ position: absolute;
 		<ul>
 			<c:choose>
 				<c:when test="${not empty generalMemberVO.region}">
-					<li>${generalMemberVO.region}
-					<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
+					<li>${generalMemberVO.region}</li>
+					<c:if
+						test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
 						<button data-region="${sessionScope._LOGIN_USER_.email }" class="region_modify"> 
-						<img src="/images/edit.png">
+						수정
 						</button>
 						<div id="modalContainerAddress" class="hidden">
 							<div id="modalContentAddress">
@@ -1104,13 +1075,12 @@ position: absolute;
 							</div>
 						</div>
 					</c:if>
-					</li>
 				</c:when>
 				<c:otherwise>
 					<li>
 					<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
 						<button data-region-id="${sessionScope._LOGIN_USER_.email }" class="region_create"> 
-							+ 추가하기
+							추가하기
 						</button>
 						<div id="modalContainerAddress" class="hidden">
 							<div id="modalContentAddress">
@@ -1138,122 +1108,96 @@ position: absolute;
 	  </div>
 	  <div class="overlay"></div>
     </div>
+</div>
 <jsp:include page="../layout/footer.jsp" />
 </body>
 <script>
-	$().ready(function() {
-		var currentUrl = window.location.href;
-		
-		var startIndex = currentUrl.indexOf("/memberinfo/view/") + "/memberinfo/view/".length;
-		var endIndex = currentUrl.length;
-		
-		var extractedEmail = currentUrl.substring(startIndex, endIndex);
-		/* var initialFollowerEmail = isValidEmail(extractedEmail) ? extractedEmail : ""; */
-		
-		var initialUrl = '/member/getfollowers/' + extractedEmail;
-		var initialUrl2 = '/member/getfollowees/' + extractedEmail;
-		
-		/* function isValidEmail(email) {
-			var emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-	        return emailRegex.test(email);
-	    } */
-		
-		function updateFollowerCount(count) {
-			console.log('Follower Count:', count);
-			$('.follower_count')[0].innerText = count;
-		}
-		function updateFolloweeCount(count) {
-			console.log('Followee Count:', count);
-			$('.followee_count')[0].innerText = count;
-		}
-		loadFollower(initialUrl);
-		loadFollowee(initialUrl2);
-		
-		function loadFollower(url) {
-			$.get(url, function(response) {
-				console.log(response.followerList);
-				let followerTemplate = '';
-	
-				if (response && response.followerList && response.followerList.length > 0) {
-					const followerList = response.followerList;
-	
-					for (let i = 0; i < followerList.length; i++) {
-						let account = followerList[i];
-						console.log(account);
-	
-						const profilePic = account.memberVO.profilePic;
-						const followerEmail = account.follower;
-						const nickname = account.memberVO.nickname;
-	
-						const followerItem =
-							`<div>
-								<img style="width: 50px; height: 50px;" src="\${profilePic}" />
-								<a class="anchor" href="/memberinfo/view/\${followerEmail}">\${nickname}</a>
-							</div>`;
-						console.log(followerItem)
-						followerTemplate += followerItem
-					}
-	
-					updateFollowerCount(response.count);
-					$('.create_content .follower_list').html(followerTemplate);
-				} else {
-					followerTemplate = "팔로워가 없습니다.";
-					$('.create_content .follower_list').html(followerTemplate);
-					updateFollowerCount(0);
-				}
-			});
-		}
-		function loadFollowee(url) {
-			$.get(url, function(response) {
-				console.log(response.followeeList);
-				let followeeTemplate = '';
-
-				if (response && response.followeeList && response.followeeList.length > 0) {
-					const followeeList = response.followeeList;
-
-					for (let i = 0; i < followeeList.length; i++) {
-						let account = followeeList[i];
-						console.log(account);
-
-						const profilePic = account.memberVO.profilePic;
-						const followeeEmail = account.followee;
-						const nickname = account.memberVO.nickname;
-
-						const followeeItem =
-							`<div>
-								<img style="width: 50px; height: 50px;" src="\${profilePic}" />
-								<a class="anchor" href="/memberinfo/view/\${followeeEmail}">\${nickname}</a>
-							</div>`;
-						console.log(followeeItem)
-						followeeTemplate += followeeItem
-					}
-					updateFolloweeCount(response.count);
-					$('.create_content2 .followee_list').html(followeeTemplate);
-				} else {
-					followeeTemplate = "팔로우하는 계정이 없습니다.";
-					$('.create_content2 .followee_list').html(followeeTemplate);
-					updateFolloweeCount(0);
-				}
-			});
-		}
-	})
-
     //모달 실행을 위한 문장
     $('.follower').click(function() {
+    	var followerEmail = $(this).data('email');
         $('.create_content, .overlay').addClass('active')
+
+		var url = '/member/getfollowers/' + followerEmail;
+		loadFollower(url);
     })
     $('.btn-close, .overlay').click(function() {
         $('.create_content, .overlay').removeClass('active')
     })
     $('.followee').click(function() {
+		var followeeEmail = $(this).data('email');
         $('.create_content2, .overlay').addClass('active')
+
+		var url2 = '/member/getfollowees/' + followeeEmail;
+		loadFollowee(url2);
     })
     $('.btn-close, .overlay').click(function() {
         $('.create_content2, .overlay').removeClass('active')
     })
     
-	
-	
+	function loadFollower(url) {
+		$.get(url, function(response) {
+			console.log(response.followerList);
+			let followerTemplate = '';
+
+			if (response && response.followerList && response.followerList.length > 0) {
+				const followerList = response.followerList;
+
+				for (let i = 0; i < followerList.length; i++) {
+					let account = followerList[i];
+					console.log(account);
+
+					const profilePic = account.memberVO.profilePic;
+					const followerEmail = account.follower;
+					const nickname = account.memberVO.nickname;
+
+					const followerItem =
+						`<div>
+							<img style="width: 50px; height: 50px;" src="\${profilePic}" />
+							<a class="anchor" href="/memberinfo/view/\${followerEmail}">\${nickname}</a>
+						</div>`;
+					console.log(followerItem)
+					followerTemplate += followerItem
+				}
+
+				$('.create_content .follower_list').html(followerTemplate);
+			} else {
+				followerTemplate = "팔로워가 없습니다.";
+				$('.create_content .follower_list').html(followerTemplate);
+			}
+		});
+	}
+	function loadFollowee(url2) {
+		$.get(url2, function(response2) {
+			console.log(response2.followeeList);
+			let followeeTemplate = '';
+
+			if (response2 && response2.followeeList && response2.followeeList.length > 0) {
+				const followeeList = response2.followeeList;
+
+				for (let i = 0; i < followeeList.length; i++) {
+					let account = followeeList[i];
+					console.log(account);
+
+					const profilePic = account.memberVO.profilePic;
+					const followeeEmail = account.followee;
+					const nickname = account.memberVO.nickname;
+
+					const followeeItem =
+						`<div>
+							<img style="width: 50px; height: 50px;" src="\${profilePic}" />
+							<a class="anchor" href="/memberinfo/view/\${followeeEmail}">\${nickname}</a>
+						</div>`;
+					console.log(followeeItem)
+					followeeTemplate += followeeItem
+				}
+
+				$('.create_content2 .followee_list').html(followeeTemplate);
+			} else {
+				followeeTemplate = "팔로우하는 계정이 없습니다.";
+				$('.create_content2 .followee_list').html(followeeTemplate);
+			}
+		});
+	}
 	
 	// 스크롤 버튼, IDE
 	let calcScrollValue = () => {
@@ -1285,6 +1229,12 @@ position: absolute;
 	                         'box-shadow': 'none'})
 	})
 
+	//마이페이지 회원 이메일
+      /* $('.follow_icon').click(function() {
+	    var email = $(this).data('email');
+	    console.log(email)
+	  }) */
+            
 	template = `
 	<c:if test="${sessionScope._LOGIN_USER_.email != memberVO.email}" >
 		<button class="follow_icon" data-email="${memberVO.email}">
