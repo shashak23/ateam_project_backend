@@ -54,15 +54,15 @@
 }
 .message_icon{
  width:200px;
-		height: 30px;
-		background-color:  rgb(231,231,231);
-		justify-content: center;
-		border-radius: 5px;
-		display: flex;
-   		padding: 5px;
-   		border: none;
-    	font-weight: bold;
-    	cursor: pointer;
+ height: 30px;
+ background-color:  rgb(231,231,231);
+ justify-content: center;
+ border-radius: 5px;
+ display: flex;
+ padding: 5px;
+ border: none;
+ font-weight: bold;
+ cursor: pointer;
 }
 
 
@@ -83,7 +83,7 @@
 }
 
 .introduction_list {
-	margin-top: 62px;
+  margin-top: 62px;
   padding: 0px;
   list-style: none;
   grid-gap: 20px;

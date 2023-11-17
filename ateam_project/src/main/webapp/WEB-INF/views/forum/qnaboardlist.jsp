@@ -14,12 +14,14 @@
 <link rel="stylesheet" type="text/css" href="/css/common.css" />
 <style>
    /* 본문 */
+ 
    .board_list_box {
        position: relative;
        bottom: 400px;
        margin: 0 auto;
        margin-top: 490px;
-       margin-left: 50px;
+       margin-left: 30px;
+       margin-right: 30px;
        border-top:none;
        border-bottom:none;
        border-left: none;
@@ -29,7 +31,8 @@
    #button_list_1 tr th {
        background-color: var(--light-gray);
        border-bottom: 1px solid var(--dark-gray);
-       color: var(--dark-gray);       
+       color: var(--dark-gray);  
+       width: 1050px;     
    }    
    .table-header_01 { 
        width: 50px;
@@ -40,13 +43,18 @@
        text-align: center;
        color: var(--dark-gray);
     }
+    
+    #tier_img{
+	  	width: 11px;
+	  	margin-left: 5px;
+	}
     .pratice {
-       margin-top: 30px;
-       border-bottom: 1px solid var(--gray);
+        margin-top: 30px;
+        border-bottom: 1px solid var(--gray);
     }
     .text_controller {
-       position: relative;
-       bottom: 20px;
+        position: relative;
+        bottom: 20px;
     }
     /* 해시태그 */
      #hashtag {
@@ -58,11 +66,11 @@
         
      }
      .hashtag_wrap {
-	      margin: 0 auto;  
-	      display: flex;
-	      flex-direction: row;
-	      flex-wrap: wrap;
-	      width: 780px;
+	    margin: 0 auto;  
+	    display: flex;
+	    flex-direction: row;
+	    flex-wrap: wrap;
+	    width: 780px;
      
      }
     .hashtag_incomplete {
@@ -76,11 +84,7 @@
        border-radius: 10px;
        border: none;
        cursor: pointer;
-       text-decoration: underline;
        
-    }
-    .hashtag_incomplete:hover {
-       background-color: var(--blue);
     }
     
     /* 글작성 버튼 */
@@ -89,19 +93,17 @@
       justify-content: center;
       width:300px;
       min-height: 500px;
-      margin-top: 42px;
-
+      margin-top: 320px;
    }
 
    #toolbar{
       width: 300px;
-      position: fixed;
+      /* position: fixed; */
       margin: 25px 0px 0px 20px;
       width: 200px;
       padding: 15px;
       align-items: center; 
    }
-
 
    #toolbar > #registerArticle > .register{
       width: 220px;
@@ -148,7 +150,7 @@
 	    justify-content: center;
 	    width: 100%;
 	    margin-bottom: 20px;
-		margin-top: 90px;
+		margin-top: 370px;
 		
 	}
    .ranking_controller , .ranking_controller_expanded{
@@ -175,6 +177,11 @@
 	    margin-bottom: 20px;
    }
    
+   .ranking_controller .ranking_wrap > ul > img {
+   		width: 11px;
+   		heigth: 11px;
+   }
+   
    .ranking_controller .ranking_wrap ul .hot_post {
 	    flex: 1;
 	    width: 100%;
@@ -196,17 +203,12 @@
 	    overflow: hidden;
 	    text-overflow: ellipsis;
 	    white-space: nowrap;
-  }
+  }  
   
 </style>
 </head>
 <body>
-    <nav>
-        <div id="hashtagList">
-            <p id="hashtag"># Hashtags</p>
-            <div class="hashtag_wrap"></div>
-        </div> 
-    </nav>
+
     <div class="body_container">
 	    <div class="body_left_aside">
 		    <div id="left_container">
@@ -235,6 +237,10 @@
 		    </div>
 	    </div>
     <div class="body">
+    <div id="hashtagList">
+            <p id="hashtag"># Hashtags</p>
+            <div class="hashtag_wrap"></div>
+        </div> 
         <main class="contents">
             <!-- 게시판 리스트 -->
             <div id="container_controller">
@@ -246,15 +252,15 @@
                                 <colgroup>
                                     <col width="10%">
                                     <col width="*">
-                                    <col width="10%">
                                     <col width="15%">
-                                    
+                                    <col width="15%">
+                                   
                                 </colgroup>
                                 <thead id="button_list_1">
                                     <tr>
                                         <th scope="col" class="table-header_01">번호</th>
                                         <th scope="col" class="table-header_02">제목</th>
-                                        <th scope="col" class="table-header_03">등록자</th> <!-- 수정: 등호 추가 -->
+                                        <th scope="col" class="table-header_03">등록자</th>
                                         <th scope="col" class="table-header_04">등록일</th>
                                     </tr>
                                 </thead>
@@ -269,7 +275,7 @@
                                                     </a>
                                                 </div>                                       
                                             </td>
-                                            <td class="pratice_02"> ${qnaboard.memberVO.nickname}</td>
+                                            <td class="pratice_02"> ${qnaboard.memberVO.nickname}<img id="tier_img" src="/images/${qnaboard.memberVO.tierVO.tierName}.png" /></td>
                                             <td class="pratice_03">${qnaboard.postDate}</td>
                                         </tr>
                                     </c:forEach>
@@ -317,38 +323,36 @@
    const day = String(prevMonday.getDate()).padStart(2, '0')
 
    const formattedMonday = year + '-' + month + '-' + day
-	// 랭킹
-    $.get('/home/ranking/\${formattedMonday}', function(response) {
-       console.log(response);
-      let list = response.rankings
-      for (let i = 0; i < 10; i++) {
-
-        if (list[i].boardId === 'CC-20231017-000030') {
-          let ranking_template = `
-            <li id="hot_post">
-            <a href="/qnaboard/view/\${list[i].generalPostId}" target="_blank"">\${list[i].postTitle}</a>
-            </li>`
-          let ranking_templateDom = $(ranking_template)
-  
-          $('.ranking_wrap').append(ranking_templateDom)
-        }
-      }
-    })
-    
-   	  // 가운데에 해시태그 리스트 조회해주는 코드 
-      $.get('/code/해시태그', function(response) {
-        for (let i = 0; i < response.length; i++) {
-          let hash_template = `<a href="/qnaboard/list?hashtagId=\${response[i].codeId}" class="hashtag_incomplete">#\${response[i].codeContent}</button>`
-          $('.hashtag_wrap').append(hash_template)
-        }
-      })
-      // vo로 바꾸고 searchVo에서 searchKeyword를 넣고 있어ㅓ
-      // vo안에 변수를 추가해야한다 
-      // 쿼리까지 바꿔야한다 
-      
-      
+	
+     
 	//  랭킹
 	$(document).ready(function() {
+		// 주간랭킹
+	    $.get('/home/ranking/\${formattedMonday}', function(response) {
+	       console.log(response);
+	      let list = response.rankings
+	      for (let i = 0; i < 10; i++) {
+
+	        if (list[i].boardId === 'CC-20231017-000030') {
+	          let ranking_template = `
+	            <li id="hot_post">
+	            <a class="block ellipse" href="/qnaboard/view/\${list[i].generalPostId}" target="_blank"">\${list[i].postTitle}</a>
+	            </li>`
+	          let ranking_templateDom = $(ranking_template)
+	  
+	          $('.ranking_wrap').append(ranking_templateDom)
+	        }
+	      }
+	    })
+	    
+	   	  // 가운데에 해시태그 리스트 조회해주는 코드 
+	      $.get('/code/해시태그', function(response) {
+	        for (let i = 0; i < response.length; i++) {
+	          let hash_template = `<a href="/qnaboard/list?hashtagId=\${response[i].codeId}" class="hashtag_incomplete">#\${response[i].codeContent}</button>`
+	          $('.hashtag_wrap').append(hash_template)
+	        }
+	      })
+	      
 	    // AJAX 요청을 통해 데이터 가져오기
 	    $.get('/home/ranking/\${formattedMonday}', function(response) {
 	        // 데이터를 가져왔을 때 실행되는 콜백 함수
@@ -365,7 +369,7 @@
 	
 	                // 그래프 항목 생성
 	                const ranking_template = `
-	                    <li>
+	                    <li> 
 	                        <a href="/qnaboard/view/${item.generalPostId}" target="_blank">${postTitle}</a>
 	                    </li>`;
 	                const ranking_templateDom = $(ranking_template);
@@ -377,20 +381,37 @@
 	            $('.ranking_controller').addClass('expanded');
 	        }
 	    });
+		
+	 // 명예의 전당
+	    $.get("/qnaboard/topTenMember", function(response) {
+		    console.log(response);
+		    for (var i in response.generalMemberList) {
+		        let listDOM = $("<ul></ul>");
+		        let userEmailDOM = $("<li></li>");
+		
+		        // 티어 이미지를 표시하는 부분
+		        let tierImageSrc = "/images/" + response.generalMemberList[i].tierVO.tierName + ".png";
+		        let tierImageDOM = $("<img>").attr("src", tierImageSrc).attr("id", "tier_img");
+		
+		        // 프로필 이미지를 표시하는 부분
+		        let profilePicSrc = response.generalMemberList[i].profilePic;
+		        let profilePicDOM = $("<img>").attr("src", profilePicSrc).attr("id", "profile_img");
+		
+		        userEmailDOM.text(" " + response.generalMemberList[i].generalMemberEmail + "  " + response.generalMemberList[i].tierScore);
+		
+		        // 이미지를 리스트에 추가
+		        listDOM.append(tierImageDOM);
+		        listDOM.append(profilePicDOM);
+		        listDOM.append(userEmailDOM);
+		        $(".ranking_wrap_1").append(listDOM);
+		    }
+		});
 	});
 
-	// 명예의 전당
-    $.get("/qnaboard/topTenMember", function(response) {
-            console.log(response)
-            for (var i in response.generalMemberList) {
-                let listDOM = $("<ul></ul>");
-                let userEmailDOM = $("<li></li>");
-                userEmailDOM.text(response.generalMemberList[i].generalMemberEmail + " / " + response.generalMemberList[i].tierScore);
-                listDOM.append(userEmailDOM)
-                $(".ranking_wrap_1").append(listDOM)
-            }
+	
 
-        })
+
+
 
 
 	//랭킹

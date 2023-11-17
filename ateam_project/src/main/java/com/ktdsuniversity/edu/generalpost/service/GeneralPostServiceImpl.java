@@ -1,13 +1,10 @@
 /**
-<<<<<<< HEAD
  * 작성자: 김시하
  * 수정자: 김시하(2023-11-01)
  * 작성일자: 2023-10-16
  * 내용: 질답 게시판을 위한 ServieImpl입니다
-=======
  * 수정자: 장보늬(2023-10-22)
  * 수정자: 김태현(2023-11-01)
->>>>>>> 태현
  * **/
 package com.ktdsuniversity.edu.generalpost.service;
 
@@ -46,9 +43,10 @@ private Logger log = LoggerFactory.getLogger(FreePostController.class);
 		GeneralPostListVO generalPostListVO = new GeneralPostListVO();
 		
 		generalPostListVO.setBoardCnt( generalPostDAO.getBoardAllCount(searchForumVO));
-		if(searchForumVO == null) {
+		if(searchForumVO != null) {
 			generalPostListVO.setGeneralPostList( generalPostDAO.getAllBoard(searchForumVO.getBoardId()));
 		} else {
+			// 근데 사실 얘는 안쓰이는 애에요 - 확인중 
 			generalPostListVO.setGeneralPostList( generalPostDAO.searchAllPost(searchForumVO));
 		}
 		return generalPostListVO;
@@ -57,7 +55,6 @@ private Logger log = LoggerFactory.getLogger(FreePostController.class);
 	
 	@Override
 	public boolean createNewBoard(GeneralPostVO generalPostVO) {
-//		log.debug("2-----서비스---------------------------");		
 		int boardCount = generalPostDAO.createNewBoard(generalPostVO);
 		List<HashtagVO> hashtagList = generalPostVO.getHashtagListVO();
 		for (HashtagVO hashtagVO : hashtagList) {
@@ -112,138 +109,6 @@ private Logger log = LoggerFactory.getLogger(FreePostController.class);
 	public List<GeneralPostVO> getAllBoardRest(String boardId) {
 		return generalPostDAO.getAllBoardRest(boardId);
 	}
-	
-	
-//	// 자유게시판
-//	@Transactional
-//	@Override
-//	public GeneralPostListVO getAllFreeBoard(SearchForumVO searchForumVO) {
-//
-//		GeneralPostListVO generalPostListVO = new GeneralPostListVO();
-//		
-//		generalPostListVO.setBoardCnt( generalPostDAO.getBoardAllCount(searchForumVO));
-//		if(searchForumVO == null) {
-//			generalPostListVO.setGeneralPostList( generalPostDAO.getAllFreeBoard());
-//		} else {
-//			generalPostListVO.setGeneralPostList( generalPostDAO.searchAllFreePost(searchForumVO));
-//		}
-//		return generalPostListVO;
-//	}
-//
-//	@Transactional
-//	@Override
-//	public boolean createNewFreeBoard(GeneralPostVO generalPostVO) {
-//		log.debug("2-----서비스---------------------------");		
-//		int boardCount = generalPostDAO.createNewFreeBoard(generalPostVO);
-//		
-//		return boardCount > 0;
-//	}
-//
-//	//@Transactional
-//	@Override
-//	public GeneralPostVO getOneFreeBoard(String generalPostId) {
-//		int updateCount = generalPostDAO.increaseViewCount(generalPostId);
-//		if (updateCount == 0) {
-//			throw new IllegalArgumentException();
-//		}else {
-//			return generalPostDAO.getOneFreeBoard(generalPostId);
-//		}
-//	}
-//	
-//	@Transactional
-//	@Override
-//	public boolean updateOneFreeBoard(GeneralPostVO generalPostVO) {
-//		int updateCount = generalPostDAO.updateOneFreeBoard(generalPostVO);
-//		return updateCount > 0;
-//	}
-//
-//	@Transactional
-//	@Override
-//	public boolean deleteOneFreeBoard(String generalPostId) {
-//		int deleteCount = generalPostDAO.deleteOneFreeBoard(generalPostId);
-//		
-//		return deleteCount > 0;
-//	}
-//	@Transactional
-//	@Override
-//	public boolean likeFreeBoard(GeneralPostVO generalPostVO) {
-//		int likeCount = generalPostDAO.updateLikeFreePost(generalPostVO);
-//		return likeCount > 0;
-//	}
-//	
-//	@Override
-//	public List<GeneralPostVO> getAllFreeBoardRest() {
-//		return generalPostDAO.getAllFreeBoardRest();
-//	}
-//	
-//	// 질답게시판 
-//	@Transactional
-//	@Override
-//	public GeneralPostListVO getAllQnABoard(SearchForumVO searchForumVO) {
-//		log.debug("--2----서비스 도착---------------------------");
-//		GeneralPostListVO generalPostListVO = new GeneralPostListVO();
-//		
-//		generalPostListVO.setBoardCnt( generalPostDAO.getBoardAllCount(searchForumVO));
-//		if(searchForumVO == null) {
-//			generalPostListVO.setGeneralPostList( generalPostDAO.getAllQnABoard());
-//			
-//		} else {
-//			generalPostListVO.setGeneralPostList( generalPostDAO.searchAllQnAPost(searchForumVO));
-//		}
-//		return generalPostListVO;	
-//	}
-//	
-//	@Transactional
-//	@Override
-//	public boolean createNewQnABoard(GeneralPostVO generalPostVO) {
-//		int boardCount = generalPostDAO.createNewQnABoard(generalPostVO);
-//		List<HashtagVO> hashtagList = generalPostVO.getHashtagListVO();
-//		for (HashtagVO hashtagVO : hashtagList) {
-//			hashtagVO.setGeneralPostId(generalPostVO.getGeneralPostId());
-//			boardCount += generalPostHashtagDAO.createPostHashtag(hashtagVO);
-//		}
-//		return boardCount > 0;
-//	}
-//
-//	@Transactional
-//	@Override
-//	public GeneralPostVO getOneQnABoard(String generalPostId) {
-//
-//		int boardCount = generalPostDAO.increaseViewCount(generalPostId);
-//		if (boardCount == 0) {
-//			throw new IllegalArgumentException();
-//		}else {
-//			return generalPostDAO.getOneQnABoard(generalPostId);
-//		}
-//	
-//	}
-//	
-//	@Transactional
-//	@Override
-//	public boolean updateOneQnABoard(GeneralPostVO generalPostVO) {
-//		int updateCount = generalPostDAO.updateOneQnABoard(generalPostVO);
-//		return updateCount > 0;
-//	}
-//
-//	@Transactional
-//	@Override
-//	public boolean deleteOneQnABoard(String generalPostId) {
-//		int deleteCount = generalPostDAO.deleteOneQnABoard(generalPostId);
-//		
-//		return deleteCount > 0;
-//	}
-//
-//	@Transactional
-//	@Override
-//	public boolean likeQnABoard(GeneralPostVO generalPostVO) {
-//		int likeCount = generalPostDAO.updateLikeQnAPost(generalPostVO);
-//		return likeCount > 0;
-//	}
-//	
-//	@Override
-//	public List<GeneralPostVO> getAllQnaBoardRest() {
-//		return generalPostDAO.getAllQnaBoardRest();
-//	}
 	
 	
 	// 내게시글 조회

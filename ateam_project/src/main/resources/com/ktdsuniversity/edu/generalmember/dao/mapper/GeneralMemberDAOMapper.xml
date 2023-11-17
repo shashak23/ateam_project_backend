@@ -194,7 +194,9 @@
 	
 	<select id="selectTopTenScoreMemberList"
 			resultMap="generalMemberVOMap">
-		SELECT *
+		SELECT GM.*
+		     , T.TIER_NAME
+		     , M.PROFILE_PIC
   		  FROM (
   				SELECT *
   		  		FROM GENERAL_MEMBER
@@ -202,6 +204,8 @@
 				) GM
 		  JOIN TIER T
     		ON GM.TIER_ID = T.TIER_ID
+    	  JOIN MEMBER M
+    	    ON GM.GENERAL_MEMBER_EMAIL = M.EMAIL
  		 WHERE ROWNUM <![CDATA[<=]]> 10
 	</select>
 	

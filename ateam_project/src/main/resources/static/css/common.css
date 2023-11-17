@@ -213,6 +213,22 @@ html {
     color: var(--white);
 }
 
+/*Text Format*/
+.ellipse {
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
+}
+
+/*display*/
+.block {
+	display: block;
+}
+
+.inline-block {
+	display: inline-block
+}
+
 /* General Styles */
 * {
     margin: 0;

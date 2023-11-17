@@ -19,6 +19,7 @@
 	<link rel="stylesheet" href="/css/jquery.sweet-modal.min.css" />
 	<script src="/js/lib/jquery.sweet-modal.min.js"></script>
 	
+	<script src="/js/common.js"></script>
     <script src="/js/Modal.js"></script>
     <script src="/js/Alert.js"></script>
 	<c:if test="${not empty sessionScope._LOGIN_USER_}">

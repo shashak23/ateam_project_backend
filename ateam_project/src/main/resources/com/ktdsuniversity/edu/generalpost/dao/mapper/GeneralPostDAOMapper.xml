@@ -10,10 +10,16 @@
 	           autoMapping="true">
 	           <id column="GENERAL_POST_ID" property="generalPostId" />
 	    <association property="memberVO"
-	                 javaType="com.ktdsuniversity.edu.member.vo.MemberVO"
+	                 javaType="com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO"
 			         autoMapping="true">
-			         <id column="EMAIL" property="email" />
-			         <id column="NICKNAME" property="nickname" />
+	         <id column="EMAIL" property="email" />
+	         <id column="NICKNAME" property="nickname" />
+	         <result column="EMAIL" property="generalMemberEmail" />
+	         <association property="tierVO"
+	         			  javaType="com.ktdsuniversity.edu.tier.TierVO"
+	         			  autoMapping="true">
+	         	<id column="TIER_ID" property="tierId"/>
+	         </association>
 	    </association>
 	    <collection property="hashtagListVO"
 	    			ofType="com.ktdsuniversity.edu.generalposthashtag.vo.HashtagVO"
@@ -158,11 +164,16 @@
 		     , GP.DELETE_YN
 		     , M.NICKNAME
 		     , GPH.*
+		     , T.*
 		  FROM GENERAL_POST GP
 		 INNER JOIN MEMBER M
 		    ON M.EMAIL = GP.POST_WRITER
-		 INNER JOIN GENERAL_POST_HASHTAG
+		 INNER JOIN GENERAL_MEMBER GM
+		    ON M.EMAIL = GM.GENERAL_MEMBER_EMAIL 
+		 INNER JOIN GENERAL_POST_HASHTAG GPH
 		    ON GPH.GENERAL_POST_ID = GP.GENERAL_POST_ID
+		 INNER JOIN TIER T
+		    ON T.TIER_ID = GM.TIER_ID
 		 WHERE DELETE_YN = 'N'
 		   AND BOARD_ID = #{_parameter}
 		 ORDER BY POST_DATE DESC
