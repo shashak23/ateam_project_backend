@@ -12,6 +12,19 @@
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <jsp:include page="../layout/header.jsp"/>
 <style>
+
+	/*swiper제어*/
+   .swiper-slide img {
+       position: relative;
+	   max-width: 100%;
+	   height: auto;
+	   overflow: hidden;
+   }
+
+   .swiper-button-prev,
+   .swiper-button-next {
+       margin-top: -100px;
+   }
 	/* 본문 */
    .wrap {
 	   display: flex;
@@ -22,39 +35,17 @@
 
    .container {
        display: inline-block;
-       width: 980px;
+       width: 1080px;
        margin: 0 auto;     
    }
    
    .board_list_box {
        margin: 0 auto;
        margin-top: 90px;
-       margin-left: 250px;
        border-top: none;
        border-bottom:none;
        border-left: none;
        border-right: none;
-   }
-   .viedo_ver {
-	   position: absolute;
-	   top: 0;
-	   right: 10px; 
-	   margin: 0 auto;
-	   margin-top: 700px;
-	   margin-right: 10px;
-
-   }
-   .advertising {
-	   position: absolute;
-	   top: 0;
-	   right: 10px; 
-	   margin: 0 auto;
-	   margin-top: 1000px;
-	   margin-right: 10px;
-   }
-   .why_code {
-       width: 300px;
-       height: 250px;
    }
 
    #button_list_1 tr th {
@@ -79,27 +70,24 @@
        position: relative;
        bottom: 20px;
     }
-    /*swiper제어*/
-   .swiper-slide img {
+    
+    /* 오른쪽 */   
+    .advertising{
+       margin-top: 90px;
+   	   margin-left: 30px;
+    }
+    
+    .viedo_ver{
+       margin-top: 40px;
+   	   margin-left: 30px;
+    }
    
-   
-       position: relative;
-	   max-width: 100%;
-	   height: auto;
-	   overflow: hidden;
-   }
-
-   .swiper-button-prev,
-   .swiper-button-next {
-       margin-top: -100px;
-   }
-   .button_box {
-       position: relative;
-       left: 95px;
-       margin: 0 auto;
-       margin-top: 5px;
-   }
-   /* 글작성 css */
+    .why_code {
+       width: 250px;
+       height: 200px;
+    }
+    
+   /* 왼쪽 글작성 */
    #left_container{
       display: flex;
       justify-content: center;
@@ -110,24 +98,19 @@
 
    #toolbar{
       width: 300px;
-      position: fixed;
-      margin: 25px 0px 0px 20px;
+      /* margin: 0px 0px 0px 0px; */
       width: 200px;
       padding: 15px;
       align-items: center;
       margin-top: 60px;
    }
 
-   #toolbar > #registerArticle{
-      width:180px;   
-   }
-
    #toolbar > #registerArticle > .register{
       width: 220px;
       height:35px;
       margin-top: 9px;
-      color:black;
-      background-color: var(--hashtag-blue);
+      color:white;
+      background-color: #26577C;
       border-radius: 6px;
       border:none;
       transition: box-shadow 0.1s ease;
@@ -137,20 +120,29 @@
       border: 2px solid #1E90FF;
    }
    #pageName {
-    font-size: 30px;
-    font-weight: bold;
+    	font-size: 30px;
+    	font-weight: bold;
    }
    .search_menu {
-    position: relative;
-    top: 22px;
+    	position: relative;
+    	top: 22px;
+   }
+   
+   .button_box {
+       position: relative;
+       left: 95px;
+       /* margin: 0 auto; */
+       margin-top: 5px;
+       color:#26577C;
+       
    }
    
    .btn_st_2 {
        position: relative;
        left: 65px;
-       margin: 0 auto;    
        margin-right: 30px;          
-       background-color: var(--hashtag-blue);
+       background-color: #26577C;
+       color: white;
        border-radius: 5px;
        border: none;
        width: 60px; 
@@ -158,14 +150,13 @@
    }
    
    .input_box {
-    position: relative;
-    right: 100px;
+    	position: relative;
+    	right: 100px;
    }
    .sc_text {
        position: relative;
        left: 70px;
        margin: 0 auto;
-       margin-right: 20px;
        width: 150px;
    }
 
@@ -188,7 +179,6 @@
           <div class="swiper-button-prev"></div>
           <div class="swiper-button-next"></div>
     </div>
-    
 	<div class="body_container">
     <div id="wrap" class="wrap">
         <!-- 좌측 툴바 -->
@@ -218,14 +208,15 @@
                 </div>            
              </div>
         </div>
+        </div> 
         <!-- 본문 -->
         <div class="body">
         <section id="container" class="container">
             <main class="contents">         
                     <!-- 게시판 리스트 -->
-                    <form action="#" method="">
+                    <form>
                         <fieldset class="board_list_box">   
-                            <div class="board_list_ty1">
+                            <div class="">
                                 <table>                                  
                                     <colgroup>
                                         <!-- 하나이상의 열을 그룹화 하며 col을 사용하여 표의 열에 대해서 정의합니다. -->
@@ -274,22 +265,23 @@
                  </section>
                  </div>
     		 <div class="body_right_aside">
+    		 <div class="body-right">
+    		 <!-- 오른쪽 -->
 	             <div class="advertising">
 		              <a href="https://blog.naver.com/roborang/221827208404">
-		              <img class="why_code" src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMDAyMjZfOTcg%2FMDAxNTgyNzAzOTk2MzQ1.bsJ-QZhJSxCCLwgYAk4ibsKrPqHNk-7SlEYEowKsf6Ug.MReP1pZZeA_b7SBVMUbJUspOftiFOZ-_rvBxkWVktmIg.PNG.roborang%2F%25C4%25DA%25B5%25F9%25B1%25B3%25C0%25B0_%25BF%25D6_%25C7%25D8%25BE%25DF_%25C7%25D2%25B1%25EE%25BF%25E4.png&type=sc960_832">
+		              	<img class="why_code" src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMDAyMjZfOTcg%2FMDAxNTgyNzAzOTk2MzQ1.bsJ-QZhJSxCCLwgYAk4ibsKrPqHNk-7SlEYEowKsf6Ug.MReP1pZZeA_b7SBVMUbJUspOftiFOZ-_rvBxkWVktmIg.PNG.roborang%2F%25C4%25DA%25B5%25F9%25B1%25B3%25C0%25B0_%25BF%25D6_%25C7%25D8%25BE%25DF_%25C7%25D2%25B1%25EE%25BF%25E4.png&type=sc960_832">
 		              </a> 
 	            </div>
 	            <div class="viedo_ver">
 	                <a href="https://www.youtube.com/watch?v=iI0s1JtKpy8">
-	                    <iframe width="300" height="250" src="https://www.youtube.com/embed/iI0s1JtKpy8" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+	                    <iframe width="250" height="200" src="https://www.youtube.com/embed/iI0s1JtKpy8" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
 	                </a>
 	            </div>        
-	          </div>
-    		</div> 
+	        </div>
         </div>
-    <jsp:include page="../layout/footer.jsp" />
-</body>
-    <script>
+      </div>
+<jsp:include page="../layout/footer.jsp" />
+<script>
         document.addEventListener('DOMContentLoaded', function() {
     const viewCountElement = document.getElementById('viewCount');
     
@@ -377,5 +369,6 @@
     prevEl: '.swiper-button-prev'
   }
 });
-    </script>
+</script>
+</body>
 </html>
