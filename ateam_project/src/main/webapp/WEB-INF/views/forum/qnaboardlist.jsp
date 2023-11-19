@@ -98,7 +98,6 @@
 
    #toolbar{
       width: 300px;
-      /* position: fixed; */
       margin: 25px 0px 0px 20px;
       width: 200px;
       padding: 15px;
@@ -109,7 +108,7 @@
       width: 220px;
       height:35px;
       margin-top: 9px;
-      color:black;
+      color:white;
       background-color: #26577C;
       border-radius: 6px;
       border:none;
@@ -122,28 +121,36 @@
    #pageName {
 	    font-size: 30px;
 	    font-weight: bold;
-	    font-color: #white;
    }
    .search_menu {
 	    position: relative;
 	    top: 22px;
    }
    .button_box {
-	    margin: 0 auto;
-	    margin-left: 160px;
+	   position: relative;
+       left: 95px;
+       margin-top: 5px;
+   }
+   
+   .btn_st_2 {
+   		margin: 0 auto;
+	    margin-left: 65px;
 	    margin-top: 10px;
 	    background-color: #26577C;
+	    color: white;
 	    border-radius: 5px;
 	    border: none;
 	    width: 60px; 
     	height: 30px;
+   	
    }
    .sc_text {
 	    margin: 0 auto;
 	    margin-left: 68px;
 	    width: 150px;
+	    color: white;
    }
-    /* 랭킹박스 */
+    
 	.my-aside {
 		display: flex;
 		flex-direction: column;
@@ -153,7 +160,7 @@
 		margin-top: 370px;
 		
 	}
-   .ranking_controller , .ranking_controller_expanded{
+   .ranking_controller {
    		display: flex;
 	    border: 1px solid var(--light-gray);
 	    border-radius: 10px;
@@ -161,28 +168,38 @@
    		flex-direction: column;
     	border: 1px solid var(--light-gray);
    }
-   .ranking_controller .viewCnt {
+   
+   .ranking_wrap {
+	    position: sticky;
+	    top: 100px;
+	    display: flex;
+	    flex-direction: column;
+	    border: 1px solid var(--light-gray);
+	    border-radius: 10px;
+  }
+  
+  .viewCnt {
    		display: flex;
 	    justify-content: center;
 	    padding: 10px 0;
 	    border-bottom: 1px solid var(--gray);
 	    width: 100%;
    }
-   
-   .ranking_controller .ranking_wrap {
-   		display: flex;
-	    flex-direction: column;
-	    justify-content: center;
-	    width: 100%;
-	    margin-bottom: 20px;
-   }
-   
-   .ranking_controller .ranking_wrap > ul > img {
+
+   .body_right_aside .ranking_controller .ranking_wrap > li > img {
    		width: 11px;
    		heigth: 11px;
    }
    
-   .ranking_controller .ranking_wrap ul .hot_post {
+   .body_right .ranking_wrap ul {
+    	display: flex;
+   		flex-direction: column;
+    	justify-content: center;
+    	width: 100%;
+    	margin-bottom: 20px;
+  }
+   
+   .body_right .ranking_wrap ul .hot_post {
 	    flex: 1;
 	    width: 100%;
 	    border-bottom: 1px solid var(--light-gray);
@@ -191,11 +208,11 @@
 	    cursor: pointer;
   }
   
-  .ranking_controller .ranking_wrap ul .hot_post:hover {
+  .body_right .ranking_wrap ul .hot_post:hover {
     	background-color: var(--hashtag-blue);
   }
   
-  .body_right .ranking_wrap ul .hot_post a {
+  .body_right_aside .ranking_wrap .hot_post a {
 	    width: 270px;
 	    color: var(--dark);
 	    display: block;
@@ -204,11 +221,9 @@
 	    text-overflow: ellipsis;
 	    white-space: nowrap;
   }  
-  
 </style>
 </head>
 <body>
-
     <div class="body_container">
 	    <div class="body_left_aside">
 		    <div id="left_container">
@@ -227,9 +242,11 @@
 		                        <option value="postWriter" ${searchForumVO.searchType eq 'postWriter' ? 'selected' : ''}>작성자</option>
 		                    </select>
 		                    <input class="sc_text" type="text"  placeholder="검색어 입력" name="searchKeyword" value="${searchForumVO.searchKeyword}" />                    
-		                        <button class="button_box" type="submit" class="btn_st_2">
-		                            검색
-		                        </button>                               
+		                       <div class="button_box">
+			                        <button class="btn_st_2" type="submit">
+			                            검색
+			                        </button>              
+		                      </div>                 
 		                  </div>               
 		               </form>               
 		            </div>            
@@ -323,29 +340,30 @@
    const day = String(prevMonday.getDate()).padStart(2, '0')
 
    const formattedMonday = year + '-' + month + '-' + day
-	
-     
+
 	//  랭킹
 	$(document).ready(function() {
 		// 주간랭킹
 	    $.get('/home/ranking/\${formattedMonday}', function(response) {
 	       console.log(response);
 	      let list = response.rankings
+	      
 	      for (let i = 0; i < 10; i++) {
 
 	        if (list[i].boardId === 'CC-20231017-000030') {
 	          let ranking_template = `
-	            <li id="hot_post">
-	            <a class="block ellipse" href="/qnaboard/view/\${list[i].generalPostId}" target="_blank"">\${list[i].postTitle}</a>
+	            <li class="hot_post">
+	        	  <a class="block ellipse" href="/qnaboard/view/\${list[i].generalPostId}" target="_blank"">\${list[i].postTitle}</a>
 	            </li>`
 	          let ranking_templateDom = $(ranking_template)
 	  
 	          $('.ranking_wrap').append(ranking_templateDom)
 	        }
 	      }
-	    })
+	    });
+
 	    
-	   	  // 가운데에 해시태그 리스트 조회해주는 코드 
+	   	  // 해시태그 소팅
 	      $.get('/code/해시태그', function(response) {
 	        for (let i = 0; i < response.length; i++) {
 	          let hash_template = `<a href="/qnaboard/list?hashtagId=\${response[i].codeId}" class="hashtag_incomplete">#\${response[i].codeContent}</button>`
@@ -380,14 +398,14 @@
 	            // 페이지가 로드될 때 랭킹 컨트롤러를 확장 (올라가도록)합니다.
 	            $('.ranking_controller').addClass('expanded');
 	        }
-	    });
+		});
 		
-	 // 명예의 전당
+	 	// 명예의 전당
 	    $.get("/qnaboard/topTenMember", function(response) {
 		    console.log(response);
 		    for (var i in response.generalMemberList) {
 		        let listDOM = $("<ul></ul>");
-		        let userEmailDOM = $("<li></li>");
+		        let userEmailDOM = $("<li>+ tierImageDOM + profilePicDOM +</li>");
 		
 		        // 티어 이미지를 표시하는 부분
 		        let tierImageSrc = "/images/" + response.generalMemberList[i].tierVO.tierName + ".png";
@@ -395,8 +413,14 @@
 		
 		        // 프로필 이미지를 표시하는 부분
 		        let profilePicSrc = response.generalMemberList[i].profilePic;
-		        let profilePicDOM = $("<img>").attr("src", profilePicSrc).attr("id", "profile_img");
-		
+		        let profilePicDOM = $("<img>")
+						            .attr("src", profilePicSrc)
+						            .attr("id", "profile_img")
+						            .css({
+						                'width': '17px',
+						                'height': '17px',
+						                'margin-left':'3px'
+						            });		
 		        userEmailDOM.text(" " + response.generalMemberList[i].generalMemberEmail + "  " + response.generalMemberList[i].tierScore);
 		
 		        // 이미지를 리스트에 추가
@@ -407,6 +431,7 @@
 		    }
 		});
 	});
+
 
    //랭킹
        const userList = document.getElementById('user-list');
