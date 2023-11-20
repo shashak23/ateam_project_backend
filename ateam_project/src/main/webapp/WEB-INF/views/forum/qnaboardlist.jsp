@@ -98,7 +98,6 @@
 
    #toolbar{
       width: 300px;
-      /* position: fixed; */
       margin: 25px 0px 0px 20px;
       width: 200px;
       padding: 15px;
@@ -111,6 +110,7 @@
       margin-top: 9px;
       color:black;
       background-color: #26577C;
+      color: white;
       border-radius: 6px;
       border:none;
       transition: box-shadow 0.1s ease;
@@ -133,6 +133,7 @@
 	    margin-left: 160px;
 	    margin-top: 10px;
 	    background-color: #26577C;
+	    color: white;
 	    border-radius: 5px;
 	    border: none;
 	    width: 60px; 
@@ -335,7 +336,7 @@
 	        if (list[i].boardId === 'CC-20231017-000030') {
 	          let ranking_template = `
 	            <li id="hot_post">
-	            <a class="block ellipse" href="/qnaboard/view/\${list[i].generalPostId}" target="_blank"">\${list[i].postTitle}</a>
+                  <a class="block ellipse" href="/qnaboard/view/\${list[i].generalPostId}" target="_blank" style="padding: 10px; border-bottom: 1px solid var(--light-gray);;">\${list[i].postTitle}</a>
 	            </li>`
 	          let ranking_templateDom = $(ranking_template)
 	  
@@ -383,8 +384,8 @@
 		
 	 // 명예의 전당
 	    $.get("/qnaboard/topTenMember", function(response) {
+		    let listDOM = $("<ul></ul>");
 		    for (var i in response.generalMemberList) {
-		        let listDOM = $("<ul></ul>");
 		        let userEmailDOM = $("<li></li>");
 		
 		        // 티어 이미지를 표시하는 부분
@@ -401,15 +402,17 @@
 						                'height': '15px',
 						                'margin-left': '3px'
 						            });
-		
-		        userEmailDOM.text(" " + response.generalMemberList[i].generalMemberEmail + "  " + response.generalMemberList[i].tierScore);
+				
+		        userEmailDOM.append(tierImageDOM);
+		        userEmailDOM.append(profilePicDOM);
+		        userEmailDOM.append($("<span> " + response.generalMemberList[i].generalMemberEmail + "  " + response.generalMemberList[i].tierScore+"</span>"));
 		
 		        // 이미지를 리스트에 추가
-		        listDOM.append(tierImageDOM);
-		        listDOM.append(profilePicDOM);
-		        listDOM.append(userEmailDOM);
-		        $(".ranking_wrap_1").append(listDOM);
+		        listDOM.append(userEmailDOM); // $()안에 넣지 않고 그냥 text를 쓰면 초기화된다
+		        //listDOM.append(tierImageDOM);
+		        //listDOM.append(profilePicDOM);
 		    }
+		    $(".ranking_wrap_1").append(listDOM);
 		});
 	});
 
