@@ -22,7 +22,7 @@ public interface GeneralPostDAO {
 	
 	public int createNewFreeBoard(GeneralPostVO generalPostVO);
 	
-	public List<GeneralPostVO> getAllBoard(SearchForumVO searchForumVO);
+	public List<GeneralPostVO> getAllBoard(SearchForumVO searchForumVOs);
 	
 	
 	//boardId 필요.

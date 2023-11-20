@@ -74,20 +74,25 @@
      
      }
     .hashtag_incomplete {
-       text-align: center;
-       font-size: 20px;
-       margin: 0 auto;
-       margin-left: 10px;
-       margin-top: 35px;
-       padding: 0px 10px;
-       width: auto;
-       height: 35px;
-       border-radius: 10px;
-       border: none;
-       cursor: pointer;
-       background-color: var(--light-gray);
-       color: var(--dark-gray);
-    }
+	    text-align: center;
+	    font-size: 20px;
+	    margin: 0 auto;
+	    margin-left: 10px;
+	    margin-top: 35px;
+	    padding: 0px 10px;
+	    width: auto;
+	    height: 35px;
+	    border-radius: 10px;
+	    border: none;
+	    cursor: pointer;
+	    background-color: var(--light-gray);
+	    color: var(--dark-gray);
+	    transition: color 0.3s ease; 
+	}
+	
+	.hashtag_incomplete:hover {
+	    background-color: #E55604;
+	}
     
     /* 글작성 버튼 */
     #left_container {
@@ -95,10 +100,11 @@
       justify-content: center;
       width:300px;
       min-height: 500px;
-      margin-top: 320px;
+      margin-top: 330px;
    }
 
    #toolbar{
+   	  position:fixed; 
       width: 300px;
       margin: 25px 0px 0px 20px;
       width: 200px;
@@ -148,7 +154,8 @@
    }
     /* 랭킹박스 */
     .body_right_aside {
-		width: 270px;
+		width: 290px;
+		padding: 15px 20px;
 	}
 	.my-aside {
 		width: 270px;
@@ -156,11 +163,20 @@
 		flex-direction: column;
 	    justify-content: center;
 	    width: 100%;
-	    margin-bottom: 20px;
 		margin-top: 370px;
-		
 	}
-   .ranking_controller , .ranking_controller_expanded{
+	
+   .ranking_controller {
+   		margin-top: 20px;
+   		display: flex;
+	    border: 1px solid var(--light-gray);
+	    border-radius: 10px;
+	    margin-right: 40px;
+   		flex-direction: column;
+    	border: 1px solid var(--light-gray);
+   }
+   
+   .ranking_controller_1 {
    		display: flex;
 	    border: 1px solid var(--light-gray);
 	    border-radius: 10px;
@@ -176,17 +192,22 @@
 	    width: 100%;
    }
    
+   .ranking_controller_1 .viewCnt {
+   		display: flex;
+	    justify-content: center;
+	    padding: 10px 0;
+	    border-bottom: 1px solid var(--gray);
+	    width: 100%;
+   }
+   
    .ranking_controller .ranking_wrap {
    		display: flex;
 	    flex-direction: column;
 	    justify-content: center;
 	    width: 100%;
 	    margin-bottom: 20px;
-   }
-   
-   .ranking_controller .ranking_wrap > ul > img {
-   		width: 11px;
-   		height: 11px;
+	    font-size: 13px;
+	    
    }
    
    .ranking_controller .ranking_wrap ul .hot_post {
@@ -196,12 +217,14 @@
 	    transition: all 0.1s;
 	    color: var(--dark);
 	    cursor: pointer;
+	    padding: 15px 20px;
+	    background-color: #DFEEF7;
   }
   
-  .ranking_controller .ranking_wrap ul .hot_post:hover {
-    	background-color: var(--hashtag-blue);
+  .ranking_controller .hot_post:hover {
+  		background-color: #DFEEF7;
   }
-  
+
   .body_right .ranking_wrap ul .hot_post a {
 	    color: var(--dark);
 	    display: block;
@@ -295,13 +318,13 @@
         <div class="body_right_aside">
 	        <div class="my-aside">
 	        	  <!-- 명예의 전당 -->
-	              <div class="ranking_controller">
-		            <h3 class="viewCnt">명예의 전당 </h3>
+	              <div class="ranking_controller_1">
+		            <h3 class="viewCnt">👑명예의 전당👑 </h3>
 	                  <ul class="ranking_wrap_1"></ul>
 	              </div>
 		          <!-- 조회수순 랭킹 -->
 	              <div class="ranking_controller">
-		          	<h3 class="viewCnt">주간 질답 랭킹 </h3>
+		          	<h3 class="viewCnt">📋주간 질답 랭킹 </h3>
 		              <ul class="ranking_wrap"></ul>
 	             </div>
 		      </div>
@@ -340,7 +363,7 @@
 
 	        if (list[i].boardId === 'CC-20231017-000030') {
 	          let ranking_template = `
-	            <li id="hot_post">
+	            <li class="hot_post">
                   <a class="block ellipse" href="/qnaboard/view/\${list[i].generalPostId}" target="_blank" style="padding: 10px; border-bottom: 1px solid var(--light-gray);;">\${list[i].postTitle}</a>
 	            </li>`
 	          let ranking_templateDom = $(ranking_template)
@@ -387,11 +410,15 @@
 	        }
 	    });
 		
-	 // 명예의 전당
+	 	// 명예의 전당
 	    $.get("/qnaboard/topTenMember", function(response) {
 		    let listDOM = $("<ul></ul>");
 		    for (var i in response.generalMemberList) {
-		        let userEmailDOM = $("<li></li>");
+		    	let userEmailDOM = $("<li></li>").css({
+		            'border-bottom': '1px solid var(--light-gray)',
+		            'padding': '9px 9px',
+		            'font-size': '13px'
+		        });
 		
 		        // 티어 이미지를 표시하는 부분
 		        let tierImageSrc = "/images/" + response.generalMemberList[i].tierVO.tierName + ".png";
@@ -403,9 +430,8 @@
 						            .attr("src", profilePicSrc)
 						            .attr("id", "profile_img")
 						            .css({
-						                'width': '15px',
-						                'height': '15px',
-						                'margin-left': '3px',
+						                'width': '9px',
+						                'height': '9px',
 						                'padding': '10px'
 						            });
 				

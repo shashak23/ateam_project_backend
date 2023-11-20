@@ -98,7 +98,7 @@
 
    #toolbar{
       width: 300px;
-      /* margin: 0px 0px 0px 0px; */
+   	  position:fixed; 
       width: 200px;
       padding: 15px;
       align-items: center;
