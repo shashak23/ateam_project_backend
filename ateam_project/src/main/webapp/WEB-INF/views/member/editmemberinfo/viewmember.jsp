@@ -17,42 +17,87 @@
 <!--스타일 입히기-->
 <style>
 
-#container{
-	display: flex;
-	justify-content: center;
+body > .body_container {
+    width: 100%;
+    min-height: 75vh;
+    display: grid;
+    grid-template-columns: 1fr 1080px 1fr;
 }
 
-.flex_button{
-	margin-left:120px;
+/* Main Contents */
+body > .body_container > .body {
+    grid-column: 2/3;
+	display: flex;
+    flex-direction: column;
+    align-items: center;
+	margin-top: 20px;
 }
-.flex_mains {
+
+/* Main Contents 왼쪽 여백*/
+body > .body_container > .body_left_aside {
+    grid-column: 1/2;
+	display: flex;
+    justify-content: flex-end; /* 여기에 추가 */
+
+}
+
+/* Main Contents 오른쪽 여백*/
+body > .body_container > .body_right_aside {
+    grid-column: 3/4;
+	
+}
+
+#emailSpace,
+#nicknameSpace,
+#pw, #confirmPw
+{
+	width: 400px;
+	height: 40px;
+    padding: 8px;
+	border: 2px solid rgb(231,231,231);
+}
+
+.pw{
 	display: flex;
 	flex-direction: column;
-	width: 1200px;
-	height: 689px;
-}
-.emil{
-	margin-top: 97px;
 }
 
-#emailSpace{
-	width: 400px;
-	height: 40px;
-    padding: 8px;
-	border: 2px solid rgb(231,231,231);
-}
+.flex_button {
+		display: flex;
+		flex-direction: column;
+		text-align: end;
+	}
 
-#nicknameSpace{
-	width: 400px;
-	height: 40px;
-    padding: 8px;
-	border: 2px solid rgb(231,231,231);
-}
+	.flex_button button {
+	  	color: white;	
+		background-color: var(--gray);
+		width: 150px;
+		height: 40px;
+		margin-bottom: 15px;
+		cursor: pointer;
+		border: 2px;
+	}
+
+	.flex_button button:hover {
+		background-color: var(--light-blue);
+		color: white;
+	}
 
 .info{
 	width:500px;
 	/* border-bottom: 0.0625rem solid rgb(231,231,231); */
 	margin-bottom: 15px;
+}
+
+#btn-regist{
+	width: 60px;
+    height: 40px;
+    border-radius: 6px;
+	background-color: #F0F0F0;
+	border: none;
+    padding: 5px;
+    border-radius: 5px;
+    cursor: pointer;
 }
 	
 .value {
@@ -79,6 +124,21 @@ a:hover {
 h3{
 	margin-bottom: 15px;
 }
+
+.errors {
+        opacity: 0.8;
+        padding: 10px;
+        color: red;
+        font-size: 10pt;
+        display: inline-block;
+    }
+    .errors:last-child {
+        margin-bottom: 15px;
+    }
+    .err_password, .err_confirm_password {
+    color: red;
+    font-size: 10pt;
+}
 </style>
 <link rel="stylesheet" type="text/css" href="/css/myProfile.css" />
 <!-- 자바스크립트 시작 -->
@@ -91,49 +151,115 @@ $().ready(function() {
 	$("#my_profile").click(function() {
 		redirectToURL(`/memberinfo/view/${memberVO.email}`);
 	});
+
+	$("#nickname").keyup(function(){
+            $.get("/memberInfo/modify/update-nickname/vaildation", {
+            	nickname: $("#nickname").val()
+            }, function(response) {
+                var nickname = response.nickname
+                var available = response.available
+
+                if (available) {
+                    $("#nickname").addClass("available")
+                    $("#nickname").removeClass("unusable")
+                    $("#btn-regist").removeAttr("disabled")
+                }
+                else {
+                    $("#nickname").addClass("unusable")
+                    $("#nickname").removeClass("available")
+                    $("#btn-regist").attr("disabled", "disabled")
+                }
+            })
+        })
+   
+	 $("#nickname").click(function() {
+ 	      $(".nickname_errors").hide();
+ 	  	 });
+// 비밀번호 수정
+			$("#confirmPw").on("input", function() {
+	    var pw = $("#pw").val();
+	    var confirmPw = $(this).val();
+	    var errConfirmPassword = $(".err_confirm_password");
+	    
+	    
+	    if (pw === confirmPw) {
+	        errConfirmPassword.text(""); 
+	    } else {
+	        errConfirmPassword.text("* 비밀번호가 일치하지 않습니다.");
+	    }
+	
+	    // 비밀번호 길이 확인
+	    if (pw.length >= 5 && pw.length <= 10) {
+	        $(".err_password").text(""); 
+	    } else {
+	        $(".err_password").text("* 5~10글자까지만 입력 가능합니다.");
+	    }
+	});
+	$("#pw").click(function() {
+	      $(".pw_errors").hide();
+	});
+	$("#confirmPw").click(function() {
+	      $(".confirmPw_errors").hide();
+	});
+		 
 });
 </script>
 </head>
 <body>
-	<div id="container">
+	<div class="body_container">
+		<div class="body_left_aside">					
 		<div class="flex_button">
-			<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
-				<div class="flex_button">
+			<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">			
 					<button id="myprofile">마이페이지</button>
 					<button id="bookmark">북마크</button>
 					<button id="modify_info">정보 수정</button>
 					<button id="mypost">내가 쓴 게시글</button>
 					<button id="solve">내가 푼 문제</button>
-					<button>탈퇴</button>
-				</div>
+					<button>탈퇴</button>				
 			</c:if>
 		</div>
-		<div class="flex_mains">
+		</div>
+
+		<div class="body">
 			<div class="info">
 				<h3 class="emil">이메일</h3>
 				<div id="emailSpace">${memberVO.email}</div> 
 			</div>
 			<div class="info">
-				<div class="value">
-					<h3>닉네임
-						<a href="/memberInfo/modify/update-nickname/${memberVO.email}">
-							<img src="/images/작성.png" alt="작성"> 수정</a>
-					</h3>
-					
-				</div>
-					<div id="nicknameSpace">${memberVO.nickname}</div>
+				<form:form modelAttribute="memberVO" method="post">
+				<input type="hidden" name="email" value="${memberVO.email}" />
+				<h3>닉네임</h3>
+				<input type="text" name="nickname" id="nicknameSpace" value="${memberVO.nickname}">
+				<input id="btn-regist" disabled="disabled"
+					type="submit" value="변경" />
+				<form:errors path="nickname" element="div" cssClass="nickname_errors" />	
+				</form:form>
 					
 				
 			</div>
 			<div class="info">
-				<div class="value">
-					<h3>
-						비밀번호 <a href="/memberInfo/modify/update-password/${memberVO.email}">
-						<img src="/images/작성.png" alt="작성">	수정</a>
-					</h3>
-				</div>
+				<form:form modelAttribute="memberVO" method="post"
+		action="/memberInfo/modify/update-password">
+		<input type="hidden" name="email" value="${memberVO.email}" />
+		<h3>비밀번호</h3>
+		<div class="pw">
+		<label for="pw">비밀번호</label>
+		<input type="password" name="pw" id="pw">
+		 <br><span class="err_password"></span>
+		<form:errors path="pw" element="div" cssClass="pw_errors" />
+		<div>
+		<label for="confirmPw">비밀번호 확인</label>
+		<input id="confirmPw" type="password" name="confirmPw" />
+		<input id="btn-regist" type="submit" value="변경" />
+		 <br><span class="err_confirm_password"></span>
+		
+		<form:errors path="confirmPw" element="div" cssClass="confirmPw_errors" />
+	</div>
+		</div>
+	</form:form>
 			</div>
 		</div>
+		<div class="body_right_aside"></div>
 	</div>
 	<jsp:include page="../../layout/footer.jsp" />
 </body>

@@ -152,6 +152,8 @@ body > .body_container > .body {
 /* Main Contents 왼쪽 여백*/
 body > .body_container > .body_left_aside {
     grid-column: 1/2;
+	display: flex;
+    justify-content: center;
 }
 
 /* Main Contents 오른쪽 여백*/
@@ -170,7 +172,7 @@ body > .body_container > .body_right_aside {
 	}
 
 	#toolbar{
-		width: 300px;
+		width: 200px;
 		margin: 33px 0px 0px 20px;
 		width: 200px;
 		padding: 15px;
@@ -182,7 +184,7 @@ body > .body_container > .body_right_aside {
 	}
 
 	#toolbar > #registerArticle > .register{
-		width: 220px;
+		width: 200px;
 		height:35px;
 		margin-top: 9px;
 		color:black;
@@ -282,6 +284,7 @@ body > .body_container > .body_right_aside {
 
 	.sc_text{
 		padding-left: 6px;
+		width: 150px;
 		height: 27px;
 		font-size: 12px;
 		transition: box-shadow 0.3s ease;

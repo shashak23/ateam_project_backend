@@ -63,17 +63,14 @@
 </style>
 </head>
 <body>
-
 	<form:form modelAttribute="memberVO" method="post" action="/memberInfo/modify/update-nickname">
 	<input type="hidden" name="email" value="${memberVO.email}" />
-			
-	
 				<h2>닉네임 수정</h2>
 				<label for="nickname">닉네임</label> 
 				<input type="text" name="nickname" id="nickname" value="${memberVO.nickname}">
-					<input id="btn-regist" disabled="disabled"
-                       type="submit" value="수정" />
-					<form:errors path="nickname" element="div" cssClass="nickname_errors" />	
+                <input id="btn-regist" disabled="disabled"
+                    type="submit" value="수정" />
+                <form:errors path="nickname" element="div" cssClass="nickname_errors" />	
 	</form:form>
 </body>
 </html>

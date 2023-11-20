@@ -56,6 +56,28 @@
 </script>
 </head>
 <style>
+    body > .body_container {
+    width: 100%;
+    min-height: 75vh;
+    display: grid;
+    grid-template-columns: 1fr 1080px 1fr;
+    }
+
+    /* Main Contents */
+    body > .body_container > .body {
+        grid-column: 2/3;
+        margin: 40px 0 100px 0;
+    }
+
+    /* Main Contents 왼쪽 여백*/
+    body > .body_container > .body_left_aside {
+        grid-column: 1/2;
+    }
+
+    /* Main Contents 오른쪽 여백*/
+    body > .body_container > .body_right_aside {
+        grid-column: 3/4;
+    }
 #container{
     display: flex;
     flex-direction: column;
@@ -116,7 +138,9 @@
 }
 </style>
 <body>
-    <div id="container">
+    <div class="body_container">
+        <div class="body_left_aside"></div>
+        <div class="body">
         <div id="header">
             <div id="algorithmName">
             <c:choose>
@@ -125,25 +149,42 @@
 			    </c:when>
 			</c:choose>
             </div>   
-
             <div id="tip">
                 <c:choose>
-                    <c:when test="${categoryId eq 1}">
-                        Key-value쌍으로 데이터를 빠르게 찾아보세요. (첫 번째 카테고리 팁)
+                    <c:when test="${algorithmCategoryId eq 'CC-20231017-000001'}">
+                        매 순간 최선의 선택을 하세요! 
                     </c:when>
-                    <c:when test="${categoryId eq 2}">
-                        다른 팁이 필요한 경우 여기에 표시하세요. (두 번째 카테고리 팁)
+                    <c:when test="${algorithmCategoryId eq 'CC-20231017-000002'}">
+                        문제를 단계적으로 정의하고 해결하세요
                     </c:when>
-                    <!-- 필요에 따라 다른 categoryId에 대한 case를 추가하세요. -->
-            
+                    <c:when test="${algorithmCategoryId eq 'CC-20231017-000003'}">
+                        깊이와 너비, 어느 것이 좋을까요?
+                    </c:when>
+                    <c:when test="${algorithmCategoryId eq 'CC-20231017-000004'}">
+                        조직화와 효율적인 검색을 경험해 보세요
+                    </c:when>
+                    <c:when test="${algorithmCategoryId eq 'CC-20231017-000005'}">
+                        시작이 반이다! 중간부터 탐색해보시죠
+                    </c:when>
+                    <c:when test="${algorithmCategoryId eq 'CC-20231017-000006'}">
+                        문제를 조각조각 나눠 시작합니다
+                    </c:when>
+                    <c:when test="${algorithmCategoryId eq 'CC-20231017-000007'}">
+                        가장 빠른 길을 찾아 보아요!
+                    </c:when>
+                    <c:when test="${algorithmCategoryId eq 'CC-20231017-000008'}">
+                        엣지를 경유해 노드를 따라가죠
+                    </c:when>
+                    <c:when test="${algorithmCategoryId eq 'CC-20231017-000009'}">
+                        더욱 많은 알고리즘의 세계를 경험해보세요
+                    </c:when>
                     <c:otherwise>
-                        기본 팁을 표시하세요.
+                        한 줄 평을 기입하시오.
                     </c:otherwise>
                 </c:choose>
             </div>
         </div>
         <div id="pointLine"></div>
-        <!-- 여기까지 해당 카테고리 상단 내용 -->
         <ul id="list">
         	<c:choose>
         		<c:when test="${not empty algorithmExplanationList.algorithmExplanationList}">
@@ -161,6 +202,8 @@
         		</c:when>
         	</c:choose>
         </ul>
+        </div>
+        <div class="body_right_aside"></div>
     </div>
     <jsp:include page="../../layout/footer.jsp"></jsp:include>
 </body>

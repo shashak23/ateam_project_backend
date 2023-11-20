@@ -724,7 +724,7 @@ position: absolute;
 			})
 		    
 			$("#modalCloseSNS").on('click',function(){
-				$("#modalContainerSNS").addClass("hidden");
+				$("#modalContentSNS").addClass("hidden");
 			})
 
 			$("#modalCloseTech").on('click',function(){
@@ -818,7 +818,8 @@ $(document).on('click', '#reportUser', function() {
 					</button>
 					
 					<div id="modalContainerProfile" class="hidden">
-						<div id="modalContentProfile">			
+						<div id="modalContentProfile">	
+									
 						</div>
 					</div>
 			</c:if>
