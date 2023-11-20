@@ -208,7 +208,6 @@
 </style>
 </head>
 <body>
-
     <div class="body_container">
 	    <div class="body_left_aside">
 		    <div id="left_container">
@@ -394,7 +393,14 @@
 		
 		        // 프로필 이미지를 표시하는 부분
 		        let profilePicSrc = response.generalMemberList[i].profilePic;
-		        let profilePicDOM = $("<img>").attr("src", profilePicSrc).attr("id", "profile_img");
+		        let profilePicDOM = $("<img>")
+						            .attr("src", profilePicSrc)
+						            .attr("id", "profile_img")
+						            .css({
+						                'width': '15px',
+						                'height': '15px',
+						                'margin-left': '3px'
+						            });
 		
 		        userEmailDOM.text(" " + response.generalMemberList[i].generalMemberEmail + "  " + response.generalMemberList[i].tierScore);
 		
