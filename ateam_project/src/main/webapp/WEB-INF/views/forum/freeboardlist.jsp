@@ -6,11 +6,11 @@
 <meta charset="UTF-8">
 <title>devGround</title>
 <script src="/js/lib/jquery-3.7.1.js"></script> 
-<link rel="stylesheet" href="/css/style.css"> 
 <script src="./js/swiper.min.js"></script>
 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <jsp:include page="../layout/header.jsp"/>
+<link rel="stylesheet" type="text/css" href="/css/common.css" />
 <style>
 
 	/*swiper제어*/
@@ -159,7 +159,6 @@
        margin: 0 auto;
        width: 150px;
    }
-
 
 </style>
 </head>
