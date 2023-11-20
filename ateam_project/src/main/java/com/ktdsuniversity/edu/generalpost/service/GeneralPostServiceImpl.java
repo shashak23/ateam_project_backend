@@ -48,7 +48,7 @@ private Logger log = LoggerFactory.getLogger(FreePostController.class);
 		
 		generalPostListVO.setBoardCnt( generalPostDAO.getBoardAllCount(searchForumVO));
 		if(searchForumVO != null) {
-			generalPostListVO.setGeneralPostList( generalPostDAO.getAllBoard(searchForumVO.getBoardId()));
+			generalPostListVO.setGeneralPostList( generalPostDAO.getAllBoard(searchForumVO));
 		} else {
 
 			generalPostListVO.setGeneralPostList( generalPostDAO.searchAllPost(searchForumVO));

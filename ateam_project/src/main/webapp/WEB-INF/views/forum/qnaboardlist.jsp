@@ -78,13 +78,15 @@
        font-size: 20px;
        margin: 0 auto;
        margin-left: 10px;
-       margin-top: 30px;
-       width: 85px;
+       margin-top: 35px;
+       padding: 0px 10px;
+       width: auto;
        height: 35px;
        border-radius: 10px;
        border: none;
        cursor: pointer;
-       
+       background-color: var(--light-gray);
+       color: var(--dark-gray);
     }
     
     /* 글작성 버튼 */
@@ -145,7 +147,11 @@
 	    width: 150px;
    }
     /* 랭킹박스 */
+    .body_right_aside {
+		width: 270px;
+	}
 	.my-aside {
+		width: 270px;
 		display: flex;
 		flex-direction: column;
 	    justify-content: center;
@@ -180,7 +186,7 @@
    
    .ranking_controller .ranking_wrap > ul > img {
    		width: 11px;
-   		heigth: 11px;
+   		height: 11px;
    }
    
    .ranking_controller .ranking_wrap ul .hot_post {
@@ -197,7 +203,6 @@
   }
   
   .body_right .ranking_wrap ul .hot_post a {
-	    width: 270px;
 	    color: var(--dark);
 	    display: block;
 	    padding: 15px 20px;
@@ -348,7 +353,7 @@
 	   	  // 가운데에 해시태그 리스트 조회해주는 코드 
 	      $.get('/code/해시태그', function(response) {
 	        for (let i = 0; i < response.length; i++) {
-	          let hash_template = `<a href="/qnaboard/list?hashtagId=\${response[i].codeId}" class="hashtag_incomplete">#\${response[i].codeContent}</button>`
+	          let hash_template = `<a href="/qnaboard/list?hashtagId=\${response[i].codeId}" class="hashtag_incomplete">\${response[i].codeContent}</button>`
 	          $('.hashtag_wrap').append(hash_template)
 	        }
 	      })
@@ -400,17 +405,18 @@
 						            .css({
 						                'width': '15px',
 						                'height': '15px',
-						                'margin-left': '3px'
+						                'margin-left': '3px',
+						                'padding': '10px'
 						            });
 				
+		        console.log(response.generalMemberList[i])
 		        userEmailDOM.append(tierImageDOM);
 		        userEmailDOM.append(profilePicDOM);
-		        userEmailDOM.append($("<span> " + response.generalMemberList[i].generalMemberEmail + "  " + response.generalMemberList[i].tierScore+"</span>"));
+		        userEmailDOM.append($("<span> " + response.generalMemberList[i].nickname + "  " + response.generalMemberList[i].tierScore+"</span>"));
 		
 		        // 이미지를 리스트에 추가
 		        listDOM.append(userEmailDOM); // $()안에 넣지 않고 그냥 text를 쓰면 초기화된다
-		        //listDOM.append(tierImageDOM);
-		        //listDOM.append(profilePicDOM);
+
 		    }
 		    $(".ranking_wrap_1").append(listDOM);
 		});
