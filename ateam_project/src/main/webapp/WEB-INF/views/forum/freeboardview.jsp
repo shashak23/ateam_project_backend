@@ -374,7 +374,6 @@ $().ready(function() {
                             <pre class="content">\${comment.commentContent}</pre>
                             \${comment.email == "${sessionScope._LOGIN_USER_.email}" ?
                             	    `<div>
-                            	        <button class="recommend-comment">좋아요</button>
                             	        <button class="update-comment">수정</button>
                             	        <button class="delete-comment">삭제</button>
                             	    </div>`
@@ -594,8 +593,8 @@ $().ready(function() {
 
                <div class="space_between">
                   <div class="btn_controller">
-                     <button id="like-btn">좋아요👍</button>
                      <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email ne generalPostVO.postWriter}">
+                     <button id="like-btn">좋아요👍</button>
                         <button id="reportFreeBoard" value="1">신고📌</button>
                      </c:if>
                   </div>

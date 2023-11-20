@@ -625,7 +625,7 @@ $(document).on('click', '#reportQnABoard', function() {
                   <div class="btn_controller">
                      <button id="like-btn">좋아요👍</button>
                      <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email ne generalPostVO.postWriter}">
-                        <button id="reportQnABoard" value="3" class="report-btn">신고📌</button>
+                        <button id="reportQnABoard" value="3" class="report-btn">신고🚨</button>
                      </c:if>
                   </div>
                   <div class="btn_controller">
