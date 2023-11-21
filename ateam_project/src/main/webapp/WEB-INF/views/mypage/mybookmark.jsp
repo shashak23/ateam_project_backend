@@ -6,7 +6,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>나의 북마크</title>
     <jsp:include page="../layout/header.jsp" />
     <link rel="stylesheet" type="text/css" href="/css/common.css" />
     <style>
@@ -15,27 +14,26 @@
     min-height: 75vh;
     display: grid;
     grid-template-columns: 1fr 1080px 1fr;
-}
+    }
 
-/* Main Contents */
-body > .body_container > .body {
-    grid-column: 2/3;
-    margin-top: 20px;
-}
+    /* Main Contents */
+    body > .body_container > .body {
+        grid-column: 2/3;
+        margin: 40px 0 100px 0;
+    }
 
-/* Main Contents 왼쪽 여백*/
-body > .body_container > .body_left_aside {
-    grid-column: 1/2;
-    display: flex;
-    justify-content: flex-end; 
-}
+    /* Main Contents 왼쪽 여백*/
+    body > .body_container > .body_left_aside {
+        grid-column: 1/2;
+        display: flex;
+        justify-content: flex-end; 
+    }
 
-/* Main Contents 오른쪽 여백*/
-body > .body_container > .body_right_aside {
-    grid-column: 3/4;
-}
+    /* Main Contents 오른쪽 여백*/
+    body > .body_container > .body_right_aside {
+        grid-column: 3/4;
+    }
     
-
 	.flex_button {	
 		margin: 100px 50px 0px 0px;
 		display: flex;
@@ -56,6 +54,10 @@ body > .body_container > .body_right_aside {
 	background-color: var(--light-blue);
   	color: white;
 	} 
+
+    tbody {
+    text-align: center;
+    }
 
     </style>
 </head>

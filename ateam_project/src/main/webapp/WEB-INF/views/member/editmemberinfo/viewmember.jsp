@@ -14,135 +14,6 @@
 	content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, width=device-width" />
 <!--스타일,폰트 지정-->
 <!--스와이퍼 기능 지정-->
-<!--스타일 입히기-->
-<style>
-
-body > .body_container {
-    width: 100%;
-    min-height: 75vh;
-    display: grid;
-    grid-template-columns: 1fr 1080px 1fr;
-}
-
-/* Main Contents */
-body > .body_container > .body {
-    grid-column: 2/3;
-	display: flex;
-    flex-direction: column;
-    align-items: center;
-	margin-top: 20px;
-}
-
-/* Main Contents 왼쪽 여백*/
-body > .body_container > .body_left_aside {
-    grid-column: 1/2;
-	display: flex;
-    justify-content: flex-end; /* 여기에 추가 */
-
-}
-
-/* Main Contents 오른쪽 여백*/
-body > .body_container > .body_right_aside {
-    grid-column: 3/4;
-	
-}
-
-#emailSpace,
-#nicknameSpace,
-#pw, #confirmPw
-{
-	width: 400px;
-	height: 40px;
-    padding: 8px;
-	border: 2px solid rgb(231,231,231);
-}
-
-.pw{
-	display: flex;
-	flex-direction: column;
-}
-
-.flex_button {
-		display: flex;
-		flex-direction: column;
-		text-align: end;
-	}
-
-	.flex_button button {
-	  	color: white;	
-		background-color: var(--gray);
-		width: 150px;
-		height: 40px;
-		margin-bottom: 15px;
-		cursor: pointer;
-		border: 2px;
-	}
-
-	.flex_button button:hover {
-		background-color: var(--light-blue);
-		color: white;
-	}
-
-.info{
-	width:500px;
-	/* border-bottom: 0.0625rem solid rgb(231,231,231); */
-	margin-bottom: 15px;
-}
-
-#btnUpdateNickname,
-#btnUpdatePassword{
-	width: 60px;
-    height: 40px;
-    border-radius: 6px;
-	background-color: #F0F0F0;
-	border: none;
-    padding: 5px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-	
-.value {
-	margin: 10px 0; /* 각 항목 사이의 여백을 설정합니다. */
-	display: flex;
-}
-
-a {
-	
-	margin-left: 10px;
-	text-decoration: none; /* 링크의 밑줄을 제거합니다. */
-	color: #007bff; /* 링크 텍스트의 색상을 설정합니다. */
-}
-
-img{
-	width:15px;
-	height: 15px;
-	text-decoration: none;
-}
-
-a:hover {
-	text-decoration: none; /* 링크에 마우스 오버 시 밑줄을 추가합니다. */
-}
-h3{
-	margin-bottom: 15px;
-}
-
-.errors {
-        opacity: 0.8;
-        padding: 10px;
-        color: red;
-        font-size: 10pt;
-        display: inline-block;
-    }
-    .errors:last-child {
-        margin-bottom: 15px;
-    }
-    .err_password, .err_confirm_password {
-    color: red;
-    font-size: 10pt;
-}
-</style>
-<link rel="stylesheet" type="text/css" href="/css/myProfile.css" />
-<!-- 자바스크립트 시작 -->
 <jsp:include page="../../layout/header.jsp" />
 <script type="text/javascript">
 	function redirectToURL(url) {
@@ -205,22 +76,143 @@ $().ready(function() {
 		 
 });
 </script>
+<style>
+	body > .body_container {
+    width: 100%;
+    min-height: 75vh;
+    display: grid;
+    grid-template-columns: 1fr 1080px 1fr;
+	}
+	
+	/* Main Contents */
+	body > .body_container > .body {
+	    grid-column: 2/3;
+		margin: 40px 0 100px 100px;
+	}
+	
+	/* Main Contents 왼쪽 여백*/
+	body > .body_container > .body_left_aside {
+	    grid-column: 1/2;
+	    display: flex;
+    	justify-content: flex-end; 
+	}
+	
+	/* Main Contents 오른쪽 여백*/
+	body > .body_container > .body_right_aside {
+	    grid-column: 3/4;
+	}
+    
+	.flex_button {	
+		margin: 100px 50px 0px 0px;
+		display: flex;
+		flex-direction: column;
+	}
+
+	.flex_button button {
+        color: white;	
+        background-color: var(--gray);
+        width: 150px;
+        height: 40px;
+        margin-bottom: 15px;
+        cursor: pointer;
+        border: 2px;
+	}
+
+	.flex_button button:hover {
+        background-color: var(--light-blue);
+        color: white;
+	} 
+
+	#emailSpace,
+	#nicknameSpace,
+	#pw, #confirmPw
+	{
+		width: 400px;
+		height: 40px;
+		padding: 8px;
+		border: 2px solid rgb(231,231,231);
+	}
+
+	.pw{
+		display: flex;
+		flex-direction: column;
+	}
+
+		
+
+	.info{
+		width:500px;
+		/* border-bottom: 0.0625rem solid rgb(231,231,231); */
+		margin-bottom: 15px;
+	}
+
+	#btnUpdateNickname,
+	#btnUpdatePassword{
+		width: 60px;
+		height: 40px;
+		border-radius: 6px;
+		background-color: #F0F0F0;
+		border: none;
+		padding: 5px;
+		border-radius: 5px;
+		cursor: pointer;
+	}
+		
+	.value {
+		margin: 10px 0; /* 각 항목 사이의 여백을 설정합니다. */
+		display: flex;
+	}
+
+	a {
+		
+		margin-left: 10px;
+		text-decoration: none; /* 링크의 밑줄을 제거합니다. */
+		color: #007bff; /* 링크 텍스트의 색상을 설정합니다. */
+	}
+
+	img{
+		width:15px;
+		height: 15px;
+		text-decoration: none;
+	}
+
+	a:hover {
+		text-decoration: none; /* 링크에 마우스 오버 시 밑줄을 추가합니다. */
+	}
+	h3{
+		margin-bottom: 15px;
+	}
+
+	.errors {
+			opacity: 0.8;
+			padding: 10px;
+			color: red;
+			font-size: 10pt;
+			display: inline-block;
+		}
+		.errors:last-child {
+			margin-bottom: 15px;
+		}
+		.err_password, .err_confirm_password {
+		color: red;
+		font-size: 10pt;
+	}
+</style>
 </head>
 <body>
 	<div class="body_container">
 		<div class="body_left_aside">					
-		<div class="flex_button">
-			<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">			
-					<button id="myprofile">마이페이지</button>
-					<button id="bookmark">북마크</button>
-					<button id="modify_info">정보 수정</button>
-					<button id="mypost">내가 쓴 게시글</button>
-					<button id="solve">내가 푼 문제</button>
-					<button>탈퇴</button>				
-			</c:if>
+			<div class="flex_button">
+				<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">			
+						<button id="myprofile">마이페이지</button>
+						<button id="bookmark">북마크</button>
+						<button id="modify_info">정보 수정</button>
+						<button id="mypost">내가 쓴 게시글</button>
+						<button id="solve">내가 푼 문제</button>
+						<button>탈퇴</button>				
+				</c:if>
+			</div>
 		</div>
-		</div>
-
 		<div class="body">
 			<div class="info">
 				<h3 class="emil">이메일</h3>

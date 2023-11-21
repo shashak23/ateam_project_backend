@@ -168,7 +168,7 @@ body > .body_container > .body_right_aside {
 	#pageName{
 		font-weight: bold;
 		font-size:x-large;
-		margin-bottom: 10px;
+		text-align: center;
 	}
 
 	label{
@@ -231,6 +231,7 @@ body > .body_container > .body_right_aside {
 
 	.seeMore{
 		margin: 0px 0px 10px 240px;
+		width: 78px;
 	}
 
 	.more{
@@ -276,10 +277,11 @@ body > .body_container > .body_right_aside {
 	}
 
 	.type{
-		width: 47px;
+		width: 51px;
 		height: 27px;
 		transition: box-shadow 0.3s ease;
 		border-radius: 4px;
+		margin-right: 5px;
 	}
 
 	.type:hover{
@@ -288,7 +290,7 @@ body > .body_container > .body_right_aside {
 
 	.sc_text{
 		padding-left: 6px;
-		width: 150px;
+		width: 155px;
 		height: 27px;
 		font-size: 12px;
 		transition: box-shadow 0.3s ease;
@@ -339,7 +341,7 @@ body > .body_container > .body_right_aside {
 	.button_list{
 		display: flex;
 		height: 30px;
-		width: 222px;
+		width: 232px;
 		margin-top: 10px;
 		justify-content: space-around;
 	}

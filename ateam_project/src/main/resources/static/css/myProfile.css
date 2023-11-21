@@ -4,7 +4,7 @@
 .flex_button {
   display: flex;
   flex-direction: column;
-  margin-right: 120px;
+ /* margin-right: 120px;*/
   
 }
 
@@ -29,9 +29,9 @@
   color: white;
 }
 
-.flex_button button:first-child {
+/*.flex_button button:first-child {
   margin-top: 51px;
-}
+}*/
 
 .follow_chat {
   text-align: right;

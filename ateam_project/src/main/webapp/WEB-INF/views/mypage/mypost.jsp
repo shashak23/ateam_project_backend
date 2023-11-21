@@ -15,7 +15,8 @@
 	/* Main Contents */
 	body > .body_container > .body {
 	    grid-column: 2/3;
-	    margin-top: 20px;
+	    
+		margin: 40px 0 100px 0;
 	}
 	
 	/* Main Contents 왼쪽 여백*/
