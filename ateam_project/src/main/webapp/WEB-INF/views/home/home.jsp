@@ -937,7 +937,7 @@
               <article class="content_container">
                 <div class="writer_info_area">
                   <div class="flex_left">
-                    <img src="/member/file/download/\${email}" onerror="this.src='\${pokemon}';" alt="\${pokemon}"/>
+                    <img src="/member/file/download/\${email}" onerror="this.src='https://w7.pngwing.com/pngs/384/868/png-transparent-person-profile-avatar-user-basic-ui-icon.png';" alt="\${pokemon}"/>
                     <div>
                       <div class="writer_name">
                         <a href="/memberinfo/view/\${email}">\${nickname}</a>
@@ -1341,6 +1341,7 @@
 
     $('.report_attached_text').click(function() {
       $('#report_attached').trigger('click')
+      console.log('asdf')
     })
 
     $('#report_attached').change(function() {
@@ -1575,19 +1576,19 @@
 
             if(i < totalMembers) {
               let member = recommendList[i]
-              let profilePic = member.memberVO.profilePic;
+              let profilePic = 'https://w7.pngwing.com/pngs/384/868/png-transparent-person-profile-avatar-user-basic-ui-icon.png';
               let nickname = member.memberVO.nickname;
               let email = member.memberVO.email;
               
-              if (!profilePic.includes('http')) {
-                profilePic = getPokemonUrl()
-              }
+              // if (!profilePic.includes('http')) {
+              //   profilePic = getPokemonUrl()
+              // }
 
               memberTemplate += 
                 `<div class="memberList">
                     <div class="member_profile align-center">
                       <div>
-                        <img class="profile_pic" src="\${profilePic}" />
+                        <img class="profile_pic" src="/member/file/download/\${email}" onerror="this.src='https://w7.pngwing.com/pngs/384/868/png-transparent-person-profile-avatar-user-basic-ui-icon.png';" />
                       </div>
                       <div class="recc_nickname">
                         <p>\${nickname}</p>
