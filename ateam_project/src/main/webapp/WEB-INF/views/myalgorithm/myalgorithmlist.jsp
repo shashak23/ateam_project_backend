@@ -10,7 +10,32 @@
     <script src="/js/lib/jquery-3.7.1.js"></script>
     <link rel="stylesheet" type="text/css" href="/css/common.css" />
     <style>
-	/* .flex_button {	
+    body > .body_container {
+    width: 100%;
+    min-height: 75vh;
+    display: grid;
+    grid-template-columns: 1fr 1080px 1fr;
+	}
+	
+	/* Main Contents */
+	body > .body_container > .body {
+	    grid-column: 2/3;
+	    margin-top: 20px;
+	}
+	
+	/* Main Contents 왼쪽 여백*/
+	body > .body_container > .body_left_aside {
+	    grid-column: 1/2;
+	    display: flex;
+    	justify-content: flex-end; 
+	}
+	
+	/* Main Contents 오른쪽 여백*/
+	body > .body_container > .body_right_aside {
+	    grid-column: 3/4;
+	}
+    
+	.flex_button {	
 		margin: 100px 50px 0px 0px;
 		display: flex;
 		flex-direction: column;
@@ -29,7 +54,7 @@
 	.flex_button button:hover {
 	background-color: var(--light-blue);
   	color: white;
-	} */
+	} 
     </style>
 </head>
 <body>

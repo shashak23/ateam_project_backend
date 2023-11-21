@@ -4,6 +4,8 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <!DOCTYPE html>
 <html>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -24,13 +26,19 @@
 			let currentURL = window.location.href;
 			let trDOM = $(this).closest('tr')
 			$.post(currentURL, {memberEmail: memberEmail, tierId: tierId}, function(response){
-				alert("처리완료")
+				Swal.fire({
+		         	  text: "처리 완료",
+		         	  icon: "success"
+		         	});
 				trDOM.empty()
 			})
 		})
 
 		$(".refuse").click(function(){
-			alert("처리완료")
+			Swal.fire({
+	         	  text: "처리 실패",
+	         	  icon: "error"
+	         	});
 			$(this).closest('tr').empty()
 		})
 	})

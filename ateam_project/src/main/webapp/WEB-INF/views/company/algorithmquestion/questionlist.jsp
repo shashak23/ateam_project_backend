@@ -6,6 +6,8 @@
 <jsp:include page="../../layout/header.jsp"></jsp:include>
 <script type="text/javascript" src="/js/lib/jquery-3.7.1.js"></script>
 <link rel="stylesheet" type="text/css" href="/css/common.css" />
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script type="text/javascript">
 	$().ready(function() {
 
@@ -65,7 +67,10 @@
 			}
 		}
 		if (memberType === 'GENERAL') {
-			alert('기업회원만 이용하실 수 있는 서비스입니다.')
+			Swal.fire({
+          	  text: "기업회원만 이용할 수 있는 서비스입니다",
+          	  icon: "warning"
+          	});
 			window.location.href="/algorithm/question/list"
 		}
 		if (memberType === 'COMPANY') {

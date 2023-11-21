@@ -89,7 +89,8 @@ body > .body_container > .body_right_aside {
 	margin-bottom: 15px;
 }
 
-#btn-regist{
+#btnUpdateNickname,
+#btnUpdatePassword{
 	width: 60px;
     height: 40px;
     border-radius: 6px;
@@ -227,36 +228,32 @@ $().ready(function() {
 			</div>
 			<div class="info">
 				<form:form modelAttribute="memberVO" method="post">
-				<input type="hidden" name="email" value="${memberVO.email}" />
-				<h3>닉네임</h3>
-				<input type="text" name="nickname" id="nicknameSpace" value="${memberVO.nickname}">
-				<input id="btn-regist" disabled="disabled"
-					type="submit" value="변경" />
-				<form:errors path="nickname" element="div" cssClass="nickname_errors" />	
-				</form:form>
-					
-				
+					<input type="hidden" name="email" value="${memberVO.email}" />
+					<h3>닉네임</h3>
+					<input type="text" name="nickname" id="nicknameSpace" value="${memberVO.nickname}">
+					<input id="btnUpdateNickname" disabled="disabled" type="submit" value="변경" />
+					<form:errors path="nickname" element="div" cssClass="nickname_errors" />	
+				</form:form>			
 			</div>
 			<div class="info">
-				<form:form modelAttribute="memberVO" method="post"
-		action="/memberInfo/modify/update-password">
-		<input type="hidden" name="email" value="${memberVO.email}" />
-		<h3>비밀번호</h3>
-		<div class="pw">
-		<label for="pw">비밀번호</label>
-		<input type="password" name="pw" id="pw">
-		 <br><span class="err_password"></span>
-		<form:errors path="pw" element="div" cssClass="pw_errors" />
-		<div>
-		<label for="confirmPw">비밀번호 확인</label>
-		<input id="confirmPw" type="password" name="confirmPw" />
-		<input id="btn-regist" type="submit" value="변경" />
-		 <br><span class="err_confirm_password"></span>
-		
-		<form:errors path="confirmPw" element="div" cssClass="confirmPw_errors" />
-	</div>
-		</div>
-	</form:form>
+				<form:form modelAttribute="memberVO" method="post" action="/memberInfo/modify/update-password">
+					<input type="hidden" name="email" value="${memberVO.email}" />
+					<h3>비밀번호</h3>
+					<div class="pw">
+						<label for="pw">비밀번호</label>
+						<input type="password" name="pw" id="pw">
+						<br><span class="err_password"></span>
+						<form:errors path="pw" element="div" cssClass="pw_errors" />
+						<div>
+							<label for="confirmPw">비밀번호 확인</label>
+							<input id="confirmPw" type="password" name="confirmPw" />
+							<input id="btnUpdatePassword" type="submit" value="변경" />
+							<br><span class="err_confirm_password"></span>
+							
+							<form:errors path="confirmPw" element="div" cssClass="confirmPw_errors" />
+						</div>
+					</div>
+				</form:form>
 			</div>
 		</div>
 		<div class="body_right_aside"></div>

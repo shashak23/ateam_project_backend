@@ -290,7 +290,6 @@ $().ready(function(){
 <body>
 	<div class="body_container">
 		<div class="body_left_aside"></div>
-		
 		<div class="body">
 			<h3 class="title_name">질문답변 게시판 게시글 수정</h3>
 				<form method="post" id="postForm" action="/qnaboard/update">
@@ -319,11 +318,7 @@ $().ready(function(){
 					</div>
 				</form>
 		</div>
-
 		<div class="body_right_aside"></div>
-	</div>
-
- 
 	<script>
 		CKEDITOR.ClassicEditor.create(document.getElementById("editor"), {
 			// https://ckeditor.com/docs/ckeditor5/latest/features/toolbar/toolbar.html#extended-toolbar-configuration-format
@@ -466,6 +461,5 @@ $().ready(function(){
 			]
 		});  
 		</script>
-
 </body>
 </html>

@@ -5,14 +5,11 @@
 <head>
 <meta charset="UTF-8">
 <title>devGround</title>
-<script src="/js/lib/jquery-3.7.1.js"></script> 
+<jsp:include page="../layout/header.jsp"/>
 <script src="./js/swiper.min.js"></script>
 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
-<jsp:include page="../layout/header.jsp"/>
-<link rel="stylesheet" type="text/css" href="/css/common.css" />
 <style>
-
 	/*swiper제어*/
    .swiper-slide img {
        position: relative;
@@ -163,21 +160,21 @@
 </style>
 </head>
 <body>
-    <div class="swiper-container">
-        <div class="swiper-wrapper">
-            <div class="swiper-slide">
-                <img src="https://asset.programmers.co.kr/image/origin/production/competition/167560/e8ef54c9-7dd9-460c-a1fb-5f4845a64e0f.jpg" alt="데브 게시판 표시">
-            </div>
-            <div class="swiper-slide">
-                <img src="https://asset.programmers.co.kr/image/origin/production/competition/166055/a73b3c4b-1be8-4c34-b5ff-7fd691bf529b.png" alt="데브 게시판 표시">
-            </div>
-            <div class="swiper-slide">
-                <img src="https://asset.programmers.co.kr/image/origin/production/competition/168189/e31a3bf1-8c84-4169-81af-c74a9aa1880e.jpg" alt="데브 게시판 표시">
-            </div>
-          </div>
-          <div class="swiper-button-prev"></div>
-          <div class="swiper-button-next"></div>
-    </div>
+<div class="swiper-container">
+    <div class="swiper-wrapper">
+        <div class="swiper-slide">
+            <img src="https://asset.programmers.co.kr/image/origin/production/competition/167560/e8ef54c9-7dd9-460c-a1fb-5f4845a64e0f.jpg" alt="데브 게시판 표시">
+        </div>
+        <div class="swiper-slide">
+            <img src="https://asset.programmers.co.kr/image/origin/production/competition/166055/a73b3c4b-1be8-4c34-b5ff-7fd691bf529b.png" alt="데브 게시판 표시">
+        </div>
+        <div class="swiper-slide">
+            <img src="https://asset.programmers.co.kr/image/origin/production/competition/168189/e31a3bf1-8c84-4169-81af-c74a9aa1880e.jpg" alt="데브 게시판 표시">
+        </div>
+      </div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div>
+</div>
 	<div class="body_container">
     <div id="wrap" class="wrap">
         <!-- 좌측 툴바 -->
@@ -253,7 +250,6 @@
                                                 <td class="pratice_03">${freeboard.postDate}</td>
                                                 <td class="pratice_04">${freeboard.viewCnt}</td>
                                             </tr>
-                                            
                                         </c:forEach>
                                     </tbody>
                                 </table>
@@ -263,13 +259,13 @@
                  </main>
                  </section>
                  </div>
-    		 <div class="body_right_aside">
-    		 <div class="body-right">
-    		 <!-- 오른쪽 -->
-	             <div class="advertising">
-		              <a href="https://blog.naver.com/roborang/221827208404">
-		              	<img class="why_code" src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMDAyMjZfOTcg%2FMDAxNTgyNzAzOTk2MzQ1.bsJ-QZhJSxCCLwgYAk4ibsKrPqHNk-7SlEYEowKsf6Ug.MReP1pZZeA_b7SBVMUbJUspOftiFOZ-_rvBxkWVktmIg.PNG.roborang%2F%25C4%25DA%25B5%25F9%25B1%25B3%25C0%25B0_%25BF%25D6_%25C7%25D8%25BE%25DF_%25C7%25D2%25B1%25EE%25BF%25E4.png&type=sc960_832">
-		              </a> 
+    		 	<div class="body_right_aside">
+    		 	<div class="body-right">
+    		 	<!-- 오른쪽 -->
+	            <div class="advertising">
+	              <a href="https://blog.naver.com/roborang/221827208404">
+	              	<img class="why_code" src="https://search.pstatic.net/common/?src=http%3A%2F%2Fblogfiles.naver.net%2FMjAyMDAyMjZfOTcg%2FMDAxNTgyNzAzOTk2MzQ1.bsJ-QZhJSxCCLwgYAk4ibsKrPqHNk-7SlEYEowKsf6Ug.MReP1pZZeA_b7SBVMUbJUspOftiFOZ-_rvBxkWVktmIg.PNG.roborang%2F%25C4%25DA%25B5%25F9%25B1%25B3%25C0%25B0_%25BF%25D6_%25C7%25D8%25BE%25DF_%25C7%25D2%25B1%25EE%25BF%25E4.png&type=sc960_832">
+	              </a> 
 	            </div>
 	            <div class="viedo_ver">
 	                <a href="https://www.youtube.com/watch?v=iI0s1JtKpy8">
@@ -300,10 +296,8 @@
             console.error('에러 발생:', error);
         });
     }
-
     // 페이지 로딩 시 초기 조회수 업데이트를 수행합니다.
     updateViewCount();
-
     // 페이지 뷰 시 매번 업데이트하는 대신, 필요한 이벤트(예: 게시물 뷰)에서 호출하세요.
     // updateViewCount();
 });

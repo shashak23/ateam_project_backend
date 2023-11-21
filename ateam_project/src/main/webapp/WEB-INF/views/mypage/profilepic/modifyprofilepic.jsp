@@ -68,7 +68,6 @@ body {
 			</div>
 		</div>
 
-		<input type="submit" value="수정" />
 		<button>
 			<a href="/memberInfo/modify/delete-profile-pic/${memberVO.email}">삭제</a>
 		</button>
