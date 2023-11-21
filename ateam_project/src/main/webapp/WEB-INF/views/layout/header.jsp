@@ -27,7 +27,7 @@
         var email = "${sessionScope._LOGIN_USER_.email}";
     </c:if>
     var send = undefined;
-	
+ 	
     $().ready(function() {
         <c:if test="${not empty sessionScope._LOGIN_USER_}">
             send = connectSocket("${sessionScope._LOGIN_USER_.nickname}", "${sessionScope._LOGIN_USER_.email}", function(send, receiveMessage) {
@@ -74,17 +74,19 @@
 				"action": "/home/search"
 			}).submit()
 		});
+        
+        $("#homeMove").click(function(){
+        	location.href = "/devground/home";
+        })
     });
 </script>
-	<!-- <link rel="stylesheet" href="/css/style.css">  -->
 	<link rel="stylesheet" href="/css/common.css">
 </head>
 <body>
   <div class="header_container">
     <section class="header">
       <div class="logo_wrap">
-        <span class="logo_img"><a href="/devground/home"></a></span>
-        <div class="logo_name"><a href="/devground/home">devGround</a></div>
+        <img src="../images/logo-final.png" id="homeMove" style="cursor: pointer;"/>
       </div>
       <nav class="gnb">
         <ul>
