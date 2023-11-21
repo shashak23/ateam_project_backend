@@ -1,7 +1,16 @@
 @charset "UTF-8";
+/* Font */
+@font-face {
+	font-family: 'IBM Plex Sans KR, sans-serif';
+	src:
+		url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500&display=swap');
+	font-weight: normal;
+	font-style:  normal;
+}
 
 /* 작성자: 김태현
    작성일: 23-10-23
+   수정일: 23-11-21
    내용: 공통 CSS 요소를 모아놓은 공간 */
 /* Variables */
 :root {
@@ -187,10 +196,10 @@ html {
 
 /* Fonts */
 *:lang(en) {
-    font-family: 'Open Sans', sans-serif;
+    font-family: 'IBM Plex Sans KR', sans-serif;
 }
 *:lang(ko-KR) {
-    font-family: 'Noto Sans KR', sans-serif;
+    font-family: 'IBM Plex Sans KR', sans-serif;
 }
 .bold {
     font-weight: bold;

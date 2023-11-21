@@ -8,6 +8,8 @@
 <title>기업회원가입 승인/거절</title>
 </head>
 <script src="/js/lib/jquery-3.7.1.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script type="text/javascript">
     $().ready(function() {
         $(".approval").click(function(){
@@ -17,7 +19,10 @@
             console.log(companyEmail)
             // console.log(e.target)
             $.post("/admin/companymember", {val: val, companyEmail: companyEmail}, function(response) {
-                alert("처리 완료")
+                Swal.fire({
+		         	  text: "처리 완료",
+		         	  icon: "success"
+		         	});
                 location.reload()
             });
             // $(document).on("click", function(){
@@ -31,7 +36,10 @@
             console.log(companyEmail)
             // console.log(e.target)
             $.post("/admin/companymember", {val: val, companyEmail: companyEmail}, function(response) {
-                alert("처리 완료")
+            	Swal.fire({
+		         	  text: "처리 완료",
+		         	  icon: "success"
+		         	});
                 location.reload()
             })
             // $(document).on("click", function(){

@@ -15,9 +15,11 @@
 <link rel="stylesheet" type="text/css" href="/css/common.css" />
 <script src="/js/lib/jquery-3.7.1.js"></script>
 <jsp:include page="../layout/header.jsp" />
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <style>
 @charset "utf-8";
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap');/*글꼴을 가져오는 페이지*/
 
 .flex_button {
   display: flex;
@@ -1298,7 +1300,10 @@ $(document).on('click', '#reportUser', function() {
 			  if ($(e.currentTarget).hasClass('follow_on')) {
 				$.post('/unfollow/member', content, function(result) {
 				  if (result.result === false) {
-					alert('삐') 
+					  Swal.fire({
+			         	  text: "삐-------",
+			         	  icon: "warning"
+			         	}); 
 				  }
 				  else {
 					$(e.currentTarget).removeClass('follow_on')
@@ -1326,7 +1331,10 @@ $(document).on('click', '#reportUser', function() {
 			        })
 				   }
 				   else {
-					 alert('처리하지 못했습니다.')
+					   Swal.fire({
+				         	  text: "처리하지 못 했습니당",
+				         	  icon: "warning"
+				         	});
 				  }
 				})
 			  }
