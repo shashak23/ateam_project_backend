@@ -10,11 +10,10 @@
     <meta name="viewport" id="viewport" content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, width=device-width"/>
     <title>devGround</title>
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-<!--     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
- -->    
  	<link rel="stylesheet" type="text/css" href="/css/common.css" />
     <script src="js/lib/jquery-3.7.1.js"></script>    
     <jsp:include page="../layout/header.jsp"/>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <style>
    a:link, a:hover, a:visited, a:active {
@@ -198,13 +197,6 @@
    .modal_content_element > label {
       width: 20%;
    }
-   /*
-   select[name=reportReason],
-   textarea[name=reportReasonContent],
-   input[name=attachedImg] {
-      width: 60%;
-   }
-   */
    select[name=reportReason] {
       height: 30px;
    }
@@ -290,7 +282,6 @@
       margin: 0 auto;
       margin-right: 10px;
    }
-
 
 /* button align */
 .btn_controller {
@@ -491,7 +482,10 @@ $().ready(function() {
                       deleteButton.closest(".comment").remove();
                   } else {
                       // 삭제에 실패한 경우 오류 메시지를 표시하거나 다른 조치를 취합니다.
-                      alert("댓글 삭제에 실패했습니다.");
+                	  Swal.fire({
+                    	  text: "댓글 삭제에 실패했습니다 ㅠㅠ",
+                    	  icon: "error"
+                    	});
                   }
               });
           }
@@ -513,10 +507,16 @@ $().ready(function() {
                   var currentCount = parseInt(likeOneComment.text().split(" ")[1].trim());
                   console.log(currentCount)
                   likeOneComment.text("추천수: " + (currentCount + 1));
-                  alert("댓글이 추천되었습니다.");
+                  Swal.fire({
+                	  text: "추천됐습니다 감사링",
+                	  icon: "success"
+                	});
               } else {
                   // 추천에 실패한 경우 오류 메시지를 표시하거나 다른 조치를 취합니다.
-                  alert("댓글 추천에 실패했습니다.");
+            	  Swal.fire({
+                	  text: "추천에 실패했습니다 ㅠㅠ",
+                	  icon: "error"
+                	});
                }
           });
       }
@@ -557,11 +557,17 @@ $().ready(function() {
                  },
                success: function(response) {
                    /* $("likeModal").hide(); */
-                   alert("좋아요가 눌렸습니다!!!!!!!!!!!!");
+            	   Swal.fire({
+                 	  text: "추천됐습니다 감사링",
+                 	  icon: "success"
+                 	});
                  },
                error: function(error){
                    /* $("#likeModal").hide(); */
-                   alert("오류가 발생했습니다~~~~~~~~~~~~");
+            	   Swal.fire({
+                 	  text: "좋아요에 실패했습니다 ㅠㅠ",
+                 	  icon: "error"
+                 	});
                  }
            })
        });
