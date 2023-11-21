@@ -71,11 +71,17 @@
           let result = response.result
           if (result) {
             load_hashtag()
-            alert('성공')
+            Swal.fire({
+		         	  text: "성공스",
+		         	  icon: "success"
+		         	});
             $('#codeContent').val('')
           }
           else {
-            alert('실패!')
+        	  Swal.fire({
+	         	  text: "실패스",
+	         	  icon: "warning"
+	         	});
             console.log($('#codeContent').val())
             console.log(body)
           }
