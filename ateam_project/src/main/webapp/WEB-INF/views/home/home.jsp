@@ -314,11 +314,44 @@
   .body_right .ranking_wrap ul .hot_post a {
     width: 270px;
     color: var(--dark);
-    display: block;
-    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    padding: 10px;
+  }
+
+  .body_right .ranking_wrap ul .hot_post a .ranking_number {
+    width: 21px;
+    font-size: 18px;
+    font-weight: bold;
+    margin-right: 8px;
+    text-align: center;
+  }
+
+  .body_right .ranking_wrap ul .hot_post a .ranking_number.top_three {
+    color: coral;
+  }
+
+  .body_right .ranking_wrap ul .hot_post a img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    margin-right: 10px;
+  }
+  
+  .body_right .ranking_wrap ul .hot_post a .main_ranking_content_wrap {
+    width: 170px;
+  }
+
+  .body_right .ranking_wrap ul .hot_post a .main_ranking_nickname {
+    color: var(--dark-gray);
+  }
+
+  .body_right .ranking_wrap ul .hot_post a .main_ranking_title {
     overflow: hidden;
-    text-overflow: ellipsis;
     white-space: nowrap;
+    text-overflow: ellipsis;
+    color: var(--deep-dark);
+    font-size: 12pt;
   }
 
   .recommend_container {
@@ -739,7 +772,7 @@
       </div>
       <div class="body_right">
         <div class="ranking_wrap">
-          <h2 class="align-center">주간랭킹</h2>
+          <h2 class="align-center">주간 인기 TOP10</h2>
           <ul class="ranking_list">
           </ul>
         </div>
@@ -1361,22 +1394,37 @@
     const daysAfterTargetDay = currentDay - targetDay
 
     const prevMonday = new Date(today)
+    const prevPrevMonday = new Date(today)
+
     prevMonday.setDate(today.getDate() - daysAfterTargetDay + 1)
+    prevPrevMonday.setDate(today.getDate() - 7 - daysAfterTargetDay + 1)
     
     const year = prevMonday.getFullYear()
     const month = String(prevMonday.getMonth() + 1).padStart(2, '0')
     const day = String(prevMonday.getDate()).padStart(2, '0')
+    const prevYear = prevPrevMonday.getFullYear()
+    const prevMonth = String(prevPrevMonday.getMonth() + 1).padStart(2, '0')
+    const prevDay = String(prevPrevMonday.getDate()).padStart(2, '0')
 
     const formattedMonday = year + '-' + month + '-' + day
+    const formattedPrevMonday = prevYear + '-' + prevMonth + '-' + prevDay
 
-    $.get('/home/ranking/\${formattedMonday}', function(response) {
+    $.get(`/home/ranking/\${formattedMonday}`, function(response) {
+      console.log(response)
       let list = response.rankings
       for (let i = 0; i < 10; i++) {
 
         if (list[i].boardId === 'CC-20231017-000029') {
           let ranking_template = `
             <li class="hot_post">
-            <a href="/freeboard/view/\${list[i].generalPostId}" target="_blank" class="small">\${list[i].postTitle}</a>
+              <a href="/freeboard/view/\${list[i].generalPostId}" target="_blank" class="small">
+                <div class="ranking_number">\${i+1}</div>
+                <img src="/member/file/download/\${list[i].postWriter}" onerror="this.src='https://w7.pngwing.com/pngs/384/868/png-transparent-person-profile-avatar-user-basic-ui-icon.png';" />
+                <div class="main_ranking_content_wrap">
+                  <div class="main_ranking_nickname small">\${list[i].memberVO.nickname}</div>
+                  <div class="main_ranking_title">\${list[i].postTitle}</div>
+                </div>
+              </a>
             </li>`
           let ranking_templateDom = $(ranking_template)
 
@@ -1384,10 +1432,21 @@
         }
         else {
           let ranking_template = `
-            <li class="hot_post">
-            <a href="/qnaboard/view/\${list[i].generalPostId}" target="_blank" class="small">\${list[i].postTitle}</a>
+          <li class="hot_post">
+              <a href="/qnaboard/view/\${list[i].generalPostId}" target="_blank" class="small">
+                <div class="ranking_number">\${i+1}</div>
+                <img src="/member/file/download/\${list[i].postWriter}" onerror="this.src='https://w7.pngwing.com/pngs/384/868/png-transparent-person-profile-avatar-user-basic-ui-icon.png';" />
+                <div class="main_ranking_content_wrap">
+                  <div class="main_ranking_nickname small">\${list[i].memberVO.nickname}</div>
+                  <div class="main_ranking_title">\${list[i].postTitle}</div>
+                </div>
+              </a>
             </li>`
           let ranking_templateDom = $(ranking_template)
+
+          if (ranking_templateDom.find('.ranking_number').text() < 4) {
+            ranking_templateDom.find('.ranking_number').addClass('top_three')
+          }
 
           $('.ranking_list').append(ranking_templateDom)
         }

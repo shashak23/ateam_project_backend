@@ -16,6 +16,15 @@
 		    <id column="CODE_ID" property="codeId" />
 		</association>
 	</resultMap>
+	
+	<resultMap type="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO" id="rankingMap" autoMapping="true">
+		<id column="GENERAL_POST_ID" property="generalPostId" />
+		<association property="memberVO"
+					 javaType="com.ktdsuniversity.edu.member.vo.MemberVO"
+					 autoMapping="true">
+			<id column="EMAIL" property="email" />
+		</association>
+	</resultMap>
 	<select id="getAllGeneralPost"
 			resultType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
 		SELECT GENERAL_POST_ID
@@ -54,11 +63,20 @@
 	
 	<select id="getWeeklyRanking"
 			parameterType="string"
-			resultType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
+			resultMap="rankingMap">
 		SELECT *
-		  FROM GENERAL_POST GP
-		 WHERE TO_CHAR(POST_DATE, 'YYYY-MM-DD') <![CDATA[>=]]> #{_parameter}
-		 ORDER BY VIEW_CNT DESC
+		  FROM (SELECT GP.GENERAL_POST_ID
+					 , GP.POST_WRITER
+					 , GP.POST_TITLE
+					 , M.NICKNAME 
+					 , M.PROFILE_PIC 
+				  FROM GENERAL_POST GP
+				 INNER JOIN MEMBER M
+				    ON GP.POST_WRITER = M.EMAIL
+				 WHERE TO_CHAR(POST_DATE, 'YYYY-MM-DD') <![CDATA[<]]> #{_parameter}
+				   AND TO_CHAR(POST_DATE, 'YYYY-MM-DD') >= TO_DATE(#{_parameter}) - 7
+				 ORDER BY VIEW_CNT DESC) GPM
+		 WHERE ROWNUM <![CDATA[<=]]> 10
 	</select>
 	<select id="getHashtag"
 			parameterType="string"
