@@ -144,7 +144,8 @@
   			 ON R.REPORT_REASON = CC.CODE_ID
   		   LEFT JOIN COMMON_CODE C
   			 ON R.REPORT_TYPE_ID = C.CODE_ID
-  		  ORDER BY R.REPORT_DATE DESC
+  		  ORDER BY R.PROGRESS_YN 
+  		  	  , R.REPORT_DATE DESC
   	</select>
 
 	<select id="singleReport"

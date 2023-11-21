@@ -347,7 +347,7 @@
   .report_title,
   .report_list_group {
     display: grid;
-    grid-template-columns: 50px 80px 640px 170px 120px;
+    grid-template-columns: 80px 100px 590px 170px 120px;
     column-gap: 10px;
     color: #888;
   }
@@ -821,10 +821,16 @@
     color: #e05454;
     font-size: 9pt;
   }
+  
+  .report_container .report_confirm div {
+    display: inline-block;
+    text-align: center;
+    width: 70px;
+    color: var(--dark);
+  }
 
-  .report_container .report_confirm.progressing {
+  .report_container .report_confirm.progressing div {
     color: red;
-    background-color: #ffdada;
     font-weight: bold;
   }
 
@@ -1777,11 +1783,11 @@
           <div class="report_list_group">
             <div class="report_id">\${response.length - i}</div>
             <div class="report_confirm">
-              \${report.progressYn}
+              <div>\${report.progressYn}</div>
             </div>
             <div class="report_content">
               <span class="report_view_btn" data-id="\${report.reportId}" data-progress="\${report.progressYn}">
-                <strong>\${report.reportReasonContent}</strong>
+                \${report.reportReasonContent}
               </span>
             </div>
             <div class="report_reason">\${report_reason}</div>
@@ -1791,6 +1797,13 @@
           </div>
         </div>`
         reportTemplateDom = $(reportTemplate)
+
+        if (reportTemplateDom.find('.report_view_btn').data('progress') === 'Y') {
+          reportTemplateDom.find('.report_view_btn').css('color', 'var(--gray)')
+        }
+        else {
+          reportTemplateDom.find('.report_view_btn').css('font-weight', 'bold')
+        }
 
         if (report.reportReasonContent.includes(val) || report_reason.includes(val)) {
           $('.report_modal').find('.desc-content').append(reportTemplateDom)
@@ -1890,14 +1903,16 @@
 
         let url = '/home/admin/person/delete/' + emailNode[0].nodeValue
 
-        $.get(url, function(response) {
-          if (confirm('정말 탈퇴시키겠습니까?') && response.result === 'success') {
-            alert('탈퇴 처리하였습니다.')
-          }
-          else {
-            alert('탈퇴 처리에 실패했습니다.')
-          }
-        })
+        if (confirm('정말 탈퇴 시키겠습니까?')) {
+          $.get(url, function(response) {
+            if (response.result === 'success') {
+              alert('탈퇴가 완료되었습니다.')
+            }
+            else {
+              alert('탈퇴처리에 실패했습니다.')
+            }
+          })
+        }
       })
 
       $('.report_btn_wrap button').click(function() {
@@ -1905,10 +1920,10 @@
 
         if (confirm('정말 처리 완료하시겠습니까?')) {
           $.get(`/admin/report/progress/\${reportId}`, function(response) {
-             console.log(response)
-             console.log(reportId)
             if (response.result === 'success') {
               alert('처리 완료하였습니다.')
+              $('.report_close_btn').trigger('click')
+              loadReportList()
             }
           })
         }

@@ -11,6 +11,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,7 +45,6 @@ import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 import com.ktdsuniversity.edu.generalpost.service.GeneralPostService;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostListVO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
-import com.ktdsuniversity.edu.generalposthashtag.vo.HashtagVO;
 import com.ktdsuniversity.edu.home.service.HomeBoardService;
 import com.ktdsuniversity.edu.home.vo.HomeBoardVO;
 import com.ktdsuniversity.edu.home.vo.HomeNickNameVO;
@@ -94,6 +95,8 @@ public class HomeController {
 
 	@Autowired
 	private FileHandler fileHandler;
+	
+	private Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	
 	@GetMapping("/devground/home")
@@ -334,7 +337,9 @@ public class HomeController {
 		GeneralMemberVO generalMemberVO = new GeneralMemberVO();
 		generalMemberVO.setGeneralMemberEmail(memberEmail);
 		generalMemberVO.setTierId(tierId);
-		System.out.println("두 업데이트 실행중");
+		logger.debug("이메일을 보여주거라."+ generalMemberVO.getGeneralMemberEmail());
+		logger.debug(memberEmail);
+		logger.debug("티어를 보여주거라."+ generalMemberVO.getTierId());
 		boolean isSuccess = tierService.doUpdateTierMember(generalMemberVO);
 		
 		if (isSuccess) {

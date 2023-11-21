@@ -392,8 +392,7 @@
     height: 50px;
   }
 
-  .rand_notice_container,
-  .report_container {
+  .rand_notice_container {
     visibility: hidden;
     position: fixed;
     top: 50%;
@@ -487,11 +486,11 @@
     border: var(--gray);
     color: var(--dark-gray);
   }
-
+/* 
   .create_container > *,
   .report_container div {
 		margin-bottom: 10px;
-	}
+	} */
 
   .post_title_label,
 	.post_content_label {

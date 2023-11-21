@@ -98,6 +98,10 @@ public class GeneralMemberDAOImpl extends SqlSessionDaoSupport implements Genera
 		return getSqlSession().update("updateTierDate", generalMemberVO);
 	}
 	@Override
+	public int completeTierUpgrade(String email) {
+		return getSqlSession().delete("completeTierUpgrade", email);
+	}
+	@Override
 	public List<Map<String, Object>> selectMemberActivityLog(String generalMemberEmail) {
 		return getSqlSession().selectList("selectMemberActivityLog", generalMemberEmail);
 	}
