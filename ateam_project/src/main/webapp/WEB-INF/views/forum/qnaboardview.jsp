@@ -42,6 +42,9 @@ a:link, a:hover, a:visited, a:active {
    .post_content {
       padding: 30px;
    }
+   .post_content img {
+      max-width: 750px;
+   }
    .space_between {
       margin: 30px 0 20px 20px;
    }
