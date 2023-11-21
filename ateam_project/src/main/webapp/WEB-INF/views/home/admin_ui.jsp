@@ -1360,7 +1360,7 @@
       $.get(url, function(response) {
         if (response.result === 'success') {
         	Swal.fire({
-           	  text: "성공적으로 탈퇴했습니다",
+           	  text: "탈퇴처리 하였습니다.",
            	  icon: "success"
            	});
           $('.personal_modal').find('.desc-content').empty()
