@@ -516,7 +516,7 @@ $(document).on('click', '#reportQnABoard', function() {
                   } else {
                       // 삭제에 실패한 경우 오류 메시지를 표시하거나 다른 조치를 취합니다.
                 	  Swal.fire({
-                    	  text: "댓글 삭제에 실패했습니다 ㅠㅠ",
+                    	  text: "댓글 삭제에 실패했습니다",
                     	  icon: "error"
                     	});
                   }
@@ -542,13 +542,13 @@ $(document).on('click', '#reportQnABoard', function() {
                   console.log(currentCount)
                   likeOneComment.text("추천수: " + (currentCount + 1));
                   Swal.fire({
-                	  text: "추천됐습니다 감사링",
+                	  text: "추천됐습니다",
                 	  icon: "success"
                 	});
               } else {
                   // 추천에 실패한 경우 오류 메시지를 표시하거나 다른 조치를 취합니다.
             	  Swal.fire({
-                	  text: "추천에 실패했습니다 ㅠㅠ",
+                	  text: "추천에 실패했습니다",
                 	  icon: "error"
                 	});
                }
@@ -587,18 +587,18 @@ $(document).on('click', '#reportQnABoard', function() {
                 },
               success: function(response) {
             	  Swal.fire({
-                	  text: "추천됐습니다 감사링",
+                	  text: "추천됐습니다",
                 	  icon: "success"
                 	});
                 },
               error: function(error){
             	  Swal.fire({
-                	  text: "추천에 실패했습니다 ㅠㅠ",
+                	  text: "추천에 실패했습니다",
                 	  icon: "error"
                 	});
                 }
           })
-      });   
+      });
    });
     
 

@@ -8,10 +8,20 @@
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <style>
 	/*swiper제어*/
-   .swiper-container{
-   		height: 331px;
-   		overflow: hidden;
-   }
+	.swiper-container{
+		max-height: 450px;
+		overflow: hidden;
+		position: relative;
+	}
+	
+	.swiper-container img {
+		max-height: 450px;
+	}
+	
+	.swiper-wrapper {
+		height: auto;
+	}
+	
    .swiper-slide img {
        position: relative;
 	   max-width: 100%;
@@ -21,16 +31,16 @@
 
    .swiper-button-prev,
    .swiper-button-next {
-       margin-top: -100px;
+       position: absolute;
+       margin-top: 0px;
    }
 	/* 본문 */
    .wrap {
 	   display: flex;
 	   justify-content: center;
 	   margin: 0 auto;
-	   
    }
-
+   
    .container {
        display: inline-block;
        width: 1080px;
@@ -302,7 +312,12 @@
     // 페이지 뷰 시 매번 업데이트하는 대신, 필요한 이벤트(예: 게시물 뷰)에서 호출하세요.
     // updateViewCount();
 });
-
+        
+        var swiperImagesHeight = $(".swiper-container img").height() / 2
+        
+        $(".swiper-button-prev").css("top", swiperImagesHeight - 22)
+        $(".swiper-button-next").css("top", swiperImagesHeight - 22)
+        
         // 미완성된 기능을 알려주는 모달창
         $('.incomplete').click(function() {
             $('.modal, .overlay').addClass('modal_active')
@@ -353,7 +368,7 @@
 
   // autoplay 속성을 사용하여 자동 전환을 활성화하고 설정합니다.
   autoplay: {
-    delay: 2000, // 슬라이드 간의 전환 지연 시간 (밀리초)
+    delay: 4000, // 슬라이드 간의 전환 지연 시간 (밀리초)
     disableOnInteraction: false, // 사용자 상호 작용 후에도 자동 전환을 유지할지 여부
   },
   
@@ -362,6 +377,13 @@
     prevEl: '.swiper-button-prev'
   }
 });
+       
+       $(window).resize(function() {
+    	   var swiperImagesHeight = $(".swiper-container img").height() / 2
+           
+           $(".swiper-button-prev").css("top", swiperImagesHeight - 22)
+           $(".swiper-button-next").css("top", swiperImagesHeight - 22)
+       })
 </script>
 </body>
 </html>
