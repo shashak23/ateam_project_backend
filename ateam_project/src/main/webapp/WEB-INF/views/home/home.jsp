@@ -27,8 +27,8 @@
   }
   .admin_container {
     position: fixed;
-    top: 170px;
-    left: 50px;
+    top: 50px;
+    right: 50px;
     z-index: 1;
   }
 
@@ -136,8 +136,8 @@
 	.body_left .content_container .writer_info_area .flex_left img {
 		width: 36px;
 		height: 36px;
-		background-color: var(--light-gray);
 		margin-right: 10px;
+    border: 1px solid var(--light-gray);
 		border-radius: 50%;
 	}
 
@@ -407,7 +407,7 @@
       border-radius: 10px;
       background-color: var(--white);
       outline: none;
-      padding: 5px 40px;
+      padding: 5px 20px;
       margin: 20px 0;
   }
 
@@ -426,7 +426,8 @@
     height: 50px;
   }
 
-  .rand_notice_container {
+  .rand_notice_container,
+  .main_report_container {
     visibility: hidden;
     position: fixed;
     top: 50%;
@@ -445,24 +446,24 @@
   }
 
   .rand_notice_container.active,
-  .report_container.active {
+  .main_report_container.active {
     visibility: visible;
     opacity: 1;
     transform: translate(-50%, -50%);
   }
 
-  .report_container {
+  .main_report_container {
     display: flex;
     flex-direction: column;
     align-items: center;
   }
 
-  .report_container label {
+  .main_report_container label {
     width: 100px;
     font-size: var(--font-small);
   }
 
-  .report_container h2 {
+  .main_report_container h2 {
     margin-bottom: 20px;
   }
 
@@ -474,11 +475,13 @@
   .report_attached_wrap {
     display: flex;
     align-items: center;
+    margin-bottom: 10px;
   }
 
   .report_detail_wrap {
     display: flex;
     align-items: flex-start;
+    margin-bottom: 10px;
   }
 
   .report_detail_wrap #report_detail {
@@ -492,6 +495,7 @@
 
   .report_attached_wrap #report_attached {
     display: none;
+    margin-bottom: 10px;
   }
 
   .report_attached_wrap .report_attached_text {
@@ -1147,7 +1151,7 @@
               <article class="content_container">
                 <div class="writer_info_area">
                   <div class="flex_left">
-                    <img src="/member/file/download/\${email}" onerror="this.src='https://w7.pngwing.com/pngs/384/868/png-transparent-person-profile-avatar-user-basic-ui-icon.png';" alt="\${pokemon}"/>
+                    <img src="/member/file/download/\${email}" onerror="this.src='/images/gray_man.png';" alt="\${pokemon}"/>
                     <div>
                       <div class="writer_name">
                         <a href="/memberinfo/view/\${email}">\${nickname}</a>
@@ -1165,10 +1169,10 @@
                         <input type="hidden" class="postId" value="\${article.generalPostId}"/>
                         <input type="hidden" class="boardId" value="\${article.boardId}" />
                         <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><style>svg{fill:(--blue)}</style><path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/></svg></button>
-                        <svg class="report_btn" width="36" height="31" viewBox="0 0 36 31" fill=None xmlns="http://www.w3.org/2000/svg" data-post-id="\${article.boardId}" data-writer-email="\${email}">
-                          <rect y="24" width="36" height="7" rx="3" fill="#FF6550"/>
-                          <path fill-rule="evenodd" clip-rule="evenodd" d="M11 21H32L29.4906 3.43431C29.2091 1.46372 27.5214 0 25.5308 0H10.4692C8.47858 0 6.7909 1.46372 6.50938 3.43431L4 21H8L9.83237 6.82325C9.92824 6.08155 10.5598 5.52632 11.3077 5.52632C12.205 5.52632 12.8981 6.31473 12.7831 7.20463L11 21Z" fill="#FF6550"/>
-                        </svg>
+                      <svg class="report_btn" width="36" height="31" viewBox="0 0 36 31" fill=None xmlns="http://www.w3.org/2000/svg" data-post-id="\${article.generalPostId}" data-writer-email="\${email}">
+                        <rect y="24" width="36" height="7" rx="3" fill="#FF6550"/>
+                        <path fill-rule="evenodd" clip-rule="evenodd" d="M11 21H32L29.4906 3.43431C29.2091 1.46372 27.5214 0 25.5308 0H10.4692C8.47858 0 6.7909 1.46372 6.50938 3.43431L4 21H8L9.83237 6.82325C9.92824 6.08155 10.5598 5.52632 11.3077 5.52632C12.205 5.52632 12.8981 6.31473 12.7831 7.20463L11 21Z" fill="#FF6550"/>
+                      </svg>
                     </div>
                   </div>
                 </div>
@@ -1419,7 +1423,7 @@
             <li class="hot_post">
               <a href="/freeboard/view/\${list[i].generalPostId}" target="_blank" class="small">
                 <div class="ranking_number">\${i+1}</div>
-                <img src="/member/file/download/\${list[i].postWriter}" onerror="this.src='https://w7.pngwing.com/pngs/384/868/png-transparent-person-profile-avatar-user-basic-ui-icon.png';" />
+                <img src="/member/file/download/\${list[i].postWriter}" onerror="this.src='/images/gray_man.png';" />
                 <div class="main_ranking_content_wrap">
                   <div class="main_ranking_nickname small">\${list[i].memberVO.nickname}</div>
                   <div class="main_ranking_title">\${list[i].postTitle}</div>
@@ -1435,7 +1439,7 @@
           <li class="hot_post">
               <a href="/qnaboard/view/\${list[i].generalPostId}" target="_blank" class="small">
                 <div class="ranking_number">\${i+1}</div>
-                <img src="/member/file/download/\${list[i].postWriter}" onerror="this.src='https://w7.pngwing.com/pngs/384/868/png-transparent-person-profile-avatar-user-basic-ui-icon.png';" />
+                <img src="/member/file/download/\${list[i].postWriter}" onerror="this.src='/images/gray_man.png';" />
                 <div class="main_ranking_content_wrap">
                   <div class="main_ranking_nickname small">\${list[i].memberVO.nickname}</div>
                   <div class="main_ranking_title">\${list[i].postTitle}</div>
@@ -1553,7 +1557,7 @@
     }
 
     let reportTemplate = `
-      <div class="report_container">
+      <div class="main_report_container">
         <div class="report_close_btn x-large">&times;</div>
         <h2 class="xx-large">신고</h2>
         <form name="reportVO" method="post" action="/report/view/\${reportType}"
@@ -1591,7 +1595,7 @@
     let reportTemplateDom = $(reportTemplate)
 
     $('body').append(reportTemplateDom)
-    $('.report_container, .report_overlay').addClass('active')
+    $('.main_report_container, .report_overlay').addClass('active')
 
     $('.report_attached_text').click(function() {
       $('#report_attached').trigger('click')
@@ -1609,14 +1613,14 @@
     
     // 신고 닫기
     $('.report_close_btn, .report_overlay, .report_cancel_btn').click(function() {
-      $('.report_container, .report_overlay').removeClass('active')
+      $('.main_report_container, .report_overlay').removeClass('active')
       setTimeout(() => {
         reportTemplateDom.remove()
       }, 1000);
     })
     $('body').keyup(function(e) {
       if (e.key === 'Escape') {
-        $('.report_container, .report_overlay').removeClass('active')
+        $('.main_report_container, .report_overlay').removeClass('active')
         setTimeout(() => {
         reportTemplateDom.remove()
       }, 1000);
@@ -1830,7 +1834,7 @@
 
             if(i < totalMembers) {
               let member = recommendList[i]
-              let profilePic = 'https://w7.pngwing.com/pngs/384/868/png-transparent-person-profile-avatar-user-basic-ui-icon.png';
+              let profilePic = '/images/gray_man.png';
               let nickname = member.memberVO.nickname;
               let email = member.memberVO.email;
               
@@ -1842,7 +1846,7 @@
                 `<div class="memberList">
                     <div class="member_profile align-center">
                       <div>
-                        <img class="profile_pic" src="/member/file/download/\${email}" onerror="this.src='https://w7.pngwing.com/pngs/384/868/png-transparent-person-profile-avatar-user-basic-ui-icon.png';" />
+                        <img class="profile_pic" src="/member/file/download/\${email}" onerror="this.src='\${profilePic}';" />
                       </div>
                       <div class="recc_nickname">
                         <p>\${nickname}</p>

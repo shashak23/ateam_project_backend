@@ -1883,6 +1883,7 @@
       let reportId = $(this).data('id')
   
       $.get(`/admin/report/view/\${reportId}`, function(response) {
+        console.log(response)
         $('.detail_report_id').html('')
         $('.detail_report_id').html(response.reportId)
         $('.detail_report_date').html('')
