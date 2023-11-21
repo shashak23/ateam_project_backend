@@ -83,7 +83,7 @@
   <div class="header_container">
     <section class="header">
       <div class="logo_wrap">
-        <span class="logo_img"><a href="/devground/home">🎃</a></span>
+        <span class="logo_img"><a href="/devground/home"></a></span>
         <div class="logo_name"><a href="/devground/home">devGround</a></div>
       </div>
       <nav class="gnb">

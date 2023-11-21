@@ -18,11 +18,6 @@
 	   height: auto;
 	   overflow: hidden;
    }
-   
-   .swiper-wrapper .swiper-slide{
-   		height: 330px;
-   		overflow: hidden;
-   }
 
    .swiper-button-prev,
    .swiper-button-next {
