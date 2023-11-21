@@ -237,6 +237,7 @@ a:link, a:hover, a:visited, a:active {
    .submit_area {
       justify-content: flex-end;
    }
+   #report_comment_button,
    .submit_area > input[type=submit] {
       width: 80px;
       height: 40px;
@@ -327,6 +328,10 @@ a:link, a:hover, a:visited, a:active {
    cursor: pointer;
 
 }
+
+#reply-count {
+    color: #E55604;
+}
 </style>
 <script type="text/javascript">
 $(document).on('click', '#reportQnABoard', function() {
@@ -373,31 +378,36 @@ $(document).on('click', '#reportQnABoard', function() {
     $(document).ready(function() {
             var loadReplies = function() {
                 // 댓글 목록 삭제.
-                $(".comment-items").html("");
-
+               $(".comment-items").html("");
              // 댓글 조회.
-                $.get("/qnaboard/view/comment/${generalPostId}", function(response) {               
-                    // 댓글 목록을 response에서 받아와서 처리하는 부분
-                    var replies = response.comments;
-                    for (var i = 0; i < replies.length; i++) {
+               $.get("/qnaboard/view/comment/${generalPostId}", function(response) {               
+                     // 댓글 목록을 response에서 받아와서 처리하는 부분
+                     var replies = response.comments;
+                     var counts = response.count;
+                     if (counts < 1) {
+                        $(".comment-items").text("아직 등록된 댓글이 없습니다!")
+                     } 
+                     $("#reply-count").text(' (' +counts+ ')')
+                     $("#reply-count").val(counts)
+                     for (var i = 0; i < replies.length; i++) {
                         var comment = replies[i];
                         var commentTemplate =
-                            `<div class="comment"
-                               data-comment-id="\${comment.generalCommentId}"
-                               data-comment-writer-email="\${comment.commentWriter}"
-                                style="padding-left: \${(comment.level - 1) * 40}px">
-                                <div class="author">\${comment.generalMemberVO.nickname}</div>
-                                <div class="recommend-count">추천수: \${comment.likeCnt}</div>
-                                <div class="datetime">
-                                    <span class="crtdt">등록일: \${comment.postDate}</span>
-                                    \${comment.mdfyDt != comment.crtDt ? 
-                                        `<span class="mdfydt">(수정: \${comment.postDate})</span>`
-                                        : ""}
-                                </div>
+                            ` <div class="comment"
+                                    data-comment-id="\${comment.generalCommentId}"
+                                    data-comment-writer-email="\${comment.commentWriter}"
+                                    style="padding-left: \${(comment.level - 1) * 40}px">
+                                 <ul class="writer_info">
+                                    <li class='author'>\${comment.generalMemberVO.nickname}</li>
+                                    <li>|</li>
+                                    <li class='recommend-count'>추천수 \${comment.likeCnt}</li>
+                                    <li>|</li>
+                                    <li class='datetime'><span class="crtdt">\${comment.postDate}</span>
+                                       \${comment.mdfyDt != comment.crtDt ? `<span class="mdfydt">(수정: \${comment.postDate})</span>` : ""}
+                                    </li>
+                                 </ul>
                                 <pre class="content">\${comment.commentContent}</pre>
-                                \${comment.email == "${sessionScope._LOGIN_USER_.email}" ?
+                                \${comment.commentWriter == "${sessionScope._LOGIN_USER_.email}" ?
                                 	    `<div>
-                                	        <button class="recommend-comment">좋아요</button>
                                 	        <button class="update-comment">수정</button>
                                 	        <button class="delete-comment">삭제</button>
                                 	    </div>`
@@ -409,11 +419,11 @@ $(document).on('click', '#reportQnABoard', function() {
                                 	    </div>`}
                             </div>`;
                         var commentDom = $(commentTemplate);
-                  commentDom.find(".delete-comment").click(deleteComment);
-                  // 추천 버튼 클릭 이벤트 핸들러를 등록합니다.
-                  commentDom.find(".recommend-comment").click(recommendComment);
-                  commentDom.find(".update-comment").click(updateComment);
-                  commentDom.find(".report-comment").click(reportComment);
+                        commentDom.find(".delete-comment").click(deleteComment);
+                        // 추천 버튼 클릭 이벤트 핸들러를 등록합니다.
+                        commentDom.find(".recommend-comment").click(recommendComment);
+                        commentDom.find(".update-comment").click(updateComment);
+                        commentDom.find(".report-comment").click(reportComment);
                         $(".comment-items").append(commentDom);
                     }
                 })// $.get
@@ -423,19 +433,10 @@ $(document).on('click', '#reportQnABoard', function() {
    	  // 신고버튼 클릭
       $(".report-comment").click(reportComment);
       var reportComment = function(event) {
-    	  // 댓글 작성자
-    	  var writer = $(this).closest(".comment").data("comment-writer-email");
-    	  // 댓글의 고유 번호
-    	  var id = $(this).closest(".comment").data("comment-id");
-    	  
-    	  	// 필요한 값들을 찾으라고 일일히 지정해줘야 합니다
-	        $(this).find("#receivedReportMember").val(writer)
-	        $(this).find("#reportContentId").val(id)
-	        
-	        $.sweetModal({
+         $.sweetModal({
 			        title: '신고 내용',
 			        content: `
-			            <form name="reportVO" method="post" action="/report/view/4">
+			            <form id="report_comment_form" name="reportVO" method="post" action="/report/view/4">
 			                <div class="grid" style="grid-template-columns: 150px 1fr; grid-template-rows: 30px 100px 30px; row-gap: 10px;">
 			                    <label for="reportReason">신고사유</label>
 			                    <select name="reportReason">
@@ -446,7 +447,6 @@ $(document).on('click', '#reportQnABoard', function() {
 			                        <option value="CC-20231018-000204">이용규칙위반</option>
 			                        <option value="CC-20231018-000205">기타</option>
 			                    </select>
-			
 			                    <label for="reportReasonContent">신고 상세내용</label>
 			                    <textarea name="reportReasonContent" id="reportReasonContent"></textarea>
 			
@@ -455,15 +455,25 @@ $(document).on('click', '#reportQnABoard', function() {
 			
 			                    <input id="reportTypeId" type="hidden" name="reportTypeId" value="4"/>
 			                    <input id="reportMemberEmail" type="hidden" name="reportMember" value="${sessionScope._LOGIN_USER_.email}"/>
-			                    <input id="receivedReportMemberEmail" type="hidden" name="receivedReportMember" value="${generalPostVO.postWriter}"/>
-			                    <input id="reportContentId" type="hidden" name="reportContentId" value="${generalPostVO.generalPostId}"/>
+			                    <input id="receivedReportMemberEmail" type="hidden" name="receivedReportMember" value=""/>
+			                    <input id="reportContentId" type="hidden" name="reportContentId" value=""/>
 			                </div>
 			                <div class="modal_content_element submit_area btn_controller">
-			                    <input type="submit" value="완료" />
+			                    <input type='button' id="report_comment_button" value="완료" />
 			                </div>
 			            </form>`
-    		});
-      };
+                  });
+                  // 댓글 작성자
+                  var writer = $(this).closest(".comment").data("comment-writer-email");
+                  // 댓글의 고유 번호
+                  var id = $(this).closest(".comment").data("comment-id");
+                  $("#report_comment_button").click(function() {
+                     // 필요한 값들을 찾으라고 일일히 지정해줘야 합니다
+                     $("input[name=receivedReportMember]").val(writer)
+                     $("input[name=reportContentId]").val(id)
+                     $("#report_comment_form").submit()
+                  })
+         };
         // 등록버튼 클릭
         $("#btn-save-comment").click(function(event) {
 
@@ -513,6 +523,9 @@ $(document).on('click', '#reportQnABoard', function() {
                   if (response.result) {
                       // 삭제가 성공적으로 처리되면 댓글을 화면에서 제거합니다.
                       deleteButton.closest(".comment").remove();
+                      let new_count = $("#reply-count").val() -1;
+                      $("#reply-count").val(new_count);
+                      $("#reply-count").text(' (' +new_count+ ')');
                   } else {
                       // 삭제에 실패한 경우 오류 메시지를 표시하거나 다른 조치를 취합니다.
                 	  Swal.fire({
@@ -539,7 +552,6 @@ $(document).on('click', '#reportQnABoard', function() {
                   // 추천이 성공적으로 처리되면 추천 수를 업데이트합니다.
                   var likeOneComment = commentDom.find(".recommend-count");
                   var currentCount = parseInt(likeOneComment.text().split(" ")[1].trim());
-                  console.log(currentCount)
                   likeOneComment.text("추천수: " + (currentCount + 1));
                   Swal.fire({
                 	  text: "추천됐습니다 감사링",
@@ -597,10 +609,33 @@ $(document).on('click', '#reportQnABoard', function() {
                 	  icon: "error"
                 	});
                 }
-          })
-      });   
-   });
+            })
+         });   
+      });
     
+   $().ready(function() {
+      $("#delete-btn").click(function(e) {
+         e.preventDefault()
+         Swal.fire({
+            title: '정말로 삭제하시겠습니까?',
+            text: '다시 되돌릴 수 없습니다. 신중하세요.',
+            icon: 'warning',
+            showCancelButton: true, // cancel버튼 보이기. 기본은 원래 없음
+            confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
+            cancelButtonColor: '#d33', // cancel 버튼 색깔 지정
+            confirmButtonText: '승인', // confirm 버튼 텍스트 지정
+            cancelButtonText: '취소', // cancel 버튼 텍스트 지정
+            
+            reverseButtons: true, // 버튼 순서 거꾸로
+            
+         }).then(result => {
+            // 만약 Promise리턴을 받으면,
+            if (result.isConfirmed) { // 만약 모달창에서 confirm 버튼을 눌렀다면
+               $("#delete_post_form").submit()
+            }
+         });
+      })
+   })
 
 </script>
 </head>
@@ -611,7 +646,7 @@ $(document).on('click', '#reportQnABoard', function() {
             <div class="main_content">
                <div id="titleArea">
                   <form name="generalPostVO" method="post">
-                  <a href="/qnaboard/list"><p class="post_category">질답게시판 ></p></a>
+                  <a href="/qnaboard/list"><p class="post_category">질문답변 게시판 ></p></a>
                   <div class="post_title">${generalPostVO.postTitle}</div>
                   <ul class="writer_info">
                      <li>작성자 <a href="/memberinfo/view/${generalPostVO.postWriter}">${generalPostVO.memberVO.nickname}</a></li>
@@ -640,7 +675,10 @@ $(document).on('click', '#reportQnABoard', function() {
                   <div class="btn_controller">
                      <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq generalPostVO.postWriter}">
                         <button id="modify-btn"><a href="/qnaboard/update/${generalPostId}">수정✍</a></button>
-                        <button id="delete-btn"><a href="/qnaboard/delete/${generalPostId}">삭제🗑️</a></button>
+                        <form id="delete_post_form" method="post" action="/qnaboard/delete/${generalPostVO.generalPostId}"  modelAttribute="generalPostVO"  >
+                           <input type="hidden" name="generalPostId" value="${generalPostVO.generalPostId}"/>
+                           <button id="delete-btn">삭제🗑️</button>
+                        </form>
                      </c:if>
                   </div>
                </div>
@@ -658,7 +696,7 @@ $(document).on('click', '#reportQnABoard', function() {
                   <!-- 신고 버튼은 조회할때 사용<button id="btn-report-comment">신고</button> -->
                </div>
 	               <div class="comment-header">
-	                  <h3>댓글 목록</h3>
+	                  <h3>댓글 목록<span id="reply-count"></span></h3>
 	               </div>
                <div class="comment-items"></div>
             </div> 
