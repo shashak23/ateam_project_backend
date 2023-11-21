@@ -16,6 +16,7 @@
 <label>Blog 주소</label>
 <input type="text" id="blogUrl" name="blogUrl" value="${generalMemberVO.blogUrl}" placeholder="Blog Url">
 <input type="submit" value="수정" />
+<button class="modalCloseSNS">닫기</button>
 </form>
 </body>
 </html>

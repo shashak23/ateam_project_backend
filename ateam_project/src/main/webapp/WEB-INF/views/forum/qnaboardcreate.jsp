@@ -267,7 +267,11 @@ $().ready(function(){
 
     // 저장 버튼 클릭 이벤트 핸들러
     function savePost() {
-        $("#postForm").submit();
+		if(hashtagsArray.length <1) {
+			alert("")
+		}else {
+			$("#postForm").submit();
+		}
     }
     
 
@@ -279,7 +283,7 @@ $().ready(function(){
 
 		<div class="body">
 			<h3 class="title_name"> 질문답변 게시판 게시글 작성 </h3>
-			<form method="post" >
+			<form method="post" id="postForm" >
 				<div id="write_area">
 					<label for="postTitle">제목</label>
 					<input id="postTitle" type="text" name="postTitle" placeholder=" 제목을 입력하세요" />
@@ -297,11 +301,10 @@ $().ready(function(){
 							<input id="button_1" type="button" value="추가" onclick="addHashtag()">
 						</div>
 					</div>
-					<input id="button_2" type="submit" value="저장" onclick="savePost()">
+					<input id="button_2" type="button" value="저장" onclick="savePost()">
 				</div>
 			</form>
 		</div>
-
         <div class="body_right_aside"></div>
    </div>
 

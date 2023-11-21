@@ -8,9 +8,11 @@
 
 <jsp:include page="../layout/header.jsp" />
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+<link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
 <script src="https://npmcdn.com/flatpickr/dist/flatpickr.min.js"></script>
 <script src="https://npmcdn.com/flatpickr/dist/l10n/ko.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://unpkg.com/@yaireo/tagify"></script>
 <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/super-build/ckeditor.js"></script>
 <c:choose>
   <c:when test="${sessionScope._LOGIN_USER_.memberType eq 'ADMIN'}">
@@ -686,8 +688,38 @@
     background-color: var(--light-blue);
   }
 
+  /* hashtag */
+
+  .hashtag {
+		display: flex;
+		flex-direction: column;
+		align-items: baseline;
+		margin-bottom: 10px;
+	}
+    .hashtag > #input_area {
+		display: flex;
+	}
+	.hashtag > label {
+		width: auto;
+		font-weight: bold;
+		margin: 20px 0 6px 0;
+	}
+	#button_1 {
+		width: 44px;
+		border-radius: 5px;
+		border: 1px solid #EEE;
+		background-color: transparent;
+		color: #666;
+		margin-left: 5px;
+		cursor: pointer;
+	}
+  .remove_btn {
+    border: none;
+    background-color: transparent;
+  }
   /* 신고 관련 css */
   
+
   
 </style>
   <div class="loading"></div>
@@ -728,10 +760,20 @@
         <label for="editor_content" class="editor_content_label">내용</label>
         <textarea id="editor_content"></textarea>
       </div>
+      <div class="hashtag">
+        <label for="hashtag">해시태그</label>
+        <div id="displayHashtags"></div>
+        <div id="input_area">
+            <input type="hidden" id="hashtagInput" name='hashtag' placeholder="#해시태그" value="${generalPostHashtagVO.hashtagId}">
+            <input type="hidden" id="general_post_hashtag_id" value="${generalPostHashtagVO.generalPostHashtagId}"/>
+            <input type="hidden" id="general_post_id" value="${generalPostHashtagVO.generalPostId}"/>
+            <input id="button_1" type="button" value="추가" onclick="addHashtag()">
+        </div>
+    </div>
       <div class="submit_wrap">
         <div class="select_wrap">
-          <button class="free_land_btn selected">자유</button>
-          <button class="qna_land_btn">질답</button>
+          <button class="free_land_btn">자유</button>
+          <button class="qna_land_btn selected">질답</button>
         </div>
         <button class="submit_btn">작성</button>  
       </div>
@@ -748,7 +790,105 @@
   // $('.overlay').click(function() {
   //   $('.modal, .overlay').removeClass('modal_active')
   // })
-  
+
+  //hashtag
+  var allHashTags = [];
+    
+    function getHashTagId(tagName) {
+        console.log(allHashTags.filter(tagElem => tagElem.tagContent == tagName), tagName, allHashTags)
+        return allHashTags.filter(tagElem => tagElem.tagContent == tagName)[0].tagId;
+    }
+    
+    $().ready(function(){
+        
+        var input = document.querySelector('input[name=hashtag]')
+        
+        $.get("/code/해시태그", function(response) {
+            
+            response.forEach(tagElem => {
+                var tagId = tagElem.codeId;
+                var tagContent = tagElem.codeContent;
+                allHashTags.push( {tagId, tagContent} );
+            });
+            
+            var tagify = new Tagify(input, {	        
+                //whitelist : ["Python","Java","Oracle","React","Vue.js","C","JavaScript", "CSS", "HTML", "Spring", "Rudy", "MYSQL", "jQuery", "Angular", "C++"],
+                whitelist : allHashTags.map(tag => tag.tagContent),
+                maxTags: 10,
+                enforceWhitelist: true,
+            })
+            
+        })
+    
+        // 폼 제출 이벤트 처리
+        $('#hashtagForm').submit(function(e) {
+            
+        });
+        
+    });
+        // 해시태그를 저장할 배열
+        const hashtagsArray = [];
+        let hashtagListVO = [];
+        // 해시태그 추가 버튼 클릭 이벤트 핸들러
+        function addHashtag() {
+            const hashtagInput = document.getElementById("hashtagInput");
+            const hashtag = hashtagInput.value;
+            if (hashtag.trim() !== "") {
+                const addedHashTag = JSON.parse(hashtag);
+                
+                for (let index in addedHashTag) {
+                    let tagName = addedHashTag[index].value;
+                    let tagId = getHashTagId(tagName);
+                    
+                    // 중복 해시태그 체크 (중복일 경우 추가하지 않음)
+                    if (!hashtagsArray.includes(tagId)) {
+                        hashtagsArray.push( { tagId, tagName } );
+                        hashtagListVO.push({'hashtagId': tagId})
+                        displayHashtags();
+                    }
+                }
+                
+            }
+    
+            // 입력 필드 초기화
+            hashtagInput.value = "";
+        }
+    
+        // 해시태그 배열을 화면에 표시
+        function displayHashtags() {
+            const displayHashtagsDiv = document.getElementById("displayHashtags");
+            displayHashtagsDiv.innerHTML = "";
+    
+            for (const hashtag of hashtagsArray) {
+                const hashtagSpan = document.createElement("span");
+                hashtagSpan.className = "hashtag-display";
+                hashtagSpan.textContent = hashtag.tagName;
+                hashtagSpan.dataset.tagId = hashtag.tagId;
+                const removeButton = document.createElement("button");
+                removeButton.textContent = "❌";
+                removeButton.classList.add("remove_btn")
+                removeButton.addEventListener("click", function () {
+                    removeHashtag(hashtag);
+                });
+                const inputtag = document.createElement("input");
+                inputtag.type = "hidden";
+                inputtag.name = "hashtagListVO["+hashtagsArray.indexOf(hashtag)+"].hashtagId";
+                inputtag.value = hashtag.tagId;
+    
+                hashtagSpan.appendChild(removeButton);
+                hashtagSpan.appendChild(inputtag);
+                displayHashtagsDiv.appendChild(hashtagSpan);
+            }
+        }
+    
+        // 해시태그 삭제 버튼 클릭 이벤트 핸들러
+        function removeHashtag(hashtag) {
+            const index = hashtagsArray.indexOf(hashtag);
+            if (index > -1) {
+                hashtagsArray.splice(index, 1);
+                displayHashtags();
+            }
+        }
   // 모달창 열고 닫기
   $(document).on('click', '.incomplete', function() {
     $('.modal, .overlay').addClass('modal_active')
@@ -821,13 +961,15 @@
   })
 
   // 에디터 작성 글 랜딩 장소 선택
-  $('.qna_land_btn').click(function() {
-    $('.free_land_btn').removeClass('selected')
-    $('.qna_land_btn').addClass('selected')
-  })
   $('.free_land_btn').click(function() {
     $('.qna_land_btn').removeClass('selected')
     $('.free_land_btn').addClass('selected')
+    $(".hashtag").toggle(200)
+  })
+  $('.qna_land_btn').click(function() {
+    $('.free_land_btn').removeClass('selected')
+    $('.qna_land_btn').addClass('selected')
+    $(".hashtag").toggle(200)
   })
 
   // 게시글 작성 ajax
@@ -843,28 +985,54 @@
         'postTitle': $('#editor_title').val(),
         'postContent': getDataFromTheEditor(),
       }
-
+      
       if ($('.free_land_btn').hasClass('selected')) {
-        $.post('/home/create/freeboard', body, function(response) {
-          if (response.result === 'success') {
-            alert('자유게시글을 성공적으로 등록했습니다.')
-            location.reload()
-          }
-          else {
-            alert('등록에 실패했습니다.')
-          }
-        })
+          $.post('/home/create/freeboard', body, function(response) {
+              if (response.result === 'success') {
+                alert('자유게시글을 성공적으로 등록했습니다.')
+                location.reload()
+              }
+              else {
+                alert('등록에 실패했습니다.')
+              }
+          })
       }
       else {
-        $.post('/home/create/qnaboard', body, function(response) {
-          if (response.result === 'success') {
-            alert('질답게시글을 성공적으로 등록했습니다.')
-            location.reload()
+        if (hashtagsArray.length < 1) {
+          alert("해시태그를 입력해주세요")
+        }
+        else {
+          let generalPostVO = {
+            postWriter: `${sessionScope._LOGIN_USER_.email}`,
+            postTitle: $('#editor_title').val(),
+            postContent: getDataFromTheEditor(),
+            hashtagListVO: hashtagListVO
           }
-          else {
-            alert('등록에 실패했습니다.')
-          }
-        })
+          $.ajax({
+            url: "/home/create/qnaboard",
+            method: "post",
+            contentType: "application/json",
+            data: JSON.stringify(generalPostVO),
+            success: function(response) {
+              if (response.result === 'success') {
+                alert('질답게시글을 성공적으로 등록했습니다.')
+                location.reload()
+              }
+              else {
+                alert('tag등록에 실패했습니다.')
+              }
+            }
+          })
+          // $.post('/home/create/qnaboard', generalPostVO, function(response) {
+          //     if (response.result === 'success') {
+          //       alert('질답게시글을 성공적으로 등록했습니다.')
+          //       location.reload()
+          //     }
+          //     else {
+          //       alert('tag등록에 실패했습니다.')
+          //     }
+          // })
+        }
       }
     }
   })

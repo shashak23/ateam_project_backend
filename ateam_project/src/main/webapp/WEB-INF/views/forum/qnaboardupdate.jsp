@@ -119,13 +119,21 @@ $().ready(function(){
 });
 	// 해시태그를 저장할 배열
     const hashtagsArray = [];
+	$.get("/qnaboard/hashtag/list/${generalPostVO.generalPostId}", function(response) {
+		console.log(response)
+        for (var i in response.result) {
+			let tagName = response.result[i].commonCodeVO.codeContent
+			let tagId = response.result[i].commonCodeVO.codeId
+			let hashtag = {tagName: tagName, tagId: tagId}
+			hashtagsArray.push(hashtag)
+        }
+		displayHashtags()
+	})
 
     // 해시태그 추가 버튼 클릭 이벤트 핸들러
     function addHashtag() {
         const hashtagInput = document.getElementById("hashtagInput");
         const hashtag = hashtagInput.value;
-		
-        
         
         if (hashtag.trim() !== "") {
 	        const addedHashTag = JSON.parse(hashtag);
@@ -162,6 +170,7 @@ $().ready(function(){
            	
             const removeButton = document.createElement("button");
             removeButton.textContent = "❌";
+			removeButton.classList.add("remove_btn")
             removeButton.addEventListener("click", function () {
                 removeHashtag(hashtag);
             });
@@ -187,7 +196,12 @@ $().ready(function(){
     }
     // 저장 버튼 클릭 이벤트 핸들러
     function savePost() {
-        $("#postForm").submit();
+		if (hashtagsArray.length < 1) {
+			alert()
+		}
+		else {
+			$("#postForm").submit();
+		}
     }
 </script>
    
@@ -300,7 +314,7 @@ $().ready(function(){
 								<input id="button_1" type="button" value="추가" onclick="addHashtag()">
 							</div>
 						</div>
-							<input id="button_2" type="submit" value="저장" onclick="savePost()"/>
+							<input id="button_2" type="button" value="저장" onclick="savePost()"/>
 						</div>	
 					</div>
 				</form>

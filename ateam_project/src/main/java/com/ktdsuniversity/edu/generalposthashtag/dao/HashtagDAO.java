@@ -15,5 +15,8 @@ public interface HashtagDAO {
 
 	public List<HashtagVO> getHashtagList(String postId);
 
+	public List<HashtagVO> getHastagListByGeneralPostId(String postId);
+	
+	public int deleteHashtagsOnGeneralPost(String postId);
 
 }

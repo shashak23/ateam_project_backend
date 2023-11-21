@@ -10,8 +10,10 @@
     <meta name="viewport" id="viewport" content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, width=device-width"/>
     <title>devGround</title>
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <link rel="stylesheet" type="text/css" href="/css/common.css" />
+<!--     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+ -->    
+ 	<link rel="stylesheet" type="text/css" href="/css/common.css" />
+    <script src="js/lib/jquery-3.7.1.js"></script>    
     <jsp:include page="../layout/header.jsp"/>
 
 <style>
@@ -175,13 +177,13 @@
 
    /* 모달 */
    .report-modal {
-       display: none; /* 초기에 모달 숨김 */
+       display: none;
        position: fixed;
        top: 0;
        left: 0;
        width: 100%;
        height: 100%;
-       background-color: rgba(0, 0, 0, 0.7); /* 반투명 배경 */
+       background-color: rgba(0, 0, 0, 0.7); 
        z-index: 1;
    }
    .modal_content {
@@ -196,11 +198,13 @@
    .modal_content_element > label {
       width: 20%;
    }
+   /*
    select[name=reportReason],
    textarea[name=reportReasonContent],
    input[name=attachedImg] {
       width: 60%;
    }
+   */
    select[name=reportReason] {
       height: 30px;
    }
@@ -335,11 +339,9 @@ $(document).on('click', '#reportFreeBoard', function() {
 		        <label for="reportContentId">${reportVO.reportContentId}</label>
 		        <input id="reportContentId" type="hidden" name="reportContentId" value="${generalPostVO.generalPostId}"/>
 		     </div>
-		     
-		        <div class="align-right">
-		           <input type="submit" value="완료" />
-		        </div>
-		     
+			  <div class="modal_content_element submit_area btn_controller">
+	             <input type="submit" value="완료" />
+	          </div>
 	     </form>`
 	});
 });
@@ -350,54 +352,96 @@ $().ready(function() {
             // 댓글 목록 삭제.
             $(".comment-items").html("");
 
-            // 댓글 조회.
-            $.get("/freeboard/view/comment/${generalPostId}", function(response) {      
-               // 댓글 목록을 response에서 받아와서 처리하는 부분
-               var replies = response.comments;
-               if (replies.length < 1) {
-                  $(".comment-items").css("display", "none")
-               }
-               for (var i = 0; i < replies.length; i++) {
-                  var comment = replies[i];
-                  var member = replies[i].memberVO;
-                  var commentTemplate =
-                        `<div class="comment" data-comment-id="\${comment.generalCommentId}" data-comment-writer="\${comment.commentWriter}"
-                              style="padding-left: \${(comment.level - 1) * 40}px">
-                              <ul class="writer_info">
-                                 <li>작성자 <span class="comment-writer">\${comment.generalMemberVO.nickname}</span></li>
-                                 <li>|</li>
-                                 <li>등록일 \${comment.postDate}</li>
-                                 <li>|</li>
-                                 <li class="recommend-count">추천수 \${comment.likeCnt}</li>
-                              </ul>
-                              <pre class="content">\${comment.commentContent}</pre>
-                              \${comment.commentWriter == "${sessionScope._LOGIN_USER_.email}" ?
-                                 `<div>
-                                    <button class="recommend-comment">좋아요</button>
-                                    <button class="update-comment">수정</button>
-                                    <button class="delete-comment">삭제</button>
-                                 </div>`
-                                 :
-                                 `<div>
-                                    <button class="recommend-comment">좋아요</button>
-                                    <button class="report-comment" value="2">신고</button>
-                                    <div class="separate-line"></div>
-                                 </div>`}
-                        </div>`
-                  var commentDom = $(commentTemplate);
-                  commentDom.find(".delete-comment").click(deleteComment);
-                  // 추천 버튼 클릭 이벤트 핸들러를 등록합니다.
-                  commentDom.find(".recommend-comment").click(recommendComment);
-                  commentDom.find(".update-comment").click(updateComment);
-                  commentDom.find(".report-comment").click(reportComment);
-                  $(".comment-items").append(commentDom);
-               } //for
+	         // 댓글 조회.
+            $.get("/qnaboard/view/comment/${generalPostId}", function(response) {               
+                // 댓글 목록을 response에서 받아와서 처리하는 부분
+                var replies = response.comments;
+                for (var i = 0; i < replies.length; i++) {
+                    var comment = replies[i];
+                    var commentTemplate =
+                        `<div class="comment"
+                           data-comment-id="\${comment.generalCommentId}"
+                           data-comment-writer-email="\${comment.commentWriter}"
+                            style="padding-left: \${(comment.level - 1) * 40}px">
+                            <div class="author">\${comment.generalMemberVO.nickname}</div>
+                            <div class="recommend-count">추천수: \${comment.likeCnt}</div>
+                            <div class="datetime">
+                                <span class="crtdt">등록일: \${comment.postDate}</span>
+                                \${comment.mdfyDt != comment.crtDt ? 
+                                    `<span class="mdfydt">(수정: \${comment.postDate})</span>`
+                                    : ""}
+                            </div>
+                            <pre class="content">\${comment.commentContent}</pre>
+                            \${comment.email == "${sessionScope._LOGIN_USER_.email}" ?
+                            	    `<div>
+                            	        <button class="update-comment">수정</button>
+                            	        <button class="delete-comment">삭제</button>
+                            	    </div>`
+                            	    :
+                            	    `<div>
+                            	        <button class="recommend-comment">좋아요</button>
+                            	        <button class="report-comment" value="2">신고</button>
+                            	        <div class="separate-line"></div>
+                            	    </div>`}
+                        </div>`;
+                    var commentDom = $(commentTemplate);
+              commentDom.find(".delete-comment").click(deleteComment);
+              // 추천 버튼 클릭 이벤트 핸들러를 등록합니다.
+              commentDom.find(".recommend-comment").click(recommendComment);
+              commentDom.find(".update-comment").click(updateComment);
+              commentDom.find(".report-comment").click(reportComment);
+                    $(".comment-items").append(commentDom);
+                }
             })// $.get
-         }//loadReplies
+	    } // loadReplies
+	  loadReplies()
+	    
+      	// 신고버튼 클릭
+         $(".report-comment").click(reportComment);
+         var reportComment = function(event) {
+       	  // 댓글 작성자
+       	  var writer = $(this).closest(".comment").data("comment-writer-email");
+       	  // 댓글의 고유 번호
+       	  var id = $(this).closest(".comment").data("comment-id");
+       	  
+       	  	// 필요한 값들을 찾으라고 일일히 지정해줘야 합니다
+   	        $(this).find("#receivedReportMember").val(writer)
+   	        $(this).find("#reportContentId").val(id)
+   	        
+   	        $.sweetModal({
+		        title: '신고 내용',
+		        content: `
+		            <form name="reportVO" method="post" action="/report/view/2">
+		                <div class="grid" style="grid-template-columns: 150px 1fr; grid-template-rows: 30px 100px 30px; row-gap: 10px;">
+		                    <label for="reportReason">신고사유</label>
+		                    <select name="reportReason">
+		                        <option value="CC-20231018-000200">영리목적/홍보성</option>
+		                        <option value="CC-20231018-000201">개인정보 노출</option>
+		                        <option value="CC-20231018-000202">음란성/선정성</option>
+		                        <option value="CC-20231018-000203">같은 내용 반복(도배)</option>
+		                        <option value="CC-20231018-000204">이용규칙위반</option>
+		                        <option value="CC-20231018-000205">기타</option>
+		                    </select>
+		
+		                    <label for="reportReasonContent">신고 상세내용</label>
+		                    <textarea name="reportReasonContent" id="reportReasonContent"></textarea>
+		
+		                    <label for="attachedImg">첨부파일</label>
+		                    <input id="attachedImg" type="file" name="attachedImg"/>
+		
+		                    <input id="reportTypeId" type="hidden" name="reportTypeId" value="2"/>
+		                    <input id="reportMemberEmail" type="hidden" name="reportMember" value="${sessionScope._LOGIN_USER_.email}"/>
+		                    <input id="receivedReportMemberEmail" type="hidden" name="receivedReportMember" value="${generalPostVO.postWriter}"/>
+		                    <input id="reportContentId" type="hidden" name="reportContentId" value="${generalPostVO.generalPostId}"/>
+		                </div>
+		                <div class="modal_content_element submit_area btn_controller">
+		                    <input type="submit" value="완료" />
+		                </div>
+		            </form>`
+       		});
 
-
-         loadReplies()
-
+         };
+         // 등록버튼 클릭
       $("#btn-save-comment").click(function(event) {
          event.preventDefault();
          var comment = $("#txt-comment").val().trim()
@@ -476,14 +520,7 @@ $().ready(function() {
                }
           });
       }
-      var reportComment = function(event) {
-         console.log()
-         console.log($(this).parent().find())
-         // 모달을 표시합니다.
-      $(".report-window").css("display", "block");
-         $(".report-window").find("#reportContentId").val($(this).parent().parent().data("comment-id"))
-         $(".report-window").find("#receivedReportMemberEmail").val($(this).parent().parent().data("comment-writer"))
-      }
+      
       // 모달 내부 "취소" 버튼 클릭 시 모달 닫기
       $(".cancel-window").click(function() {
          $(".report-window").css("display", "none");
@@ -505,46 +542,31 @@ $().ready(function() {
           $("#txt-comment").data("target",replyId)
           $("#txt-comment").data("generalCommentId", replyId)
           }
-
-
-       // "신고" 버튼 클릭 시 모달 열기
-       $(".report-btn").click(function() {
-          let reportType = $("#reportFreeBoard").val()
-          console.log(reportType);
-           $("#report-modal").css("display", "block");
+		
+       // 신고 넌 빠져 
        
-          // 모달 내부 "취소" 버튼 클릭 시 모달 닫기
-          $(".close").click(function() {
-             console.log(1)
-              $("#report-modal").css("display", "none");
-            });
+       // "좋아요" 버튼 클릭 시 이벤트 발생
+       $("#like-btn").click(function () {
+           // 클라이언트에서 AJAX 요청 생성
+           $.ajax({
+               method: "POST",
+               url: "/freeboard/like",
+               data: { 
+                   "generalPostId": "${generalPostVO.generalPostId}",
+                   "likeCnt": ${generalPostVO.likeCnt}
+                 },
+               success: function(response) {
+                   /* $("likeModal").hide(); */
+                   alert("좋아요가 눌렸습니다!!!!!!!!!!!!");
+                 },
+               error: function(error){
+                   /* $("#likeModal").hide(); */
+                   alert("오류가 발생했습니다~~~~~~~~~~~~");
+                 }
+           })
        });
-       console.log($("jsp:param[name='reportType']"))
 
-      
-        // "좋아요" 버튼 클릭 시 이벤트 발생
-        $("#like-btn").click(function () {
-            // 클라이언트에서 AJAX 요청 생성
-            $.ajax({
-                method: "POST",
-                url: "/freeboard/like",
-                data: { 
-                    "generalPostId": "${generalPostVO.generalPostId}",
-                    "likeCnt": ${generalPostVO.likeCnt}
-                  },
-                success: function(response) {
-                    /* $("likeModal").hide(); */
-                    alert("좋아요가 눌렸습니다!!!!!!!!!!!!");
-                  },
-                error: function(error){
-                    /* $("#likeModal").hide(); */
-                    alert("오류가 발생했습니다~~~~~~~~~~~~");
-                  }
-            })
-        });
-   
 });
-
 </script>
 </head>
 <body>
@@ -571,9 +593,9 @@ $().ready(function() {
 
                <div class="space_between">
                   <div class="btn_controller">
-                     <button id="like-btn">좋아요👍</button>
                      <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email ne generalPostVO.postWriter}">
-                        <button id="reportFreeBoard" value="1" class="report-btn">신고📌</button>
+                     <button id="like-btn">좋아요👍</button>
+                        <button id="reportFreeBoard" value="1">신고📌</button>
                      </c:if>
                   </div>
                   <div class="btn_controller">
@@ -594,71 +616,15 @@ $().ready(function() {
                   <div class="btn_controller">
                      <button id="btn-save-comment" type="submit">등록</button>
                   </div>
-                  <!-- 신고 버튼은 조회할때 사용<button id="btn-report-comment">신고</button> -->
                </div>
                <div class="comment-header">
                   <h3>댓글 목록</h3>
                </div>
                <div class="comment-items"></div>
             </div>  
-
          </div>
-
         <div class="body_right_aside"></div>
    </div>
-            <!-- <div class="postContent_Controller"> -->
-               <!-- 댓글 신고 모달 창 -->
-               <div class="report-window">
-                  <div class="report-window-content">
-                        <!-- 모달 내용 추가 -->
-                        <h2>신고 내용</h2>
-                        <form name="reportVO" method="post" action="/report/view/2">
-                           <div class="modal_content">
-                              <div class="modal_content_element">
-                                 <label for="reportReason" >신고사유${reportVO.reportReason}</label>
-                                 <select name="reportReason">
-                                    <option value="CC-20231018-000200">영리 및 홍보 목적</option>
-                                    <option value="CC-20231018-000201">개인정보노출</option>
-                                    <option value="CC-20231018-000202">음란성/선정성</option>
-                                    <option value="CC-20231018-000203">같은 내용 반복(도배)</option>
-                                    <option value="CC-20231018-000204">이용규칙위반</option>
-                                    <option value="CC-20231018-000205">기타</option>
-                                 </select>
-                              </div>
-                              <div class="modal_content_element">
-                                 <label for = "reportReasonContent">신고 상세내용</label>
-                                 <textarea name="reportReasonContent" id="reportReasonContent">${reportVO.reportReasonContent}</textarea>
-                              </div>
-                              <div class="modal_content_element">
-                                 <label for="attachedImg">첨부파일${reportVO.attachedImg}</label>
-                                 <input id="attachedImg" type="file" name="attachedImg"/>
-                              </div>
-                              <div class="modal_content_element">
-                                 <label for="reportTypeId">${reportVO.reportTypeId}</label>
-                                 <input id="reportTypeId" type="hidden" name="reportTypeId" value="4"/>
-                              </div>
-                              <div class="modal_content_element">
-                                 <label for="reportMemberEmail">${reportVO.reportMemberEmail}</label>
-                                 <input id="reportMemberEmail" type="hidden" name="reportMember" value="${reportVO.reportMember}"/>
-                              </div>
-                              <div class="modal_content_element">
-                                 <label for="receivedReportMemberEmail">${reportVO.receivedReportMemberEmail}</label>
-                                 <input id="receivedReportMemberEmail" type="hidden" name="receivedReportMember" value=""/>
-                              </div>
-                              <div class="modal_content_element">
-                                 <label for="reportContentId">${reportVO.reportContentId}</label>
-                                 <input id="reportContentId" type="hidden" name="reportContentId" value=""/>
-                              </div>
-                              <div class="modal_content_element submit_area btn_controller">
-                                 <input type="submit" value="완료" />
-                                 <span class="cancel-window">취소</span>
-                              </div>
-                           </div>
-                        </form>
-                     </div>
-                  </div> 
-
-   </div>  
    <jsp:include page="../layout/footer.jsp" />
    <script>
          // 미완성된 기능을 알려주는 모달창

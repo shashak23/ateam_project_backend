@@ -93,8 +93,8 @@
       </div>
       <nav class="gnb">
         <ul>
-          <li><a href="/qnaboard/list">질답게시판</a></li>
-          <li><a href="/freeboard/list">자유게시판</a></li>
+          <li><a href="/qnaboard/list">질문답변 게시판</a></li>
+          <li><a href="/freeboard/list">자유 게시판</a></li>
 		  <li><a href="/algorithm/question/list">알고리즘 문제 게시판</a></li>
 		  <li><a href="/algorithm/explanation/list">알고리즘 해설 게시판</a></li>
         </ul>

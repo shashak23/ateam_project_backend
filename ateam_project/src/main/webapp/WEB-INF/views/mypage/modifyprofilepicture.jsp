@@ -59,6 +59,7 @@
         </div>
     </div>
     	<input type="submit" value="수정" />
+    	<!-- <button class="modalCloseProfile">닫기</button> -->
 </form>
 </body>
 </html>

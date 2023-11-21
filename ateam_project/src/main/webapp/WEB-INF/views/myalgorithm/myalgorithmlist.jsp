@@ -97,6 +97,7 @@
     </div>
     <jsp:include page="../layout/footer.jsp" />
     <script>
+    
 		  function redirectToURL(url) {
 	        window.location.href = url;
           }

@@ -9,6 +9,7 @@ package com.ktdsuniversity.edu.algorithmquestion.dao;
 import java.util.List;
 
 import com.ktdsuniversity.edu.algorithmquestion.vo.AlgorithmQuestionVO;
+import com.ktdsuniversity.edu.algorithmquestion.vo.PercentageVO;
 import com.ktdsuniversity.edu.algorithmquestion.vo.SearchAlgorithmQuestionVO;
 import com.ktdsuniversity.edu.common.vo.AbstractCompanyPostVO;
 import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
@@ -18,6 +19,8 @@ public interface AlgorithmQuestionDAO {
 	public int getAlgorithmQuestionAllCount(SearchAlgorithmQuestionVO searchAlgorithmQuestionVO);
 	
 	public List<AlgorithmQuestionVO> getAllAlgorithmQuestion();
+	
+	public List<PercentageVO> getPercentage();
 	
 	public List<AlgorithmQuestionVO> searchAllAlgorithmQuestion(SearchAlgorithmQuestionVO searchAlgorithmQuestionVO);
 	

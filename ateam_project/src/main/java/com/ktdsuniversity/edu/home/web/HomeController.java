@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
@@ -42,6 +43,7 @@ import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 import com.ktdsuniversity.edu.generalpost.service.GeneralPostService;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostListVO;
 import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
+import com.ktdsuniversity.edu.generalposthashtag.vo.HashtagVO;
 import com.ktdsuniversity.edu.home.service.HomeBoardService;
 import com.ktdsuniversity.edu.home.vo.HomeBoardVO;
 import com.ktdsuniversity.edu.home.vo.HomeNickNameVO;
@@ -266,7 +268,7 @@ public class HomeController {
 	// 질답 게시글 작성
 	@ResponseBody
 	@PostMapping("/home/create/qnaboard")
-	public Map<String, Object> createOneQnaboard(@ModelAttribute GeneralPostVO generalPostVO) {
+	public Map<String, Object> createOneQnaboard(@RequestBody GeneralPostVO generalPostVO) {
 		XssIgnoreUtil.ignore(generalPostVO);
 		
 		Map<String, Object> resultSet = new HashMap<>();

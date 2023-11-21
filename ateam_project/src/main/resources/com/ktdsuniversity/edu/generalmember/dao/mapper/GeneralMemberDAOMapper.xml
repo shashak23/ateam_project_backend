@@ -197,6 +197,7 @@
 		SELECT GM.*
 		     , T.TIER_NAME
 		     , M.PROFILE_PIC
+		     , M.NICKNAME
   		  FROM (
   				SELECT *
   		  		FROM GENERAL_MEMBER

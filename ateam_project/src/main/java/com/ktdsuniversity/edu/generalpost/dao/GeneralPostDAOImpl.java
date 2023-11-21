@@ -44,8 +44,8 @@ public class GeneralPostDAOImpl extends SqlSessionDaoSupport
 	}
 	// 자유게시판
 	@Override
-	public List<GeneralPostVO> getAllBoard(String boardId) {
-		return getSqlSession().selectList("com.ktdsuniversity.edu.generalpost.dao.GeneralPostDAO.getAllBoard", boardId);
+	public List<GeneralPostVO> getAllBoard(SearchForumVO searchForumVO) {
+		return getSqlSession().selectList("com.ktdsuniversity.edu.generalpost.dao.GeneralPostDAO.getAllBoard", searchForumVO);
 //		return getSqlSession().selectList("getAllFreeBoard");
 	}
 

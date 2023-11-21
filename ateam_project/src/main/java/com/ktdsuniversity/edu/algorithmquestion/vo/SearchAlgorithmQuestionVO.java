@@ -15,6 +15,7 @@ public class SearchAlgorithmQuestionVO extends AbstractSearchVO {
 	private String[] algorithmTierList;
 	private String category;
 	private String tier;
+	private String companyAlgorithmQuestionId;
 
 	
 	/**
@@ -68,6 +69,14 @@ public class SearchAlgorithmQuestionVO extends AbstractSearchVO {
 
 	public void setTier(String tier) {
 		this.tier = tier;
+	}
+
+	public String getCompanyAlgorithmQuestionId() {
+		return companyAlgorithmQuestionId;
+	}
+
+	public void setCompanyAlgorithmQuestionId(String companyAlgorithmQuestionId) {
+		this.companyAlgorithmQuestionId = companyAlgorithmQuestionId;
 	}
 	
 }

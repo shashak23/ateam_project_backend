@@ -6,27 +6,23 @@
  */
 package com.ktdsuniversity.edu.generalposthashtag.web;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO;
 import com.ktdsuniversity.edu.generalpost.web.FreePostController;
 import com.ktdsuniversity.edu.generalposthashtag.service.HashtagService;
 import com.ktdsuniversity.edu.generalposthashtag.vo.HashtagListVO;
 import com.ktdsuniversity.edu.generalposthashtag.vo.HashtagVO;
-import com.ktdsuniversity.edu.member.vo.MemberVO;
-import com.ktdsuniversity.edu.util.XssIgnoreUtil;
 
 @Controller
 public class HashtagController {
@@ -51,6 +47,15 @@ public class HashtagController {
 	@GetMapping("/qnaboard/hashtag/{postId}")
 	public List<HashtagVO> getHashtagList(@PathVariable String postId){
 		return hashtagService.getHashtagList(postId);
+	}
+	
+	@ResponseBody
+	@GetMapping("/qnaboard/hashtag/list/{postId}")
+	public Map<String, Object> getHastagListByGeneralPostId(@PathVariable String postId) {
+		Map<String, Object> resultMap = new HashMap<>();
+		List<HashtagVO> hashtagList = hashtagService.getHastagListByGeneralPostId(postId);
+		resultMap.put("result", hashtagList);
+		return resultMap;
 	}
 
 }

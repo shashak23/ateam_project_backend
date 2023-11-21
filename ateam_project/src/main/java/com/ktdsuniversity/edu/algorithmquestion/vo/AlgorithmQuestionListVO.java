@@ -12,6 +12,7 @@ public class AlgorithmQuestionListVO {
 	
 	private int algorithmQuestionCnt;
 	private List<AlgorithmQuestionVO> algorithmQuestionList;
+	private List<PercentageVO> percentageList;
 	
 	public int getAlgorithmQuestionCnt() {
 		return algorithmQuestionCnt;
@@ -25,6 +26,10 @@ public class AlgorithmQuestionListVO {
 	public void setAlgorithmQuestionList(List<AlgorithmQuestionVO> algorithmQuestionList) {
 		this.algorithmQuestionList = algorithmQuestionList;
 	}
-
-	
+	public List<PercentageVO> getPercentageList() {
+		return percentageList;
+	}
+	public void setPercentageList(List<PercentageVO> percentageList) {
+		this.percentageList = percentageList;
+	}
 }

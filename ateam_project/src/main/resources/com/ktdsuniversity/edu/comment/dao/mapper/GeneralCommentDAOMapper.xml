@@ -30,7 +30,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	             , GC.COMMENT_WRITER
 	             , GC.GENERAL_POST_ID
 	             , GC.COMMENT_CONTENT
-	             , GC.POST_DATE
+	             , TO_CHAR(GC.POST_DATE, 'YYYY-MM-DD') POST_DATE
 	             , GC.UPPER_COMMENT_ID
 	             , GC.LIKE_CNT
 	             , GC.DELETE_YN
@@ -51,7 +51,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
              , GC.COMMENT_WRITER
              , GC.GENERAL_POST_ID
              , GC.COMMENT_CONTENT
-             , GC.POST_DATE
+             , TO_CHAR(GC.POST_DATE, 'YYYY-MM-DD') POST_DATE
              , GC.UPPER_COMMENT_ID
              , GC.LIKE_CNT
              , GC.DELETE_YN

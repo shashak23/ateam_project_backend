@@ -74,18 +74,25 @@
      
      }
     .hashtag_incomplete {
-       text-align: center;
-       font-size: 20px;
-       margin: 0 auto;
-       margin-left: 10px;
-       margin-top: 30px;
-       width: 85px;
-       height: 35px;
-       border-radius: 10px;
-       border: none;
-       cursor: pointer;
-       
-    }
+	    text-align: center;
+	    font-size: 20px;
+	    margin: 0 auto;
+	    margin-left: 10px;
+	    margin-top: 35px;
+	    padding: 0px 10px;
+	    width: auto;
+	    height: 35px;
+	    border-radius: 10px;
+	    border: none;
+	    cursor: pointer;
+	    background-color: var(--light-gray);
+	    color: var(--dark-gray);
+	    transition: color 0.3s ease; 
+	}
+	
+	.hashtag_incomplete:hover {
+	    background-color: #E55604;
+	}
     
     /* 글작성 버튼 */
     #left_container {
@@ -93,12 +100,12 @@
       justify-content: center;
       width:300px;
       min-height: 500px;
-      margin-top: 320px;
+      margin-top: 330px;
    }
 
    #toolbar{
+   	  position:fixed; 
       width: 300px;
-      /* position: fixed; */
       margin: 25px 0px 0px 20px;
       width: 200px;
       padding: 15px;
@@ -111,6 +118,7 @@
       margin-top: 9px;
       color:black;
       background-color: #26577C;
+      color: white;
       border-radius: 6px;
       border:none;
       transition: box-shadow 0.1s ease;
@@ -122,7 +130,7 @@
    #pageName {
 	    font-size: 30px;
 	    font-weight: bold;
-	    font-color: #white;
+	    color: white;
    }
    .search_menu {
 	    position: relative;
@@ -133,6 +141,7 @@
 	    margin-left: 160px;
 	    margin-top: 10px;
 	    background-color: #26577C;
+	    color: white;
 	    border-radius: 5px;
 	    border: none;
 	    width: 60px; 
@@ -144,16 +153,30 @@
 	    width: 150px;
    }
     /* 랭킹박스 */
+    .body_right_aside {
+		width: 290px;
+		padding: 15px 20px;
+	}
 	.my-aside {
+		width: 270px;
 		display: flex;
 		flex-direction: column;
 	    justify-content: center;
 	    width: 100%;
-	    margin-bottom: 20px;
 		margin-top: 370px;
-		
 	}
-   .ranking_controller , .ranking_controller_expanded{
+	
+   .ranking_controller {
+   		margin-top: 20px;
+   		display: flex;
+	    border: 1px solid var(--light-gray);
+	    border-radius: 10px;
+	    margin-right: 40px;
+   		flex-direction: column;
+    	border: 1px solid var(--light-gray);
+   }
+   
+   .ranking_controller_1 {
    		display: flex;
 	    border: 1px solid var(--light-gray);
 	    border-radius: 10px;
@@ -169,17 +192,22 @@
 	    width: 100%;
    }
    
+   .ranking_controller_1 .viewCnt {
+   		display: flex;
+	    justify-content: center;
+	    padding: 10px 0;
+	    border-bottom: 1px solid var(--gray);
+	    width: 100%;
+   }
+   
    .ranking_controller .ranking_wrap {
    		display: flex;
 	    flex-direction: column;
 	    justify-content: center;
 	    width: 100%;
 	    margin-bottom: 20px;
-   }
-   
-   .ranking_controller .ranking_wrap > ul > img {
-   		width: 11px;
-   		heigth: 11px;
+	    font-size: 13px;
+	    
    }
    
    .ranking_controller .ranking_wrap ul .hot_post {
@@ -189,14 +217,15 @@
 	    transition: all 0.1s;
 	    color: var(--dark);
 	    cursor: pointer;
+	    padding: 15px 20px;
+	    background-color: #DFEEF7;
   }
   
-  .ranking_controller .ranking_wrap ul .hot_post:hover {
-    	background-color: var(--hashtag-blue);
+  .ranking_controller .hot_post:hover {
+  		background-color: #DFEEF7;
   }
-  
+
   .body_right .ranking_wrap ul .hot_post a {
-	    width: 270px;
 	    color: var(--dark);
 	    display: block;
 	    padding: 15px 20px;
@@ -204,11 +233,10 @@
 	    text-overflow: ellipsis;
 	    white-space: nowrap;
   }  
-  
+
 </style>
 </head>
 <body>
-
     <div class="body_container">
 	    <div class="body_left_aside">
 		    <div id="left_container">
@@ -290,13 +318,13 @@
         <div class="body_right_aside">
 	        <div class="my-aside">
 	        	  <!-- 명예의 전당 -->
-	              <div class="ranking_controller">
-		            <h3 class="viewCnt">명예의 전당 </h3>
+	              <div class="ranking_controller_1">
+		            <h3 class="viewCnt">👑명예의 전당👑 </h3>
 	                  <ul class="ranking_wrap_1"></ul>
 	              </div>
 		          <!-- 조회수순 랭킹 -->
 	              <div class="ranking_controller">
-		          	<h3 class="viewCnt">주간 질답 랭킹 </h3>
+		          	<h3 class="viewCnt">📋주간 질답 랭킹 </h3>
 		              <ul class="ranking_wrap"></ul>
 	             </div>
 		      </div>
@@ -335,8 +363,8 @@
 
 	        if (list[i].boardId === 'CC-20231017-000030') {
 	          let ranking_template = `
-	            <li id="hot_post">
-	            <a class="block ellipse" href="/qnaboard/view/\${list[i].generalPostId}" target="_blank"">\${list[i].postTitle}</a>
+	            <li class="hot_post">
+                  <a class="block ellipse" href="/qnaboard/view/\${list[i].generalPostId}" target="_blank" style="padding: 10px; border-bottom: 1px solid var(--light-gray);;">\${list[i].postTitle}</a>
 	            </li>`
 	          let ranking_templateDom = $(ranking_template)
 	  
@@ -348,7 +376,7 @@
 	   	  // 가운데에 해시태그 리스트 조회해주는 코드 
 	      $.get('/code/해시태그', function(response) {
 	        for (let i = 0; i < response.length; i++) {
-	          let hash_template = `<a href="/qnaboard/list?hashtagId=\${response[i].codeId}" class="hashtag_incomplete">#\${response[i].codeContent}</button>`
+	          let hash_template = `<a href="/qnaboard/list?hashtagId=\${response[i].codeId}" class="hashtag_incomplete">\${response[i].codeContent}</button>`
 	          $('.hashtag_wrap').append(hash_template)
 	        }
 	      })
@@ -382,12 +410,15 @@
 	        }
 	    });
 		
-	 // 명예의 전당
+	 	// 명예의 전당
 	    $.get("/qnaboard/topTenMember", function(response) {
-		    console.log(response);
+		    let listDOM = $("<ul></ul>");
 		    for (var i in response.generalMemberList) {
-		        let listDOM = $("<ul></ul>");
-		        let userEmailDOM = $("<li></li>");
+		    	let userEmailDOM = $("<li></li>").css({
+		            'border-bottom': '1px solid var(--light-gray)',
+		            'padding': '9px 9px',
+		            'font-size': '13px'
+		        });
 		
 		        // 티어 이미지를 표시하는 부분
 		        let tierImageSrc = "/images/" + response.generalMemberList[i].tierVO.tierName + ".png";
@@ -395,26 +426,29 @@
 		
 		        // 프로필 이미지를 표시하는 부분
 		        let profilePicSrc = response.generalMemberList[i].profilePic;
-		        let profilePicDOM = $("<img>").attr("src", profilePicSrc).attr("id", "profile_img");
-		
-		        userEmailDOM.text(" " + response.generalMemberList[i].generalMemberEmail + "  " + response.generalMemberList[i].tierScore);
+		        let profilePicDOM = $("<img>")
+						            .attr("src", profilePicSrc)
+						            .attr("id", "profile_img")
+						            .css({
+						                'width': '9px',
+						                'height': '9px',
+						                'padding': '10px'
+						            });
+				
+		        console.log(response.generalMemberList[i])
+		        userEmailDOM.append(tierImageDOM);
+		        userEmailDOM.append(profilePicDOM);
+		        userEmailDOM.append($("<span> " + response.generalMemberList[i].nickname + "  " + response.generalMemberList[i].tierScore+"</span>"));
 		
 		        // 이미지를 리스트에 추가
-		        listDOM.append(tierImageDOM);
-		        listDOM.append(profilePicDOM);
-		        listDOM.append(userEmailDOM);
-		        $(".ranking_wrap_1").append(listDOM);
+		        listDOM.append(userEmailDOM); // $()안에 넣지 않고 그냥 text를 쓰면 초기화된다
+
 		    }
+		    $(".ranking_wrap_1").append(listDOM);
 		});
 	});
 
-	
-
-
-
-
-
-	//랭킹
+   //랭킹
        const userList = document.getElementById('user-list');
        const tableContainer = document.querySelector('.board_list_ty1');
        const loading = document.getElementById('loading');
