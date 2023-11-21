@@ -3,7 +3,6 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <jsp:include page="../../layout/header.jsp"></jsp:include>
-<script type="text/javascript" src="/js/lib/jquery-3.7.1.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script type="text/javascript">
 $().ready(function() {

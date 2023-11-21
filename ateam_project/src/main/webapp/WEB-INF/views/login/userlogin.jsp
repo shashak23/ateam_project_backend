@@ -11,19 +11,13 @@
 <head>
 <meta charset="UTF-8">
 <title>로그인</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
-<!-- <link rel="stylesheet" href="/css/style.css"> -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 <script src="/js/lib/jquery-3.7.1.js"></script>
-<link rel="stylesheet" href="/css/style.css">
 <style>
   *:lang(en) {
-	  font-family: 'Open Sans', sans-serif;
+	  font-family: 'SUIT', suit;
   }
   *:lang(ko-KR) {
-	  font-family: 'Noto Sans KR', sans-serif;
+	  font-family: 'SUIT', suit;
   }
   * {
     margin: 0;
@@ -54,13 +48,13 @@
     border: 0px;
     width: 350px;
     height: 40px;
-    background-color: var(--hashtag-blue);
+    background-color: #26577C;
     font-weight: bold;
     cursor: pointer;
   }
 
   .login_container > .login_tab > button.active {
-    background-color: var(--blue);
+    background-color: #26577c;
     color: var(--light-gray);
   }
 
@@ -118,7 +112,7 @@
   }
 
   .input_container > .login_btn > input {
-    background-color: var(--hashtag-blue);
+    background-color: #26577C;
     padding: 5px 10px;
     border-radius: 5px;
     border: 0;
@@ -130,7 +124,7 @@
   }
 
   .input_container > .login_btn > input:active {
-    background-color: var(--blue);
+    background-color: #26577C;
   }
 
   .line_container {
@@ -218,7 +212,7 @@
   }
 
   .notice_container .link_to_pw {
-    color: var(--blue);
+    color: #26577C;
   }
 
   .message {

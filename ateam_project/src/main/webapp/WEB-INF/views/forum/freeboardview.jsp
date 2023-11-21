@@ -10,8 +10,6 @@
     <meta name="viewport" id="viewport" content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, width=device-width"/>
     <title>devGround</title>
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
- 	<link rel="stylesheet" type="text/css" href="/css/common.css" />
-    <script src="js/lib/jquery-3.7.1.js"></script>    
     <jsp:include page="../layout/header.jsp"/>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
