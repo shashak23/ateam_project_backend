@@ -5,7 +5,6 @@
 <jsp:include page="../layout/header.jsp"/>
 <style>
    /* 본문 */
- 
    .board_list_box {
        position: relative;
        bottom: 400px;
