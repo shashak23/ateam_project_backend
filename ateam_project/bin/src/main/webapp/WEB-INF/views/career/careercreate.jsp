@@ -81,6 +81,7 @@
             <input type="text" id="resignDate" name="resignDate" class="date-picker" placeholder="YYYY-MM-DD">
         </div>
         <input type="submit" value="저장">
+        <button class="modalCloseCareer">닫기</button>
     </form>
 </body>
 </html>

@@ -4,8 +4,31 @@
 <jsp:include page="../layout/header.jsp" />
 <link rel="stylesheet" type="text/css" href="/css/common.css" />
 <style>
-  /* 메인 컨텐츠 영역 */
-
+	  /* 메인 컨텐츠 영역 */
+	body > .body_container {
+	    width: 100%;
+	    min-height: 75vh;
+	    display: grid;
+	    grid-template-columns: 1fr 1080px 1fr;
+	}
+	
+	/* Main Contents */
+	body > .body_container > .body {
+	    grid-column: 2/3;
+	    margin-top: 20px;
+	}
+	
+	/* Main Contents 왼쪽 여백*/
+	body > .body_container > .body_left_aside {
+	    grid-column: 1/2;
+	    display: flex;
+    	justify-content: flex-end; 
+	}
+	
+	/* Main Contents 오른쪽 여백*/
+	body > .body_container > .body_right_aside {
+	    grid-column: 3/4;
+	}
 	#content_wrapper{
 		display: flex;
 		justify-content: center;
@@ -52,7 +75,8 @@
 </style>
 <body> 
 
-<div id="content_wrapper">
+<div class="body_container">
+<div class="body_left_aside">
 	<div class="flex_button">
 			<button id="myprofile">마이페이지</button>
 			<button id="bookmark">북마크</button>
@@ -61,7 +85,8 @@
 			<button id="solve">내가 푼 문제</button>
 			<button>탈퇴</button>
 	</div>
-  <div id="container">   
+	</div>
+  <div class="body">   
 		<table class="grid">
 			<caption>질답게시판</caption>
 			<thead>
@@ -150,6 +175,7 @@
 			</tbody>
 		</table>
 		</div>
+		<div class="body_right_aside"></div>
 	</div>
   <jsp:include page="../layout/footer.jsp" />
 </body>
