@@ -8,11 +8,20 @@
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <style>
 	/*swiper제어*/
+   .swiper-container{
+   		height: 331px;
+   		overflow: hidden;
+   }
    .swiper-slide img {
        position: relative;
 	   max-width: 100%;
 	   height: auto;
 	   overflow: hidden;
+   }
+   
+   .swiper-wrapper .swiper-slide{
+   		height: 330px;
+   		overflow: hidden;
    }
 
    .swiper-button-prev,
