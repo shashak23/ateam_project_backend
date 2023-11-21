@@ -14,6 +14,7 @@
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 <script src="https://unpkg.com/@yaireo/tagify"></script>
 <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/super-build/ckeditor.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <c:choose>
   <c:when test="${sessionScope._LOGIN_USER_.memberType eq 'ADMIN'}">
     <jsp:include page="./admin_ui.jsp" />
@@ -392,8 +393,7 @@
     height: 50px;
   }
 
-  .rand_notice_container,
-  .report_container {
+  .rand_notice_container {
     visibility: hidden;
     position: fixed;
     top: 50%;
@@ -487,11 +487,11 @@
     border: var(--gray);
     color: var(--dark-gray);
   }
-
+/* 
   .create_container > *,
   .report_container div {
 		margin-bottom: 10px;
-	}
+	} */
 
   .post_title_label,
 	.post_content_label {
@@ -977,7 +977,10 @@
     let userEmail = `${sessionScope._LOGIN_USER_.email}`
 
     if (userEmail === '') {
-      alert('로그인을 먼저 진행해주세요.')
+    	Swal.fire({
+      	  text: "로그인을 먼저 진행해 주세요",
+      	  icon: "warning"
+      	});
     }
     else {
       let body = {
@@ -989,17 +992,26 @@
       if ($('.free_land_btn').hasClass('selected')) {
           $.post('/home/create/freeboard', body, function(response) {
               if (response.result === 'success') {
-                alert('자유게시글을 성공적으로 등록했습니다.')
+            	  Swal.fire({
+                  	  text: "성공적으로 게시글을 등록했습니다",
+                  	  icon: "success"
+                  	});
                 location.reload()
               }
               else {
-                alert('등록에 실패했습니다.')
+            	  Swal.fire({
+                  	  text: "게시글 등록에 실패했습니다",
+                  	  icon: "error"
+                  	});
               }
           })
       }
       else {
         if (hashtagsArray.length < 1) {
-          alert("해시태그를 입력해주세요")
+        	Swal.fire({
+            	  text: "해시태그를 입력해 주세요!!!!!!",
+            	  icon: "warning"
+            	});
         }
         else {
           let generalPostVO = {
@@ -1015,23 +1027,20 @@
             data: JSON.stringify(generalPostVO),
             success: function(response) {
               if (response.result === 'success') {
-                alert('질답게시글을 성공적으로 등록했습니다.')
+            	  Swal.fire({
+                  	  text: "성공적으로 게시글을 등록했습니다",
+                  	  icon: "success"
+                  	});
                 location.reload()
               }
               else {
-                alert('tag등록에 실패했습니다.')
+            	  Swal.fire({
+                  	  text: "게시글 등록에 실패했습니다",
+                  	  icon: "error"
+                  	});
               }
             }
           })
-          // $.post('/home/create/qnaboard', generalPostVO, function(response) {
-          //     if (response.result === 'success') {
-          //       alert('질답게시글을 성공적으로 등록했습니다.')
-          //       location.reload()
-          //     }
-          //     else {
-          //       alert('tag등록에 실패했습니다.')
-          //     }
-          // })
         }
       }
     }
@@ -1258,7 +1267,10 @@
   
           if ($(e.currentTarget).find('svg').hasClass('bookmark_on')) {
             $.post('/unbookmark', body, function(result) {
-              alert('북마크가 취소되었습니다.')
+              Swal.fire({
+              	  text: "북마크가 취소됐습니다",
+              	  icon: "error"
+              	});
               $(e.currentTarget).find('svg').removeClass('bookmark_on')
               $(e.currentTarget).find('svg').css('fill', 'var(--gray)')
               $('.bookmarkId').remove()
@@ -1267,13 +1279,19 @@
         else {
           $.post('/bookmark/general-post', body, function(result) {
             if (result) {
-              alert('북마크에 추가되었습니다.')
+            	Swal.fire({
+              	  text: "북마크가 추가됐습니다",
+              	  icon: "success"
+              	});
               $(e.currentTarget).find('svg').css('fill', 'var(--blue)')
               $(e.currentTarget).find('svg').addClass('bookmark_on')
               $('.bookmarkBtn').prepend(`<input type="hidden" class="bookmarkId" value="\${result.bookmarkId}"/>`)
             }
             else {
-              alert('처리하지 못했습니다.')
+            	Swal.fire({
+                	  text: "처리하지 못했습니다",
+                	  icon: "error"
+                	});
             }
           })
         }
@@ -1296,7 +1314,10 @@
         }
         if ($(this).hasClass('follow_on')) {
           $.post('/unfollow/member', content, function(result) {
-            alert('팔로우를 취소합니다.')
+        	  Swal.fire({
+            	  text: "팔로우를 취소합니다",
+            	  icon: "error"
+            	});
             $(e.currentTarget).removeClass('follow_on')
             $(e.currentTarget).css({'background-color':'var(--gray)', 'color':'var(--blue)'})
             $('.followId').remove()
@@ -1305,7 +1326,10 @@
         else {
           $.post('/follow/member', content, function(result) {
             if(result) {
-              alert('팔로우 합니다.')
+            	Swal.fire({
+                	  text: "팔로우 성공 감사링",
+                	  icon: "success"
+                	});
               $(e.currentTarget).css({'background-color':'var(--blue)', 'color':'var(--white)'})
               $(e.currentTarget).addClass('follow_on')
               $('.follow_btn').prepend(`<input type="hidden" class="followId" value="\${result.followId}"/>`)
@@ -1319,7 +1343,10 @@
 	        })
             }
             else {
-              alert('처리하지 못했습니다.')
+            	Swal.fire({
+              	  text: "처리하지 못했습니다",
+              	  icon: "error"
+              	});ㄴ
             }
           })
         }

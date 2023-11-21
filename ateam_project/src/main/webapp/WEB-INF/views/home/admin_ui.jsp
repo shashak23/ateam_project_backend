@@ -2,6 +2,12 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <style>
   .admin_container ul {
     list-style: none;
@@ -347,7 +353,7 @@
   .report_title,
   .report_list_group {
     display: grid;
-    grid-template-columns: 50px 80px 640px 170px 120px;
+    grid-template-columns: 80px 100px 590px 170px 120px;
     column-gap: 10px;
     color: #888;
   }
@@ -821,10 +827,16 @@
     color: #e05454;
     font-size: 9pt;
   }
+  
+  .report_container .report_confirm div {
+    display: inline-block;
+    text-align: center;
+    width: 70px;
+    color: var(--dark);
+  }
 
-  .report_container .report_confirm.progressing {
+  .report_container .report_confirm.progressing div {
     color: red;
-    background-color: #ffdada;
     font-weight: bold;
   }
 
@@ -865,6 +877,7 @@
         cursor: not-allowed;
     }
 </style>
+</head>
 <body>
   <nav class="admin_container">
     <ul class="admin_mainmenu">
@@ -1332,7 +1345,10 @@
   // 일반 회원 경고 조치
   $(document).on('click', '.admin_member_warn_btn', function() {
     if (confirm('정말 경고를 주시겠습니까?')) {
-      alert('경고 조치 하였습니다.')
+    	Swal.fire({
+       	  text: "경고 1회 적립",
+       	  icon: "warning"
+       	});
     }
   })
 
@@ -1343,7 +1359,10 @@
     if (confirm('정말 탈퇴 시키겠습니까?')) {
       $.get(url, function(response) {
         if (response.result === 'success') {
-          alert('탈퇴가 완료되었습니다.')
+        	Swal.fire({
+           	  text: "탈퇴처리 하였습니다.",
+           	  icon: "success"
+           	});
           $('.personal_modal').find('.desc-content').empty()
           loadGeneralTypeMember()
         }
@@ -1389,11 +1408,17 @@
       $.post('/admin/management/tier/upgrade', body, function(response) {
 
         if (response.result === 'success') {
-          alert('승급 처리 하였습니다.')
+        	Swal.fire({
+           	  text: "성공적으로 승급처리하였습니다",
+           	  icon: "success"
+           	});
           loadMemberTierManagement()
         }
         else {
-          alert('처리하지 못했습니다. 왜 일까요?')
+        	Swal.fire({
+           	  text: "성공하지 못했습니다 왜죠?",
+           	  icon: "error"
+           	});
         }
       })
     }
@@ -1403,7 +1428,10 @@
   $(document).on('click', '.admin_member_tier_upgrade_deny_btn', function() {
 
     if (confirm('정말 거절 하시겠습니까?')) {
-      alert('거절 처리 하였습니다.')
+    	Swal.fire({
+       	  text: "거절 처리 성공!",
+       	  icon: "success"
+       	});
       loadMemberTierManagement()
     }
   })
@@ -1484,7 +1512,10 @@
 
     if (confirm('정말 승인하시겠습니까?')) {
       $.post(url, body, function(response) {
-        alert('승인 처리되었습니다.')
+    	  Swal.fire({
+         	  text: "승인 처리 성공!",
+         	  icon: "success"
+         	});
         $('.company_modal').find('.desc-content').empty()
         loadCompanytypeMember()
       })
@@ -1515,7 +1546,10 @@
     if (confirm('정말 탈퇴 시키겠습니까?')) {
       $.get(url, function(response) {
         if (response.result === 'success') {
-          alert('탈퇴가 완료되었습니다.')
+        	Swal.fire({
+           	  text: "탈퇴 처리 성공!",
+           	  icon: "success"
+           	});
           $('.company_modal').find('.desc-content').empty()
           loadCompanytypeMember()
         }
@@ -1627,7 +1661,10 @@
     let currBtn =$(this)
 
     if ($(this).parent().hasClass('notice_expired')) {
-      alert('이 공지는 만료되었습니다. 날짜를 먼저 수정해주세요.')
+    	Swal.fire({
+       	  text: "이 공지는 만료됐습니다. 날짜를 수정 해주세요",
+       	  icon: "error"
+       	});
     }
     else {
       $.get(`/admin/notice/onoff/\${onoff}/\${id}`, function(response) {
@@ -1655,7 +1692,10 @@
   })
 
   $(document).on('click', '.notice_del_btn', function() {
-    alert('삭제된 공지입니다.')
+	  Swal.fire({
+     	  text: "삭제된 공지입니다만?!",
+     	  icon: "error"
+     	});
   })
 
   // 공지 조회 기능(제목 클릭)
@@ -1748,11 +1788,17 @@
     if (confirm('정말 삭제하시겠습니까?')) {
       $.get(`/notice/delete/\${noticeId}`, function(response) {
         if (response.result === 'success') {
-          alert('삭제를 완료했습니다.')
+        	Swal.fire({
+           	  text: "삭제 성공!",
+           	  icon: "success"
+           	});
           loadAdminNoticeList()
         }
         else {
-          alert('삭제에 실패했습니다.')
+        	Swal.fire({
+           	  text: "삭제 실패!",
+           	  icon: "warning"
+           	});
         }
       })
     }
@@ -1777,11 +1823,11 @@
           <div class="report_list_group">
             <div class="report_id">\${response.length - i}</div>
             <div class="report_confirm">
-              \${report.progressYn}
+              <div>\${report.progressYn}</div>
             </div>
             <div class="report_content">
               <span class="report_view_btn" data-id="\${report.reportId}" data-progress="\${report.progressYn}">
-                <strong>\${report.reportReasonContent}</strong>
+                \${report.reportReasonContent}
               </span>
             </div>
             <div class="report_reason">\${report_reason}</div>
@@ -1791,6 +1837,13 @@
           </div>
         </div>`
         reportTemplateDom = $(reportTemplate)
+
+        if (reportTemplateDom.find('.report_view_btn').data('progress') === 'Y') {
+          reportTemplateDom.find('.report_view_btn').css('color', 'var(--gray)')
+        }
+        else {
+          reportTemplateDom.find('.report_view_btn').css('font-weight', 'bold')
+        }
 
         if (report.reportReasonContent.includes(val) || report_reason.includes(val)) {
           $('.report_modal').find('.desc-content').append(reportTemplateDom)
@@ -1821,7 +1874,10 @@
   $(document).on('click', '.report_view_btn', function() {
     $(this).data('progress')
     if ($(this).data('progress') === 'Y') {
-      alert('이미 처리 완료된 건입니다.')
+    	Swal.fire({
+       	  text: "이미 처리가 완료된 건입니다만?!",
+       	  icon: "warning"
+       	});
     }
     else {
       let reportId = $(this).data('id')
@@ -1862,7 +1918,10 @@
 
       // 멤버 경고
       $('.report_btn.member_warn').click(function() {
-        alert('경고를 주었습니다.')
+    	  Swal.fire({
+         	  text: "경고를 주었습니다",
+         	  icon: "success"
+         	});
       })
 
       // 회원 탈퇴
@@ -1875,10 +1934,16 @@
         
         $.get(url, function(response) {
           if (confirm('정말 탈퇴시키겠습니까?') && response.result === 'success') {
-            alert('탈퇴 처리하였습니다.')
+        	  Swal.fire({
+             	  text: "탈퇴 처리 성공!",
+             	  icon: "success"
+             	});
           }
           else {
-            alert('탈퇴 처리에 실패했습니다.')
+        	  Swal.fire({
+             	  text: "탈퇴 처리 실패!",
+             	  icon: "error"
+             	});
           }
         })
       })
@@ -1890,14 +1955,23 @@
 
         let url = '/home/admin/person/delete/' + emailNode[0].nodeValue
 
-        $.get(url, function(response) {
-          if (confirm('정말 탈퇴시키겠습니까?') && response.result === 'success') {
-            alert('탈퇴 처리하였습니다.')
-          }
-          else {
-            alert('탈퇴 처리에 실패했습니다.')
-          }
-        })
+
+        if (confirm('정말 탈퇴 시키겠습니까?')) {
+          $.get(url, function(response) {
+            if (response.result === 'success') {
+              Swal.fire({
+               	  text: "탈퇴 처리 성공!",
+               	  icon: "success"
+               	});
+            }
+            else {
+              Swal.fire({
+               	  text: "탈퇴 처리 실패!",
+               	  icon: "error"
+               	});
+            }
+          })
+        }
       })
 
       $('.report_btn_wrap button').click(function() {
@@ -1905,10 +1979,13 @@
 
         if (confirm('정말 처리 완료하시겠습니까?')) {
           $.get(`/admin/report/progress/\${reportId}`, function(response) {
-             console.log(response)
-             console.log(reportId)
             if (response.result === 'success') {
-              alert('처리 완료하였습니다.')
+              Swal.fire({
+                text: "처리 완료!!!!!!",
+                icon: "success"
+              });
+              $('.report_close_btn').trigger('click')
+              loadReportList()
             }
           })
         }
@@ -1942,7 +2019,10 @@
     let body = {'codeContent': $('#codeContent').val()}
 
     if(body === null || body === '' || $('#codeContent').val().trim() === '') {
-      alert('해시태그를 입력해주세요')
+    	Swal.fire({
+         	  text: "탈퇴 처리 실패!",
+         	  icon: "warning"
+         	});
     }
 
     else {
@@ -1953,11 +2033,17 @@
         let result = response.result
         if (result) {
           load_hashtag()
-          alert('성공')
+          Swal.fire({
+         	  text: "해시태그 입력 성공~~~~~",
+         	  icon: "success"
+         	});
           $('#codeContent').val('')
         }
         else {
-          alert('실패!')
+        	Swal.fire({
+           	  text: "해시태그 입력 실패?!!!!",
+           	  icon: "warning"
+           	});
         }
       })
     }

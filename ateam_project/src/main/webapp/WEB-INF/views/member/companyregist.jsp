@@ -12,6 +12,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
 <script src="/js/lib/jquery-3.7.1.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <style type="text/css">
 button, input {
     padding: 10px;
@@ -214,8 +216,11 @@ $().ready(function() {
 
     // 회원가입 시 승인 대기 문구를 띄움
     $('#btn-regist').click(function() {
-        alert('가입 완료!')
-        alert('관리자가 확인 후 연락드릴 예정입니다.')
+    	Swal.fire({
+    	  title: "가입 성공"
+      	  text: "추후 관리자가 메일 보냅니다.확인 해 주세요!",
+      	  icon: "success"
+      	});
     })
 
   function checkAvailability(inputId, paramName) {

@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <jsp:include page="../layout/header.jsp" />
 <link rel="stylesheet" type="text/css" href="/css/common.css" />
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <style>
 	table th{
 		background-color: var(--light-gray);
@@ -546,7 +547,10 @@
           console.log(e.currentTarget)
           if ($(e.currentTarget).find('svg').hasClass('bookmark_on')) {
             $.post('/unbookmark', body, function(result) {
-              alert('북마크가 취소되었습니다.!')
+            	Swal.fire({
+              	  text: "북마크가 취소됐습니다",
+              	  icon: "error"
+              	});
               $(e.currentTarget).find('svg').removeClass('bookmark_on')
               $(e.currentTarget).find('svg').css('fill', 'var(--gray)')
               $('.bookmarkId').remove()
@@ -555,13 +559,19 @@
           else {
             $.post('/bookmark/general-post', body, function(result) {
               if (result) {
-                alert('북마크에 추가되었습니다.')
+            	  Swal.fire({
+                	  text: "북마크가 추가됐습니다",
+                	  icon: "success"
+                	});
                 $(e.currentTarget).find('svg').css('fill', 'var(--blue)')
                 $(e.currentTarget).find('svg').addClass('bookmark_on')
                 $('.bookmarkBtn').prepend(`<input type="hidden" class="bookmarkId" value="\${result.bookmarkId}"/>`)
               }
               else {
-                alert('처리하지 못했습니다.')
+            	  Swal.fire({
+                	  text: "처리에 실패했습니다",
+                	  icon: "error"
+                	});
               }
             })
           }

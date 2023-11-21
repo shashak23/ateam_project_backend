@@ -2,6 +2,7 @@ package com.ktdsuniversity.edu.admin.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ktdsuniversity.edu.admin.dao.AdminDAO;
 import com.ktdsuniversity.edu.admin.vo.AdminTierListVO;
@@ -26,11 +27,13 @@ public class TierServiceImpl implements TierService {
 		return adminTierListVO;
 	}
 	
+	@Transactional
 	@Override
 	public boolean doUpdateTierMember(GeneralMemberVO generalMemberVO) {
 		int updateTierIdCount = generalMemberDAO.updateTierId(generalMemberVO);
 		int updateTierDateCount = generalMemberDAO.updateTierDate(generalMemberVO);
-		return updateTierIdCount > 0 && updateTierDateCount > 0 ;
+		int completeTierUpgradeCount = generalMemberDAO.completeTierUpgrade(generalMemberVO.getGeneralMemberEmail());
+		return updateTierIdCount > 0 && updateTierDateCount > 0 && completeTierUpgradeCount > 0 ;
 	}
 	
 	@Override

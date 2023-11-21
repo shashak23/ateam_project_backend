@@ -103,6 +103,13 @@ public interface GeneralMemberDAO {
 	public int updateTierDate(GeneralMemberVO generalMemberVO);
 	
 	/**
+	 * 등급 조정이 완료된 회원 테이블에서 제거
+	 * @param email
+	 * @return 조정 완료된 회원 로우 개수
+	 */
+	public int completeTierUpgrade(String email);
+	
+	/**
 	 * 회원이 작성한 글과 댓글 조회
 	 * @param generalMemberEmail 활동 내역을 조회할 회원 email
 	 * @return

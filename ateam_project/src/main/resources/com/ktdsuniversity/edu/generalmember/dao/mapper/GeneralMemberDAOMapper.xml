@@ -165,6 +165,13 @@
 		 WHERE GENERAL_MEMBER_EMAIL = #{generalMemberEmail}
 	</update>
 	
+	<delete id="completeTierUpgrade"
+			parameterType="string">
+		DELETE 
+		  FROM ADMIN_TIER
+		 WHERE MEMBER_EMAIL = #{_parameter}
+	</delete>
+	
 	<update id="updateTierDate"
 			parameterType="com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO">
 		UPDATE GENERAL_MEMBER
