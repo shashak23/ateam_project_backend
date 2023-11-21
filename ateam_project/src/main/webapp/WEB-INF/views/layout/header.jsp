@@ -14,7 +14,6 @@
 	<!-- sweet Modal 추가(11.10.금.김시하) -->
 	<link rel="stylesheet" href="/css/jquery.sweet-modal.min.css" />
 	<script src="/js/lib/jquery.sweet-modal.min.js"></script>
-	
 	<script src="/js/common.js"></script>
     <script src="/js/Modal.js"></script>
     <script src="/js/Alert.js"></script>
@@ -84,7 +83,7 @@
   <div class="header_container">
     <section class="header">
       <div class="logo_wrap">
-        <span class="logo_img"><a href="/devground/home">🎃</a></span>
+        <span class="logo_img"><a href="/devground/home"></a></span>
         <div class="logo_name"><a href="/devground/home">devGround</a></div>
       </div>
       <nav class="gnb">

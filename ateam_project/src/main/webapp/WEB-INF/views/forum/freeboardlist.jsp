@@ -1,9 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" 
+	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-<meta charset="UTF-8">
 <title>devGround</title>
 <jsp:include page="../layout/header.jsp"/>
 <script src="./js/swiper.min.js"></script>
@@ -11,6 +8,10 @@
 <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
 <style>
 	/*swiper제어*/
+   .swiper-container{
+   		height: 331px;
+   		overflow: hidden;
+   }
    .swiper-slide img {
        position: relative;
 	   max-width: 100%;
@@ -355,7 +356,6 @@
     delay: 2000, // 슬라이드 간의 전환 지연 시간 (밀리초)
     disableOnInteraction: false, // 사용자 상호 작용 후에도 자동 전환을 유지할지 여부
   },
-
   
   navigation: {
     nextEl: '.swiper-button-next',

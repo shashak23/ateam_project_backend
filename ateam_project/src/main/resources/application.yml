@@ -34,7 +34,7 @@ app:
     # 파일 업로드 정책 관련 설정.
     multipart: 
         #업로드한 파일이 저장한 위치
-        base-dir: Z:/192.168.211.15\uploadFiles
+        base-dir: C:\uploadFiles
         #파일명 난독화 관련 설정
         obfuscation:
             #난독화 사용 여부
