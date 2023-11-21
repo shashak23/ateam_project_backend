@@ -60,8 +60,18 @@
       justify-content: flex-end;
    }
    #like-btn,
+   #modify-btn,
    #reportFreeBoard  {
-      margin-left: 5px;
+      margin-right: 5px;
+      background-color: transparent;
+      border: 1px solid #EEE;
+      width: 90px;
+      border-radius: 5px;
+      cursor: pointer;
+   }
+
+   #delete-btn {
+      margin-right: 20px;
       background-color: transparent;
       border: 1px solid #EEE;
       width: 90px;
@@ -600,14 +610,14 @@ $().ready(function() {
                <div class="space_between">
                   <div class="btn_controller">
                      <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email ne generalPostVO.postWriter}">
-                     <button id="like-btn">좋아요👍</button>
-                        <button id="reportFreeBoard" value="1">신고📌</button>
+                        <button id="like-btn">좋아요👍</button>
+                        <button id="reportFreeBoard" value="1">신고🚨</button>
                      </c:if>
                   </div>
                   <div class="btn_controller">
                      <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq generalPostVO.postWriter}">
-                        <a href="/freeboard/update/${generalPostVO.generalPostId}">수정</a>
-                        <a href="/freeboard/delete/${generalPostVO.generalPostId}">삭제</a>
+                        <button id="modify-btn"><a href="/freeboard/update/${generalPostVO.generalPostId}">수정✍</a></button>
+                        <button id="delete-btn"><a href="/freeboard/delete/${generalPostVO.generalPostId}">삭제🗑️</a></button>
                      </c:if>
                   </div>
                </div>

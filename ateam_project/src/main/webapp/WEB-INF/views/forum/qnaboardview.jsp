@@ -51,8 +51,18 @@ a:link, a:hover, a:visited, a:active {
       justify-content: flex-end;
    }
    #like-btn,
+   #modify-btn,
    #reportQnABoard  {
-      margin-left: 5px;
+      margin-right: 5px;
+      background-color: transparent;
+      border: 1px solid #EEE;
+      width: 90px;
+      border-radius: 5px;
+      cursor: pointer;
+   }
+
+   #delete-btn {
+      margin-right: 20px;
       background-color: transparent;
       border: 1px solid #EEE;
       width: 90px;
@@ -619,15 +629,15 @@ $(document).on('click', '#reportQnABoard', function() {
                </div>
                <div class="space_between">
                   <div class="btn_controller">
-                     <button id="like-btn">좋아요👍</button>
                      <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email ne generalPostVO.postWriter}">
+                        <button id="like-btn">좋아요👍</button>
                         <button id="reportQnABoard" value="3" class="report-btn">신고🚨</button>
                      </c:if>
                   </div>
                   <div class="btn_controller">
                      <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq generalPostVO.postWriter}">
-                        <a href="/qnaboard/update/${generalPostId}">수정</a>
-                        <a href="/qnaboard/delete/${generalPostId}">삭제</a>
+                        <button id="modify-btn"><a href="/qnaboard/update/${generalPostId}">수정✍</a></button>
+                        <button id="delete-btn"><a href="/qnaboard/delete/${generalPostId}">삭제🗑️</a></button>
                      </c:if>
                   </div>
                </div>
