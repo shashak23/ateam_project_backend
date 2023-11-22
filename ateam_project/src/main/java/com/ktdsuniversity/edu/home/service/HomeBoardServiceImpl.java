@@ -28,23 +28,28 @@ public class HomeBoardServiceImpl implements HomeBoardService {
 	private GeneralPostHashtagDAO generalPostHashtagDAO;
 	
 	@Override
-	public List<GeneralPostVO> getAllGeneralPost() {
-		return homeBoardDAO.getAllGeneralPost();
+	public List<GeneralPostVO> getAllGeneralPost(int skip) {
+		return homeBoardDAO.getAllGeneralPost(skip);
 	}
 	
 	@Override
-	public List<HomecommentCntVO> getAllGeneralCommentCnt() {
-		return homeBoardDAO.getAllGeneralCommentCnt();
+	public HomecommentCntVO getAllGeneralCommentCnt(String generalPostId) {
+		return homeBoardDAO.getAllGeneralCommentCnt(generalPostId);
 	}
 	
 	@Override
-	public List<HomeNickNameVO> getNicknameList() {
-		return homeBoardDAO.getNicknameList();
+	public HomeNickNameVO getNicknameList(String generalPostId) {
+		return homeBoardDAO.getNicknameList(generalPostId);
 	}
 	
 	@Override
 	public List<GeneralPostVO> getWeeklyRanking(String date) {
 		return homeBoardDAO.getWeeklyRanking(date);
+	}
+	
+	@Override
+	public List<GeneralPostVO> getWeeklyRankingInQnaBoard(String date) {
+		return homeBoardDAO.getWeeklyRankingInQnaBoard(date);
 	}
 
 	@Override

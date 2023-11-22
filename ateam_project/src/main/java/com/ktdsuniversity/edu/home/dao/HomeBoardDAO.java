@@ -9,10 +9,11 @@ import com.ktdsuniversity.edu.home.vo.HomecommentCntVO;
 import com.ktdsuniversity.edu.member.vo.MemberVO;
 
 public interface HomeBoardDAO {
-	public List<GeneralPostVO> getAllGeneralPost();
-	public List<HomecommentCntVO> getAllGeneralCommentCnt();
-	public List<HomeNickNameVO> getNicknameList();
+	public List<GeneralPostVO> getAllGeneralPost(int skip);
+	public HomecommentCntVO getAllGeneralCommentCnt(String generalPostId);
+	public HomeNickNameVO getNicknameList(String generalPostId);
 	public List<GeneralPostVO> getWeeklyRanking(String date);
+	public List<GeneralPostVO> getWeeklyRankingInQnaBoard(String date);
 	public List<HomeBoardVO> getHashtag(String postId);
 	public MemberVO getMemberProfilePic(String email);
 	public int freeboardCreateByMain(GeneralPostVO generalPostVO);

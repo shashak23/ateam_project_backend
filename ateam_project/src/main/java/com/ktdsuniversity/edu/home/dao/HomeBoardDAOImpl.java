@@ -27,23 +27,28 @@ public class HomeBoardDAOImpl extends SqlSessionDaoSupport implements HomeBoardD
 	}
 	
 	@Override
-	public List<GeneralPostVO> getAllGeneralPost() {
-		return getSqlSession().selectList("getAllGeneralPost");
+	public List<GeneralPostVO> getAllGeneralPost(int skip) {
+		return getSqlSession().selectList("getAllGeneralPost", skip);
 	}
 		
 	@Override
-	public List<HomecommentCntVO> getAllGeneralCommentCnt() {
-		return getSqlSession().selectList("getAllGeneralCommentCnt");
+	public HomecommentCntVO getAllGeneralCommentCnt(String generalPostId) {
+		return getSqlSession().selectOne("getAllGeneralCommentCnt", generalPostId);
 	}
 	
 	@Override
-	public List<HomeNickNameVO> getNicknameList() {
-		return getSqlSession().selectList("getNicknameList");
+	public HomeNickNameVO getNicknameList(String generalPostId) {
+		return getSqlSession().selectOne("getNicknameList", generalPostId);
 	}
 	
 	@Override
 	public List<GeneralPostVO> getWeeklyRanking(String date) {
 		return getSqlSession().selectList("getWeeklyRanking", date);
+	}
+	
+	@Override
+	public List<GeneralPostVO> getWeeklyRankingInQnaBoard(String date) {
+		return getSqlSession().selectList("getWeeklyRankingInQnaBoard", date);
 	}
 	
 	@Override

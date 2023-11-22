@@ -814,7 +814,6 @@
   var allHashTags = [];
     
     function getHashTagId(tagName) {
-        console.log(allHashTags.filter(tagElem => tagElem.tagContent == tagName), tagName, allHashTags)
         return allHashTags.filter(tagElem => tagElem.tagContent == tagName)[0].tagId;
     }
     
@@ -1077,34 +1076,22 @@
     let hashtagArr = []
     let haveHashtag = []
     let template
-    let comments
-    let comment_cnt
-    let nicknameList
-    let nickname
-    let email
     let members
     let innerCounter
-
-
-    // 댓글 개수 가져오기
-    $.get('/home/maincontent/commentcnt', function(response_of_comment) {
-      comments = response_of_comment
-    })
-
-    // 닉네임 리스트 가져오기
-    $.get('/home/maincontent/nickname', function(response_of_nicknames) {
-      nicknameList = response_of_nicknames
-    })
+    let commentCnt = 0
+    let nickname = ''
+    let email = ''
     
     function loadContents(skip = 0) {
-      $.get('/home/maincontent', function(response) {
-        console.log(response)
+      $.get(`/home/maincontent/\${skip}`, function(response) {
+
         articles = response
         all_count = response.length
-
-        if (skip < all_count) {
-          for (let i = skip; i < skip + 5; i++) {
-            article = articles[i]
+        
+        for (let i = 0; i < 5; i++) {
+          article = articles[i]
+          if (article !== undefined) {
+            email = article.postWriter
 
             // 게시판의 타입 결정
             if (article.boardId.slice(-2) === '30') {
@@ -1112,19 +1099,6 @@
             }
             else {
               boardType = 'freeboard'
-            }
-
-            for (let j = 0; j < comments.length; j++) {
-              if (comments[j].generalPostId === article.generalPostId) {
-                comment_cnt = comments[j].commentCnt
-              }
-            }
-            
-            for (let j = 0; j < nicknameList.length; j++) {
-              if (nicknameList[j].generalPostId === article.generalPostId) {
-                nickname = nicknameList[j].nickname
-                email = nicknameList[j].email
-              }
             }
 
             let pokemon = getPokemonUrl()
@@ -1137,7 +1111,7 @@
                     <img src="/member/file/download/\${email}" onerror="this.src='/images/gray_man.png';" alt="\${pokemon}"/>
                     <div>
                       <div class="writer_name">
-                        <a href="/memberinfo/view/\${email}">\${nickname}</a>
+                        <a href="/memberinfo/view/\${email}" class="post_nickname">\${nickname}</a>
                         <button class="follow_btn small">팔로우
                           <input type="hidden" class="followerEmail" value="${sessionScope._LOGIN_USER_.email}" />
                           <input type="hidden" class="followeeEmail" value="\${email}" />
@@ -1165,7 +1139,7 @@
                     <a href="/\${boardType}/view/\${article.generalPostId}" target="_blank">
                       <span class="title large">\${article.postTitle}</span>
                     </a>
-                    <span class="comment_number">[\${comment_cnt}]</span>
+                    <span class="comment_number">0</span>
                     <span><svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 512 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path d="M323.8 34.8c-38.2-10.9-78.1 11.2-89 49.4l-5.7 20c-3.7 13-10.4 25-19.5 35l-51.3 56.4c-8.9 9.8-8.2 25 1.6 33.9s25 8.2 33.9-1.6l51.3-56.4c14.1-15.5 24.4-34 30.1-54.1l5.7-20c3.6-12.7 16.9-20.1 29.7-16.5s20.1 16.9 16.5 29.7l-5.7 20c-5.7 19.9-14.7 38.7-26.6 55.5c-5.2 7.3-5.8 16.9-1.7 24.9s12.3 13 21.3 13L448 224c8.8 0 16 7.2 16 16c0 6.8-4.3 12.7-10.4 15c-7.4 2.8-13 9-14.9 16.7s.1 15.8 5.3 21.7c2.5 2.8 4 6.5 4 10.6c0 7.8-5.6 14.3-13 15.7c-8.2 1.6-15.1 7.3-18 15.1s-1.6 16.7 3.6 23.3c2.1 2.7 3.4 6.1 3.4 9.9c0 6.7-4.2 12.6-10.2 14.9c-11.5 4.5-17.7 16.9-14.4 28.8c.4 1.3 .6 2.8 .6 4.3c0 8.8-7.2 16-16 16H286.5c-12.6 0-25-3.7-35.5-10.7l-61.7-41.1c-11-7.4-25.9-4.4-33.3 6.7s-4.4 25.9 6.7 33.3l61.7 41.1c18.4 12.3 40 18.8 62.1 18.8H384c34.7 0 62.9-27.6 64-62c14.6-11.7 24-29.7 24-50c0-4.5-.5-8.8-1.3-13c15.4-11.7 25.3-30.2 25.3-51c0-6.5-1-12.8-2.8-18.7C504.8 273.7 512 257.7 512 240c0-35.3-28.6-64-64-64l-92.3 0c4.7-10.4 8.7-21.2 11.8-32.2l5.7-20c10.9-38.2-11.2-78.1-49.4-89zM32 192c-17.7 0-32 14.3-32 32V448c0 17.7 14.3 32 32 32H96c17.7 0 32-14.3 32-32V224c0-17.7-14.3-32-32-32H32z"/></svg></span>
                     <span class="thumbs_up_number">\${article.likeCnt}</span>
                   </div>
@@ -1177,6 +1151,20 @@
                 </div>
               </article>`
             let templateDom = $(template)
+
+            // 댓글 개수  가져오기
+            $.get(`/home/maincontent/commentcnt/\${article.generalPostId}`, function(response_of_comment) {
+              commentCnt = response_of_comment.commentCnt
+              templateDom.find('.comment_number').text(commentCnt)
+            })
+    
+            // 닉네임 가져오기
+            $.get(`/home/maincontent/nickname/\${article.generalPostId}`, function(response_of_nickname) {
+              nickname = response_of_nickname.nickname
+              email = response_of_nickname.email
+              templateDom.find('.post_nickname').text(nickname)
+              templateDom.find('.comment_number').text(commentCnt)
+            })
             
             // 북마크 상태 가져오기
             user_email = `${sessionScope._LOGIN_USER_.email}`
@@ -1219,7 +1207,16 @@
 
             
             $('.body_left').append(templateDom)
+
           } 
+        }
+        
+        let userEmail = `${sessionScope._LOGIN_USER_}`
+        // 알 수도 있는 사람 호출
+        if (userEmail != '') {
+          console.log(page)
+          loadRecFollower(page)
+            page += 3
         }
       })
     }
@@ -1236,13 +1233,6 @@
 
         // 그리고 게시글 다시 호출
         loadContents(skip)
-
-        let userEmail = `${sessionScope._LOGIN_USER_}`
-        // 알 수도 있는 사람 호출
-        if (userEmail != '' && !$('.body_left article:last-child').hasClass('recommend_container')) {
-          loadRecFollower(page)
-          page += 3
-        }
       }
     })
 
@@ -1566,14 +1556,12 @@
 
     $('.report_attached_text').click(function() {
       $('#report_attached').trigger('click')
-      console.log('asdf')
     })
 
     $('#report_attached').change(function() {
       let selectedFilePath = $(this).val()
       let parts = selectedFilePath.split('\\')
       let selectedFile = parts[parts.length-1]
-      console.log(selectedFile)
       $('.report_attached_text').val(selectedFile)
     })
     

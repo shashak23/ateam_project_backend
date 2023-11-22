@@ -158,9 +158,10 @@ public class HomeController {
 //	}
 	
 	@ResponseBody
-	@GetMapping("/home/maincontent")
-	public List<GeneralPostVO> getAllMainContents() {
-		List<GeneralPostVO> generalList = homeBoardService.getAllGeneralPost();
+	@GetMapping("/home/maincontent/{skip}")
+	public List<GeneralPostVO> getAllMainContents(@PathVariable int skip) {
+		logger.debug("스킵이야" + skip);
+		List<GeneralPostVO> generalList = homeBoardService.getAllGeneralPost(skip);
 		
 		return generalList;
 	}
@@ -170,9 +171,9 @@ public class HomeController {
 	 * @return 질답 게시글, 자유 게시글
 	 */
 	@ResponseBody
-	@GetMapping("/home/maincontent/commentcnt")
-	public List<HomecommentCntVO> getAllGeneralCommentCnt() {
-		return homeBoardService.getAllGeneralCommentCnt();
+	@GetMapping("/home/maincontent/commentcnt/{generalPostId}")
+	public HomecommentCntVO getAllGeneralCommentCnt(@PathVariable String generalPostId) {
+		return homeBoardService.getAllGeneralCommentCnt(generalPostId);
 	}
 	
 	/**
@@ -180,9 +181,9 @@ public class HomeController {
 	 * @return 게시글 작성자의 닉네임
 	 */
 	@ResponseBody
-	@GetMapping("/home/maincontent/nickname")
-	public List<HomeNickNameVO> getNicknameList() {
-		return homeBoardService.getNicknameList();
+	@GetMapping("/home/maincontent/nickname/{generalPostId}")
+	public HomeNickNameVO getNicknameList(@PathVariable String generalPostId) {
+		return homeBoardService.getNicknameList(generalPostId);
 	}
 	
 	/**
@@ -196,6 +197,16 @@ public class HomeController {
 		Map<String, Object> resultMap = new HashMap<>();
 		List<GeneralPostVO> RankingList = new ArrayList<>();
 		RankingList.addAll(homeBoardService.getWeeklyRanking(date));
+		resultMap.put("rankings", RankingList);
+		return resultMap;
+	}
+	
+	@ResponseBody
+	@GetMapping("/qna/ranking/{date}")
+	public Map<String, Object> getWeeklyRankingInFreeBoard(@PathVariable String date) {
+		Map<String, Object> resultMap = new HashMap<>();
+		List<GeneralPostVO> RankingList = new ArrayList<>();
+		RankingList.addAll(homeBoardService.getWeeklyRankingInQnaBoard(date));
 		resultMap.put("rankings", RankingList);
 		return resultMap;
 	}

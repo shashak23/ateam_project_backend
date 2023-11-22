@@ -26,39 +26,49 @@
 		</association>
 	</resultMap>
 	<select id="getAllGeneralPost"
+			parameterType="_int"
 			resultType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
-		SELECT GENERAL_POST_ID
-		     , POST_WRITER
-		     , BOARD_ID
-		     , POST_TITLE
-		     , POST_CONTENT
-		     , TO_CHAR(POST_DATE, 'YYYY-MM-DD') POST_DATE
-		     , LIKE_CNT
-		     , VIEW_CNT
-		     , DELETE_YN
-		  FROM GENERAL_POST
-		 WHERE DELETE_YN = 'N'
-		 ORDER BY GENERAL_POST_ID DESC
+		SELECT *
+		  FROM (SELECT ROWNUM RN
+				     , S.*
+				  FROM (SELECT GENERAL_POST_ID
+						     , POST_WRITER
+						     , BOARD_ID
+						     , POST_TITLE
+						     , POST_CONTENT
+						     , TO_CHAR(POST_DATE, 'YYYY-MM-DD') POST_DATE
+						     , LIKE_CNT
+						     , VIEW_CNT
+						     , DELETE_YN
+						  FROM GENERAL_POST
+						 WHERE DELETE_YN = 'N'
+						 ORDER BY GENERAL_POST_ID DESC) S
+				 WHERE ROWNUM <![CDATA[<=]]> #{_parameter} + 5)
+		 WHERE RN > #{_parameter}
 	</select>
 	
 	<select id="getAllGeneralCommentCnt"
+			parameterType="string"
 			resultType="com.ktdsuniversity.edu.home.vo.HomecommentCntVO">
 		SELECT COUNT(GC.GENERAL_COMMENT_ID) COMMENT_CNT
 		     , GP.GENERAL_POST_ID 
 		  FROM GENERAL_POST GP
 		  LEFT JOIN GENERAL_COMMENT GC
 		    ON GC.GENERAL_POST_ID = GP.GENERAL_POST_ID 
+		 WHERE GC.GENERAL_POST_ID = #{_parameter}
 		 GROUP BY GP.GENERAL_POST_ID
 	</select>
 	
 	<select id="getNicknameList"
+			parameterType="string"
 			resultType="com.ktdsuniversity.edu.home.vo.HomeNickNameVO">
 		SELECT M.NICKNAME
 			 , M.EMAIL 
 		     , GP.GENERAL_POST_ID 
 		  FROM GENERAL_POST GP
 		 INNER JOIN MEMBER M
-		    ON GP.POST_WRITER = M.EMAIL 
+		    ON GP.POST_WRITER = M.EMAIL
+		 WHERE GP.GENERAL_POST_ID = #{_parameter}
 	</select>
 	
 	<select id="getWeeklyRanking"
@@ -78,6 +88,17 @@
 				 ORDER BY VIEW_CNT DESC) GPM
 		 WHERE ROWNUM <![CDATA[<=]]> 10
 	</select>
+	
+	<select id="getWeeklyRankingInQnaBoard"
+			parameterType="string"
+			resultType="com.ktdsuniversity.edu.generalpost.vo.GeneralPostVO">
+		SELECT *
+		  FROM GENERAL_POST GP
+		 WHERE TO_CHAR(POST_DATE, 'YYYY-MM-DD') <![CDATA[>=]]> #{_parameter}
+		 ORDER BY VIEW_CNT DESC
+	</select>
+	
+	
 	<select id="getHashtag"
 			parameterType="string"
 			resultMap="GeneralPostDAOMap">
