@@ -511,8 +511,8 @@ body > .body_container > .body_right_aside {
 		width: 70px;
 		position: absolute;
 		height: 30px;
-		top: 12%;
-		left: 85%;
+		top: 18%;
+   		left: 98.5%;
 		transform: translate(-50%, -50%);
 		cursor: pointer;
 	}
@@ -537,6 +537,10 @@ body > .body_container > .body_right_aside {
 	}
 
 	.saveCareer {
+		text-align: right;
+	}
+
+	.saveEducation{
 		text-align: right;
 	}
 
@@ -1024,8 +1028,9 @@ body > .body_container > .body_right_aside {
 					</div>
 					<div class="saveCareer">
 						<input type="submit" value="저장" style="cursor: pointer; border: 1px solid #EEE; border-radius: 5px; background-color: var(--blue); color: #EEE; width: 80px; height: 40px; font-size: 14pt;">
-					
-					<a href="/memberInfo/modify/delete-career/\${response.careerId}">삭제</a>
+						<button style="cursor: pointer; border: 1px solid #EEE; border-radius: 5px; background-color: var(--blue); color: #EEE; width: 80px; height: 40px; font-size: 14pt;">
+							<a href="/memberInfo/modify/delete-career/\${response.careerId}" style="text-decoration: none; color: #EEE;">삭제</a>
+						</button>				
 					</div>
 				</form:form>`
         	})	
@@ -1138,10 +1143,17 @@ body > .body_container > .body_right_aside {
 							<option value="박사">박사</option>
 						</select>
 					</div>
-					<div class="saveCareer" style="display: flex; justify-content: space-between; align-items: center;">
-  <input type="submit" value="저장" style="cursor: pointer; border: 1px solid #EEE; border-radius: 5px; background-color: var(--blue); color: #EEE; width: 80px; height: 40px; font-size: 14pt;">
-  <a href="/memberInfo/modify/delete-education/\${response.educationId}" style="cursor: pointer; border: 1px solid #EEE; border-radius: 5px; background-color: var(--blue); color: #EEE; padding: 10px; text-decoration: none;">삭제</a>
-</div>
+
+					
+
+					<div class="saveEducation">
+						<input type="submit" value="저장" style="cursor: pointer; border: 1px solid #EEE; border-radius: 5px; background-color: var(--blue); color: #EEE; width: 80px; height: 40px; font-size: 14pt;">
+						<button style="cursor: pointer; border: 1px solid #EEE; border-radius: 5px; background-color: var(--blue); color: #EEE; width: 80px; height: 40px; font-size: 14pt;">
+							<a href="/memberInfo/modify/delete-education/\${response.educationId}" style="text-decoration:none; color:#EEE;">삭제</a>
+							
+						</button>				
+					</div>
+
 				</form:form>`
         	})
 			})	
