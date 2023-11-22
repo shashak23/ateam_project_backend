@@ -1155,7 +1155,12 @@
             // 댓글 개수  가져오기
             $.get(`/home/maincontent/commentcnt/\${article.generalPostId}`, function(response_of_comment) {
               commentCnt = response_of_comment.commentCnt
-              templateDom.find('.comment_number').text(commentCnt)
+              if (commentCnt !== undefined) {
+                templateDom.find('.comment_number').text(`[\${commentCnt}]`)
+              }
+              else {
+                templateDom.find('.comment_number').text('[0]')
+              }
             })
     
             // 닉네임 가져오기
@@ -1163,7 +1168,6 @@
               nickname = response_of_nickname.nickname
               email = response_of_nickname.email
               templateDom.find('.post_nickname').text(nickname)
-              templateDom.find('.comment_number').text(commentCnt)
             })
             
             // 북마크 상태 가져오기
