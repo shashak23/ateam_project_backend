@@ -7,14 +7,6 @@
 
 
 <jsp:include page="../layout/header.jsp" />
-<script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/super-build/ckeditor.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-<link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
-<script src="https://npmcdn.com/flatpickr/dist/flatpickr.min.js"></script>
-<script src="https://npmcdn.com/flatpickr/dist/l10n/ko.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://unpkg.com/@yaireo/tagify"></script>
 
 
 <style>
@@ -1079,7 +1071,7 @@
     let skip = 0
     let page = 0
     let all_count
-    let loading = false
+    let loading = true
     let article, articles
     let boardType
     let hashtagArr = []
@@ -1106,6 +1098,7 @@
     
     function loadContents(skip = 0) {
       $.get('/home/maincontent', function(response) {
+        console.log(response)
         articles = response
         all_count = response.length
 
@@ -1214,35 +1207,8 @@
               templateDom.find('.big_letter').text('').css('margin-right', '0px')
             }
             
-            // 해시태그 표시할 AJAX 호출
-            $.get(`/home/hashtag/\${article.generalPostId}`, function(response_of_hashtag) {
-              if (response_of_hashtag.length > 0) {
-                for (let j = 0; j < response_of_hashtag.length; j++) {
-                  haveHashtag.push(response_of_hashtag[j].commonCodeVO.codeContent)
-                  templateDom.find('.hashtagList').append(`<li class="hashtag_each x-small">\${response_of_hashtag[j].commonCodeVO.codeContent}</li>`)
-                }
-              }
-            })
-            // 해시태그 필터 결과
-            if (hashtagArr.length === 0) {
-              $('.body_left').append(templateDom)
-            }
-            else {
-              let isExist = false
-
-              for (let i = 0; i < hashtagArr.length; i++) {
-                for (let j = 0; j < haveHashtag.length; j++) {
-                  if (isExist === false && hashtagArr[i] === haveHashtag[j]) {
-                    $('.body_left').append(templateDom)
-                    isExist = true
-
-                    break
-                  }
-                }
-              }
-            }
-            haveHashtag = []
-          }
+            $('.body_left').append(templateDom)
+          } 
         }
       })
     }
@@ -1405,7 +1371,6 @@
     const formattedPrevMonday = prevYear + '-' + prevMonth + '-' + prevDay
 
     $.get(`/home/ranking/\${formattedMonday}`, function(response) {
-      console.log(response)
       let list = response.rankings
       for (let i = 0; i < 10; i++) {
 

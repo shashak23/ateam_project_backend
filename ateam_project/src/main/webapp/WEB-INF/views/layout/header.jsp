@@ -15,8 +15,16 @@
 	<link rel="stylesheet" href="/css/jquery.sweet-modal.min.css" />
 	<script src="/js/lib/jquery.sweet-modal.min.js"></script>
 	<script src="/js/common.js"></script>
-    <script src="/js/Modal.js"></script>
-    <script src="/js/Alert.js"></script>
+	<script src="/js/Modal.js"></script>
+	<script src="/js/Alert.js"></script>
+	<script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/super-build/ckeditor.js"></script>
+	<script src="https://npmcdn.com/flatpickr/dist/flatpickr.min.js"></script>
+	<script src="https://npmcdn.com/flatpickr/dist/l10n/ko.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+	<link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script src="https://unpkg.com/@yaireo/tagify"></script>
 	<c:if test="${not empty sessionScope._LOGIN_USER_}">
       <script type="text/javascript" src="/js/lib/sockjs.min.js"></script>
       <script type="text/javascript" src="/js/socket.js"></script>
