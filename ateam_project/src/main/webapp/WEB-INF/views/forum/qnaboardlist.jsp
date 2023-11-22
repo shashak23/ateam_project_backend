@@ -35,7 +35,7 @@
     }
     
     #tier_img{
-	  	width: 11px;
+	  	width: 13px;
 	  	margin-left: 5px;
 	}
     .pratice {
@@ -60,7 +60,7 @@
 	    display: flex;
 	    flex-direction: row;
 	    flex-wrap: wrap;
-	    width: 780px;
+	    width: 871px;
      
      }
     .hashtag_incomplete {
@@ -223,6 +223,9 @@
 	    text-overflow: ellipsis;
 	    white-space: nowrap;
   }  
+  .top_3_members {
+  	font-weight: bold;
+  }
 
 </style>
 </head>
@@ -420,15 +423,22 @@
 						            .attr("src", profilePicSrc)
 						            .attr("id", "profile_img")
 						            .css({
-						                'width': '9px',
-						                'height': '9px',
-						                'padding': '10px'
+						                'width': '25px',
+						                'height': '25px',
+						                'padding':'2px',
+						                'display':'inline',
+						                'margin':'auto',
+						                
 						            });
 				
 		        console.log(response.generalMemberList[i])
 		        userEmailDOM.append(tierImageDOM);
 		        userEmailDOM.append(profilePicDOM);
-		        userEmailDOM.append($("<span> " + response.generalMemberList[i].nickname + "  " + response.generalMemberList[i].tierScore+"</span>"));
+		        if (i < 3) {
+		        	userEmailDOM.append($("<span class='top_3_members'> " + response.generalMemberList[i].nickname + "  " + response.generalMemberList[i].tierScore+"</span>"));
+		        }else {
+		        	userEmailDOM.append($("<span> " + response.generalMemberList[i].nickname + "  " + response.generalMemberList[i].tierScore+"</span>"));
+		        }
 		
 		        // 이미지를 리스트에 추가
 		        listDOM.append(userEmailDOM); // $()안에 넣지 않고 그냥 text를 쓰면 초기화된다

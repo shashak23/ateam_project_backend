@@ -1,11 +1,8 @@
 @charset "UTF-8";
 /* Font */
 @font-face {
-	font-family: 'IBM Plex Sans KR, sans-serif';
-	src:
-		url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@300;400;500&display=swap');
-	font-weight: normal;
-	font-style:  normal;
+	font-family: 'SUIT', suit;
+	src: url('../font/SUIT-Bold.ttf')
 }
 
 /* 작성자: 김태현
@@ -73,11 +70,11 @@ h6 {
 }
 
 .btn-hashtag-blue {
-    background-color: var(--hashtag-blue);
+    background-color: #26577C;
 }
 
 .btn-light-blue {
-    background-color: var(--light-blue);
+    background-color: #26577C;
     color: var(--white);
 }
 
@@ -196,10 +193,10 @@ html {
 
 /* Fonts */
 *:lang(en) {
-    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-family: 'SUIT', suit;
 }
 *:lang(ko-KR) {
-    font-family: 'IBM Plex Sans KR', sans-serif;
+    font-family: 'SUIT', suit;
 }
 .bold {
     font-weight: bold;
@@ -253,7 +250,7 @@ html {
 }
 
 svg {
-    fill: var(--blue);
+    fill: #26577C;
 }
 
 /* Header */
@@ -264,9 +261,6 @@ body > .header_container {
 }
 
 .header_container > section.header {
-    /* display: flex;
-    justify-content: space-between;
-    align-items: center; */
     display: grid;
     grid-template-columns: 170px 1fr minmax(118px, auto);
     align-items: center;
@@ -290,7 +284,13 @@ body > .header_container {
     line-height: 30px;
     font-size: var(--font-big);
 }
-
+/* Header admin */
+.admin_container {
+    position: fixed;
+    top: 50px;
+    right: 150px;
+    z-index: 2;
+}
 
 /* Header > GNB */
 .header_container > section.header > .gnb {
@@ -308,7 +308,7 @@ body > .header_container {
     border-radius: 10px;
     font-weight: bold;
     font-size: var(--font-medium);
-    color: var(--blue);
+    color: #26577C;
 }
 .header_container > section.header > .gnb > ul li a:hover {
     background-color: var(--blue);
@@ -350,7 +350,7 @@ body > .header_container {
 
 /* Search */
 body > .search_container {
-    background-color: var(--light-blue);
+    background-color: #26577C;
 }
 
 .search_container > .for_search_align {
@@ -418,8 +418,8 @@ body > .body_container > .body_right_aside {
 
 /* Footer  */
 body > .footer {
-     background-color: var(--light-blue);
-     color: var(--white);
+     background-color: #26577C;
+     color: white;
 }/*  */
 
 .footer > .inner {
@@ -433,11 +433,11 @@ body > .footer {
     padding: 0 0 10px 0;
 }
 .footer > .inner > address > span {
-    color: var(--dark);
+    color: white;
 }
 .footer > .inner > .copyright {
      text-align: center;
-     color: var(--dark);
+     color: white;
      font-size: var(--font-x-small);
      border-top: 1px solid var(--blue);
      padding: 10px 0 0 0;

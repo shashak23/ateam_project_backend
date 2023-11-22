@@ -65,7 +65,7 @@
 		, #{nickname}
 		</if>
 		, 'Y'
-		, 'https://w7.pngwing.com/pngs/384/868/png-transparent-person-profile-avatar-user-basic-ui-icon.png'
+		, '/images/gray_man.png'
 		, SYSDATE
 		, #{memberType}
 		, 'N' )

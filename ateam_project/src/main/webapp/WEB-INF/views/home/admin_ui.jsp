@@ -16,6 +16,9 @@
     width: 120px;
     overflow: hidden;
   }
+  .admin_container .admin_mainmenu > .admin_main_list {
+    display: block;
+  }
 
   .admin_container .admin_mainmenu > li > button {
     display: flex;
@@ -26,6 +29,7 @@
     color: #e5e5e5;
     width: 120px;
     height: 30px;
+    border-radius: 0px;
   }
 
 
@@ -33,6 +37,7 @@
     border: none;
     padding: 0;
     cursor: pointer;
+    border-radius: 0px;
   }
 
   .admin_submenu > li > button {
@@ -46,6 +51,7 @@
     height: 30px;
   }
 
+
   .personal_modal,
   .company_modal,
   .hashtag_modal,
@@ -55,7 +61,7 @@
     max-height: 650px;
     top: 50%;
     left: 50%;
-    transform: translate(-120%, -50%) scale(0.7) ;
+    transform: translate(120%, -50%) scale(0.7) ;
     z-index: 10;
     opacity: 0;
     visibility: hidden;
@@ -495,8 +501,8 @@
     margin: 5px 6px;
     border-radius: 12px;
     border: 0;
-    background-color: #b3d8f1;
-    color: #fff;
+    background-color: var(--light-gray);
+    color: #E55604;
     font-size: 9pt;
   }
 
@@ -881,13 +887,13 @@
 <body>
   <nav class="admin_container">
     <ul class="admin_mainmenu">
-      <li><button class="mainmenu_btn">회원</button>
+      <li class="admin_main_list"><button class="mainmenu_btn">회원</button>
         <ul class="admin_submenu">
           <li><button class="admin_person_btn">개인</button></li>
           <li><button class="admin_company_btn">기업</button></li>
         </ul>
       </li>
-      <li><button class="mainmenu_btn">게시글</button>
+      <li class="admin_main_list"><button class="mainmenu_btn">게시글</button>
         <ul class="admin_submenu">
           <li><button class="admin_freeboard_btn">자유 게시판</button></li>
           <li><button class="admin_qnaboard_btn">질답 게시판</button></li>
@@ -895,14 +901,14 @@
           <li><button class="admin_algorithm_btn">알고리즘 게시판</button></li>
         </ul>
       </li>
-      <li><button class="mainmenu_btn">통합</button>
+      <li class="admin_main_list"><button class="mainmenu_btn">통합</button>
         <ul class="admin_submenu">
           <li><button class="admin_notice_btn">공지</button></li>
           <li><button class="admin_report_btn">신고</button></li>
           <li><button class="admin_hashtag_btn">해시태그</button></li>
         </ul>
       </li>
-      <li><button class="mainmenu_btn">환경설정</button>
+      <li class="admin_main_list"><button class="mainmenu_btn">환경설정</button>
         <ul class="admin_submenu">
           <li><button>임시</button></li>
         </ul>
@@ -1179,7 +1185,7 @@
         </div>
         <div class="admin_hashtag_wrap"></div>
         <div class="hashtag_create_title"><strong>해시태그 생성</strong></div>
-        <label for="codeContent">입력: </label>
+        <!-- <label for="codeContent">입력: </label> -->
         <input type="text" name="codeContent" id="codeContent" />
         <button id="create_btn">생성</button>
       </div>

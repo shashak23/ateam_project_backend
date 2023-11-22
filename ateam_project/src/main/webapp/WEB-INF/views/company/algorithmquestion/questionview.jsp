@@ -345,13 +345,19 @@ body > .body_container > .body_right_aside {
         margin: 0px 0px 15px 15px;    
     }
 
-    #result{
+    #result {
         font-weight: bold;
         margin-bottom: 15px;
     }
 
-    #show_result{  
+    #show_result{
+        margin-bottom: 10px;
         border: 1px solid var(--dark-gray);      
+    }
+    #checkAnswer {
+        font-weight: bold;
+        margin-top: 15px;
+        color: var(--red);
     }
     button {
     border: none;
@@ -416,6 +422,7 @@ body > .body_container > .body_right_aside {
                             </ul>
                         </c:forEach>
                     </c:if>
+                    <div id="checkAnswer">${popupMessage}</div>
                     <!-- 일반회원이 로그인 했을 시 -->
                     <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.memberType eq 'GENERAL'}">
                         <div id="buttonList">
@@ -423,7 +430,6 @@ body > .body_container > .body_right_aside {
                             <button id="submit-btn" >제출 후 채점하기</button>
                         </div>
                     </c:if>
-                    <div id="checkAnswer">${popupMessage}</div>
                 </div>
                 <div class="btn-group">                  
                     <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq algorithmQuestionVO.algorithmWriter}">

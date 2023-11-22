@@ -15,8 +15,16 @@
 	<link rel="stylesheet" href="/css/jquery.sweet-modal.min.css" />
 	<script src="/js/lib/jquery.sweet-modal.min.js"></script>
 	<script src="/js/common.js"></script>
-    <script src="/js/Modal.js"></script>
-    <script src="/js/Alert.js"></script>
+	<script src="/js/Modal.js"></script>
+	<script src="/js/Alert.js"></script>
+	<script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/super-build/ckeditor.js"></script>
+	<script src="https://npmcdn.com/flatpickr/dist/flatpickr.min.js"></script>
+	<script src="https://npmcdn.com/flatpickr/dist/l10n/ko.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+	<link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+	<script src="https://unpkg.com/@yaireo/tagify"></script>
 	<c:if test="${not empty sessionScope._LOGIN_USER_}">
       <script type="text/javascript" src="/js/lib/sockjs.min.js"></script>
       <script type="text/javascript" src="/js/socket.js"></script>
@@ -27,7 +35,7 @@
         var email = "${sessionScope._LOGIN_USER_.email}";
     </c:if>
     var send = undefined;
-	
+ 	
     $().ready(function() {
         <c:if test="${not empty sessionScope._LOGIN_USER_}">
             send = connectSocket("${sessionScope._LOGIN_USER_.nickname}", "${sessionScope._LOGIN_USER_.email}", function(send, receiveMessage) {
@@ -74,17 +82,23 @@
 				"action": "/home/search"
 			}).submit()
 		});
+        
+        $("#homeMove").click(function(){
+        	location.href = "/devground/home";
+        })
     });
 </script>
-	<!-- <link rel="stylesheet" href="/css/style.css">  -->
-	<link rel="stylesheet" href="/css/common.css">
 </head>
 <body>
+	<c:choose>
+		<c:when test="${sessionScope._LOGIN_USER_.memberType eq 'ADMIN'}">
+			<jsp:include page="../home/admin_ui.jsp" />
+		</c:when>
+	</c:choose>
   <div class="header_container">
     <section class="header">
       <div class="logo_wrap">
-        <span class="logo_img"><a href="/devground/home"></a></span>
-        <div class="logo_name"><a href="/devground/home">devGround</a></div>
+        <img src="../../images/logo-final.png" id="homeMove" style="cursor: pointer;"/>
       </div>
       <nav class="gnb">
         <ul>

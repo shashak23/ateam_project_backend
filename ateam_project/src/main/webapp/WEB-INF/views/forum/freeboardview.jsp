@@ -10,9 +10,7 @@
     <meta name="viewport" id="viewport" content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, width=device-width"/>
     <title>devGround</title>
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
- 	<link rel="stylesheet" type="text/css" href="/css/common.css" />
-    <script src="js/lib/jquery-3.7.1.js"></script>    
-    <jsp:include page="../layout/header.jsp"/>
+	<jsp:include page="../layout/header.jsp"/>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <style>
@@ -115,6 +113,14 @@
       border-bottom: 1px solid var(--light-gray);
       margin-top: 20px;
    }
+   .writer_info {
+      font-size: 14px;
+   }
+   .writer_info > .author {
+      font-weight: bold;
+      color: var(--blue);
+   }
+
    .comment-writer {
       font-weight: bold;
    }
@@ -130,7 +136,7 @@
    }
    .content {
       margin: 10px 0 5px 0;
-      font-size: 18px;
+      font-size: 15px;
    }
 
    .recommend-comment,
@@ -219,6 +225,7 @@
    .submit_area {
       justify-content: flex-end;
    }
+   #report_comment_button,
    .submit_area > input[type=submit] {
       width: 80px;
       height: 40px;
@@ -306,6 +313,11 @@
     flex-direction: row;
     justify-content: space-between;
 }
+
+#reply-count {
+    color: #E55604;
+}
+
    
 </style>
 <script type="text/javascript">
@@ -360,23 +372,30 @@ $().ready(function() {
             $.get("/qnaboard/view/comment/${generalPostId}", function(response) {               
                 // 댓글 목록을 response에서 받아와서 처리하는 부분
                 var replies = response.comments;
+                var counts = response.count;
+                  if (counts < 1) {
+                     $(".comment-items").text("아직 등록된 댓글이 없습니다!")
+                  } 
+                $("#reply-count").text(' (' +counts+ ')')
+                $("#reply-count").val(counts)
                 for (var i = 0; i < replies.length; i++) {
                     var comment = replies[i];
                     var commentTemplate =
                         `<div class="comment"
-                           data-comment-id="\${comment.generalCommentId}"
-                           data-comment-writer-email="\${comment.commentWriter}"
-                            style="padding-left: \${(comment.level - 1) * 40}px">
-                            <div class="author">\${comment.generalMemberVO.nickname}</div>
-                            <div class="recommend-count">추천수: \${comment.likeCnt}</div>
-                            <div class="datetime">
-                                <span class="crtdt">등록일: \${comment.postDate}</span>
-                                \${comment.mdfyDt != comment.crtDt ? 
-                                    `<span class="mdfydt">(수정: \${comment.postDate})</span>`
-                                    : ""}
-                            </div>
+                                    data-comment-id="\${comment.generalCommentId}"
+                                    data-comment-writer-email="\${comment.commentWriter}"
+                                    style="padding-left: \${(comment.level - 1) * 40}px">
+                                 <ul class="writer_info">
+                                    <li class='author'>\${comment.generalMemberVO.nickname}</li>
+                                    <li>|</li>
+                                    <li class='recommend-count'>추천수 \${comment.likeCnt}</li>
+                                    <li>|</li>
+                                    <li class='datetime'><span class="crtdt">\${comment.postDate}</span>
+                                       \${comment.mdfyDt != comment.crtDt ? `<span class="mdfydt">(수정: \${comment.postDate})</span>` : ""}
+                                    </li>
+                                 </ul>
                             <pre class="content">\${comment.commentContent}</pre>
-                            \${comment.email == "${sessionScope._LOGIN_USER_.email}" ?
+                            \${comment.commentWriter == "${sessionScope._LOGIN_USER_.email}" ?
                             	    `<div>
                             	        <button class="update-comment">수정</button>
                             	        <button class="delete-comment">삭제</button>
@@ -403,19 +422,10 @@ $().ready(function() {
       	// 신고버튼 클릭
          $(".report-comment").click(reportComment);
          var reportComment = function(event) {
-       	  // 댓글 작성자
-       	  var writer = $(this).closest(".comment").data("comment-writer-email");
-       	  // 댓글의 고유 번호
-       	  var id = $(this).closest(".comment").data("comment-id");
-       	  
-       	  	// 필요한 값들을 찾으라고 일일히 지정해줘야 합니다
-   	        $(this).find("#receivedReportMember").val(writer)
-   	        $(this).find("#reportContentId").val(id)
-   	        
    	        $.sweetModal({
 		        title: '신고 내용',
 		        content: `
-		            <form name="reportVO" method="post" action="/report/view/2">
+		            <form id="report_comment_form" name="reportVO" method="post" action="/report/view/2">
 		                <div class="grid" style="grid-template-columns: 150px 1fr; grid-template-rows: 30px 100px 30px; row-gap: 10px;">
 		                    <label for="reportReason">신고사유</label>
 		                    <select name="reportReason">
@@ -435,14 +445,24 @@ $().ready(function() {
 		
 		                    <input id="reportTypeId" type="hidden" name="reportTypeId" value="2"/>
 		                    <input id="reportMemberEmail" type="hidden" name="reportMember" value="${sessionScope._LOGIN_USER_.email}"/>
-		                    <input id="receivedReportMemberEmail" type="hidden" name="receivedReportMember" value="${generalPostVO.postWriter}"/>
-		                    <input id="reportContentId" type="hidden" name="reportContentId" value="${generalPostVO.generalPostId}"/>
+		                    <input id="receivedReportMemberEmail" type="hidden" name="receivedReportMember" value=""/>
+                          <input id="reportContentId" type="hidden" name="reportContentId" value=""/>
 		                </div>
 		                <div class="modal_content_element submit_area btn_controller">
-		                    <input type="submit" value="완료" />
+                        <input type='button' id="report_comment_button" value="완료" />
 		                </div>
 		            </form>`
        		});
+               // 댓글 작성자
+               var writer = $(this).closest(".comment").data("comment-writer-email");
+               // 댓글의 고유 번호
+               var id = $(this).closest(".comment").data("comment-id");
+               $("#report_comment_button").click(function() {
+                  // 필요한 값들을 찾으라고 일일히 지정해줘야 합니다
+                  $("input[name=receivedReportMember]").val(writer)
+                  $("input[name=reportContentId]").val(id)
+                  $("#report_comment_form").submit()
+               })
 
          };
          // 등록버튼 클릭
@@ -493,10 +513,13 @@ $().ready(function() {
                   if (response.result) {
                       // 삭제가 성공적으로 처리되면 댓글을 화면에서 제거합니다.
                       deleteButton.closest(".comment").remove();
+                      let new_count = $("#reply-count").val() -1;
+                      $("#reply-count").val(new_count);
+                      $("#reply-count").text(' (' +new_count+ ')');
                   } else {
                       // 삭제에 실패한 경우 오류 메시지를 표시하거나 다른 조치를 취합니다.
                 	  Swal.fire({
-                    	  text: "댓글 삭제에 실패했습니다 ㅠㅠ",
+                    	  text: "댓글 삭제에 실패했습니다",
                     	  icon: "error"
                     	});
                   }
@@ -521,13 +544,13 @@ $().ready(function() {
                   console.log(currentCount)
                   likeOneComment.text("추천수: " + (currentCount + 1));
                   Swal.fire({
-                	  text: "추천됐습니다 감사링",
+                	  text: "추천이 완료되었습니다",
                 	  icon: "success"
                 	});
               } else {
                   // 추천에 실패한 경우 오류 메시지를 표시하거나 다른 조치를 취합니다.
             	  Swal.fire({
-                	  text: "추천에 실패했습니다 ㅠㅠ",
+                	  text: "추천에 실패했습니다",
                 	  icon: "error"
                 	});
                }
@@ -571,19 +594,41 @@ $().ready(function() {
                success: function(response) {
                    /* $("likeModal").hide(); */
             	   Swal.fire({
-                 	  text: "추천됐습니다 감사링",
+                 	  text: "추천됐습니다",
                  	  icon: "success"
                  	});
                  },
                error: function(error){
                    /* $("#likeModal").hide(); */
             	   Swal.fire({
-                 	  text: "좋아요에 실패했습니다 ㅠㅠ",
+                 	  text: "좋아요에 실패했습니다",
                  	  icon: "error"
                  	});
                  }
            })
        });
+
+      $("#delete-btn").click(function(e) {
+         e.preventDefault()
+         Swal.fire({
+            title: '경고',
+            text: '정말로 삭제하시겠습니까?',
+            icon: 'warning',
+            showCancelButton: true, // cancel버튼 보이기. 기본은 원래 없음
+            confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
+            cancelButtonColor: '#d33', // cancel 버튼 색깔 지정
+            confirmButtonText: '승인', // confirm 버튼 텍스트 지정
+            cancelButtonText: '취소', // cancel 버튼 텍스트 지정
+            
+            reverseButtons: true, // 버튼 순서 거꾸로
+            
+         }).then(result => {
+            // 만약 Promise리턴을 받으면,
+            if (result.isConfirmed) { // 만약 모달창에서 confirm 버튼을 눌렀다면
+               $("#delete_post_form").submit()
+            }
+         });
+      })
 
 });
 </script>
@@ -597,7 +642,7 @@ $().ready(function() {
             <div class="main_content">
                <div id="titleArea">
                   <form name="generalPostVO" method="post">
-                  <a href="/freeboard/list"><p class="post_category">자유게시판 ></p></a>
+                  <a href="/freeboard/list"><p class="post_category">자유 게시판 ></p></a>
                   <div class="post_title">${generalPostVO.postTitle}</div>
                   <ul class="writer_info">
                      <li>작성자 <a href="/memberinfo/view/${generalPostVO.postWriter}">${generalPostVO.memberVO.nickname}</a></li>
@@ -613,14 +658,17 @@ $().ready(function() {
                <div class="space_between">
                   <div class="btn_controller">
                      <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email ne generalPostVO.postWriter}">
-                        <button id="like-btn">좋아요👍</button>
-                        <button id="reportFreeBoard" value="1">신고🚨</button>
+                           <button id="like-btn">좋아요👍</button>
+                           <button id="reportFreeBoard" value="1">신고🚨</button>
                      </c:if>
                   </div>
                   <div class="btn_controller">
                      <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq generalPostVO.postWriter}">
                         <button id="modify-btn"><a href="/freeboard/update/${generalPostVO.generalPostId}">수정✍</a></button>
-                        <button id="delete-btn"><a href="/freeboard/delete/${generalPostVO.generalPostId}">삭제🗑️</a></button>
+                        <form id="delete_post_form" method="post" action="/freeboard/delete/${generalPostVO.generalPostId}"  modelAttribute="generalPostVO"  >
+                           <input type="hidden" name="generalPostId" value="${generalPostVO.generalPostId}"/>
+                           <button id="delete-btn"><a href="/freeboard/delete/${generalPostVO.generalPostId}">삭제🗑️</a></button>
+                        </form>
                      </c:if>
                   </div>
                </div>
@@ -637,7 +685,7 @@ $().ready(function() {
                   </div>
                </div>
                <div class="comment-header">
-                  <h3>댓글 목록</h3>
+                  <h3>댓글 목록<span id="reply-count"></span></h3>
                </div>
                <div class="comment-items"></div>
             </div>  
