@@ -7,29 +7,19 @@
 
 
 <jsp:include page="../layout/header.jsp" />
+<script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/super-build/ckeditor.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 <link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
 <script src="https://npmcdn.com/flatpickr/dist/flatpickr.min.js"></script>
 <script src="https://npmcdn.com/flatpickr/dist/l10n/ko.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-<script src="https://unpkg.com/@yaireo/tagify"></script>
-<script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/super-build/ckeditor.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<c:choose>
-  <c:when test="${sessionScope._LOGIN_USER_.memberType eq 'ADMIN'}">
-    <jsp:include page="./admin_ui.jsp" />
-  </c:when>
-</c:choose>
+<script src="https://unpkg.com/@yaireo/tagify"></script>
+
 
 <style>
   .ml10 {
     margin-left: 10px;
-  }
-  .admin_container {
-    position: fixed;
-    top: 50px;
-    right: 50px;
-    z-index: 1;
   }
 
   /* 로딩 */
@@ -147,9 +137,9 @@
 
 	.body_left .content_container .writer_info_area .flex_left .writer_name .follow_btn {
 		border: 1px solid var(--light-gray);
-		border-radius: 10px;
-		margin-left: 20px;
-		padding: 0 3px;
+		border-radius: 5px;
+		margin-left: 5px;
+		padding: 2px 8px;
 		color: var(--blue);
 		cursor: pointer;
 	}
@@ -259,11 +249,11 @@
 
 	.body_left .content_container .q_content .hashtag_each {
 		padding: 3px 10px;
-		margin-right: 20px;
+		margin-right: 10px;
     margin-bottom: 10px;
 		border-radius: 50px;
-		background-color: var(--hashtag-blue);
-		color: var(--blue);
+		background-color: var(--light-gray);
+		color: #E55604;
     cursor: default;
 	}
 
@@ -328,7 +318,7 @@
   }
 
   .body_right .ranking_wrap ul .hot_post a .ranking_number.top_three {
-    color: coral;
+    color: #E55604;
   }
 
   .body_right .ranking_wrap ul .hot_post a img {
@@ -1155,7 +1145,7 @@
                     <div>
                       <div class="writer_name">
                         <a href="/memberinfo/view/\${email}">\${nickname}</a>
-                        <button class="follow_btn small">follow
+                        <button class="follow_btn small">팔로우
                           <input type="hidden" class="followerEmail" value="${sessionScope._LOGIN_USER_.email}" />
                           <input type="hidden" class="followeeEmail" value="\${email}" />
                         </button>
@@ -1169,10 +1159,10 @@
                         <input type="hidden" class="postId" value="\${article.generalPostId}"/>
                         <input type="hidden" class="boardId" value="\${article.boardId}" />
                         <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"><!--! Font Awesome Free 6.4.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><style>svg{fill:(--blue)}</style><path d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z"/></svg></button>
-                      <svg class="report_btn" width="36" height="31" viewBox="0 0 36 31" fill=None xmlns="http://www.w3.org/2000/svg" data-post-id="\${article.generalPostId}" data-writer-email="\${email}">
-                        <rect y="24" width="36" height="7" rx="3" fill="#FF6550"/>
-                        <path fill-rule="evenodd" clip-rule="evenodd" d="M11 21H32L29.4906 3.43431C29.2091 1.46372 27.5214 0 25.5308 0H10.4692C8.47858 0 6.7909 1.46372 6.50938 3.43431L4 21H8L9.83237 6.82325C9.92824 6.08155 10.5598 5.52632 11.3077 5.52632C12.205 5.52632 12.8981 6.31473 12.7831 7.20463L11 21Z" fill="#FF6550"/>
-                      </svg>
+                        <svg class="report_btn" width="36" height="31" viewBox="0 0 36 31" fill="none" xmlns="http://www.w3.org/2000/svg" data-post-id="GP-20231122-000675" data-writer-email="xogus@xogus">
+                          <rect y="24" width="36" height="7" rx="3" fill="#DB5240"/>
+                          <path fill-rule="evenodd" clip-rule="evenodd" d="M12 24L30 24L27.8115 3.57386C27.5937 1.54131 25.8784 0 23.8342 0H12.1658C10.1216 0 8.40629 1.54131 8.18851 3.57387L6 24L9.42857 24L11.0308 7.47204C11.0943 6.81617 11.6456 6.3158 12.3045 6.3158C13.0601 6.3158 13.6512 6.96695 13.5783 7.71899L12 24Z" fill="#FF6550"/>
+                          </svg>
                     </div>
                   </div>
                 </div>
@@ -1200,7 +1190,7 @@
 
             $.get(`/bookmark/status/\${user_email}/\${article.generalPostId}`, function(response) {
               if (response.bookmarkYn === 'Y') {
-                templateDom.find('.bookmarkBtn').find('svg').css('fill', 'var(--blue)').addClass('bookmark_on')
+                templateDom.find('.bookmarkBtn').find('svg').css('fill', '#26577C').addClass('bookmark_on')
                 templateDom.find('.bookmarkBtn').prepend(`<input type="hidden" class="bookmarkId" value="\${response.bookmarkId}"/>`)
               }
             })
@@ -1209,7 +1199,8 @@
             $.get(`/follow/status/\${user_email}/\${article.postWriter}`, function(state) {
 
             	if(state.followYn === 'Y') {
-            	templateDom.find('.follow_btn').css({'background-color':'var(--blue)', 'color':'var(--white)'}).addClass('follow_on')
+            	templateDom.find('.follow_btn').css({'background-color':'#26577C', 'color':'var(--white)'}).addClass('follow_on')
+              templateDom.find('.follow_btn').text('팔로잉')
             	templateDom.find('.follow_btn').prepend($(`<input type="hidden" class="followId" value="\${state.followId}"/>`))
             	}
             })
@@ -1356,7 +1347,7 @@
             	  icon: "error"
             	});
             $(e.currentTarget).removeClass('follow_on')
-            $(e.currentTarget).css({'background-color':'var(--gray)', 'color':'var(--blue)'})
+            templateDom.find('.follow_btn').text('팔로우')
             $('.followId').remove()
           })
         }

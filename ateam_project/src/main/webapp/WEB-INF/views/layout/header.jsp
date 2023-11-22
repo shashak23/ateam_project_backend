@@ -80,9 +80,13 @@
         })
     });
 </script>
-	<link rel="stylesheet" href="/css/common.css">
 </head>
 <body>
+	<c:choose>
+		<c:when test="${sessionScope._LOGIN_USER_.memberType eq 'ADMIN'}">
+			<jsp:include page="../home/admin_ui.jsp" />
+		</c:when>
+	</c:choose>
   <div class="header_container">
     <section class="header">
       <div class="logo_wrap">

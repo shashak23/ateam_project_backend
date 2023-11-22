@@ -289,7 +289,13 @@ body > .header_container {
     line-height: 30px;
     font-size: var(--font-big);
 }
-
+/* Header admin */
+.admin_container {
+    position: fixed;
+    top: 50px;
+    right: 150px;
+    z-index: 2;
+}
 
 /* Header > GNB */
 .header_container > section.header > .gnb {
