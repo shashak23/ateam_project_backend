@@ -34,6 +34,11 @@ a:link, a:hover, a:visited, a:active {
    }
    .writer_info {
       display: flex;
+      font-size: 14px;
+   }
+   .writer_info > .author {
+      font-weight: bold;
+      color: var(--blue);
    }
    .writer_info li {
       font-size: 14px;
@@ -121,7 +126,7 @@ a:link, a:hover, a:visited, a:active {
    }
    .content {
       margin: 10px 0 5px 0;
-      font-size: 18px;
+      font-size: 15px;
    }
 
    #hashtag_area {
@@ -384,9 +389,9 @@ $(document).on('click', '#reportQnABoard', function() {
                      // 댓글 목록을 response에서 받아와서 처리하는 부분
                      var replies = response.comments;
                      var counts = response.count;
-                     if (counts < 1) {
-                        $(".comment-items").text("아직 등록된 댓글이 없습니다!")
-                     } 
+                        if (counts < 1) {
+                           $(".comment-items").text("아직 등록된 댓글이 없습니다!")
+                        } 
                      $("#reply-count").text(' (' +counts+ ')')
                      $("#reply-count").val(counts)
                      for (var i = 0; i < replies.length; i++) {
@@ -609,15 +614,9 @@ $(document).on('click', '#reportQnABoard', function() {
                 	  icon: "error"
                 	});
                 }
-<<<<<<< HEAD
-            })
-         });   
-      });
-=======
           })
       });
    });
->>>>>>> 08799787c7566f6d472fe9e4346e18146c6ae88f
     
    $().ready(function() {
       $("#delete-btn").click(function(e) {

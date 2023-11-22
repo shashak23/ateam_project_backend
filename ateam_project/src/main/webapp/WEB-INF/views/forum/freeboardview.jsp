@@ -314,10 +314,6 @@
     justify-content: space-between;
 }
 
-#button_wrapper {
-   display: flex;
-}
-
 #reply-count {
     color: #E55604;
 }
@@ -523,7 +519,7 @@ $().ready(function() {
                   } else {
                       // 삭제에 실패한 경우 오류 메시지를 표시하거나 다른 조치를 취합니다.
                 	  Swal.fire({
-                    	  text: "댓글 삭제에 실패했습니다 ㅠㅠ",
+                    	  text: "댓글 삭제에 실패했습니다",
                     	  icon: "error"
                     	});
                   }
@@ -548,13 +544,13 @@ $().ready(function() {
                   console.log(currentCount)
                   likeOneComment.text("추천수: " + (currentCount + 1));
                   Swal.fire({
-                	  text: "추천됐습니다 감사링",
+                	  text: "추천이 완료되었습니다",
                 	  icon: "success"
                 	});
               } else {
                   // 추천에 실패한 경우 오류 메시지를 표시하거나 다른 조치를 취합니다.
             	  Swal.fire({
-                	  text: "추천에 실패했습니다 ㅠㅠ",
+                	  text: "추천에 실패했습니다",
                 	  icon: "error"
                 	});
                }
@@ -615,8 +611,8 @@ $().ready(function() {
       $("#delete-btn").click(function(e) {
          e.preventDefault()
          Swal.fire({
-            title: '정말로 삭제하시겠습니까?',
-            text: '다시 되돌릴 수 없습니다. 신중하세요.',
+            title: '경고',
+            text: '정말로 삭제하시겠습니까?',
             icon: 'warning',
             showCancelButton: true, // cancel버튼 보이기. 기본은 원래 없음
             confirmButtonColor: '#3085d6', // confrim 버튼 색깔 지정
@@ -662,11 +658,8 @@ $().ready(function() {
                <div class="space_between">
                   <div class="btn_controller">
                      <c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email ne generalPostVO.postWriter}">
-                        <li>이 글이 재밌었나요?</li>
-                        <div id="button_wrapper">
                            <button id="like-btn">좋아요👍</button>
                            <button id="reportFreeBoard" value="1">신고🚨</button>
-                        </div>
                      </c:if>
                   </div>
                   <div class="btn_controller">
