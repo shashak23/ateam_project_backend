@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="jakarta.tags.core" %>
-<jsp:include page="../../layout/header.jsp"></jsp:include>
+<jsp:include page="../../layout/header.jsp"/>
 <script type="text/javascript">
 // 모달창 열고 닫기
 $(document).on('click', '.incomplete', function() {

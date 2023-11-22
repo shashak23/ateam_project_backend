@@ -10,7 +10,7 @@
     <meta name="viewport" id="viewport" content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, width=device-width"/>
     <title>devGround</title>
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
-    <jsp:include page="../layout/header.jsp"/>
+	<jsp:include page="../layout/header.jsp"/>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <style>
@@ -594,14 +594,14 @@ $().ready(function() {
                success: function(response) {
                    /* $("likeModal").hide(); */
             	   Swal.fire({
-                 	  text: "추천됐습니다 감사링",
+                 	  text: "추천됐습니다",
                  	  icon: "success"
                  	});
                  },
                error: function(error){
                    /* $("#likeModal").hide(); */
             	   Swal.fire({
-                 	  text: "좋아요에 실패했습니다 ㅠㅠ",
+                 	  text: "좋아요에 실패했습니다",
                  	  icon: "error"
                  	});
                  }

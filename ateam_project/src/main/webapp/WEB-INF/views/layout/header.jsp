@@ -98,7 +98,7 @@
   <div class="header_container">
     <section class="header">
       <div class="logo_wrap">
-        <img src="../images/logo-final.png" id="homeMove" style="cursor: pointer;"/>
+        <img src="../../images/logo-final.png" id="homeMove" style="cursor: pointer;"/>
       </div>
       <nav class="gnb">
         <ul>

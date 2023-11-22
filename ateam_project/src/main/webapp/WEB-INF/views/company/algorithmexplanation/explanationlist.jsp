@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<jsp:include page="../../layout/header.jsp"></jsp:include>
+<jsp:include page="../../layout/header.jsp"/>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script type="text/javascript">
 $().ready(function() {

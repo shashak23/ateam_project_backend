@@ -35,7 +35,7 @@
     }
     
     #tier_img{
-	  	width: 11px;
+	  	width: 13px;
 	  	margin-left: 5px;
 	}
     .pratice {
@@ -425,7 +425,10 @@
 						            .css({
 						                'width': '25px',
 						                'height': '25px',
-						                'padding':'2px'
+						                'padding':'2px',
+						                'display':'inline',
+						                'margin':'auto',
+						                
 						            });
 				
 		        console.log(response.generalMemberList[i])

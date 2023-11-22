@@ -55,10 +55,9 @@ body > .body_container > .body_right_aside {
 }
 
 .flex_button {
+  margin: 50px 50px 0px 0px;
   display: flex;
   flex-direction: column;
-  margin-right: 120px;
-  
 }
 .flex_button button {
 	background-color:var(--gray);
@@ -76,7 +75,7 @@ body > .body_container > .body_right_aside {
 
 .flex_button button:first-child {
   margin-top: 51px;
-}
+} 
 
 .follow_chat {
   text-align: right;
@@ -186,7 +185,7 @@ body > .body_container > .body_right_aside {
   border-bottom: 0.0625rem solid rgb(231,231,231);
   display: flex;
   flex-direction: column;
-  width: 940px;
+  width: 1080px;
 }
 
 #technology_stack ul {
@@ -212,13 +211,13 @@ body > .body_container > .body_right_aside {
   border-bottom: 0.0625rem solid rgb(231,231,231);
   display: flex;
   flex-direction: column;
-  width: 940px;
+  width: 1080px;
 }
 .career{
   border-bottom: 0.0625rem solid rgb(231,231,231);
   display: flex;
   flex-direction: column;
-  width: 940px;
+  width: 1080px;
 }
 .education>ul,
 .career>ul,
@@ -343,7 +342,7 @@ body > .body_container > .body_right_aside {
    background-color:var(--gray); 
    width: 150px; 
    height: 40px; 
-  margin-bottom: 15px; 
+   margin-bottom: 15px; 
    cursor: pointer; 
    color: white; 
  } 
@@ -356,7 +355,7 @@ body > .body_container > .body_right_aside {
     position: relative;
 }
 .profile-modify{
-position: absolute;
+	position: absolute;
     top: 84%;
     left: 83%;
     transform: translate(-50%, -50%);
@@ -424,7 +423,7 @@ position: absolute;
 		grid-template-columns: 27px 50px 30px 50px 30px 1fr 70px 10px 70px;
 		border-bottom: 1px solid #333;
 		font-weight: bold;
-		width: 940px;
+		width: 1080px;
 		padding-bottom: 10px;
 		align-items: center;
 	}
@@ -536,11 +535,6 @@ input#additionalEmail
 }
 </style>
 <!-- 자바스크립트 시작 -->
-<%-- <jsp:include page="../layout/header.jsp" />
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="/js/lib/jquery-3.7.1.js"></script> --%>
 <script type="text/javascript">
 	//신고버튼
 	$().ready(function() {
@@ -960,8 +954,6 @@ input#additionalEmail
 <body>
 	<div class="body_container">
 		<div class="body_left_aside">
-			<!-- <c:if
-				test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}"> -->
 				<div class="flex_button">
 					<button id="myprofile">마이페이지</button>
 					<button id="bookmark">북마크</button>
@@ -970,7 +962,6 @@ input#additionalEmail
 					<button id="solve">내가 푼 문제</button>
 					<button id="quit">탈퇴</button>
 				</div>
-			<!-- </c:if> -->
 		</div>
 	<div class="body">
 	<div class="flex_main">	
@@ -1201,12 +1192,6 @@ input#additionalEmail
 							<button class="addCareer btn_append">
 								추가하기
 							</button>	
-							<!-- <div id="modalContainerCareer" class="hidden">
-								<div id="modalContentCareer">
-											
-									
-								</div>
-							</div> -->
 						</c:if>
 					</li>
 				</c:otherwise>
