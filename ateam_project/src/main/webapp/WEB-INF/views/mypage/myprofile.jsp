@@ -60,7 +60,7 @@ body > .body_container > .body_right_aside {
   flex-direction: column;
 }
 .flex_button button {
-	background-color:var(--gray);
+  background-color:var(--gray);
   width: 150px;
   height: 40px;
   margin-bottom: 15px;
