@@ -249,11 +249,6 @@ html {
     color: var(--dark);
 }
 
-li {
-    display: flex;
-    align-content: center;
-}
-
 svg {
     fill: #26577C;
 }

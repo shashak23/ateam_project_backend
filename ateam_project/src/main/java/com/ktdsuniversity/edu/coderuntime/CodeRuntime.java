@@ -135,7 +135,7 @@ public class CodeRuntime {
 		runFileCode.append("        			long now = System.currentTimeMillis();\n");
 		runFileCode.append("        			Object result = method.invoke(solution, parameters);\n");
 		runFileCode.append("        			float processTime = (System.currentTimeMillis() - now) / 1000.0f;\n");
-		runFileCode.append("        			System.out.println(\"걸린시간: \" + processTime + \"ms\");\n");
+		runFileCode.append("        			System.out.println(\"Processing Time: \" + processTime + \"ms\");\n");
 		runFileCode.append("        			if (result != null) {\n");
 		runFileCode.append("        				System.out.println(result);\n");
 		runFileCode.append("        			}\n");
