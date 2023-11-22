@@ -732,14 +732,14 @@ input#additionalEmail
 						content: `			
 						<form method="post" enctype="multipart/form-data"
 							action="/memberInfo/modify/modify-profile-pic">
-							<input type="hidden" name="email" value="tlgk@tlgk" />
+							<input type="hidden" name="email" value="${memberVO.email}" />
 							<div class="profile-container">
 								<c:choose>
 									<c:when test="${memberVO.profilePic eq 'https://w7.pngwing.com/pngs/384/868/png-transparent-person-profile-avatar-user-basic-ui-icon.png'}">
 										<img src="${memberVO.profilePic}" class="profile-image" id="profile-image"/>
 									</c:when>
 									<c:otherwise>
-										<img src="/member/file/download/tlgk@tlgk" class="profile-image" id="profile-image"/>
+										<img src="/member/file/download/${memberVO.email}" class="profile-image" id="profile-image"/>
 									</c:otherwise>
 								</c:choose>
 								<div class="file-input" style="display:flex; justify-content:center; margin-left:70px">
