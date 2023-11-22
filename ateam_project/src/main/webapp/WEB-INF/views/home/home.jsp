@@ -1207,6 +1207,17 @@
               templateDom.find('.big_letter').text('').css('margin-right', '0px')
             }
             
+             // 해시태그 표시할 AJAX 호출
+             $.get(`/home/hashtag/\${article.generalPostId}`, function(response_of_hashtag) {
+              if (response_of_hashtag.length > 0) {
+                for (let j = 0; j < response_of_hashtag.length; j++) {
+                  haveHashtag.push(response_of_hashtag[j].commonCodeVO.codeContent)
+                  templateDom.find('.hashtagList').append(`<li class="hashtag_each x-small">\${response_of_hashtag[j].commonCodeVO.codeContent}</li>`)
+                }
+              }
+            })
+
+            
             $('.body_left').append(templateDom)
           } 
         }
