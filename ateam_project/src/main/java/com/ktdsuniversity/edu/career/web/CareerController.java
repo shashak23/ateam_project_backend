@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.ktdsuniversity.edu.career.service.CareerService;
@@ -65,6 +66,17 @@ public class CareerController {
 	 }
 	 
 	 /**
+	  * 경력 수정 API
+	  */
+	 @ResponseBody
+	 @GetMapping("/memberInfo/career/{workexId}")
+	 public CareerVO getCareerInfoAPI(@PathVariable String workexId) {
+		 CareerVO careerVO = careerService.getOneCareer(workexId);
+		 
+		 return careerVO;
+	 }
+	 
+	 /**
 	  * 수정
 	  */
 	 @GetMapping("/memberInfo/modify/update-career/{careerId}")
@@ -80,6 +92,14 @@ public class CareerController {
 		 return "career/careermodify";
 	 }
 	
+	 /**
+	  * 경력 수정
+	  * @param careerVO
+	  * @param bindingResult
+	  * @param model
+	  * @param memberVO
+	  * @return
+	  */
 	 @PostMapping("/memberInfo/modify/update-career")
 	 public String doUpdateCareer(@Valid @ModelAttribute CareerVO careerVO
 			 					 ,BindingResult bindingResult  

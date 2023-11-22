@@ -5,6 +5,9 @@
  */
 package com.ktdsuniversity.edu.education.web;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttribute;
 
 import com.ktdsuniversity.edu.education.service.EducationService;
@@ -68,14 +72,25 @@ public class EducationController {
 	 }
 	 
 	 /**
-	  * Education 수정
+	  * 학력 수정 API
+	  */
+	 @ResponseBody
+	 @GetMapping("/memberInfo/education/{eduId}")
+	 public EducationVO getEducationInfoAPI(@PathVariable String eduId) {
+		 EducationVO educationVO = educationService.getOneEducation(eduId);
+		 
+		 return educationVO;
+	 }
+	 
+	 /**
+	  * 학력 수정
 	  */
 	 @GetMapping("/memberInfo/modify/update-education/{educationId}")
 	 public String updateEducation(@PathVariable String educationId
 			 					, Model model
 			 					,@SessionAttribute("_LOGIN_USER_") MemberVO memberVO) {
 		 
-		 EducationVO educationVO =educationService.getOneEducation(educationId);
+		 EducationVO educationVO = educationService.getOneEducation(educationId);
 		 educationVO.setGeneralMemberEmail(memberVO.getEmail());
 		 if (!educationVO.getGeneralMemberEmail().equals(memberVO.getEmail())) {
 				throw new PageNotFoundException("잘못된 접근입니다.");
@@ -83,7 +98,7 @@ public class EducationController {
 		 model.addAttribute("educationVO", educationVO);
 		 return "education/educationmodify";
 	 }
-	
+	 
 	 @PostMapping("/memberInfo/modify/update-education")
 	 public String doUpdateEducation(@Valid @ModelAttribute EducationVO educationVO
 			 					    ,BindingResult bindingResult

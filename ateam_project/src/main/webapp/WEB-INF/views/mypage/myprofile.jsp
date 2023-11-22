@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
+<%@ taglib prefix="form" uri ="http://www.springframework.org/tags/form" %>
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -451,95 +453,146 @@ position: absolute;
 	/* 프로필 */
 	
 
-.profile-image {
+	.profile-image {
+		width: 150px;
+		height: 150px;
+		border-radius: 50%;
+		object-fit: cover;
+		margin: 0 auto;
+		display: block;
+	}
+
+	.file-input {
+		margin-top: 20px;
+	}
+
+	input#githubUrl,
+	input#blogUrl,
+	input#additionalEmail
+	{
+		width: 500px;
+		padding: 6px;
+	}
+	.companyName_errors,
+	.jobTitle_errors,
+	.hireDate_errors {
+		opacity: 0.8;
+		padding: 10px;
+		color: red;
+		font-size: 10pt;
+	
+	}
+
+	#techstack_category{
+		border: 1px solid;
+		padding: 6px;
+		margin: 5px 0px 10px 0px ;
+		border-radius: 6px;
+	}
+	.profile {
+	display: grid;
+	grid-template-columns: 170px 20px 1fr;
+	margin: 20px;
+	}
+
+	#profile-img,
+	#nomal-img {
 	width: 150px;
 	height: 150px;
 	border-radius: 50%;
-	object-fit: cover;
-	margin: 0 auto;
-	display: block;
-}
+	}
 
-.file-input {
-	margin-top: 20px;
-}
+	.related_link a {
+	text-decoration: none;
+	color: #333;
+	margin-right: 10px;
 
-input#githubUrl,
-input#blogUrl,
-input#additionalEmail
- {
-    width: 500px;
-}
-.companyName_errors,
-.jobTitle_errors,
-.hireDate_errors {
-	opacity: 0.8;
-	padding: 10px;
-	color: red;
-	font-size: 10pt;
-  
-}
+	}
+	#reportUser{
+		width: 70px;
+		position: absolute;
+		height: 30px;
+		top: 12%;
+		left: 85%;
+		transform: translate(-50%, -50%);
+		cursor: pointer;
+	}
 
-#techstack_category{
-	border: 1px solid;
-	padding: 6px;
-	margin: 5px 0px 10px 0px ;
-	border-radius: 6px;
-}
-.profile {
-  display: grid;
-  grid-template-columns: 170px 20px 1fr;
-  margin: 20px;
-}
+	#saveBtn{
+		cursor: pointer;
+		border: 1px solid #EEE;
+		border-radius: 5px;
+		background-color:var(--blue);;
+		color: #EEE;
+		width: 80px;
+		height: 40px;
+		font-size: 14pt;
+	}
 
-#profile-img,
-#nomal-img {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
-}
+	#techSave,
+	#saveSNS,
+	#saveEdu,
+	#saveAddress{
+		display: flex;
+		justify-content: end;
+	}
 
-.related_link a {
-  text-decoration: none;
-  color: #333;
-  margin-right: 10px;
+	.saveCareer {
+		text-align: right;
+	}
 
-}
-#reportUser{
-	width: 70px;
-    position: absolute;
-    height: 30px;
-    top: 12%;
-    left: 85%;
-    transform: translate(-50%, -50%);
-	cursor: pointer;
-}
+	input#sample6_postcode,
+	#region{
+		height: 30px;
+		width: 250px;
+		margin: 8px;
+		padding:6px;
+	}
 
-#saveBtn{
-	cursor: pointer;
-    border: 1px solid #EEE;
-    border-radius: 5px;
-    background-color:var(--blue);;
-    color: #EEE;
-    width: 80px;
-    height: 40px;
-    font-size: 14pt;
-}
+	input#region_button {
+		height: 30px;
+		cursor: pointer;
+		border: 1px solid #EEE;
+		border-radius: 5px;
+		background-color: var(--blue);
+		color: #EEE;
+		width: 90px;
+		font-size: 9pt;
+	}
 
-#techSave,
-#saveSNS,
-#saveEdu,
-#saveCareer,
-#saveAddress{
-	display: flex;
-	justify-content: end;
-}
+	#university-section,
+	#department-section{
+		display: flex;
+	}
+
+	#department-section{
+		margin-top: 10px;
+	}
+
+	.careerInfo {
+		height: 40px;
+	}
+
+	#previousCompanyName,
+	#jobTitle,
+	#hireDate,
+	#resignDate
+	{
+		height: 30px;
+	}
+
+	#jobTitle,
+	#hireDate,
+	#resignDate
+	{
+		margin-left: 32px;
+	}
 </style>
 <!-- 자바스크립트 시작 -->
 <%-- <jsp:include page="../layout/header.jsp" />
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="/js/lib/jquery-3.7.1.js"></script> --%>
 <script type="text/javascript">
 	//신고버튼
@@ -574,6 +627,139 @@ input#additionalEmail
 	    });
 
 	});
+
+	$().ready(function() {
+        	 
+			 const universityApiUrl = `https://www.career.go.kr/cnet/openapi/getOpenApi?apiKey=8a2e49c8c985107112055a268b321623&svcType=api&svcCode=SCHOOL&contentType=json&gubun=univ_list&perPage=10000`;
+			  const departmentApiUrl = `https://www.career.go.kr/cnet/openapi/getOpenApi?apiKey=8a2e49c8c985107112055a268b321623&svcType=api&svcCode=MAJOR&contentType=json&gubun=high_list&perPage=9999`;
+			 let universities = [];
+			 let departments = [];
+	 
+			 // API를 호출하여 대학교 정보 가져오기
+			 $.ajax({
+				 url: universityApiUrl,
+				 dataType: 'json',
+				 success: function(data) {
+					 universities = data.dataSearch.content;
+	 
+					 // 중복된 대학교 이름 필터링
+					 const uniqueUniversities = [...new Set(universities.map(university => university.schoolName))];
+	 
+					 // 검색창에서 텍스트 입력 시 대학교 검색 결과 업데이트
+					 $('#search-university-input').on('input', function() {
+						 const searchText = $(this).val().toLowerCase();
+						 const searchResults = uniqueUniversities.filter(universityName => universityName.toLowerCase().includes(searchText));
+						 // 대학교 검색 결과를 화면에 표시
+						 displayUniversitySearchResults(searchResults);
+					 });
+				 }
+			 });
+	 
+			// API를 호출하여 학과 정보 가져오기
+			 $.ajax({
+				 url: departmentApiUrl,
+				 dataType: 'json',
+				 success: function(data) {
+					 departments = data.dataSearch.content;
+					 // 학과 검색창에서 텍스트 입력 시 학과 검색 결과 업데이트
+					 $('#search-department-input').on('input', function() {
+						 const searchText = $(this).val().toLowerCase();
+						 const searchResults = departments.filter(department => department.facilName.toLowerCase().includes(searchText));
+						 // 학과 검색 결과를 화면에 표시
+						 displayDepartmentSearchResults(searchResults);
+					 });
+				 },
+			 });
+	 
+			 // 대학교 검색 결과를 표시하는 함수
+			 function displayUniversitySearchResults(results) {
+				 const searchResultsContainer = $('#search-university-results');
+				 searchResultsContainer.empty();
+				 results.forEach(result => {
+					 searchResultsContainer.append(`<p class='result-item university' data-name='\${result}'>\${result}</p>`);
+				 });
+	 
+				 // 대학교 검색 결과 항목을 클릭했을 때 해당 대학이 검색 창에 나타남
+				 $('.result-item.university').click(function() {
+					 const selectedUniversityName = $(this).data('name');
+					 $('#search-university-input').val(selectedUniversityName);
+					 searchResultsContainer.empty();
+				 });
+			 }
+	 
+		  // 학과 검색 결과를 표시하는 함수
+			 function displayDepartmentSearchResults(results) {
+				 const searchResultsContainer = $('#search-department-results');
+				 searchResultsContainer.empty();
+	 
+				 results.forEach(result => {
+					 const facilNameArray = result.facilName.split(', ');
+					 facilNameArray.forEach(facil => {
+							 searchResultsContainer.append(`<p class="result-item department" data-name="\${facil}">\${facil}</p>`);
+					 });
+				 });
+	 
+				 // 학과 검색 결과 항목을 클릭했을 때 선택한 학과를 검색 창에 설정
+				 $('.result-item.department').click(function() {
+					 const selectedDepartment = $(this).data('name');
+					 $('#search-department-input').val(selectedDepartment);
+					 searchResultsContainer.empty();
+				 });
+			 }
+			 $("#search-university-input").click(function() {
+				   $("div.school_errors").hide();
+			   });
+			 
+			   $("#search-department-input").click(function() {
+				   $("div.department_errors").hide();
+			   });
+		 });
+      
+		 $().ready(function() {
+    	$("#hireDate, #resignDate").change(function() {
+            var currentDate = new Date(); // 현재 날짜 가져오기
+            var hireDateValue = $("#hireDate").val();
+            var resignDateValue = $("#resignDate").val();
+            
+            // 빈 값인 경우 비교하지 않음
+            if (hireDateValue && resignDateValue) {
+                var hireDate = new Date(hireDateValue);
+                var resignDate = new Date(resignDateValue);
+                
+                if (hireDate > currentDate || resignDate > currentDate) {
+                    alert("입사일과 퇴사일은 현재 날짜보다 클 수 없습니다.");
+                    // 입사일과 퇴사일을 초기화
+                    $("#hireDate").val("");
+                    $("#resignDate").val("");
+                } else if (hireDate > resignDate) {
+                    alert("입사일이 퇴사일보다 이후일 수 없습니다.");
+                    // 입사일을 초기화
+                    $("#hireDate").val("");
+                }
+                else if (hireDate === resignDate) {
+                    alert("입사일이 퇴사일보다 이후일 수 없습니다.");
+                    // 입사일을 초기화
+                    $("#hireDate").val("");
+                }
+                else if (hireDate.toDateString() === resignDate.toDateString()) {
+                    alert("입사일과 퇴사일이 같을 수 없습니다.");
+                    // 입사일과 퇴사일을 초기화
+                    $("#hireDate").val("");
+                    $("#resignDate").val("");
+                }
+            }
+        });
+        $("#previousCompanyName").click(function() {
+  	      $(".companyName_errors").hide();
+  	 	 });
+  	
+  	    $("#jobTitle").click(function() {
+  	      $(".jobTitle_errors").hide();
+  	 	 });
+  	    $("#hireDate").click(function() {
+  	      $(".hireDate_errors").hide();
+  	  	 });
+    });
 
 	function sample6_execDaumPostcode() {
       			new daum.Postcode({
@@ -623,52 +809,7 @@ input#additionalEmail
 				});
 			});
 
-		$().ready(function() {
-				$("#hireDate, #resignDate").change(function() {
-					var currentDate = new Date(); // 현재 날짜 가져오기
-					var hireDateValue = $("#hireDate").val();
-					var resignDateValue = $("#resignDate").val();
-					
-					// 빈 값인 경우 비교하지 않음
-					if (hireDateValue && resignDateValue) {
-						var hireDate = new Date(hireDateValue);
-						var resignDate = new Date(resignDateValue);
-						
-						if (hireDate > currentDate || resignDate > currentDate) {
-							alert("입사일과 퇴사일은 현재 날짜보다 클 수 없습니다.");
-							// 입사일과 퇴사일을 초기화
-							$("#hireDate").val("");
-							$("#resignDate").val("");
-						} else if (hireDate > resignDate) {
-							alert("입사일이 퇴사일보다 이후일 수 없습니다.");
-							// 입사일을 초기화
-							$("#hireDate").val("");
-						}
-						else if (hireDate === resignDate) {
-							alert("입사일이 퇴사일보다 이후일 수 없습니다.");
-							// 입사일을 초기화
-							$("#hireDate").val("");
-						}
-						else if (hireDate.toDateString() === resignDate.toDateString()) {
-							alert("입사일과 퇴사일이 같을 수 없습니다.");
-							// 입사일과 퇴사일을 초기화
-							$("#hireDate").val("");
-							$("#resignDate").val("");
-						}
-					}
-				});
-				$("#previousCompanyName").click(function() {
-					$(".companyName_errors").hide();
-				});
-				
-				$("#jobTitle").click(function() {
-					$(".jobTitle_errors").hide();
-				});
-				$("#hireDate").click(function() {
-					$(".hireDate_errors").hide();
-				});
-				
-		});
+	
 
 		$(document).ready(function() {
 		// 페이지가 로드된 후 실행될 JavaScript 코드
@@ -776,7 +917,7 @@ input#additionalEmail
         	$.sweetModal({
         		title: 'SNS',
         		content: `			
-					<form method="post" action="/memberInfo/modify/update-sns-link" style=" display: grid; grid-template-rows: 20px 30px 20px 30px 20px 30px;">				
+					<form method="post" action="/memberInfo/modify/update-sns-link" style=" display: grid; grid-template-rows: 20px 30px 20px 30px 20px 30px; row-gap: 5px; ">				
 					<input type="hidden" name="generalMemberEmail" value="${sessionScope._LOGIN_USER_.email}"/>
 					<label>Github 주소</label>
 					<input type="text" id="githubUrl" name="githubUrl" value="${generalMemberVO.githubUrl}" placeholder="Github Url">
@@ -850,75 +991,160 @@ input#additionalEmail
 
 
 		$(document).on('click', '.career-modify', function() {
+			let workexId = $(this).data('career')
+			console.log(workexId)
+			$.get(`/memberInfo/career/\${workexId}`, function(response) {
         	$.sweetModal({
         		title: '경력 수정',
         		content: `
-        		<form:form modelAttribute="careerVO" method="post" action="/memberInfo/modify/update-career" enctype ="multipart/form-data">
-					<input type="hidden" name="careerId" value="${careerVO.careerId}" />
-					<div>
-						<label for="previousCompanyName">근무 회사명:</label>
-						<input type="text" id="previousCompanyName" name="previousCompanyName" value="${careerVO.previousCompanyName }" >
+				<form:form modelAttribute="careerVO" method="post" action="/memberInfo/modify/update-career" enctype ="multipart/form-data">
+					<input type="hidden" name="careerId" value="\${response.careerId}" />
+					<div class="careerInfo">
+						<label for="previousCompanyName">근무 회사명</label>
+						<input type="text" id="previousCompanyName" name="previousCompanyName" value="\${response.previousCompanyName }" style="padding:6px;">
 						<form:errors path="previousCompanyName" element="div" cssClass="companyName_errors" />
 					</div>
 					
-					<div>
-						<label for="jobTitle">직무명:</label>
-						<input type="text" id="jobTitle" name="jobTitle" value="${careerVO.jobTitle }">
+					<div class="careerInfo">
+						<label for="jobTitle">직무명</label>
+						<input type="text" id="jobTitle" name="jobTitle" value="\${response.jobTitle }" style="padding:6px;">
 						<form:errors path="jobTitle" element="div" cssClass="jobTitle_errors" />
 					</div>
-					<div>
-						<label for="hireDate">입사일:</label>
+					<div class="careerInfo">
+						<label for="hireDate">입사일</label>
 						<input type="date" id="hireDate" name="hireDate" class="date-picker" placeholder="YYYY-MM-DD"
-						value="${careerVO.hireDate }">
+						value="\${response.hireDate }">
 					<form:errors path="hireDate" element="div" cssClass="hireDate_errors" />
 					</div>
-					<div>
-						<label for="resignDate">퇴사일:</label>
+					<div class="careerInfo">
+						<label for="resignDate">퇴사일</label>
 						<input type="date" id="resignDate" name="resignDate" class="date-picker" placeholder="YYYY-MM-DD" 
-						value="${careerVO.resignDate }">
+						value="\${response.resignDate }">
 					</div>
-					<div id="saveCareer">
-						<input type="submit" value="저장" id="saveBtn">
-					</div>
+					<div class="saveCareer">
+						<input type="submit" value="저장" style="cursor: pointer; border: 1px solid #EEE; border-radius: 5px; background-color: var(--blue); color: #EEE; width: 80px; height: 40px; font-size: 14pt;">
 					
-					<button class="modalCloseCareer">닫기</button>
-					<a href="/memberInfo/modify/delete-career/${careerVO.careerId}">삭제</a>
+					<a href="/memberInfo/modify/delete-career/\${response.careerId}">삭제</a>
+					</div>
 				</form:form>`
-        	})
-		
+        	})	
+		})
     	});
 
 		$(document).on('click', '.addCareer', function() {
         	$.sweetModal({
         		title: '경력 추가',
         		content: `
-        		<form modelAttribute="careerVO" method="post">
-					<div>
-						<label for="previousCompanyName">근무 회사명:</label>
-						<input type="text" id="previousCompanyName" name="previousCompanyName" >
+				<form:form modelAttribute="careerVO" method="post" action="/memberInfo/modify/create-career">
+					<div class="careerInfo">
+						<label for="previousCompanyName">근무 회사명</label>
+						<input type="text" id="previousCompanyName" name="previousCompanyName" style="padding:6px;">
 						<form:errors path="previousCompanyName" element="div" cssClass="companyName_errors" />
 					</div>
-					<div>
-						<label for="jobTitle">직무명:</label>
-						<input type="text" id="jobTitle" name="jobTitle">
+					<div class="careerInfo">
+						<label for="jobTitle">직무명</label>
+						<input type="text" id="jobTitle" name="jobTitle" style="padding:6px;">
 						<form:errors path="jobTitle" element="div" cssClass="jobTitle_errors" />
 					</div>
-					<div>
-						<label for="hireDate">입사일:</label>
+					<div class="careerInfo">
+						<label for="hireDate">입사일</label>
 						<input type="date" id="hireDate" name="hireDate" class="date-picker" placeholder="YYYY-MM-DD" >
 						<form:errors path="hireDate" element="div" cssClass="hireDate_errors" />
 					</div>
-					<div>
-						<label for="resignDate">퇴사일:</label>
+					<div class="careerInfo">
+						<label for="resignDate">퇴사일</label>
 						<input type="date" id="resignDate" name="resignDate" class="date-picker" placeholder="YYYY-MM-DD" >
 					</div>
-					<div id="saveCareer">
-						<input type="submit" value="저장" id="saveBtn">
+					<div class="saveCareer">
+						<input type="submit" value="저장" style="cursor: pointer; border: 1px solid #EEE; border-radius: 5px; background-color: var(--blue); color: #EEE; width: 80px; height: 40px; font-size: 14pt;">
 					</div>
-				</form>`
-        	})
-			
+				</form:form>`
+        	})	
         });
+
+		$(document).on('click', '#addEducationButton', function() {
+			let eduId = $(this).data('education-id')
+			console.log(eduId)
+			$.get(`/memberInfo/education/\${eduId}`, function(response) {
+				console.log(response)
+				$.sweetModal({
+					title: '학력 추가',
+					content: `
+					<form:form modelAttribute="educationVO" method="post" action="/memberInfo/modify/create-education">
+						<div>
+							<div id="university-section" style="display:flex;">
+							<h3>대학교 검색</h3>
+							<input type="text" id="search-university-input" name="schoolName" placeholder="대학교 검색" style="margin-left:10px; padding:6px;">
+							<form:errors path="schoolName" element="div" cssClass="school_errors" />
+							<div id="search-university-results">
+								<!-- 검색 결과를 여기에 표시할 예정입니다. -->
+							</div>
+							</div>
+
+							<div id="department-section" style="display:flex; margin-top:15px;">
+							<h3>학과 검색</h3>
+							<input type="text" id="search-department-input" name="schoolDepartment" placeholder="학과 검색" style="margin-left:26px; padding:6px;">
+							<form:errors path="schoolDepartment" element="div" cssClass="department_errors" />
+							<div id="search-department-results">
+								<!-- 검색 결과를 여기에 표시할 예정입니다. -->
+							</div>
+							<select id="degree" name="degrees" required style="margin-left: 10px;">
+								<option value="" disabled selected hidden>선택하세요</option>
+								<option value="학사">학사</option>
+								<option value="석사">석사</option>								
+								<option value="박사">박사</option>
+							</select>
+							</div>
+							<div class="saveCareer">
+							<input type="submit" value="저장" style="cursor: pointer; border: 1px solid #EEE; border-radius: 5px; background-color: var(--blue); color: #EEE; width: 80px; height: 40px; font-size: 14pt;">
+							</div>
+						</div>
+					</form:form>`
+				})
+			})	
+		});	
+			
+		$(document).on('click', '.education-modify', function() {
+			let eduId = $(this).data('education-id')
+			console.log(eduId)
+			$.get(`/memberInfo/education/\${eduId}`, function(response) {
+				console.log(response)
+        	$.sweetModal({
+        		title: '학력 수정',
+        		content: `
+        		<form:form modelAttribute="educationVO" method ="post" action="/memberInfo/modify/update-education">
+						<input type="hidden" name="educationId" value="\${response.educationId}" />
+					<div id="university-section">
+						<h3>대학교 검색</h3>
+							<input type="text" id="search-university-input" name="schoolName" value="\${response.schoolName}" placeholder="대학교 검색" style="margin-left:10px; padding:6px;">
+						<form:errors path="schoolName" element="div" cssClass="school_errors" />
+						<div id="search-university-results">
+							<!-- 지우면 안됩니다 -->
+						</div>
+					</div>
+					<div id="department-section">
+						<h3>학과 검색</h3>
+							<input type="text" id="search-department-input" name="schoolDepartment" value="\${response.schoolDepartment}" placeholder="학과 검색" style="margin-left:26px; padding:6px;">
+						<form:errors path="schoolDepartment" element="div" cssClass="department_errors" />
+						<div id="search-department-results">
+							<!-- 검색 결과를 여기에 표시할 예정입니다. -->
+						</div>
+					
+						<select id="degree" name="degrees" style="margin-left:10px;" required>
+								<option value="\${response.degrees}" disabled selected hidden>선택하세요</option>
+								<option value="학사">학사</option>
+							<option value="석사" >석사</option>
+							<option value="박사">박사</option>
+						</select>
+					</div>
+					<div class="saveCareer" style="display: flex; justify-content: space-between; align-items: center;">
+  <input type="submit" value="저장" style="cursor: pointer; border: 1px solid #EEE; border-radius: 5px; background-color: var(--blue); color: #EEE; width: 80px; height: 40px; font-size: 14pt;">
+  <a href="/memberInfo/modify/delete-education/\${response.educationId}" style="cursor: pointer; border: 1px solid #EEE; border-radius: 5px; background-color: var(--blue); color: #EEE; padding: 10px; text-decoration: none;">삭제</a>
+</div>
+				</form:form>`
+        	})
+			})	
+		});	
 
 		$(document).on('click', '.region_create', function() {
 			
@@ -990,12 +1216,6 @@ input#additionalEmail
 					<button data-pic-id="${sessionScope._LOGIN_USER_.email }" class="profile-modify">
 					<img id="edit-profilepic" src="/images/edit.png">
 					</button>
-<!-- 					
-					<div id="modalContainerProfile" class="hidden">
-						<div id="modalContentProfile">	
-									
-						</div>
-					</div> -->
 			</c:if>
 		</div>
 				<ul class="introduction_list">
@@ -1018,11 +1238,7 @@ input#additionalEmail
 										자기소개 추가하기
 									</button>	
 									    
-                                    <div id="modalContainerIntroduction" class="hidden">
-                                        <div id="modalContenIntroduction">        
-                                            <jsp:include page="modifyintroduce.jsp" />                                                                        
-                                        </div>                                    
-                                    </div>    	
+                                	
 								</c:if></li>
 						</c:otherwise>
 					</c:choose>
@@ -1061,12 +1277,7 @@ input#additionalEmail
 			<button data-sns="${sessionScope._LOGIN_USER_.email }" id="edit_button1"> 
 				<img id="edit-sns" src="/images/edit.png">
 			</button>
-			<!-- <div id="modalContainerSNS" class="hidden">
-				<div id="modalContentSNS">
-					<jsp:include page="modifysns.jsp" />
-				</div>
-				<button id="modalCloseSNS">닫기</button>
-			</div>			 -->
+			
 		</c:if>
 	</div>
 	<!-- 모달 -->	
@@ -1082,13 +1293,7 @@ input#additionalEmail
 						test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
 						
 							<button data-teach="${sessionScope._LOGIN_USER_.email }" id="edit_button2" class="btn_append">추가하기</button>
-							<!-- <div id="modalContainerTech" class="hidden">
-								<div id="modalContentTech">
-									
-									<button id="deleteTech">삭제</button>
-									
-								</div>
-							</div> -->
+							
 						
 					</c:if>
 				</c:when>
@@ -1098,12 +1303,7 @@ input#additionalEmail
 							<button id="insert_techstack">
 								<img id="add" src="/images/저장.png/" alt="추가하기">
 							</button>
-							<!-- <div id="modalContainerTech" class="hidden">
-								<div id="modalContentTech">
-									
-									
-								</div>
-							</div> -->
+						
 						</c:if></li>
 				</c:otherwise>
 			</c:choose>
@@ -1122,11 +1322,7 @@ input#additionalEmail
 								<button data-education-id="${education.educationId}" class="education-modify">
 								<img src="/images/edit.png">
 								</button>
-								<!-- <div id="modalContainerEducation" class="hidden">
-									<div id="modalContentEducation">
-										<button id="modalCloseEducation">닫기</button>
-									</div>
-								</div> -->
+								
 							</c:if>
 						</li>						
 					</c:forEach>
@@ -1135,13 +1331,7 @@ input#additionalEmail
 						<button id="addEducationButton" class="btn_append">
 							추가하기
 						</button>	
-						<!-- <div id="modalContainerEducation" class="hidden">
-							<div id="modalContentEducation">
-								
-									
-								<button class="modalCloseEducation">닫기</button>
-							</div>
-						</div> -->
+						
 					</c:if>
 				</c:when>
 				<c:otherwise>
@@ -1150,13 +1340,7 @@ input#additionalEmail
 						<button id="addEducationButton" class="btn_append">
 							추가하기
 						</button>
-						<div id="modalContainerEducation" class="hidden">
-							<div id="modalContentEducation">
-								
-									
-								<button class="modalCloseEducation">닫기</button>
-							</div>
-						</div>
+						
 					</c:if></li>
 				</c:otherwise>
 			</c:choose>			
@@ -1173,12 +1357,7 @@ input#additionalEmail
 							${career.resignDate} <c:if
 								test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
 								<button data-career="${career.careerId}" class="career-modify"><img src="/images/edit.png"></button>
-								<!-- <div id="modalContainerCareer" class="hidden">
-									<div id="modalContentCareer">
-														
-										
-									</div>
-								</div> -->
+								
 							</c:if>
 						</li>
 					</c:forEach>
@@ -1187,12 +1366,7 @@ input#additionalEmail
 						<button class="addCareer btn_append" data-career="${career.careerId}">
 							추가하기
 						</button>
-						<!-- <div id="modalContainerCareer" class="hidden">
-							<div id="modalContentCareer">
-												
-								
-							</div>
-						</div> -->
+						
 					</c:if>
 				</c:when>
 				<c:otherwise>
@@ -1201,12 +1375,7 @@ input#additionalEmail
 							<button class="addCareer btn_append">
 								추가하기
 							</button>	
-							<!-- <div id="modalContainerCareer" class="hidden">
-								<div id="modalContentCareer">
-											
-									
-								</div>
-							</div> -->
+							
 						</c:if>
 					</li>
 				</c:otherwise>

@@ -27,6 +27,7 @@ import com.ktdsuniversity.edu.bookmark.service.BookmarkService;
 import com.ktdsuniversity.edu.bookmark.vo.BookmarkVO;
 import com.ktdsuniversity.edu.career.vo.CareerVO;
 import com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO;
+import com.ktdsuniversity.edu.education.service.EducationService;
 import com.ktdsuniversity.edu.education.vo.EducationVO;
 import com.ktdsuniversity.edu.exceptions.PageNotFoundException;
 import com.ktdsuniversity.edu.generalmember.service.GeneralMemberService;
@@ -50,6 +51,9 @@ public class GeneralMemberController {
 	
 	@Autowired
 	private BookmarkService bookmarkService;
+	
+	@Autowired
+	private EducationService educationService;
 
 	
 	/**
