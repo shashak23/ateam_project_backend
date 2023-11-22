@@ -54,14 +54,20 @@ body {
   border: 0px;
   width: 350px;
   height: 40px;
-  background-color: var(--hashtag-blue);
+  background-color: var(--blue);
+  color: var(--light-gray);
   font-weight: bold;
   cursor: pointer;
 }
 
-.login_container > .login_tab > button.active {
-  background-color: var(--blue);
+.login_container > .login_tab > button:hover {
+  background-color: #E55604;
   color: var(--light-gray);
+}
+
+.login_container > .login_tab > button.active {
+    background-color: #26577C;
+    color: var(--light-gray);
 }
 
 .login_tab > div {

@@ -501,8 +501,8 @@
     margin: 5px 6px;
     border-radius: 12px;
     border: 0;
-    background-color: #b3d8f1;
-    color: #fff;
+    background-color: var(--light-gray);
+    color: #E55604;
     font-size: 9pt;
   }
 
@@ -1184,10 +1184,10 @@
           <strong>해시태그 목록</strong>
         </div>
         <div class="admin_hashtag_wrap"></div>
-        <div class="hashtag_create_title"><strong>해시태그 생성</strong></div>
+        <!-- <div class="hashtag_create_title"><strong>해시태그 생성</strong></div>
         <label for="codeContent">입력: </label>
         <input type="text" name="codeContent" id="codeContent" />
-        <button id="create_btn">생성</button>
+        <button id="create_btn">생성</button> -->
       </div>
     </div>
   </div>
@@ -1889,7 +1889,6 @@
       let reportId = $(this).data('id')
   
       $.get(`/admin/report/view/\${reportId}`, function(response) {
-        console.log(response)
         $('.detail_report_id').html('')
         $('.detail_report_id').html(response.reportId)
         $('.detail_report_date').html('')

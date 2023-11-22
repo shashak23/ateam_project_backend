@@ -217,7 +217,7 @@ $().ready(function() {
     // 회원가입 시 승인 대기 문구를 띄움
     $('#btn-regist').click(function() {
     	Swal.fire({
-    	  title: "가입 성공"
+    	  title: "가입 성공",
       	  text: "추후 관리자가 메일 보냅니다.확인 해 주세요!",
       	  icon: "success"
       	});
