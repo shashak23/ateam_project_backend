@@ -1184,10 +1184,10 @@
           <strong>해시태그 목록</strong>
         </div>
         <div class="admin_hashtag_wrap"></div>
-        <!-- <div class="hashtag_create_title"><strong>해시태그 생성</strong></div>
-        <label for="codeContent">입력: </label>
+        <div class="hashtag_create_title"><strong>해시태그 생성</strong></div>
+        <!-- <label for="codeContent">입력: </label> -->
         <input type="text" name="codeContent" id="codeContent" />
-        <button id="create_btn">생성</button> -->
+        <button id="create_btn">생성</button>
       </div>
     </div>
   </div>
