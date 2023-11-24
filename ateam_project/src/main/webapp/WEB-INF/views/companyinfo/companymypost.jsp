@@ -33,18 +33,18 @@
     border: 2px;
 	}
 	.flex_button button:hover {
-	background-color: var(--light-blue);
+	background-color: #E55604;
   	color: white;
 	}
 
 	table th{
-		background-color: var(--light-gray);
+		background-color: f#E55604;
 		height:35px;
-		color: var(--dark-gray);
+		color: white;
 	}
 	
 	table td{
-		border-bottom: 1px solid #D3D3D3;
+		border-bottom: 1px solid #E55604;
 		color: var(--dark-gray);
 		text-align: center;
 	}

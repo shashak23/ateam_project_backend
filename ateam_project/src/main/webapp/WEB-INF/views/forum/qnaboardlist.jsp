@@ -349,7 +349,7 @@
 	//  랭킹
 	$(document).ready(function() {
 		// 주간랭킹
-	    $.get('/home/ranking/\${formattedMonday}', function(response) {
+	    $.get('/qna/ranking/\${formattedMonday}', function(response) {
 	       console.log(response);
 	      let list = response.rankings
 	      for (let i = 0; i < 10; i++) {
@@ -422,6 +422,7 @@
 		        let profilePicDOM = $("<img>")
 						            .attr("src", profilePicSrc)
 						            .attr("id", "profile_img")
+						            .attr("onerror","this.src='/images/gray_man.png'")
 						            .css({
 						                'width': '25px',
 						                'height': '25px',

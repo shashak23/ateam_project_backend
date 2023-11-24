@@ -1,14 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+
 <link rel="stylesheet" type="text/css" href="./companyMyPage.css" />
 <jsp:include page="../layout/header.jsp" />
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>	
-<script type="text/javascript" src="/js/lib/jquery-3.7.1.js"></script>
 <script type="text/javascript">
 	$().ready(function() {
 		
@@ -203,8 +198,7 @@
 </script>
 </head>
 <style>
-	@charset "utf-8";
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@100;300;400;500;700&display=swap');/*글꼴을 가져오는 페이지*/
+@charset "utf-8";
 #overall{
 	display: flex;
 	justify-content: center;
@@ -263,14 +257,8 @@
 }
 
 .flex_button button:hover {
-  background-color: #007BFF;
-  color: white;
+  background-color: #E55604;
 }
-
-.flex_button button:first-child {
-  /* margin-top: 51px; */
-}
-
 
 .leave_button {
     position: relative;
@@ -367,12 +355,12 @@
 #technology_stack{
   margin-top: 120px;
   margin-bottom: 20px;
-  border-bottom: 1px solid var(--light-gray);
+  border-bottom: 1px solid #E55604;
 }
 #career_stack{
   margin-top: 20px;
   margin-bottom: 20px;
-  border-bottom: 1px solid var(--light-gray);
+  border-bottom: 1px solid #E55604;
 }
 #address_stack {
   margin-top: 20px;
@@ -424,22 +412,7 @@ margin: 0;
 	height: 24px;
 }
 
-/* #technology_stack ul>li>button 
-,#career_stack ul>li>button 
-,#address_stack ul>li>button {
-  background-color:#75c2f6;
-  color: white;
-  border: none;
-  border-radius: 20px;
-  padding: 5px 15px;
-  cursor: pointer;
-} */
-
 .common{
-	/* display: grid;
-	grid-template-columns: 150px 50px 1fr;
-	padding: 0px;
-	grid-template-rows: 50px; */
 	display: flex;
 	flex-direction: column;
 }
@@ -447,7 +420,7 @@ margin: 0;
 	margin-top: 13px;
 }
 #address_stack > img{
-	padding-top: 14px;
+	padding-top: 14px;s
 
 }
 
