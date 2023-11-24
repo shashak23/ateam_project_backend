@@ -55,7 +55,7 @@ body {
   border: 0;
   width: 350px;
   height: 40px;
-  background-color: var(--gray);
+  background-color: var(--light-gray);
   color: #26577C;
   font-weight: bold;
   cursor: pointer;
