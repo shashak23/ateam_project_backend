@@ -55,7 +55,7 @@
   	color: white;
 	} 
 
-    tbody {s
+    tbody {
     text-align: center;
     }
 
