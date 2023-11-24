@@ -72,7 +72,7 @@ fieldset {
   color: #26577C;
   text-align: center;
   width: 50%;
-  background-color: white;
+  background-color: var(--gray);
   border: none;
   cursor: pointer;
 }

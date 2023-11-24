@@ -48,7 +48,7 @@
     border: 0px;
     width: 350px;
     height: 40px;
-    background-color: #26577C;
+    background-color: var(--light-gray);
     font-weight: bold;
     cursor: pointer;
   }

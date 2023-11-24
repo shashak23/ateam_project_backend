@@ -1326,7 +1326,7 @@
           $.post('/follow/member', content, function(result) {
             if(result) {
             	Swal.fire({
-                	  text: "팔로우 성공 감사링",
+                	  text: "팔로우 성공",
                 	  icon: "success"
                 	});
               $(e.currentTarget).css({'background-color':'var(--blue)', 'color':'var(--white)'})
