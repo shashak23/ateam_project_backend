@@ -11,6 +11,14 @@
 	    grid-column: 2/3;
 	    margin: 40px 0 100px 0;
 	}
+	
+	body > .body_container > .body_left_aside {
+        grid-column: 1/2;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 51px;
+}
+	
 
 	.flex_button {	
 		margin: 50px 120px 0px 0px;
@@ -45,11 +53,13 @@
 </style>
 <body> 
 <div class="body_container">
-	<div class="flex_button">
-		<button id="myprofile">마이페이지</button>			
-		<button id="modify_info">정보 수정</button> 
-		<button id="mypost">내가 쓴 게시글</button>
-		<button id="quit">탈퇴</button>
+	<div class="body_left_aside">
+		<div class="flex_button">
+			<button id="myprofile">마이페이지</button>			
+			<button id="modify_info">정보 수정</button> 
+			<button id="mypost">내가 쓴 게시글</button>
+			<button id="quit">탈퇴</button>
+		</div>
 	</div>
 	<div class="body">
 		<table class="grid">
