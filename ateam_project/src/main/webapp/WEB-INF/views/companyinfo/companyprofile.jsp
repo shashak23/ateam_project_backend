@@ -354,12 +354,12 @@
 #technology_stack{
   margin-top: 120px;
   margin-bottom: 20px;
-  border-bottom: 1px solid #E55604;
+  border-bottom: 1px solid gray;
 }
 #career_stack{
   margin-top: 20px;
   margin-bottom: 20px;
-  border-bottom: 1px solid #E55604;
+  border-bottom: 1px solid gray; 
 }
 #address_stack {
   margin-top: 20px;
