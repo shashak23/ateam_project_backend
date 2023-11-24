@@ -2,9 +2,25 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <%@ taglib prefix="form" uri ="http://www.springframework.org/tags/form" %>
+
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>myPage</title>
+<!--브라우저에게 현재 페이지를 가장 최신 버전으로 렌더링-->
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<!--뷰포트는 화면에 표시되는 웹영역 표시, 모바일 등에서 상호작용 할 수있는지 제어-->
+<meta name="viewport" id="viewport"
+	content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, width=device-width" />
+<link rel="stylesheet" type="text/css" href="/css/common.css" />
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="/js/lib/jquery-3.7.1.js"></script>
 <jsp:include page="../layout/header.jsp" />
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <style>
 @charset "utf-8";
 
@@ -55,7 +71,7 @@ body > .body_container > .body_right_aside {
 }
 
 .flex_button button:hover {
-  background-color: #E55604;
+  background-color: var(--light-blue);
   color: white;
 }
 
@@ -333,7 +349,7 @@ body > .body_container > .body_right_aside {
    color: white; 
  } 
 .techstack-font, .education-font, .career-font, .region-font{
-    font-family: 'SUIT', suit;
+    font-family: 'Noto Sans KR', sans-serif;
     margin-top: 10px;
     margin-bottom: 10px;
 }
@@ -397,7 +413,7 @@ body > .body_container > .body_right_aside {
     }
 
     .btn-close:hover {
-        color: #E55604;
+        color: #191919;
     }
     
     .create_title {
@@ -426,7 +442,7 @@ body > .body_container > .body_right_aside {
 
 	#selfIntro{
 		height: 200px;
-		width: 770px;
+		width: 665px;
 		resize: none;
 	}
 
@@ -503,7 +519,7 @@ body > .body_container > .body_right_aside {
 
 	#saveBtn{
 		cursor: pointer;
-		border: 1px solid #E55604;
+		border: 1px solid #EEE;
 		border-radius: 5px;
 		background-color:var(--blue);;
 		color: #EEE;
@@ -552,6 +568,13 @@ body > .body_container > .body_right_aside {
 		display: flex;
 	}
 
+	#search-university-results,
+	#search-department-results {
+    overflow-y: scroll;
+    max-height: 100px;
+    margin-left: 16px;
+}
+
 	#department-section{
 		margin-top: 10px;
 	}
@@ -576,6 +599,13 @@ body > .body_container > .body_right_aside {
 	}
 </style>
 <!-- 자바스크립트 시작 -->
+
+<%-- <jsp:include page="../layout/header.jsp" />
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+<script src="/js/lib/jquery-3.7.1.js"></script> --%>
+
 <script type="text/javascript">
 	//신고버튼
 	$().ready(function() {
@@ -609,139 +639,6 @@ body > .body_container > .body_right_aside {
 	    });
 
 	});
-
-	$().ready(function() {
-        	 
-			 const universityApiUrl = `https://www.career.go.kr/cnet/openapi/getOpenApi?apiKey=8a2e49c8c985107112055a268b321623&svcType=api&svcCode=SCHOOL&contentType=json&gubun=univ_list&perPage=10000`;
-			  const departmentApiUrl = `https://www.career.go.kr/cnet/openapi/getOpenApi?apiKey=8a2e49c8c985107112055a268b321623&svcType=api&svcCode=MAJOR&contentType=json&gubun=high_list&perPage=9999`;
-			 let universities = [];
-			 let departments = [];
-	 
-			 // API를 호출하여 대학교 정보 가져오기
-			 $.ajax({
-				 url: universityApiUrl,
-				 dataType: 'json',
-				 success: function(data) {
-					 universities = data.dataSearch.content;
-	 
-					 // 중복된 대학교 이름 필터링
-					 const uniqueUniversities = [...new Set(universities.map(university => university.schoolName))];
-	 
-					 // 검색창에서 텍스트 입력 시 대학교 검색 결과 업데이트
-					 $('#search-university-input').on('input', function() {
-						 const searchText = $(this).val().toLowerCase();
-						 const searchResults = uniqueUniversities.filter(universityName => universityName.toLowerCase().includes(searchText));
-						 // 대학교 검색 결과를 화면에 표시
-						 displayUniversitySearchResults(searchResults);
-					 });
-				 }
-			 });
-	 
-			// API를 호출하여 학과 정보 가져오기
-			 $.ajax({
-				 url: departmentApiUrl,
-				 dataType: 'json',
-				 success: function(data) {
-					 departments = data.dataSearch.content;
-					 // 학과 검색창에서 텍스트 입력 시 학과 검색 결과 업데이트
-					 $('#search-department-input').on('input', function() {
-						 const searchText = $(this).val().toLowerCase();
-						 const searchResults = departments.filter(department => department.facilName.toLowerCase().includes(searchText));
-						 // 학과 검색 결과를 화면에 표시
-						 displayDepartmentSearchResults(searchResults);
-					 });
-				 },
-			 });
-	 
-			 // 대학교 검색 결과를 표시하는 함수
-			 function displayUniversitySearchResults(results) {
-				 const searchResultsContainer = $('#search-university-results');
-				 searchResultsContainer.empty();
-				 results.forEach(result => {
-					 searchResultsContainer.append(`<p class='result-item university' data-name='\${result}'>\${result}</p>`);
-				 });
-	 
-				 // 대학교 검색 결과 항목을 클릭했을 때 해당 대학이 검색 창에 나타남
-				 $('.result-item.university').click(function() {
-					 const selectedUniversityName = $(this).data('name');
-					 $('#search-university-input').val(selectedUniversityName);
-					 searchResultsContainer.empty();
-				 });
-			 }
-	 
-		  // 학과 검색 결과를 표시하는 함수
-			 function displayDepartmentSearchResults(results) {
-				 const searchResultsContainer = $('#search-department-results');
-				 searchResultsContainer.empty();
-	 
-				 results.forEach(result => {
-					 const facilNameArray = result.facilName.split(', ');
-					 facilNameArray.forEach(facil => {
-							 searchResultsContainer.append(`<p class="result-item department" data-name="\${facil}">\${facil}</p>`);
-					 });
-				 });
-	 
-				 // 학과 검색 결과 항목을 클릭했을 때 선택한 학과를 검색 창에 설정
-				 $('.result-item.department').click(function() {
-					 const selectedDepartment = $(this).data('name');
-					 $('#search-department-input').val(selectedDepartment);
-					 searchResultsContainer.empty();
-				 });
-			 }
-			 $("#search-university-input").click(function() {
-				   $("div.school_errors").hide();
-			   });
-			 
-			   $("#search-department-input").click(function() {
-				   $("div.department_errors").hide();
-			   });
-		 });
-      
-		 $().ready(function() {
-    	$("#hireDate, #resignDate").change(function() {
-            var currentDate = new Date(); // 현재 날짜 가져오기
-            var hireDateValue = $("#hireDate").val();
-            var resignDateValue = $("#resignDate").val();
-            
-            // 빈 값인 경우 비교하지 않음
-            if (hireDateValue && resignDateValue) {
-                var hireDate = new Date(hireDateValue);
-                var resignDate = new Date(resignDateValue);
-                
-                if (hireDate > currentDate || resignDate > currentDate) {
-                    alert("입사일과 퇴사일은 현재 날짜보다 클 수 없습니다.");
-                    // 입사일과 퇴사일을 초기화
-                    $("#hireDate").val("");
-                    $("#resignDate").val("");
-                } else if (hireDate > resignDate) {
-                    alert("입사일이 퇴사일보다 이후일 수 없습니다.");
-                    // 입사일을 초기화
-                    $("#hireDate").val("");
-                }
-                else if (hireDate === resignDate) {
-                    alert("입사일이 퇴사일보다 이후일 수 없습니다.");
-                    // 입사일을 초기화
-                    $("#hireDate").val("");
-                }
-                else if (hireDate.toDateString() === resignDate.toDateString()) {
-                    alert("입사일과 퇴사일이 같을 수 없습니다.");
-                    // 입사일과 퇴사일을 초기화
-                    $("#hireDate").val("");
-                    $("#resignDate").val("");
-                }
-            }
-        });
-        $("#previousCompanyName").click(function() {
-  	      $(".companyName_errors").hide();
-  	 	 });
-  	
-  	    $("#jobTitle").click(function() {
-  	      $(".jobTitle_errors").hide();
-  	 	 });
-  	    $("#hireDate").click(function() {
-  	      $(".hireDate_errors").hide();
-  	  	 });
-    });
 
 	function sample6_execDaumPostcode() {
       			new daum.Postcode({
@@ -876,6 +773,38 @@ body > .body_container > .body_right_aside {
 					})	
 		});
 
+		$(document).on('click', '.introduce-create', function() {
+        	$.sweetModal({
+        		title: '자기소개',
+        		content: `
+				<div class="gridIntro" style="grid; grid-template-colums: 100px 1fr 100px;">
+        		<form method="post" action="/memberInfo/modify/update-introduction">
+        			<input type="hidden" name="generalMemberEmail" value="${sessionScope._LOGIN_USER_.email}"/>
+        			  <textarea name="selfIntro" id="selfIntro" placeholder="간단한 문구를 입력해 주세요 😊">
+        			  ${generalMemberVO.selfIntro}
+        			  </textarea> 
+					<div class="saveIntro">
+						<input type="submit" value="저장" id="saveBtn" /> 
+					</div>    			
+        		</form>
+				</div>
+				`
+        	})
+			$(document).ready(function() {
+            // 페이지가 로드된 후 실행될 JavaScript 코드
+            var selfIntroTextarea = $("#selfIntro");
+            var selfIntroValue = selfIntroTextarea.val();
+            
+            // 공백 제거 함수
+            function removeSpaces(inputText) {
+                return inputText.replace(/\s/g, '');
+            }
+            
+            // 초기 텍스트 설정
+            selfIntroTextarea.val(removeSpaces(selfIntroValue));
+        });
+        });
+
         $(document).on('click', '.introduce-modify', function() {
         	$.sweetModal({
         		title: '자기소개',
@@ -893,6 +822,19 @@ body > .body_container > .body_right_aside {
 				</div>
 				`
         	})
+			$(document).ready(function() {
+            // 페이지가 로드된 후 실행될 JavaScript 코드
+            var selfIntroTextarea = $("#selfIntro");
+            var selfIntroValue = selfIntroTextarea.val();
+            
+            // 공백 제거 함수
+            function removeSpaces(inputText) {
+                return inputText.replace(/\s/g, '');
+            }
+            
+            // 초기 텍스트 설정
+            selfIntroTextarea.val(removeSpaces(selfIntroValue));
+        });
         });
 
 		$(document).on('click', '#edit_button1', function() {
@@ -1011,8 +953,57 @@ body > .body_container > .body_right_aside {
 					</div>
 				</form:form>`
         	})	
-		})
+
+			$().ready(function() {
+    	$("#hireDate, #resignDate").change(function() {
+            var currentDate = new Date(); // 현재 날짜 가져오기
+            var hireDateValue = $("#hireDate").val();
+            var resignDateValue = $("#resignDate").val();
+            
+            // 빈 값인 경우 비교하지 않음
+            if (hireDateValue && resignDateValue) {
+                var hireDate = new Date(hireDateValue);
+                var resignDate = new Date(resignDateValue);
+                
+                if (hireDate > currentDate || resignDate > currentDate) {
+                    alert("입사일과 퇴사일은 현재 날짜보다 클 수 없습니다.");
+                    // 입사일과 퇴사일을 초기화
+                    $("#hireDate").val("");
+                    $("#resignDate").val("");
+                } else if (hireDate > resignDate) {
+                    alert("입사일이 퇴사일보다 이후일 수 없습니다.");
+                    // 입사일을 초기화
+                    $("#hireDate").val("");
+                }
+                else if (hireDate === resignDate) {
+                    alert("입사일이 퇴사일보다 이후일 수 없습니다.");
+                    // 입사일을 초기화
+                    $("#hireDate").val("");
+                }
+                else if (hireDate.toDateString() === resignDate.toDateString()) {
+                    alert("입사일과 퇴사일이 같을 수 없습니다.");
+                    // 입사일과 퇴사일을 초기화
+                    $("#hireDate").val("");
+                    $("#resignDate").val("");
+                }
+            }
+        });
+        $("#previousCompanyName").click(function() {
+  	      $(".companyName_errors").hide();
+  	 	 });
+  	
+  	    $("#jobTitle").click(function() {
+  	      $(".jobTitle_errors").hide();
+  	 	 });
+  	    $("#hireDate").click(function() {
+  	      $(".hireDate_errors").hide();
+  	  	 });
+    });
     	});
+		})
+
+		
+		
 
 		$(document).on('click', '.addCareer', function() {
         	$.sweetModal({
@@ -1043,6 +1034,53 @@ body > .body_container > .body_right_aside {
 					</div>
 				</form:form>`
         	})	
+
+			
+			$().ready(function() {
+    	$("#hireDate, #resignDate").change(function() {
+            var currentDate = new Date(); // 현재 날짜 가져오기
+            var hireDateValue = $("#hireDate").val();
+            var resignDateValue = $("#resignDate").val();
+            
+            // 빈 값인 경우 비교하지 않음
+            if (hireDateValue && resignDateValue) {
+                var hireDate = new Date(hireDateValue);
+                var resignDate = new Date(resignDateValue);
+                
+                if (hireDate > currentDate || resignDate > currentDate) {
+                    alert("입사일과 퇴사일은 현재 날짜보다 클 수 없습니다.");
+                    // 입사일과 퇴사일을 초기화
+                    $("#hireDate").val("");
+                    $("#resignDate").val("");
+                } else if (hireDate > resignDate) {
+                    alert("입사일이 퇴사일보다 이후일 수 없습니다.");
+                    // 입사일을 초기화
+                    $("#hireDate").val("");
+                }
+                else if (hireDate === resignDate) {
+                    alert("입사일이 퇴사일보다 이후일 수 없습니다.");
+                    // 입사일을 초기화
+                    $("#hireDate").val("");
+                }
+                else if (hireDate.toDateString() === resignDate.toDateString()) {
+                    alert("입사일과 퇴사일이 같을 수 없습니다.");
+                    // 입사일과 퇴사일을 초기화
+                    $("#hireDate").val("");
+                    $("#resignDate").val("");
+                }
+            }
+        });
+        $("#previousCompanyName").click(function() {
+  	      $(".companyName_errors").hide();
+  	 	 });
+  	
+  	    $("#jobTitle").click(function() {
+  	      $(".jobTitle_errors").hide();
+  	 	 });
+  	    $("#hireDate").click(function() {
+  	      $(".hireDate_errors").hide();
+  	  	 });
+    });
         });
 
 		$(document).on('click', '#addEducationButton', function() {
@@ -1055,28 +1093,28 @@ body > .body_container > .body_right_aside {
 					content: `
 					<form:form modelAttribute="educationVO" method="post" action="/memberInfo/modify/create-education">
 						<div>
-							<div id="university-section" style="display:flex;">
+							<div id="university-section">
 							<h3>대학교 검색</h3>
 							<input type="text" id="search-university-input" name="schoolName" placeholder="대학교 검색" style="margin-left:10px; padding:6px;">
 							<form:errors path="schoolName" element="div" cssClass="school_errors" />
+							</div>
 							<div id="search-university-results">
 								<!-- 검색 결과를 여기에 표시할 예정입니다. -->
-							</div>
 							</div>
 
 							<div id="department-section" style="display:flex; margin-top:15px;">
 							<h3>학과 검색</h3>
 							<input type="text" id="search-department-input" name="schoolDepartment" placeholder="학과 검색" style="margin-left:26px; padding:6px;">
 							<form:errors path="schoolDepartment" element="div" cssClass="department_errors" />
-							<div id="search-department-results">
-								<!-- 검색 결과를 여기에 표시할 예정입니다. -->
-							</div>
 							<select id="degree" name="degrees" required style="margin-left: 10px;">
 								<option value="" disabled selected hidden>선택하세요</option>
 								<option value="학사">학사</option>
 								<option value="석사">석사</option>								
 								<option value="박사">박사</option>
 							</select>
+							</div>
+							<div id="search-department-results">
+								<!-- 검색 결과를 여기에 표시할 예정입니다. -->
 							</div>
 							<div class="saveCareer">
 							<input type="submit" value="저장" style="cursor: pointer; border: 1px solid #EEE; border-radius: 5px; background-color: var(--blue); color: #EEE; width: 80px; height: 40px; font-size: 14pt;">
@@ -1085,6 +1123,93 @@ body > .body_container > .body_right_aside {
 					</form:form>`
 				})
 			})	
+
+			$().ready(function() {
+        	 
+			 const universityApiUrl = `https://www.career.go.kr/cnet/openapi/getOpenApi?apiKey=8a2e49c8c985107112055a268b321623&svcType=api&svcCode=SCHOOL&contentType=json&gubun=univ_list&perPage=10000`;
+			  const departmentApiUrl = `https://www.career.go.kr/cnet/openapi/getOpenApi?apiKey=8a2e49c8c985107112055a268b321623&svcType=api&svcCode=MAJOR&contentType=json&gubun=high_list&perPage=9999`;
+			 let universities = [];
+			 let departments = [];
+	 
+			 // API를 호출하여 대학교 정보 가져오기
+			 $.ajax({
+				 url: universityApiUrl,
+				 dataType: 'json',
+				 success: function(data) {
+					 universities = data.dataSearch.content;
+	 
+					 // 중복된 대학교 이름 필터링
+					 const uniqueUniversities = [...new Set(universities.map(university => university.schoolName))];
+	 
+					 // 검색창에서 텍스트 입력 시 대학교 검색 결과 업데이트
+					 $('#search-university-input').on('input', function() {
+						 const searchText = $(this).val().toLowerCase();
+						 const searchResults = uniqueUniversities.filter(universityName => universityName.toLowerCase().includes(searchText));
+						 // 대학교 검색 결과를 화면에 표시
+						 displayUniversitySearchResults(searchResults);
+					 });
+				 }
+			 });
+	 
+			// API를 호출하여 학과 정보 가져오기
+			 $.ajax({
+				 url: departmentApiUrl,
+				 dataType: 'json',
+				 success: function(data) {
+					 departments = data.dataSearch.content;
+					 // 학과 검색창에서 텍스트 입력 시 학과 검색 결과 업데이트
+					 $('#search-department-input').on('input', function() {
+						 const searchText = $(this).val().toLowerCase();
+						 const searchResults = departments.filter(department => department.facilName.toLowerCase().includes(searchText));
+						 // 학과 검색 결과를 화면에 표시
+						 displayDepartmentSearchResults(searchResults);
+					 });
+				 },
+			 });
+	 
+			 // 대학교 검색 결과를 표시하는 함수
+			 function displayUniversitySearchResults(results) {
+				 const searchResultsContainer = $('#search-university-results');
+				 searchResultsContainer.empty();
+				 results.forEach(result => {
+					 searchResultsContainer.append(`<p class='result-item university' data-name='\${result}'>\${result}</p>`);
+				 });
+	 
+				 // 대학교 검색 결과 항목을 클릭했을 때 해당 대학이 검색 창에 나타남
+				 $('.result-item.university').click(function() {
+					 const selectedUniversityName = $(this).data('name');
+					 $('#search-university-input').val(selectedUniversityName);
+					 searchResultsContainer.empty();
+				 });
+			 }
+	 
+		  // 학과 검색 결과를 표시하는 함수
+			 function displayDepartmentSearchResults(results) {
+				 const searchResultsContainer = $('#search-department-results');
+				 searchResultsContainer.empty();
+	 
+				 results.forEach(result => {
+					 const facilNameArray = result.facilName.split(', ');
+					 facilNameArray.forEach(facil => {
+							 searchResultsContainer.append(`<p class="result-item department" data-name="\${facil}">\${facil}</p>`);
+					 });
+				 });
+	 
+				 // 학과 검색 결과 항목을 클릭했을 때 선택한 학과를 검색 창에 설정
+				 $('.result-item.department').click(function() {
+					 const selectedDepartment = $(this).data('name');
+					 $('#search-department-input').val(selectedDepartment);
+					 searchResultsContainer.empty();
+				 });
+			 }
+			 $("#search-university-input").click(function() {
+				   $("div.school_errors").hide();
+			   });
+			 
+			   $("#search-department-input").click(function() {
+				   $("div.department_errors").hide();
+			   });
+		 });
 		});	
 			
 		$(document).on('click', '.education-modify', function() {
@@ -1101,17 +1226,15 @@ body > .body_container > .body_right_aside {
 						<h3>대학교 검색</h3>
 							<input type="text" id="search-university-input" name="schoolName" value="\${response.schoolName}" placeholder="대학교 검색" style="margin-left:10px; padding:6px;">
 						<form:errors path="schoolName" element="div" cssClass="school_errors" />
+						</div>
 						<div id="search-university-results">
 							<!-- 지우면 안됩니다 -->
 						</div>
-					</div>
 					<div id="department-section">
 						<h3>학과 검색</h3>
 							<input type="text" id="search-department-input" name="schoolDepartment" value="\${response.schoolDepartment}" placeholder="학과 검색" style="margin-left:26px; padding:6px;">
 						<form:errors path="schoolDepartment" element="div" cssClass="department_errors" />
-						<div id="search-department-results">
-							<!-- 검색 결과를 여기에 표시할 예정입니다. -->
-						</div>
+						
 					
 						<select id="degree" name="degrees" style="margin-left:10px;" required>
 								<option value="\${response.degrees}" disabled selected hidden>선택하세요</option>
@@ -1120,6 +1243,9 @@ body > .body_container > .body_right_aside {
 							<option value="박사">박사</option>
 						</select>
 					</div>
+					<div id="search-department-results">
+							<!-- 검색 결과를 여기에 표시할 예정입니다. -->
+						</div>
 
 					
 
@@ -1134,6 +1260,93 @@ body > .body_container > .body_right_aside {
 				</form:form>`
         	})
 			})	
+
+			$().ready(function() {
+        	 
+			 const universityApiUrl = `https://www.career.go.kr/cnet/openapi/getOpenApi?apiKey=8a2e49c8c985107112055a268b321623&svcType=api&svcCode=SCHOOL&contentType=json&gubun=univ_list&perPage=10000`;
+			  const departmentApiUrl = `https://www.career.go.kr/cnet/openapi/getOpenApi?apiKey=8a2e49c8c985107112055a268b321623&svcType=api&svcCode=MAJOR&contentType=json&gubun=high_list&perPage=9999`;
+			 let universities = [];
+			 let departments = [];
+	 
+			 // API를 호출하여 대학교 정보 가져오기
+			 $.ajax({
+				 url: universityApiUrl,
+				 dataType: 'json',
+				 success: function(data) {
+					 universities = data.dataSearch.content;
+	 
+					 // 중복된 대학교 이름 필터링
+					 const uniqueUniversities = [...new Set(universities.map(university => university.schoolName))];
+	 
+					 // 검색창에서 텍스트 입력 시 대학교 검색 결과 업데이트
+					 $('#search-university-input').on('input', function() {
+						 const searchText = $(this).val().toLowerCase();
+						 const searchResults = uniqueUniversities.filter(universityName => universityName.toLowerCase().includes(searchText));
+						 // 대학교 검색 결과를 화면에 표시
+						 displayUniversitySearchResults(searchResults);
+					 });
+				 }
+			 });
+	 
+			// API를 호출하여 학과 정보 가져오기
+			 $.ajax({
+				 url: departmentApiUrl,
+				 dataType: 'json',
+				 success: function(data) {
+					 departments = data.dataSearch.content;
+					 // 학과 검색창에서 텍스트 입력 시 학과 검색 결과 업데이트
+					 $('#search-department-input').on('input', function() {
+						 const searchText = $(this).val().toLowerCase();
+						 const searchResults = departments.filter(department => department.facilName.toLowerCase().includes(searchText));
+						 // 학과 검색 결과를 화면에 표시
+						 displayDepartmentSearchResults(searchResults);
+					 });
+				 },
+			 });
+	 
+			 // 대학교 검색 결과를 표시하는 함수
+			 function displayUniversitySearchResults(results) {
+				 const searchResultsContainer = $('#search-university-results');
+				 searchResultsContainer.empty();
+				 results.forEach(result => {
+					 searchResultsContainer.append(`<p class='result-item university' data-name='\${result}'>\${result}</p>`);
+				 });
+	 
+				 // 대학교 검색 결과 항목을 클릭했을 때 해당 대학이 검색 창에 나타남
+				 $('.result-item.university').click(function() {
+					 const selectedUniversityName = $(this).data('name');
+					 $('#search-university-input').val(selectedUniversityName);
+					 searchResultsContainer.empty();
+				 });
+			 }
+	 
+		  // 학과 검색 결과를 표시하는 함수
+			 function displayDepartmentSearchResults(results) {
+				 const searchResultsContainer = $('#search-department-results');
+				 searchResultsContainer.empty();
+	 
+				 results.forEach(result => {
+					 const facilNameArray = result.facilName.split(', ');
+					 facilNameArray.forEach(facil => {
+							 searchResultsContainer.append(`<p class="result-item department" data-name="\${facil}">\${facil}</p>`);
+					 });
+				 });
+	 
+				 // 학과 검색 결과 항목을 클릭했을 때 선택한 학과를 검색 창에 설정
+				 $('.result-item.department').click(function() {
+					 const selectedDepartment = $(this).data('name');
+					 $('#search-department-input').val(selectedDepartment);
+					 searchResultsContainer.empty();
+				 });
+			 }
+			 $("#search-university-input").click(function() {
+				   $("div.school_errors").hide();
+			   });
+			 
+			   $("#search-department-input").click(function() {
+				   $("div.department_errors").hide();
+			   });
+		 });
 		});	
 
 		$(document).on('click', '.region_create', function() {
@@ -1177,7 +1390,7 @@ body > .body_container > .body_right_aside {
 	<div class="body_container">
 		<div class="body_left_aside">
 				<div class="flex_button">
-					<button id="myprofile">마이프로필</button>
+					<button id="myprofile">마이페이지</button>
 					<button id="bookmark">북마크</button>
 					<button id="modify_info">정보 수정</button>
 					<button id="mypost">내가 쓴 게시글</button>
