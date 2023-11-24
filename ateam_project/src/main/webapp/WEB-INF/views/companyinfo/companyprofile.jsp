@@ -213,8 +213,7 @@
 .flex_button {
   display: flex;
   flex-direction: column;
-  margin-left: 120px;
-  margin-top: 51px;
+  margin: 50px 120px 0px 0px;
 }
 
 
@@ -257,7 +256,7 @@
 }
 
 .flex_button button:hover {
-  background-color: #E55604;
+   background-color: #26577C;
 }
 
 .leave_button {

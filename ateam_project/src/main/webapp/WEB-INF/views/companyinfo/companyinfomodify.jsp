@@ -39,8 +39,7 @@ body>.body_container>.body_right_aside {
 .flex_button {
 	display: flex;
 	flex-direction: column;
-	text-align: end;
-	margin-right: 120px;
+	margin: 50px 120px 0px 0px;
 }
 
 .flex_button button {
@@ -54,7 +53,7 @@ body>.body_container>.body_right_aside {
 }
 
 .flex_button button:hover {
-	background-color: var(--light-blue);
+	background-color: #26577C;
 	color: white;
 }
 

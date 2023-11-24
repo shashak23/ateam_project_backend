@@ -57,12 +57,12 @@ body > .body_container > .body_right_aside {
 }
 
 .flex_button {
-  margin: 50px 50px 0px 0px;
+  margin: 50px 120px 0px 0px;
   display: flex;
   flex-direction: column;
 }
 .flex_button button {
-  background-color:var(--gray);
+  background-color: #B4B4B3;
   width: 150px;
   height: 40px;
   margin-bottom: 15px;
@@ -71,7 +71,7 @@ body > .body_container > .body_right_aside {
 }
 
 .flex_button button:hover {
-  background-color: var(--light-blue);
+  background-color: #26577C;
   color: white;
 }
 
@@ -1389,6 +1389,7 @@ body > .body_container > .body_right_aside {
 <body>
 	<div class="body_container">
 		<div class="body_left_aside">
+<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
 				<div class="flex_button">
 					<button id="myprofile">마이페이지</button>
 					<button id="bookmark">북마크</button>
@@ -1397,6 +1398,7 @@ body > .body_container > .body_right_aside {
 					<button id="solve">내가 푼 문제</button>
 					<button id="quit">탈퇴</button>
 				</div>
+</c:if>
 		</div>
 	<div class="body">
 	<div class="flex_main">	
@@ -1517,8 +1519,7 @@ body > .body_container > .body_right_aside {
 					<c:forEach items="${educationList}" var="education">
 						<li>${education.schoolName}-${education.schoolDepartment }
 							${education.degrees } 
-							<c:if
-								test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
+							<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
 								<button data-education-id="${education.educationId}" class="education-modify">
 								<img src="/images/edit.png">
 								</button>

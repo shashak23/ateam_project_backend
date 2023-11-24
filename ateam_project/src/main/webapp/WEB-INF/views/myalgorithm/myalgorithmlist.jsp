@@ -33,7 +33,7 @@
 	}
     
 	.flex_button {	
-		margin: 100px 50px 0px 0px;
+		margin: 50px 120px 0px 0px;
 		display: flex;
 		flex-direction: column;
 	}
@@ -49,7 +49,7 @@
 	}
 
 	.flex_button button:hover {
-        background-color:#E55604;
+        background-color: #26577C;
         color: white;
 	} 
 

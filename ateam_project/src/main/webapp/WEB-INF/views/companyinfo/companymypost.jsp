@@ -2,23 +2,18 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <jsp:include page="../layout/header.jsp" />
-<link rel="stylesheet" type="text/css" href="/css/common.css" />
 <style>
-  /* 메인 컨텐츠 영역 */
 
-	#content_wrapper{
-		display: flex;
-		justify-content: center;
-	}
-	#container{
-		width: 1100px;
-		display: flex; 
-		flex-direction: column;
-		justify-content: center;
+
+
+	/* Main Contents */
+	body > .body_container > .body {
+	    grid-column: 2/3;
+	    margin: 40px 0 100px 0;
 	}
 
 	.flex_button {	
-		margin: 100px 50px 0px 0px;
+		margin: 50px 120px 0px 0px;
 		display: flex;
 		flex-direction: column;
 	}
@@ -33,31 +28,30 @@
     border: 2px;
 	}
 	.flex_button button:hover {
-	background-color: #E55604;
+	background-color: #26577C;
   	color: white;
 	}
 
-	table th{
-		background-color: f#E55604;
+	table th {
+		background-color:var(--light-gray);
 		height:35px;
-		color: white;
+		color: var(--dark-gray);
 	}
 	
 	table td{
-		border-bottom: 1px solid #E55604;
 		color: var(--dark-gray);
 		text-align: center;
 	}
 </style>
 <body> 
-<div id="content_wrapper">
+<div class="body_container">
 	<div class="flex_button">
 		<button id="myprofile">마이페이지</button>			
 		<button id="modify_info">정보 수정</button> 
 		<button id="mypost">내가 쓴 게시글</button>
 		<button id="quit">탈퇴</button>
 	</div>
-	<div id="container">
+	<div class="body">
 		<table class="grid">
 			<caption>알고리즘 문제 게시판</caption>
 			<thead>
@@ -154,6 +148,7 @@
 			</tbody>
 		</table>
 	</div>
+	<div class="body_right_aside"></div>
 </div>
 <jsp:include page="../layout/footer.jsp" />
 </body>
