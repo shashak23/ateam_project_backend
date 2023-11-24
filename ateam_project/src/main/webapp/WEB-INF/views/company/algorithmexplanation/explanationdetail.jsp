@@ -3,13 +3,8 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="c" uri="jakarta.tags.core"%>
 <%@ page import="com.ktdsuniversity.edu.algorithmexplanation.vo.AlgorithmExplanationVO" %>
-<jsp:include page="../../layout/header.jsp"></jsp:include>
-<script type="text/javascript" src="/js/lib/jquery-3.7.1.js"></script>
+<jsp:include page="../../layout/header.jsp"/>
 <script type="text/javascript">
-	$().ready(function() {
-	
-	})
-
     // 모달창 열고 닫기
   $(document).on('click', '.incomplete', function() {
     $('.modal, .overlay').addClass('modal_active')
@@ -54,7 +49,6 @@
                            'box-shadow': 'none'})
   })
 </script>
-</head>
 <style>
     body > .body_container {
     width: 100%;

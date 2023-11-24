@@ -1,17 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>myPage</title>
-<!--브라우저에게 현재 페이지를 가장 최신 버전으로 렌더링-->
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<!--뷰포트는 화면에 표시되는 웹영역 표시, 모바일 등에서 상호작용 할 수있는지 제어-->
-<meta name="viewport" id="viewport"
-	content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, width=device-width" />
 <!--스타일,폰트 지정-->
 <!--스와이퍼 기능 지정-->
 <jsp:include page="../../layout/header.jsp" />
@@ -119,7 +108,7 @@ $().ready(function() {
 	}
 
 	.flex_button button:hover {
-        background-color: var(--light-blue);
+        background-color: #E55604;
         color: white;
 	} 
 
@@ -280,27 +269,17 @@ $().ready(function() {
 	$('.visible').hide()
 	$('.list_company').mouseover(function() {
 	  $('.visible').show()
-	  $(this).find('a').css({'background-color': 'var(--blue)',
+	  $(this).find('a').css({'background-color': '#E55604',
 	                         'color': 'white',
 	                         'box-shadow': '0 0 5px var(--gray)'})
 	})
 	$('.list_company').mouseleave(function() {
 	  $('.visible').hide()
 	  $(this).find('a').css({'background-color': 'white',
-	                         'color': 'var(--blue)',
+	                         'color': '#E55604',
 	                         'box-shadow': 'none'})
 	})
-	//  $("#my_profile").click(function() {
-	//         redirectToURL(`/memberInfo/view/${memberVO.email}`);
-	//     });
-
-		
-	//     $("#mypost").click(function() {
-	//         redirectToURL(`/member/mypost`);
-	//     });
-	//     $("#modify_info").click(function() {
-	//         redirectToURL(`/member/selectmember/${memberVO.email}`);
-	//     });
+	
 	/* 비밀번호, 닉네임 수정 버튼 */
 	$("#myprofile").click(function() {
 			redirectToURL("/memberinfo/view/${sessionScope._LOGIN_USER_.email}");

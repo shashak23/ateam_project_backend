@@ -51,11 +51,11 @@
 	}
 
 	.flex_button button:hover {
-	background-color: var(--light-blue);
+	background-color: #E55604;
   	color: white;
 	} 
 
-    tbody {
+    tbody {s
     text-align: center;
     }
 

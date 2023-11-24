@@ -37,7 +37,7 @@
         }
 
         .flex_button button:hover {
-            background-color: #007BFF;
+            background-color: #E55604;
             color: white;
         }
 
@@ -57,7 +57,7 @@
             width: 15px;
         }
         .message_icon{
-            background-color: black;
+            background-color: #E55604;
             cursor: pointer;
             color: white;
             height: 30px;

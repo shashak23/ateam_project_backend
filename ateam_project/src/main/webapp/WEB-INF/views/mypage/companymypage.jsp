@@ -4,7 +4,6 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <jsp:include page="../layout/header.jsp"></jsp:include>
 <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/super-build/ckeditor.js"></script>
-<script type="text/javascript" src="/js/lib/jquery-3.7.1.js"></script>
 <script type="text/javascript">
 </script>
 <style>

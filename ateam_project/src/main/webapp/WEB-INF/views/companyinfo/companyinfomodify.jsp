@@ -1,121 +1,107 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<!DOCTYPE html>
-<html>
-<head>
-   <meta charset="UTF-8">
-    <title>devGround</title>
-        <link rel="preconnect" href="https://fonts.googleapis.com"> 
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
-        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400&family=Open+Sans:wght@300;400&display=swap" rel="stylesheet"> 
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" /> 
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-        <script src="/js/lib/jquery-3.7.1.js"></script> 
-        <link rel="stylesheet" type="text/css" href="/css/common.css" />
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+
 <jsp:include page="../layout/header.jsp" />
 <style>
-
-	body > .body_container {
-	    width: 100%;
-	    min-height: 75vh;
-	    display: grid;
-	    grid-template-columns: 1fr 1080px 1fr;
-	}
-	
-	/* Main Contents */
-	body > .body_container > .body {
-	    grid-column: 2/3;
-		margin-top: 20px;
-	}
-	
-	/* Main Contents 왼쪽 여백*/
-	body > .body_container > .body_left_aside {
-		grid-column: 1/2;
-		display: flex;
-		justify-content: flex-end;
-		margin-top: 51px;
-	}
-	
-	/* Main Contents 오른쪽 여백*/
-	body > .body_container > .body_right_aside {
-	    grid-column: 3/4;
-	}
-
-	.companyInfoModify {
-		display: flex;
-		flex-direction: column;	
-		align-items: center;
-	}
-	.flex_button {		
-		display: flex;
-		flex-direction: column;
-		text-align: end;
-		margin-right: 120px;
-	}
-
-	.flex_button button {
-	  	color: white;	
-		background-color: var(--gray);
-		width: 150px;
-		height: 40px;
-		margin-bottom: 15px;
-		cursor: pointer;
-		border: 2px;
-	}
-
-	.flex_button button:hover {
-		background-color: var(--light-blue);
-		color: white;
-	}
-
-	#companyEmail,
-	#contactNumber,
-	#pw,
-	#confirmPw{
-		width: 400px;
-		height: 40px;
-		padding: 8px;
-		border: 2px solid rgb(231,231,231);
-	}
-
-	#password{
-		display: flex;
-		flex-direction: column;
-	}
-
-	.submit_btn{
-		width: 60px;
-		height: 40px;
-		border-radius: 6px;
-		border: none;
-	}
-
-	form{
-		margin: 10px;
-	}
-
-	.info{
-		margin-bottom: 10px;
-	}
-
-	h2{
-		margin: 100px 0px 20px 0px;
-	}
-
-	h3 {
-    margin-bottom: 15px;
+body>.body_container {
+	width: 100%;
+	min-height: 75vh;
+	display: grid;
+	grid-template-columns: 1fr 1080px 1fr;
 }
 
-	#origin, #changed{
-		display: flex;
-	}
+/* Main Contents */
+body>.body_container>.body {
+	grid-column: 2/3;
+	margin-top: 20px;
+}
 
-	#conPW{
-		margin-top: 10px;
-	}
+/* Main Contents 왼쪽 여백*/
+body>.body_container>.body_left_aside {
+	grid-column: 1/2;
+	display: flex;
+	justify-content: flex-end;
+	margin-top: 51px;
+}
+
+/* Main Contents 오른쪽 여백*/
+body>.body_container>.body_right_aside {
+	grid-column: 3/4;
+}
+
+.companyInfoModify {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.flex_button {
+	display: flex;
+	flex-direction: column;
+	text-align: end;
+	margin-right: 120px;
+}
+
+.flex_button button {
+	color: white;
+	background-color: var(--gray);
+	width: 150px;
+	height: 40px;
+	margin-bottom: 15px;
+	cursor: pointer;
+	border: 2px;
+}
+
+.flex_button button:hover {
+	background-color: var(--light-blue);
+	color: white;
+}
+
+#companyEmail, #contactNumber, #pw, #confirmPw {
+	width: 400px;
+	height: 40px;
+	padding: 8px;
+	border: 2px solid rgb(231, 231, 231);
+}
+
+#password {
+	display: flex;
+	flex-direction: column;
+}
+
+.submit_btn {
+	width: 60px;
+	height: 40px;
+	border-radius: 6px;
+	border: none;
+}
+
+form {
+	margin: 10px;
+}
+
+.info {
+	margin-bottom: 10px;
+}
+
+h2 {
+	margin: 100px 0px 20px 0px;
+}
+
+h3 {
+	margin-bottom: 15px;
+}
+
+#origin, #changed {
+	display: flex;
+}
+
+#conPW {
+	margin-top: 10px;
+}
 </style>
-<script>
+<script type="text/javascript">
 	  function redirectToURL(url) {
 	        window.location.href = url;
 	   }
@@ -190,18 +176,16 @@
 <body>
 	<div class="body_container">
 		<div class="body_left_aside">
-			<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
+			<c:if
+				test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
 				<div class="flex_button">
 					<a href="/companyinfo/view">
 						<button id="myprofile">마이프로필</button>
-					</a>
-					<a href="/companyinfo/modify">
+					</a> <a href="/companyinfo/modify">
 						<button id="modify_info">정보 수정</button>
-					</a>
-					<a href="/companyinfo/mypost">
+					</a> <a href="/companyinfo/mypost">
 						<button id="mypost">내가 쓴 게시글</button>
-					</a>
-					<a href="/member/logout">
+					</a> <a href="/member/logout">
 						<button id="quit">탈퇴</button>
 					</a>
 				</div>
@@ -213,41 +197,46 @@
 				<form:form>
 					<!-- <label class="info" for="companyEmail">회사 이메일</label><br> -->
 					<h3>회사 이메일</h3>
-					<input type="text" name="companyEmail" id="companyEmail" value="${companyVO.companyEmail}" placeholder="${companyVO.companyEmail}">
+					<input type="text" name="companyEmail" id="companyEmail"
+						value="${companyVO.companyEmail}"
+						placeholder="${companyVO.companyEmail}">
 					<input class="submit_btn" type="submit" value="변경" />
 				</form:form>
-	
+
 				<form:form modelAttribute="companyVO" method="post">
 					<!-- <label class="info" for="contactNumber">담당자 연락처</label><br> -->
 					<h3>담당자 연락처</h3>
-					<input type="text" name="contactNumber" id="contactNumber" value="${companyVO.contactNumber}" placeholder="${companyVO.contactNumber}">
-					<input class="submit_btn" type="submit" value="변경" />			
+					<input type="text" name="contactNumber" id="contactNumber"
+						value="${companyVO.contactNumber}"
+						placeholder="${companyVO.contactNumber}">
+					<input class="submit_btn" type="submit" value="변경" />
 				</form:form>
-	
-				<form:form modelAttribute="memberVO" method="post">    	
+
+				<form:form modelAttribute="memberVO" method="post">
 					<h3>비밀번호</h3>
 					<div id="password">
-					<label for="pw">비밀번호</label>
-					<div id="origin">
-					<input type="text" name="pw" id="pw" value="${memberVO.pw}" />
-					<!-- <input class="submit_btn" type="submit" value="변경" />	 -->
-				</div>	
-					<label for="confirmPw" id="conPW">비밀번호 확인</label>
-					<div id="changed">
-					<input id="confirmPw" type="password" name="confirmPw" />
-					<input class="submit_btn" type="submit" value="변경" />	
-				</div>		
-						<br><span class="err_confirm_password"></span>
-					
-					<form:errors path="confirmPw" element="div" cssClass="confirmPw_errors" />
-					
-				</div>
+						<label for="pw">비밀번호</label>
+						<div id="origin">
+							<input type="text" name="pw" id="pw" value="${memberVO.pw}" />
+							<!-- <input class="submit_btn" type="submit" value="변경" />	 -->
+						</div>
+						<label for="confirmPw" id="conPW">비밀번호 확인</label>
+						<div id="changed">
+							<input id="confirmPw" type="password" name="confirmPw" /> <input
+								class="submit_btn" type="submit" value="변경" />
+						</div>
+						<br> <span class="err_confirm_password"></span>
+
+						<form:errors path="confirmPw" element="div"
+							cssClass="confirmPw_errors" />
+
+					</div>
 				</form:form>
 			</div>
 		</div>
 
-        <div class="body_right_aside"></div>
+		<div class="body_right_aside"></div>
 	</div>
-<jsp:include page="../layout/footer.jsp" />
+	<jsp:include page="../layout/footer.jsp" />
 </body>
 </html>

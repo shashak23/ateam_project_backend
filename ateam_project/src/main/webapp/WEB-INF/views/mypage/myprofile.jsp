@@ -2,25 +2,9 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <%@ taglib prefix="form" uri ="http://www.springframework.org/tags/form" %>
-
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>myPage</title>
-<!--브라우저에게 현재 페이지를 가장 최신 버전으로 렌더링-->
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<!--뷰포트는 화면에 표시되는 웹영역 표시, 모바일 등에서 상호작용 할 수있는지 제어-->
-<meta name="viewport" id="viewport"
-	content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, width=device-width" />
-<link rel="stylesheet" type="text/css" href="/css/common.css" />
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script src="/js/lib/jquery-3.7.1.js"></script>
 <jsp:include page="../layout/header.jsp" />
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 <style>
 @charset "utf-8";
 
@@ -71,7 +55,7 @@ body > .body_container > .body_right_aside {
 }
 
 .flex_button button:hover {
-  background-color: var(--light-blue);
+  background-color: #E55604;
   color: white;
 }
 
@@ -349,7 +333,7 @@ body > .body_container > .body_right_aside {
    color: white; 
  } 
 .techstack-font, .education-font, .career-font, .region-font{
-    font-family: 'Noto Sans KR', sans-serif;
+    font-family: 'SUIT', suit;
     margin-top: 10px;
     margin-bottom: 10px;
 }
@@ -413,7 +397,7 @@ body > .body_container > .body_right_aside {
     }
 
     .btn-close:hover {
-        color: #191919;
+        color: #E55604;
     }
     
     .create_title {
@@ -519,7 +503,7 @@ body > .body_container > .body_right_aside {
 
 	#saveBtn{
 		cursor: pointer;
-		border: 1px solid #EEE;
+		border: 1px solid #E55604;
 		border-radius: 5px;
 		background-color:var(--blue);;
 		color: #EEE;
@@ -592,13 +576,6 @@ body > .body_container > .body_right_aside {
 	}
 </style>
 <!-- 자바스크립트 시작 -->
-
-<%-- <jsp:include page="../layout/header.jsp" />
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script src="/js/lib/jquery-3.7.1.js"></script> --%>
-
 <script type="text/javascript">
 	//신고버튼
 	$().ready(function() {
@@ -1200,7 +1177,7 @@ body > .body_container > .body_right_aside {
 	<div class="body_container">
 		<div class="body_left_aside">
 				<div class="flex_button">
-					<button id="myprofile">마이페이지</button>
+					<button id="myprofile">마이프로필</button>
 					<button id="bookmark">북마크</button>
 					<button id="modify_info">정보 수정</button>
 					<button id="mypost">내가 쓴 게시글</button>
