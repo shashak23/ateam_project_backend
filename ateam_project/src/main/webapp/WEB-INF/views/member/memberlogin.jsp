@@ -43,6 +43,7 @@ body {
 .login_container {
   border-radius: 10px;
   overflow: hidden;
+  border: 1px solid var(--gray);
 }
 
 .login_container > .login_tab {
@@ -51,11 +52,11 @@ body {
 }
 
 .login_container > .login_tab > button {
-  border: 0px;
+  border: 0;
   width: 350px;
   height: 40px;
-  background-color: var(--blue);
-  color: var(--light-gray);
+  background-color: white;
+  color: #26577C;
   font-weight: bold;
   cursor: pointer;
 }
@@ -73,15 +74,6 @@ body {
 .login_tab > div {
   text-align: center;
   padding: 10px 0;
-}
-
-
-.login_container > form {
-  border-right: 1px solid var(--gray);
-  border-left: 1px solid var(--gray);
-  border-bottom: 1px solid var(--gray);
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
 }
 
 .input_container {

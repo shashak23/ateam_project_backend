@@ -25,7 +25,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: rgb(141, 18, 18);
+    background-color: #E55604;
     color: #e5e5e5;
     width: 120px;
     height: 30px;
@@ -45,7 +45,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    background-color: rgb(153, 87, 87);
+    background-color: #ee9d6e;
     color: #e5e5e5;
     width: 120px;
     height: 30px;

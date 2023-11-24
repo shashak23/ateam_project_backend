@@ -223,6 +223,30 @@
   margin-top: 51px;
 }
 
+
+.intro_button,
+.stack_button,
+.task_button,
+.location_button {
+	background-color: transparent;
+	border: none;
+	cursor: pointer;
+	padding: 3px;
+}
+
+.location_button {
+	padding-left: 10px;
+}
+
+.intro_button .intro_button_img,
+.stack_button img,
+.task_button img,
+.location_button img {
+	width: 28px;
+	height: 24px;
+	border-radius: 0;
+}
+
 .flex_main {
   display: flex;
   flex-direction: column;
@@ -396,8 +420,8 @@ margin: 0;
 }
 
 .task_button{
-	width: 40px;
-	height: 30px;
+	width: 24px;
+	height: 24px;
 }
 
 /* #technology_stack ul>li>button 
@@ -576,7 +600,7 @@ margin: 0;
 									<h2>kt ds</h2>
 								</li>
 								<li class="list_intro"><p>kt는 국내 최대 통신사이자 디지털 플랫폼 기업으로 ICT, 금융사업, 위성방송서비스사업, 기타사업 등을 영위하고 있다.<br> 무선통신, 초고속인터넷, IPTV 등 핵심사업에서의 지속적인 성장뿐만 아니라<br> IDC, 클라우드, AI/DX 등 B2B 성장사업에서도 성과를 창출하였다.</p>
-									<button class="intro_button">수정</button>
+									<button class="intro_button"><img class="intro_button_img" src="/images/edit.png" /></button>
 									<div id="modalContainerIntro" class="hidden">
 										<div id="modalContentIntro">
 											<textarea id="introTextArea"></textarea>
@@ -613,7 +637,7 @@ margin: 0;
 								</ul>
 								<span></span>
 								</li>
-								<button class="stack_button">수정</button>
+								<button class="stack_button"><img src="/images/edit.png" /></button>
 								<div id="modalContainerStack" class="hidden">
 									<div id="modalContentStack">
 										<span class="close" onclick="closeLocationModal()">&times;</span>
@@ -628,7 +652,7 @@ margin: 0;
 						<ul>
 							<div class="info">업무 소개</div>
 							<div class="taskInfo">이런일 저런일 합니다.</div>
-							<button class="task_button">수정</button>
+							<button class="task_button"><img src="/images/edit.png" /></button>
 								<div id="modalContainerTask" class="hidden">
 									<div id="modalContentTask">
 										<span class="close" onclick="closeTaskModal()">&times;</span>
@@ -648,7 +672,7 @@ margin: 0;
 							
 								<p class="info">오시는 길</p>
 								<p class="address">서울 서초구 효령로 176</p>
-								<button class="location_button">수정</button>
+								<button class="location_button"><img src="/images/edit.png" /></button>
 								<div id="modalContainerLocation" class="hidden">
 									<div id="modalContentLocation">
 										<span class="close" onclick="closeLocationModal()">&times;</span>

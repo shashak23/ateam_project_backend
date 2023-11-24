@@ -29,7 +29,12 @@ button, input {
 }
 
 .company_signup.select {
-    background-color: var(--blue);
+    background-color: #26577C;
+    color: white;
+}
+
+.company_signup.select:hover {
+  background-color: #26577C;
 }
 
 .signup_container {
@@ -45,9 +50,9 @@ fieldset {
     width: 400px;
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
-    border-left: 1px solid var(--light-blue);
-    border-right: 1px solid var(--light-blue);
-    border-bottom: 1px solid var(--light-blue);
+    border-left: 1px solid #26577C;
+    border-right: 1px solid #26577C;
+    border-bottom: 1px solid #26577C;
     border-top: none;
     padding-top: 20px;
 }
@@ -55,7 +60,9 @@ fieldset {
 .signup_btn_wrap {
     display: flex;
     width: 412px;
-    background-color: var(--light-blue);
+    border-top: 1px solid #26577C;
+    border-left: 1px solid #26577C;
+    border-right: 1px solid #26577C;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     overflow: hidden;
@@ -63,16 +70,16 @@ fieldset {
 
 .signup_btn_wrap button {
   font-size: 15px;
-  color: var(--white);
+  color: #26577C;
   text-align: center;
   width: 50%;
-  background-color: var(--light-blue);
+  background-color: white;
   border: none;
   cursor: pointer;
 }
-
-.signup_btn_wrap button:active {
-    background-color: var(--deep-blue);
+.signup_btn_wrap button:hover {
+  background-color: #E55604;
+  color: white;
 }
 
 label {
