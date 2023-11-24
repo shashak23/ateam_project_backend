@@ -2,10 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="jakarta.tags.core" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<jsp:include page="../../layout/header.jsp"></jsp:include>
+<jsp:include page="../../layout/header.jsp"/>
 <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/super-build/ckeditor.js"></script>
-<script type="text/javascript" src="/js/lib/jquery-3.7.1.js"></script>
-<link rel="stylesheet" type="text/css" href="/css/common.css" />
 <script type="text/javascript">
     $().ready(function() {
     	$("#ide")[0].contentWindow.onload = function() {
@@ -74,7 +72,6 @@
                            'box-shadow': 'none'})
   })
 </script>
-</head>
 <style>
   * {
     margin: 0;

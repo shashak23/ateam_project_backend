@@ -6,8 +6,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <jsp:include page="../layout/header.jsp" />
-    <script src="/js/lib/jquery-3.7.1.js"></script>
-    <link rel="stylesheet" type="text/css" href="/css/common.css" />
     <style>
     body > .body_container {
     width: 100%;
@@ -51,7 +49,7 @@
 	}
 
 	.flex_button button:hover {
-        background-color: var(--light-blue);
+        background-color:#E55604;
         color: white;
 	} 
 
