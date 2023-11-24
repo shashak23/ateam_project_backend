@@ -552,8 +552,8 @@ body > .body_container > .body_right_aside {
                         <textarea name="algorithmSolution" id="algorithmSolution"></textarea>
                         
                        
-                            <label id="testData">테스트 데이터</label>
-                            <div id="table-div"></div>
+                        <label class="label" id="testData">테스트 데이터</label>
+                        <div id="table-div"></div>
                        
                         <div id="add-button">
                             <button id="add-row">행 추가</button>
