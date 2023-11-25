@@ -191,4 +191,8 @@ public class MemberDAOImpl extends SqlSessionDaoSupport implements MemberDAO{
 	public SocialVO findSocial(HashMap<String, Object> userInfo) {
 		return getSqlSession().selectOne("findSocial",userInfo);
 	}
+	@Override
+	public List<MemberVO> exportGeneralMember() {
+		return getSqlSession().selectList("exportGeneralMember");
+	}
 }

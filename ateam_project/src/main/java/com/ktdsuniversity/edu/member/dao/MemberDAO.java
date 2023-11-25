@@ -124,5 +124,11 @@ public interface MemberDAO {
 	/**
 	 * 소셜 아이디조회
 	 */
-	public  SocialVO findSocial(HashMap<String, Object> userInfo);
+	public SocialVO findSocial(HashMap<String, Object> userInfo);
+	
+	/**
+	 * 엑셀 추출용 일반 회원 조회
+	 * @return 일반 회원들의 웬만한 정보
+	 */
+	public List<MemberVO> exportGeneralMember();
 }

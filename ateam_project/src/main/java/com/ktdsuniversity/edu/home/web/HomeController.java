@@ -5,15 +5,33 @@
  */
 package com.ktdsuniversity.edu.home.web;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.net.URLEncoder;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -40,6 +58,8 @@ import com.ktdsuniversity.edu.common.vo.AbstractSearchVO;
 import com.ktdsuniversity.edu.companyinfo.service.CompanyInfoService;
 import com.ktdsuniversity.edu.companynews.service.CompanyNewsService;
 import com.ktdsuniversity.edu.companynews.vo.CompanyNewsListVO;
+import com.ktdsuniversity.edu.exceptions.FileNotExistsException;
+import com.ktdsuniversity.edu.exceptions.MakeXlsxFileException;
 import com.ktdsuniversity.edu.generalmember.service.GeneralMemberService;
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 import com.ktdsuniversity.edu.generalpost.service.GeneralPostService;
@@ -348,9 +368,6 @@ public class HomeController {
 		GeneralMemberVO generalMemberVO = new GeneralMemberVO();
 		generalMemberVO.setGeneralMemberEmail(memberEmail);
 		generalMemberVO.setTierId(tierId);
-		logger.debug("이메일을 보여주거라."+ generalMemberVO.getGeneralMemberEmail());
-		logger.debug(memberEmail);
-		logger.debug("티어를 보여주거라."+ generalMemberVO.getTierId());
 		boolean isSuccess = tierService.doUpdateTierMember(generalMemberVO);
 		
 		if (isSuccess) {
@@ -411,14 +428,113 @@ public class HomeController {
 		return "/algorithmmain/main";
 	}
 	
-//	@GetMapping("/file/download/${email}")
-//	public ResponseEntity<Resource> downloadFile(@PathVariable String email) {
-//		CompanyVO companyVO = companyInfoService.getOneCompanyInfo(email);
-//		if (companyVO == null) {
-//			throw new PageNotFoundException("잘못된 접근입니다.");
-//		}
-//		
-//		File storedFile = fileHandler.getStoredFile(companyVO.getCompanyRegistCertificateUrl());
-//	}
+	@GetMapping("/generalmember/excel/download")
+	public ResponseEntity<Resource> downloadGeneralMemberExcelFile() {
+		List<MemberVO> generalMemberList = new ArrayList<>();
+		generalMemberList = memberService.exportGeneralMember();
+		
+		Workbook workbook = new SXSSFWorkbook(-1);
+		Sheet sheet = workbook.createSheet("일반 회원 목록");
+		Row row = sheet.createRow(0);
+		
+		Cell cell = row.createCell(0);
+		cell.setCellValue("번호");
+		cell = row.createCell(1);
+		cell.setCellValue("닉네임");
+		cell = row.createCell(2);
+		cell.setCellValue("이메일");
+		cell = row.createCell(3);
+		cell.setCellValue("티어");
+		cell = row.createCell(4);
+		cell.setCellValue("티어점수");
+		cell = row.createCell(5);
+		cell.setCellValue("자기소개");
+		cell = row.createCell(6);
+		cell.setCellValue("직무");
+		cell = row.createCell(7);
+		cell.setCellValue("지역");
+		cell = row.createCell(8);
+		cell.setCellValue("깃허브");
+		cell = row.createCell(9);
+		cell.setCellValue("추가이메일");
+		cell = row.createCell(10);
+		cell.setCellValue("블로그");
+		cell = row.createCell(11);
+		cell.setCellValue("가입일");
+		
+		int rowIndex = 1;
+		
+		for (MemberVO member : generalMemberList) {
+			row = sheet.createRow(rowIndex);
+			cell = row.createCell(0);
+			cell.setCellValue(rowIndex);
+			cell = row.createCell(1);
+			cell.setCellValue(member.getNickname());
+			cell = row.createCell(2);
+			cell.setCellValue(member.getEmail());
+			cell = row.createCell(3);
+			cell.setCellValue(member.getGeneralMemberVO().getTierVO().getTierName());
+			cell = row.createCell(4);
+			cell.setCellValue(member.getGeneralMemberVO().getTierScore());
+			cell = row.createCell(5);
+			cell.setCellValue(member.getGeneralMemberVO().getSelfIntro());
+			cell = row.createCell(6);
+			cell.setCellValue(member.getGeneralMemberVO().getJobId());
+			cell = row.createCell(7);
+			cell.setCellValue(member.getGeneralMemberVO().getRegion());
+			cell = row.createCell(8);
+			cell.setCellValue(member.getGeneralMemberVO().getGithubUrl());
+			cell = row.createCell(9);
+			cell.setCellValue(member.getGeneralMemberVO().getAdditionalEmail());
+			cell = row.createCell(10);
+			cell.setCellValue(member.getGeneralMemberVO().getBlogUrl());
+			cell = row.createCell(11);
+			cell.setCellValue(member.getGeneralMemberVO().getRegistDate());
+			
+			rowIndex++;
+		}
+		
+		File storedFile = fileHandler.getStoredFile("일반회원목록.xlsx");
+		OutputStream os = null;
+		
+		try {
+			os = new FileOutputStream(storedFile);
+			workbook.write(os);
+		} catch (IOException e) {
+			throw new MakeXlsxFileException("엓겔 파일을 만들 수 없습니다.");
+		} finally {
+			try {
+				workbook.close();
+			} catch (IOException e) {}
+			
+			if (os != null) {
+				try {
+					os.flush();
+				} catch (IOException e) {}
+				try {
+					os.close();
+				} catch (IOException e) {}
+			}
+		}
+		
+		String downloadFileName = URLEncoder.encode("일반회원목록.xlsx", Charset.defaultCharset());
+		HttpHeaders header = new HttpHeaders();
+		header.setContentType(new MediaType("application", "force-download"));
+		header.setContentLength(storedFile.length());
+		header.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + downloadFileName);
+		
+		InputStreamResource resource;
+		
+		try {
+			resource = new InputStreamResource(new FileInputStream(storedFile));
+		} catch (FileNotFoundException e) {
+			throw new FileNotExistsException("파일이 존재하지 않습니다.");
+		}
+		
+		
+		return ResponseEntity.ok()
+				.headers(header)
+				.body(resource);
+	}
 	
 }

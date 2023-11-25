@@ -140,4 +140,9 @@ public interface MemberService {
 	 * 네이버 유저정보 
 	 */
 	public SocialVO getGoogleUserInfo(String accessToken);
+	
+	/**
+	 * 엑셀 추출용 일반 회원 조회
+	 */
+	public List<MemberVO> exportGeneralMember();
 }

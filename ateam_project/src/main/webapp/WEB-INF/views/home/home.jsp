@@ -1152,7 +1152,7 @@
               </article>`
             let templateDom = $(template)
 
-            // 댓글 개수  가져오기
+            // 댓글 개수 가져오기
             $.get(`/home/maincontent/commentcnt/\${article.generalPostId}`, function(response_of_comment) {
               commentCnt = response_of_comment.commentCnt
               if (commentCnt !== undefined) {
@@ -1218,7 +1218,6 @@
         let userEmail = `${sessionScope._LOGIN_USER_}`
         // 알 수도 있는 사람 호출
         if (userEmail != '') {
-          console.log(page)
           loadRecFollower(page)
             page += 3
         }
@@ -1228,15 +1227,15 @@
     loadContents(skip)
     skip += 5
 
-
     $(window).scroll(function() {
       if ($(window).scrollTop() + $(window).height() >= $('body').height() - 200 && !loading) {
         $('.loading').css('display', 'block')
         loading = true
-        skip += 5
-
+        console.log(skip)
+        
         // 그리고 게시글 다시 호출
         loadContents(skip)
+        skip += 5
       }
     })
 

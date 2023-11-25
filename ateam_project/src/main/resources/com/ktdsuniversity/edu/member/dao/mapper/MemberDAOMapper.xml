@@ -26,7 +26,22 @@
 			<id column="COMPANY_EMAIL" property="companyEmail"/>
 		</association>		   
 	</resultMap>
-
+	<!-- 일반 회원 엑셀 추출용 조인 -->
+	<resultMap type="com.ktdsuniversity.edu.member.vo.MemberVO" 
+			   id="exportGeneralMemberMap"
+			   autoMapping="true">
+		<id column="EMAIL" property="email"/>
+		<association property="generalMemberVO"
+					 javaType="com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO"
+					 autoMapping="true">
+			<id column="GENERAL_MEMBER_EMAIL" property="generalMemberEmail"/>
+			<association property="tierVO"
+						 javaType="com.ktdsuniversity.edu.tier.TierVO"
+						 autoMapping="true">
+				<id column="TIER_ID" property="tierId"/>
+			</association>
+		</association>		   
+	</resultMap>
 		
 	<select id="getEmailCount" parameterType="string">
 		SELECT COUNT(1)
@@ -298,4 +313,26 @@
         , 'N'
         , #{accessToken})
     </insert>
+    
+    <!-- 일반회원 엑셀 추출용 쿼리 -->
+    <select id="exportGeneralMember"
+    		resultMap="exportGeneralMemberMap">
+    	SELECT M.NICKNAME 
+		     , M.EMAIL 
+		     , T.TIER_NAME 
+		     , GM.SELF_INTRO 
+		     , GM.JOB_ID 
+		     , GM.REGION 
+		     , GM.GITHUB_URL 
+		     , GM.ADDITIONAL_EMAIL 
+		     , GM.BLOG_URL 
+		     , GM.TIER_SCORE 
+		     , TO_CHAR(M.REGIST_DATE, 'YYYY-MM-DD') REGIST_DATE
+		  FROM MEMBER M
+		 INNER JOIN GENERAL_MEMBER GM
+		    ON GM.GENERAL_MEMBER_EMAIL = M.EMAIL 
+		 INNER JOIN TIER T
+		    ON T.TIER_ID = GM.TIER_ID
+		 WHERE M.WITHDRAW_YN = 'N'
+    </select>
 </mapper>

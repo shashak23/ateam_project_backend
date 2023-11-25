@@ -108,7 +108,7 @@
 
   .desc-header > div:first-child {
     font-size: 12pt;
-    border-left: 10px solid crimson;
+    border-left: 10px solid #E55604;
     padding: 10px;
   }
 
@@ -127,10 +127,10 @@
   .admin_general_member_search,
   .admin_notice_search,
   .admin_report_search {
-    border: #e07272;
+    border: none;
     outline: none;
-    background-color: #ebd9d9;
-    color: #e05454;
+    background-color: #E55604;
+    color: #eee;
     padding: 5px 10px;
     margin-left: 10px;
   }
@@ -145,20 +145,28 @@
   }
 
   .desc-header_left .admin_member_manage_toggle_wrap button {
-    background-color: #ebd9d9;
-    color: #e05454;
-    border: #e07272;
+    background-color: #ee9d6e;
+    color: #eee;
+    border: none;
     padding: 5px;
     font-size: 10pt;
   }
   
   .desc-header_left .admin_member_manage_toggle_wrap button.selected {
     color: #eee;
-    background-color: #f12e2e;
+    background-color: #E55604;
   }
 
   .desc-header .notice_crud {
     display: flex;
+  }
+
+  .desc-header .export_btn {
+    border: 0;
+    background-color: #ee9d6e;
+    color: #eee;
+    padding: 5px 10px;
+    cursor: default;
   }
 
   .member_container.selected,
@@ -191,7 +199,7 @@
     color: #888;
   }
 
-  .personal_modal .profile_group_title * {
+  .personal_modal .profile_group_title > div {
     text-align: center;
   }
 
@@ -268,6 +276,14 @@
     color: #888;
   }
 
+  .company_modal .profile_group_title div {
+    text-align: center;
+  }
+
+  .company_modal .profile_group_title .withdraw_txt {
+    margin-left: 10px;
+  }
+
   .notice_modal .desc-header {
     display: flex;
     justify-content: space-between;
@@ -278,7 +294,7 @@
     padding: 5px;
     margin-left: 10px;
     color: white;
-    background-color: #f12e2e;
+    background-color: #E55604;
     border-radius: 5px;
     cursor: pointer;
   }
@@ -355,6 +371,9 @@
     height: 30px;
   }
 
+  .profile_group .company_info {
+    padding: 0 10px;
+  }
 
   .report_title,
   .report_list_group {
@@ -400,6 +419,11 @@
 
   .company_modal .btn_group button {
     width: 80px;
+  }
+
+  .company_modal .btn_group .company_refuse {
+    background-color: rgb(240, 186, 196);
+    color: #eee;
   }
   
   .company_modal .btn_group .confirm_complete_btn {
@@ -458,7 +482,7 @@
     display: block;
     width: 100%;
     border: none;
-    background-color: rgb(255, 137, 161);
+    background-color: rgb(245, 103, 131);
     color: #e5e5e5;
     padding: 7px 1px;
   }
@@ -513,6 +537,7 @@
   #codeContent {
     outline: none;
     border: 0;
+    width: 210px;
     height: 20px;
   }
 
@@ -521,7 +546,7 @@
     width: 70px;
     border: 0;
     border-radius: 5px;
-    background-color: #75C2F6;
+    background-color: #E55604;
     color: #fff;
     padding: 5px;
     cursor: pointer;
@@ -529,11 +554,7 @@
   }
 
   #create_btn:hover {
-    background-color: #2251ec;
-  }
-
-  #create_btn:active {
-    background-color: #07227a;
+    background-color: #ee9d6e;
   }
 
   * {
@@ -930,6 +951,7 @@
           <div class="admin_general_member_search_wrap">
             <input class="admin_general_member_input" type="text" placeholder="홍길동"/>
             <button class="admin_general_member_search">검색</button>
+            <a class="export_btn general_member small" href="/generalmember/excel/download">엑셀다운로드</a>
           </div>
         </div>
         <button class="btn-close">&times;</button>
@@ -992,9 +1014,7 @@
         <div class="desc-title">
           <div class="company_container">
             <div class="profile_group_title">
-              <span>이미지</span> <div class="member_info" style="text-align: center;">회원 정보</div><div class=tier>승인여부</div><div class="withdraw_txt">탈퇴</div>
-              <div class="btn_group">
-              </div>
+              <div>이미지</div><div class="member_info">회원 정보</div><div class=tier>승인여부</div><div class="withdraw_txt">탈퇴</div>
             </div>
           </div>
         </div>
@@ -1259,7 +1279,7 @@
           generalMemberTemplate = 
             `<div class="member_container_body">
               <div class="profile_group">
-                <img src="\${member.profilePic}" alt=".">
+                <img src="/member/file/download/\${member.email}" onerror="this.src='/images/gray_man.png';" >
                 <div class="member_info"><a href="/memberinfo/view/\${member.email}" target="_blank" class="admin_anchor">\${member.nickname}(\${member.email})</a></div>
                 <div class="tier">\${tier}</div>
                 <button class="admin_member_warn_btn">경고</button>
@@ -1453,7 +1473,7 @@
           let companyTemplate = 
             `<div class="company_container">
               <div class="profile_group">
-              <img src="\${company.profilePic}" alt="."><div class="company_info">
+              <img src="/member/file/download/\${company.email}" onerror="this.src='/images/gray_man.png';" /><div class="company_info">
                 <strong>\${company.nickname}</strong>(\${company.email})
                 <a class="certificate_download" href='/company/file/download/\${company.email}'>[사업자등록증]</a>
                 </div>
