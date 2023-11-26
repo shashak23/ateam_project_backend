@@ -131,4 +131,10 @@ public interface MemberDAO {
 	 * @return 일반 회원들의 웬만한 정보
 	 */
 	public List<MemberVO> exportGeneralMember();
+	
+	/**
+	 * 엑셀 추출용 기업 회원 조회
+	 * @return 기업 회원들의 웬만한 정보
+	 */
+	public List<MemberVO> exportCompanyMember();
 }

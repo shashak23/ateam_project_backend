@@ -623,4 +623,9 @@ public class MemberServiceImpl implements MemberService {
 		return memberDAO.exportGeneralMember();
 	}
 
+	@Override
+	public List<MemberVO> exportCompanyMember() {
+		return memberDAO.exportCompanyMember();
+	}
+
 }

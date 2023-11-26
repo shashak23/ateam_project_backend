@@ -195,4 +195,8 @@ public class MemberDAOImpl extends SqlSessionDaoSupport implements MemberDAO{
 	public List<MemberVO> exportGeneralMember() {
 		return getSqlSession().selectList("exportGeneralMember");
 	}
+	@Override
+	public List<MemberVO> exportCompanyMember() {
+		return getSqlSession().selectList("exportCompanyMember");
+	}
 }

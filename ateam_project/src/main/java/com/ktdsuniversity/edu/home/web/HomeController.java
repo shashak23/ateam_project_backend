@@ -501,7 +501,7 @@ public class HomeController {
 			os = new FileOutputStream(storedFile);
 			workbook.write(os);
 		} catch (IOException e) {
-			throw new MakeXlsxFileException("엓겔 파일을 만들 수 없습니다.");
+			throw new MakeXlsxFileException("엑셀 파일을 만들 수 없습니다.");
 		} finally {
 			try {
 				workbook.close();
@@ -518,6 +518,87 @@ public class HomeController {
 		}
 		
 		String downloadFileName = URLEncoder.encode("일반회원목록.xlsx", Charset.defaultCharset());
+		HttpHeaders header = new HttpHeaders();
+		header.setContentType(new MediaType("application", "force-download"));
+		header.setContentLength(storedFile.length());
+		header.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=" + downloadFileName);
+		
+		InputStreamResource resource;
+		
+		try {
+			resource = new InputStreamResource(new FileInputStream(storedFile));
+		} catch (FileNotFoundException e) {
+			throw new FileNotExistsException("파일이 존재하지 않습니다.");
+		}
+		
+		
+		return ResponseEntity.ok()
+				.headers(header)
+				.body(resource);
+	}
+	
+	@GetMapping("/companymember/excel/download")
+	public ResponseEntity<Resource> downloadCompanyMemberExcelFile() {
+		List<MemberVO> companyMemberList = new ArrayList<>();
+		companyMemberList = memberService.exportCompanyMember();
+		
+		Workbook workbook = new SXSSFWorkbook(-1);
+		Sheet sheet = workbook.createSheet("기업 회원 목록");
+		Row row = sheet.createRow(0);
+		
+		Cell cell = row.createCell(0);
+		cell.setCellValue("번호");
+		cell = row.createCell(1);
+		cell.setCellValue("회사명");
+		cell = row.createCell(2);
+		cell.setCellValue("이메일");
+		cell = row.createCell(3);
+		cell.setCellValue("연락처");
+		cell = row.createCell(4);
+		cell.setCellValue("가입일");
+		
+		int rowIndex = 1;
+		
+		for (MemberVO company : companyMemberList) {
+			row = sheet.createRow(rowIndex);
+			cell = row.createCell(0);
+			cell.setCellValue(rowIndex);
+			cell = row.createCell(1);
+			cell.setCellValue(company.getNickname());
+			cell = row.createCell(2);
+			cell.setCellValue(company.getEmail());
+			cell = row.createCell(3);
+			cell.setCellValue(company.getCompanyVO().getContactNumber());
+			cell = row.createCell(4);
+			cell.setCellValue(company.getRegistDate());
+			
+			rowIndex++;
+		}
+		
+		File storedFile = fileHandler.getStoredFile("기업회원목록.xlsx");
+		OutputStream os = null;
+		
+		try {
+			os = new FileOutputStream(storedFile);
+			workbook.write(os);
+		} catch (IOException e) {
+			throw new MakeXlsxFileException("엑셀 파일을 만들 수 없습니다.");
+		} finally {
+			try {
+				workbook.close();
+			} catch (IOException e) {}
+			
+			if (os != null) {
+				try {
+					os.flush();
+				} catch (IOException e) {}
+				try {
+					os.close();
+				} catch (IOException e) {}
+			}
+		}
+		
+		String downloadFileName = URLEncoder.encode("기업회원목록.xlsx", Charset.defaultCharset());
 		HttpHeaders header = new HttpHeaders();
 		header.setContentType(new MediaType("application", "force-download"));
 		header.setContentLength(storedFile.length());

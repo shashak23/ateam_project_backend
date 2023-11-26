@@ -41,6 +41,7 @@
     min-width: 1080px;
 		padding: 20px 30px 10px 30px;
     background-color: var(--white);
+    z-index: 1;
 	}
 
   .home_edit_container .home_edit_wrap {

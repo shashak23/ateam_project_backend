@@ -145,4 +145,10 @@ public interface MemberService {
 	 * 엑셀 추출용 일반 회원 조회
 	 */
 	public List<MemberVO> exportGeneralMember();
+	
+	
+	/**
+	 * 엑셀 추출용 기업 회원 조회
+	 */
+	public List<MemberVO> exportCompanyMember();
 }

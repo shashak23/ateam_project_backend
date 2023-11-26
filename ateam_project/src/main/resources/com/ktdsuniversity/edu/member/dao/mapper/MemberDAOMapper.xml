@@ -42,6 +42,18 @@
 			</association>
 		</association>		   
 	</resultMap>
+	
+	<!-- 기업 회원 엑셀 추출용 조인 -->
+	<resultMap type="com.ktdsuniversity.edu.member.vo.MemberVO"
+			   id="exportCompanyMemberMap"
+			   autoMapping="true">
+		<id column="EMAIL" property="email" />
+		<association property="companyVO"
+					 javaType="com.ktdsuniversity.edu.companymember.vo.CompanyVO"
+					 autoMapping="true">
+			<id column="companyEmail" property="COMPANY_EMAIL"/>
+		</association>
+	</resultMap>
 		
 	<select id="getEmailCount" parameterType="string">
 		SELECT COUNT(1)
@@ -334,5 +346,18 @@
 		 INNER JOIN TIER T
 		    ON T.TIER_ID = GM.TIER_ID
 		 WHERE M.WITHDRAW_YN = 'N'
+    </select>
+    
+    <select id="exportCompanyMember"
+    		resultMap="exportCompanyMemberMap">
+    	SELECT M.NICKNAME 
+			 , M.EMAIL 
+			 , C.CONTACT_NUMBER 
+			 , TO_CHAR(M.REGIST_DATE, 'YYYY-MM-DD') REGIST_DATE
+		  FROM MEMBER M
+		 INNER JOIN COMPANY C
+		    ON C.COMPANY_EMAIL = M.EMAIL
+		 WHERE M.WITHDRAW_YN = 'N'
+		 ORDER BY M.REGIST_DATE ASC
     </select>
 </mapper>

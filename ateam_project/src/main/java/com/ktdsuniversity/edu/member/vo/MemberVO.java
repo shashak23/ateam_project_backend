@@ -7,6 +7,7 @@ package com.ktdsuniversity.edu.member.vo;
 import java.util.List;
 
 import com.ktdsuniversity.edu.companyinfo.vo.CompanyInfoVO;
+import com.ktdsuniversity.edu.companymember.vo.CompanyVO;
 import com.ktdsuniversity.edu.generalmember.vo.GeneralMemberVO;
 import com.ktdsuniversity.edu.member.vo.validategroup.MemberAuthGroup;
 import com.ktdsuniversity.edu.member.vo.validategroup.MemberEditNickGroup;
@@ -55,6 +56,7 @@ public class MemberVO {
 	private List<MyAlgorithmVO> myAlgorithmVO;
 	private GeneralMemberVO generalMemberVO;
 	private CompanyInfoVO companyInfoVO;
+	private CompanyVO companyVO;
 	private String emailTemp;
 	private String nicknameTemp;
 
@@ -133,6 +135,13 @@ public class MemberVO {
 	public CompanyInfoVO getCompanyInfoVO() {
 		return companyInfoVO;
 	}
+	
+	public CompanyVO getCompanyVO() {
+		return companyVO;
+	}
+	public void setCompanyVO(CompanyVO companyVO) {
+		this.companyVO = companyVO;
+	}
 	public void setCompanyInfoVO(CompanyInfoVO companyInfoVO) {
 		this.companyInfoVO = companyInfoVO;
 	}
@@ -148,5 +157,6 @@ public class MemberVO {
 	public void setNicknameTemp(String nicknameTemp) {
 		this.nicknameTemp = nicknameTemp;
 	}
+	
 	
 }

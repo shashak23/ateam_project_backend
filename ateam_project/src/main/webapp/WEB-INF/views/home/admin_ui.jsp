@@ -951,7 +951,7 @@
           <div class="admin_general_member_search_wrap">
             <input class="admin_general_member_input" type="text" placeholder="홍길동"/>
             <button class="admin_general_member_search">검색</button>
-            <a class="export_btn general_member small" href="/generalmember/excel/download">엑셀다운로드</a>
+            <a class="export_btn small" href="/generalmember/excel/download">엑셀다운로드</a>
           </div>
         </div>
         <button class="btn-close">&times;</button>
@@ -1008,6 +1008,7 @@
           <div class="admin_company_search_wrap">
             <input class="admin_company_member_input" type="text" placeholder="기업 이름 및 이메일"/>
             <button class="admin_company_member_search">검색</button>
+            <a class="export_btn small" href="/companymember/excel/download">엑셀다운로드</a>
           </div>
           <button class="btn-close">&times;</button>
         </div>
