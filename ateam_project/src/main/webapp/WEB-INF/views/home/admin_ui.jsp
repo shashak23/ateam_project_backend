@@ -2008,7 +2008,7 @@
           $.get(`/admin/report/progress/\${reportId}`, function(response) {
             if (response.result === 'success') {
               Swal.fire({
-                text: "처리 완료!!!!!!",
+                text: "처리 완료",
                 icon: "success"
               });
               $('.report_close_btn').trigger('click')
