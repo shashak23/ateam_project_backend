@@ -17,10 +17,8 @@
 <link rel="stylesheet" type="text/css" href="/css/common.css" />
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 <script src="/js/lib/jquery-3.7.1.js"></script>
-<jsp:include page="../layout/header.jsp" />
+<jsp:include page="../layout/header.jsp"/>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
 <style>
 @charset "utf-8";
 
@@ -599,12 +597,6 @@ body > .body_container > .body_right_aside {
 	}
 </style>
 <!-- 자바스크립트 시작 -->
-
-<%-- <jsp:include page="../layout/header.jsp" />
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-<script src="/js/lib/jquery-3.7.1.js"></script> --%>
 
 <script type="text/javascript">
 	//신고버튼
@@ -1626,18 +1618,6 @@ body > .body_container > .body_right_aside {
     </div>
 <jsp:include page="../layout/footer.jsp" />
 <div>
-	<%-- <c:choose>
-		<c:when test="${not empty sessionScope._LOGIN_USER_.email eq memberVO.email}">
-			<!-- a유저가 로그인한 경우에만 신고 버튼을 표시합니다. -->
-			<form action="/report/view/5" method="post">
-				<input type="hidden" id="reportUser" value="${empty sessionScope._LOGIN_USER}">
-				<button type="submit" id="reportUser" value="5">신고</button>
-			</form>
-		</c:when>
-		<c:otherwise>
-			<!-- a유저가 로그인하지 않은 경우에는 신고 버튼을 표시하지 않습니다. -->
-		</c:otherwise>
-	</c:choose> --%>
 </div>
 </body>
 <script>

@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <!--스타일,폰트 지정-->
 <!--스와이퍼 기능 지정-->
-<jsp:include page="../../layout/header.jsp" />
+<jsp:include page="../../layout/header.jsp"/>
 <script type="text/javascript">
 	function redirectToURL(url) {
 	    window.location.href = url;
@@ -36,7 +36,7 @@ $().ready(function() {
 	 $("#nickname").click(function() {
  	      $(".nickname_errors").hide();
  	  	 });
-// 비밀번호 수정
+			// 비밀번호 수정
 			$("#confirmPw").on("input", function() {
 	    var pw = $("#pw").val();
 	    var confirmPw = $(this).val();
@@ -67,10 +67,10 @@ $().ready(function() {
 </script>
 <style>
 	body > .body_container {
-    width: 100%;
-    min-height: 75vh;
-    display: grid;
-    grid-template-columns: 1fr 1080px 1fr;
+	    width: 100%;
+	    min-height: 75vh;
+	    display: grid;
+	    grid-template-columns: 1fr 1080px 1fr;
 	}
 	
 	/* Main Contents */
@@ -127,11 +127,9 @@ $().ready(function() {
 		flex-direction: column;
 	}
 
-		
 
 	.info{
 		width:500px;
-		/* border-bottom: 0.0625rem solid rgb(231,231,231); */
 		margin-bottom: 15px;
 	}
 
@@ -148,46 +146,39 @@ $().ready(function() {
 	}
 		
 	.value {
-		margin: 10px 0; /* 각 항목 사이의 여백을 설정합니다. */
+		margin: 10px 0; 
 		display: flex;
 	}
 
 	a {
 		
 		margin-left: 10px;
-		text-decoration: none; /* 링크의 밑줄을 제거합니다. */
-		color: #007bff; /* 링크 텍스트의 색상을 설정합니다. */
-	}
-
-	img{
-		width:15px;
-		height: 15px;
-		text-decoration: none;
+		text-decoration: none; 
+		color: #007bff; 
 	}
 
 	a:hover {
-		text-decoration: none; /* 링크에 마우스 오버 시 밑줄을 추가합니다. */
+		text-decoration: none;
 	}
 	h3{
 		margin-bottom: 15px;
 	}
 
 	.errors {
-			opacity: 0.8;
-			padding: 10px;
-			color: red;
-			font-size: 10pt;
-			display: inline-block;
-		}
-		.errors:last-child {
-			margin-bottom: 15px;
-		}
+		opacity: 0.8;
+		padding: 10px;
+		color: red;
+		font-size: 10pt;
+		display: inline-block;
+	}
+	.errors:last-child {
+		margin-bottom: 15px;
+	}
 		.err_password, .err_confirm_password {
 		color: red;
 		font-size: 10pt;
 	}
 </style>
-</head>
 <body>
 	<div class="body_container">
 		<div class="body_left_aside">					
@@ -205,7 +196,7 @@ $().ready(function() {
 		<div class="body">
 			<div class="info">
 				<h3 class="emil">이메일</h3>
-				<div id="emailSpace">${memberVO.email}</div> 
+				<div id="emailSpace">${memberVO.email}</div>
 			</div>
 			<div class="info">
 				<form:form modelAttribute="memberVO" method="post">
@@ -239,7 +230,7 @@ $().ready(function() {
 		</div>
 		<div class="body_right_aside"></div>
 	</div>
-	<jsp:include page="../../layout/footer.jsp" />
+<jsp:include page="../../layout/footer.jsp" />
 </body>
 <script>
 	//미완성된 기능을 알려주는 모달창
