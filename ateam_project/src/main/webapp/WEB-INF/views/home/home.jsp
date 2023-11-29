@@ -162,7 +162,7 @@
 	}
 
   .body_left .content_container .writer_info_area .flex_right .utility > button > svg:hover {
-    fill: var(--hashtag-blue);
+    fill: #26577C; 
   }
 
 	.body_left .content_container .writer_info_area .flex_right .utility > svg {
@@ -386,7 +386,7 @@
   .member_profile .follow_btn {
       width: 120px;
       color: var(--blue);
-      border: 1px solid var(--light-blue);
+      border: 1px solid #26577C;
       border-radius: 10px;
       background-color: var(--white);
       outline: none;
@@ -395,13 +395,13 @@
   }
 
   .member_profile .follow_btn:hover {
-    background-color: var(--light-blue);
+    background-color: #26577C;
     color: var(--white);
   }
   .member_profile .follow_btn:active {
-    background-color: var(--blue);
+    background-color: #26577C;
     color: var(--white);
-    border: 1px solid var(--blue);
+    border: 1px solid #26577C;
   }
 
   .member_profile > img {
@@ -507,11 +507,6 @@
     border: var(--gray);
     color: var(--dark-gray);
   }
-/* 
-  .create_container > *,
-  .report_container div {
-		margin-bottom: 10px;
-	} */
 
   .post_title_label,
 	.post_content_label {
@@ -1329,7 +1324,7 @@
                 	  text: "팔로우 성공",
                 	  icon: "success"
                 	});
-              $(e.currentTarget).css({'background-color':'var(--blue)', 'color':'var(--white)'})
+              $(e.currentTarget).css({'background-color':'#E55604', 'color':'var(--white)'})
               $(e.currentTarget).addClass('follow_on')
               $('.follow_btn').prepend(`<input type="hidden" class="followId" value="\${result.followId}"/>`)
               send({
