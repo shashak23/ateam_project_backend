@@ -2,7 +2,6 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <style>
   .admin_container ul {
@@ -1201,7 +1200,6 @@
         </div>
         <div class="admin_hashtag_wrap"></div>
         <div class="hashtag_create_title"><strong>해시태그 생성</strong></div>
-        <!-- <label for="codeContent">입력: </label> -->
         <input type="text" name="codeContent" id="codeContent" />
         <button id="create_btn">생성</button>
       </div>
@@ -1376,18 +1374,16 @@
   $(document).on('click', '.general_member_withdraw_btn', function(e) {
     let email = $(this).attr('id')
     let url = '/home/admin/person/delete/' + email
-    if (confirm('정말 탈퇴 시키겠습니까?')) {
-      $.get(url, function(response) {
-        if (response.result === 'success') {
-        	Swal.fire({
-           	  text: "탈퇴처리 하였습니다.",
-           	  icon: "success"
-           	});
-          $('.personal_modal').find('.desc-content').empty()
-          loadGeneralTypeMember()
-        }
-      })
-    }
+     $.get(url, function(response) {
+       if (response.result === 'success') {
+       	Swal.fire({
+          	  text: "탈퇴처리 하였습니다.",
+          	  icon: "success"
+          	});
+         $('.personal_modal').find('.desc-content').empty()
+         loadGeneralTypeMember()
+       }
+     })
   })
 
   // 일반 회원 승급 활동 내역 조회
@@ -1553,18 +1549,16 @@
   $(document).on('click', '.company_member_withdraw_btn', function(e) {
     let email = $(this).attr('id')
     let url = '/home/admin/person/delete/' + email
-    if (confirm('정말 탈퇴 시키겠습니까?')) {
-      $.get(url, function(response) {
-        if (response.result === 'success') {
-        	Swal.fire({
-           	  text: "탈퇴 처리 성공!",
-           	  icon: "success"
-           	});
-          $('.company_modal').find('.desc-content').empty()
-          loadCompanytypeMember()
-        }
-      })
-    }
+     $.get(url, function(response) {
+       if (response.result === 'success') {
+       	Swal.fire({
+          	  text: "탈퇴 처리 성공!",
+          	  icon: "success"
+          	});
+         $('.company_modal').find('.desc-content').empty()
+         loadCompanytypeMember()
+       }
+     })
   })
 
   // 공지 사항 목록 조회
@@ -1794,24 +1788,22 @@
   // 공지 삭제 기능
   $(document).on('click', '.notice_delete_btn', function() {
     let noticeId = $(this).data('id')
-    
-    if (confirm('정말 삭제하시겠습니까?')) {
-      $.get(`/notice/delete/\${noticeId}`, function(response) {
-        if (response.result === 'success') {
-        	Swal.fire({
-           	  text: "삭제 성공!",
-           	  icon: "success"
-           	});
-          loadAdminNoticeList()
-        }
-        else {
-        	Swal.fire({
-           	  text: "삭제 실패!",
-           	  icon: "warning"
-           	});
-        }
-      })
-    }
+  
+    $.get(`/notice/delete/\${noticeId}`, function(response) {
+      if (response.result === 'success') {
+      	Swal.fire({
+         	  text: "삭제 성공!",
+         	  icon: "success"
+         	});
+        loadAdminNoticeList()
+      }
+      else {
+      	Swal.fire({
+         	  text: "삭제 실패!",
+         	  icon: "warning"
+         	});
+      }
+    })
   })
 
   // 신고 목록 조회
@@ -1943,7 +1935,7 @@
         let url = '/home/admin/person/delete/' + emailNode[0].nodeValue
         
         $.get(url, function(response) {
-          if (confirm('정말 탈퇴시키겠습니까?') && response.result === 'success') {
+          if (response.result === 'success') {
         	  Swal.fire({
              	  text: "탈퇴 처리 성공",
              	  icon: "success"
@@ -1964,24 +1956,20 @@
         })
 
         let url = '/home/admin/person/delete/' + emailNode[0].nodeValue
-
-
-        if (confirm('정말 탈퇴 시키겠습니까?')) {
-          $.get(url, function(response) {
-            if (response.result === 'success') {
-              Swal.fire({
-               	  text: "탈퇴 처리 성공!",
-               	  icon: "success"
-               	});
-            }
-            else {
-              Swal.fire({
-               	  text: "탈퇴 처리 실패!",
-               	  icon: "error"
-               	});
-            }
-          })
-        }
+        $.get(url, function(response) {
+          if (response.result === 'success') {
+            Swal.fire({
+             	  text: "탈퇴 처리 성공!",
+             	  icon: "success"
+             	});
+          }
+          else {
+            Swal.fire({
+             	  text: "탈퇴 처리 실패!",
+             	  icon: "error"
+             	});
+          }
+        })
       })
 
       $('.report_btn_wrap button').click(function() {

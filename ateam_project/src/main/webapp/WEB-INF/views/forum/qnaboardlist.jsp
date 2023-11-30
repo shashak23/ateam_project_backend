@@ -60,7 +60,7 @@
 	    display: flex;
 	    flex-direction: row;
 	    flex-wrap: wrap;
-	    width: 871px;
+	    width: 787px;
      
      }
     .hashtag_incomplete {
