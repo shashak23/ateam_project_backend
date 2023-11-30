@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<link rel="stylesheet" type="text/css" href="./companyMyPage.css" />
+<!-- <link rel="stylesheet" type="text/css" href="./companyMyPage.css" /> -->
 <jsp:include page="../layout/header.jsp" />
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>	
 <script type="text/javascript">
@@ -198,15 +198,17 @@
 </head>
 <style>
 @charset "utf-8";
-#overall{
-	display: flex;
-	justify-content: center;
+/* Main Contents */
+body > .body_container > .body {
+    grid-column: 2/3;
+    margin: 40px 0 100px 0;
 }
 
-#container {
-  display: grid;
-  grid-gap: 30px;
-  grid-template-columns: 300px 1fr;
+body > .body_container > .body_left_aside {
+   grid-column: 1/2;
+   display: flex;
+   justify-content: flex-end;
+   margin-top: 51px;
 }
 
 .flex_button {
@@ -215,6 +217,20 @@
   margin: 50px 120px 0px 0px;
 }
 
+.flex_button button {
+	color: white;
+	background-color: var(--gray);
+	width: 150px;
+	height: 40px;
+	margin-bottom: 15px;
+	cursor: pointer;
+	border: 2px;
+}
+
+.flex_button button:hover {
+	background-color: #26577C;
+	color: white;
+}
 
 .intro_button,
 .stack_button,
@@ -237,25 +253,6 @@
 	width: 28px;
 	height: 24px;
 	border-radius: 0;
-}
-
-.flex_main {
-  display: flex;
-  flex-direction: column;
-  width: 1200px;
-  margin: 0px 0px 200px 45px;
-}
-
-.flex_button button {
-  width: 150px;
-  height: 40px;
-  margin-bottom: 15px;
-  cursor: pointer;
-  border: 2px;
-}
-
-.flex_button button:hover {
-   background-color: #26577C;
 }
 
 .leave_button {
@@ -324,7 +321,7 @@
   display: grid;
   grid-template-columns: 1fr 250px 250px 250px 1fr;
 }
-
+/* 
 .show_pwf button {
   background-color: transparent;
   border: none;
@@ -348,7 +345,7 @@
   height: 4px;
   background-color: orange;
   transform: scaleX(0.55);
-}
+} */
 
 #technology_stack{
   margin-top: 120px;
@@ -365,18 +362,18 @@
   margin-bottom: 20px;
 }
 #edit_button1{
-            cursor: pointer;
-            background: none;
-            border: none;
-            padding-left: 10px;
-            margin: 0;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding-left: 10px;
+  margin: 0;
         }
 #edit_button2,#edit_button3,#edit_button4, #edit_button5 {
-cursor: pointer;
-background: none;
-border: none;
-padding: 0;
-margin: 0;
+	cursor: pointer;
+	background: none;
+	border: none;
+	padding: 0;
+	margin: 0;
 }
 
 
@@ -540,43 +537,39 @@ margin: 0;
   display: none;
 }
 </style>
-
 <body>
-		<div id="overall">
-		<div id="container">
-			<div class="flex_button">
-				<c:if
-				test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
-				<a href="/companyinfo/view">
-					<button id="myprofile">마이프로필</button>
-				</a>
-				<a href="/companyinfo/modify">
-					<button id="modify_info">정보 수정</button>
-				</a>
-				<a href="/companyinfo/mypost">
-					<button id="mypost">내가 쓴 게시글</button>
-				</a>
-				<a href="/member/logout">
-					<button id="quit">탈퇴</button>
-				</a>
+	<div class="body_container">
+		<div class="body_left_aside">
+			<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
+				<div class="flex_button">
+					<a href="/companyinfo/view">
+						<button id="myprofile">마이프로필</button>
+					</a>
+					<a href="/companyinfo/modify">
+						<button id="modify_info">정보 수정</button>
+					</a>
+					<a href="/companyinfo/mypost">
+						<button id="mypost">내가 쓴 게시글</button>
+					</a>
+					<a href="/member/logout">
+						<button id="quit">탈퇴</button>
+					</a>
+				</div>
 			</c:if>
 			</div>
-			<div class="flex_main">
+			<div class="body">
 				<div class="profile">
-							<img src="https://cdn.thelec.kr/news/photo/202307/22027_19495_4334.jpg" />
-					<div>
+					<img src="https://cdn.thelec.kr/news/photo/202307/22027_19495_4334.jpg" />
 						<div>
 							<ul class="introduction_list">
 								<li class="list_name">
-									<h2>kt ds</h2>
-								</li>
+									<h2>kt ds</h2></li>
 								<li class="list_intro"><p>kt는 국내 최대 통신사이자 디지털 플랫폼 기업으로 ICT, 금융사업, 위성방송서비스사업, 기타사업 등을 영위하고 있다.<br> 무선통신, 초고속인터넷, IPTV 등 핵심사업에서의 지속적인 성장뿐만 아니라<br> IDC, 클라우드, AI/DX 등 B2B 성장사업에서도 성과를 창출하였다.</p>
 									<button class="intro_button"><img class="intro_button_img" src="/images/edit.png" /></button>
 									<div id="modalContainerIntro" class="hidden">
 										<div id="modalContentIntro">
 											<textarea id="introTextArea"></textarea>
 											<button id="saveIntro">변경 저장</button>
-											<!-- <button onclick="saveIntroChanges()">변경 저장</button> -->											
 											<button id="modalCloseIntro">닫기</button>
 										</div>
 									</div>
@@ -584,39 +577,31 @@ margin: 0;
 							</ul>
 						</div>
 					</div>
-				</div>
-				<div class="show_pwf">
-					<p></p>
-					<p></p>				
-					<p></p>
-					<p></p>
-				</div>
 				<div id="technology_stack">
 					<div class="common">
 						<ul>
 							<li><p class="info">기술스택</p></li>
-							
 							<p></p>
 						</ul>
 					</div>
-								<ul class="technology_button">
-									<li class="stackList">java</li>
-									<li class="stackList">Docker</li>
-									<li class="stackList">Ubuntu</li>
-									<li class="stackList">OpenCV</li>
-									<li class="stackList">springboot</li>
-								</ul>
-								<span></span>
-								</li>
-								<button class="stack_button"><img src="/images/edit.png" /></button>
-								<div id="modalContainerStack" class="hidden">
-									<div id="modalContentStack">
-										<span class="close" onclick="closeLocationModal()">&times;</span>
-										<textarea id="stackTextArea"></textarea>
-										<button id="saveStack">변경 저장</button>
-										<button id="modalCloseStack">닫기</button>
-									</div>
-								</div>
+					<ul class="technology_button">
+						<li class="stackList">java</li>
+						<li class="stackList">Docker</li>
+						<li class="stackList">Ubuntu</li>
+						<li class="stackList">OpenCV</li>
+						<li class="stackList">springboot</li>
+					</ul>
+					<span></span>
+					</li>
+					<button class="stack_button"><img src="/images/edit.png" /></button>
+					<div id="modalContainerStack" class="hidden">
+						<div id="modalContentStack">
+							<span class="close" onclick="closeLocationModal()">&times;</span>
+							<textarea id="stackTextArea"></textarea>
+							<button id="saveStack">변경 저장</button>
+							<button id="modalCloseStack">닫기</button>
+						</div>
+					</div>
 				</div>
 				<div id="career_stack">
 					<div class="common">
@@ -624,18 +609,16 @@ margin: 0;
 							<div class="info">업무 소개</div>
 							<div class="taskInfo">이런일 저런일 합니다.</div>
 							<button class="task_button"><img src="/images/edit.png" /></button>
-								<div id="modalContainerTask" class="hidden">
-									<div id="modalContentTask">
-										<span class="close" onclick="closeTaskModal()">&times;</span>
-										<textarea id="taskTextArea"></textarea>
-										<button id="saveTask">변경 저장</button>
-										<button id="modalCloseTask">닫기</button>
-									</div>
+							<div id="modalContainerTask" class="hidden">
+								<div id="modalContentTask">
+									<span class="close" onclick="closeTaskModal()">&times;</span>
+									<textarea id="taskTextArea"></textarea>
+									<button id="saveTask">변경 저장</button>
+									<button id="modalCloseTask">닫기</button>
 								</div>
-							<p></p>
+							</div>
 						</ul>
 					</div>
-					
 				</div>
 				<div id="address_stack">
 					<div class="common">
@@ -644,22 +627,20 @@ margin: 0;
 							<p class="address">서울 서초구 효령로 176</p>
 							<button class="location_button"><img src="/images/edit.png" /></button>
 							<div id="modalContainerLocation" class="hidden">
-								<div id="modalContentLocation">
-									<span class="close" onclick="closeLocationModal()">&times;</span>
-									<textarea id="locationTextArea"></textarea>
-									<button id="saveLocation">변경 저장</button>
-									<button id="modalCloseLocation">닫기</button>
+									<div id="modalContentLocation">
+										<span class="close" onclick="closeLocationModal()">&times;</span>
+										<textarea id="locationTextArea"></textarea>
+										<button id="saveLocation">변경 저장</button>
+										<button id="modalCloseLocation">닫기</button>
+									</div>
 								</div>
-							</div>
-						</ul>
-					</div>
+							</ul>
+						</div>
 					<img class="map" src="/images/오시는길.png"/>
 				</div>
 			</div>
-		</div>
-		</form>
+		<div class="body_right_aside"></div>
 	</div>
-	<jsp:include page="../layout/footer.jsp" />
-	
+<jsp:include page="../layout/footer.jsp" />
 </body>
 </html>

@@ -10,7 +10,7 @@ body > .body_container > .body {
 }
 
 body > .body_container > .body_left_aside {
-       grid-column: 1/2;
+   grid-column: 1/2;
    display: flex;
    justify-content: flex-end;
    margin-top: 51px;
@@ -144,8 +144,7 @@ h3 {
 <body>
 	<div class="body_container">
 		<div class="body_left_aside">
-			<c:if
-				test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
+			<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
 				<div class="flex_button">
 					<a href="/companyinfo/view">
 						<button id="myprofile">마이프로필</button>
