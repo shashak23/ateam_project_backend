@@ -195,13 +195,11 @@ $().ready(function() {
     // 회원가입 창 이동
     $('.personal_signup').click(function(event) {
         event.preventDefault()
-        // window.open('/member/signup')
         window.location.href = '/member/signup'
     })
 
     $('.company_signup').click(function(event) {
         event.preventDefault()
-        // window.open('/member/companysignup2')
         window.location.href = '/member/companysignup'
 
     })

@@ -3,9 +3,6 @@
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <jsp:include page="../layout/header.jsp" />
 <style>
-
-
-
 	/* Main Contents */
 	body > .body_container > .body {
 	    grid-column: 2/3;

@@ -1,19 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>myPage</title>
-<!--브라우저에게 현재 페이지를 가장 최신 버전으로 렌더링-->
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<!--뷰포트는 화면에 표시되는 웹영역 표시, 모바일 등에서 상호작용 할 수있는지 제어-->
-<meta name="viewport" id="viewport"
-	content="user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, width=device-width" />
-<!--스타일,폰트 지정-->
-<!--스와이퍼 기능 지정-->
 <!--스타일 입히기-->
 <link rel="stylesheet" type="text/css" href="/css/myProfile.css" />
 <!-- 자바스크립트 시작 -->
@@ -30,10 +17,6 @@
 		</div>
 		<div class="flex_main">
 			<div class="follow_chat">
-				<!-- <button class="follow_icon">
-						<img src="https://cdn-icons-png.flaticon.com/512/907/907873.png">
-						팔로우
-					 </button> 일단 보류 -->
 				<div>
 					<c:choose>
 						<c:when test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">
@@ -49,8 +32,7 @@
 				<h2>신고 내용</h2>
 				<form name="reportVO" method="post" action="/report/view/5">
 					<div>
-						<label for="reportReason">신고사유${reportVO.reportReason} <select
-							name="reportReason">
+						<label for="reportReason">신고사유${reportVO.reportReason} <select name="reportReason">
 								<option value="CC-20231018-000200">영리 및 홍보 목적</option>
                                 <option value="CC-20231018-000201">개인정보노출</option>
                                 <option value="CC-20231018-000202">음란성/선정성</option>
@@ -60,19 +42,16 @@
 						</select>
 						</label> <label for="reportReasonContent">신고 상세내용 <textarea
 								name="reportReasonContent" id="reportReasonContent">${reportVO.reportReasonContent}</textarea></label>
-
 						<label for="attachedImg">첨부파일${reportVO.attachedImg}</label> <input
 							id="attachedImg" type="file" name="attachedImg" /> <label
 							for="reportTypeId">${reportVO.reportTypeId}</label> <input
 							id="reportTypeId" type="hidden" name="reportTypeId" value="1" />
-
 						<label for="reportMemberEmail">${reportVO.reportMemberEmail}</label>
 						<input id="reportMemberEmail" type="hidden" name="reportMember"
 							value="${reportVO.reportMember}" /> <label
 							for="receivedReportMemberEmail">${reportVO.receivedReportMemberEmail}</label>
 						<input id="receivedReportMemberEmail" type="hidden"
 							name="receivedReportMember" value="${memberVO.email}" />
-
 						<label for="reportContentId">${reportVO.reportContentId}</label> <input
 							id="reportContentId" type="hidden" name="reportContentId"
 							value="${careerVO.generalMemberEmail}" />

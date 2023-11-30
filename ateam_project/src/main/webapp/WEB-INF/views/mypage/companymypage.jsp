@@ -4,8 +4,6 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <jsp:include page="../layout/header.jsp"></jsp:include>
 <script src="https://cdn.ckeditor.com/ckeditor5/34.2.0/super-build/ckeditor.js"></script>
-<script type="text/javascript">
-</script>
 <style>
     #overall{
         display: flex;
@@ -115,6 +113,6 @@
             <div class="detailInfo">추가 설명</div>
         </div>
     </div>
-        <jsp:include page="../layout/footer.jsp"></jsp:include>
+<jsp:include page="../layout/footer.jsp"></jsp:include>
 </body>
 </html>

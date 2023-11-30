@@ -1,6 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
 <link rel="stylesheet" type="text/css" href="./companyMyPage.css" />
 <jsp:include page="../layout/header.jsp" />
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>	
@@ -641,20 +640,17 @@ margin: 0;
 				<div id="address_stack">
 					<div class="common">
 						<ul>
-							
-								<p class="info">오시는 길</p>
-								<p class="address">서울 서초구 효령로 176</p>
-								<button class="location_button"><img src="/images/edit.png" /></button>
-								<div id="modalContainerLocation" class="hidden">
-									<div id="modalContentLocation">
-										<span class="close" onclick="closeLocationModal()">&times;</span>
-										<textarea id="locationTextArea"></textarea>
-										<button id="saveLocation">변경 저장</button>
-										<button id="modalCloseLocation">닫기</button>
-									</div>
+							<p class="info">오시는 길</p>
+							<p class="address">서울 서초구 효령로 176</p>
+							<button class="location_button"><img src="/images/edit.png" /></button>
+							<div id="modalContainerLocation" class="hidden">
+								<div id="modalContentLocation">
+									<span class="close" onclick="closeLocationModal()">&times;</span>
+									<textarea id="locationTextArea"></textarea>
+									<button id="saveLocation">변경 저장</button>
+									<button id="modalCloseLocation">닫기</button>
 								</div>
-								
-							<p></p>
+							</div>
 						</ul>
 					</div>
 					<img class="map" src="/images/오시는길.png"/>

@@ -220,7 +220,6 @@
 	</c:choose>
     </section>
   </div>
-
   <!-- 검색 영역 -->
   <section class="search_container">
     <div class="for_search_align">

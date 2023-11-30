@@ -2,12 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8" />
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <style>
   .admin_container ul {
     list-style: none;
@@ -904,7 +900,6 @@
         cursor: not-allowed;
     }
 </style>
-</head>
 <body>
   <nav class="admin_container">
     <ul class="admin_mainmenu">
@@ -1371,12 +1366,10 @@
 
   // 일반 회원 경고 조치
   $(document).on('click', '.admin_member_warn_btn', function() {
-    if (confirm('정말 경고를 주시겠습니까?')) {
-    	Swal.fire({
-       	  text: "경고 1회 적립",
-       	  icon: "warning"
-       	});
-    }
+  	Swal.fire({
+     	  text: "경고 1회 적립",
+     	  icon: "warning"
+     	});
   })
 
   // 일반 회원 탈퇴 조치
@@ -1431,37 +1424,33 @@
       tierId: $(this).data('tier-id'),
     }
 
-    if (confirm('정말 승인 하시겠습니까?')) {
-      $.post('/admin/management/tier/upgrade', body, function(response) {
+     $.post('/admin/management/tier/upgrade', body, function(response) {
 
-        if (response.result === 'success') {
-        	Swal.fire({
-           	  text: "성공적으로 승급처리하였습니다",
-           	  icon: "success"
-           	});
-          loadMemberTierManagement()
-        }
-        else {
-        	Swal.fire({
-           	  text: "성공하지 못했습니다 왜죠?",
-           	  icon: "error"
-           	});
-        }
-      })
-    }
+       if (response.result === 'success') {
+       	Swal.fire({
+          	  text: "성공적으로 승급처리하였습니다",
+          	  icon: "success"
+          	});
+         loadMemberTierManagement()
+       }
+       else {
+       	Swal.fire({
+          	  text: "승급처리를 성공하지 못했습니다",
+          	  icon: "error"
+          	});
+       }
+     })
   })
 
   // 일반 회원 승급 거절 처리
   $(document).on('click', '.admin_member_tier_upgrade_deny_btn', function() {
 
-    if (confirm('정말 거절 하시겠습니까?')) {
-    	Swal.fire({
-       	  text: "거절 처리 성공!",
-       	  icon: "success"
-       	});
-      loadMemberTierManagement()
-    }
-  })
+   	Swal.fire({
+      	  text: "거절 처리 성공",
+      	  icon: "success"
+      	});
+     loadMemberTierManagement()
+ })
 
   // 기업 회원 조회
   function loadCompanytypeMember(val = '') {
@@ -1536,17 +1525,14 @@
       val: 'approval'
     }
     let url = '/admin/companymember'
-
-    if (confirm('정말 승인하시겠습니까?')) {
-      $.post(url, body, function(response) {
-    	  Swal.fire({
-         	  text: "승인 처리 성공!",
-         	  icon: "success"
-         	});
-        $('.company_modal').find('.desc-content').empty()
-        loadCompanytypeMember()
-      })
-    }
+     $.post(url, body, function(response) {
+   	  Swal.fire({
+        	  text: "승인 처리 성공!",
+        	  icon: "success"
+        	});
+       $('.company_modal').find('.desc-content').empty()
+       loadCompanytypeMember()
+     })
   })
   
   // 기업 반려 처리
@@ -1556,14 +1542,11 @@
       val: 'refuse'
     }
     let url = '/admin/companymember'
-
-    if (confirm('정말 반려하시겠습니까?')) {
-      $.post(url, body, function(response) {
-        alert('반려 처리되었습니다.')
-        $('.company_modal').find('.desc-content').empty()
-        loadCompanytypeMember()
-      })
-    }
+     $.post(url, body, function(response) {
+       alert('반려 처리되었습니다.')
+       $('.company_modal').find('.desc-content').empty()
+       loadCompanytypeMember()
+     })
   })
 
   // 기업 회원 탈퇴 조치
@@ -1962,13 +1945,13 @@
         $.get(url, function(response) {
           if (confirm('정말 탈퇴시키겠습니까?') && response.result === 'success') {
         	  Swal.fire({
-             	  text: "탈퇴 처리 성공!",
+             	  text: "탈퇴 처리 성공",
              	  icon: "success"
              	});
           }
           else {
         	  Swal.fire({
-             	  text: "탈퇴 처리 실패!",
+             	  text: "탈퇴 처리 실패",
              	  icon: "error"
              	});
           }
@@ -2004,18 +1987,16 @@
       $('.report_btn_wrap button').click(function() {
         let reportId = $(this).closest('.report_view_container').find('.detail_report_id').html()
 
-        if (confirm('정말 처리 완료하시겠습니까?')) {
-          $.get(`/admin/report/progress/\${reportId}`, function(response) {
-            if (response.result === 'success') {
-              Swal.fire({
-                text: "처리 완료",
-                icon: "success"
-              });
-              $('.report_close_btn').trigger('click')
-              loadReportList()
-            }
-          })
-        }
+        $.get(`/admin/report/progress/\${reportId}`, function(response) {
+          if (response.result === 'success') {
+            Swal.fire({
+              text: "처리 완료",
+              icon: "success"
+            });
+            $('.report_close_btn').trigger('click')
+            loadReportList()
+          }
+        })
       })
   
       $('.report_view_container, .report_view_overlay').addClass('active')
@@ -2061,14 +2042,14 @@
         if (result) {
           load_hashtag()
           Swal.fire({
-         	  text: "해시태그 입력 성공~~~~~",
+         	  text: "해시태그 입력 성공",
          	  icon: "success"
          	});
           $('#codeContent').val('')
         }
         else {
         	Swal.fire({
-           	  text: "해시태그 입력 실패?!!!!",
+           	  text: "해시태그 입력 실패",
            	  icon: "warning"
            	});
         }
