@@ -152,7 +152,7 @@
 		display: flex;
 		flex-direction: column;
 	    justify-content: center;
-	    width: 100%;
+	    width: 120%;
 		margin-top: 370px;
 	}
 	
@@ -226,6 +226,9 @@
   .top_3_members {
   	font-weight: bold;
   }
+  /* .top_3_color{
+  	color: #E55604
+  } */
 
 </style>
 </head>
@@ -317,7 +320,7 @@
 	              </div>
 		          <!-- 조회수순 랭킹 -->
 	              <div class="ranking_controller">
-		          	<h3 class="viewCnt">📋주간 질답 랭킹 </h3>
+		          	<h3 class="viewCnt">📋주간 인기 질문답변 </h3>
 		              <ul class="ranking_wrap"></ul>
 	             </div>
 		      </div>
@@ -357,7 +360,7 @@
 	        if (list[i].boardId === 'CC-20231017-000030') {
 	          let ranking_template = `
 	            <li class="hot_post">
-                  <a class="block ellipse" href="/qnaboard/view/\${list[i].generalPostId}" target="_blank" style="padding: 10px; border-bottom: 1px solid var(--light-gray);;">\${list[i].postTitle}</a>
+                  <a class="block ellipse" href="/qnaboard/view/\${list[i].generalPostId}" target="_blank" style="padding: 10px; border-bottom: 1px solid var(--light-gray);;">▶ \${list[i].postTitle}</a>
 	            </li>`
 	          let ranking_templateDom = $(ranking_template)
 	  
@@ -406,6 +409,7 @@
 	 	// 명예의 전당
 	    $.get("/qnaboard/topTenMember", function(response) {
 		    let listDOM = $("<ul></ul>");
+		    
 		    for (var i in response.generalMemberList) {
 		    	let userEmailDOM = $("<li></li>").css({
 		            'border-bottom': '1px solid var(--light-gray)',
@@ -429,22 +433,38 @@
 						                'padding':'2px',
 						                'display':'inline',
 						                'margin':'auto',
-						                
 						            });
-				
-		        console.log(response.generalMemberList[i])
+		        
+		     	// 1부터 시작하는 번호를 표시하는 부분
+		        let number = i % 10 + 1;
+		        if (i < 3){
+		        	userEmailDOM.append($("<span class='top_3_color'>" + number + "</span>").css({
+			            'margin-right': '3px',
+			            'font-size': '22px',
+			            'font-weight': 'bold',
+			            'color':'#E55604'
+			        }));
+		        } else {
+		        	userEmailDOM.append($("<span class='top_3_color'>" + number + "</span>").css({
+			            'margin-right': '3px',
+			            'font-size': '22px',
+			            'font-weight': 'bold',
+			        }));
+		        }
 		        userEmailDOM.append(tierImageDOM);
 		        userEmailDOM.append(profilePicDOM);
 		        if (i < 3) {
-		        	userEmailDOM.append($("<span class='top_3_members'> " + response.generalMemberList[i].nickname + "  " + response.generalMemberList[i].tierScore+"</span>"));
+		        	userEmailDOM.append($( "<span class='top_3_members'> " + response.generalMemberList[i].nickname + "  " + response.generalMemberList[i].tierScore+"점"+"</span>"));
+		        	
 		        }else {
-		        	userEmailDOM.append($("<span> " + response.generalMemberList[i].nickname + "  " + response.generalMemberList[i].tierScore+"</span>"));
+		        	userEmailDOM.append($("<span> " + response.generalMemberList[i].nickname + "  " + response.generalMemberList[i].tierScore+"점"+"</span>"));
 		        }
 		
 		        // 이미지를 리스트에 추가
-		        listDOM.append(userEmailDOM); // $()안에 넣지 않고 그냥 text를 쓰면 초기화된다
-
+		        listDOM.append(userEmailDOM);
+		        
 		    }
+		    
 		    $(".ranking_wrap_1").append(listDOM);
 		});
 	});

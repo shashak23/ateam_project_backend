@@ -770,7 +770,7 @@
       </div>
       <div class="body_right">
         <div class="ranking_wrap">
-          <h2 class="align-center">주간 인기 TOP10</h2>
+          <h2 class="align-center">📋주간 인기 TOP10</h2>
           <ul class="ranking_list">
           </ul>
         </div>
