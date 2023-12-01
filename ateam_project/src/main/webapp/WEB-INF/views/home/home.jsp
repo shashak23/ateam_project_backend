@@ -608,18 +608,20 @@
 
   .editor_head {
     display: flex;
+    flex-direction: column;
     justify-content: center;
-  }
-
-  .editor_head {
     margin-bottom: 15px;
     margin-top: 15px;
+    align-items: center;
   }
 
+  .editor_head > input {
+    width: 880px;
+  }
+  
   #editor_title {
-    margin-left: 10px;
-    width: 830px;
     height: 30px;
+    width: 880px;
     outline: none;
     border: 1px solid var(--gray);
     padding: 10px;
@@ -635,6 +637,7 @@
     display: block;
     margin-bottom: 10px;
     width: 880px;
+    font-weight: bold;
   }
 
   .editor_body .ck.ck-editor {
@@ -705,20 +708,32 @@
 
   /* hashtag */
 
+  #hashtag-wrapper {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-bottom: 15px;
+    margin-top: 15px;
+    align-items: center;
+  }
   .hashtag {
 		display: flex;
 		flex-direction: column;
 		align-items: baseline;
 		margin-bottom: 10px;
+    width: 880px;
 	}
-    .hashtag > #input_area {
-		display: flex;
+  .hashtag > #input_area {
+    display: flex;
 	}
 	.hashtag > label {
 		width: auto;
 		font-weight: bold;
 		margin: 20px 0 6px 0;
 	}
+  #displayHashtags {
+    margin-bottom: 10px;
+  }
 	#button_1 {
 		width: 44px;
 		border-radius: 5px;
@@ -768,23 +783,25 @@
       <div class="editor_close_btn large">&times;</div>
       <h1>게시글 작성</h1>
       <div class="editor_head">
-        <label for="editor_title">제목</label>
+        <label for="editor_title" class="editor_content_label">제목</label>
         <input type="text" id="editor_title"></input>
       </div>
       <div class="editor_body">
         <label for="editor_content" class="editor_content_label">내용</label>
         <textarea id="editor_content"></textarea>
       </div>
-      <div class="hashtag">
-        <label for="hashtag">해시태그</label>
-        <div id="displayHashtags"></div>
-        <div id="input_area">
-            <input type="hidden" id="hashtagInput" name='hashtag' placeholder="#해시태그" value="${generalPostHashtagVO.hashtagId}">
-            <input type="hidden" id="general_post_hashtag_id" value="${generalPostHashtagVO.generalPostHashtagId}"/>
-            <input type="hidden" id="general_post_id" value="${generalPostHashtagVO.generalPostId}"/>
-            <input id="button_1" type="button" value="추가" onclick="addHashtag()">
+      <div id="hashtag-wrapper">
+        <div class="hashtag">
+          <label for="hashtag">해시태그</label>
+          <div id="displayHashtags"></div>
+          <div id="input_area">
+              <input type="hidden" id="hashtagInput" name='hashtag' placeholder="#해시태그" value="${generalPostHashtagVO.hashtagId}">
+              <input type="hidden" id="general_post_hashtag_id" value="${generalPostHashtagVO.generalPostHashtagId}"/>
+              <input type="hidden" id="general_post_id" value="${generalPostHashtagVO.generalPostId}"/>
+              <input id="button_1" type="button" value="추가" onclick="addHashtag()">
+          </div>
         </div>
-    </div>
+      </div>
       <div class="submit_wrap">
         <div class="select_wrap">
           <button class="free_land_btn">자유</button>

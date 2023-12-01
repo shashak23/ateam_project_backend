@@ -24,6 +24,7 @@ import com.ktdsuniversity.edu.career.vo.CareerVO;
 import com.ktdsuniversity.edu.common.vo.AbstractCompanyPostVO;
 import com.ktdsuniversity.edu.commoncode.vo.CommonCodeVO;
 import com.ktdsuniversity.edu.companyinfo.service.CompanyInfoService;
+import com.ktdsuniversity.edu.companyinfo.vo.CompanyInfoVO;
 import com.ktdsuniversity.edu.companymember.vo.CompanyVO;
 import com.ktdsuniversity.edu.companynews.service.CompanyNewsService;
 import com.ktdsuniversity.edu.companynews.vo.CompanyNewsListVO;
@@ -52,8 +53,12 @@ public class CompanyInfoController {
 	public CompanyInfoService companyInfoService;
 	
 	@GetMapping("/companyinfo/modify")
-	public String companyInfoModify() {
-		return "companyinfo/companyinfomodify";
+	public ModelAndView companyInfoModify(@SessionAttribute("_LOGIN_USER_") MemberVO loginMemberVO) {
+		ModelAndView modelAndView = new ModelAndView();
+		modelAndView.setViewName("companyinfo/companyinfomodify");
+		CompanyInfoVO companyVO = companyInfoService.getOneCompanyInfo(loginMemberVO.getEmail());
+		modelAndView.addObject("companyVO", companyVO);
+		return modelAndView;
 	}
 	
 	@Transactional

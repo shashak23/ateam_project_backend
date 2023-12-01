@@ -151,8 +151,6 @@ $().ready(function() {
 	}
 
 	a {
-		
-		margin-left: 10px;
 		text-decoration: none; 
 		color: #007bff; 
 	}
@@ -184,7 +182,7 @@ $().ready(function() {
 		<div class="body_left_aside">					
 			<div class="flex_button">
 				<c:if test="${not empty sessionScope._LOGIN_USER_ && sessionScope._LOGIN_USER_.email eq memberVO.email}">			
-						<button id="myprofile">마이페이지</button>
+						<button id="myprofile">마이프로필</button>
 						<button id="bookmark">북마크</button>
 						<button id="modify_info">정보 수정</button>
 						<button id="mypost">내가 쓴 게시글</button>
@@ -212,12 +210,12 @@ $().ready(function() {
 					<input type="hidden" name="email" value="${memberVO.email}" />
 					<h3>비밀번호</h3>
 					<div class="pw">
-						<label for="pw">비밀번호</label>
+						<label for="pw">새 비밀번호</label>
 						<input type="password" name="pw" id="pw">
 						<br><span class="err_password"></span>
 						<form:errors path="pw" element="div" cssClass="pw_errors" />
 						<div>
-							<label for="confirmPw">비밀번호 확인</label>
+							<label for="confirmPw">새 비밀번호 확인</label>
 							<input id="confirmPw" type="password" name="confirmPw" />
 							<input id="btnUpdatePassword" type="submit" value="변경" />
 							<br><span class="err_confirm_password"></span>

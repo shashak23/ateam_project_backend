@@ -6,7 +6,7 @@
 /* Main Contents */
 body > .body_container > .body {
     grid-column: 2/3;
-    margin: 40px 0 100px 0;
+    margin: 40px 0 100px 100px;
 }
 
 body > .body_container > .body_left_aside {
@@ -39,7 +39,8 @@ body > .body_container > .body_left_aside {
 .companyInfoModify {
 	display: flex;
 	flex-direction: column; 
-	align-items: center;
+	/* align-items: center; */
+	row-gap: 15px;
 }
 
 #companyEmail, #contactNumber, #pw, #confirmPw {
@@ -164,8 +165,8 @@ h3 {
 					<h3>회사 이메일</h3>
 					<input type="text" name="companyEmail" id="companyEmail"
 						value="${companyVO.companyEmail}"
-						placeholder="${companyVO.companyEmail}">
-					<input class="submit_btn" type="submit" value="변경" />
+						placeholder="${companyVO.companyEmail}" readonly>
+					<!-- <input class="submit_btn" type="submit" value="변경" /> -->
 				</form:form>
 
 				<form:form modelAttribute="companyVO" method="post">
@@ -178,11 +179,11 @@ h3 {
 				<form:form modelAttribute="memberVO" method="post">
 					<h3>비밀번호</h3>
 					<div id="password">
-						<label for="pw">비밀번호</label>
+						<label for="pw">새 비밀번호</label>
 						<div id="origin">
 							<input type="text" name="pw" id="pw" value="${memberVO.pw}" />
 						</div>
-						<label for="confirmPw" id="conPW">비밀번호 확인</label>
+						<label for="confirmPw" id="conPW">새 비밀번호 확인</label>
 						<div id="changed">
 							<input id="confirmPw" type="password" name="confirmPw" />
 							<input class="submit_btn" type="submit" value="변경" />

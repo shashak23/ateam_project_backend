@@ -1308,8 +1308,8 @@
             <div class="current_tier">\${member.tierVO.tierName}</div>
             <div class="next_tier">\${member.tierVOTemp.tierNameTemp}</div>
             <button class="admin_member_tier_log_btn" data-email="\${member.memberEmail}">활동내역</button>
-            <button class="admin_member_tier_upgrade_access_btn" data-email="\${member.memberEmail}" data-tier-id="\${member.tierVOTemp.tierNameTemp}">승인</button>
-            <button class="admin_member_tier_upgrade_deny_btn" data-email="\${member.memberEmail}" data-tier-id="\${member.tierVOTemp.tierNameTemp}">거절</button>
+            <button class="admin_member_tier_upgrade_access_btn" data-email="\${member.memberEmail}" data-tier-id="\${member.tierVOTemp.tierIdTemp}">승인</button>
+            <button class="admin_member_tier_upgrade_deny_btn" data-email="\${member.memberEmail}" data-tier-id="\${member.tierVOTemp.tierIdTemp}">거절</button>
           </div>
         </div>`
 
