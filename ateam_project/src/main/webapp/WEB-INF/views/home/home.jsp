@@ -1335,7 +1335,7 @@
                 	  text: "팔로우 성공",
                 	  icon: "success"
                 	});
-              $(e.currentTarget).css({'background-color':'#E55604', 'color':'var(--white)'})
+              $(e.currentTarget).css({'border': '1px solid #E55604', 'background-color':'#E55604', 'color':'var(--white)'})
               $(e.currentTarget).addClass('follow_on')
               $('.follow_btn').prepend(`<input type="hidden" class="followId" value="\${result.followId}"/>`)
               send({
