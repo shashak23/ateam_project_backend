@@ -856,7 +856,7 @@ body > .body_container > .body_right_aside {
         		content: `
         		<form method="post" action="/memberInfo/modify/update-tech">
 				<input type="hidden" name="email" value="${sessionScope._LOGIN_USER_.email}" />   
-				<label class="label" for="hashtagId">알고리즘 카테고리</label>
+				<label class="label" for="hashtagId"></label>
 				<div id="techstack_category"></div>
 				<div id="techSave">
 					<input type="submit" value="저장" id="saveBtn">
@@ -896,7 +896,7 @@ body > .body_container > .body_right_aside {
         		title: '기술스택 추가',
         		content: `
         		<form method="post">		
-				<label class="label" for="hashtagId">알고리즘 카테고리</label>
+				<label class="label" for="hashtagId"></label>
 				<div id="techstack_category"></div>
 				<input type="submit" value="저장" id="saveBtn" />
 				</form>`
