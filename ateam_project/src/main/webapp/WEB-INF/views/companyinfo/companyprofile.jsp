@@ -348,15 +348,16 @@ body > .body_container > .body_left_aside {
 } */
 
 #technology_stack{
-  margin-top: 120px;
+  margin-top: 80px;
   margin-bottom: 20px;
-  border-bottom: 1px solid gray;
+  border-bottom: 0.0625rem solid rgb(231,231,231);
 }
 #career_stack{
   margin-top: 20px;
   margin-bottom: 20px;
-  border-bottom: 1px solid gray; 
+  border-bottom: 0.0625rem solid rgb(231,231,231);
 }
+
 #address_stack {
   margin-top: 20px;
   margin-bottom: 20px;
@@ -415,22 +416,26 @@ body > .body_container > .body_left_aside {
 	margin-top: 13px;
 }
 #address_stack > img{
-	padding-top: 14px;s
+	padding-top: 14px;
 
 }
 
 .info{
 	font-weight: bold;
-	font-size: larger;
+	font-size: large;
 }
-
+.title_btn_area {
+	display: flex;
+	margin-bottom: 15px;
+	align-items: center;
+}
 .location{
-	width:200px;
+	width: 200px;
 	margin-top: 10px;
 }
 
 .map{
-	margin-top: 30px;
+	margin-top: 10px;
 }
 
 .stackList{
@@ -438,6 +443,10 @@ body > .body_container > .body_left_aside {
 	border-radius: 5px;
 	font-weight: bold;
 	padding: 5px;
+}
+
+.buisnessList {
+	margin-bottom: 3px;
 }
 
 #modalContainerIntro {
@@ -564,7 +573,7 @@ body > .body_container > .body_left_aside {
 							<ul class="introduction_list">
 								<li class="list_name">
 									<h2>kt ds</h2></li>
-								<li class="list_intro"><p>kt는 국내 최대 통신사이자 디지털 플랫폼 기업으로 ICT, 금융사업, 위성방송서비스사업, 기타사업 등을 영위하고 있다.<br> 무선통신, 초고속인터넷, IPTV 등 핵심사업에서의 지속적인 성장뿐만 아니라<br> IDC, 클라우드, AI/DX 등 B2B 성장사업에서도 성과를 창출하였다.</p>
+								<li class="list_intro"><p>kt는 국내 최대 통신사이자 디지털 플랫폼 기업으로 ICT, 금융사업, 위성방송서비스사업, 기타사업 등을 영위하고 있다.<br> 무선통신, 초고속인터넷, IPTV 등 핵심사업에서의 지속적인 성장뿐만 아니라 IDC, 클라우드, AI/DX 등 B2B 성장사업에서도 성과를 창출하였다.</p>
 									<button class="intro_button"><img class="intro_button_img" src="/images/edit.png" /></button>
 									<div id="modalContainerIntro" class="hidden">
 										<div id="modalContentIntro">
@@ -576,24 +585,25 @@ body > .body_container > .body_left_aside {
 								</li>
 							</ul>
 						</div>
-					</div>
+				</div>
+
 				<div id="technology_stack">
 					<div class="common">
-						<ul>
-							<li><p class="info">기술스택</p></li>
-							<p></p>
-						</ul>
+						<div class="title_btn_area">
+							<p class="info">기술스택</p>
+							<button class="location_button"><img src="/images/edit.png" /></button>
+						</div>
 					</div>
 					<ul class="technology_button">
 						<li class="stackList">java</li>
 						<li class="stackList">Docker</li>
 						<li class="stackList">Ubuntu</li>
 						<li class="stackList">OpenCV</li>
-						<li class="stackList">springboot</li>
+						<li class="stackList">SpringBoot</li>
+						<li class="stackList">React</li>
 					</ul>
 					<span></span>
-					</li>
-					<button class="stack_button"><img src="/images/edit.png" /></button>
+					
 					<div id="modalContainerStack" class="hidden">
 						<div id="modalContentStack">
 							<span class="close" onclick="closeLocationModal()">&times;</span>
@@ -603,41 +613,48 @@ body > .body_container > .body_left_aside {
 						</div>
 					</div>
 				</div>
-				<div id="career_stack">
-					<div class="common">
-						<ul>
-							<div class="info">업무 소개</div>
-							<div class="taskInfo">이런일 저런일 합니다.</div>
-							<button class="task_button"><img src="/images/edit.png" /></button>
-							<div id="modalContainerTask" class="hidden">
-								<div id="modalContentTask">
-									<span class="close" onclick="closeTaskModal()">&times;</span>
-									<textarea id="taskTextArea"></textarea>
-									<button id="saveTask">변경 저장</button>
-									<button id="modalCloseTask">닫기</button>
-								</div>
-							</div>
-						</ul>
+
+				<div id="career_stack" class="common">
+					<div class="title_btn_area">
+						<p class="info">사업 소개</p>
+						<button class="location_button"><img src="/images/edit.png" /></button>
 					</div>
+					<div id="modalContainerTask" class="hidden">
+						<div id="modalContentTask">
+							<span class="close" onclick="closeTaskModal()">&times;</span>
+							<textarea id="taskTextArea"></textarea>
+							<button id="saveTask">변경 저장</button>
+							<button id="modalCloseTask">닫기</button>
+						</div>
+					</div>
+					<ul>
+						<li class="buisnessList">애큐온저축은행 코어 뱅킹 차세대</li>
+						<li class="buisnessList">차세대 국방통합데이터센터</li>
+						<li class="buisnessList">서울시 인공지능 기반 빅데이터 서비스 플랫폼</li>
+						<li class="buisnessList">한국의류시험연구원 빅데이터 플랫폼</li>
+						<li class="buisnessList">KT AI IDC 플랫폼</li>
+					</ul>
 				</div>
+
 				<div id="address_stack">
 					<div class="common">
-						<ul>
+						<div class="title_btn_area">
 							<p class="info">오시는 길</p>
-							<p class="address">서울 서초구 효령로 176</p>
 							<button class="location_button"><img src="/images/edit.png" /></button>
-							<div id="modalContainerLocation" class="hidden">
-									<div id="modalContentLocation">
-										<span class="close" onclick="closeLocationModal()">&times;</span>
-										<textarea id="locationTextArea"></textarea>
-										<button id="saveLocation">변경 저장</button>
-										<button id="modalCloseLocation">닫기</button>
-									</div>
-								</div>
-							</ul>
 						</div>
+						<div id="modalContainerLocation" class="hidden">
+							<div id="modalContentLocation">
+								<span class="close" onclick="closeLocationModal()">&times;</span>
+								<textarea id="locationTextArea"></textarea>
+								<button id="saveLocation">변경 저장</button>
+								<button id="modalCloseLocation">닫기</button>
+							</div>
+						</div>
+					</div>
+					<p class="address">서울 서초구 효령로 176</p>
 					<img class="map" src="/images/오시는길.png"/>
 				</div>
+
 			</div>
 		<div class="body_right_aside"></div>
 	</div>

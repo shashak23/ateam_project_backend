@@ -8,7 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>myPage</title>
+<title>devGround</title>
 <!--브라우저에게 현재 페이지를 가장 최신 버전으로 렌더링-->
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <!--뷰포트는 화면에 표시되는 웹영역 표시, 모바일 등에서 상호작용 할 수있는지 제어-->
