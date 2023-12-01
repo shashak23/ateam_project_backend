@@ -662,37 +662,38 @@
     padding: 5px 10px;
     background-color: var(--white);
     color: var(--dark);
-    border: 1px solid var(--light-blue);
+    border: 1px solid #26577C; 
   }
 
   .submit_wrap .select_wrap .free_land_btn {
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;
-    border-top: 1px solid var(--light-blue);
-    border-bottom: 1px solid var(--light-blue);
-    border-left: 1px solid var(--light-blue);
+    border-top: 1px solid #26577C; 
+    border-bottom: 1px solid #26577C;
+    border-left: 1px solid #26577C;
     border-right: 0;
   }
 
   .submit_wrap .select_wrap .qna_land_btn {
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
-    border-top: 1px solid var(--light-blue);
-    border-bottom: 1px solid var(--light-blue);
-    border-right: 1px solid var(--light-blue);
+    border-top: 1px solid #26577C;
+    border-bottom: 1px solid #26577C;
+    border-right: 1px solid #26577C;
     border-left: 0;
   }
 
   .submit_wrap .select_wrap .free_land_btn.selected,
   .submit_wrap .select_wrap .qna_land_btn.selected {
-    background-color: var(--hashtag-blue);
+    background-color: #26577C;  
+    color: white; 
   }
 
   .submit_wrap .submit_btn {
     padding: 5px 10px;
     background-color: var(--white);
     color: var(--dark);
-    border: 1px solid var(--light-blue);
+    border: 1px solid #26577C;
   }
 
   .submit_wrap .submit_btn:hover {
@@ -798,13 +799,6 @@
   <jsp:include page="../layout/footer.jsp" />
 </body>
 <script>
-  // 미완성된 기능을 알려주는 모달창
-  // $('.incomplete').click(function() {
-  //   $('.modal, .overlay').addClass('modal_active')
-  // })
-  // $('.overlay').click(function() {
-  //   $('.modal, .overlay').removeClass('modal_active')
-  // })
 
   //hashtag
   var allHashTags = [];
