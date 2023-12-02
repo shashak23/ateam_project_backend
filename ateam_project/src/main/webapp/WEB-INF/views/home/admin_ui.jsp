@@ -920,7 +920,7 @@
         <ul class="admin_submenu">
           <li><button class="admin_notice_btn">공지</button></li>
           <li><button class="admin_report_btn">신고</button></li>
-          <li><button class="admin_hashtag_btn">해시태그</button></li>
+          <li><button class="admin_hashtag_btn">공통코드</button></li>
         </ul>
       </li>
       <li class="admin_main_list"><button class="mainmenu_btn">환경설정</button>
