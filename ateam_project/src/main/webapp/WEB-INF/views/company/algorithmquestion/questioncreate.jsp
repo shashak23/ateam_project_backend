@@ -426,7 +426,7 @@ body > .body_container > .body_right_aside {
     div.grid {
         display: grid;
         grid-template-columns: 1fr;
-        grid-template-rows: 60px 40px 60px 40px 60px 60px 1fr 60px 1fr;
+        grid-template-rows: 60px 40px 60px 40px 60px 40px 60px 1fr 60px 1fr;
         margin: 40px 0 100px 0;
     }
 
@@ -538,6 +538,7 @@ body > .body_container > .body_right_aside {
                             <option value="Lv.5">Lv.5</option>
                         </select>
                         
+                        <label class="label" for="algorithmTitle">문제제목</label>
                         <input id="algorithmTitle" type="text" name="algorithmTitle" placeholder="제목을 입력해 주세요."
                             value="${algorithmQuestionVO.algorithmTitle}" />
                         
