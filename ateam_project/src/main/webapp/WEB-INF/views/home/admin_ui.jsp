@@ -1196,10 +1196,10 @@
       <button class="btn-close">&times;</button>
       <div class="desc">
         <div>
-          <strong>해시태그 목록</strong>
+          <strong>공통코드 목록</strong>
         </div>
         <div class="admin_hashtag_wrap"></div>
-        <div class="hashtag_create_title"><strong>해시태그 생성</strong></div>
+        <div class="hashtag_create_title"><strong>공통코드 생성</strong></div>
         <input type="text" name="codeContent" id="codeContent" />
         <button id="create_btn">생성</button>
       </div>
