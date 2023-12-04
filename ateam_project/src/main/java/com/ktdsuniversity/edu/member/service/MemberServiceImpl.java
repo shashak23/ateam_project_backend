@@ -1,5 +1,4 @@
 /**
- * 작성자: 김광원
  * 수정자: 신진영(2023-10-20)
  * 수정자: 김태현(2023-10-27)
  * 수정자: 김태현(2023-10-31)
@@ -513,7 +512,7 @@ public class MemberServiceImpl implements MemberService {
         }
 		SocialVO socialVO = memberDAO.findSocial(userInfo);
 		if (socialVO == null || socialVO.getSocailEmail() == null) {
-			memberDAO.kakaoinsert(userInfo);
+			memberDAO.naverinsert(userInfo);
 			return memberDAO.findSocial(userInfo);
 		} else {
 			return socialVO;
